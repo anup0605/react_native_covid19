@@ -10,7 +10,7 @@ interface IProps {
 export default function TalkRectangle(props: IProps) {
   return (
     <View>
-      <Triangle color={colors.backgroundWhiteBlue} direction="up" height={20} style={styles.triangle} width={30} />
+      <Triangle color={colors.transparentDarkBlue} direction="up" height={20} style={styles.triangle} width={30} />
       <View style={styles.view}>{props.children}</View>
     </View>
   );
