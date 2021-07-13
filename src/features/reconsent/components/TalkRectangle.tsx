@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   view: {
-    backgroundColor: colors.backgroundWhiteBlue,
+    backgroundColor: colors.transparentDarkBlue,
     borderRadius: 16,
     padding: 32,
   },

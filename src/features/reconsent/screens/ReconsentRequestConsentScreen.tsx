@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
   },
   card: {
-    backgroundColor: colors.lightBlueBackground,
+    backgroundColor: colors.transparentDarkBlue,
     borderRadius: grid.l,
     marginBottom: grid.l,
     paddingHorizontal: grid.xxl,

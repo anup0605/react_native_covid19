@@ -36,6 +36,7 @@ export const colors = {
   lightBlueBrand: '#29C4CF',
   darkblue: '#0165B5',
   lightBlueBackground: '#F0F6FB',
+  transparentDarkBlue: '#0165B516',
 
   backgroundWhiteBlue: '#F3F8FB',
   backgroundBrandDisabled: '#7C9CAD',

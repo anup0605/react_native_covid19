@@ -29,7 +29,7 @@ export default function ReconsentIntroductionScreen() {
       </Text>
       <IllustrationTim style={styles.illustration} />
       <TalkRectangle>
-        <Text textAlign="center" textClass="h2Light">
+        <Text inverted colorPalette="accentBlue" colorShade="main" textAlign="center" textClass="h2Light">
           {i18n.t('reconsent.introduction.title')}
         </Text>
       </TalkRectangle>
