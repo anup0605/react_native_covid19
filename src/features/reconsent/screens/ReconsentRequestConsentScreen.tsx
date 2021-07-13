@@ -1,6 +1,8 @@
+import appConfig from '@covid/appConfig';
 import { Text } from '@covid/components';
 import { ErrorText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
+import { consentService } from '@covid/core/consent/ConsentService';
 import { patientService } from '@covid/core/patient/PatientService';
 import { selectDiseasePreferences } from '@covid/core/state/reconsent';
 import { RootState } from '@covid/core/state/root';
@@ -58,6 +60,11 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
 
     const diseasePreferencesPayload = { ...diseasePreferences, research_consent_asked: true };
     try {
+      await consentService.postConsent(
+        'UK Disease Research Consent',
+        appConfig.diseaseResearchConsentVersionUK,
+        appConfig.diseaseResearchPrivacyPolicyVersionUK,
+      );
       await patientService.updatePatientInfo(patientId, diseasePreferencesPayload);
       NavigatorService.navigate('ReconsentNewsletterSignup');
     } catch {
