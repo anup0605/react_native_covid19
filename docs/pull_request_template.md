@@ -27,4 +27,4 @@
 
 ## Out of scope and potential follow-up
 
-[comment]: <> (_Are there any related changes that you plan to do in a follow-up PR or voluntarily excluded from the scope?_)
+[comment]: <> (Are there any related changes that you plan to do in a follow-up PR or voluntarily excluded from the scope?)
