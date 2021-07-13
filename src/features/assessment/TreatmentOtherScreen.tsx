@@ -90,7 +90,7 @@ export default class TreatmentOtherScreen extends React.Component<TreatmentOther
                       bordered
                       onChangeText={props.handleChange('description')}
                       placeholder={i18n.t('placeholder-optional-question')}
-                      style={styles.textarea}
+                      textAreaStyle={styles.textarea}
                       value={props.values.description}
                     />
                   </Item>

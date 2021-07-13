@@ -101,7 +101,8 @@ export default function MHPRatingScreen() {
         </Text>
         <TextareaWithCharCount
           onChangeText={setComments}
-          style={[styling.textarea, styling.marginBottomAuto]}
+          style={styling.marginBottomAuto}
+          textAreaStyle={styling.textarea}
           value={comments}
         />
       </View>

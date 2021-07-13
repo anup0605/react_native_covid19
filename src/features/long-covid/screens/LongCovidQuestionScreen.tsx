@@ -264,7 +264,7 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
           bordered
           onChangeText={props.handleChange('symptom_change_comments')}
           placeholder={i18n.t('placeholder-optional-question')}
-          style={styles.textarea}
+          textAreaStyle={styles.textarea}
           value={props.values.symptom_change_comments}
         />
       </View>

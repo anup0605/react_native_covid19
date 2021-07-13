@@ -1,5 +1,5 @@
 import Check from '@assets/icons/Check';
-import { Text } from '@covid/components';
+import { Text, TextareaWithCharCount } from '@covid/components';
 import { requiredFormMarker } from '@covid/components/Forms';
 import { styling } from '@covid/themes';
 import { colors } from '@theme/colors';
@@ -49,15 +49,15 @@ export default React.memo(function CheckboxTextInputList(props: IProps) {
             </Text>
           </TouchableOpacity>
           {option.value !== undefined ? (
-            <Textarea
+            <TextareaWithCharCount
               bordered={false}
               onChangeText={(text) => props.onChange(text, index)}
               placeholder="Please add any comments"
               placeholderTextColor={colors.tertiary}
               rowSpan={5}
-              style={[styling.textarea, styles.textarea]}
+              style={styles.marginBottom}
               testID={`${props.testID || 'textarea'}-${option.id}`}
-              underline={false}
+              textAreaStyle={styling.textarea}
               value={option.value}
             />
           ) : null}
@@ -83,12 +83,12 @@ const styles = StyleSheet.create({
     ...checkBoxStyle,
     borderColor: '#C4C4C4',
   },
+  marginBottom: {
+    marginBottom: 24,
+  },
   text: {
     flex: 1,
     marginBottom: 0,
-  },
-  textarea: {
-    marginBottom: 24,
   },
   touchable: {
     flexDirection: 'row',
