@@ -58,7 +58,10 @@ export default function ReconsentScreen(props: IProps) {
           </View>
         ) : null}
       </View>
-      <ScrollView contentContainerStyle={props.noPadding ? styles.contentContainer : styles.contentContainerPadding}>
+      <ScrollView
+        alwaysBounceVertical={false}
+        contentContainerStyle={props.noPadding ? styles.contentContainer : styles.contentContainerPadding}
+      >
         {props.children}
 
         {props.buttonOnPress && props.buttonTitle ? (
