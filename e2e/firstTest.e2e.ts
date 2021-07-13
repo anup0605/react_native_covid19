@@ -569,6 +569,7 @@ function testReportToday(config: TReportTodayConfig) {
 
 type TReconsentConfig = {
   consent: boolean;
+  fillInAllFeedback: boolean;
   reconsider: boolean;
   selectAllDiseases: boolean;
   viewPrivacyNotice: boolean;
@@ -673,18 +674,20 @@ function testReconsent(config: TReconsentConfig) {
       await scrollDownToId('scroll-view-reconsent-request-consent-screen', 'button-no');
       await element(by.id('button-no')).tap();
     });
-    it('should be able to fill in all feedback', async () => {
-      for (let i = 0; i < feedback.length; i += 1) {
-        await scrollDownToId('scroll-view-reconsent-feedback-screen', `checkbox-${feedback[i].id}`);
-        // Press in an extra time because of the previous input focus
-        if (i > 0) {
+    if (config.fillInAllFeedback) {
+      it('should be able to fill in all feedback', async () => {
+        for (let i = 0; i < feedback.length; i += 1) {
+          await scrollDownToId('scroll-view-reconsent-feedback-screen', `checkbox-${feedback[i].id}`);
+          // Press in an extra time because of the previous input focus
+          if (i > 0) {
+            await element(by.id(`checkbox-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).tap();
+          }
           await element(by.id(`checkbox-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).tap();
+          await scrollDownToId('scroll-view-reconsent-feedback-screen', `textarea-${feedback[i].id}`);
+          await element(by.id(`textarea-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).typeText('test');
         }
-        await element(by.id(`checkbox-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).tap();
-        await scrollDownToId('scroll-view-reconsent-feedback-screen', `textarea-${feedback[i].id}`);
-        await element(by.id(`textarea-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).typeText('test');
-      }
-    });
+      });
+    }
     it('should be possible to finish the feedback screen', async () => {
       await scrollDownToId('scroll-view-reconsent-feedback-screen', 'button-cta-reconsent-feedback-screen');
       await element(by.id('button-cta-reconsent-feedback-screen')).tap();
@@ -695,13 +698,13 @@ function testReconsent(config: TReconsentConfig) {
     });
     if (config.reconsider) {
       it('should be possible to reconsider', async () => {
-        await scrollDownToId('scroll-view-reconsent-reconsider-screen', 'button-cta-reconsent-reconsider-screen');
+        await scrollDownToId('scroll-view-reconsent-reconsider-screen', 'button-positive');
         await element(by.id('button-positive')).tap();
       });
       testConsent();
     } else {
       it('should be possible to end the reconsent', async () => {
-        await scrollDownToId('scroll-view-reconsent-reconsider-screen', 'button-cta-reconsent-reconsider-screen');
+        await scrollDownToId('scroll-view-reconsent-reconsider-screen', 'button-negative');
         await element(by.id('button-negative')).tap();
       });
     }
@@ -726,6 +729,7 @@ testLoginScreen({
 });
 testReconsent({
   consent: false,
+  fillInAllFeedback: true,
   reconsider: true,
   selectAllDiseases: true,
   viewPrivacyNotice: true,
