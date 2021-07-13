@@ -42,6 +42,7 @@ const source = {
 
 export default function ReconsentReconsiderScreen(props: IProps) {
   const windowDimensions = useWindowDimensions();
+  const [hideVideo, setHideVideo] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const feedbackData = useSelector(selectFeedbackData);
@@ -52,7 +53,8 @@ export default function ReconsentReconsiderScreen(props: IProps) {
 
   function onPressPositive() {
     Analytics.track(events.RECONSENT_RECONSIDER_CLICKED);
-    props.navigation.push('ReconsentRequestConsent', { secondTime: true });
+    props.navigation.navigate('ReconsentRequestConsent');
+    setHideVideo(true);
   }
 
   async function onPressNegative() {
@@ -66,10 +68,11 @@ export default function ReconsentReconsiderScreen(props: IProps) {
     setLoading(false);
     dispatch(resetFeedback());
     NavigatorService.navigate('Dashboard');
+    setHideVideo(true);
   }
 
   return (
-    <ReconsentScreen hideBackButton noPadding>
+    <ReconsentScreen hideBackButton noPadding testID="reconsent-reconsider-screen">
       <View style={styles.padding}>
         <Text rhythm={24} textAlign="center" textClass="h2Light">
           {i18n.t('reconsent.reconsider.title')}
@@ -85,7 +88,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
         <View style={styles.activityIndicatorWrapper}>
           <ActivityIndicator color={colors.brand} size="large" />
         </View>
-        {videoHeight > 0 ? (
+        {!hideVideo && videoHeight > 0 ? (
           <WebView
             allowsInlineMediaPlayback
             automaticallyAdjustContentInsets
@@ -108,7 +111,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
         ) : null}
       </View>
       <View style={styles.padding}>
-        <BrandedButton onPress={onPressPositive} style={styles.buttonPositive}>
+        <BrandedButton onPress={onPressPositive} style={styles.buttonPositive} testID="button-positive">
           {i18n.t('reconsent.reconsider.button-positive')}
         </BrandedButton>
         <BrandedButton
@@ -117,6 +120,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
           loading={loading}
           onPress={onPressNegative}
           style={styles.buttonNegative}
+          testID="button-negative"
           textStyle={styles.buttonNegativeText}
         >
           {i18n.t('reconsent.reconsider.button-negative')}

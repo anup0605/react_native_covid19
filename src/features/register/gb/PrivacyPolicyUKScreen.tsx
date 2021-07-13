@@ -19,8 +19,8 @@ export class PrivacyPolicyUKScreen extends React.Component<PropsType, object> {
 
   render() {
     return (
-      <View style={styles.rootContainer}>
-        <ScrollView>
+      <View style={styles.rootContainer} testID="privacy-policy-uk-screen">
+        <ScrollView testID="scroll-view-privacy-policy-uk-screen">
           <RegularBoldText>Privacy Notice{'\n'}</RegularBoldText>
           <RegularText>
             This page explains how we process information about individual people, known as “personal data”, that we
@@ -318,7 +318,7 @@ export class PrivacyPolicyUKScreen extends React.Component<PropsType, object> {
         </ScrollView>
 
         {!this.viewOnly ? (
-          <BrandedButton onPress={this.props.navigation.goBack} style={styles.button}>
+          <BrandedButton onPress={this.props.navigation.goBack} style={styles.button} testID="button-back-navigation">
             Back
           </BrandedButton>
         ) : null}

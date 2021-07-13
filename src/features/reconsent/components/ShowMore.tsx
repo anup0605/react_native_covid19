@@ -7,11 +7,12 @@ import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 interface IProps {
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
+  testID?: string;
 }
 
 export default function ShowMore(props: IProps) {
   return (
-    <Pressable onPress={props.onPress} style={props.style}>
+    <Pressable onPress={props.onPress} style={props.style} testID={props.testID}>
       <Text style={styles.text} textClass="pMedium">
         {i18n.t('reconsent.disease-preferences.show-more')}
       </Text>

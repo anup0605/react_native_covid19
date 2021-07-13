@@ -1,7 +1,6 @@
-import { SafeLayout, Text } from '@covid/components';
+import { SafeLayout } from '@covid/components';
 import { BrandedButton } from '@covid/components/buttons';
 import ChevronLeft from '@covid/features/reconsent/components/ChevronLeft';
-import { grid } from '@covid/themes';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -14,8 +13,7 @@ interface IProps {
   children?: React.ReactNode;
   hideBackButton?: boolean;
   noPadding?: boolean;
-  secondaryButtonOnPress?: () => void;
-  secondaryButtonTitle?: string;
+  testID?: string;
 }
 
 const DOT_SIZE = 8;
@@ -36,10 +34,10 @@ export default function ReconsentScreen(props: IProps) {
   const navigation = useNavigation();
 
   return (
-    <SafeLayout style={styles.safeLayout}>
+    <SafeLayout style={styles.safeLayout} testID={props.testID}>
       <View style={styles.headerWrapper}>
         {props.hideBackButton ? null : (
-          <TouchableOpacity hitSlop={hitSlop} onPress={navigation.goBack}>
+          <TouchableOpacity hitSlop={hitSlop} onPress={navigation.goBack} testID="button-back-navigation">
             <ChevronLeft />
           </TouchableOpacity>
         )}
@@ -61,27 +59,18 @@ export default function ReconsentScreen(props: IProps) {
       <ScrollView
         alwaysBounceVertical={false}
         contentContainerStyle={props.noPadding ? styles.contentContainer : styles.contentContainerPadding}
+        testID={`scroll-view-${props.testID || 'screen'}`}
       >
         {props.children}
 
         {props.buttonOnPress && props.buttonTitle ? (
-          <BrandedButton onPress={props.buttonOnPress} style={styles.button}>
+          <BrandedButton
+            onPress={props.buttonOnPress}
+            style={styles.button}
+            testID={`button-cta-${props.testID || 'screen'}`}
+          >
             {props.buttonTitle}
           </BrandedButton>
-        ) : null}
-        {props.secondaryButtonOnPress && props.secondaryButtonTitle ? (
-          <TouchableOpacity onPress={props.secondaryButtonOnPress} style={styles.secondaryButton}>
-            <Text
-              inverted
-              colorPalette="uiDark"
-              colorShade="dark"
-              textAlign="center"
-              textClass="pLight"
-              textDecorationLine="underline"
-            >
-              {props.secondaryButtonTitle}
-            </Text>
-          </TouchableOpacity>
         ) : null}
       </ScrollView>
     </SafeLayout>
@@ -133,9 +122,5 @@ const styles = StyleSheet.create({
   },
   safeLayout: {
     backgroundColor: colors.backgroundPrimary,
-  },
-  secondaryButton: {
-    marginTop: grid.xxxl,
-    paddingHorizontal: grid.xs,
   },
 });

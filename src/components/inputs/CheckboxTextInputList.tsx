@@ -8,6 +8,7 @@ import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface IOption {
+  id: string;
   label: string;
   value?: string;
 }
@@ -35,11 +36,10 @@ export default React.memo(function CheckboxTextInputList(props: IProps) {
           <TouchableOpacity
             accessible
             accessibilityRole="checkbox"
-            // eslint-disable-next-line react/no-array-index-key
-            key={`checkbox-touchable-${index}`}
+            key={`checkbox-touchable-${option.id}`}
             onPress={() => props.onChange(option.value === undefined ? '' : undefined, index)}
             style={styles.touchable}
-            testID={`${props.testID}-${option.value}`}
+            testID={`${props.testID || 'checkbox'}-${option.id}`}
           >
             <View style={props.dark ? styles.checkBoxDark : styles.checkBox}>
               {option.value !== undefined ? <Check color={colors.purple} /> : null}
@@ -56,6 +56,7 @@ export default React.memo(function CheckboxTextInputList(props: IProps) {
               placeholderTextColor={colors.tertiary}
               rowSpan={5}
               style={[styling.textarea, styles.textarea]}
+              testID={`${props.testID || 'textarea'}-${option.id}`}
               underline={false}
               value={option.value}
             />

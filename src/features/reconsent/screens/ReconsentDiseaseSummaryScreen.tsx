@@ -37,6 +37,7 @@ export default function ReconsentDiseaseSummaryScreen() {
       activeDot={2}
       buttonOnPress={() => NavigatorService.navigate('ReconsentRequestConsent')}
       buttonTitle={i18n.t('reconsent.disease-summary.button')}
+      testID="reconsent-disease-summary-screen"
     >
       <Text textAlign="center" textClass="h2Light">
         {i18n.t('reconsent.disease-summary.title')}

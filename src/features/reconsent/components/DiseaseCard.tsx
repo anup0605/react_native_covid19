@@ -5,12 +5,13 @@ import * as React from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 interface IProps {
-  description: string;
-  style?: StyleProp<ViewStyle>;
   IconComponent: React.ComponentType<any>;
-  title: string;
-  onPressHandler: () => void;
+  description: string;
   initialStateIsActive: boolean;
+  onPressHandler: () => void;
+  style?: StyleProp<ViewStyle>;
+  testID?: string;
+  title: string;
 }
 
 export default function DiseaseCard(props: IProps) {
@@ -28,6 +29,7 @@ export default function DiseaseCard(props: IProps) {
         accessibilityRole="checkbox"
         onPress={onPress}
         style={styles.pressable}
+        testID={props.testID}
       >
         <View style={styles.icon}>
           <props.IconComponent color={active ? colors.white : colors.darkblue} />

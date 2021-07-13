@@ -1,5 +1,6 @@
 import appConfig from '@covid/appConfig';
 import { Text } from '@covid/components';
+import { BrandedButton } from '@covid/components/buttons';
 import { ErrorText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import { consentService } from '@covid/core/consent/ConsentService';
@@ -14,12 +15,17 @@ import { grid } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 interface IProps {
   route: RouteProp<ScreenParamList, 'ReconsentRequestConsent'>;
 }
+
+const hitSlop = {
+  bottom: 20,
+  top: 20,
+};
 
 const Callout = (props: { title: string; description: string }) => {
   return (
@@ -35,14 +41,15 @@ const Callout = (props: { title: string; description: string }) => {
 };
 
 export default function ReconsentRequestConsentScreen(props: IProps) {
-  const [error, setError] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string>();
   const patientId = useSelector<RootState, string>((state) => state.user.patients[0]);
 
   const diseasePreferences = useSelector(selectDiseasePreferences);
 
   const onPrivacyPolicyPress = () => {
     Analytics.track(events.RECONSENT_PRIVACY_POLICY_CLICKED);
-    NavigatorService.navigate('PrivacyPolicyUK', { viewOnly: true });
+    NavigatorService.navigate('PrivacyPolicyUK');
   };
 
   const renderCallouts = () => {
@@ -55,11 +62,11 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
     ));
   };
 
-  const onConfirmYes = async () => {
+  async function onPressYes() {
     Analytics.track(events.RECONSENT_YES_CLICKED);
-
     const diseasePreferencesPayload = { ...diseasePreferences, research_consent_asked: true };
     try {
+      setLoading(true);
       await consentService.postConsent(
         'UK Disease Research Consent',
         appConfig.diseaseResearchConsentVersionUK,
@@ -70,21 +77,16 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
     } catch {
       setError(i18n.t('something-went-wrong'));
     }
-  };
+    setLoading(false);
+  }
 
-  const onNoClick = () => {
+  function onPressNo() {
     Analytics.track(events.RECONSENT_FIRST_NO_CLICKED);
     NavigatorService.navigate('ReconsentFeedback');
-  };
+  }
 
   return (
-    <ReconsentScreen
-      activeDot={3}
-      buttonOnPress={onConfirmYes}
-      buttonTitle={i18n.t('reconsent.request-consent.consent-yes')}
-      secondaryButtonOnPress={props.route.params?.secondTime ? undefined : onNoClick}
-      secondaryButtonTitle={props.route.params?.secondTime ? undefined : i18n.t('reconsent.request-consent.consent-no')}
-    >
+    <ReconsentScreen activeDot={3} testID="reconsent-request-consent-screen">
       <Text rhythm={16} style={styles.center} textClass="h2Light">
         {i18n.t('reconsent.request-consent.title')}
       </Text>
@@ -92,16 +94,52 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
         {i18n.t('reconsent.request-consent.subtitle')}
       </Text>
       {renderCallouts()}
-      <Text onPress={onPrivacyPolicyPress} style={styles.privacyLink} textClass="pSmallLight">
-        {i18n.t('reconsent.request-consent.learn-more')}{' '}
-      </Text>
+      <TouchableOpacity
+        hitSlop={hitSlop}
+        onPress={onPrivacyPolicyPress}
+        style={styles.touchable}
+        testID="button-privacy-notice"
+      >
+        <Text style={styles.privacyLink} textClass="pSmallLight">
+          {i18n.t('reconsent.request-consent.learn-more')}{' '}
+        </Text>
+      </TouchableOpacity>
       <View style={styles.hr} />
       {error ? <ErrorText style={styles.errorText}>{error}</ErrorText> : null}
+      <BrandedButton
+        enabled={!loading}
+        loading={loading}
+        onPress={onPressYes}
+        style={styles.buttonYes}
+        testID="button-yes"
+      >
+        {i18n.t('reconsent.request-consent.consent-yes')}
+      </BrandedButton>
+      <TouchableOpacity disabled={loading} onPress={onPressNo} style={styles.buttonNo} testID="button-no">
+        <Text
+          inverted
+          colorPalette="uiDark"
+          colorShade="dark"
+          textAlign="center"
+          textClass="pLight"
+          textDecorationLine="underline"
+        >
+          {i18n.t('reconsent.request-consent.consent-no')}
+        </Text>
+      </TouchableOpacity>
     </ReconsentScreen>
   );
 }
 
 const styles = StyleSheet.create({
+  buttonNo: {
+    marginTop: grid.xxxl,
+    paddingHorizontal: grid.xs,
+  },
+  buttonYes: {
+    backgroundColor: colors.purple,
+    marginTop: 'auto',
+  },
   card: {
     backgroundColor: colors.lightBlueBackground,
     borderRadius: grid.l,
@@ -123,21 +161,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   hr: {
-    borderBottomColor: colors.backgroundFour,
-    borderBottomWidth: 1,
+    backgroundColor: colors.backgroundFour,
+    height: 1,
     marginBottom: grid.xxl,
+    width: '100%',
   },
   page: {
     backgroundColor: colors.backgroundPrimary,
   },
   privacyLink: {
     color: colors.darkblue,
-    marginBottom: 30,
-    marginTop: grid.s,
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
   subtitle: {
     color: colors.secondary,
+  },
+  touchable: {
+    marginBottom: 30,
+    marginTop: grid.s,
   },
 });

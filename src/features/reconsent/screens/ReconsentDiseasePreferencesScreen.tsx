@@ -1,17 +1,3 @@
-import {
-  Brain,
-  Cancer,
-  Cell,
-  EyeEar,
-  Female,
-  Gut,
-  Heart,
-  Immune,
-  Joint,
-  LightBulb,
-  Lungs,
-  Neuron,
-} from '@assets/icons/svgIcons';
 import { Text } from '@covid/components';
 import { BrandedButton } from '@covid/components/buttons';
 import { selectDiseasePreferences } from '@covid/core/state/reconsent';
@@ -21,6 +7,7 @@ import DiseaseCard from '@covid/features/reconsent/components/DiseaseCard';
 import InfoBox from '@covid/features/reconsent/components/InfoBox';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import ShowMore from '@covid/features/reconsent/components/ShowMore';
+import { extendedDiseases, initialDiseases } from '@covid/features/reconsent/data/diseases';
 import { TDiseasePreference } from '@covid/features/reconsent/types';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -29,62 +16,6 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-
-// TODO: Replace icons
-
-const initialDiseases: TDiseasePreference[] = [
-  {
-    IconComponent: Brain,
-    name: 'research_consent_dementia',
-  },
-  {
-    IconComponent: Heart,
-    name: 'research_consent_cardiovascular_diseases',
-  },
-  {
-    IconComponent: Cancer,
-    name: 'research_consent_cancer',
-  },
-  {
-    IconComponent: Joint,
-    name: 'research_consent_joint_and_bone_diseases',
-  },
-  {
-    IconComponent: LightBulb,
-    name: 'research_consent_mental_health',
-  },
-  {
-    IconComponent: Gut,
-    name: 'research_consent_nutrition_and_gut_health',
-  },
-];
-
-const extendedDiseases: TDiseasePreference[] = [
-  {
-    IconComponent: Female,
-    name: 'research_consent_womens_health',
-  },
-  {
-    IconComponent: EyeEar,
-    name: 'research_consent_vision_and_hearing_conditions',
-  },
-  {
-    IconComponent: Immune,
-    name: 'research_consent_autoimmune_conditions',
-  },
-  {
-    IconComponent: Cell,
-    name: 'research_consent_skin_conditions',
-  },
-  {
-    IconComponent: Lungs,
-    name: 'research_consent_lung_diseases',
-  },
-  {
-    IconComponent: Neuron,
-    name: 'research_consent_neurological_conditions',
-  },
-];
 
 export default function ReconsentDiseasePreferencesScreen() {
   const dispatch = useDispatch();
@@ -119,13 +50,14 @@ export default function ReconsentDiseasePreferencesScreen() {
         key={item.name}
         onPressHandler={() => toggleDisease(item.name)}
         style={{ marginBottom: grid.xxl }}
+        testID={`disease-card-${item.name}`}
         title={i18n.t(`disease-cards.${item.name}.name`)}
       />
     );
   };
 
   return (
-    <ReconsentScreen noPadding activeDot={1}>
+    <ReconsentScreen noPadding activeDot={1} testID="reconsent-disease-preferences-screen">
       <View style={styles.padding}>
         <Text rhythm={24} textAlign="center" textClass="h2Light">
           {i18n.t('reconsent.disease-preferences.title')}
@@ -138,15 +70,17 @@ export default function ReconsentDiseasePreferencesScreen() {
         contentContainerStyle={styles.padding}
         data={showExtendedList ? initialDiseases.concat(extendedDiseases) : initialDiseases}
         keyExtractor={(disease: TDiseasePreference) => disease.name}
-        ListFooterComponent={<ShowMore onPress={() => setShowExtendedList(true)} style={styles.padding} />}
+        ListFooterComponent={
+          <ShowMore onPress={() => setShowExtendedList(true)} style={styles.padding} testID="show-more" />
+        }
         ListFooterComponentStyle={showExtendedList ? { display: 'none' } : null}
         renderItem={renderItem}
-        style={{ overflow: 'visible' }}
+        scrollEnabled={false}
       />
       <View style={styles.padding}>
         <InfoBox text={i18n.t('reconsent.disease-preferences.how-data-used')} />
 
-        <BrandedButton onPress={onPress} style={styles.button}>
+        <BrandedButton onPress={onPress} style={styles.button} testID="button-cta-reconsent-disease-preferences-screen">
           {i18n.t('navigation.next')}
         </BrandedButton>
       </View>

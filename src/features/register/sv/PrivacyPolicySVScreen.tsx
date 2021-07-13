@@ -11,8 +11,8 @@ import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'PrivacyPolicyUK'>;
-  route: RouteProp<ScreenParamList, 'PrivacyPolicyUK'>;
+  navigation: StackNavigationProp<ScreenParamList, 'PrivacyPolicySV'>;
+  route: RouteProp<ScreenParamList, 'PrivacyPolicySV'>;
 };
 
 export default class PrivacyPolicySVScreen extends React.Component<PropsType, object> {

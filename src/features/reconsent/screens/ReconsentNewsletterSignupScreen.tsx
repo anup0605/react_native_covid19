@@ -8,7 +8,7 @@ import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { colors } from '@theme/colors';
 import * as React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const hitSlop = {
   bottom: 24,
@@ -36,6 +36,7 @@ export default function ReconsentNewsletterSignupScreen() {
       hideBackButton
       buttonOnPress={() => NavigatorService.navigate('Dashboard')}
       buttonTitle={i18n.t('reconsent.newsletter-signup.button')}
+      testID="reconsent-newsletter-signup-screen"
     >
       <Text rhythm={24} textAlign="center" textClass="h2Light">
         {i18n.t('reconsent.newsletter-signup.title')}
@@ -63,14 +64,26 @@ export default function ReconsentNewsletterSignupScreen() {
                 {i18n.t('reconsent.newsletter-signup.card-message')}
               </Text>
             </View>
-            <Pressable hitSlop={hitSlop} onPress={toggleNewsletterSignup} style={styles.buttonNoPressable}>
+            <TouchableOpacity
+              disabled={loading}
+              hitSlop={hitSlop}
+              onPress={toggleNewsletterSignup}
+              style={styles.buttonNo}
+              testID="button-opt-out"
+            >
               <Text style={styles.buttonNoText} textClass="p">
                 {i18n.t('reconsent.newsletter-signup.card-button-no')}
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </>
         ) : (
-          <BrandedButton loading={loading} onPress={toggleNewsletterSignup} style={styles.buttonYes}>
+          <BrandedButton
+            enabled={!loading}
+            loading={loading}
+            onPress={toggleNewsletterSignup}
+            style={styles.buttonYes}
+            testID="button-opt-in"
+          >
             {i18n.t('reconsent.newsletter-signup.card-button-yes')}
           </BrandedButton>
         )}
@@ -80,7 +93,7 @@ export default function ReconsentNewsletterSignupScreen() {
 }
 
 const styles = StyleSheet.create({
-  buttonNoPressable: {
+  buttonNo: {
     alignSelf: 'center',
     marginTop: 24,
   },

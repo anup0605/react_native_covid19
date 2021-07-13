@@ -10,8 +10,10 @@ import { StyleSheet } from 'react-native';
 export default function ReconsentIntroductionScreen() {
   return (
     <ReconsentScreen
+      hideBackButton
       buttonOnPress={() => NavigatorService.navigate('ReconsentDiseasePreferences')}
       buttonTitle={i18n.t('reconsent.introduction.button')}
+      testID="reconsent-introduction-screen"
     >
       <Text
         inverted
