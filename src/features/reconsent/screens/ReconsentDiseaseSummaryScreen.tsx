@@ -1,22 +1,28 @@
 import { Text } from '@covid/components';
 import { selectDiseasePreferences } from '@covid/core/state/reconsent';
 import { TDisease, TDiseasePreferencesData } from '@covid/core/state/reconsent/types';
-import IllustrationConfirmation from '@covid/features/reconsent/components/IllustrationSummary';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Image, useWindowDimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 
+const handAnimation = require('@covid/features/reconsent/data/hand-animation.gif');
+
+const GIF_RATIO = 750 / 550;
+
 export default function ReconsentDiseaseSummaryScreen() {
+  const windowDimensions = useWindowDimensions();
   const diseasePreferences = useSelector(selectDiseasePreferences);
   const identifiers = Object.keys(diseasePreferences) as TDisease[];
   const diseasesChosen = identifiers.filter((key: keyof TDiseasePreferencesData) => diseasePreferences[key] === true);
   const numberDiseases = diseasesChosen.length;
 
+  const gifWidth = windowDimensions.width - 32;
+  const gifHeight = gifWidth / GIF_RATIO;
+
   let diseasesTitle = '';
-  // TODO: Copy in the event of no choices being made
 
   if (numberDiseases === 0) {
     diseasesTitle = i18n.t('reconsent.disease-summary.various-diseases');
@@ -51,14 +57,15 @@ export default function ReconsentDiseaseSummaryScreen() {
           {diseasesTitle}
         </Text>
       )}
-      <IllustrationConfirmation style={styles.illustration} />
+      <Image
+        source={handAnimation}
+        style={{
+          alignSelf: 'center',
+          height: gifHeight,
+          marginTop: 'auto',
+          width: gifWidth,
+        }}
+      />
     </ReconsentScreen>
   );
 }
-
-const styles = StyleSheet.create({
-  illustration: {
-    alignSelf: 'center',
-    marginTop: 'auto',
-  },
-});
