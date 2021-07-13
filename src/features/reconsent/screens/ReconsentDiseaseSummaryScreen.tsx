@@ -35,7 +35,7 @@ export default function ReconsentDiseaseSummaryScreen() {
   } else if (numberDiseases > 2) {
     diseasesTitle = `${i18n.t(`disease-cards.${diseasesChosen[0]}.name`)}, ${i18n.t(
       `disease-cards.${diseasesChosen[1]}.name`,
-    )} & ${i18n.t('more')}`;
+    )} & ${i18n.t('more').toLowerCase()}`;
   }
 
   return (
