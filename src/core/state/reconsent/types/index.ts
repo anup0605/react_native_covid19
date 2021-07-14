@@ -1,4 +1,4 @@
-export type TDisease =
+export type TDiseaseId =
   | 'research_consent_dementia'
   | 'research_consent_cardiovascular_diseases'
   | 'research_consent_cancer'
@@ -13,7 +13,7 @@ export type TDisease =
   | 'research_consent_neurological_conditions';
 
 export type TDiseasePreferencesData = {
-  [key in TDisease]?: boolean;
+  [key in TDiseaseId]?: boolean;
 };
 
 export type TFeedbackId =
@@ -37,4 +37,9 @@ export type TReconsentState = {
 export type TUpdateFeedbackAction = {
   feedbackId: TFeedbackId;
   value: string | undefined;
+};
+
+export type TUpdateDiseasePreferenceAction = {
+  diseaseId: TDiseaseId;
+  value: boolean;
 };

@@ -7,39 +7,33 @@ import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 interface IProps {
   IconComponent: React.ComponentType<any>;
   description: string;
-  initialStateIsActive: boolean;
-  onPressHandler: () => void;
+  onPress: () => void;
+  selected: boolean;
   style?: StyleProp<ViewStyle>;
   testID?: string;
   title: string;
 }
 
 export default function DiseaseCard(props: IProps) {
-  const [active, setActive] = React.useState<boolean>(props.initialStateIsActive);
-  const onPress = () => {
-    setActive((currentState) => !currentState);
-    props.onPressHandler();
-  };
-
   return (
-    <View style={[styles.container, styles.shadow, active ? styles.activeCard : null, props.style]}>
+    <View style={[styles.container, styles.shadow, props.selected ? styles.activeCard : null, props.style]}>
       <Pressable
         accessible
         accessibilityLabel={`Select ${props.title}`}
         accessibilityRole="checkbox"
-        onPress={onPress}
+        onPress={props.onPress}
         style={styles.pressable}
         testID={props.testID}
       >
         <View style={styles.icon}>
-          <props.IconComponent color={active ? colors.white : colors.darkblue} />
+          <props.IconComponent color={props.selected ? colors.white : colors.darkblue} />
         </View>
         <View style={styles.textSection}>
-          <Text rhythm={2} style={[styles.name, active ? styles.activeName : null]} textClass="pSmallMedium">
+          <Text rhythm={2} style={[styles.name, props.selected ? styles.activeName : null]} textClass="pSmallMedium">
             {props.title}
           </Text>
           <Text
-            style={[styles.description, active ? styles.activeDescription : styles.inactiveDescription]}
+            style={[styles.description, props.selected ? styles.activeDescription : styles.inactiveDescription]}
             textClass="pLight"
           >
             {props.description}
