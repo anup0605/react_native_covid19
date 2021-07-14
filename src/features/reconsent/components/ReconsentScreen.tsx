@@ -4,7 +4,15 @@ import ChevronLeft from '@covid/features/reconsent/components/ChevronLeft';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 interface IProps {
   activeDot?: number;
@@ -56,23 +64,25 @@ export default function ReconsentScreen(props: IProps) {
           </View>
         ) : null}
       </View>
-      <ScrollView
-        alwaysBounceVertical={false}
-        contentContainerStyle={props.noPadding ? styles.contentContainer : styles.contentContainerPadding}
-        testID={`scroll-view-${props.testID || 'screen'}`}
-      >
-        {props.children}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.rootContainer}>
+        <ScrollView
+          alwaysBounceVertical={false}
+          contentContainerStyle={props.noPadding ? styles.contentContainer : styles.contentContainerPadding}
+          testID={`scroll-view-${props.testID || 'screen'}`}
+        >
+          {props.children}
 
-        {props.buttonOnPress && props.buttonTitle ? (
-          <BrandedButton
-            onPress={props.buttonOnPress}
-            style={styles.button}
-            testID={`button-cta-${props.testID || 'screen'}`}
-          >
-            {props.buttonTitle}
-          </BrandedButton>
-        ) : null}
-      </ScrollView>
+          {props.buttonOnPress && props.buttonTitle ? (
+            <BrandedButton
+              onPress={props.buttonOnPress}
+              style={styles.button}
+              testID={`button-cta-${props.testID || 'screen'}`}
+            >
+              {props.buttonTitle}
+            </BrandedButton>
+          ) : null}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeLayout>
   );
 }
@@ -116,6 +126,10 @@ const styles = StyleSheet.create({
   },
   marginLeft: {
     marginLeft: DOT_SIZE / 2,
+  },
+  rootContainer: {
+    flex: 1,
+    paddingBottom: 32,
   },
   row: {
     flexDirection: 'row',
