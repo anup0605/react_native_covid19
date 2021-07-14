@@ -11,7 +11,7 @@ import * as React from 'react';
 import { Alert, StyleSheet } from 'react-native';
 
 export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = ({ navigation }) => {
-  const { logout } = useLogout(navigation);
+  const logout = useLogout(navigation);
 
   function goToPrivacy() {
     Analytics.track(events.CLICK_DRAWER_MENU_ITEM, {

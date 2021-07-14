@@ -72,14 +72,6 @@ export function DashboardScreen({ navigation, route }: IProps) {
 
   const [shouldShowReminders, setShouldShowReminders] = React.useState(false);
 
-  const runCurrentFeature = () => {
-    if (startupInfo?.show_research_consent) {
-      appCoordinator.goToReconsent();
-    } else if (startupInfo?.show_modal === 'mental-health-playback') {
-      setMentalHealthPlaybackModalVisible(true);
-    }
-  };
-
   // TODO: Can we move this into app initialisation?
   React.useEffect(() => {
     (async () => {
@@ -105,7 +97,11 @@ export function DashboardScreen({ navigation, route }: IProps) {
       dispatch(setDashboardHasBeenViewed(true));
       setTimeout(() => {
         if (isMounted) {
-          runCurrentFeature();
+          if (startupInfo?.show_research_consent) {
+            appCoordinator.goToReconsent();
+          } else if (startupInfo?.show_modal === 'mental-health-playback') {
+            setMentalHealthPlaybackModalVisible(true);
+          }
         }
       }, 800);
     }

@@ -23,7 +23,7 @@ const isDevChannel = () => {
 export const DrawerMenu: React.FC<DrawerContentComponentProps> = (props) => {
   const user = useSelector(selectUser);
 
-  const { logout } = useLogout(props.navigation);
+  const logout = useLogout(props.navigation);
 
   return (
     <SafeAreaView style={styles.drawerRoot}>
@@ -61,14 +61,7 @@ export const DrawerMenu: React.FC<DrawerContentComponentProps> = (props) => {
         <LinksSection navigation={props.navigation} />
 
         <View style={{ marginBottom: 24, paddingBottom: 24 }}>
-          <MenuItem
-            label={i18n.t('logout')}
-            onPress={() => {
-              logout();
-            }}
-            smallLabel={user.username}
-            testID="menu-item-logout"
-          />
+          <MenuItem label={i18n.t('logout')} onPress={logout} smallLabel={user.username} testID="menu-item-logout" />
         </View>
       </ScrollView>
     </SafeAreaView>

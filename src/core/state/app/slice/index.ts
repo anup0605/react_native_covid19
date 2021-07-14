@@ -17,9 +17,7 @@ const appSlice = createSlice({
   name: 'App',
   reducers: {
     reset: () => {
-      return {
-        ...initialStateApp,
-      };
+      return initialStateApp;
     },
     setDashboardHasBeenViewed: (state, action: PayloadAction<boolean>) => {
       return {

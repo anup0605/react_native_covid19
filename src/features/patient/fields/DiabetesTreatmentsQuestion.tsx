@@ -54,19 +54,15 @@ const DiabetesTreatmentsCheckbox: React.FC<DiabetesTreatmentsCheckboxProps> = ({
     formikProps.setFieldValue('diabetesTreatmentOtherOral', result.includes(DiabetesTreatmentsFieldnames.OTHER_ORAL));
   };
 
-  const reset = () => {
-    formikProps.setFieldValue('diabetesOralMeds', []);
-    formikProps.setFieldValue('diabetesOralOtherMedication', '');
-    formikProps.setFieldValue('diabetesOralOtherMedicationNotListed', false);
-  };
-
   return (
     <CheckboxItem
       onChange={(checked: boolean) => {
         toggled(checked);
         // Reset conditional fields on unchecked
         if (data.fieldName === DiabetesTreatmentsFieldnames.OTHER_ORAL && !checked) {
-          reset();
+          formikProps.setFieldValue('diabetesOralMeds', []);
+          formikProps.setFieldValue('diabetesOralOtherMedication', '');
+          formikProps.setFieldValue('diabetesOralOtherMedicationNotListed', false);
         }
       }}
       value={value}
