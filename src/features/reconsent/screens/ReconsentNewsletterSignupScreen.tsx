@@ -41,10 +41,10 @@ export default function ReconsentNewsletterSignupScreen() {
       <Text rhythm={24} textAlign="center" textClass="h2Light">
         {i18n.t('reconsent.newsletter-signup.title')}
       </Text>
-      <Text rhythm={24} textAlign="center" textClass="pLight">
+      <Text rhythm={24} textAlign="center" textClass="h4Light">
         {i18n.t('reconsent.newsletter-signup.description-1')}
       </Text>
-      <Text textAlign="center" textClass="pLight">
+      <Text textAlign="center" textClass="h4Light">
         {i18n.t('reconsent.newsletter-signup.description-2')}
       </Text>
       <Card useShadow style={styles.card}>

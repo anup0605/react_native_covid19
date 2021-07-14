@@ -39,7 +39,7 @@ export default function ReconsentIntroductionScreen() {
         colorShade="darker"
         style={styles.description}
         textAlign="center"
-        textClass="h5Light"
+        textClass="h4Light"
       >
         {i18n.t('reconsent.introduction.description')}
       </Text>

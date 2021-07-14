@@ -77,10 +77,10 @@ export default function ReconsentReconsiderScreen(props: IProps) {
         <Text rhythm={24} textAlign="center" textClass="h2Light">
           {i18n.t('reconsent.reconsider.title')}
         </Text>
-        <Text rhythm={24} textAlign="center" textClass="pLight">
+        <Text rhythm={24} textAlign="center" textClass="h4Light">
           {i18n.t('reconsent.reconsider.description-1')}
         </Text>
-        <Text textAlign="center" textClass="pLight">
+        <Text textAlign="center" textClass="h4Light">
           {i18n.t('reconsent.reconsider.description-2')}
         </Text>
       </View>
