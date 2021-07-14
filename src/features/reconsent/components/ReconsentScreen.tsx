@@ -14,6 +14,7 @@ interface IProps {
   hideBackButton?: boolean;
   noPadding?: boolean;
   testID?: string;
+  additionalBackButtonAction?: () => void;
 }
 
 const DOT_SIZE = 8;
@@ -33,11 +34,18 @@ const hitSlop = {
 export default function ReconsentScreen(props: IProps) {
   const navigation = useNavigation();
 
+  function onPressBackButton() {
+    if (props.additionalBackButtonAction) {
+      props.additionalBackButtonAction();
+    }
+    navigation.goBack();
+  }
+
   return (
     <SafeLayout style={styles.safeLayout} testID={props.testID}>
       <View style={styles.headerWrapper}>
         {props.hideBackButton ? null : (
-          <TouchableOpacity hitSlop={hitSlop} onPress={navigation.goBack} testID="button-back-navigation">
+          <TouchableOpacity hitSlop={hitSlop} onPress={onPressBackButton} testID="button-back-navigation">
             <ChevronLeft />
           </TouchableOpacity>
         )}

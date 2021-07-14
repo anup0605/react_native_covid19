@@ -40,7 +40,7 @@ export default function DiseaseCard(props: IProps) {
           </Text>
           <Text
             style={[styles.description, active ? styles.activeDescription : styles.inactiveDescription]}
-            textClass="h6Light"
+            textClass="pLight"
           >
             {props.description}
           </Text>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     borderRadius: grid.s,
   },
   description: {
-    minHeight: grid.xxxl,
+    minHeight: grid.xxxxl,
     paddingRight: grid.l,
   },
   icon: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: grid.l,
-    paddingVertical: grid.s,
+    paddingVertical: grid.l,
   },
   shadow: {
     elevation: 4,

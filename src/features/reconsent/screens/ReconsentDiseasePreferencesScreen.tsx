@@ -12,14 +12,16 @@ import { TDiseasePreference } from '@covid/features/reconsent/types';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { grid } from '@covid/themes';
+import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { BackHandler, FlatList, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ReconsentDiseasePreferencesScreen() {
   const dispatch = useDispatch();
   const diseasePreferencesPersisted = useSelector(selectDiseasePreferences);
+  const navigation = useNavigation();
 
   const extendedListDiseaseNames: TDisease[] = extendedDiseases.map((item) => item.name);
   const identifiers = Object.keys(diseasePreferencesPersisted) as TDisease[];
@@ -41,6 +43,23 @@ export default function ReconsentDiseasePreferencesScreen() {
     NavigatorService.navigate('ReconsentDiseaseSummary');
   };
 
+  const updateState = () => {
+    dispatch(updateDiseasePreferences(diseasePreferences));
+  };
+
+  const androidBackHandler = () => {
+    updateState();
+    navigation.goBack();
+    return true;
+  };
+
+  React.useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', androidBackHandler);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', androidBackHandler);
+    };
+  }, [androidBackHandler]);
+
   const renderItem = ({ item }: { item: TDiseasePreference }) => {
     return (
       <DiseaseCard
@@ -57,7 +76,12 @@ export default function ReconsentDiseasePreferencesScreen() {
   };
 
   return (
-    <ReconsentScreen noPadding activeDot={1} testID="reconsent-disease-preferences-screen">
+    <ReconsentScreen
+      noPadding
+      activeDot={1}
+      additionalBackButtonAction={updateState}
+      testID="reconsent-disease-preferences-screen"
+    >
       <View style={styles.padding}>
         <Text rhythm={24} textAlign="center" textClass="h2Light">
           {i18n.t('reconsent.disease-preferences.title')}
@@ -71,13 +95,13 @@ export default function ReconsentDiseasePreferencesScreen() {
         data={showExtendedList ? initialDiseases.concat(extendedDiseases) : initialDiseases}
         keyExtractor={(disease: TDiseasePreference) => disease.name}
         ListFooterComponent={
-          <ShowMore onPress={() => setShowExtendedList(true)} style={styles.padding} testID="show-more" />
+          <ShowMore onPress={() => setShowExtendedList(true)} style={styles.showMore} testID="show-more" />
         }
         ListFooterComponentStyle={showExtendedList ? { display: 'none' } : null}
         renderItem={renderItem}
         scrollEnabled={false}
       />
-      <View style={styles.padding}>
+      <View style={styles.footer}>
         <InfoBox text={i18n.t('reconsent.disease-preferences.how-data-used')} />
 
         <BrandedButton onPress={onPress} style={styles.button} testID="button-cta-reconsent-disease-preferences-screen">
@@ -91,12 +115,19 @@ export default function ReconsentDiseasePreferencesScreen() {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.purple,
-    marginTop: 16,
+    marginTop: 32,
+  },
+  footer: {
+    padding: 16,
+    paddingTop: 0,
   },
   padding: {
     padding: 16,
   },
   page: {
     backgroundColor: colors.backgroundPrimary,
+  },
+  showMore: {
+    paddingBottom: 8,
   },
 });
