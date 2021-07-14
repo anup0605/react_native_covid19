@@ -1,8 +1,8 @@
 # Description
 
 [comment]: <> (Description of the feature or fix)
-[comment]: <> (Include link to Figma designs (if relevant))
-[comment]: <> (Include link to Notion ticket (if relevant))
+[comment]: <> (Include link to Figma designs, if relevant)
+[comment]: <> (Include link to Notion ticket, if relevant)
 
 ## On what platform have you tested the change?
 
@@ -13,7 +13,7 @@
 
 ## Screenshots
 
-[comment]: <> (Please attach screenshots showing the change (if relevant))
+[comment]: <> (Please attach screenshots showing the change, if relevant)
 
 ## Checklist (for submission)
 
