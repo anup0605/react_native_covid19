@@ -4,7 +4,7 @@ import { isGBCountry, isSECountry } from '@covid/core/localisation/LocalisationS
 import PushNotificationService from '@covid/core/push-notifications/PushNotificationService';
 import { userService } from '@covid/core/user/UserService';
 import { DrawerMenuItem, LinkItem } from '@covid/features/menu/DrawerMenuItem';
-import { useLogout } from '@covid/features/menu/Logout.hooks';
+import { useLogout } from '@covid/features/menu/useLogout';
 import i18n from '@covid/locale/i18n';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import * as React from 'react';

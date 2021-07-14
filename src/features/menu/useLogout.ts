@@ -1,5 +1,6 @@
 import Analytics, { events } from '@covid/core/Analytics';
 import { reset as resetApp } from '@covid/core/state/app';
+import { resetDiseasePreferences, resetFeedback } from '@covid/core/state/reconsent';
 import { reset as resetUser } from '@covid/core/state/user';
 import { userService } from '@covid/core/user/UserService';
 import { DrawerMenuItem } from '@covid/features/menu/DrawerMenuItem';
@@ -17,6 +18,8 @@ export function useLogout(navigation: DrawerNavigationHelpers) {
     userService.logout();
     dispatch(resetApp());
     dispatch(resetUser());
+    dispatch(resetDiseasePreferences());
+    dispatch(resetFeedback());
     navigation.reset({
       index: 0,
       routes: [{ name: 'CountrySelect' }],

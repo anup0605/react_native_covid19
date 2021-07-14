@@ -1,6 +1,7 @@
 import { BrandedButton, ErrorText, Text } from '@covid/components';
 import Card from '@covid/components/cards/Card';
 import { contentService } from '@covid/core/content/ContentService';
+import { resetFeedback } from '@covid/core/state/reconsent';
 import IllustrationSignup from '@covid/features/reconsent/components/IllustrationSignup';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import Tick from '@covid/features/reconsent/components/Tick';
@@ -9,6 +10,7 @@ import NavigatorService from '@covid/NavigatorService';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 const hitSlop = {
   bottom: 24,
@@ -18,23 +20,31 @@ const hitSlop = {
 };
 
 export default function ReconsentNewsletterSignupScreen() {
+  const [error, setError] = React.useState<string>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [signedUp, setSignedUp] = React.useState<boolean>(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const dispatch = useDispatch();
 
   async function toggleNewsletterSignup() {
+    setLoading(true);
     try {
       await contentService.signUpForDiseaseResearchNewsletter(!signedUp);
       setSignedUp((prevState) => !prevState);
     } catch {
       setError(i18n.t('something-went-wrong'));
     }
+    setLoading(false);
+  }
+
+  function onPress() {
+    NavigatorService.navigate('Dashboard');
+    dispatch(resetFeedback());
   }
 
   return (
     <ReconsentScreen
       hideBackButton
-      buttonOnPress={() => NavigatorService.navigate('Dashboard')}
+      buttonOnPress={onPress}
       buttonTitle={i18n.t('reconsent.newsletter-signup.button')}
       testID="reconsent-newsletter-signup-screen"
     >

@@ -6,7 +6,7 @@ import { CaptionText } from '@covid/components/Text';
 import { selectUser } from '@covid/core/state/user';
 import { MenuItem } from '@covid/features/menu/DrawerMenuItem';
 import { LinksSection } from '@covid/features/menu/LinksSection';
-import { useLogout } from '@covid/features/menu/Logout.hooks';
+import { useLogout } from '@covid/features/menu/useLogout';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import Constants from '@covid/utils/Constants';

@@ -18,7 +18,7 @@ import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ProfileCard } from './components/ProfileCard';
 import { ProfileList } from './components/ProfileList';
-import { useProfileList } from './ProfileList.hooks';
+import { useProfileList } from './useProfileList';
 
 type TProps = {
   navigation: NavigationProp<ScreenParamList, 'SelectProfile'>;

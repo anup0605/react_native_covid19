@@ -3,7 +3,6 @@ import { Text, TextareaWithCharCount } from '@covid/components';
 import { requiredFormMarker } from '@covid/components/Forms';
 import { styling } from '@covid/themes';
 import { colors } from '@theme/colors';
-import { Textarea } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
