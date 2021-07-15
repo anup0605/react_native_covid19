@@ -1,30 +1,31 @@
+import { CaptionText } from '@covid/components/Text';
 import { Textarea } from 'native-base';
 import * as React from 'react';
-import { StyleProp, TextStyle } from 'react-native';
+import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 
-import { CaptionText } from './Text';
-
-interface ITextareaWithCharCountProps {
+interface IProps {
   bordered?: boolean;
   maxLength?: number;
   onChangeText: (value: string) => void;
   placeholder?: string;
+  placeholderTextColor?: string;
   rowSpan?: number;
-  style?: StyleProp<TextStyle>;
-  value?: string;
+  style?: StyleProp<ViewStyle>;
+  textAreaStyle?: StyleProp<TextStyle>;
   testID?: string;
+  value?: string;
 }
 
 const DEFAULT_MAX_LENGTH = 1000;
 const DEFAULT_ROW_SPAN = 5;
 
-export default function TextareaWithCharCount(props: ITextareaWithCharCountProps) {
+export default function TextareaWithCharCount(props: IProps) {
   const [charCount, setCharCount] = React.useState(0);
 
   const maxLength = props.maxLength || DEFAULT_MAX_LENGTH;
 
   return (
-    <>
+    <View style={props.style}>
       <Textarea
         bordered={props.bordered || false}
         maxLength={maxLength}
@@ -33,8 +34,9 @@ export default function TextareaWithCharCount(props: ITextareaWithCharCountProps
           setCharCount(value.length);
         }}
         placeholder={props.placeholder}
+        placeholderTextColor={props.placeholderTextColor}
         rowSpan={props.rowSpan || DEFAULT_ROW_SPAN}
-        style={props.style}
+        style={props.textAreaStyle}
         testID={props.testID}
         underline={false}
         value={props.value}
@@ -42,6 +44,6 @@ export default function TextareaWithCharCount(props: ITextareaWithCharCountProps
       <CaptionText style={{ alignSelf: 'flex-end' }}>
         {charCount} / {maxLength}
       </CaptionText>
-    </>
+    </View>
   );
 }

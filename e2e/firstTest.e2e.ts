@@ -1,4 +1,10 @@
+/* eslint-disable no-await-in-loop */
+
+import { extendedDiseases, initialDiseases } from '@covid/features/reconsent/data/diseases';
+import { feedback } from '@covid/features/reconsent/data/feedback';
 import Detox, { by, device, element, expect, init } from 'detox';
+
+jest.setTimeout(60000);
 
 const countries = ['GB', 'SE', 'US'];
 const defaultPassword = 'manymuffins';
@@ -44,9 +50,7 @@ async function tapInputById(elementId: string) {
 }
 
 beforeAll(async () => {
-  // @todo: There seems to be a bug with this but it's necessary for the automatic ci/cd tests to complete.
-  // await device.launchApp({ permissions: { notifications: 'YES' } });
-  await device.launchApp();
+  await device.launchApp({ newInstance: true, permissions: { notifications: 'YES' } });
 });
 
 beforeEach(async () => {
@@ -563,6 +567,150 @@ function testReportToday(config: TReportTodayConfig) {
   });
 }
 
+type TReconsentConfig = {
+  consent: boolean;
+  fillInAllFeedback: boolean;
+  reconsider: boolean;
+  selectAllDiseases: boolean;
+  viewPrivacyNotice: boolean;
+};
+
+function testReconsent(config: TReconsentConfig) {
+  it('should not be possible to go back on the introduction screen', async () => {
+    await expect(
+      element(by.id('button-back-navigation').withAncestor(by.id('reconsent-introduction-screen'))),
+    ).not.toBeVisible();
+  });
+
+  it('should be able to finish the introduction screen', async () => {
+    await scrollDownToId('scroll-view-reconsent-introduction-screen', 'button-cta-reconsent-introduction-screen');
+    await element(by.id('button-cta-reconsent-introduction-screen')).tap();
+  });
+
+  it('should be able to continue without selecting any disease', async () => {
+    await scrollDownToId(
+      'scroll-view-reconsent-disease-preferences-screen',
+      'button-cta-reconsent-disease-preferences-screen',
+    );
+    await element(by.id('button-cta-reconsent-disease-preferences-screen')).tap();
+    await expect(element(by.id('reconsent-disease-summary-screen'))).toBeVisible();
+    await element(by.id('button-back-navigation').withAncestor(by.id('reconsent-disease-summary-screen'))).tap();
+  });
+
+  if (config.selectAllDiseases) {
+    it('should be able to select all diseases', async () => {
+      await element(by.id('scroll-view-reconsent-disease-preferences-screen')).scrollTo('top');
+      for (const disease of initialDiseases) {
+        await scrollDownToId('scroll-view-reconsent-disease-preferences-screen', `disease-card-${disease.name}`);
+        await element(by.id(`disease-card-${disease.name}`)).tap();
+      }
+      try {
+        await element(by.id('show-more')).tap();
+      } catch (_) {}
+      for (const disease of extendedDiseases) {
+        await scrollDownToId('scroll-view-reconsent-disease-preferences-screen', `disease-card-${disease.name}`);
+        await element(by.id(`disease-card-${disease.name}`)).tap();
+      }
+    });
+  }
+
+  it('should be able to finish the disease preferences screen', async () => {
+    await scrollDownToId(
+      'scroll-view-reconsent-disease-preferences-screen',
+      'button-cta-reconsent-disease-preferences-screen',
+    );
+    await element(by.id('button-cta-reconsent-disease-preferences-screen')).tap();
+  });
+
+  it('should be able to finish the summary screen', async () => {
+    await scrollDownToId('scroll-view-reconsent-disease-summary-screen', 'button-cta-reconsent-disease-summary-screen');
+    await element(by.id('button-cta-reconsent-disease-summary-screen')).tap();
+  });
+
+  if (config.viewPrivacyNotice) {
+    it('should be able to view the privacy notice', async () => {
+      await scrollDownToId('scroll-view-reconsent-request-consent-screen', 'button-privacy-notice');
+      await element(by.id('button-privacy-notice')).tap();
+      await expect(element(by.id('privacy-policy-uk-screen'))).toBeVisible();
+      await element(by.id('scroll-view-privacy-policy-uk-screen')).scrollTo('bottom');
+      await element(by.id('button-back-navigation').withAncestor(by.id('privacy-policy-uk-screen'))).tap();
+    });
+  }
+
+  function testConsent() {
+    it('should be possible to consent', async () => {
+      await scrollDownToId('scroll-view-reconsent-request-consent-screen', 'button-yes');
+      await element(by.id('button-yes')).tap();
+    });
+    it('should not be possible to go back on the thank you screen', async () => {
+      await expect(
+        element(by.id('button-back-navigation').withAncestor(by.id('reconsent-newsletter-signup-screen'))),
+      ).not.toBeVisible();
+    });
+    it('should be able to opt-in and opt-out of the newsletter', async () => {
+      await scrollDownToId('scroll-view-reconsent-newsletter-signup-screen', 'button-opt-in');
+      await element(by.id('button-opt-in')).tap();
+      await element(by.id('button-opt-out')).tap();
+      await element(by.id('button-opt-in')).tap();
+    });
+    it('should be possible to finish the reconsent', async () => {
+      await scrollDownToId(
+        'scroll-view-reconsent-newsletter-signup-screen',
+        'button-cta-reconsent-newsletter-signup-screen',
+      );
+      await element(by.id('button-cta-reconsent-newsletter-signup-screen')).tap();
+    });
+  }
+
+  if (config.consent) {
+    testConsent();
+  } else {
+    it('should be possible to not consent', async () => {
+      await scrollDownToId('scroll-view-reconsent-request-consent-screen', 'button-no');
+      await element(by.id('button-no')).tap();
+    });
+    it('should be possible to go back to the consent screen', async () => {
+      await element(by.id('button-back-navigation').withAncestor(by.id('reconsent-feedback-screen'))).tap();
+      await scrollDownToId('scroll-view-reconsent-request-consent-screen', 'button-no');
+      await element(by.id('button-no')).tap();
+    });
+    if (config.fillInAllFeedback) {
+      it('should be able to fill in all feedback', async () => {
+        for (let i = 0; i < feedback.length; i += 1) {
+          await scrollDownToId('scroll-view-reconsent-feedback-screen', `checkbox-${feedback[i].id}`);
+          // Press in an extra time because of the previous input focus
+          if (i > 0) {
+            await element(by.id(`checkbox-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).tap();
+          }
+          await element(by.id(`checkbox-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).tap();
+          await scrollDownToId('scroll-view-reconsent-feedback-screen', `textarea-${feedback[i].id}`);
+          await element(by.id(`textarea-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).typeText('test');
+        }
+      });
+    }
+    it('should be possible to finish the feedback screen', async () => {
+      await scrollDownToId('scroll-view-reconsent-feedback-screen', 'button-cta-reconsent-feedback-screen');
+      await element(by.id('button-cta-reconsent-feedback-screen')).tap();
+      // Press in an extra time because of the previous input focus
+      try {
+        await element(by.id('button-cta-reconsent-feedback-screen')).tap();
+      } catch (_) {}
+    });
+    if (config.reconsider) {
+      it('should be possible to reconsider', async () => {
+        await scrollDownToId('scroll-view-reconsent-reconsider-screen', 'button-positive');
+        await element(by.id('button-positive')).tap();
+      });
+      testConsent();
+    } else {
+      it('should be possible to end the reconsent', async () => {
+        await scrollDownToId('scroll-view-reconsent-reconsider-screen', 'button-negative');
+        await element(by.id('button-negative')).tap();
+      });
+    }
+  }
+}
+
 const timestamp = Math.round(Date.now() / 1000);
 const tempEmailAddress = `test-${timestamp}@joinzoe.com`;
 const tempPhoneNumber = `+44 7900 ${timestamp}`;
@@ -578,6 +726,13 @@ testLogout();
 testLoginScreen({
   emailAddress: defaultEmailAddress,
   password: defaultPassword,
+});
+testReconsent({
+  consent: false,
+  fillInAllFeedback: true,
+  reconsider: true,
+  selectAllDiseases: true,
+  viewPrivacyNotice: true,
 });
 testCreateNewProfile();
 testReportToday({

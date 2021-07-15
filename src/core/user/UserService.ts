@@ -84,7 +84,7 @@ export default class UserService extends ApiClientBase implements IUserService {
   };
 
   async loadUser() {
-    const user = await AsyncStorageService.GetStoredData();
+    const user = await AsyncStorageService.getStoredData();
     this.hasUser = !!user && !!user!.userToken && !!user!.userId;
     localisationService.updateUserCountry(this.hasUser);
     if (this.hasUser) {

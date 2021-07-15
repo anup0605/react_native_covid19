@@ -5,8 +5,7 @@ import { action, HandlerFunction } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react-native';
 import { Formik } from 'formik';
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, Text, View } from 'react-native';
 
 const ValueChangeHandler = (): HandlerFunction => action('submit');
 

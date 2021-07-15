@@ -1,16 +1,16 @@
 import { SafeLayout } from '@covid/components';
 import * as React from 'react';
-import { Modal, ScrollView, StyleSheet } from 'react-native';
+import { Modal as RNModal, ScrollView, StyleSheet } from 'react-native';
 
 interface IProps {
   children?: React.ReactNode;
-  closeModalHandler: () => void;
-  showModal: boolean;
+  onRequestClose: () => void;
+  visible: boolean;
 }
 
-export default function ModalZoe(props: IProps) {
+export default function Modal(props: IProps) {
   return (
-    <Modal transparent animationType="slide" onRequestClose={props.closeModalHandler} visible={props.showModal}>
+    <RNModal transparent animationType="slide" onRequestClose={props.onRequestClose} visible={props.visible}>
       <SafeLayout style={styles.modal}>
         <ScrollView
           alwaysBounceVertical={false}
@@ -21,7 +21,7 @@ export default function ModalZoe(props: IProps) {
           {props.children}
         </ScrollView>
       </SafeLayout>
-    </Modal>
+    </RNModal>
   );
 }
 

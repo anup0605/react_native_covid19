@@ -75,8 +75,8 @@ export const DoseSymptomsQuestions: IDoseSymptomQuestions<Props, DoseSymptomsDat
             maxLength={500}
             onChangeText={formikProps.handleChange('otherSymptoms')}
             placeholder={i18n.t('vaccines.dose-symptoms.other-placeholder')}
-            rowSpan={4}
-            style={{ borderRadius: 8 }}
+            rowSpan={5}
+            textAreaStyle={{ borderRadius: 8 }}
             value={formikProps.values.otherSymptoms}
           />
         </>

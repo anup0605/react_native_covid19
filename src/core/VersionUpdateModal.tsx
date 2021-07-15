@@ -1,4 +1,4 @@
-import { BrandedButton, HeaderText, ModalZoe, Text } from '@covid/components';
+import { BrandedButton, HeaderText, Modal, Text } from '@covid/components';
 import { ScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { openWebLink } from '@covid/utils/links';
@@ -27,13 +27,13 @@ export default function VersionUpdateModal({ navigation }: IProps) {
   }, [navigation]);
 
   return (
-    <ModalZoe showModal closeModalHandler={goToStore}>
+    <Modal visible onRequestClose={goToStore}>
       <HeaderText style={styles.text}>{i18n.t('version-update.title')}</HeaderText>
       <Text style={styles.text}>{i18n.t('version-update.body')}</Text>
       <BrandedButton onPress={goToStore} style={styles.button}>
         {i18n.t('version-update.cta')}
       </BrandedButton>
-    </ModalZoe>
+    </Modal>
   );
 }
 

@@ -1,25 +1,29 @@
 import { QuoteMarks } from '@assets';
-import { BrandedButton, DoctorProfile, ModalZoe, Tag, Text } from '@covid/components';
+import { BrandedButton, DoctorProfile, Modal, Tag, Text } from '@covid/components';
 import { events, track } from '@covid/core/Analytics';
 import { RootState } from '@covid/core/state/root';
+import { selectFirstPatientId } from '@covid/core/state/user';
 import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
+import util from '@covid/features/mental-health-playback/util';
 import i18n from '@covid/locale/i18n';
-import { generalApiClient } from '@covid/Services';
+import { generalApiClient } from '@covid/services';
 import { colors, styling } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 
 interface IProps {
-  closeModalHandler: () => void;
-  showModal: boolean;
+  onRequestClose: () => void;
+  visible: boolean;
 }
 
-export default function MentalHealthPlaybackModal({ closeModalHandler, showModal }: IProps) {
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+export default function MentalHealthPlaybackModal(props: IProps) {
   const [tracked, setTracked] = React.useState(false);
+  const patientId = useSelector(selectFirstPatientId);
+  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const testGroupId = React.useMemo(() => util.determineTestGroupId(patientId), [patientId]);
 
   React.useEffect(() => {
     if (!tracked) {
@@ -30,17 +34,17 @@ export default function MentalHealthPlaybackModal({ closeModalHandler, showModal
 
   function handlePositive() {
     generalApiClient.postUserEvent('view-mental-health-insights');
-    closeModalHandler();
+    props.onRequestClose();
     appCoordinator.goToMentalHealthStudyPlayback(startupInfo);
   }
 
   function handleNegative() {
     generalApiClient.postUserEvent('skip-mental-health-insights');
-    closeModalHandler();
+    props.onRequestClose();
   }
 
   return (
-    <ModalZoe closeModalHandler={closeModalHandler} showModal={showModal}>
+    <Modal onRequestClose={props.onRequestClose} visible={props.visible}>
       <Tag
         color={colors.coral.main.bgColor}
         style={styling.selfCenter}
@@ -71,10 +75,12 @@ export default function MentalHealthPlaybackModal({ closeModalHandler, showModal
       <BrandedButton onPress={handlePositive} style={styles.buttonPositive}>
         {i18n.t('mental-health-playback.modal.button-positive')}
       </BrandedButton>
-      <BrandedButton onPress={handleNegative} style={styles.buttonNegative}>
-        <Text textClass="pSmallLight">{i18n.t('mental-health-playback.modal.button-negative')}</Text>
-      </BrandedButton>
-    </ModalZoe>
+      {testGroupId !== 'GROUP_E' && testGroupId !== 'GROUP_F' ? (
+        <BrandedButton onPress={handleNegative} style={styles.buttonNegative}>
+          <Text textClass="pSmallLight">{i18n.t('mental-health-playback.modal.button-negative')}</Text>
+        </BrandedButton>
+      ) : null}
+    </Modal>
   );
 }
 

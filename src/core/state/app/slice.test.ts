@@ -1,10 +1,4 @@
-import {
-  initialStateApp,
-  reset,
-  setDashboardHasBeenViewed,
-  setLoggedVaccine,
-  setMentalHealthStudyActive,
-} from '@covid/core/state/app/slice';
+import { appActions, appInitialState } from '@covid/core/state/app/slice';
 import store from '@covid/core/state/store';
 
 describe('\n** redux app state **\n', () => {
@@ -19,23 +13,23 @@ describe('\n** redux app state **\n', () => {
     expect(state.loggedVaccine).toBe(false);
   });
   it('should be able to set the state of dashboardHasBeenViewed', () => {
-    store.dispatch(setDashboardHasBeenViewed(true));
+    store.dispatch(appActions.setDashboardHasBeenViewed(true));
     state = store.getState().app;
     expect(state.dashboardHasBeenViewed).toBe(true);
   });
   it('should be able to set the state of setLoggedVaccine', () => {
-    store.dispatch(setLoggedVaccine(true));
+    store.dispatch(appActions.setLoggedVaccine(true));
     state = store.getState().app;
     expect(state.loggedVaccine).toBe(true);
   });
   it('should be able to set the state of setMentalHealthStudyActive', () => {
-    store.dispatch(setMentalHealthStudyActive(false));
+    store.dispatch(appActions.setMentalHealthStudyActive(false));
     state = store.getState().app;
     expect(state.mentalHealthStudyActive).toBe(false);
   });
   it('should be able to reset all app values back to initial state', () => {
-    store.dispatch(reset());
+    store.dispatch(appActions.reset());
     state = store.getState().app;
-    expect(state).toEqual(initialStateApp);
+    expect(state).toEqual(appInitialState);
   });
 });

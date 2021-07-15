@@ -31,7 +31,11 @@ export type Coordinates = {
 };
 
 export class AsyncStorageService {
-  public static async GetStoredData(): Promise<AuthenticatedUser | null> {
+  public static async getUserId() {
+    return AsyncStorage.getItem(USER_ID);
+  }
+
+  public static async getStoredData(): Promise<AuthenticatedUser | null> {
     await migrateIfNeeded();
     let userToken: string | null = '';
     let userId: string | null = '';

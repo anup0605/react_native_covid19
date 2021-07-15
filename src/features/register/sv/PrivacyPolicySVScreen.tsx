@@ -11,8 +11,8 @@ import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'PrivacyPolicyUK'>;
-  route: RouteProp<ScreenParamList, 'PrivacyPolicyUK'>;
+  navigation: StackNavigationProp<ScreenParamList, 'PrivacyPolicySV'>;
+  route: RouteProp<ScreenParamList, 'PrivacyPolicySV'>;
 };
 
 export default class PrivacyPolicySVScreen extends React.Component<PropsType, object> {
@@ -202,7 +202,7 @@ export default class PrivacyPolicySVScreen extends React.Component<PropsType, ob
         </ScrollView>
 
         {!this.viewOnly ? (
-          <BrandedButton onPress={() => this.props.navigation.goBack()} style={styles.button}>
+          <BrandedButton onPress={this.props.navigation.goBack} style={styles.button}>
             {i18n.t('legal.back')}
           </BrandedButton>
         ) : null}

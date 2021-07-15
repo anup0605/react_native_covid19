@@ -14,8 +14,7 @@ import { loadEstimatedCasesCartoMap } from '@covid/utils/files';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 const MAP_HEIGHT = 246;

@@ -1,8 +1,7 @@
 import { colors, fontStyles } from '@theme';
 import { Text } from 'native-base';
 import * as React from 'react';
-import { GestureResponderEvent, StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { FieldWrapper } from './Screen';
 

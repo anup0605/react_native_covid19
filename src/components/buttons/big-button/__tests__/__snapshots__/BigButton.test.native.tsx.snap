@@ -1,47 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button should match snapshot 1`] = `
-<RNGestureHandlerButton
-  collapsable={false}
-  onGestureEvent={[Function]}
-  onGestureHandlerEvent={[Function]}
-  onGestureHandlerStateChange={[Function]}
-  onHandlerStateChange={[Function]}
-  rippleColor={0}
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
   testID="button-test-ID"
 >
   <View
-    accessible={true}
     style={
       Object {
-        "opacity": 1,
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#565A5C",
+        "borderRadius": 28,
+        "borderWidth": 1,
+        "fontSize": 16,
+        "paddingHorizontal": 24,
+        "paddingVertical": 16,
       }
     }
   >
-    <View
+    <Text
       style={
         Object {
-          "backgroundColor": "#FFFFFF",
-          "borderColor": "#565A5C",
-          "borderRadius": 28,
-          "borderWidth": 1,
-          "fontSize": 16,
-          "paddingHorizontal": 24,
-          "paddingVertical": 16,
+          "color": "#565A5C",
+          "textAlign": "center",
         }
       }
     >
-      <Text
-        style={
-          Object {
-            "color": "#565A5C",
-            "textAlign": "center",
-          }
-        }
-      >
-        Button Text
-      </Text>
-    </View>
+      Button Text
+    </Text>
   </View>
-</RNGestureHandlerButton>
+</View>
 `;

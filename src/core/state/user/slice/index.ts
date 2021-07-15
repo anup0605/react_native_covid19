@@ -19,9 +19,7 @@ const userSlice = createSlice({
   name: 'User',
   reducers: {
     reset: () => {
-      return {
-        ...initialStateUser,
-      };
+      return initialStateUser;
     },
     setPatients: (state, action: PayloadAction<string[]>) => {
       state.patients = action.payload;
@@ -37,5 +35,6 @@ const userSlice = createSlice({
 
 export const { reset, setProfile, setUsername, setPatients } = userSlice.actions;
 export const selectUser = (state: RootState) => state.user;
+export const selectFirstPatientId = (state: RootState) => state.user.patients[0];
 
 export default userSlice.reducer;

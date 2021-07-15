@@ -1,7 +1,6 @@
 import { colors } from '@theme';
 import * as React from 'react';
-import { GestureResponderEvent, StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export type IButtonPress = ((event: GestureResponderEvent) => void) | undefined;
 
