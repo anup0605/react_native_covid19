@@ -4956,7 +4956,7 @@ axe-core@^4.0.2:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.2.0.tgz#6594db4ee62f78be79e32a7295d21b099b60668d"
   integrity sha512-1uIESzroqpaTzt9uX48HO+6gfnKu3RwvWdCcWSrX4csMInJfCo1yvKPNXCwXFRpJqRW25tiASb6No0YH57PXqg==
 
-axios-mock-adapter@1.19.0:
+axios-mock-adapter@^1.19.0:
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.19.0.tgz#9d72e321a6c5418e1eff067aa99761a86c5188a4"
   integrity sha512-D+0U4LNPr7WroiBDvWilzTMYPYTuZlbo6BI8YHZtj7wYQS8NkARlP9KBt8IWWHTQJ0q/8oZ0ClPBtKCCkx8cQg==
@@ -8674,7 +8674,7 @@ expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-expo-analytics-amplitude@^10.0.0:
+expo-analytics-amplitude@10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/expo-analytics-amplitude/-/expo-analytics-amplitude-10.0.0.tgz#c726ed61ab305615fea33c987f04ab1307c62236"
   integrity sha512-NdClV0sKihG/OhB31hKSv4gLNHWZPQTTWhj5ptnybhuRf5TLMUUhMIAB6FKsuD1Ug66sYuH+MlMF3wcxgqfGeA==
@@ -19468,7 +19468,7 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-url-parse@^1.4.3, url-parse@^1.4.4, url-parse@^1.4.7, url-parse@^1.5.1:
+url-parse@1.5.1, url-parse@^1.4.3, url-parse@^1.4.4, url-parse@^1.4.7:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.1.tgz#d5fa9890af8a5e1f274a2c98376510f6425f6e3b"
   integrity sha512-HOfCOUJt7iSYzEx/UqgtwKRMC6EU91NFhsCHMv9oM03VJcVo2Qrp8T8kI9D7amFf1cu+/3CEhgb3rF9zL7k85Q==
