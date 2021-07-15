@@ -110,7 +110,7 @@ const ConsentScreenUS: React.FC<PropsType> = ({ navigation, route, setAgreed }) 
             <ClickableText onPress={onTermsOfUsePress} testID="terms-of-use">
               {i18n.t('consent-normal-us.terms')}
             </ClickableText>{' '}
-            {i18n.t('consent-normal-us.and')}{' '}
+            {i18n.t('and')}{' '}
             <ClickableText onPress={onPrivacyPolicyPress} testID="privacy-policy3">
               {i18n.t('consent-normal-us.privacy-policy')}
             </ClickableText>

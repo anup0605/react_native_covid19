@@ -24,13 +24,21 @@ export default function ReconsentDiseaseSummaryScreen() {
   } else if (diseasesChosen.length === 1) {
     diseasesTitle = i18n.t(`disease-cards.${diseasesChosen[0]}.name`);
   } else if (diseasesChosen.length === 2) {
-    diseasesTitle = `${i18n.t(`disease-cards.${diseasesChosen[0]}.name`)} & ${i18n.t(
-      `disease-cards.${diseasesChosen[1]}.name`,
-    )}`;
+    diseasesTitle =
+      i18n.t(`disease-cards.${diseasesChosen[0]}.name`) +
+      ' ' +
+      i18n.t('and') +
+      ' ' +
+      i18n.t(`disease-cards.${diseasesChosen[1]}.name`);
   } else if (diseasesChosen.length > 2) {
-    diseasesTitle = `${i18n.t(`disease-cards.${diseasesChosen[0]}.name`)}, ${i18n.t(
-      `disease-cards.${diseasesChosen[1]}.name`,
-    )} & ${i18n.t('more').toLowerCase()}`;
+    diseasesTitle =
+      i18n.t(`disease-cards.${diseasesChosen[0]}.name`) +
+      ', ' +
+      i18n.t(`disease-cards.${diseasesChosen[1]}.name`) +
+      ' ' +
+      i18n.t('and') +
+      ' ' +
+      i18n.t('more').toLowerCase();
   }
 
   return (

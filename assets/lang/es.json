@@ -1,4 +1,5 @@
 {
+  "and": "y",
   "app-name": "COVID Study",
   "company-name": "ZOE",
   "continue": "Continue",
@@ -682,7 +683,6 @@
     "any-questions": "Cualquier pregunta que tenga puede enviarla a",
     "i-consent": "Doy mi consentimiento para el procesamiento de mis datos personales (incluidos, entre otros, los datos que proporcione en relación con mi salud) como se establece en este consentimiento y en la",
     "terms": "Términos de Uso",
-    "and": "y",
     "read-accepted": "Leí y acepto los "
   },
 
@@ -1732,7 +1732,7 @@
       "description": "Someone in the UK is diagnosed with cancer every 2 mins"
     },
     "research_consent_joint_and_bone_diseases": {
-      "name": "Joint and Bone Diseases",
+      "name": "Joint & Bone Diseases",
       "description": "Musculoskeletal conditions affect 1 in 4 UK adults"
     },
     "research_consent_mental_health": {
