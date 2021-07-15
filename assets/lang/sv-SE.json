@@ -1421,10 +1421,13 @@
     "modal": {
       "button-negative": "Skip for now",
       "button-positive": "View insights",
+      "button-positive-new": "View insights report",
       "description-general": "We're excited to share the insights we found into how habits and lifestyle affected mental health during the pandemic\n\nThank you for your participation!",
+      "description-new": "Thanks for being part of one of the world's largest study in Mental Health during the pandemic",
       "description-personal": "We've crunched the data and have prepared your very own personal insights into your unique habits during the pandemic for you to look at!\n\nThanks for your participation.",
       "tag": "INSIGHTS AVAILABLE",
-      "title": "Mental Health during the pandemic"
+      "title": "Mental Health during the pandemic",
+      "title-new": "Your Mental Health insights report is ready!"
     },
 
     "general": {
