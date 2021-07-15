@@ -40,6 +40,7 @@ export default function BasicPage({
   return (
     <SafeLayout style={style} testID={testID}>
       <ScrollView
+        alwaysBounceVertical={false}
         contentContainerStyle={styling.flexGrow}
         stickyHeaderIndices={hasStickyHeader ? [0] : undefined}
         style={withGutter && { paddingHorizontal: theme.grid.gutter }}

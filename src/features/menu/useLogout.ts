@@ -1,5 +1,5 @@
 import Analytics, { events } from '@covid/core/Analytics';
-import { reset as resetApp } from '@covid/core/state/app';
+import { appActions } from '@covid/core/state/app/slice';
 import { resetDiseasePreferences, resetFeedback } from '@covid/core/state/reconsent';
 import { reset as resetUser } from '@covid/core/state/user';
 import { userService } from '@covid/core/user/UserService';
@@ -16,7 +16,7 @@ export function useLogout(navigation: DrawerNavigationHelpers) {
       name: DrawerMenuItem.LOGOUT,
     });
     userService.logout();
-    dispatch(resetApp());
+    dispatch(appActions.reset());
     dispatch(resetUser());
     dispatch(resetDiseasePreferences());
     dispatch(resetFeedback());

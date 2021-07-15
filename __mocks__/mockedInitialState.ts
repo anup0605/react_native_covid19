@@ -1,7 +1,7 @@
 import { initialStateAssessment } from '@covid/core/assessment/state/reducers';
 import { initialStateContent } from '@covid/core/content/state/contentSlice';
 import { initialStateSchools } from '@covid/core/schools/Schools.slice';
-import { initialStateApp } from '@covid/core/state/app/slice';
+import { appInitialState } from '@covid/core/state/app/slice';
 import { initialStateDietStudy } from '@covid/core/state/diet-study/slice';
 import { initialStateMentalHealthChanges } from '@covid/core/state/mental-health/changes/slice';
 import { initialStateMentalHealthFrequency } from '@covid/core/state/mental-health/frequency/slice';
@@ -16,7 +16,7 @@ import { initialStateUser } from '@covid/core/state/user/slice';
 import { initialStateVaccine } from '@covid/core/state/vaccines/slice';
 
 export const initialState = {
-  app: initialStateApp,
+  app: appInitialState,
   assessment: initialStateAssessment,
   content: initialStateContent,
   dietStudy: initialStateDietStudy,

@@ -6,7 +6,7 @@ import { ClickableText, Header3Text, HeaderText, RegularText } from '@covid/comp
 import { ValidationError } from '@covid/components/ValidationError';
 import YesNoField from '@covid/components/YesNoField';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { setLoggedVaccine } from '@covid/core/state';
+import { appActions } from '@covid/core/state/app/slice';
 import { Dose, VaccineBrands, VaccineRequest, VaccineTypes } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { ScreenParamList } from '@covid/features/ScreenParamList';
@@ -104,7 +104,7 @@ export function AboutYourVaccineScreen({ route, navigation }: IProps) {
 
   const submitVaccine = async (vaccine: Partial<VaccineRequest>) => {
     await vaccineService.saveVaccineResponse(assessmentData?.patientData.patientId, vaccine);
-    dispatch(setLoggedVaccine(true));
+    dispatch(appActions.setLoggedVaccine(true));
     coordinator.gotoNextScreen(route.name);
   };
 

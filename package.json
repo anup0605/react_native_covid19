@@ -3,7 +3,8 @@
   "version": "2.5.0",
   "private": true,
   "resolutions": {
-    "browserslist": ">=4.16.5"
+    "browserslist": ">=4.16.5",
+    "react-devtools-core": "^4.13.4"
   },
   "scripts": {
     "android": "react-native run-android --variant=debug --appId=com.joinzoe.covid_zoe.qa",
@@ -58,7 +59,7 @@
     "@react-navigation/drawer": "5.11.4",
     "@react-navigation/native": "5.0.8",
     "@react-navigation/stack": "5.12.8",
-    "@reduxjs/toolkit": "1.5.0",
+    "@reduxjs/toolkit": "1.6.0",
     "@sentry/react-native": "2.1.0",
     "@types/i18n-js": "3.0.3",
     "@types/node": "13.13.6",

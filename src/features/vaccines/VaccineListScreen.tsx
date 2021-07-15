@@ -4,7 +4,7 @@ import { Loading } from '@covid/components/Loading';
 import Screen from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
-import { selectApp, setLoggedVaccine } from '@covid/core/state';
+import { appActions, appSelectors } from '@covid/core/state/app/slice';
 import { RootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import vaccinesSlice, { fetchVaccines } from '@covid/core/state/vaccines/slice';
@@ -34,7 +34,7 @@ export const VaccineListScreen: React.FC<Props> = ({ route, navigation }) => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [showVaccineWarning, setShowVaccineWarning] = React.useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const app = useSelector(selectApp);
+  const app = useSelector(appSelectors.selectApp);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -161,7 +161,7 @@ export const VaccineListScreen: React.FC<Props> = ({ route, navigation }) => {
           {
             action: () => {
               setShowVaccineWarning(false);
-              dispatch(setLoggedVaccine(false));
+              dispatch(appActions.setLoggedVaccine(false));
               openWebLink(
                 'https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/vaccination-mot-covid-19/information-for-dig-om-vaccinationen/efter-vaccinationen--fortsatt-folja-de-allmanna-raden/',
               );
@@ -173,7 +173,7 @@ export const VaccineListScreen: React.FC<Props> = ({ route, navigation }) => {
     {
       action: () => {
         setShowVaccineWarning(false);
-        dispatch(setLoggedVaccine(false));
+        dispatch(appActions.setLoggedVaccine(false));
       },
       label: i18n.t('navigation.dismiss'),
     },

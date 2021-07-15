@@ -19,5 +19,5 @@ export * from './status';
 export { default as Tag } from './Tag';
 export * from './Text';
 export * from './typography';
-export { default as ModalZoe } from './ModalZoe';
+export { default as Modal } from './Modal';
 export { default as DoctorProfile } from './DoctorProfile';

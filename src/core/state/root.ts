@@ -4,7 +4,8 @@ import { contentSlice, ContentState } from '@covid/core/content/state/contentSli
 import { schoolSlice, SchoolState } from '@covid/core/schools/Schools.slice';
 import { combineReducers } from 'redux';
 
-import { appSlice, IApp } from './app';
+import { appSlice } from './app/slice';
+import { IApp } from './app/types';
 import { dietStudySlice, IDietStudy } from './diet-study';
 import {
   IMentalHealthChanges,
@@ -46,7 +47,7 @@ export type RootState = {
 };
 
 export default combineReducers({
-  app: appSlice,
+  app: appSlice.reducer,
   assessment,
   content: contentSlice.reducer,
   dietStudy: dietStudySlice,
