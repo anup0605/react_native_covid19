@@ -1,10 +1,11 @@
 import { Text } from '@covid/components';
 import { selectDiseasesChosen } from '@covid/core/state/reconsent';
+import GIF from '@covid/features/reconsent/components/GIF';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import * as React from 'react';
-import { Image, useWindowDimensions } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 
 const handAnimation = require('@covid/features/reconsent/data/hand-animation.gif');
@@ -60,15 +61,14 @@ export default function ReconsentDiseaseSummaryScreen() {
           {diseasesTitle}
         </Text>
       )}
-      <Image
-        source={handAnimation}
-        style={{
-          alignSelf: 'center',
-          height: gifHeight,
-          marginTop: 'auto',
-          width: gifWidth,
-        }}
-      />
+      <GIF height={gifHeight} source={handAnimation} width={gifWidth} />
     </ReconsentScreen>
   );
 }
+
+const styles = StyleSheet.create({
+  gif: {
+    alignSelf: 'center',
+    marginTop: 'auto',
+  },
+});
