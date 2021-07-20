@@ -32,6 +32,7 @@ export interface IProps {
   textAlign?: TTextAlign | undefined;
   textDecorationLine?: TTtextDecorationLine | undefined;
   textClass?: TTextClass;
+  numberOfLines?: number;
 }
 
 export default function Text({
@@ -50,6 +51,7 @@ export default function Text({
   style = {},
   textAlign = undefined,
   textClass = 'default',
+  numberOfLines = undefined,
 }: IProps) {
   const theme: IThemeVars = useTheme();
   const fFamily = fontFamily || theme.text[textClass].fontFamily;
@@ -61,6 +63,7 @@ export default function Text({
   const tDecorationLine = textDecorationLine || theme.text[textClass].textDecorationLine;
   return (
     <SText
+      numberOfLines={numberOfLines}
       colorPalette={colorPalette}
       colorShade={colorShade}
       fontFamily={fFamily}

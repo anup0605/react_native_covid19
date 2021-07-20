@@ -4,7 +4,8 @@ import { contentSlice, ContentState } from '@covid/core/content/state/contentSli
 import { schoolSlice, SchoolState } from '@covid/core/schools/Schools.slice';
 import { combineReducers } from 'redux';
 
-import { appSlice, IApp } from './app';
+import { appSlice } from './app/slice';
+import { IApp } from './app/types';
 import { dietStudySlice, IDietStudy } from './diet-study';
 import {
   IMentalHealthChanges,
@@ -21,6 +22,7 @@ import {
   mentalHealthSupportSlice,
 } from './mental-health';
 import { IMentalHealthPlayback, mentalHealthPlaybackSlice } from './mental-health-playback';
+import { reconsentSlice, TReconsentState } from './reconsent';
 import { ISettings, settingsSlice } from './settings';
 import { IUser, userSlice } from './user';
 import { IVaccineState, vaccinesSlice } from './vaccines';
@@ -37,6 +39,7 @@ export type RootState = {
   mentalHealthPlayback: IMentalHealthPlayback;
   mentalHealthState: IMentalHealthState;
   mentalHealthSupport: IMentalHealthSupport;
+  reconsent: TReconsentState;
   school: SchoolState;
   settings: ISettings;
   user: IUser;
@@ -44,7 +47,7 @@ export type RootState = {
 };
 
 export default combineReducers({
-  app: appSlice,
+  app: appSlice.reducer,
   assessment,
   content: contentSlice.reducer,
   dietStudy: dietStudySlice,
@@ -55,6 +58,7 @@ export default combineReducers({
   mentalHealthPlayback: mentalHealthPlaybackSlice,
   mentalHealthState: mentalHealthStateSlice,
   mentalHealthSupport: mentalHealthSupportSlice,
+  reconsent: reconsentSlice,
   school: schoolSlice.reducer,
   settings: settingsSlice,
   user: userSlice,

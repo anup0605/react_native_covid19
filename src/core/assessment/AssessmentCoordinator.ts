@@ -3,19 +3,16 @@ import { ConfigType } from '@covid/core/Config';
 import { Coordinator, ScreenFlow, ScreenName } from '@covid/core/Coordinator';
 import {
   homeScreenName,
-  ILocalisationService,
   isSECountry,
   isUSCountry,
+  localisationService,
 } from '@covid/core/localisation/LocalisationService';
 import { PatientData } from '@covid/core/patient/PatientData';
 import { PatientStateType } from '@covid/core/patient/PatientState';
-import { CovidTest, CovidTestType } from '@covid/core/user/dto/CovidTestContracts';
+import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { AppCoordinator } from '@covid/features/AppCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
 import NavigatorService from '@covid/NavigatorService';
-import { lazyInject } from '@covid/provider/services';
-import { Services } from '@covid/provider/services.types';
 
 export type AssessmentData = {
   assessmentId?: string;
@@ -24,9 +21,6 @@ export type AssessmentData = {
 };
 
 export class AssessmentCoordinator extends Coordinator {
-  @lazyInject(Services.Localisation)
-  private readonly localisationService: ILocalisationService;
-
   navigation: NavigationType;
 
   assessmentService: IAssessmentService;
@@ -69,9 +63,6 @@ export class AssessmentCoordinator extends Coordinator {
       } else {
         NavigatorService.navigate('GeneralSymptoms', { assessmentData: this.assessmentData });
       }
-    },
-    NHSTestDetail: () => {
-      NavigatorService.goBack();
     },
     OtherSymptoms: () => {
       NavigatorService.navigate('WhereAreYou', { assessmentData: this.assessmentData });
@@ -136,8 +127,8 @@ export class AssessmentCoordinator extends Coordinator {
   };
 
   startAssessment = () => {
-    const currentPatient = this.patientData.patientState;
-    const config = this.localisationService.getConfig();
+    const currentPatient = this.patientData?.patientState;
+    const config = localisationService.getConfig();
     this.assessmentService.initAssessment(this.patientData.patientState.patientId);
 
     if (currentPatient.hasCompletedPatientDetails) {
@@ -157,9 +148,8 @@ export class AssessmentCoordinator extends Coordinator {
     this.goToThankYouScreen();
   };
 
-  goToAddEditTest = (testType: CovidTestType, covidTest?: CovidTest) => {
-    const screenName: keyof ScreenParamList = testType === CovidTestType.Generic ? 'CovidTestDetail' : 'NHSTestDetail';
-    NavigatorService.navigate(screenName, { assessmentData: this.assessmentData, test: covidTest });
+  goToAddEditTest = (covidTest?: CovidTest) => {
+    NavigatorService.navigate('CovidTestDetail', { assessmentData: this.assessmentData, test: covidTest });
   };
 
   goToVaccineLogSymptomsInfo = () => {
@@ -183,9 +173,9 @@ export class AssessmentCoordinator extends Coordinator {
     });
   };
 
-  static mustBackFillProfile(currentPatient: PatientStateType, config: ConfigType) {
+  static mustBackFillProfile(currentPatient: PatientStateType, config: ConfigType | undefined) {
     return (
-      ((config.showRaceQuestion || config.showEthnicityQuestion) && !currentPatient.hasRaceEthnicityAnswer) ||
+      ((config?.showRaceQuestion || config?.showEthnicityQuestion) && !currentPatient.hasRaceEthnicityAnswer) ||
       currentPatient.shouldAskExtendedDiabetes ||
       !currentPatient.hasBloodPressureAnswer ||
       !currentPatient.hasAtopyAnswers ||
@@ -247,5 +237,4 @@ export class AssessmentCoordinator extends Coordinator {
   }
 }
 
-const assessmentCoordinator = new AssessmentCoordinator();
-export default assessmentCoordinator;
+export const assessmentCoordinator = new AssessmentCoordinator();

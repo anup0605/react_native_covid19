@@ -1,8 +1,7 @@
 import { colors, fontStyles } from '@theme';
 import { Text } from 'native-base';
 import * as React from 'react';
-import { GestureResponderEvent, StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { FieldWrapper } from './Screen';
 
@@ -18,7 +17,7 @@ interface IProps {
 export function SelectorButton(props: IProps) {
   return (
     <FieldWrapper style={styles.fieldWrapper}>
-      <TouchableOpacity disabled={props.disable} onPress={props.onPress} testID={props.testID ?? 'buttonTestID'}>
+      <TouchableOpacity disabled={props.disable} onPress={props.onPress} testID={props.testID ?? 'button-test-ID'}>
         <View style={styles.bigButton}>
           <Text style={[fontStyles.bodyReg, styles.buttonText]}>{props.text}</Text>
         </View>

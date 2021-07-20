@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 });
 
 export default class TermsOfUseUSScreen extends React.Component<PropsType> {
-  viewOnly = this.props.route.params.viewOnly;
+  viewOnly = this.props.route.params?.viewOnly;
 
   render() {
     return (
@@ -226,7 +226,7 @@ export default class TermsOfUseUSScreen extends React.Component<PropsType> {
           </RegularText>
         </ScrollView>
 
-        <BrandedButton onPress={() => this.props.navigation.goBack()} style={styles.button}>
+        <BrandedButton onPress={this.props.navigation.goBack} style={styles.button}>
           {i18n.t('terms-of-use-us.back')}
         </BrandedButton>
       </View>

@@ -14,7 +14,7 @@ describe('branded-button tests', () => {
     const onPress = jest.fn();
     const { getByTestId } = render(<BrandedButton onPress={onPress}>This is a branded button</BrandedButton>);
     expect(onPress).toHaveBeenCalledTimes(0);
-    const button = getByTestId('buttonTestID');
+    const button = getByTestId('button-test-ID');
     fireEvent.press(button);
     expect(onPress).toHaveBeenCalledTimes(1);
   });
@@ -22,13 +22,13 @@ describe('branded-button tests', () => {
   it('Does not fire press events when disabled', () => {
     const onPress = jest.fn();
     const { getByTestId } = render(
-      <BrandedButton enable={false} onPress={onPress}>
+      <BrandedButton enabled={false} onPress={onPress}>
         This is a branded button
       </BrandedButton>,
     );
     expect(onPress).toHaveBeenCalledTimes(0);
     try {
-      fireEvent.press(getByTestId('buttonTestID'));
+      fireEvent.press(getByTestId('button-test-ID'));
     } catch (_) {}
     expect(onPress).toHaveBeenCalledTimes(0);
   });
@@ -37,10 +37,10 @@ describe('branded-button tests', () => {
     const onPress = jest.fn();
     const style = { background: 'red' };
     const { getByTestId } = render(
-      <BrandedButton enable={false} onPress={onPress} style={style}>
+      <BrandedButton enabled={false} onPress={onPress} style={style}>
         This is a branded button
       </BrandedButton>,
     );
-    expect(getByTestId('buttonTestID').props.style.background).toBe('red');
+    expect(getByTestId('button-test-ID').props.style.background).toBe('red');
   });
 });

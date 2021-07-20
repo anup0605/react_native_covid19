@@ -1,7 +1,6 @@
 import { colors } from '@theme';
 import * as React from 'react';
-import { GestureResponderEvent, StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export type IButtonPress = ((event: GestureResponderEvent) => void) | undefined;
 
@@ -29,7 +28,7 @@ const buttonStyles = StyleSheet.create({
 
 function BigButton(props: IProps) {
   return (
-    <TouchableOpacity onPress={props.onPress} testID="buttonTestID">
+    <TouchableOpacity onPress={props.onPress} testID="button-test-ID">
       <View style={buttonStyles.bigButton}>
         <Text style={buttonStyles.buttonText}>{props.children}</Text>
       </View>

@@ -1,4 +1,5 @@
 import { menuIcon } from '@assets';
+import { ScreenName } from '@covid/core/Coordinator';
 import { ScreenParamList } from '@covid/features/ScreenParamList';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '@theme';
@@ -6,8 +7,9 @@ import * as React from 'react';
 import { Image, ImageStyle, StyleProp, StyleSheet, TouchableOpacity } from 'react-native';
 
 type Props = {
-  navigation: DrawerNavigationProp<ScreenParamList, keyof ScreenParamList>;
+  navigation: DrawerNavigationProp<ScreenParamList, ScreenName>;
   style?: StyleProp<ImageStyle>;
+  testID?: string;
 };
 
 export const DrawerToggle: React.FC<Props> = (props) => (
@@ -18,6 +20,7 @@ export const DrawerToggle: React.FC<Props> = (props) => (
     onPress={() => {
       props.navigation.toggleDrawer();
     }}
+    testID={props.testID}
   >
     <Image source={menuIcon} style={[styles.menuIcon, props.style]} />
   </TouchableOpacity>

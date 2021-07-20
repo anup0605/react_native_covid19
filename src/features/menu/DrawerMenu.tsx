@@ -6,14 +6,13 @@ import { CaptionText } from '@covid/components/Text';
 import { selectUser } from '@covid/core/state/user';
 import { MenuItem } from '@covid/features/menu/DrawerMenuItem';
 import { LinksSection } from '@covid/features/menu/LinksSection';
-import { useLogout } from '@covid/features/menu/Logout.hooks';
+import { useLogout } from '@covid/features/menu/useLogout';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import Constants from '@covid/utils/Constants';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import * as React from 'react';
-import { Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 const isDevChannel = () => {
@@ -23,7 +22,7 @@ const isDevChannel = () => {
 export const DrawerMenu: React.FC<DrawerContentComponentProps> = (props) => {
   const user = useSelector(selectUser);
 
-  const { logout } = useLogout(props.navigation);
+  const logout = useLogout(props.navigation);
 
   return (
     <SafeAreaView style={styles.drawerRoot}>
@@ -34,7 +33,7 @@ export const DrawerMenu: React.FC<DrawerContentComponentProps> = (props) => {
             {Constants.manifest.revisionId ? Constants.manifest.revisionId : Constants.manifest.version}
             {isDevChannel() ? ` (DEV)` : false}
           </CaptionText>
-          <TouchableOpacity onPress={() => props.navigation.goBack()}>
+          <TouchableOpacity onPress={props.navigation.goBack}>
             <Image source={closeIcon} style={styles.closeIcon} />
           </TouchableOpacity>
         </View>
@@ -45,6 +44,7 @@ export const DrawerMenu: React.FC<DrawerContentComponentProps> = (props) => {
           onPress={() => {
             NavigatorService.navigate('SelectProfile', { assessmentFlow: false });
           }}
+          testID="menu-item-edit-profile"
         />
 
         <MenuItem
@@ -54,18 +54,13 @@ export const DrawerMenu: React.FC<DrawerContentComponentProps> = (props) => {
             const shareMessage = i18n.t('share-this-app.message');
             share(shareMessage);
           }}
+          testID="menu-item-share"
         />
 
         <LinksSection navigation={props.navigation} />
 
         <View style={{ marginBottom: 24, paddingBottom: 24 }}>
-          <MenuItem
-            label={i18n.t('logout')}
-            onPress={() => {
-              logout();
-            }}
-            smallLabel={user.username}
-          />
+          <MenuItem label={i18n.t('logout')} onPress={logout} smallLabel={user.username} testID="menu-item-logout" />
         </View>
       </ScrollView>
     </SafeAreaView>

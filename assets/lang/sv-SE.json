@@ -1,11 +1,19 @@
 {
+  "and": "and",
+  "app-name": "COVID Study",
+  "company-name": "ZOE",
   "continue": "Continue",
+  "less": "Less",
   "loading": "Loading",
+  "log-in": "Logga in",
+  "more": "More",
+  "no-change": "No change",
+  "skip": "Hoppa över",
+  "you": "You",
 
   "create-account": {
     "title": "Skapa nytt konto",
     "btn": "Skapa konto",
-    "login": "Logga in",
     "existing-account": "till befintligt konto.",
     "email": "Din e-postadress",
     "password": "Skapa lösenord",
@@ -488,7 +496,6 @@
     "dont-have-account": "Har du inget konto?",
     "create-account": "Skapa konto",
     "forgot-your-password": "Glömt lösenordet?",
-    "button": "Logga in",
     "user-not-found-exception": "Vi kunde inte identifiera dig. Försök igen.",
     "exception": "Det gick inte att logga in. Försök igen."
   },
@@ -509,8 +516,7 @@
 
   "welcome": {
     "title": "COVID Symptom Study",
-    "sign-in": "Logga in",
-    "take-a-minute": "Lägg 1 minut om dagen på att hjälpa oss bekämpa COVID-19.",
+    "take-a-minute": "Lägg 1 minut om dagen på att hjälpa oss bekämpa covid-19.",
     "disclaimer": "Med den här appen kan du hjälpa andra, men den ger dig inga hälsoråd. För hälsorådgivning ber vi dig besöka",
     "disclaimer-link": "1177.se",
     "tell-me-more": "Berätta mer",
@@ -625,7 +631,6 @@
   "next-question": "Nästa fråga",
   "completed": "Klar",
   "something-went-wrong": "Någonting gick fel, var god försök igen senare",
-  "choose-one-of-these-options": "Välj ett av alternativen",
   "prefer-not-to-say": "Föredrar att inte svara",
 
   "validation-error-text": "Vänligen bläddra upp och fyll i de saknade detaljerna eller korrigera ovanstående information",
@@ -831,7 +836,6 @@
       "any-questions": false,
       "i-consent": false,
       "terms": false,
-      "and": false,
       "read-accepted": false
     },
 
@@ -1038,46 +1042,6 @@
       "callout-text": false,
       "callout-link-text": false,
       "menu-item": false
-    },
-
-    "nhs-study-intro": {
-      "title": false,
-      "text-1": false,
-      "text-2": false,
-      "nhsID-placeholder": false,
-      "text-3": false,
-      "text-cancel": false,
-      "consent": false,
-      "next": false
-    },
-
-    "nhs-study-questions": {
-      "title": false,
-      "text-1": false,
-      "text-2": false,
-      "text-3": false,
-      "text-link": false
-    },
-
-    "nhs-test-detail": {
-      "title": false,
-      "date-label": false,
-      "date-required": false,
-      "mechanism-label": false,
-      "mechanism-required": false,
-      "mechanism-saliva": false,
-      "mechanism-swab": false,
-      "fridge-label": false,
-      "fridge-required": false,
-      "days-label": false,
-      "days-required": false,
-      "days-placeholder": false,
-      "cta-add": false
-    },
-
-    "covid-test-list": {
-      "nhs-text": false,
-      "nhs-text-link": false
     }
   },
 
@@ -1240,8 +1204,7 @@
         "title": "",
         "description": ""
       },
-      "cta": "",
-      "skip": ""
+      "cta": ""
     },
 
     "how-to": {
@@ -1254,8 +1217,7 @@
         "title": "",
         "description": ""
       },
-      "cta": "",
-      "skip": ""
+      "cta": ""
     },
 
     "join-school": {
@@ -1454,19 +1416,18 @@
     "specify-other": "Please specify"
   },
   "mental-health-playback": {
-    "less": "Less",
-    "more": "More",
-    "no-change": "No change",
     "results-ready": "Insights on COVID & Mental Health are ready",
-    "you": "You",
 
     "modal": {
       "button-negative": "Skip for now",
       "button-positive": "View insights",
+      "button-positive-new": "View insights report",
       "description-general": "We're excited to share the insights we found into how habits and lifestyle affected mental health during the pandemic\n\nThank you for your participation!",
+      "description-new": "Thanks for being part of one of the world's largest study in Mental Health during the pandemic",
       "description-personal": "We've crunched the data and have prepared your very own personal insights into your unique habits during the pandemic for you to look at!\n\nThanks for your participation.",
       "tag": "INSIGHTS AVAILABLE",
-      "title": "Mental Health during the pandemic"
+      "title": "Mental Health during the pandemic",
+      "title-new": "Your Mental Health insights report is ready!"
     },
 
     "general": {
@@ -1685,6 +1646,112 @@
     "title": "Din appversion behöver uppdateras!",
     "body": "Uppdatera din app för att fortsätta använda den. Vid uppdateringen får du tillgång till de senaste funktionerna.",
     "cta": "Uppdatera nu"
+  },
+
+  "reconsent": {
+    "disease-summary": {
+      "button": "Next",
+      "title": "We’ll invite you to answer additional questions occasionally and send you insights about",
+      "various-diseases": "various diseases"
+    },
+    "disease-preferences": {
+      "title": "What matters most to you?",
+      "subtitle": "Select as many as you like (optional)",
+      "show-more": "+ Show more",
+      "how-data-used": "Your data will help scientists research a wide range of disorders, not just the ones you’ve selected"
+    },
+    "feedback": {
+      "button": "Next",
+      "subtitle": "Select as many as you like (optional)",
+      "title": "We'd love to know why this didn't feel right for you"
+    },
+    "introduction": {
+      "button": "Next",
+      "description": "Help detect early symptoms and uncover the role of nutrition and lifestyle in disease risk.",
+      "title": "Help us fight other major health issues beyond COVID-19"
+    },
+    "reconsider": {
+      "description-1": "We'll continue to use your data to fight COVID-19 only.",
+      "description-2": "Please keep reporting your health as usual.",
+      "button-positive": "I'd like to reconsider",
+      "button-negative": "Close",
+      "title": "Thank you!"
+    },
+    "newsletter-signup": {
+      "button": "Close",
+      "card-button-no": "Opt-out of email updates",
+      "card-button-yes": "Yes, sign me up",
+      "card-description": "You can opt-out at any time, and will only receive science updates.",
+      "card-message": "Great, keep an eye on your inbox!",
+      "card-title": "Get ZOE's latest science direct to your inbox",
+      "description-1": "Your preferences have been saved and we’ll update you soon.",
+      "description-2": "You don’t need to do anything yet, just keep reporting as usual.",
+      "title": "Thank you!"
+    },
+    "request-consent": {
+      "title": "Are you in?",
+      "subtitle": "To fight other diseases, we need your consent to:",
+      "use-1-title": "1. Advance human health science",
+      "use-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
+      "use-2-title": "2. Help others improve human health ",
+      "use-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
+      "use-3-title": "3. Build health products",
+      "use-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
+      "learn-more": "Learn more in our Privacy Notice",
+      "consent-yes": "Yes, I'm in",
+      "consent-no": "No, I do not consent"
+    }
+  },
+
+  "disease-cards": {
+    "research_consent_dementia": {
+      "name": "Dementia",
+      "description": "1 in 3 people born in the UK this year will develop dementia in their lifetime"
+    },
+    "research_consent_cardiovascular_diseases": {
+      "name": "Cardiovascular Diseases",
+      "description": "Responsible for 1 in 4 deaths in the UK"
+    },
+    "research_consent_cancer": {
+      "name": "Cancer",
+      "description": "Someone in the UK is diagnosed with cancer every 2 mins"
+    },
+    "research_consent_joint_and_bone_diseases": {
+      "name": "Joint & Bone Diseases",
+      "description": "Musculoskeletal conditions affect 1 in 4 UK adults"
+    },
+    "research_consent_mental_health": {
+      "name": "Mental Health",
+      "description": "Up to 20% of people in the UK will experience depression"
+    },
+    "research_consent_nutrition_and_gut_health": {
+      "name": "Nutrition & Gut Health",
+      "description": "86% of the UK population have suffered from a gastrointestinal problem in the past year"
+    },
+    "research_consent_womens_health": {
+      "name": "Women's Health",
+      "description": "In the UK, a woman is diagnosed with breast cancer every 10 minutes"
+    },
+    "research_consent_vision_and_hearing_conditions": {
+      "name": "Vision & Hearing Conditions",
+      "description": "1 in 5 UK adults live with hearing loss"
+    },
+    "research_consent_autoimmune_conditions": {
+      "name": "Autoimmune Conditions",
+      "description": "Around 4 million people are living with an autoimmune condition in the UK"
+    },
+    "research_consent_skin_conditions": {
+      "name": "Skin Conditions",
+      "description": "Skin diseases kill approximately 4,000 people every year in the UK"
+    },
+    "research_consent_lung_diseases": {
+      "name": "Lung Diseases",
+      "description": "About 10,000 people in the UK are diagnosed with lung disease every week"
+    },
+    "research_consent_neurological_conditions": {
+      "name": "Neurological Conditions",
+      "description": "600,000 people are diagnosed with a brain disorder every year in the UK"
+    }
   },
 
   "required-field": "Obligatoriska fält"

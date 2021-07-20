@@ -10,8 +10,7 @@ import { openWebLink } from '@covid/utils/links';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { DeltaTag } from './DeltaTag';

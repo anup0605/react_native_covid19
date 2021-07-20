@@ -4,20 +4,17 @@ import { Text } from '@covid/components/typography';
 import { WebView } from '@covid/components/WebView';
 import Analytics, { events } from '@covid/core/Analytics';
 import { Coordinates, PersonalisedLocalData } from '@covid/core/AsyncStorageService';
-import { IPatientService } from '@covid/core/patient/PatientService';
+import { patientService } from '@covid/core/patient/PatientService';
 import { RootState } from '@covid/core/state/root';
 import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
-import appCoordinator from '@covid/features/AppCoordinator';
+import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { useInjection } from '@covid/provider/services.hooks';
-import { Services } from '@covid/provider/services.types';
 import { loadEstimatedCasesCartoMap } from '@covid/utils/files';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 const MAP_HEIGHT = 246;
@@ -133,7 +130,6 @@ const ZOOM_LEVEL_FURTHER = 6;
 
 export function EstimatedCasesMapCard({ isSharing }: IProps) {
   const { navigate } = useNavigation();
-  const patientService = useInjection<IPatientService>(Services.Patient);
 
   const localData = useSelector<RootState, PersonalisedLocalData | undefined>(
     (state) => state.content.personalizedLocalData,

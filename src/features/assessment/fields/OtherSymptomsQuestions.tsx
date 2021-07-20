@@ -24,7 +24,8 @@ export const OtherSymptomsQuestions: ISymptomQuestions<Props, OtherSymptomsData>
         bordered
         onChangeText={formikProps.handleChange('otherSymptoms')}
         placeholder={i18n.t('placeholder-optional-question')}
-        style={{ borderRadius: 8 }}
+        testID="input-other-symptoms"
+        textAreaStyle={{ borderRadius: 8 }}
         value={formikProps.values.otherSymptoms}
       />
     </FieldWrapper>

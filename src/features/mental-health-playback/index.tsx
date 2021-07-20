@@ -1,2 +1,2 @@
 export * from './screens';
-export { default as MentalHealthPlaybackModal } from './MentalHealthPlaybackModal';
+export { default as MentalHealthPlaybackModal } from './modals/MentalHealthPlaybackModal';

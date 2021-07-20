@@ -13,7 +13,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// The middleware only runs in development mode of the app so it's safe to ignore the warning.
+// This middleware only runs in development mode of the app so it's safe to ignore the warning.
 LogBox.ignoreLogs(['ImmutableStateInvariantMiddleware took']);
 
 const store = configureStore({

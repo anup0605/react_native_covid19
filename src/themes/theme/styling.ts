@@ -129,4 +129,7 @@ export default StyleSheet.create({
     backgroundColor: '#EEEEEF',
     borderRadius: 16,
   },
+  zIndex10: {
+    zIndex: 10,
+  },
 });

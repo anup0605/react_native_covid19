@@ -1,4 +1,5 @@
 import Analytics from '@covid/core/Analytics';
+import { ScreenName } from '@covid/core/Coordinator';
 import { ScreenParamList } from '@covid/features/ScreenParamList';
 import { CommonActions, NavigationContainerRef, NavigationState, Route, StackActions } from '@react-navigation/native';
 
@@ -9,9 +10,9 @@ function setContainer(navigationRef: NavigationContainerRef) {
   navigation = navigationRef;
 }
 
-function reset<RouteName extends keyof ScreenParamList>(routeList: Omit<Route<RouteName>, 'key'>[], index?: number) {
+function reset<RouteName extends ScreenName>(routeList: Omit<Route<RouteName>, 'key'>[], index?: number) {
   const value = index ?? 0;
-  navigation!.dispatch(
+  navigation?.dispatch(
     CommonActions.reset({
       index: value,
       routes: routeList,
@@ -19,20 +20,20 @@ function reset<RouteName extends keyof ScreenParamList>(routeList: Omit<Route<Ro
   );
 }
 
-function navigate<RouteName extends keyof ScreenParamList>(routeName: RouteName, params?: ScreenParamList[RouteName]) {
-  navigation!.navigate(routeName, params);
+function navigate<RouteName extends ScreenName>(routeName: RouteName, params?: ScreenParamList[RouteName]) {
+  navigation?.navigate(routeName, params);
 }
 
-function replace<RouteName extends keyof ScreenParamList>(routeName: RouteName, params?: ScreenParamList[RouteName]) {
-  navigation!.dispatch(StackActions.replace(routeName, params));
+function replace<RouteName extends ScreenName>(routeName: RouteName, params?: ScreenParamList[RouteName]) {
+  navigation?.dispatch(StackActions.replace(routeName, params));
 }
 
 function goBack() {
-  navigation!.goBack();
+  navigation?.goBack();
 }
 
 function handleStateChange() {
-  const state = navigation!.getRootState();
+  const state = navigation?.getRootState();
   if (!state) return;
 
   const previousRouteName = currentRouteName;
@@ -51,8 +52,6 @@ const getCurrentRouteName = (navigationState: NavigationState): string | null =>
 
   const route = navigationState.routes[navigationState.index];
   if (route.state) {
-    // Nested navigators
-    // @ts-ignore
     return getCurrentRouteName(route.state);
   }
   return route.name;

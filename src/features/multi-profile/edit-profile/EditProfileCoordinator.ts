@@ -1,24 +1,16 @@
 import { Coordinator, IUpdatePatient, ScreenFlow } from '@covid/core/Coordinator';
-import { homeScreenName, ILocalisationService, isGBCountry } from '@covid/core/localisation/LocalisationService';
+import { isGBCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import { PatientData } from '@covid/core/patient/PatientData';
-import { IPatientService } from '@covid/core/patient/PatientService';
+import { patientService } from '@covid/core/patient/PatientService';
 import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { IUserService } from '@covid/core/user/UserService';
-import schoolNetworkCoordinator from '@covid/features/school-network/SchoolNetworkCoordinator';
+import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import NavigatorService from '@covid/NavigatorService';
-import { lazyInject } from '@covid/provider/services';
-import { Services } from '@covid/provider/services.types';
 
 export class EditProfileCoordinator extends Coordinator implements IUpdatePatient {
   userService: IUserService;
 
   patientData: PatientData;
-
-  @lazyInject(Services.Patient)
-  private readonly patientService: IPatientService;
-
-  @lazyInject(Services.Localisation)
-  private readonly localisationService: ILocalisationService;
 
   screenFlow: Partial<ScreenFlow> = {
     AboutYou: () => {
@@ -27,31 +19,8 @@ export class EditProfileCoordinator extends Coordinator implements IUpdatePatien
     EditLocation: () => {
       NavigatorService.goBack();
     },
-    NHSDetails: () => {
-      NavigatorService.reset(
-        [
-          { name: homeScreenName(), params: {} },
-          {
-            name: 'SelectProfile',
-            params: {
-              assessmentFlow: false,
-              patientData: this.patientData,
-            },
-          },
-          { name: 'EditProfile', params: { patientData: this.patientData } },
-        ],
-        2,
-      );
-    },
-    NHSIntro: () => {
-      NavigatorService.navigate('NHSDetails', { editing: true });
-    },
     YourStudy: () => {
-      if (this.patientData.patientState.isNHSStudy) {
-        NavigatorService.navigate('NHSIntro', { editing: true });
-      } else {
-        NavigatorService.goBack();
-      }
+      NavigatorService.goBack();
     },
   };
 
@@ -61,7 +30,7 @@ export class EditProfileCoordinator extends Coordinator implements IUpdatePatien
   };
 
   updatePatientInfo(patientInfo: Partial<PatientInfosRequest>) {
-    return this.patientService.updatePatientInfo(this.patientData.patientId, patientInfo).then((info) => {
+    return patientService.updatePatientInfo(this.patientData.patientId, patientInfo).then((info) => {
       Object.assign(this.patientData.patientInfo, patientInfo);
       return info;
     });
@@ -94,14 +63,14 @@ export class EditProfileCoordinator extends Coordinator implements IUpdatePatien
   }
 
   shouldShowEditStudy() {
-    const currentPatient = this.patientData.patientState;
-    const config = this.localisationService.getConfig();
+    const currentPatient = this.patientData?.patientState;
+    const config = localisationService.getConfig();
 
-    return config.enableCohorts && currentPatient.shouldAskStudy;
+    return config?.enableCohorts && currentPatient.shouldAskStudy;
   }
 
   shouldShowSchoolNetwork() {
-    const currentPatient = this.patientData.patientState;
+    const currentPatient = this.patientData?.patientState;
     return isGBCountry() && currentPatient.isReportedByAnother && currentPatient.isMinor;
   }
 
@@ -110,5 +79,4 @@ export class EditProfileCoordinator extends Coordinator implements IUpdatePatien
   }
 }
 
-const editProfileCoordinator = new EditProfileCoordinator();
-export default editProfileCoordinator;
+export const editProfileCoordinator = new EditProfileCoordinator();

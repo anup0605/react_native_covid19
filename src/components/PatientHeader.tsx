@@ -8,15 +8,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Icon } from 'native-base';
 import * as React from 'react';
-import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Image, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 import { ClippedText, RegularText } from './Text';
 
 type BackButtonProps = {
   navigation: NavigationProp<ScreenParamList, ScreenName>;
-  style?: StyleProp<ViewStyle>;
   showCloseButton?: boolean;
+  style?: StyleProp<ViewStyle>;
 };
 
 export enum CallOutType {
@@ -26,13 +25,13 @@ export enum CallOutType {
 
 export const BackButton: React.FC<BackButtonProps> = ({ navigation, style: containerStyle, showCloseButton }) => {
   return showCloseButton ? (
-    <TouchableOpacity onPress={navigation.goBack} style={containerStyle}>
+    <TouchableOpacity onPress={navigation.goBack} style={containerStyle} testID="button-back-navigation">
       <View style={styles.iconButton}>
         <Icon name="cross" style={styles.icon} type="Entypo" />
       </View>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity onPress={navigation.goBack} style={containerStyle}>
+    <TouchableOpacity onPress={navigation.goBack} style={containerStyle} testID="button-back-navigation">
       <View style={styles.iconButton}>
         <Icon name="chevron-thin-left" style={styles.icon} type="Entypo" />
       </View>
