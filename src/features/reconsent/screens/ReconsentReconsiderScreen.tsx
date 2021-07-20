@@ -56,7 +56,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
   return (
     <ReconsentScreen hideBackButton noPadding testID="reconsent-reconsider-screen">
       <View style={styles.padding}>
-        <Text rhythm={24} textAlign="center" textClass="h2Light">
+        <Text rhythm={24} style={styles.marginTop} textAlign="center" textClass="h2Light">
           {i18n.t('reconsent.reconsider.title')}
         </Text>
         <Text rhythm={24} textAlign="center" textClass="h4Light">
@@ -110,6 +110,9 @@ const styles = StyleSheet.create({
   buttonPositive: {
     backgroundColor: colors.brand,
     marginBottom: 12,
+  },
+  marginTop: {
+    marginTop: 16,
   },
   padding: {
     padding: 16,

@@ -43,28 +43,30 @@ export default function ReconsentScreen(props: IProps) {
 
   return (
     <SafeLayout style={styles.safeLayout} testID={props.testID}>
-      <View style={styles.headerWrapper}>
-        {props.hideBackButton ? null : (
-          <TouchableOpacity hitSlop={hitSlop} onPress={navigation.goBack} testID="button-back-navigation">
-            <ChevronLeft />
-          </TouchableOpacity>
-        )}
-        {props.activeDot ? (
-          <View pointerEvents="none" style={styles.dotsWrapper}>
-            {dots.map((_, index) => (
-              <View
-                // eslint-disable-next-line react/no-array-index-key
-                key={`dot-${index}`}
-                style={[
-                  index > 0 && styles.marginLeft,
-                  index + 1 === props.activeDot ? styles.dotActive : styles.dotInactive,
-                ]}
-              />
-            ))}
-          </View>
-        ) : null}
-      </View>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.rootContainer}>
+      {!props.hideBackButton || props.activeDot ? (
+        <View style={styles.headerWrapper}>
+          {props.hideBackButton ? null : (
+            <TouchableOpacity hitSlop={hitSlop} onPress={navigation.goBack} testID="button-back-navigation">
+              <ChevronLeft />
+            </TouchableOpacity>
+          )}
+          {props.activeDot ? (
+            <View pointerEvents="none" style={styles.dotsWrapper}>
+              {dots.map((_, index) => (
+                <View
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`dot-${index}`}
+                  style={[
+                    index > 0 && styles.marginLeft,
+                    index + 1 === props.activeDot ? styles.dotActive : styles.dotInactive,
+                  ]}
+                />
+              ))}
+            </View>
+          ) : null}
+        </View>
+      ) : null}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.flex}>
         <ScrollView
           alwaysBounceVertical={false}
           contentContainerStyle={props.noPadding ? styles.contentContainer : styles.contentContainerPadding}
@@ -119,6 +121,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  flex: {
+    flex: 1,
+  },
   headerWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -126,10 +131,6 @@ const styles = StyleSheet.create({
   },
   marginLeft: {
     marginLeft: DOT_SIZE / 2,
-  },
-  rootContainer: {
-    flex: 1,
-    paddingBottom: 32,
   },
   row: {
     flexDirection: 'row',

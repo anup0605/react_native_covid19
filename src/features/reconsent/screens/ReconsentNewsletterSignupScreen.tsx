@@ -48,7 +48,7 @@ export default function ReconsentNewsletterSignupScreen() {
       buttonTitle={i18n.t('reconsent.newsletter-signup.button')}
       testID="reconsent-newsletter-signup-screen"
     >
-      <Text rhythm={24} textAlign="center" textClass="h2Light">
+      <Text rhythm={24} style={styles.marginTop} textAlign="center" textClass="h2Light">
         {i18n.t('reconsent.newsletter-signup.title')}
       </Text>
       <Text rhythm={24} textAlign="center" textClass="h4Light">
@@ -123,6 +123,9 @@ const styles = StyleSheet.create({
   },
   marginLeft: {
     marginLeft: 8,
+  },
+  marginTop: {
+    marginTop: 16,
   },
   messageWrapper: {
     alignItems: 'center',
