@@ -68,7 +68,7 @@ export class AssessmentCoordinator extends Coordinator {
       NavigatorService.navigate('WhereAreYou', { assessmentData: this.assessmentData });
     },
     Pingdemic: () => {
-      NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });
+      this.goToThankYouScreen();
     },
     ProfileBackDate: () => {
       this.startAssessment();
@@ -106,8 +106,6 @@ export class AssessmentCoordinator extends Coordinator {
       if (params.shouldAskDoseSymptoms && params.dose) {
         // For 7 days after a dose, they'll have to log VaccineDoseSymptoms (shouldAskDoseSymptoms = True)
         NavigatorService.navigate('VaccineDoseSymptoms', { assessmentData: this.assessmentData, dose: params.dose });
-      } else if (this.assessmentData?.patientData?.patientInfo?.should_ask_pingdemic_questions) {
-        NavigatorService.navigate('Pingdemic', { assessmentData: this.assessmentData });
       } else {
         NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });
       }
@@ -150,7 +148,11 @@ export class AssessmentCoordinator extends Coordinator {
   };
 
   gotoEndAssessment = async () => {
-    this.goToThankYouScreen();
+    if (this.assessmentData?.patientData?.patientInfo?.should_ask_pingdemic_questions) {
+      NavigatorService.navigate('Pingdemic', { assessmentData: this.assessmentData });
+    } else {
+      this.goToThankYouScreen();
+    }
   };
 
   goToAddEditTest = (covidTest?: CovidTest) => {

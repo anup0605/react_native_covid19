@@ -48,9 +48,7 @@ export const HowYouFeelScreen: React.FC<Props> = ({ route, navigation }) => {
     assessmentCoordinator.assessmentData?.patientData?.patientId === currentProfileVaccines[0].patient;
 
   const handlePress = async (healthy: boolean) => {
-    if (isSubmitting) {
-      return;
-    }
+    if (isSubmitting) return;
     setIsSubmitting(true);
 
     const status = healthy ? 'healthy' : 'not_healthy';
