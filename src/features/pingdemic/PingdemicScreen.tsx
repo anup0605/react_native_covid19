@@ -2,7 +2,7 @@ import { BrandedButton } from '@covid/components';
 import { FormWrapper } from '@covid/components/Forms';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import Screen, { Header } from '@covid/components/Screen';
-import { ErrorText, HeaderText, RegularText } from '@covid/components/Text';
+import { ErrorText, HeaderText, RegularText, SecondaryText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
@@ -163,7 +163,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
         </Header>
 
         <View style={{ paddingHorizontal: 16 }}>
-          <RegularText>{`${i18n.t('pingdemic.body')} `}</RegularText>
+          <SecondaryText style={{ marginBottom: 32}}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
 
           <Formik
             validateOnChange
@@ -217,6 +217,6 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   marginTop: {
-    marginTop: 16,
+    marginTop: 64,
   },
 });
