@@ -67,6 +67,9 @@ export type ScreenParamList = {
   GutStomachSymptoms: { assessmentData: AssessmentData };
   OtherSymptoms: { assessmentData: AssessmentData };
 
+  // Pingdemic
+  Pingdemic: { assessmentData: AssessmentData };
+
   // Vaccines
   VaccineDoseSymptoms: { assessmentData: AssessmentData; dose: string };
   VaccineList: { assessmentData: AssessmentData };

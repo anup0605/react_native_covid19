@@ -63,7 +63,6 @@ export default function Text({
   const tDecorationLine = textDecorationLine || theme.text[textClass].textDecorationLine;
   return (
     <SText
-      numberOfLines={numberOfLines}
       colorPalette={colorPalette}
       colorShade={colorShade}
       fontFamily={fFamily}
@@ -72,6 +71,7 @@ export default function Text({
       inverted={inverted}
       letterSpacing={lSpacing}
       lineHeight={lHeight}
+      numberOfLines={numberOfLines}
       onPress={onPress}
       rhythm={rhythm}
       style={style}

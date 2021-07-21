@@ -259,6 +259,9 @@ export type PatientInfosRequest = {
   vaccine_status: VaccineStatus;
   should_ask_long_covid_questions: boolean;
 
+  // Pingdemic
+  should_ask_pingdemic_questions: boolean;
+
   // Reconsent
   research_consent_dementia: boolean;
   research_consent_cardiovascular_diseases: boolean;
@@ -328,6 +331,7 @@ export type StartupInfo = {
   show_timeline: boolean;
   show_trendline: boolean;
   show_research_consent: boolean;
+  show_pingdemic: boolean;
   users_count: number;
   local_data: {
     app_users: number;

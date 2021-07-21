@@ -1,0 +1,1 @@
+export { PingdemicScreen } from './PingdemicScreen';
