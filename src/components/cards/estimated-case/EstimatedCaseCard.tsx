@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
 
   divider: {
     backgroundColor: colors.backgroundFour,
-    width: 1,
     marginHorizontal: 16,
+    width: 1,
   },
 
   metric: {

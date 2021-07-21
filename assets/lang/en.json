@@ -325,7 +325,7 @@
     "question-time-test-taken": "What time did you take the test?",
     "question-pick-a-time": "Pick a time",
     "question-time-test-taken-error": "Please enter the time of your appointment",
-    "question-date-test-occurred-guess": "Between which two dates do you think you had your test?",
+    "question-date-approximate": "Approximate date range",
 
     "required-date": "Please indicate the date this test occurred",
     "required-dates": "Please indicate between which two dates this test occurred",
@@ -437,6 +437,29 @@
     "update-location": "Update Location",
     "vaccine-reporting-message": "Please continue to provide daily health reports following your COVID-19 vaccination and log any general symptoms you might experience.",
     "vaccine-reporting-link": "Why is that important?"
+  },
+
+  "pingdemic": {
+    "title": "Understanding COVID risk when self-isolating",
+    "body": "We're investigating the COVID risk profile of people contacted by the NHS COVID-19 App to self-isolate compared to those who have not.",
+    "q1": "In the last month, were you asked by the NHS COVID-19 app to self-isolate?",
+    "q1-yes": "Yes",
+    "q1-no": "No",
+    "q1-prefer-not-to-say": "Prefer not to say",
+    "yes": "Yes",
+    "no": "No",
+    "prefer-not-to-say": "Prefer not to say",
+    "dates": "What date were you asked to start self-isolating?",
+    "approx": "Approximate date range",
+    "no-app": "Do you have the NHS COVID-19 app?",
+    "no-app-yes": "Yes",
+    "no-app-never-had": "No, I never had it",
+    "no-app-used-to-have": "No, I used to have it",
+    "no-app-prefer-not-to-say": "Prefer not to say",
+    "active-bluetooth": "Is the app active and is your Bluetooth on?",
+    "active-yes": "Yes",
+    "active-no": "No",
+    "active-not-sure": "I’m not sure"
   },
 
   "long-covid": {

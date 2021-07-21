@@ -6,11 +6,9 @@ import { SelectorButton } from '@covid/components/SelectorButton';
 import { HeaderText, RegularBoldText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { RootState } from '@covid/core/state/root';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
-import NavigatorService from '@covid/NavigatorService';
 import { assessmentService } from '@covid/services';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -32,9 +30,6 @@ export const HowYouFeelScreen: React.FC<Props> = ({ route, navigation }) => {
   const currentProfileVaccines = useSelector<RootState, VaccineRequest[]>((state) => state.vaccines.vaccines);
   const isFocused = useIsFocused();
 
-  // Startup info is currently used to toggle long covid - this is per user account and not per profile
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
-
   React.useEffect(() => {
     const patientInfo = assessmentCoordinator.assessmentData?.patientData?.patientInfo;
     const { getName } = require('country-list');
@@ -53,18 +48,9 @@ export const HowYouFeelScreen: React.FC<Props> = ({ route, navigation }) => {
     assessmentCoordinator.assessmentData?.patientData?.patientId === currentProfileVaccines[0].patient;
 
   const handlePress = async (healthy: boolean) => {
-    if (isSubmitting) {
-      return;
-    }
+    if (isSubmitting) return;
     setIsSubmitting(true);
-    if (
-      startupInfo?.show_long_covid &&
-      healthy &&
-      assessmentCoordinator.assessmentData?.patientData?.patientInfo?.should_ask_long_covid_questions
-    ) {
-      NavigatorService.navigate('LongCovidStart', { patientData: assessmentCoordinator.assessmentData?.patientData });
-      return;
-    }
+
     const status = healthy ? 'healthy' : 'not_healthy';
     await updateAssessment(status, healthy);
     assessmentCoordinator.gotoNextScreen(route.name, healthy);

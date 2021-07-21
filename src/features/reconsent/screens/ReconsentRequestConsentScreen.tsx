@@ -133,6 +133,7 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
 
 const styles = StyleSheet.create({
   buttonNo: {
+    marginBottom: grid.l,
     marginTop: grid.xxxl,
     paddingHorizontal: grid.xs,
   },

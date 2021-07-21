@@ -61,7 +61,7 @@ export default function ReconsentDiseaseSummaryScreen() {
           {diseasesTitle}
         </Text>
       )}
-      <GIF height={gifHeight} source={handAnimation} width={gifWidth} />
+      <GIF height={gifHeight} source={handAnimation} style={styles.gif} width={gifWidth} />
     </ReconsentScreen>
   );
 }

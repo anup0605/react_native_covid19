@@ -24,7 +24,7 @@ interface IProps extends ITest {
   navigation: StackNavigationProp<ScreenParamList, 'Welcome'>;
 }
 
-type Item = {
+type tItem = {
   label: string;
   value: CountryCode;
 };
@@ -68,7 +68,7 @@ export default React.memo(function CountryIpModal({ navigation, isModalVisible, 
     [closeModal, setCountrySelected, selectCountry],
   );
 
-  const items: Item[] = [
+  const items: tItem[] = [
     { label: i18n.t('united-states'), value: CountryCode.US },
     { label: i18n.t('united-kingdom'), value: CountryCode.GB },
     { label: i18n.t('sweden'), value: CountryCode.SV },

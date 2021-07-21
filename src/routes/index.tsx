@@ -59,6 +59,7 @@ export default function MainNavigator() {
       <Stack.Screen component={screens.NursesConsentUSScreen} name="NursesConsentUS" options={simpleHeader} />
       <Stack.Screen component={screens.OptionalInfoScreen} name="OptionalInfo" options={noHeader} />
       <Stack.Screen component={screens.OtherSymptomsScreen} name="OtherSymptoms" options={noHeader} />
+      <Stack.Screen component={screens.PingdemicScreen} name="Pingdemic" options={noHeader} />
       <Stack.Screen component={screens.PreviousExposureScreen} name="PreviousExposure" options={noHeader} />
       <Stack.Screen
         component={screens.PrivacyPolicySVScreen}

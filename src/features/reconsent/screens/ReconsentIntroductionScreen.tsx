@@ -19,7 +19,8 @@ export default function ReconsentIntroductionScreen() {
         inverted
         colorPalette="actionPrimary"
         colorShade="main"
-        style={{ alignSelf: 'center' }}
+        style={styles.marginTop}
+        textAlign="center"
         textClass="h5Medium"
       >
         {i18n.t('company-name')}{' '}
@@ -37,7 +38,7 @@ export default function ReconsentIntroductionScreen() {
         inverted
         colorPalette="uiDark"
         colorShade="darker"
-        style={styles.description}
+        style={styles.marginVertical}
         textAlign="center"
         textClass="h4Light"
       >
@@ -48,12 +49,15 @@ export default function ReconsentIntroductionScreen() {
 }
 
 const styles = StyleSheet.create({
-  description: {
-    marginBottom: 32,
-    marginTop: 32,
-  },
   illustration: {
     alignSelf: 'center',
     marginTop: 12,
+  },
+  marginTop: {
+    marginTop: 32,
+  },
+  marginVertical: {
+    marginBottom: 32,
+    marginTop: 32,
   },
 });
