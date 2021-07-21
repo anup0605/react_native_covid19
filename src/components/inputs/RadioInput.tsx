@@ -73,7 +73,7 @@ const itemStyle: ViewStyle = {
 const styles = StyleSheet.create({
   firstItem: {
     ...itemStyle,
-    paddingBottom: 6,
+    paddingBottom: 12,
   },
   image: {
     height: 24,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   lastItem: {
     ...itemStyle,
-    paddingTop: 6,
+    paddingTop: 12,
   },
   marginBottom: {
     marginBottom: 12,
