@@ -181,8 +181,6 @@ commands:
       - run: npm i -g detox-cli
       - run: brew tap wix/brew
       - run: brew install applesimutils
-      - run: applesimutils --list
-
 
 ###
 ### Define jobs
