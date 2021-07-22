@@ -275,7 +275,7 @@
 
     "question-knows-date-of-test": "Vet du vilket datum du testades?",
     "question-date-test-occurred": "När testades du?",
-    "question-date-approximate": "Mellan vilka två datum tror du att testet utfördes?",
+    "question-date-approximate": "Ungefärligt datumintervall",
 
     "required-date": "Ange datum när testet utfördes",
     "required-dates": "Ange mellan vilka två datum testet utfördes",

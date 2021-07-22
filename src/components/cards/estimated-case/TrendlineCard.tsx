@@ -48,7 +48,7 @@ export function TrendlineCard({ ctaOnPress = () => null, isSharing = false }: IP
             color={colors.linkBlue}
             iconName="info"
             linkText={i18n.t('explore-trend-line.trendline-change')}
-            onPress={() => openWebLink('https://covid.joinzoe.com/post/covid-rates-trends-changing-near-you')}
+            onPress={() => openWebLink('https://covid.joinzoe.com/post/covid-estimates-updated-vaccine')}
           />
         </View>
 
