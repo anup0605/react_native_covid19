@@ -180,6 +180,7 @@ commands:
       - run: brew install watchman
       - run: npm i -g detox-cli
       - run: brew tap wix/brew
+      - run: applesimutils --list
       - run: brew install applesimutils
 
 ###
