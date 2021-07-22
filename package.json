@@ -10,6 +10,7 @@
     "android": "react-native run-android --variant=debug --appId=com.joinzoe.covid_zoe.qa",
     "android:devices": " ~/Library/Android/sdk/emulator/emulator -list-avds",
     "android:local": "ENVFILE=.env.local yarn android",
+    "android:menu": "adb shell input keyevent 82",
     "android:staging": "ENVFILE=.env.staging yarn android",
     "build-fonts": "./.circleci/pull_private_assets.sh",
     "bump:major": "npm version major --no-git-tag-version && bundle exec fastlane bump",

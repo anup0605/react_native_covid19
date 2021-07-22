@@ -93,7 +93,6 @@ export function DashboardScreen({ navigation, route }: IProps) {
   }, [navigation]);
 
   React.useEffect(() => {
-    dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
     let isMounted = true;
     if (!app.dashboardHasBeenViewed) {
       dispatch(appActions.setDashboardHasBeenViewed(true));

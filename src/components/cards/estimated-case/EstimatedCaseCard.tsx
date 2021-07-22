@@ -44,15 +44,19 @@ export function EstimatedCaseCard({
         </View>
       </View>
       <View style={styles.metricRow}>
-        <View style={styles.metricBox}>
-          <Text textClass="h1Regular">{leftMetric}</Text>
+        <View>
+          <Text numberOfLines={1} textClass="h1Regular">
+            {leftMetric}
+          </Text>
           <Text inverted colorPalette="uiDark" colorShade="dark" textClass="pSmallLight">
             {leftMetricLabel}
           </Text>
         </View>
         <View style={styles.divider} />
-        <View style={[styles.metricBox, { paddingHorizontal: 16 }]}>
-          <Text textClass="h1Regular">{rightMetric}</Text>
+        <View>
+          <Text numberOfLines={1} textClass="h1Regular">
+            {rightMetric}
+          </Text>
           <Text inverted colorPalette="uiDark" colorShade="dark" textClass="pSmallLight">
             {rightMetricLabel}
           </Text>
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
 
   divider: {
     backgroundColor: colors.backgroundFour,
+    marginHorizontal: 16,
     width: 1,
   },
 
@@ -96,21 +101,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
 
-  metricBox: {
-    width: '50%',
-  },
-
-  metricContainer: {
-    alignItems: 'center',
-  },
-
   metricLabel: {
     color: colors.secondary,
   },
 
   metricRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginBottom: 32,
     marginVertical: 24,
     width: '100%',

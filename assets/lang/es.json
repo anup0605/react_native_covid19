@@ -322,8 +322,7 @@
 
     "question-knows-date-of-test": "¿Sabe la fecha de su examen?",
     "question-date-test-occurred": "¿Cuándo fue su examen?",
-    "question-date-test-occurred-guess": "¿Entre qué fechas cree que se realizó el examen?",
-
+    "question-date-approximate": "¿Entre qué fechas cree que se realizó el examen?",
     "required-date": "Indique la fecha de este examen",
     "required-dates": "Indique las fechas entre las que ocurrió este examen",
     "required-mechanism": "Indique cómo se realizó el examen",
@@ -435,6 +434,30 @@
     "vaccine-reporting-message": "",
     "vaccine-reporting-link": ""
   },
+
+  "pingdemic": {
+    "title": "",
+    "body": "",
+    "q1": "",
+    "q1-yes": "",
+    "q1-no": "",
+    "q1-prefer-not-to-say": "",
+    "yes": "",
+    "no": "",
+    "prefer-not-to-say": "",
+    "dates": "",
+    "approx": "",
+    "no-app": "",
+    "no-app-yes": "",
+    "no-app-never-had": "",
+    "no-app-used-to-have": "",
+    "no-app-prefer-not-to-say": "",
+    "active-bluetooth": "",
+    "active-yes": "",
+    "active-no": "",
+    "active-not-sure": ""
+  },
+
 
   "long-covid": {
     "apology": "We kindly ask anyone who already completed this to do so once more as we made a mistake in our previous version - thank you!",
@@ -1438,10 +1461,13 @@
     "modal": {
       "button-negative": "Skip for now",
       "button-positive": "View insights",
+      "button-positive-new": "View insights report",
       "description-general": "We're excited to share the insights we found into how habits and lifestyle affected mental health during the pandemic\n\nThank you for your participation!",
+      "description-new": "Thanks for being part of one of the world's largest study in Mental Health during the pandemic",
       "description-personal": "We've crunched the data and have prepared your very own personal insights into your unique habits during the pandemic for you to look at!\n\nThanks for your participation.",
       "tag": "INSIGHTS AVAILABLE",
-      "title": "Mental Health during the pandemic"
+      "title": "Mental Health during the pandemic",
+      "title-new": "Your Mental Health insights report is ready!"
     },
 
     "general": {

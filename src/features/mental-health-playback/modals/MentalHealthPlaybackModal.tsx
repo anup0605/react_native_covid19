@@ -43,6 +43,13 @@ export default function MentalHealthPlaybackModal(props: IProps) {
     props.onRequestClose();
   }
 
+  let description = i18n.t('mental-health-playback.modal.description-general');
+  if (testGroupId === 'GROUP_C' || testGroupId === 'GROUP_D') {
+    description = i18n.t('mental-health-playback.modal.description-new');
+  } else if (startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_a') {
+    description = i18n.t('mental-health-playback.modal.description-personal');
+  }
+
   return (
     <Modal onRequestClose={props.onRequestClose} visible={props.visible}>
       <Tag
@@ -58,7 +65,9 @@ export default function MentalHealthPlaybackModal(props: IProps) {
         textAlign="center"
         textClass="h3Regular"
       >
-        {i18n.t('mental-health-playback.modal.title')}
+        {testGroupId === 'GROUP_C' || testGroupId === 'GROUP_D'
+          ? i18n.t('mental-health-playback.modal.title-new')
+          : i18n.t('mental-health-playback.modal.title')}
       </Text>
       <DoctorProfile
         image={getMentalHealthStudyDoctorImage()}
@@ -68,12 +77,12 @@ export default function MentalHealthPlaybackModal(props: IProps) {
       />
       <QuoteMarks />
       <Text inverted colorPalette="uiDark" colorShade="dark" style={styles.description} textClass="pLight">
-        {startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_b'
-          ? i18n.t('mental-health-playback.modal.description-general')
-          : i18n.t('mental-health-playback.modal.description-personal')}
+        {description}
       </Text>
       <BrandedButton onPress={handlePositive} style={styles.buttonPositive}>
-        {i18n.t('mental-health-playback.modal.button-positive')}
+        {testGroupId === 'GROUP_C' || testGroupId === 'GROUP_D'
+          ? i18n.t('mental-health-playback.modal.button-positive-new')
+          : i18n.t('mental-health-playback.modal.button-positive')}
       </BrandedButton>
       {testGroupId !== 'GROUP_E' && testGroupId !== 'GROUP_F' ? (
         <BrandedButton onPress={handleNegative} style={styles.buttonNegative}>

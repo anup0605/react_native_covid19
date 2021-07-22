@@ -110,14 +110,14 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
   handleAction(formData: ICovidTestData) {
     if (!this.state.submitting) {
       this.setState({ submitting: true });
-      if (formData.knowsDateOfTest === 'yes' && !formData.dateTakenSpecific) {
+      if (!formData.useApproximateDate && !formData.dateTakenSpecific) {
         this.setState({ errorMessage: i18n.t('covid-test.required-date') });
         this.setState({ submitting: false });
         return;
       }
 
       if (
-        formData.knowsDateOfTest === 'no' &&
+        formData.useApproximateDate &&
         (formData.dateTakenBetweenStart === undefined || formData.dateTakenBetweenEnd === undefined)
       ) {
         this.setState({ errorMessage: i18n.t('covid-test.required-dates') });

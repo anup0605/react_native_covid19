@@ -3,6 +3,7 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { patientService } from '@covid/core/patient/PatientService';
 import { resetFeedback, selectFeedbackData } from '@covid/core/state/reconsent';
 import { RootState } from '@covid/core/state/root';
+import VimeoVideo from '@covid/features/reconsent//components/VimeoVideo';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import { ScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
@@ -11,8 +12,7 @@ import { generalApiClient } from '@covid/services';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme/colors';
 import * as React from 'react';
-import { ActivityIndicator, StyleSheet, useWindowDimensions, View } from 'react-native';
-import WebView from 'react-native-webview';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface IProps {
@@ -21,24 +21,6 @@ interface IProps {
 
 const VIMEO_ID = '571660625';
 const VIDEO_RATIO = 640 / 480;
-
-const source = {
-  html: `
-  <html style="padding: 0; margin: 0; background-color: transparent;">
-    <body style="padding: 0; margin: 0; background-color: transparent;">
-      <iframe
-        allow="autoplay; picture-in-picture"
-        frameborder="0"
-        height="100%"
-        src="https://player.vimeo.com/video/${VIMEO_ID}?autoplay=1&loop=0"
-        style="background-color: transparent;"
-        width="100%"
-      ></iframe>
-      <script src="https://player.vimeo.com/api/player.js"></script>
-    </body>
-  </html>
-  `,
-};
 
 export default function ReconsentReconsiderScreen(props: IProps) {
   const windowDimensions = useWindowDimensions();
@@ -74,7 +56,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
   return (
     <ReconsentScreen hideBackButton noPadding testID="reconsent-reconsider-screen">
       <View style={styles.padding}>
-        <Text rhythm={24} textAlign="center" textClass="h2Light">
+        <Text rhythm={24} style={styles.marginTop} textAlign="center" textClass="h2Light">
           {i18n.t('reconsent.reconsider.title')}
         </Text>
         <Text rhythm={24} textAlign="center" textClass="h4Light">
@@ -85,29 +67,8 @@ export default function ReconsentReconsiderScreen(props: IProps) {
         </Text>
       </View>
       <View style={styles.videoWrapper}>
-        <View style={styles.activityIndicatorWrapper}>
-          <ActivityIndicator color={colors.brand} size="large" />
-        </View>
         {!hideVideo && videoHeight > 0 ? (
-          <WebView
-            allowsInlineMediaPlayback
-            automaticallyAdjustContentInsets
-            allowsFullscreenVideo={false}
-            containerStyle={{
-              backgroundColor: 'transparent',
-              flex: 0,
-              height: videoHeight,
-              width: videoWidth,
-            }}
-            scrollEnabled={false}
-            source={source}
-            style={{
-              backgroundColor: 'transparent',
-              flex: 0,
-              height: videoHeight,
-              width: videoWidth,
-            }}
-          />
+          <VimeoVideo autoplay showLoading height={videoHeight} vimeoId={VIMEO_ID} width={videoWidth} />
         ) : null}
       </View>
       <View style={styles.padding}>
@@ -149,6 +110,9 @@ const styles = StyleSheet.create({
   buttonPositive: {
     backgroundColor: colors.brand,
     marginBottom: 12,
+  },
+  marginTop: {
+    marginTop: 16,
   },
   padding: {
     padding: 16,
