@@ -23,7 +23,7 @@ interface IProps {
   formikProps: FormikProps<ICovidTestDateData>;
   test?: CovidTest;
   dateChangeCallback?: Function;
-  label?: string
+  label?: string;
 }
 
 export interface ICovidTestDateQuestion<P, Data> extends React.FC<P> {
@@ -54,14 +54,13 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
     if (!selectedDate) return;
     if (type === 'END_DATE') {
       formikProps.values.dateTakenBetweenEnd = convertToDate(selectedDate);
-      
     } else {
       formikProps.values.dateTakenBetweenStart = convertToDate(selectedDate);
       formikProps.values.dateTakenBetweenEnd = undefined;
     }
     if (props.dateChangeCallback) {
-        props.dateChangeCallback();
-      }
+      props.dateChangeCallback();
+    }
   }
 
   return (

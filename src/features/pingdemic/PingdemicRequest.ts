@@ -7,4 +7,5 @@ export type PingdemicRequest = {
   isolate_date_specific?: string;
   isolate_date_between_start?: string;
   isolate_date_between_end?: string;
+  other_text?: string;
 };

@@ -442,9 +442,10 @@
   "pingdemic": {
     "title": "Understanding COVID risk when self-isolating",
     "body": "We're investigating the COVID risk profile of people contacted by the NHS COVID-19 App to self-isolate compared to those who have not.",
-    "q1": "In the last month, were you asked by the NHS COVID-19 app to self-isolate?",
+    "q1": "In the last month, were you asked by the NHS COVID-19 app, the Protect Scotland app or the StopCOVID NI app to self-isolate?",
     "q1-yes": "Yes",
     "q1-no": "No",
+    "q1-other": "Other",
     "q1-prefer-not-to-say": "Prefer not to say",
     "yes": "Yes",
     "no": "No",
