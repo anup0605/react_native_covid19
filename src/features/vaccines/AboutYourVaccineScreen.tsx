@@ -1,8 +1,8 @@
 import QuestionCircle from '@assets/icons/QuestionCircle';
 import { BrandedButton } from '@covid/components';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
-import Screen, { Header } from '@covid/components/Screen';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { ClickableText, Header3Text, HeaderText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
@@ -126,7 +126,7 @@ export function AboutYourVaccineScreen({ route }: IProps) {
     );
   };
 
-  const promptDeleteVaccine = () => {
+  function promptDeleteVaccine() {
     Alert.alert(
       i18n.t('vaccines.vaccine-list.delete-vaccine-title'),
       i18n.t('vaccines.vaccine-list.delete-vaccine-text'),
@@ -148,38 +148,7 @@ export function AboutYourVaccineScreen({ route }: IProps) {
       ],
       { cancelable: false },
     );
-  };
-
-  const renderFirstDoseUI = (props: FormikProps<IVaccineDoseData>) => (
-    <>
-      <Header3Text style={styles.labelStyle}>{i18n.t('vaccines.your-vaccine.first-dose')}</Header3Text>
-      <VaccineDoseQuestion
-        firstDose
-        formikProps={props as FormikProps<IVaccineDoseData>}
-        testID="vaccine-first-dose-question"
-      />
-    </>
-  );
-
-  const renderSecondDoseUI = (props: FormikProps<IVaccineDoseData>) =>
-    vaccineOrFormHasSecondDose() ? (
-      <VaccineDoseQuestion
-        firstDose={false}
-        formikProps={props as FormikProps<IVaccineDoseData>}
-        testID="vaccine-second-dose-question"
-      />
-    ) : null;
-
-  const renderFindInfoLink = (
-    <TouchableOpacity onPress={() => assessmentCoordinator.goToVaccineFindInfo()} style={{ margin: 16 }}>
-      <View style={{ flexDirection: 'row' }}>
-        <View style={{ flex: 0.1 }}>
-          <QuestionCircle colorIcon={colors.linkBlue} />
-        </View>
-        <RegularText style={{ color: colors.linkBlue, flex: 0.9 }}>{i18n.t('vaccines.find-info.link')}</RegularText>
-      </View>
-    </TouchableOpacity>
-  );
+  }
 
   const dateHasBeenEdited = (formData: IAboutYourVaccineData) => {
     // This is quite verbose vs a one-line return for easier reading
@@ -215,19 +184,13 @@ export function AboutYourVaccineScreen({ route }: IProps) {
     };
   };
 
-  const renderDeleteButton = () =>
-    assessmentData?.vaccineData?.id ? (
-      <ClickableText onPress={() => promptDeleteVaccine()} style={styles.clickableText}>
-        {i18n.t('vaccines.your-vaccine.delete')}
-      </ClickableText>
-    ) : null;
-
   return (
-    <Screen profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
-      <Header>
-        <HeaderText>{i18n.t('vaccines.your-vaccine.title')}</HeaderText>
-      </Header>
-      {renderFindInfoLink}
+    <ScreenNew profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
+      <HeaderText>{i18n.t('vaccines.your-vaccine.title')}</HeaderText>
+      <TouchableOpacity onPress={assessmentCoordinator.goToVaccineFindInfo} style={styles.infoWrapper}>
+        <QuestionCircle colorIcon={colors.linkBlue} />
+        <RegularText style={styles.infoText}>{i18n.t('vaccines.find-info.link')}</RegularText>
+      </TouchableOpacity>
       <Formik
         validateOnChange
         validateOnMount
@@ -240,57 +203,92 @@ export function AboutYourVaccineScreen({ route }: IProps) {
       >
         {(props: FormikProps<IAboutYourVaccineData>) => {
           return (
-            <FormWrapper hasRequiredFields style={{ flex: 1 }}>
-              <View style={{ marginBottom: 32, marginHorizontal: 16 }}>
-                {renderFirstDoseUI(props)}
-                {props.values.firstBrand && props.values.firstBrand !== VaccineBrands.JOHNSON ? (
-                  <>
-                    <Header3Text style={{ marginBottom: 8, marginTop: 48 }}>
-                      {i18n.t('vaccines.your-vaccine.second-dose')}
-                    </Header3Text>
+            <Form hasRequiredFields style={styles.flex}>
+              <Header3Text style={styles.label}>{i18n.t('vaccines.your-vaccine.first-dose')}</Header3Text>
+              <VaccineDoseQuestion
+                firstDose
+                formikProps={props as FormikProps<IVaccineDoseData>}
+                testID="vaccine-first-dose-question"
+              />
+              {props.values.firstBrand && props.values.firstBrand !== VaccineBrands.JOHNSON ? (
+                <>
+                  <Header3Text style={styles.header}>{i18n.t('vaccines.your-vaccine.second-dose')}</Header3Text>
 
-                    <YesNoField
-                      required
-                      label={i18n.t('vaccines.your-vaccine.have-had-second')}
-                      onValueChange={(value: string) => {
-                        props.values.hasSecondDose = value === 'yes';
-                        if (value === 'no') {
-                          props.values.secondDoseDate = undefined;
-                        }
-                        setHasSecondDose(value);
-                        props.validateForm();
-                      }}
-                      selectedValue={vaccineOrFormHasSecondDose() ? 'yes' : 'no'}
+                  <YesNoField
+                    required
+                    label={i18n.t('vaccines.your-vaccine.have-had-second')}
+                    onValueChange={(value: string) => {
+                      props.values.hasSecondDose = value === 'yes';
+                      if (value === 'no') {
+                        props.values.secondDoseDate = undefined;
+                      }
+                      setHasSecondDose(value);
+                      props.validateForm();
+                    }}
+                    selectedValue={vaccineOrFormHasSecondDose() ? 'yes' : 'no'}
+                  />
+                  {vaccineOrFormHasSecondDose() ? (
+                    <VaccineDoseQuestion
+                      firstDose={false}
+                      formikProps={props as FormikProps<IVaccineDoseData>}
+                      testID="vaccine-second-dose-question"
                     />
-                    {renderSecondDoseUI(props)}
-                  </>
-                ) : null}
-              </View>
-
-              {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
-                <ValidationError error={i18n.t('validation-error-text')} style={{ marginBottom: 32 }} />
+                  ) : null}
+                </>
               ) : null}
 
-              <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
-                {i18n.t('vaccines.your-vaccine.confirm')}
-              </BrandedButton>
-              {renderDeleteButton()}
-            </FormWrapper>
+              <View style={styles.footerWrapper}>
+                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                  <ValidationError error={i18n.t('validation-error-text')} style={styles.marginBottom} />
+                ) : null}
+
+                <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
+                  {i18n.t('vaccines.your-vaccine.confirm')}
+                </BrandedButton>
+
+                {assessmentData?.vaccineData?.id ? (
+                  <TouchableOpacity onPress={promptDeleteVaccine}>
+                    <ClickableText style={styles.clickableText}>{i18n.t('vaccines.your-vaccine.delete')}</ClickableText>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+            </Form>
           );
         }}
       </Formik>
-    </Screen>
+    </ScreenNew>
   );
 }
 
 const styles = StyleSheet.create({
   clickableText: {
-    color: colors.purple,
-    marginBottom: 8,
-    marginTop: 24,
+    marginVertical: 32,
     textAlign: 'center',
   },
-  labelStyle: {
+  flex: {
+    flex: 1,
+  },
+  footerWrapper: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingTop: 32,
+  },
+  header: {
+    marginBottom: 32,
+    marginTop: 48,
+  },
+  infoText: {
+    color: colors.linkBlue,
+    marginLeft: 16,
+  },
+  infoWrapper: {
+    flexDirection: 'row',
+    marginVertical: 32,
+  },
+  label: {
     marginVertical: 16,
+  },
+  marginBottom: {
+    marginBottom: 16,
   },
 });

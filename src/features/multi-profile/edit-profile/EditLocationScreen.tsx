@@ -1,6 +1,6 @@
 import { BrandedButton } from '@covid/components';
 import DropdownField from '@covid/components/DropdownField';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import Screen, { Header } from '@covid/components/Screen';
@@ -132,7 +132,7 @@ export const EditLocationScreen: React.FC<RenderProps> = (props) => {
       >
         {(props) => {
           return (
-            <FormWrapper hasRequiredFields>
+            <Form hasRequiredFields>
               <View style={{ marginHorizontal: 16 }}>
                 <GenericTextField
                   required
@@ -187,7 +187,7 @@ export const EditLocationScreen: React.FC<RenderProps> = (props) => {
                   {i18n.t('edit-profile.done')}
                 </BrandedButton>
               </View>
-            </FormWrapper>
+            </Form>
           );
         }}
       </Formik>

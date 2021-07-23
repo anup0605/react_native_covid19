@@ -1,5 +1,5 @@
 import { BrandedButton } from '@covid/components';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
@@ -341,7 +341,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
             const isMinor = isMinorAge(cleanIntegerVal(props.values.yearOfBirth));
 
             return (
-              <FormWrapper hasRequiredFields>
+              <Form hasRequiredFields style={{ marginTop: 32 }}>
                 <GenericTextField
                   required
                   showError
@@ -455,7 +455,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
                 >
                   {this.props.route.params?.editing ? i18n.t('edit-profile.done') : i18n.t('next-question')}
                 </BrandedButton>
-              </FormWrapper>
+              </Form>
             );
           }}
         </Formik>

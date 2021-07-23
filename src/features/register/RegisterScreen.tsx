@@ -1,5 +1,4 @@
 import { BrandedButton } from '@covid/components';
-import { Field, FieldError } from '@covid/components/Forms';
 import { ClickableText, ErrorText, HeaderLightText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import Analytics, { events } from '@covid/core/Analytics';
@@ -155,58 +154,54 @@ class RegisterScreen extends React.Component<PropsType, State> {
 
                     <Form style={styles.form}>
                       <View style={styles.formItem}>
-                        <Field>
-                          <Label style={styles.labelStyle}>{i18n.t('create-account.email')}</Label>
-                          <ValidatedTextInput
-                            autoCapitalize="none"
-                            autoCompleteType="email"
-                            error={(props.touched.email && !!props.errors.email) || this.state.accountExists}
-                            keyboardType="email-address"
-                            onBlur={props.handleBlur('email')}
-                            onChangeText={(text) => {
-                              // this.setState({ enableSubmit: true });
-                              props.handleChange('email')(text);
-                              this.setIsEnabled(text, props.values.password);
-                            }}
-                            onSubmitEditing={() => {
-                              this.passwordComponent.focus();
-                            }}
-                            placeholder={i18n.t('create-account.email')}
-                            returnKeyType="next"
-                            testID="input-email-address"
-                            value={props.values.email}
-                          />
-                          {!!props.touched.email && !!props.errors.email ? (
-                            <FieldError>{props.errors.email}</FieldError>
-                          ) : null}
-                          {this.state.accountExists ? (
-                            <FieldError>{i18n.t('create-account.already-registered')}</FieldError>
-                          ) : null}
-                        </Field>
+                        <Label style={styles.label}>{i18n.t('create-account.email')}</Label>
+                        <ValidatedTextInput
+                          autoCapitalize="none"
+                          autoCompleteType="email"
+                          error={(props.touched.email && !!props.errors.email) || this.state.accountExists}
+                          keyboardType="email-address"
+                          onBlur={props.handleBlur('email')}
+                          onChangeText={(text) => {
+                            // this.setState({ enableSubmit: true });
+                            props.handleChange('email')(text);
+                            this.setIsEnabled(text, props.values.password);
+                          }}
+                          onSubmitEditing={() => {
+                            this.passwordComponent.focus();
+                          }}
+                          placeholder={i18n.t('create-account.email')}
+                          returnKeyType="next"
+                          testID="input-email-address"
+                          value={props.values.email}
+                        />
+                        {!!props.touched.email && !!props.errors.email ? (
+                          <ErrorText>{props.errors.email}</ErrorText>
+                        ) : null}
+                        {this.state.accountExists ? (
+                          <ErrorText>{i18n.t('create-account.already-registered')}</ErrorText>
+                        ) : null}
                       </View>
 
                       <View style={styles.formItem}>
-                        <Field>
-                          <Label style={styles.labelStyle}>{i18n.t('create-account.password')}</Label>
-                          <ValidatedTextInput
-                            secureTextEntry
-                            error={props.touched.password && props.errors.password}
-                            onBlur={props.handleBlur('password')}
-                            onChangeText={(text) => {
-                              props.handleChange('password')(text);
-                              this.setIsEnabled(props.values.email, text);
-                            }}
-                            onSubmitEditing={(event) => props.handleSubmit()}
-                            placeholder={i18n.t('create-account.password')}
-                            ref={(input) => (this.passwordComponent = input)}
-                            returnKeyType="go"
-                            testID="input-password"
-                            value={props.values.password}
-                          />
-                          {!!props.touched.password && !!props.errors.password ? (
-                            <FieldError>{props.errors.password}</FieldError>
-                          ) : null}
-                        </Field>
+                        <Label style={styles.label}>{i18n.t('create-account.password')}</Label>
+                        <ValidatedTextInput
+                          secureTextEntry
+                          error={props.touched.password && props.errors.password}
+                          onBlur={props.handleBlur('password')}
+                          onChangeText={(text) => {
+                            props.handleChange('password')(text);
+                            this.setIsEnabled(props.values.email, text);
+                          }}
+                          onSubmitEditing={(event) => props.handleSubmit()}
+                          placeholder={i18n.t('create-account.password')}
+                          ref={(input) => (this.passwordComponent = input)}
+                          returnKeyType="go"
+                          testID="input-password"
+                          value={props.values.password}
+                        />
+                        {!!props.touched.password && !!props.errors.password ? (
+                          <ErrorText>{props.errors.password}</ErrorText>
+                        ) : null}
                       </View>
                     </Form>
 
@@ -265,7 +260,7 @@ const styles = StyleSheet.create({
   formItem: {
     paddingVertical: 4,
   },
-  labelStyle: {
+  label: {
     color: colors.tertiary,
     fontSize: 16,
     left: -16384,

@@ -88,6 +88,7 @@ export const RegularBoldText = ({ style, children }: Props) => (
   <Text style={[styles.regularBoldText, style]}>{children}</Text>
 );
 
+// @todo: Remove the onPress property because the animation is ugly.
 export const ClickableText = ({ style, children, onPress, testID }: IClickableTextProps) => (
   <Text onPress={onPress} style={[styles.clickableText, style]} testID={testID}>
     {children}

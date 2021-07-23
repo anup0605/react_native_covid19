@@ -105,11 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 22,
   },
-  labelStyle: {
-    color: colors.primary,
-    fontSize: 15,
-    lineHeight: 30,
-  },
   modalView: {
     backgroundColor: colors.white,
     borderRadius: 8,

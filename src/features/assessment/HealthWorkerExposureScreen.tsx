@@ -1,5 +1,5 @@
 import { BrandedButton } from '@covid/components';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
@@ -151,7 +151,7 @@ export default class HealthWorkerExposureScreen extends React.Component<HealthWo
         >
           {(props) => {
             return (
-              <FormWrapper hasRequiredFields>
+              <Form hasRequiredFields>
                 <View>
                   <YesNoField
                     label={i18n.t('health-worker-exposure-question-interacted-any-patients')}
@@ -219,7 +219,7 @@ export default class HealthWorkerExposureScreen extends React.Component<HealthWo
                 <BrandedButton enabled={props.isValid} onPress={props.handleSubmit}>
                   {i18n.t('next-question')}
                 </BrandedButton>
-              </FormWrapper>
+              </Form>
             );
           }}
         </Formik>

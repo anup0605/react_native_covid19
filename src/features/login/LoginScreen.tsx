@@ -81,7 +81,7 @@ function LoginScreen({ route }: IProps) {
       <View style={styles.contentWrapper}>
         <HeaderLightText>{i18n.t('login.title')}</HeaderLightText>
         <Item floatingLabel error={hasErrors} style={styles.item}>
-          <Label style={styles.labelStyle}>{i18n.t('login.email-label')}</Label>
+          <Label style={styles.label}>{i18n.t('login.email-label')}</Label>
           <Input
             autoCapitalize="none"
             autoCompleteType="email"
@@ -96,7 +96,7 @@ function LoginScreen({ route }: IProps) {
           />
         </Item>
         <Item floatingLabel error={hasErrors} style={styles.item}>
-          <Label style={styles.labelStyle}>{i18n.t('login.password-label')}</Label>
+          <Label style={styles.label}>{i18n.t('login.password-label')}</Label>
           <Input
             secureTextEntry
             onChangeText={(password) => {
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   item: {
     marginTop: 12,
   },
-  labelStyle: {
+  label: {
     color: colors.tertiary,
     fontSize: 16,
   },

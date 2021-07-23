@@ -1,6 +1,6 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
@@ -171,7 +171,7 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
         >
           {(props) => {
             return (
-              <FormWrapper hasRequiredFields>
+              <Form hasRequiredFields>
                 <View style={{ marginHorizontal: 16 }}>
                   <YesNoField
                     required
@@ -292,7 +292,7 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
                 <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
                   {i18n.t('next-question')}
                 </BrandedButton>
-              </FormWrapper>
+              </Form>
             );
           }}
         </Formik>

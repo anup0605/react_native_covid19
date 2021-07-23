@@ -4,7 +4,7 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleProp, StyleSheet, Switch as RNSwitch, View, ViewStyle } from 'react-native';
 
-import { requiredFormMarker } from './Forms';
+import { requiredFormMarker } from './Form';
 
 interface IProps {
   label: string;

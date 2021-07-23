@@ -1,6 +1,6 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
@@ -283,7 +283,7 @@ export default class YourWorkScreen extends React.Component<YourWorkProps, State
               (!!isCarer && isCarer === 'yes');
             return (
               <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-                <FormWrapper hasRequiredFields>
+                <Form hasRequiredFields>
                   <View style={{ marginHorizontal: 16 }}>
                     <RadioInput
                       required
@@ -453,7 +453,7 @@ export default class YourWorkScreen extends React.Component<YourWorkProps, State
                   >
                     {i18n.t('next-question')}
                   </BrandedButton>
-                </FormWrapper>
+                </Form>
               </KeyboardAvoidingView>
             );
           }}

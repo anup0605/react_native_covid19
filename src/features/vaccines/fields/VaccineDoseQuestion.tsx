@@ -1,6 +1,6 @@
 import { CalendarIcon } from '@assets';
 import CalendarPicker from '@covid/components/CalendarPicker';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import { ErrorText, RegularText, SecondaryText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';

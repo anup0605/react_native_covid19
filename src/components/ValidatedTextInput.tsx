@@ -57,13 +57,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingRight: 8,
   },
-  labelStyle: {
-    color: colors.primary,
-    fontFamily: 'SofiaProRegular',
-    fontSize: 16,
-    lineHeight: 30,
-    marginBottom: 8,
-  },
   multipleLines: {
     height: 96,
     marginVertical: 8,

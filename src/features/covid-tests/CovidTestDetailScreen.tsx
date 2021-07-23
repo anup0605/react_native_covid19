@@ -1,6 +1,6 @@
 import { BrandedButton } from '@covid/components';
 import { ClearButton } from '@covid/components/buttons/ClearButton';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen from '@covid/components/Screen';
 import { ErrorText } from '@covid/components/Text';
@@ -181,7 +181,6 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
 
     return (
       <Screen
-        navigation={this.props.navigation}
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="covid-test-detail-screen"
       >
@@ -208,7 +207,7 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
         >
           {(props) => {
             return (
-              <FormWrapper hasRequiredFields>
+              <Form hasRequiredFields>
                 <View style={{ marginHorizontal: 16 }}>
                   <CovidTestDateQuestion formikProps={props as FormikProps<ICovidTestDateData>} test={test} />
                   <CovidTestMechanismQuestion formikProps={props as FormikProps<ICovidTestMechanismData>} test={test} />
@@ -239,7 +238,7 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
                 >
                   {i18n.t(this.testId ? 'covid-test.update-test' : 'covid-test.add-test')}
                 </BrandedButton>
-              </FormWrapper>
+              </Form>
             );
           }}
         </Formik>

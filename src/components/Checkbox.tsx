@@ -1,5 +1,5 @@
 import Check from '@assets/icons/Check';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import { colors } from '@theme/colors';
 import { Item } from 'native-base';
 import * as React from 'react';

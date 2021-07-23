@@ -1,5 +1,5 @@
 import CalendarPicker from '@covid/components/CalendarPicker';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import Switch from '@covid/components/Switch';
 import { RegularText } from '@covid/components/Text';
 import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
@@ -65,7 +65,7 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
 
   return (
     <>
-      <RegularText style={styles.labelStyle}>
+      <RegularText style={styles.label}>
         {props.label ? props.label : i18n.t('covid-test.question-date-test-occurred')}
         {requiredFormMarker}
       </RegularText>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     paddingBottom: 10,
   },
-  labelStyle: {
+  label: {
     marginVertical: 16,
   },
   switch: {

@@ -1,5 +1,5 @@
 import { BrandedButton } from '@covid/components';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
@@ -264,7 +264,7 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
         >
           {(props) => {
             return (
-              <FormWrapper hasRequiredFields>
+              <Form hasRequiredFields>
                 <View style={{ marginHorizontal: 16 }}>
                   <YesNoField
                     required
@@ -393,7 +393,7 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
                 >
                   {i18n.t('next-question')}
                 </BrandedButton>
-              </FormWrapper>
+              </Form>
             );
           }}
         </Formik>

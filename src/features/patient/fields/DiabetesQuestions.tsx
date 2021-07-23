@@ -9,7 +9,6 @@ import { isSECountry } from '@covid/core/localisation/LocalisationService';
 import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { cleanFloatVal, cleanIntegerVal } from '@covid/utils/number';
-import { colors } from '@theme';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -222,13 +221,6 @@ const styles = StyleSheet.create({
   },
   fieldWrapper: {
     flex: 1,
-  },
-  labelStyle: {
-    color: colors.primary,
-    fontSize: 16,
-    lineHeight: 30,
-    marginHorizontal: 16,
-    marginTop: 16,
   },
   primaryField: {
     flex: 4,

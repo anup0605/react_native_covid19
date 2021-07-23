@@ -1,5 +1,5 @@
 import { BrandedButton, TextareaWithCharCount } from '@covid/components';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import Screen, { Header } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
@@ -201,7 +201,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
           >
             {(formikProps: FormikProps<IPingdemicData>) => {
               return (
-                <FormWrapper>
+                <Form>
                   <RadioInput
                     required
                     items={askedByAppOptions}
@@ -223,7 +223,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
                   >
                     {i18n.t('vaccines.dose-symptoms.next')}
                   </BrandedButton>
-                </FormWrapper>
+                </Form>
               );
             }}
           </Formik>
