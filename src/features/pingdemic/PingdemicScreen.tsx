@@ -1,11 +1,12 @@
-import { BrandedButton } from '@covid/components';
+import { BrandedButton, TextareaWithCharCount } from '@covid/components';
 import { FormWrapper } from '@covid/components/Forms';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import Screen, { Header } from '@covid/components/Screen';
-import { ErrorText, HeaderText, RegularText, SecondaryText } from '@covid/components/Text';
+import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
@@ -26,9 +27,10 @@ type TSelectionOption = {
 };
 
 interface IPingdemicData extends ICovidTestDateData {
+  appActiveWithBluetooth?: string;
   askedByApp?: string;
   haveApp?: string;
-  appActiveWithBluetooth?: string;
+  otherText?: string;
 }
 
 type TProps = {
@@ -76,6 +78,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
     { label: i18n.t('pingdemic.q1-yes'), value: 'yes' },
     { label: i18n.t('pingdemic.q1-no'), value: 'no' },
     { label: i18n.t('pingdemic.q1-prefer-not-to-say'), value: 'pfnts' },
+    { label: i18n.t('pingdemic.q1-other'), value: 'other' },
   ];
 
   const haveAppOptions: TSelectionOption[] = [
@@ -102,6 +105,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
       isolate_date_between_end: formatDateToPost(pingdemicData.values.dateTakenBetweenEnd),
       isolate_date_between_start: formatDateToPost(pingdemicData.values.dateTakenBetweenStart),
       isolate_date_specific: formatDateToPost(pingdemicData.values.dateTakenSpecific),
+      other_text: pingdemicData.values.otherText,
       patient: patientId,
     } as PingdemicRequest;
 
@@ -151,6 +155,19 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
       />
     ) : null;
 
+  const renderOtherText = (formikProps: FormikProps<IPingdemicData>) =>
+    formikProps.values.askedByApp === 'other' ? (
+      <TextareaWithCharCount
+        bordered={false}
+        maxLength={500}
+        onChangeText={formikProps.handleChange('otherText')}
+        placeholder={i18n.t('placeholder-optional')}
+        rowSpan={5}
+        textAreaStyle={styling.textarea}
+        value={formikProps.values.otherText}
+      />
+    ) : null;
+
   return (
     <>
       <Screen
@@ -163,7 +180,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
         </Header>
 
         <View style={{ paddingHorizontal: 16 }}>
-          <SecondaryText style={{ marginBottom: 32}}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
+          <SecondaryText style={{ marginBottom: 32 }}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
 
           <Formik
             validateOnChange
@@ -193,6 +210,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
                     selectedValue={formikProps.values.askedByApp}
                     testID="input-pingdemic-radio-asked-by-app"
                   />
+                  {renderOtherText(formikProps)}
                   {renderDate(formikProps)}
                   {renderHaveApp(formikProps)}
                   {renderBluetooth(formikProps)}
