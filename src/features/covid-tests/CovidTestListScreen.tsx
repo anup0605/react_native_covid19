@@ -1,8 +1,8 @@
 import { BrandedButton } from '@covid/components';
 import { Loading } from '@covid/components/Loading';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { HeaderText, RegularText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
+import { RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { covidTestService } from '@covid/core/user/CovidTestService';
 import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
@@ -70,13 +70,7 @@ export default class CovidTestListScreen extends React.Component<Props, State> {
     return (
       <View style={styles.rootContainer}>
         <Screen navigation={this.props.navigation} profile={currentPatient?.profile} testID="covid-test-list-screen">
-          <Header>
-            <HeaderText>{i18n.t('covid-test-list.title')}</HeaderText>
-          </Header>
-
-          <ProgressBlock>
-            <ProgressStatus maxSteps={1} step={0} />
-          </ProgressBlock>
+          <ProgressHeader maxSteps={1} step={0} title={i18n.t('covid-test-list.title')} />
 
           <View style={styles.content}>
             <RegularText>{i18n.t('covid-test-list.text')}</RegularText>

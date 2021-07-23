@@ -2,11 +2,11 @@ import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { FormWrapper } from '@covid/components/Forms';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import YesNoField from '@covid/components/YesNoField';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
 import {
@@ -259,13 +259,7 @@ export default class YourWorkScreen extends React.Component<YourWorkProps, State
         profile={patientCoordinator.patientData?.patientState?.profile}
         testID="your-work-screen"
       >
-        <Header>
-          <HeaderText>{i18n.t('title-about-work')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={2} />
-        </ProgressBlock>
+        <ProgressHeader maxSteps={6} step={2} title={i18n.t('title-about-work')} />
 
         <Formik
           initialValues={{} as IYourWorkData}

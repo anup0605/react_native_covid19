@@ -5,7 +5,7 @@ import { consentService } from '@covid/core/consent/ConsentService';
 import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { PatientData } from '@covid/core/patient/PatientData';
 import { getInitialPatientState, isMinorAge, PatientStateType } from '@covid/core/patient/PatientState';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import { PatientInfosRequest, VaccineStatus } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { DEFAULT_PROFILE } from '@covid/utils/avatar';
@@ -17,7 +17,7 @@ export interface IPatientService {
   updatePatientInfo(patientId: string, infos: Partial<PatientInfosRequest>): Promise<PatientInfosRequest>;
   setUSStudyInviteResponse(patientId: string, response: boolean): void;
   getPatientDataById(patientId: string): Promise<PatientData>;
-  getPatientDataByProfile(profile: Profile): Promise<PatientData>;
+  getPatientDataByProfile(profile: TProfile): Promise<PatientData>;
   updatePatientState(patientState: PatientStateType, patient: PatientInfosRequest): Promise<PatientStateType>;
 }
 
@@ -83,7 +83,7 @@ export class PatientService extends ApiClientBase implements IPatientService {
     } as PatientData;
   }
 
-  public async getPatientDataByProfile(profile: Profile): Promise<PatientData> {
+  public async getPatientDataByProfile(profile: TProfile): Promise<PatientData> {
     let patientState = getInitialPatientState(profile.id);
     const patientInfo = await this.getPatientInfo(profile.id);
 
@@ -135,7 +135,7 @@ export class PatientService extends ApiClientBase implements IPatientService {
       patientName = i18n.t('default-profile-name');
     }
 
-    const profile: Profile = {
+    const profile: TProfile = {
       avatar_name: patient.avatar_name ?? DEFAULT_PROFILE,
       id: patientState.patientId,
       name: patientName,

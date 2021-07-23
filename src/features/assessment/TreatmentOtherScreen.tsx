@@ -1,7 +1,6 @@
 import { BrandedButton, TextareaWithCharCount } from '@covid/components';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { HeaderText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen, { FieldWrapper } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ScreenParamList } from '@covid/features';
@@ -65,13 +64,7 @@ export default class TreatmentOtherScreen extends React.Component<TreatmentOther
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="treatment-other-screen"
       >
-        <Header>
-          <HeaderText>{title}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={5} step={5} />
-        </ProgressBlock>
+        <ProgressHeader maxSteps={5} step={5} title={title} />
 
         <Formik
           initialValues={initialFormValues}

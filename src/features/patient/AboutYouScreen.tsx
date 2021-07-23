@@ -2,11 +2,11 @@ import { BrandedButton } from '@covid/components';
 import { FormWrapper } from '@covid/components/Forms';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import { ScreenNew } from '@covid/components/ScreenNew';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import YesNoField from '@covid/components/YesNoField';
 import { Coordinator, IUpdatePatient } from '@covid/core/Coordinator';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
@@ -20,7 +20,6 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
-import { View } from 'react-native';
 import * as Yup from 'yup';
 
 import { HeightQuestion, IHeightData } from './fields/HeightQuestion';
@@ -53,19 +52,19 @@ export interface IAboutYouData extends IRaceEthnicityData, IHeightData, IWeightD
   mobilityAid: string;
 }
 
-type AboutYouProps = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'AboutYou'>;
   route: RouteProp<ScreenParamList, 'AboutYou'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   enableSubmit: boolean;
   showRaceQuestion: boolean;
   showEthnicityQuestion: boolean;
 };
 
-const initialState: State = {
+const initialState: TState = {
   enableSubmit: true,
   errorMessage: '',
 
@@ -73,12 +72,12 @@ const initialState: State = {
   showRaceQuestion: false,
 };
 
-export default class AboutYouScreen extends React.Component<AboutYouProps, State> {
+export default class AboutYouScreen extends React.Component<TProps, TState> {
   private coordinator: Coordinator & IUpdatePatient = this.props.route.params?.editing
     ? editProfileCoordinator
     : patientCoordinator;
 
-  constructor(props: AboutYouProps) {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -327,18 +326,8 @@ export default class AboutYouScreen extends React.Component<AboutYouProps, State
     };
 
     return (
-      <Screen
-        navigation={this.props.navigation}
-        profile={this.coordinator.patientData?.patientState?.profile}
-        testID="about-you-screen"
-      >
-        <Header>
-          <HeaderText>{i18n.t('title-about-you')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={2} />
-        </ProgressBlock>
+      <ScreenNew profile={this.coordinator.patientData?.patientState?.profile} testID="about-you-screen">
+        <ProgressHeader maxSteps={6} step={2} title={i18n.t('title-about-you')} />
 
         <Formik
           validateOnChange
@@ -353,113 +342,111 @@ export default class AboutYouScreen extends React.Component<AboutYouProps, State
 
             return (
               <FormWrapper hasRequiredFields>
-                <View style={{ marginHorizontal: 16 }}>
+                <GenericTextField
+                  required
+                  showError
+                  formikProps={props}
+                  keyboardType="numeric"
+                  label={i18n.t('what-year-were-you-born')}
+                  name="yearOfBirth"
+                  placeholder={i18n.t('placeholder-year-of-birth')}
+                  testID="input-year-of-birth"
+                />
+
+                <RadioInput
+                  required
+                  error={props.touched.sex ? props.errors.sex : ''}
+                  items={sexAtBirthItems}
+                  label={i18n.t('your-sex-at-birth')}
+                  onValueChange={props.handleChange('sex')}
+                  selectedValue={props.values.sex}
+                  testID="input-sex-at-birth"
+                />
+
+                <RadioInput
+                  required
+                  error={props.touched.genderIdentity ? props.errors.genderIdentity : ''}
+                  items={genderIdentityItems}
+                  label={i18n.t('label-gender-identity')}
+                  onValueChange={props.handleChange('genderIdentity')}
+                  selectedValue={props.values.genderIdentity}
+                  testID="input-gender-identity"
+                />
+
+                {props.values.genderIdentity === 'other' ? (
+                  <GenericTextField
+                    formikProps={props}
+                    label={i18n.t('label-gender-identity-other')}
+                    name="genderIdentityDescription"
+                    placeholder={i18n.t('placeholder-optional')}
+                  />
+                ) : null}
+
+                <RaceEthnicityQuestion
+                  formikProps={props as FormikProps<IRaceEthnicityData>}
+                  showEthnicityQuestion={this.state.showEthnicityQuestion}
+                  showRaceQuestion={this.state.showRaceQuestion}
+                />
+
+                <HeightQuestion formikProps={props as FormikProps<IHeightData>} />
+
+                <WeightQuestion formikProps={props as FormikProps<IWeightData>} label={i18n.t('your-weight')} />
+
+                {!this.props.route.params?.editing ? (
                   <GenericTextField
                     required
                     showError
                     formikProps={props}
-                    keyboardType="numeric"
-                    label={i18n.t('what-year-were-you-born')}
-                    name="yearOfBirth"
-                    placeholder={i18n.t('placeholder-year-of-birth')}
-                    testID="input-year-of-birth"
+                    label={i18n.t('your-postcode')}
+                    name="postcode"
+                    placeholder={i18n.t('placeholder-postcode')}
+                    testID="input-postal-code"
+                    textInputProps={{ autoCompleteType: 'postal-code' }}
                   />
+                ) : null}
 
-                  <RadioInput
-                    required
-                    error={props.touched.sex ? props.errors.sex : ''}
-                    items={sexAtBirthItems}
-                    label={i18n.t('your-sex-at-birth')}
-                    onValueChange={props.handleChange('sex')}
-                    selectedValue={props.values.sex}
-                    testID="input-sex-at-birth"
-                  />
+                <RadioInput
+                  required
+                  error={props.touched.everExposed ? props.errors.everExposed : ''}
+                  items={everExposedItems}
+                  label={i18n.t('have-you-been-exposed')}
+                  onValueChange={props.handleChange('everExposed')}
+                  selectedValue={props.values.everExposed}
+                  testID="input-ever-exposed"
+                />
 
-                  <RadioInput
-                    required
-                    error={props.touched.genderIdentity ? props.errors.genderIdentity : ''}
-                    items={genderIdentityItems}
-                    label={i18n.t('label-gender-identity')}
-                    onValueChange={props.handleChange('genderIdentity')}
-                    selectedValue={props.values.genderIdentity}
-                    testID="input-gender-identity"
-                  />
-
-                  {props.values.genderIdentity === 'other' ? (
-                    <GenericTextField
-                      formikProps={props}
-                      label={i18n.t('label-gender-identity-other')}
-                      name="genderIdentityDescription"
-                      placeholder={i18n.t('placeholder-optional')}
+                {!isMinor ? (
+                  <>
+                    <YesNoField
+                      label={i18n.t('housebound-problems')}
+                      onValueChange={props.handleChange('houseboundProblems')}
+                      selectedValue={props.values.houseboundProblems}
                     />
-                  ) : null}
 
-                  <RaceEthnicityQuestion
-                    formikProps={props as FormikProps<IRaceEthnicityData>}
-                    showEthnicityQuestion={this.state.showEthnicityQuestion}
-                    showRaceQuestion={this.state.showRaceQuestion}
-                  />
-
-                  <HeightQuestion formikProps={props as FormikProps<IHeightData>} />
-
-                  <WeightQuestion formikProps={props as FormikProps<IWeightData>} label={i18n.t('your-weight')} />
-
-                  {!this.props.route.params?.editing ? (
-                    <GenericTextField
-                      required
-                      showError
-                      formikProps={props}
-                      label={i18n.t('your-postcode')}
-                      name="postcode"
-                      placeholder={i18n.t('placeholder-postcode')}
-                      testID="input-postal-code"
-                      textInputProps={{ autoCompleteType: 'postal-code' }}
+                    <YesNoField
+                      label={i18n.t('needs-help')}
+                      onValueChange={props.handleChange('needsHelp')}
+                      selectedValue={props.values.needsHelp}
                     />
-                  ) : null}
 
-                  <RadioInput
-                    required
-                    error={props.touched.everExposed ? props.errors.everExposed : ''}
-                    items={everExposedItems}
-                    label={i18n.t('have-you-been-exposed')}
-                    onValueChange={props.handleChange('everExposed')}
-                    selectedValue={props.values.everExposed}
-                    testID="input-ever-exposed"
-                  />
+                    <YesNoField
+                      label={i18n.t('help-available')}
+                      onValueChange={props.handleChange('helpAvailable')}
+                      selectedValue={props.values.helpAvailable}
+                    />
 
-                  {!isMinor ? (
-                    <>
-                      <YesNoField
-                        label={i18n.t('housebound-problems')}
-                        onValueChange={props.handleChange('houseboundProblems')}
-                        selectedValue={props.values.houseboundProblems}
-                      />
+                    <YesNoField
+                      label={i18n.t('mobility-aid')}
+                      onValueChange={props.handleChange('mobilityAid')}
+                      selectedValue={props.values.mobilityAid}
+                    />
+                  </>
+                ) : null}
 
-                      <YesNoField
-                        label={i18n.t('needs-help')}
-                        onValueChange={props.handleChange('needsHelp')}
-                        selectedValue={props.values.needsHelp}
-                      />
-
-                      <YesNoField
-                        label={i18n.t('help-available')}
-                        onValueChange={props.handleChange('helpAvailable')}
-                        selectedValue={props.values.helpAvailable}
-                      />
-
-                      <YesNoField
-                        label={i18n.t('mobility-aid')}
-                        onValueChange={props.handleChange('mobilityAid')}
-                        selectedValue={props.values.mobilityAid}
-                      />
-                    </>
-                  ) : null}
-
-                  <ErrorText>{this.state.errorMessage}</ErrorText>
-                  {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
-                    <ValidationError error={i18n.t('validation-error-text')} />
-                  ) : null}
-                </View>
+                <ErrorText>{this.state.errorMessage}</ErrorText>
+                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                  <ValidationError error={i18n.t('validation-error-text')} />
+                ) : null}
 
                 <BrandedButton
                   enabled={props.isValid && props.dirty}
@@ -472,7 +459,7 @@ export default class AboutYouScreen extends React.Component<AboutYouProps, State
             );
           }}
         </Formik>
-      </Screen>
+      </ScreenNew>
     );
   }
 }

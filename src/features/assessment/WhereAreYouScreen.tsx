@@ -1,22 +1,19 @@
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
 import { SelectorButton } from '@covid/components/SelectorButton';
-import { HeaderText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'WhereAreYou'>;
   route: RouteProp<ScreenParamList, 'WhereAreYou'>;
 }
 
-function WhereAreYouScreen({ navigation, route }: IProps) {
+function WhereAreYouScreen({ route }: IProps) {
   const isFocused = useIsFocused();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -55,17 +52,10 @@ function WhereAreYouScreen({ navigation, route }: IProps) {
 
   return (
     <Screen
-      navigation={navigation}
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="where-are-you-screen"
     >
-      <Header>
-        <HeaderText>{i18n.t('where-are-you.question-location')}</HeaderText>
-      </Header>
-
-      <ProgressBlock>
-        <ProgressStatus maxSteps={6} step={6} />
-      </ProgressBlock>
+      <ProgressHeader maxSteps={6} step={6} title={i18n.t('where-are-you.question-location')} />
 
       <View style={styles.content}>
         <SelectorButton

@@ -1,5 +1,5 @@
 import { PatientData } from '@covid/core/patient/PatientData';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features/ScreenParamList';
 
@@ -13,11 +13,11 @@ export interface IUpdatePatient {
 }
 
 export interface ISelectProfile {
-  profileSelected(profile: Profile): Promise<void>;
+  profileSelected(profile: TProfile): Promise<void>;
 }
 
 export interface IEditableProfile {
-  startEditProfile(profile: Profile): Promise<void>;
+  startEditProfile(profile: TProfile): Promise<void>;
   goToCreateProfile(avatarName: string): void;
 }
 

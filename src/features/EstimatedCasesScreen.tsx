@@ -1,17 +1,11 @@
 import { BackButton } from '@covid/components/PatientHeader';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
 import { loadEstimatedCasesCartoMap } from '@covid/utils/files';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-interface IProps {
-  navigation: StackNavigationProp<ScreenParamList>;
-}
-
-export function EstimatedCasesScreen({ navigation }: IProps) {
+export function EstimatedCasesScreen() {
   const [html, setHtml] = React.useState<string>('');
 
   React.useEffect(() => {
@@ -40,7 +34,7 @@ export function EstimatedCasesScreen({ navigation }: IProps) {
           zIndex: 100,
         }}
       >
-        <BackButton navigation={navigation} />
+        <BackButton />
       </View>
       <WebView originWhitelist={['*']} source={{ html }} style={styles.webview} />
     </View>

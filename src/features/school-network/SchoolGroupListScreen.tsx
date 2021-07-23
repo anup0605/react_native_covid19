@@ -10,7 +10,6 @@ import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolN
 import { ScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Text } from 'native-base';
 import * as React from 'react';
@@ -18,11 +17,10 @@ import { StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'SchoolGroupList'>;
   route: RouteProp<ScreenParamList, 'SchoolGroupList'>;
 };
 
-export const SchoolGroupListScreen: React.FC<Props> = ({ route, navigation }) => {
+export const SchoolGroupListScreen: React.FC<Props> = ({ route }) => {
   const [joinedGroups, setJoinedGroups] = React.useState<ISchoolGroupModel[]>([]);
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [pressedGroup, setPressedGroup] = React.useState<ISchoolGroupModel>();
@@ -53,7 +51,7 @@ export const SchoolGroupListScreen: React.FC<Props> = ({ route, navigation }) =>
 
   return (
     <View style={styles.rootContainer}>
-      <Screen navigation={navigation} profile={route.params?.patientData.profile} testID="school-group-list-screen">
+      <Screen profile={route.params?.patientData.profile} testID="school-group-list-screen">
         <Header>
           <HeaderText>{i18n.t('school-networks.groups-list.title')}</HeaderText>
         </Header>

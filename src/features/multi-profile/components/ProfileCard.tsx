@@ -1,6 +1,6 @@
 import { ClippedText, SecondaryText } from '@covid/components/Text';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
 import { AvatarName, getAvatarByName } from '@covid/utils/avatar';
 import { getDaysAgo } from '@covid/utils/datetime';
@@ -14,7 +14,7 @@ import LastReported from './LastReported';
 
 type TProps = {
   index: number;
-  profile: Profile;
+  profile: TProfile;
   onEditPressed?: VoidFunction;
   testID?: string;
 };

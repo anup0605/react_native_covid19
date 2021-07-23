@@ -55,12 +55,12 @@ export function ButtonsGroup({
           marginTop: 8,
         }}
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <SelectableButton
             key={item.value}
             onPress={() => onSelect(item.value)}
             selected={selected === item.value}
-            style={{ flex: 1, marginEnd: 8 }}
+            style={{ flex: 1, marginStart: index !== 0 ? 8 : 0 }}
             testID={`button-${item.value}${testID ? `-${testID}` : ''}`}
           >
             {item.label}

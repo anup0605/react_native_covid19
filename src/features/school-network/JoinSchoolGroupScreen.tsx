@@ -10,7 +10,6 @@ import { ScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Formik } from 'formik';
 import { Form } from 'native-base';
@@ -19,7 +18,6 @@ import { Alert, PickerItemProps, StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
 type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'JoinSchoolGroup'>;
   route: RouteProp<ScreenParamList, 'JoinSchoolGroup'>;
 };
 
@@ -33,7 +31,7 @@ const ValidationSchema = () => {
   });
 };
 
-export const JoinSchoolGroupScreen: React.FC<Props> = ({ route, navigation, ...props }) => {
+export const JoinSchoolGroupScreen: React.FC<Props> = ({ route }) => {
   const [groupList, setGroupList] = React.useState<PickerItemProps[]>([]);
 
   React.useEffect(() => {
@@ -74,11 +72,7 @@ export const JoinSchoolGroupScreen: React.FC<Props> = ({ route, navigation, ...p
   };
 
   return (
-    <Screen
-      navigation={navigation}
-      profile={route.params?.patientData?.patientState?.profile}
-      testID="join-school-group-screen"
-    >
+    <Screen profile={route.params?.patientData?.patientState?.profile} testID="join-school-group-screen">
       <Header>
         <HeaderText>{i18n.t('school-networks.join-group.title')}</HeaderText>
         <RegularText style={styles.topText}>

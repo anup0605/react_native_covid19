@@ -1,7 +1,7 @@
 import { BrandedButton } from '@covid/components';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ConfigType } from '@covid/core/Config';
@@ -202,13 +202,7 @@ export default class ProfileBackDateScreen extends React.Component<BackDateProps
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="profile-back-date-screen"
       >
-        <Header>
-          <HeaderText>{i18n.t('back-date-profile-title')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={1} />
-        </ProgressBlock>
+        <ProgressHeader maxSteps={6} step={1} title={i18n.t('back-date-profile-title')} />
 
         <Formik
           initialValues={{

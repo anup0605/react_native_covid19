@@ -1,8 +1,8 @@
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 
 export type PatientStateType = {
   patientId: string;
-  profile: Profile;
+  profile: TProfile;
   isHealthWorker: boolean;
   hasCompletedPatientDetails: boolean;
   hasBloodPressureAnswer: boolean;

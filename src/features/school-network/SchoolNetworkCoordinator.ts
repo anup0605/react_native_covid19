@@ -2,7 +2,7 @@ import { Coordinator, ISelectProfile, ScreenFlow } from '@covid/core/Coordinator
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import { PatientData } from '@covid/core/patient/PatientData';
 import { patientService } from '@covid/core/patient/PatientService';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import { ISchoolGroupModel, ISchoolModel, ISubscribedSchoolStats } from '@covid/core/schools/Schools.dto';
 import { fetchSubscribedSchoolGroups, schoolSlice } from '@covid/core/schools/Schools.slice';
 import { schoolService } from '@covid/core/schools/SchoolService';
@@ -74,7 +74,7 @@ export class SchoolNetworkCoordinator extends Coordinator implements ISelectProf
     }
   }
 
-  async profileSelected(profile: Profile): Promise<void> {
+  async profileSelected(profile: TProfile): Promise<void> {
     this.patientData = await patientService.getPatientDataByProfile(profile);
     NavigatorService.navigate('JoinSchool');
   }

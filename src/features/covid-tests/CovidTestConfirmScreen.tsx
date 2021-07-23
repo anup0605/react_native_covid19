@@ -7,18 +7,16 @@ import { covidTestService } from '@covid/core/user/CovidTestService';
 import { ScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { ListItem } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'CovidTestConfirm'>;
   route: RouteProp<ScreenParamList, 'CovidTestConfirm'>;
 }
 
-export default function CovidTestConfirmScreen({ navigation, route }: IProps) {
+export default function CovidTestConfirmScreen({ route }: IProps) {
   const [agreed, setAgreed] = React.useState(false);
 
   const handleConsentClick = (checked: boolean) => {
@@ -44,7 +42,7 @@ export default function CovidTestConfirmScreen({ navigation, route }: IProps) {
   };
 
   return (
-    <Screen showBackButton navigation={navigation} style={styles.container} testID="covid-test-confirm-screen">
+    <Screen showBackButton style={styles.container} testID="covid-test-confirm-screen">
       <Header>
         <HeaderText>{i18n.t('covid-test.confirm-test.title')}</HeaderText>
       </Header>

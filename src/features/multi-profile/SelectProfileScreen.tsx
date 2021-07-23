@@ -4,7 +4,7 @@ import { Header } from '@covid/components/Screen';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
 import { Coordinator, IEditableProfile, ISelectProfile } from '@covid/core/Coordinator';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
@@ -52,7 +52,7 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
     (coordinator as IEditableProfile).goToCreateProfile(await getNextAvatarName());
   };
 
-  const getPatientThen = async (profile: Profile, callback: (patient: Profile) => void) => {
+  const getPatientThen = async (profile: TProfile, callback: (patient: TProfile) => void) => {
     try {
       callback(profile);
     } catch (error) {
@@ -66,7 +66,7 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
     }
   };
 
-  function onProfileSelected(profile: Profile) {
+  function onProfileSelected(profile: TProfile) {
     getPatientThen(profile, (profile) => {
       if (assessmentFlow) {
         coordinator.profileSelected(profile);
@@ -80,7 +80,7 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
     <SafeAreaView style={styling.flex}>
       <ScrollView contentContainerStyle={styles.scrollView} testID="scroll-view-select-profile-screen">
         <View style={styles.rootContainer}>
-          <View style={styles.navContainer}>{navigation ? <BackButton navigation={navigation} /> : null}</View>
+          <View style={styles.navContainer}>{navigation ? <BackButton /> : null}</View>
 
           <Header>
             <HeaderText style={styles.headerText}>

@@ -8,7 +8,6 @@ import { ScreenParamList } from '@covid/features';
 import { DoseSymptomsData, DoseSymptomsQuestions } from '@covid/features/vaccines/fields/DoseSymptomsQuestions';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Formik } from 'formik';
 import { Form } from 'native-base';
@@ -17,11 +16,10 @@ import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
 type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'VaccineDoseSymptoms'>;
   route: RouteProp<ScreenParamList, 'VaccineDoseSymptoms'>;
 };
 
-export const VaccineDoseSymptomsScreen: React.FC<Props> = ({ route, navigation }) => {
+export const VaccineDoseSymptomsScreen: React.FC<Props> = ({ route }) => {
   const [errorMessage, setErrorMessage] = React.useState('');
   const [isSubmitting, setSubmitting] = React.useState(false);
 
@@ -45,7 +43,6 @@ export const VaccineDoseSymptomsScreen: React.FC<Props> = ({ route, navigation }
   return (
     <View style={styles.rootContainer}>
       <Screen
-        navigation={navigation}
         profile={route.params?.assessmentData?.patientData?.patientState?.profile}
         testID="vaccine-dose-symptoms-screen"
       >

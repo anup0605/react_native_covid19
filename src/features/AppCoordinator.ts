@@ -23,7 +23,7 @@ import {
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { PatientData } from '@covid/core/patient/PatientData';
 import { patientService } from '@covid/core/patient/PatientService';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import store from '@covid/core/state/store';
 import { StartupInfo, UserResponse } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
@@ -186,20 +186,20 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     assessmentCoordinator.startAssessment();
   }
 
-  async startEditProfile(profile: Profile) {
+  async startEditProfile(profile: TProfile) {
     await this.setPatientByProfile(profile);
 
     editProfileCoordinator.init(this.patientData, userService);
     editProfileCoordinator.startEditProfile();
   }
 
-  async startEditLocation(profile: Profile, patientData?: PatientData) {
+  async startEditLocation(profile: TProfile, patientData?: PatientData) {
     if (!patientData) await this.setPatientByProfile(profile);
     editProfileCoordinator.init(patientData ?? this.patientData, userService);
     editProfileCoordinator.goToEditLocation();
   }
 
-  async profileSelected(profile: Profile) {
+  async profileSelected(profile: TProfile) {
     await this.setPatientByProfile(profile);
     this.startAssessmentFlow(this.patientData);
   }
@@ -208,7 +208,7 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     this.patientData = await patientService.getPatientDataById(patientId);
   }
 
-  async setPatientByProfile(profile: Profile) {
+  async setPatientByProfile(profile: TProfile) {
     this.patientData = await patientService.getPatientDataByProfile(profile);
   }
 

@@ -1,10 +1,7 @@
-import { ScreenName } from '@covid/core/Coordinator';
-import { Profile } from '@covid/core/profile/ProfileService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
+import NavigatorService from '@covid/NavigatorService';
 import { AvatarName, getAvatarByName } from '@covid/utils/avatar';
-import { NavigationProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Icon } from 'native-base';
 import * as React from 'react';
@@ -13,7 +10,6 @@ import { Image, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 
 import { ClippedText, RegularText } from './Text';
 
 type BackButtonProps = {
-  navigation: NavigationProp<ScreenParamList, ScreenName>;
   showCloseButton?: boolean;
   style?: StyleProp<ViewStyle>;
 };
@@ -23,15 +19,15 @@ export enum CallOutType {
   Tag,
 }
 
-export const BackButton: React.FC<BackButtonProps> = ({ navigation, style: containerStyle, showCloseButton }) => {
+export const BackButton: React.FC<BackButtonProps> = ({ style: containerStyle, showCloseButton }) => {
   return showCloseButton ? (
-    <TouchableOpacity onPress={navigation.goBack} style={containerStyle} testID="button-back-navigation">
+    <TouchableOpacity onPress={NavigatorService.goBack} style={containerStyle} testID="button-back-navigation">
       <View style={styles.iconButton}>
         <Icon name="cross" style={styles.icon} type="Entypo" />
       </View>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity onPress={navigation.goBack} style={containerStyle} testID="button-back-navigation">
+    <TouchableOpacity onPress={NavigatorService.goBack} style={containerStyle} testID="button-back-navigation">
       <View style={styles.iconButton}>
         <Icon name="chevron-thin-left" style={styles.icon} type="Entypo" />
       </View>
@@ -40,8 +36,7 @@ export const BackButton: React.FC<BackButtonProps> = ({ navigation, style: conta
 };
 
 type PatientHeaderProps = {
-  profile: Profile;
-  navigation?: StackNavigationProp<ScreenParamList>;
+  profile: TProfile;
   simpleCallout?: boolean;
   type?: CallOutType;
   calloutTitle?: string;
@@ -49,16 +44,15 @@ type PatientHeaderProps = {
 };
 
 type NavbarProps = {
-  navigation?: StackNavigationProp<ScreenParamList>;
   rightComponent?: React.ReactNode;
   showCloseButton?: boolean;
 };
 
-export const NavHeader: React.FC<NavbarProps> = ({ navigation, rightComponent, showCloseButton }) => {
+export const NavHeader: React.FC<NavbarProps> = ({ rightComponent, showCloseButton }) => {
   return (
     <View style={styles.headerBar}>
       <View style={styles.left}>
-        {navigation ? <BackButton navigation={navigation} showCloseButton={showCloseButton} /> : null}
+        <BackButton showCloseButton={showCloseButton} />
       </View>
       <View style={styles.center} />
       <View style={styles.right}>{rightComponent}</View>
@@ -66,14 +60,13 @@ export const NavHeader: React.FC<NavbarProps> = ({ navigation, rightComponent, s
   );
 };
 
-const PatientHeader: React.FC<PatientHeaderProps> = ({
+export function PatientHeader({
   profile,
-  navigation,
   simpleCallout = false,
   type = !profile.reported_by_another ? CallOutType.Simple : CallOutType.Tag,
   calloutTitle = !profile.reported_by_another ? profile.name : i18n.t('answer-for', { name: profile.name }),
   showCloseButton = false,
-}) => {
+}: PatientHeaderProps) {
   const avatarImage = getAvatarByName(profile.avatar_name as AvatarName);
   const avatarComponent = (
     <>
@@ -93,8 +86,8 @@ const PatientHeader: React.FC<PatientHeaderProps> = ({
     </>
   );
 
-  return <NavHeader navigation={navigation} rightComponent={avatarComponent} showCloseButton={showCloseButton} />;
-};
+  return <NavHeader rightComponent={avatarComponent} showCloseButton={showCloseButton} />;
+}
 
 const styles = StyleSheet.create({
   altText: {
@@ -166,5 +159,3 @@ const styles = StyleSheet.create({
     right: -8,
   },
 });
-
-export default PatientHeader;

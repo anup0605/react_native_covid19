@@ -1,9 +1,9 @@
 import { BrandedButton } from '@covid/components';
 import { ClearButton } from '@covid/components/buttons/ClearButton';
 import { FormWrapper } from '@covid/components/Forms';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
@@ -185,15 +185,11 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="covid-test-detail-screen"
       >
-        <Header>
-          <HeaderText>
-            {i18n.t(this.testId ? 'covid-test.page-title-detail-update' : 'covid-test.page-title-detail-add')}
-          </HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={2} step={1} />
-        </ProgressBlock>
+        <ProgressHeader
+          maxSteps={2}
+          step={1}
+          title={i18n.t(this.testId ? 'covid-test.page-title-detail-update' : 'covid-test.page-title-detail-add')}
+        />
 
         <Formik
           validateOnMount

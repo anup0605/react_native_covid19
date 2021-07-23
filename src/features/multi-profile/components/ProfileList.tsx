@@ -1,6 +1,6 @@
 import { Loading, LoadingModal } from '@covid/components/Loading';
 import { ApiErrorState } from '@covid/core/api/ApiServiceErrors';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -8,11 +8,11 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { NewProfileCard } from './NewProfileCard';
 
 interface IProps extends ApiErrorState {
-  profiles: Profile[];
+  profiles: TProfile[];
   isLoaded: boolean;
   addProfile?: VoidFunction;
-  onProfileSelected: (profile: Profile, index: number) => void;
-  renderItem: (profile: Profile, index: number) => React.ReactNode;
+  onProfileSelected: (profile: TProfile, index: number) => void;
+  renderItem: (profile: TProfile, index: number) => React.ReactNode;
   renderCreateItem?: () => React.ReactNode;
 }
 

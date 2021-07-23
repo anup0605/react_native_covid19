@@ -1,4 +1,4 @@
-import YesNoField from '@covid/components/YesNoField';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { isGBCountry } from '@covid/core/localisation/LocalisationService';
 import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';

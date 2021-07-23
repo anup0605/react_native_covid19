@@ -1,9 +1,9 @@
 import { RightArrow } from '@assets';
 import InfoCircle from '@assets/icons/InfoCircle';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
 import { SelectorButton } from '@covid/components/SelectorButton';
-import { HeaderText, RegularBoldText, RegularText } from '@covid/components/Text';
+import { RegularBoldText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { RootState } from '@covid/core/state/root';
 import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
@@ -107,17 +107,10 @@ export const HowYouFeelScreen: React.FC<Props> = ({ route, navigation }) => {
       <USStudyInvite assessmentData={assessmentCoordinator.assessmentData} />
 
       <Screen
-        navigation={navigation}
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="how-you-feel-screen"
       >
-        <Header>
-          <HeaderText>{i18n.t('how-you-feel.question-health-status')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={1} step={0} />
-        </ProgressBlock>
+        <ProgressHeader maxSteps={1} step={0} title={i18n.t('how-you-feel.question-health-status')} />
 
         <TouchableOpacity onPress={() => assessmentCoordinator.editLocation()} style={{ padding: 16 }}>
           <RegularText>

@@ -1,7 +1,4 @@
-import { ScreenName } from '@covid/core/Coordinator';
-import { Profile } from '@covid/core/profile/ProfileService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import { colors } from '@theme';
 import * as React from 'react';
 import {
@@ -18,7 +15,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import PatientHeader, { CallOutType, NavHeader } from './PatientHeader';
+import { NavHeader, PatientHeader } from './PatientHeader';
 
 export const screenWidth = Math.round(Dimensions.get('window').width) - 32;
 export const screenHeight = Math.round(Dimensions.get('window').height);
@@ -52,10 +49,8 @@ export const FieldWrapper = (props: FieldWrapperType) => {
 type TProps = {
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
-  navigation?: StackNavigationProp<ScreenParamList, ScreenName>;
-  profile?: Profile;
+  profile?: TProfile;
   simpleCallout?: boolean;
-  calloutType?: CallOutType;
   calloutTitle?: string;
   showBackButton?: boolean;
   showCloseButton?: boolean;
@@ -65,34 +60,21 @@ type TProps = {
 };
 
 function renderHeader(props: TProps) {
-  if (props.profile && props.navigation) {
-    return (
-      <PatientHeader
-        calloutTitle={props.calloutTitle}
-        navigation={props.navigation}
-        profile={props.profile}
-        showCloseButton={props.showCloseButton}
-        simpleCallout={props.simpleCallout}
-        type={props.calloutType}
-      />
-    );
-  }
-  if (props.profile && !props.navigation) {
+  if (props.profile) {
     return (
       <PatientHeader
         calloutTitle={props.calloutTitle}
         profile={props.profile}
         showCloseButton={props.showCloseButton}
         simpleCallout={props.simpleCallout}
-        type={props.calloutType}
       />
     );
   }
-  if (props.navigation && props.showBackButton) {
-    return <NavHeader navigation={props.navigation} showCloseButton={props.showCloseButton} />;
+  if (props.showBackButton) {
+    return <NavHeader showCloseButton={props.showCloseButton} />;
   }
-  if (props.navigation && props.showCloseButton) {
-    return <NavHeader navigation={props.navigation} showCloseButton={props.showCloseButton} />;
+  if (props.showCloseButton) {
+    return <NavHeader showCloseButton={props.showCloseButton} />;
   }
   if (props.extendEdges) {
     return <View />;

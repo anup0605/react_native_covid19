@@ -16,7 +16,6 @@ import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
@@ -24,11 +23,10 @@ import { StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'VaccineList'>;
   route: RouteProp<ScreenParamList, 'VaccineList'>;
 };
 
-export const VaccineListScreen: React.FC<Props> = ({ route, navigation }) => {
+export const VaccineListScreen: React.FC<Props> = ({ route }) => {
   const coordinator = assessmentCoordinator;
   const vaccines = useSelector<RootState, VaccineRequest[]>((state) => state.vaccines.vaccines);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -183,11 +181,7 @@ export const VaccineListScreen: React.FC<Props> = ({ route, navigation }) => {
     <View style={styles.rootContainer}>
       {showVaccineWarning ? <VaccineWarning actions={actions} /> : null}
 
-      <Screen
-        navigation={navigation}
-        profile={route.params?.assessmentData?.patientData?.patientState?.profile}
-        testID="vaccine-list-screen"
-      >
+      <Screen profile={route.params?.assessmentData?.patientData?.patientState?.profile} testID="vaccine-list-screen">
         <HeaderText style={{ margin: 16 }}>{i18n.t('vaccines.vaccine-list.title')}</HeaderText>
 
         <Text style={{ marginHorizontal: 16, marginVertical: 8 }}>{i18n.t('vaccines.vaccine-list.description')}</Text>

@@ -1,9 +1,9 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { GenericTextField } from '@covid/components/GenericTextField';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText, RegularText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { ErrorText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { Coordinator, IUpdatePatient } from '@covid/core/Coordinator';
 import { isUSCountry, LocalisationService } from '@covid/core/localisation/LocalisationService';
@@ -315,13 +315,7 @@ export default class YourStudyScreen extends React.Component<YourStudyProps, Sta
         profile={this.coordinator.patientData?.patientState?.profile}
         testID="your-study-screen"
       >
-        <Header>
-          <HeaderText>{i18n.t('your-study.title')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={1} />
-        </ProgressBlock>
+        <ProgressHeader maxSteps={6} step={1} title={i18n.t('your-study.title')} />
 
         <Formik
           initialValues={this.getInitialFormValues()}

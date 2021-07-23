@@ -1,10 +1,10 @@
 import QuestionCircle from '@assets/icons/QuestionCircle';
 import { BrandedButton } from '@covid/components';
 import { FormWrapper } from '@covid/components/Forms';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
 import Screen, { Header } from '@covid/components/Screen';
 import { ClickableText, Header3Text, HeaderText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import YesNoField from '@covid/components/YesNoField';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { appActions } from '@covid/core/state/app/slice';
 import { Dose, VaccineBrands, VaccineRequest, VaccineTypes } from '@covid/core/vaccine/dto/VaccineRequest';
@@ -14,7 +14,6 @@ import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/
 import i18n from '@covid/locale/i18n';
 import { formatDateToPost } from '@covid/utils/datetime';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
@@ -24,7 +23,6 @@ import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 type IProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'AboutYourVaccine'>;
   route: RouteProp<ScreenParamList, 'AboutYourVaccine'>;
 };
 
@@ -32,7 +30,7 @@ const registerSchema = Yup.object().shape({}).concat(VaccineDoseQuestion.schema(
 
 interface IAboutYourVaccineData extends IVaccineDoseData {}
 
-export function AboutYourVaccineScreen({ route, navigation }: IProps) {
+export function AboutYourVaccineScreen({ route }: IProps) {
   const coordinator = assessmentCoordinator;
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const [hasSecondDose, setHasSecondDose] = React.useState<string | undefined>(undefined);
@@ -225,7 +223,7 @@ export function AboutYourVaccineScreen({ route, navigation }: IProps) {
     ) : null;
 
   return (
-    <Screen navigation={navigation} profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
+    <Screen profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
       <Header>
         <HeaderText>{i18n.t('vaccines.your-vaccine.title')}</HeaderText>
       </Header>

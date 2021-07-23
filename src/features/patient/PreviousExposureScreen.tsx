@@ -3,11 +3,11 @@ import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { FormWrapper } from '@covid/components/Forms';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import YesNoField from '@covid/components/YesNoField';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
 import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
@@ -159,13 +159,7 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
         profile={patientCoordinator.patientData?.patientState?.profile}
         testID="previous-exposure-screen"
       >
-        <Header>
-          <HeaderText>{i18n.t('previous-exposure-title')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={4} />
-        </ProgressBlock>
+        <ProgressHeader maxSteps={6} step={4} title={i18n.t('previous-exposure-title')} />
 
         <Formik
           validateOnChange

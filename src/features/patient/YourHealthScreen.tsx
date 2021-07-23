@@ -2,11 +2,11 @@ import { BrandedButton } from '@covid/components';
 import { FormWrapper } from '@covid/components/Forms';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import YesNoField from '@covid/components/YesNoField';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
@@ -240,13 +240,7 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
         profile={patientCoordinator.patientData?.patientState?.profile}
         testID="your-health-screen"
       >
-        <Header>
-          <HeaderText>{i18n.t('your-health.page-title')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={3} />
-        </ProgressBlock>
+        <ProgressHeader maxSteps={6} step={3} title={i18n.t('your-health.page-title')} />
 
         <Formik
           initialValues={{
