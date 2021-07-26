@@ -3,11 +3,11 @@ import i18n from '@covid/locale/i18n';
 import { getDaysAgo } from '@covid/utils/datetime';
 import * as React from 'react';
 
-type ProgressProps = {
+type TProgressProps = {
   timeAgo: Date | undefined;
 };
 
-export default class LastReported extends React.Component<ProgressProps> {
+export default class LastReported extends React.Component<TProgressProps> {
   render() {
     let text = i18n.t('never-reported');
     if (this.props.timeAgo) {

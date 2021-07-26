@@ -4,7 +4,7 @@ import {
   TUpdateDiseasePreferenceAction,
   TUpdateFeedbackAction,
 } from '@covid/core/state/reconsent/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialDiseasePreferences = {};
@@ -46,10 +46,10 @@ const reconsentSlice = createSlice({
 
 export const { resetDiseasePreferences, resetFeedback, updateDiseasePreference, updateFeedback } =
   reconsentSlice.actions;
-export const selectFeedbackData = (state: RootState) => state.reconsent.feedbackData || initialFeedbackData;
-export const selectDiseasePreferences = (state: RootState) =>
+export const selectFeedbackData = (state: TRootState) => state.reconsent.feedbackData || initialFeedbackData;
+export const selectDiseasePreferences = (state: TRootState) =>
   state.reconsent.diseasePreferences || initialDiseasePreferences;
-export const selectDiseasesChosen = (state: RootState) =>
+export const selectDiseasesChosen = (state: TRootState) =>
   (Object.keys(state.reconsent.diseasePreferences) as TDiseaseId[]).filter(
     (diseaseId) => state.reconsent.diseasePreferences[diseaseId] === true,
   );

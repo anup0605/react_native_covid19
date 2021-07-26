@@ -25,7 +25,7 @@ type TProps = {
   route: RouteProp<ScreenParamList, 'SelectProfile'>;
 };
 
-export type SelectProfileCoordinator =
+export type TSelectProfileCoordinator =
   | (Coordinator & ISelectProfile)
   | (Coordinator & ISelectProfile & IEditableProfile);
 
@@ -33,7 +33,7 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
   const { status, error, isLoaded, isApiError, setIsApiError, setError, profiles, listProfiles, retryListProfiles } =
     useProfileList();
   const assessmentFlow = route.params?.assessmentFlow;
-  const coordinator: SelectProfileCoordinator = appCoordinator;
+  const coordinator: TSelectProfileCoordinator = appCoordinator;
   const config = localisationService.getConfig();
 
   React.useEffect(() => {

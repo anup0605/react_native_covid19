@@ -3,10 +3,10 @@ import { ShareButton } from '@covid/components/buttons';
 import { Text } from '@covid/components/typography';
 import { WebView } from '@covid/components/WebView';
 import Analytics, { events } from '@covid/core/Analytics';
-import { Coordinates, PersonalisedLocalData } from '@covid/core/AsyncStorageService';
+import { TCoordinates, TPersonalisedLocalData } from '@covid/core/AsyncStorageService';
 import { patientService } from '@covid/core/patient/PatientService';
-import { RootState } from '@covid/core/state/root';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TRootState } from '@covid/core/state/root';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -26,12 +26,12 @@ interface IEmptyViewProps {
   onPress: VoidFunction;
 }
 
-enum MapEventOrigin {
+enum EMapEventOrigin {
   Arrow = 'arrow',
   Map = 'map',
 }
 
-enum MapType {
+enum EMapType {
   Carto = 'carto',
   ImageAsset = 'image_asset',
 }
@@ -39,7 +39,7 @@ enum MapType {
 function EmptyView({ onPress, ...props }: IEmptyViewProps) {
   const [html, setHtml] = React.useState<string>('');
 
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
 
   const primaryLabel = props.primaryLabel ?? i18n.t('covid-cases-map.covid-in-x', { location: 'your area' });
   const secondaryLabel = props.secondaryLabel ?? i18n.t('covid-cases-map.update-postcode');
@@ -52,7 +52,7 @@ function EmptyView({ onPress, ...props }: IEmptyViewProps) {
   const root = showCartoMap ? { paddingTop: 0 } : {};
 
   const showMap = () => {
-    Analytics.track(events.ESTIMATED_CASES_MAP_CLICKED, { origin: MapEventOrigin.Map });
+    Analytics.track(events.ESTIMATED_CASES_MAP_CLICKED, { origin: EMapEventOrigin.Map });
     NavigatorService.navigate('EstimatedCases');
   };
 
@@ -119,19 +119,19 @@ interface IProps {
   isSharing?: boolean;
 }
 
-type MapConfig = {
-  coordinates: Coordinates;
+type TMapConfig = {
+  coordinates: TCoordinates;
   zoom: number;
 };
 
-const DEFAULT_MAP_CENTER: Coordinates = { lat: 53.963843, lng: -3.823242 };
+const DEFAULT_MAP_CENTER: TCoordinates = { lat: 53.963843, lng: -3.823242 };
 const ZOOM_LEVEL_CLOSER = 10.5;
 const ZOOM_LEVEL_FURTHER = 6;
 
 export function EstimatedCasesMapCard({ isSharing }: IProps) {
   const { navigate } = useNavigation();
 
-  const localData = useSelector<RootState, PersonalisedLocalData | undefined>(
+  const localData = useSelector<TRootState, TPersonalisedLocalData | undefined>(
     (state) => state.content.personalizedLocalData,
   );
 
@@ -145,7 +145,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
   const [useCartoMap, setUseCartoMap] = React.useState<boolean>(true);
   const [html, setHtml] = React.useState<string>('');
 
-  const [mapConfig, setMapConfig] = React.useState<MapConfig>({
+  const [mapConfig, setTMapConfig] = React.useState<TMapConfig>({
     coordinates: DEFAULT_MAP_CENTER,
     zoom: ZOOM_LEVEL_FURTHER,
   });
@@ -154,7 +154,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
     // Use carto map if map url is not avaliable
     const hasMapUrl = !!localData?.mapUrl;
     setUseCartoMap(!hasMapUrl);
-    Analytics.track(events.ESTIMATED_CASES_MAP_SHOWN, { type: hasMapUrl ? MapType.ImageAsset : MapType.Carto });
+    Analytics.track(events.ESTIMATED_CASES_MAP_SHOWN, { type: hasMapUrl ? EMapType.ImageAsset : EMapType.Carto });
 
     // Show empty state if data is missing
     if (!localData) {
@@ -177,7 +177,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
   React.useEffect(() => {
     if (!webViewRef.current) return;
     webViewRef.current!.call('updateMapView', mapConfig);
-  }, [mapConfig, setMapConfig, webViewRef.current]);
+  }, [mapConfig, setTMapConfig, webViewRef.current]);
 
   React.useEffect(() => {
     let isMounted = true;
@@ -205,7 +205,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
       config = { coordinates: { lat, lng }, zoom: ZOOM_LEVEL_CLOSER };
     }
 
-    setMapConfig(config);
+    setTMapConfig(config);
   };
 
   const onMapEvent = (type: string, data?: object) => {
@@ -238,12 +238,12 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
   };
 
   const showMap = () => {
-    Analytics.track(events.ESTIMATED_CASES_MAP_CLICKED, { origin: MapEventOrigin.Arrow });
+    Analytics.track(events.ESTIMATED_CASES_MAP_CLICKED, { origin: EMapEventOrigin.Arrow });
     NavigatorService.navigate('EstimatedCases');
   };
 
   const onMapTapped = () => {
-    Analytics.track(events.ESTIMATED_CASES_MAP_CLICKED, { origin: MapEventOrigin.Map });
+    Analytics.track(events.ESTIMATED_CASES_MAP_CLICKED, { origin: EMapEventOrigin.Map });
     NavigatorService.navigate('EstimatedCases');
   };
 

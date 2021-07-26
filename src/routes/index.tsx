@@ -1,4 +1,4 @@
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import * as screens from '@covid/features/screens';
 import i18n from '@covid/locale/i18n';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,7 +10,7 @@ import MentalHealthNavigator from './MentalHealthNavigator';
 import MentalHealthPlaybackNavigator from './MentalHealthPlaybackNavigator';
 import ReconsentNavigator from './ReconsentNavigator';
 
-const Stack = createStackNavigator<ScreenParamList>();
+const Stack = createStackNavigator<TScreenParamList>();
 
 const noHeader = {
   headerShown: false,

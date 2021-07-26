@@ -1,21 +1,21 @@
 import { TextareaWithCharCount } from '@covid/components';
 import { FieldWrapper } from '@covid/components/Screen';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ISymptomQuestions } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 
-export type OtherSymptomsData = {
+export type TOtherSymptomsData = {
   otherSymptoms: string;
 };
 
-type Props = {
-  formikProps: FormikProps<OtherSymptomsData>;
+type TProps = {
+  formikProps: FormikProps<TOtherSymptomsData>;
 };
 
-export const OtherSymptomsQuestions: ISymptomQuestions<Props, OtherSymptomsData> = (props: Props) => {
+export const OtherSymptomsQuestions: ISymptomQuestions<TProps, TOtherSymptomsData> = (props: TProps) => {
   const { formikProps } = props;
 
   return (
@@ -32,7 +32,7 @@ export const OtherSymptomsQuestions: ISymptomQuestions<Props, OtherSymptomsData>
   );
 };
 
-OtherSymptomsQuestions.initialFormValues = (): OtherSymptomsData => {
+OtherSymptomsQuestions.initialFormValues = (): TOtherSymptomsData => {
   return {
     otherSymptoms: '',
   };
@@ -42,7 +42,7 @@ OtherSymptomsQuestions.schema = () => {
   return Yup.object();
 };
 
-OtherSymptomsQuestions.createAssessment = (formData: OtherSymptomsData): Partial<AssessmentInfosRequest> => {
+OtherSymptomsQuestions.createAssessment = (formData: TOtherSymptomsData): Partial<TAssessmentInfosRequest> => {
   return {
     other_symptoms: formData.otherSymptoms ? formData.otherSymptoms : null,
   };

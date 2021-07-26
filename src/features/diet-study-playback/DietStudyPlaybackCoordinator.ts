@@ -2,7 +2,7 @@ import { IContentService } from '@covid/core/content/ContentService';
 import { Coordinator } from '@covid/core/Coordinator';
 import { IDietScoreRemoteClient } from '@covid/core/diet-score/DietScoreApiClient';
 import { TDietScoreResponse } from '@covid/core/diet-score/dto/DietScoreResponse';
-import { PatientData } from '@covid/core/patient/PatientData';
+import { TPatientData } from '@covid/core/patient/PatientData';
 import { AppCoordinator } from '@covid/features/AppCoordinator';
 
 class DietStudyPlaybackCoordinator extends Coordinator {
@@ -16,7 +16,7 @@ class DietStudyPlaybackCoordinator extends Coordinator {
 
   init = async (
     appCoordinator: AppCoordinator,
-    patientData: PatientData,
+    patientData: TPatientData,
     contentService: IContentService,
     dietStudyService: IDietScoreRemoteClient,
   ) => {

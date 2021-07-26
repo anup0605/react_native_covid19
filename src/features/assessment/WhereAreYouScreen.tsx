@@ -2,7 +2,7 @@ import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen from '@covid/components/Screen';
 import { SelectorButton } from '@covid/components/SelectorButton';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
@@ -10,7 +10,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 interface IProps {
-  route: RouteProp<ScreenParamList, 'WhereAreYou'>;
+  route: RouteProp<TScreenParamList, 'WhereAreYou'>;
 }
 
 function WhereAreYouScreen({ route }: IProps) {

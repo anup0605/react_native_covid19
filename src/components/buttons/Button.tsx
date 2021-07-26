@@ -4,14 +4,14 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TextStyle } from 'react-native';
 
-interface Props {
+interface IProps {
   onPress: VoidFunction;
   branded?: boolean;
   outline?: boolean;
   labelStyle?: TextStyle;
 }
 
-export const Button: React.FC<Props> = ({ children, onPress, ...props }) => {
+export const Button: React.FC<IProps> = ({ children, onPress, ...props }) => {
   if (props.branded) {
     return (
       <BrandedButton onPress={onPress} style={[styles.base, styles.container]}>

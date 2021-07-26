@@ -7,9 +7,9 @@ import { ClickableText, Header3Text, HeaderText, RegularText } from '@covid/comp
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { appActions } from '@covid/core/state/app/slice';
-import { Dose, VaccineBrands, VaccineRequest, VaccineTypes } from '@covid/core/vaccine/dto/VaccineRequest';
+import { EVaccineBrands, EVaccineTypes, TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/fields/VaccineDoseQuestion';
 import i18n from '@covid/locale/i18n';
 import { formatDateToPost } from '@covid/utils/datetime';
@@ -22,15 +22,15 @@ import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
-type IProps = {
-  route: RouteProp<ScreenParamList, 'AboutYourVaccine'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'AboutYourVaccine'>;
 };
 
 const registerSchema = Yup.object().shape({}).concat(VaccineDoseQuestion.schema());
 
 interface IAboutYourVaccineData extends IVaccineDoseData {}
 
-export function AboutYourVaccineScreen({ route }: IProps) {
+export function AboutYourVaccineScreen({ route }: TProps) {
   const coordinator = assessmentCoordinator;
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const [hasSecondDose, setHasSecondDose] = React.useState<string | undefined>(undefined);
@@ -41,7 +41,7 @@ export function AboutYourVaccineScreen({ route }: IProps) {
     return (
       assessmentData?.vaccineData &&
       assessmentData?.vaccineData.doses[0] &&
-      assessmentData?.vaccineData.brand === VaccineBrands.JOHNSON
+      assessmentData?.vaccineData.brand === EVaccineBrands.JOHNSON
     );
   }
 
@@ -59,16 +59,16 @@ export function AboutYourVaccineScreen({ route }: IProps) {
   const processFormDataForSubmit = (formData: IAboutYourVaccineData) => {
     if (!submitting) {
       setSubmitting(true);
-      const vaccine: Partial<VaccineRequest> = {
+      const vaccine: Partial<TVaccineRequest> = {
         ...assessmentData?.vaccineData,
         patient: assessmentData?.patientData.patientId,
-        vaccine_type: VaccineTypes.COVID_VACCINE,
+        vaccine_type: EVaccineTypes.COVID_VACCINE,
       };
-      const doses: Partial<Dose | undefined>[] = [];
+      const doses: Partial<TDose | undefined>[] = [];
 
       if (formData.firstDoseDate) {
         doses[0] = vaccine?.doses && vaccine?.doses[0] ? vaccine.doses[0] : undefined;
-        const updatedDose: Partial<Dose> = {
+        const updatedDose: Partial<TDose> = {
           ...doses[0],
           batch_number: formData.firstBatchNumber,
           brand: formData.firstBrand,
@@ -82,7 +82,7 @@ export function AboutYourVaccineScreen({ route }: IProps) {
       // if setHasSecondDose is manually set to 'no', the data will not be saved (even if entered)
       if (vaccineOrFormHasSecondDose()) {
         doses[1] = vaccine?.doses && vaccine?.doses[1] ? vaccine.doses[1] : undefined;
-        const updatedDose: Partial<Dose> = {
+        const updatedDose: Partial<TDose> = {
           ...doses[1],
           batch_number: formData.secondBatchNumber,
           brand: formData.secondBrand,
@@ -95,12 +95,12 @@ export function AboutYourVaccineScreen({ route }: IProps) {
         // unlinking a "deleted" dose needs work in this ticket:
         // https://www.notion.so/joinzoe/Delete-vaccine-dose-if-user-sets-second-to-no-on-edit-2dbfcaad27e44068af02ce980e5a98da
       }
-      const updatedVaccine: Partial<VaccineRequest> = { ...vaccine, doses };
+      const updatedVaccine: Partial<TVaccineRequest> = { ...vaccine, doses };
       submitVaccine(updatedVaccine);
     }
   };
 
-  const submitVaccine = async (vaccine: Partial<VaccineRequest>) => {
+  const submitVaccine = async (vaccine: Partial<TVaccineRequest>) => {
     await vaccineService.saveVaccineResponse(assessmentData?.patientData.patientId, vaccine);
     dispatch(appActions.setLoggedVaccine(true));
     coordinator.gotoNextScreen(route.name);
@@ -167,7 +167,7 @@ export function AboutYourVaccineScreen({ route }: IProps) {
     return date1Changed || date2Changed;
   };
 
-  const buildInitialValues = (vaccine?: VaccineRequest): IVaccineDoseData => {
+  const buildInitialValues = (vaccine?: TVaccineRequest): IVaccineDoseData => {
     return {
       firstBatchNumber: vaccine?.doses[0]?.batch_number ?? '',
       firstBrand: vaccine?.doses[0]?.brand ?? undefined,
@@ -210,7 +210,7 @@ export function AboutYourVaccineScreen({ route }: IProps) {
                 formikProps={props as FormikProps<IVaccineDoseData>}
                 testID="vaccine-first-dose-question"
               />
-              {props.values.firstBrand && props.values.firstBrand !== VaccineBrands.JOHNSON ? (
+              {props.values.firstBrand && props.values.firstBrand !== EVaccineBrands.JOHNSON ? (
                 <>
                   <Header3Text style={styles.header}>{i18n.t('vaccines.your-vaccine.second-dose')}</Header3Text>
 

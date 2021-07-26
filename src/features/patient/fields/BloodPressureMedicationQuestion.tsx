@@ -10,11 +10,11 @@ export interface IBloodPressureData {
   takesBloodPressureMedicationsSartan: string;
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IBloodPressureData>;
 }
 
-export class BloodPressureMedicationQuestion extends React.Component<Props, object> {
+export class BloodPressureMedicationQuestion extends React.Component<IProps, object> {
   static initialFormValues = () => {
     return {
       takesAnyBloodPressureMedications: 'no',

@@ -1,6 +1,6 @@
-import { Coordinator, ISelectProfile, ScreenFlow } from '@covid/core/Coordinator';
+import { Coordinator, ISelectProfile, TScreenFlow } from '@covid/core/Coordinator';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
-import { PatientData } from '@covid/core/patient/PatientData';
+import { TPatientData } from '@covid/core/patient/PatientData';
 import { patientService } from '@covid/core/patient/PatientService';
 import { TProfile } from '@covid/core/profile/ProfileService';
 import { ISchoolGroupModel, ISchoolModel, ISubscribedSchoolStats } from '@covid/core/schools/Schools.dto';
@@ -10,13 +10,13 @@ import store from '@covid/core/state/store';
 import NavigatorService from '@covid/NavigatorService';
 
 export class SchoolNetworkCoordinator extends Coordinator implements ISelectProfile {
-  patientData: PatientData;
+  patientData: TPatientData;
 
   higherEducation: boolean;
 
   private selectedSchool?: ISchoolModel;
 
-  public screenFlow: Partial<ScreenFlow> = {
+  public screenFlow: Partial<TScreenFlow> = {
     JoinSchoolGroup: () => {
       this.goToGroupList();
     },
@@ -34,7 +34,7 @@ export class SchoolNetworkCoordinator extends Coordinator implements ISelectProf
     },
   };
 
-  init = (patientData: PatientData, higherEducation: boolean) => {
+  init = (patientData: TPatientData, higherEducation: boolean) => {
     this.patientData = patientData;
     this.higherEducation = higherEducation;
     this.selectedSchool = undefined;

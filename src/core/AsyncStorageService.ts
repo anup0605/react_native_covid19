@@ -1,7 +1,7 @@
 import { migrateIfNeeded } from '@covid/utils/async-storage-migrate';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { AuthenticatedUser } from './user/UserService';
+import { TAuthenticatedUser } from './user/UserService';
 
 const AUTH_TOKEN = 'authToken';
 const USER_ID = 'userId';
@@ -16,16 +16,16 @@ const ASKED_COUNTRY = 'askedCountry';
 export const PERSONALISED_LOCAL_DATA = 'personalisedLocalData';
 export const DISMISSED_CALLOUTS = 'dismissedCallouts';
 
-export type PersonalisedLocalData = {
+export type TPersonalisedLocalData = {
   mapUrl: string;
-  mapConfig?: Coordinates;
+  mapConfig?: TCoordinates;
   lad: string;
   name: string;
   cases: number;
   appUsers: number;
 };
 
-export type Coordinates = {
+export type TCoordinates = {
   lat: number;
   lng: number;
 };
@@ -35,7 +35,7 @@ export class AsyncStorageService {
     return AsyncStorage.getItem(USER_ID);
   }
 
-  public static async getStoredData(): Promise<AuthenticatedUser | null> {
+  public static async getStoredData(): Promise<TAuthenticatedUser | null> {
     await migrateIfNeeded();
     let userToken: string | null = '';
     let userId: string | null = '';

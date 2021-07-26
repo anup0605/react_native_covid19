@@ -11,7 +11,7 @@ import { Coordinator, IUpdatePatient } from '@covid/core/Coordinator';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { isMinorAge } from '@covid/core/patient/PatientState';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import i18n from '@covid/locale/i18n';
@@ -123,7 +123,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
       gender_identity: formData.genderIdentity,
       interacted_with_covid: formData.everExposed,
       year_of_birth: cleanIntegerVal(formData.yearOfBirth),
-    } as Partial<PatientInfosRequest>;
+    } as Partial<TPatientInfosRequest>;
 
     if (!isMinorAge(cleanIntegerVal(formData.yearOfBirth))) {
       infos = {

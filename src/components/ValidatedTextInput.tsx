@@ -3,13 +3,13 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
 
-interface Props extends TextInputProps {
+interface IProps extends TextInputProps {
   error?: boolean;
   label?: string;
   testID?: string;
 }
 
-export class ValidatedTextInput extends React.Component<Props, object> {
+export class ValidatedTextInput extends React.Component<IProps, object> {
   private textInput: TextInput | null;
 
   focus() {

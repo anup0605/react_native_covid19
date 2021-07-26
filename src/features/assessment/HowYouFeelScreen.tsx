@@ -5,8 +5,8 @@ import Screen from '@covid/components/Screen';
 import { SelectorButton } from '@covid/components/SelectorButton';
 import { RegularBoldText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { RootState } from '@covid/core/state/root';
-import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TRootState } from '@covid/core/state/root';
+import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
@@ -19,15 +19,15 @@ import { useSelector } from 'react-redux';
 
 import { USStudyInvite } from './partials/USStudyInvite';
 
-type Props = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'HowYouFeel'>;
   route: RouteProp<ScreenParamList, 'HowYouFeel'>;
 };
 
-export const HowYouFeelScreen: React.FC<Props> = ({ route, navigation }) => {
+export const HowYouFeelScreen: React.FC<TProps> = ({ route, navigation }) => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [location, setLocation] = React.useState('');
-  const currentProfileVaccines = useSelector<RootState, VaccineRequest[]>((state) => state.vaccines.vaccines);
+  const currentProfileVaccines = useSelector<TRootState, TVaccineRequest[]>((state) => state.vaccines.vaccines);
   const isFocused = useIsFocused();
 
   React.useEffect(() => {

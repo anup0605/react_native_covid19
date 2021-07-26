@@ -1,15 +1,15 @@
-import { PatientData } from '@covid/core/patient/PatientData';
+import { TPatientData } from '@covid/core/patient/PatientData';
 import { TProfile } from '@covid/core/profile/ProfileService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 
-export type ScreenName = keyof ScreenParamList;
-export type ScreenFlow = {
-  [key in ScreenName]: (param?: any) => void;
+export type TScreenName = keyof TScreenParamList;
+export type TScreenFlow = {
+  [key in TScreenName]: (param?: any) => void;
 };
 
 export interface IUpdatePatient {
-  updatePatientInfo(patientInfo: Partial<PatientInfosRequest>): Promise<PatientInfosRequest>;
+  updatePatientInfo(patientInfo: Partial<TPatientInfosRequest>): Promise<TPatientInfosRequest>;
 }
 
 export interface ISelectProfile {
@@ -22,11 +22,11 @@ export interface IEditableProfile {
 }
 
 export abstract class Coordinator {
-  patientData: PatientData;
+  patientData: TPatientData;
 
-  screenFlow: Partial<ScreenFlow>;
+  screenFlow: Partial<TScreenFlow>;
 
-  gotoNextScreen = (screenName: ScreenName, params?: any) => {
+  gotoNextScreen = (screenName: TScreenName, params?: any) => {
     if (this.screenFlow[screenName]) {
       this.screenFlow[screenName]!(params);
     } else {

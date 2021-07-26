@@ -4,7 +4,7 @@ import Screen, { Header } from '@covid/components/Screen';
 import { HeaderText, RegularBoldText, RegularText } from '@covid/components/Text';
 import { Coordinator } from '@covid/core/Coordinator';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
@@ -12,13 +12,13 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-type Props = {
-  route: RouteProp<ScreenParamList, 'SchoolIntro'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'SchoolIntro'>;
 };
 
 const enableCTAs = false;
 
-export const SchoolIntroScreen: React.FC<Props> = ({ route }) => {
+export const SchoolIntroScreen: React.FC<TProps> = ({ route }) => {
   const coordinator: Coordinator = schoolNetworkCoordinator;
 
   const goNext = () => {

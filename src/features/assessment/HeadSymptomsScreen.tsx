@@ -3,7 +3,7 @@ import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
-import { HeadSymptomsData, HeadSymptomsQuestions } from '@covid/features/assessment/fields/HeadSymptomsQuestions';
+import { HeadSymptomsQuestions, THeadSymptomsData } from '@covid/features/assessment/fields/HeadSymptomsQuestions';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
@@ -13,12 +13,12 @@ import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-type Props = {
+type TProps = {
   route: RouteProp<ScreenParamList, 'HeadSymptoms'>;
 };
 
-export const HeadSymptomsScreen: React.FC<Props> = ({ route }) => {
-  function onSubmit(values: HeadSymptomsData, formikHelpers: FormikHelpers<HeadSymptomsData>) {
+export const HeadSymptomsScreen: React.FC<TProps> = ({ route }) => {
+  function onSubmit(values: THeadSymptomsData, formikHelpers: FormikHelpers<THeadSymptomsData>) {
     assessmentService.saveAssessment(HeadSymptomsQuestions.createAssessment(values));
     assessmentCoordinator.gotoNextScreen(route.name);
     formikHelpers.setSubmitting(false);

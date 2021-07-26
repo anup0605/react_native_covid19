@@ -7,7 +7,7 @@ import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native';
 
 import { ErrorText, RegularText } from './Text';
 
-type LoadingProps = {
+type TProps = {
   error: AppException | null;
   status?: string;
   style?: StyleSheet | object;
@@ -15,7 +15,7 @@ type LoadingProps = {
   onPress?: () => void;
 };
 
-const ErrorMessaging = ({ error, status, onRetry, onPress }: LoadingProps) => {
+const ErrorMessaging = ({ error, status, onRetry, onPress }: TProps) => {
   let messageKey: string | null = null;
   let message: string | null = null;
   let shouldRetry = false;
@@ -46,7 +46,7 @@ const ErrorMessaging = ({ error, status, onRetry, onPress }: LoadingProps) => {
   );
 };
 
-export const Loading = (props: LoadingProps) => {
+export const Loading = (props: TProps) => {
   return (
     <View style={styles.loadingView}>
       {props.error ? (
@@ -61,7 +61,7 @@ export const Loading = (props: LoadingProps) => {
   );
 };
 
-export const LoadingModal = (props: LoadingProps) => {
+export const LoadingModal = (props: TProps) => {
   return (
     <Modal transparent visible>
       <View style={styles.centeredView}>

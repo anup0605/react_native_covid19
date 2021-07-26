@@ -18,25 +18,25 @@ import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutF
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
-type PropsType = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'Register'>;
   route: RouteProp<ScreenParamList, 'Register'>;
   setUsername: (username: string) => void;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   enableSubmit: boolean;
   accountExists: boolean;
 };
 
-const initialState: State = {
+const initialState: TState = {
   accountExists: false,
   enableSubmit: false,
   errorMessage: '',
 };
 
-interface RegistrationData {
+interface IRegistrationData {
   email: string;
   password: string;
 }
@@ -46,10 +46,10 @@ const initialRegistrationValues = {
   password: '',
 };
 
-class RegisterScreen extends React.Component<PropsType, State> {
+class RegisterScreen extends React.Component<TProps, TState> {
   private passwordComponent: any;
 
-  constructor(props: PropsType) {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -59,7 +59,7 @@ class RegisterScreen extends React.Component<PropsType, State> {
     return true;
   };
 
-  private handleCreateAccount(formData: RegistrationData) {
+  private handleCreateAccount(formData: IRegistrationData) {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false }); // Stop resubmissions
       userService
@@ -129,7 +129,7 @@ class RegisterScreen extends React.Component<PropsType, State> {
       <View style={styles.flex} testID="register-screen">
         <Formik
           initialValues={initialRegistrationValues}
-          onSubmit={(values: RegistrationData) => this.handleCreateAccount(values)}
+          onSubmit={(values: IRegistrationData) => this.handleCreateAccount(values)}
           validationSchema={this.registerSchema}
         >
           {(props) => {

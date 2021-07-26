@@ -1,9 +1,9 @@
-import { SvgProps } from '@assets/Svg';
+import { TSvgProps } from '@assets/Svg';
 import { colors } from '@theme';
 import * as React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 
-interface IProps extends SvgProps {
+interface IProps extends TSvgProps {
   backgroundColor?: string;
   chveronColor?: string;
 }

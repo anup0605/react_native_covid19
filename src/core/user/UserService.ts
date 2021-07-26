@@ -7,22 +7,27 @@ import { UserNotFoundException } from '@covid/core/Exception';
 import { LocalisationService, localisationService } from '@covid/core/localisation/LocalisationService';
 import { AxiosResponse } from 'axios';
 
-import { LoginOrRegisterResponse, PiiRequest, UpdateCountryCodeRequest, UserResponse } from './dto/UserAPIContracts';
+import {
+  TLoginOrRegisterResponse,
+  TPiiRequest,
+  TUpdateCountryCodeRequest,
+  TUserResponse,
+} from './dto/UserAPIContracts';
 
-export type AuthenticatedUser = {
+export type TAuthenticatedUser = {
   userToken: string;
   userId: string;
 };
 
 export interface IUserService {
   hasUser: boolean;
-  register(email: string, password: string): Promise<LoginOrRegisterResponse>; // TODO: define return object
-  login(email: string, password: string): Promise<LoginOrRegisterResponse>; // TODO: define return object
+  register(email: string, password: string): Promise<TLoginOrRegisterResponse>; // TODO: define return object
+  login(email: string, password: string): Promise<TLoginOrRegisterResponse>; // TODO: define return object
   logout(): void;
   resetPassword(email: string): Promise<any>; // TODO: define return object
-  getUser(): Promise<UserResponse | null>;
-  updateCountryCode(body: UpdateCountryCodeRequest): Promise<any>;
-  updatePii(pii: Partial<PiiRequest>): Promise<any>;
+  getUser(): Promise<TUserResponse | null>;
+  updateCountryCode(body: TUpdateCountryCodeRequest): Promise<any>;
+  updatePii(pii: Partial<TPiiRequest>): Promise<any>;
   deleteRemoteUserData(): Promise<any>;
   loadUser(): void;
   getFirstPatientId(): Promise<string | null>;
@@ -45,10 +50,10 @@ export default class UserService extends ApiClientBase implements IUserService {
       username: email,
     });
 
-    let response: AxiosResponse<LoginOrRegisterResponse>;
+    let response: AxiosResponse<TLoginOrRegisterResponse>;
 
     try {
-      response = await this.client.post<LoginOrRegisterResponse>('/auth/login/', requestBody, this.configEncoded);
+      response = await this.client.post<TLoginOrRegisterResponse>('/auth/login/', requestBody, this.configEncoded);
     } catch (e) {
       throw new UserNotFoundException('Invalid login');
     }
@@ -74,8 +79,8 @@ export default class UserService extends ApiClientBase implements IUserService {
     return this.client.post(`/auth/password/reset/`, payload);
   }
 
-  private handleLoginOrRegisterResponse = async (response: AxiosResponse<LoginOrRegisterResponse>) => {
-    const data = this.getData<LoginOrRegisterResponse>(response);
+  private handleLoginOrRegisterResponse = async (response: AxiosResponse<TLoginOrRegisterResponse>) => {
+    const data = this.getData<TLoginOrRegisterResponse>(response);
     const authToken = data.key;
     await this.storeTokenInAsyncStorage(authToken, data.user.pii);
     this.client.defaults.headers.Authorization = `Token ${authToken}`;
@@ -127,13 +132,13 @@ export default class UserService extends ApiClientBase implements IUserService {
     };
     const requestBody = objectToQueryString(payload);
 
-    const response = await this.client.post<LoginOrRegisterResponse>('/auth/signup/', requestBody, this.configEncoded);
+    const response = await this.client.post<TLoginOrRegisterResponse>('/auth/signup/', requestBody, this.configEncoded);
     return this.handleLoginOrRegisterResponse(response);
   }
 
-  public async getUser(): Promise<UserResponse | null> {
+  public async getUser(): Promise<TUserResponse | null> {
     try {
-      const { data: profile } = await this.client.get<UserResponse>(`/profile/?u=${ApiClientBase.userId}`);
+      const { data: profile } = await this.client.get<TUserResponse>(`/profile/?u=${ApiClientBase.userId}`);
       return profile;
     } catch (error) {
       handleServiceError(error);
@@ -141,9 +146,9 @@ export default class UserService extends ApiClientBase implements IUserService {
     return null;
   }
 
-  public async updateCountryCode(body: UpdateCountryCodeRequest): Promise<UserResponse | null> {
+  public async updateCountryCode(body: TUpdateCountryCodeRequest): Promise<TUserResponse | null> {
     try {
-      const { data } = await this.client.patch<UserResponse>(`/users/country_code/`, body);
+      const { data } = await this.client.patch<TUserResponse>(`/users/country_code/`, body);
       return data;
     } catch (error) {
       handleServiceError(error);
@@ -151,7 +156,7 @@ export default class UserService extends ApiClientBase implements IUserService {
     return null;
   }
 
-  public async updatePii(pii: Partial<PiiRequest>) {
+  public async updatePii(pii: Partial<TPiiRequest>) {
     const { userId } = ApiClientBase;
     return this.client.patch(`/information/${userId}/`, pii);
   }

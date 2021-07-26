@@ -1,29 +1,29 @@
 import i18n from '@covid/locale/i18n';
 
-export type VaccineRequest = {
+export type TVaccineRequest = {
   id: string;
   version: string; // document/schema version
   patient: string; //	Patient id
 
-  vaccine_type: VaccineTypes;
-  brand: VaccineBrands | null;
-  placebo: PlaceboStatus | null;
-  doses: Partial<Dose>[];
+  vaccine_type: EVaccineTypes;
+  brand: EVaccineBrands | null;
+  placebo: EPlaceboStatus | null;
+  doses: Partial<TDose>[];
   description: string; // eg 'mRNA'
 };
 
-export type Dose = {
+export type TDose = {
   id: string;
   vaccine: string;
-  location: VaccineLocations;
+  location: EVaccineLocations;
   sequence: number;
   date_taken_specific: string;
-  brand: VaccineBrands | null;
+  brand: EVaccineBrands | null;
   description: string; // eg 'mRNA'
   batch_number: string;
 };
 
-export type DoseSymptomsRequest = {
+export type TDoseSymptomsRequest = {
   id: string;
   patient: string; //	Patient ID
   dose: string; // Dose ID
@@ -38,13 +38,13 @@ export type DoseSymptomsRequest = {
   other: string;
 };
 
-export enum VaccineTypes {
+export enum EVaccineTypes {
   COVID_TRIAL = 'covid_trial',
   COVID_VACCINE = 'covid_vaccine',
   SEASONAL_FLU = 'flu_seasonal',
 }
 
-export enum VaccineBrands {
+export enum EVaccineBrands {
   PFIZER = 'pfizer',
   ASTRAZENECA = 'astrazeneca',
   MODERNA = 'moderna',
@@ -53,20 +53,20 @@ export enum VaccineBrands {
 }
 
 export const vaccineBrandDisplayName = {
-  [VaccineBrands.PFIZER]: 'Pfizer/BioNTech',
-  [VaccineBrands.ASTRAZENECA]: 'Oxford/Astrazeneca',
-  [VaccineBrands.MODERNA]: 'Moderna',
-  [VaccineBrands.JOHNSON]: 'Johnson and Johnson',
-  [VaccineBrands.NOT_SURE]: i18n.t('vaccines.your-vaccine.name-i-dont-know'),
+  [EVaccineBrands.PFIZER]: 'Pfizer/BioNTech',
+  [EVaccineBrands.ASTRAZENECA]: 'Oxford/Astrazeneca',
+  [EVaccineBrands.MODERNA]: 'Moderna',
+  [EVaccineBrands.JOHNSON]: 'Johnson and Johnson',
+  [EVaccineBrands.NOT_SURE]: i18n.t('vaccines.your-vaccine.name-i-dont-know'),
 };
 
-export enum PlaceboStatus {
+export enum EPlaceboStatus {
   YES = 'yes',
   NO = 'no',
   UNSURE = 'unsure',
 }
 
-export enum VaccineLocations {
+export enum EVaccineLocations {
   GP = 'gp',
   CARE_HOME = 'care_home',
   HOME = 'home',

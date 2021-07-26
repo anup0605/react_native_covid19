@@ -1,18 +1,18 @@
 import { ClickableText, RegularBoldText, RegularText } from '@covid/components/Text';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 import { ScrollView } from 'react-native';
 
-type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'Consent'>;
-  route: RouteProp<ScreenParamList, 'Consent'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
+  route: RouteProp<TScreenParamList, 'Consent'>;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ConsentScreenGB: React.FC<PropsType> = ({ navigation, route, setAgreed }) => {
+const ConsentScreenGB: React.FC<TProps> = ({ navigation, route, setAgreed }) => {
   const onInfoLinkPress = React.useCallback(
     () => openWebLink('https://www.nhs.uk/conditions/coronavirus-covid-19/'),
     [],

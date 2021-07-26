@@ -1,11 +1,11 @@
-import { SvgProps } from '@assets/Svg';
+import { TSvgProps } from '@assets/Svg';
 import { colors } from '@theme';
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
 const color = colors.textDark;
 
-const MyStudyIcon: React.FC<SvgProps> = ({ width = 14, height = 16, style = {} }) => {
+const MyStudyIcon: React.FC<TSvgProps> = ({ width = 14, height = 16, style = {} }) => {
   return (
     <Svg height={height} style={style} viewBox="0 0 14 16" width={width}>
       <Path d="M10.068 10.7227H3.93164" stroke={color} strokeLinecap="round" strokeLinejoin="round" />

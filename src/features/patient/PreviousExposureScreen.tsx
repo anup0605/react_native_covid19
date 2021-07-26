@@ -10,7 +10,7 @@ import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { stripAndRound } from '@covid/utils/number';
@@ -38,12 +38,12 @@ const initialFormValues = {
   unwellMonthBefore: 'no',
 };
 
-type HealthProps = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'PreviousExposure'>;
   route: RouteProp<ScreenParamList, 'PreviousExposure'>;
 };
 
-type State = {
+type TState = {
   pastSymptomAnosmia: boolean;
   pastSymptomShortnessOfBreath: boolean;
   pastSymptomFatigue: boolean;
@@ -58,7 +58,7 @@ type State = {
   errorMessage: string;
 };
 
-const initialState: State = {
+const initialState: TState = {
   errorMessage: '',
   pastSymptomAbdominalPain: false,
   pastSymptomAnosmia: false,
@@ -73,8 +73,8 @@ const initialState: State = {
   pastSymptomSkippedMeals: false,
 };
 
-export default class PreviousExposureScreen extends React.Component<HealthProps, State> {
-  constructor(props: HealthProps) {
+export default class PreviousExposureScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -114,7 +114,7 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
   private createPatientInfos(formData: IYourHealthData) {
     let infos = {
       unwell_month_before: formData.unwellMonthBefore === 'yes',
-    } as Partial<PatientInfosRequest>;
+    } as Partial<TPatientInfosRequest>;
 
     if (infos.unwell_month_before) {
       infos = {
@@ -154,11 +154,7 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
       { label: i18n.t('past-symptom-changed-much-worse'), value: 'much_worse' },
     ];
     return (
-      <Screen
-        navigation={this.props.navigation}
-        profile={patientCoordinator.patientData?.patientState?.profile}
-        testID="previous-exposure-screen"
-      >
+      <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="previous-exposure-screen">
         <ProgressHeader maxSteps={6} step={4} title={i18n.t('previous-exposure-title')} />
 
         <Formik

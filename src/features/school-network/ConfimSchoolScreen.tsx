@@ -2,7 +2,7 @@ import { Button } from '@covid/components/buttons/Button';
 import Screen from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -12,7 +12,7 @@ import { StyleSheet, View } from 'react-native';
 import { JoinHeader } from './partials';
 
 interface IProps {
-  route: RouteProp<ScreenParamList, 'ConfirmSchool'>;
+  route: RouteProp<TScreenParamList, 'ConfirmSchool'>;
 }
 
 function ConfirmSchoolScreen({ route }: IProps) {

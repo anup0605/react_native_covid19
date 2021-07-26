@@ -4,10 +4,10 @@ import Screen from '@covid/components/Screen';
 import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { ConfigType } from '@covid/core/Config';
+import { TConfigType } from '@covid/core/Config';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import { patientService } from '@covid/core/patient/PatientService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { AtopyQuestions, IAtopyData } from '@covid/features/patient/fields/AtopyQuestions';
 import { BloodGroupQuestion, IBloodGroupData } from '@covid/features/patient/fields/BloodGroupQuestion';
 import {
@@ -16,7 +16,7 @@ import {
 } from '@covid/features/patient/fields/BloodPressureMedicationQuestion';
 import { DiabetesQuestions, IDiabetesData } from '@covid/features/patient/fields/DiabetesQuestions';
 import { IRaceEthnicityData, RaceEthnicityQuestion } from '@covid/features/patient/fields/RaceEthnicityQuestion';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -27,12 +27,12 @@ import * as Yup from 'yup';
 
 interface IBackfillData extends IBloodPressureData, IRaceEthnicityData, IAtopyData, IDiabetesData, IBloodGroupData {}
 
-type BackDateProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'ProfileBackDate'>;
-  route: RouteProp<ScreenParamList, 'ProfileBackDate'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'ProfileBackDate'>;
+  route: RouteProp<TScreenParamList, 'ProfileBackDate'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   needBloodPressureAnswer: boolean;
   needRaceEthnicityAnswer: boolean;
@@ -41,7 +41,7 @@ type State = {
   needBloodGroupAnswer: boolean;
 };
 
-const initialState: State = {
+const initialState: TState = {
   errorMessage: '',
   needAtopyAnswers: false,
   needBloodGroupAnswer: false,
@@ -50,12 +50,12 @@ const initialState: State = {
   needRaceEthnicityAnswer: false,
 };
 
-export default class ProfileBackDateScreen extends React.Component<BackDateProps, State> {
-  get features(): ConfigType | undefined {
+export default class ProfileBackDateScreen extends React.Component<TProps, TState> {
+  get features(): TConfigType | undefined {
     return localisationService.getConfig();
   }
 
-  constructor(props: BackDateProps) {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -126,7 +126,7 @@ export default class ProfileBackDateScreen extends React.Component<BackDateProps
   }
 
   createPatientInfos(formData: IBackfillData) {
-    let infos: Partial<PatientInfosRequest> = {};
+    let infos: Partial<TPatientInfosRequest> = {};
 
     if (this.state.needBloodPressureAnswer) {
       if (formData.takesAnyBloodPressureMedications) {
@@ -198,7 +198,6 @@ export default class ProfileBackDateScreen extends React.Component<BackDateProps
   render() {
     return (
       <Screen
-        navigation={this.props.navigation}
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="profile-back-date-screen"
       >

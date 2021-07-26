@@ -1,15 +1,15 @@
 import { IThemeVars } from '@covid/themes/types';
-import { DefaultTheme } from 'styled-components';
+import { IDefaultTheme } from 'styled-components';
 
 import { colors } from './colors';
 import { grid } from './grid';
 import { styles } from './typography';
 
 declare module 'styled-components' {
-  export interface DefaultTheme extends IThemeVars {}
+  export interface IDefaultTheme extends IThemeVars {}
 }
 
-const theme: DefaultTheme = {
+const theme: IDefaultTheme = {
   colors,
   grid,
   text: styles,

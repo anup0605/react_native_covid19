@@ -1,5 +1,5 @@
-import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 
-export type VaccineData = {
-  vaccine: Partial<VaccineRequest>;
+export type TVaccineData = {
+  vaccine: Partial<TVaccineRequest>;
 };

@@ -3,7 +3,7 @@ import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen from '@covid/components/Screen';
 import { RegularBoldText, RegularText } from '@covid/components/Text';
 import { Coordinator } from '@covid/core/Coordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
@@ -13,11 +13,11 @@ import { StyleSheet, View } from 'react-native';
 
 import { schoolNetworkCoordinator } from './SchoolNetworkCoordinator';
 
-type Props = {
-  route: RouteProp<ScreenParamList, 'SchoolHowTo'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'SchoolHowTo'>;
 };
 
-export const SchoolHowToScreen: React.FC<Props> = ({ route }) => {
+export const SchoolHowToScreen: React.FC<TProps> = ({ route }) => {
   const coordinator: Coordinator = schoolNetworkCoordinator;
 
   const goNext = () => {

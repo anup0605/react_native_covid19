@@ -2,8 +2,8 @@ import Screen from '@covid/components/Screen';
 import { ISchoolModel } from '@covid/core/schools/Schools.dto';
 import { selectPatientsJoinedGroups } from '@covid/core/schools/Schools.slice';
 import { schoolService } from '@covid/core/schools/SchoolService';
-import { RootState } from '@covid/core/state/root';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TRootState } from '@covid/core/state/root';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { RouteProp } from '@react-navigation/native';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
@@ -12,12 +12,12 @@ import { UniversityForm } from './forms';
 import { JoinHeader, SelectedSchool } from './partials';
 
 interface IProps {
-  route: RouteProp<ScreenParamList, 'ConfirmSchool'>;
+  route: RouteProp<TScreenParamList, 'ConfirmSchool'>;
 }
 
 export default function JoinHigherEducationScreen({ route }: IProps) {
   const [schools, setSchools] = React.useState<ISchoolModel[]>([]);
-  const currentJoinedGroup = useSelector((state: RootState) =>
+  const currentJoinedGroup = useSelector((state: TRootState) =>
     selectPatientsJoinedGroups(state, route.params?.patientData?.patientId, true),
   );
 

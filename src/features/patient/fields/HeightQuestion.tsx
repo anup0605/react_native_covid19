@@ -17,15 +17,15 @@ export interface IHeightData {
   heightUnit: string;
 }
 
-interface FCWithStatic<P> extends React.FC<P> {
+interface IFCWithStatic<P> extends React.FC<P> {
   initialFormValues: () => IHeightData;
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IHeightData>;
 }
 
-const HeightInInches: React.FC<Props> = ({ formikProps }) => {
+const HeightInInches: React.FC<IProps> = ({ formikProps }) => {
   return (
     <View style={styles.primaryFieldRow}>
       <View style={styles.feetField}>
@@ -58,7 +58,7 @@ const HeightInInches: React.FC<Props> = ({ formikProps }) => {
   );
 };
 
-const HeightInCm: React.FC<Props> = ({ formikProps }) => {
+const HeightInCm: React.FC<IProps> = ({ formikProps }) => {
   return (
     <View style={styles.cmField}>
       <ValidatedTextInput
@@ -76,7 +76,7 @@ const HeightInCm: React.FC<Props> = ({ formikProps }) => {
   );
 };
 
-export const HeightQuestion: FCWithStatic<Props> = ({ formikProps }) => {
+export const HeightQuestion: IFCWithStatic<IProps> = ({ formikProps }) => {
   return (
     <FieldWrapper style={styles.fieldWrapper}>
       <RegularText>

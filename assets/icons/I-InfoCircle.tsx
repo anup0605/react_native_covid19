@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-type CheckProps = {
+type TProps = {
   width?: number | string;
   height?: number | string;
 };
@@ -9,7 +9,7 @@ type CheckProps = {
 const ratio = 12.75 / 3.5;
 const defaultWidth = 18;
 
-const IInfoCircle: React.FC<CheckProps> = ({ width = defaultWidth, height = defaultWidth * ratio }) => {
+const IInfoCircle: React.FC<TProps> = ({ width = defaultWidth, height = defaultWidth * ratio }) => {
   return (
     <Svg fill="none" height={height} viewBox="-6 -0.5 16 16" width={width}>
       <Path d="M2 13L2 6.75" stroke="#24262B" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />

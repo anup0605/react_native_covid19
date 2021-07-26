@@ -3,33 +3,33 @@ import { ApiClientBase } from '@covid/core/api/ApiClientBase';
 import { handleServiceError } from '@covid/core/api/ApiServiceErrors';
 import { consentService } from '@covid/core/consent/ConsentService';
 import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
-import { PatientData } from '@covid/core/patient/PatientData';
-import { getInitialPatientState, isMinorAge, PatientStateType } from '@covid/core/patient/PatientState';
+import { TPatientData } from '@covid/core/patient/PatientData';
+import { getInitialPatientState, isMinorAge, TPatientStateType } from '@covid/core/patient/PatientState';
 import { TProfile } from '@covid/core/profile/ProfileService';
-import { PatientInfosRequest, VaccineStatus } from '@covid/core/user/dto/UserAPIContracts';
+import { EVaccineStatus, TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { DEFAULT_PROFILE } from '@covid/utils/avatar';
 
 export interface IPatientService {
-  myPatientProfile(): Promise<Profile | null>;
-  listProfiles(): Promise<Profile[] | null>;
-  createPatient(infos: Partial<PatientInfosRequest>): Promise<PatientInfosRequest>;
-  updatePatientInfo(patientId: string, infos: Partial<PatientInfosRequest>): Promise<PatientInfosRequest>;
+  myPatientProfile(): Promise<TProfile | null>;
+  listProfiles(): Promise<TProfile[] | null>;
+  createPatient(infos: Partial<TPatientInfosRequest>): Promise<TPatientInfosRequest>;
+  updatePatientInfo(patientId: string, infos: Partial<TPatientInfosRequest>): Promise<TPatientInfosRequest>;
   setUSStudyInviteResponse(patientId: string, response: boolean): void;
-  getPatientDataById(patientId: string): Promise<PatientData>;
-  getPatientDataByProfile(profile: TProfile): Promise<PatientData>;
-  updatePatientState(patientState: PatientStateType, patient: PatientInfosRequest): Promise<PatientStateType>;
+  getPatientDataById(patientId: string): Promise<TPatientData>;
+  getPatientDataByProfile(profile: TProfile): Promise<TPatientData>;
+  updatePatientState(patientState: TPatientStateType, patient: TPatientInfosRequest): Promise<TPatientStateType>;
 }
 
 export class PatientService extends ApiClientBase implements IPatientService {
   protected client = ApiClientBase.client;
 
-  public async myPatientProfile(): Promise<Profile | null> {
+  public async myPatientProfile(): Promise<TProfile | null> {
     try {
       // Append the userId to the endpoint for increased logging observability only.
       // (The backend ignores the appended value in favour of the authenticated userId
       // if there's any inconsistency.)
-      const data = (await this.client.get(`/patient_list/?u=${ApiClientBase.userId}`)).data as Profile[];
+      const data = (await this.client.get(`/patient_list/?u=${ApiClientBase.userId}`)).data as TProfile[];
       return !!data && data.length > 0 ? data[0] : null;
     } catch (error) {
       handleServiceError(error);
@@ -47,27 +47,27 @@ export class PatientService extends ApiClientBase implements IPatientService {
     return null;
   }
 
-  public async createPatient(infos: Partial<PatientInfosRequest>) {
+  public async createPatient(infos: Partial<TPatientInfosRequest>) {
     infos = {
       ...infos,
       version: this.getPatientVersion(),
     };
-    return (await this.client.post<PatientInfosRequest>(`/patients/`, infos)).data;
+    return (await this.client.post<TPatientInfosRequest>(`/patients/`, infos)).data;
   }
 
-  public async updatePatientInfo(patientId: string, infos: Partial<PatientInfosRequest>) {
+  public async updatePatientInfo(patientId: string, infos: Partial<TPatientInfosRequest>) {
     infos = {
       ...infos,
       version: this.getPatientVersion(),
     };
-    return (await this.client.patch<PatientInfosRequest>(`/patients/${patientId}/`, infos)).data;
+    return (await this.client.patch<TPatientInfosRequest>(`/patients/${patientId}/`, infos)).data;
   }
 
   private getPatientVersion() {
     return appConfig.patientVersion;
   }
 
-  public async getPatientDataById(patientId: string): Promise<PatientData> {
+  public async getPatientDataById(patientId: string): Promise<TPatientData> {
     let patientState = getInitialPatientState(patientId);
     const patientInfo = await this.getPatientInfo(patientId);
 
@@ -80,10 +80,10 @@ export class PatientService extends ApiClientBase implements IPatientService {
       patientInfo,
       patientState,
       profile: patientState.profile,
-    } as PatientData;
+    } as TPatientData;
   }
 
-  public async getPatientDataByProfile(profile: TProfile): Promise<PatientData> {
+  public async getPatientDataByProfile(profile: TProfile): Promise<TPatientData> {
     let patientState = getInitialPatientState(profile.id);
     const patientInfo = await this.getPatientInfo(profile.id);
 
@@ -96,12 +96,12 @@ export class PatientService extends ApiClientBase implements IPatientService {
       patientInfo,
       patientState,
       profile,
-    } as PatientData;
+    } as TPatientData;
   }
 
-  private async getPatientInfo(patientId: string): Promise<PatientInfosRequest | null> {
+  private async getPatientInfo(patientId: string): Promise<TPatientInfosRequest | null> {
     try {
-      const patientResponse = await this.client.get<PatientInfosRequest>(`/patients/${patientId}/`);
+      const patientResponse = await this.client.get<TPatientInfosRequest>(`/patients/${patientId}/`);
       return patientResponse.data;
     } catch (error) {
       handleServiceError(error);
@@ -110,9 +110,9 @@ export class PatientService extends ApiClientBase implements IPatientService {
   }
 
   public async updatePatientState(
-    patientState: PatientStateType,
-    patient: PatientInfosRequest,
-  ): Promise<PatientStateType> {
+    patientState: TPatientStateType,
+    patient: TPatientInfosRequest,
+  ): Promise<TPatientStateType> {
     // Calculate the flags based on patient info
     const hasRaceEthnicityAnswer = Array.isArray(patient.race) && patient.race.length > 0;
     const isFemale = patient.gender === 0;
@@ -155,7 +155,7 @@ export class PatientService extends ApiClientBase implements IPatientService {
     const shouldShowUSStudyInvite = patient.contact_additional_studies === null;
     const hasBloodGroupAnswer = patient.blood_group != null;
     const hasSchoolGroup = patient.has_school_group;
-    const shouldShowVaccineList = patient.vaccine_status !== VaccineStatus.DO_NOT_ASK;
+    const shouldShowVaccineList = patient.vaccine_status !== EVaccineStatus.DO_NOT_ASK;
     const isMinor = isMinorAge(patient.year_of_birth);
 
     return {

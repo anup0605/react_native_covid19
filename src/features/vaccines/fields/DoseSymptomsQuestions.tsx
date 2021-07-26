@@ -2,11 +2,11 @@ import InfoCircle from '@assets/icons/InfoCircle';
 import { TextareaWithCharCount } from '@covid/components';
 import { CheckboxList } from '@covid/components/Checkbox';
 import { RegularText } from '@covid/components/Text';
-import { DoseSymptomsRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TDoseSymptomsRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import {
   createSymptomCheckboxes,
   IDoseSymptomQuestions,
-  SymptomCheckBoxData,
+  TSymptomCheckBoxData,
 } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
 import { colors } from '@covid/themes/theme/colors';
@@ -15,9 +15,9 @@ import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-export type DoseSymptomsData = DoseSymptomsCheckBoxData & DoseSymptomsFollowUpData;
+export type TDoseSymptomsData = TDoseSymptomsCheckBoxData & TDoseSymptomsFollowUpData;
 
-type DoseSymptomsCheckBoxData = {
+type TDoseSymptomsCheckBoxData = {
   pain: boolean;
   redness: boolean;
   swelling: boolean;
@@ -29,18 +29,18 @@ type DoseSymptomsCheckBoxData = {
   other: boolean;
 };
 
-type DoseSymptomsFollowUpData = {
+type TDoseSymptomsFollowUpData = {
   otherSymptoms: string;
 };
 
-type Props = {
-  formikProps: FormikProps<DoseSymptomsData>;
+type TProps = {
+  formikProps: FormikProps<TDoseSymptomsData>;
 };
 
-export const DoseSymptomsQuestions: IDoseSymptomQuestions<Props, DoseSymptomsData> = (props: Props) => {
+export const DoseSymptomsQuestions: IDoseSymptomQuestions<TProps, TDoseSymptomsData> = (props: TProps) => {
   const { formikProps } = props;
 
-  const checkboxes: SymptomCheckBoxData<DoseSymptomsCheckBoxData, DoseSymptomsFollowUpData>[] = [
+  const checkboxes: TSymptomCheckBoxData<TDoseSymptomsCheckBoxData, TDoseSymptomsFollowUpData>[] = [
     { label: i18n.t('vaccines.dose-symptoms.pain'), value: 'pain' },
     { label: i18n.t('vaccines.dose-symptoms.redness'), value: 'redness' },
     { label: i18n.t('vaccines.dose-symptoms.swelling'), value: 'swelling' },
@@ -85,7 +85,7 @@ export const DoseSymptomsQuestions: IDoseSymptomQuestions<Props, DoseSymptomsDat
   );
 };
 
-DoseSymptomsQuestions.initialFormValues = (): DoseSymptomsData => {
+DoseSymptomsQuestions.initialFormValues = (): TDoseSymptomsData => {
   return {
     bruising: false,
     glands: false,
@@ -104,7 +104,7 @@ DoseSymptomsQuestions.schema = () => {
   return Yup.object();
 };
 
-DoseSymptomsQuestions.createDoseSymptoms = (formData: DoseSymptomsData): Partial<DoseSymptomsRequest> => {
+DoseSymptomsQuestions.createDoseSymptoms = (formData: TDoseSymptomsData): Partial<TDoseSymptomsRequest> => {
   return {
     bruising: formData.bruising,
     itch: formData.itch,

@@ -1,41 +1,41 @@
-import { AvatarName } from '@covid/utils/avatar';
+import { TAvatarName } from '@covid/utils/avatar';
 
-export enum HealthCareStaffOptions {
+export enum EHealthCareStaffOptions {
   NO = 'no',
   DOES_INTERACT = 'yes_does_interact',
   DOES_NOT_INTERACT = 'yes_does_not_interact',
 }
 
-export enum EquipmentUsageOptions {
+export enum EEquipmentUsageOptions {
   ALWAYS = 'always',
   NEVER = 'never',
   SOMETIMES = 'sometimes',
 }
 
-export enum AvailabilityAlwaysOptions {
+export enum EAvailabilityAlwaysOptions {
   ALL_NEEDED = 'all_needed',
   REUSED = 'reused',
 }
 
-export enum AvailabilitySometimesOptions {
+export enum EAvailabilitySometimesOptions {
   ALL_NEEDED = 'all_needed',
   NOT_ENOUGH = 'not_enough',
   REUSED = 'reused',
 }
 
-export enum AvailabilityNeverOptions {
+export enum EAvailabilityNeverOptions {
   NOT_NEEDED = 'not_needed',
   NOT_AVAILABLE = 'not_available',
 }
 
-export enum PatientInteractions {
+export enum EPatientInteractions {
   YES_DOCUMENTED = 'yes_documented',
   YES_SUSPECTED = 'yes_suspected',
   YES_DOCUMENTED_SUSPECTED = 'yes_documented_suspected',
   NO = 'no',
 }
 
-export enum CovidTestMechanismOptions {
+export enum ECovidTestMechanismOptions {
   NOSE_SWAB = 'nose_swab', // Deprecated
   THROAT_SWAB = 'throat_swab', // Deprecated
   NOSE_OR_THROAT_SWAB = 'nose_throat_swab',
@@ -47,18 +47,18 @@ export enum CovidTestMechanismOptions {
   OTHER = 'other',
 }
 
-export enum CovidTestTrainedWorkerOptions {
+export enum ECovidTestTrainedWorkerOptions {
   TRAINED = 'trained',
   UNTRAINED = 'untrained',
   UNSURE = 'unsure',
 }
 
-export type LoginOrRegisterResponse = {
-  key: string; // auth token
-  user: UserResponse;
+export type TLoginOrRegisterResponse = {
+  key: string;
+  user: TUserResponse;
 };
 
-export type UserResponse = {
+export type TUserResponse = {
   // TODO: WARNING If this is changed we need to invalidate the locally cached version
   pii: string;
   username: string;
@@ -68,30 +68,29 @@ export type UserResponse = {
   country_code: string;
 };
 
-export enum CountryCode {
+export enum ECountryCode {
   GB = 'GB',
   US = 'US',
   SE = 'SE',
 }
 
-// So that enum is compatible is current code base without refactoring
-export type SupportedCountryCodes = CountryCode | 'GB' | 'US' | 'SE';
+export type TSupportedCountryCodes = ECountryCode | 'GB' | 'US' | 'SE';
 
-export type UpdateCountryCodeRequest = {
-  country_code: SupportedCountryCodes;
+export type TUpdateCountryCodeRequest = {
+  country_code: TSupportedCountryCodes;
 };
 
-export type PiiRequest = {
+export type TPiiRequest = {
   name: string;
   phone_number: string;
 };
 
-export type PatientInfosRequest = {
-  version: string; // Document/schema version
+export type TPatientInfosRequest = {
+  version: string;
 
   id: string;
   name: string;
-  avatar_name: AvatarName;
+  avatar_name: TAvatarName;
   reported_by_another: boolean;
   same_household_as_reporter: boolean;
   archived: boolean;
@@ -173,7 +172,7 @@ export type PatientInfosRequest = {
   clinical_study_nct_ids: string;
 
   // About your work
-  healthcare_professional: HealthCareStaffOptions;
+  healthcare_professional: EHealthCareStaffOptions;
   is_carer_for_community: boolean;
 
   // Healthcare professional questions
@@ -256,7 +255,7 @@ export type PatientInfosRequest = {
 
   has_school_group: boolean;
   should_ask_vaccine_questions: boolean;
-  vaccine_status: VaccineStatus;
+  vaccine_status: EVaccineStatus;
   should_ask_long_covid_questions: boolean;
 
   // Pingdemic
@@ -278,27 +277,26 @@ export type PatientInfosRequest = {
   research_consent_asked: boolean;
 };
 
-export enum VaccineStatus {
+export enum EVaccineStatus {
   DO_NOT_ASK = 'do_not_ask',
   ASK_VACCINE_QUESTION = 'ask_about_vaccines',
   ASK_DOSE_SYMPTOMS = 'ask_dose_symptoms',
   HAS_VACCINES = 'has_vaccines',
 }
 
-export type TokenInfoRequest = {
+export type TTokenInfoRequest = {
   token: string;
   active: boolean;
   platform: 'ANDROID' | 'IOS';
 };
 
-export type TokenInfoResponse = {
+export type TTokenInfoResponse = {
   token: string;
   active: boolean;
   platform: 'ANDROID' | 'IOS';
 };
 
-// todo: what on earth is the any here?!?
-export type Consent =
+export type TConsent =
   | {
       document: string;
       version: string;
@@ -306,7 +304,7 @@ export type Consent =
     }
   | any;
 
-export type AreaStatsResponse = {
+export type TAreaStatsResponse = {
   locked: boolean;
   rank: number;
   number_of_areas: number;
@@ -317,7 +315,7 @@ export type AreaStatsResponse = {
   population: number;
 };
 
-export type StartupInfo = {
+export type TStartupInfo = {
   app_requires_update?: boolean;
   ip_country: string;
   mh_insight_cohort?: 'MHIP-v1-cohort_a' | 'MHIP-v1-cohort_b' | 'MHIP-v1-cohort_c';

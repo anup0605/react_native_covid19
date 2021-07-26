@@ -5,10 +5,8 @@ import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react
 
 import { FieldWrapper } from './Screen';
 
-type IButtonPress = ((event: GestureResponderEvent) => void) | undefined;
-
 interface IProps {
-  onPress?: IButtonPress;
+  onPress?: (event: GestureResponderEvent) => void;
   text: string;
   testID?: string;
   disable?: boolean;

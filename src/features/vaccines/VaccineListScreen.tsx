@@ -5,11 +5,11 @@ import Screen from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
 import { appActions, appSelectors } from '@covid/core/state/app/slice';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import vaccinesSlice, { fetchVaccines } from '@covid/core/state/vaccines/slice';
-import { Dose, VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { VaccineWarning } from '@covid/features/vaccines/components';
 import { VaccineCard } from '@covid/features/vaccines/components/VaccineCard';
 import i18n from '@covid/locale/i18n';
@@ -22,13 +22,13 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-type Props = {
-  route: RouteProp<ScreenParamList, 'VaccineList'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'VaccineList'>;
 };
 
-export const VaccineListScreen: React.FC<Props> = ({ route }) => {
+export const VaccineListScreen: React.FC<TProps> = ({ route }) => {
   const coordinator = assessmentCoordinator;
-  const vaccines = useSelector<RootState, VaccineRequest[]>((state) => state.vaccines.vaccines);
+  const vaccines = useSelector<TRootState, TVaccineRequest[]>((state) => state.vaccines.vaccines);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [showVaccineWarning, setShowVaccineWarning] = React.useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -48,7 +48,7 @@ export const VaccineListScreen: React.FC<Props> = ({ route }) => {
       .catch(() => {});
   };
 
-  function getFirstActiveDose(vaccines: VaccineRequest[]): string | null | undefined {
+  function getFirstActiveDose(vaccines: TVaccineRequest[]): string | null | undefined {
     // Loops over all vaccines and doses and return the first dose that has a date in the last 7 days.
     const today = moment().add(moment().utcOffset(), 'minutes').toDate();
     const sevenDaysAgo = moment().add(moment().utcOffset(), 'minutes').subtract(7, 'days').toDate();
@@ -78,8 +78,8 @@ export const VaccineListScreen: React.FC<Props> = ({ route }) => {
   };
 
   const enableNext = () => {
-    const firstDose: Partial<Dose> | undefined = vaccines[0]?.doses[0];
-    const secondDose: Partial<Dose> | undefined = vaccines[0]?.doses[1];
+    const firstDose: Partial<TDose> | undefined = vaccines[0]?.doses[0];
+    const secondDose: Partial<TDose> | undefined = vaccines[0]?.doses[1];
 
     // Disable button if user has dose(s) with missing date, brand & description
     if (
@@ -119,7 +119,7 @@ export const VaccineListScreen: React.FC<Props> = ({ route }) => {
           </BrandedButton>
         )}
 
-        {vaccines.map((vaccine: VaccineRequest) => {
+        {vaccines.map((vaccine: TVaccineRequest) => {
           return (
             <VaccineCard
               key={vaccine.id}

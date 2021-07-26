@@ -7,7 +7,7 @@ import Screen from '@covid/components/Screen';
 import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
@@ -36,21 +36,21 @@ interface IHealthWorkerExposureData {
   ppeAvailabilityNever: string;
 }
 
-type HealthWorkerExposureProps = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'HealthWorkerExposure'>;
   route: RouteProp<ScreenParamList, 'HealthWorkerExposure'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
 };
 
-const initialState: State = {
+const initialState: TState = {
   errorMessage: '',
 };
 
-export default class HealthWorkerExposureScreen extends React.Component<HealthWorkerExposureProps, State> {
-  constructor(props: HealthWorkerExposureProps) {
+export default class HealthWorkerExposureScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -77,7 +77,7 @@ export default class HealthWorkerExposureScreen extends React.Component<HealthWo
         formData.ppeAvailabilitySometimes && { sometimes_used_shortage: formData.ppeAvailabilitySometimes }),
       ...(formData.hasUsedPPEEquipment === 'never' &&
         formData.ppeAvailabilityNever && { never_used_shortage: formData.ppeAvailabilityNever }),
-    } as Partial<AssessmentInfosRequest>;
+    } as Partial<TAssessmentInfosRequest>;
   }
 
   registerSchema = Yup.object().shape({
@@ -138,10 +138,7 @@ export default class HealthWorkerExposureScreen extends React.Component<HealthWo
     ];
 
     return (
-      <Screen
-        navigation={this.props.navigation}
-        profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
-      >
+      <Screen profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}>
         <ProgressHeader maxSteps={5} step={1} title={i18n.t('title-health-worker-exposure')} />
 
         <Formik

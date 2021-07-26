@@ -5,7 +5,7 @@ import { isDateBefore, now, yesterday } from '@covid/utils/datetime';
 import * as IntentLauncher from 'expo-intent-launcher';
 import { Linking, Platform } from 'react-native';
 
-import { PushToken } from './types';
+import { TPushToken } from './types';
 
 const KEY_PUSH_TOKEN = 'PUSH_TOKEN';
 const PLATFORM_ANDROID = 'ANDROID';
@@ -16,7 +16,7 @@ export interface IPushTokenEnvironment {
   getPushToken(): Promise<string | null>;
 }
 
-const createTokenDoc = (token: string): PushToken => {
+const createTokenDoc = (token: string): TPushToken => {
   return {
     lastUpdated: now(),
     platform: Platform.OS === 'android' ? PLATFORM_ANDROID : PLATFORM_IOS,
@@ -34,21 +34,21 @@ export default class PushNotificationService {
     this.environment = environment;
   }
 
-  private async fetchProviderPushToken(): Promise<PushToken | null> {
+  private async fetchProviderPushToken(): Promise<TPushToken | null> {
     const token = await this.environment.getPushToken();
     return token ? createTokenDoc(token) : null;
   }
 
-  private async getSavedPushToken(): Promise<PushToken | null> {
-    const pushToken = await this.storage.getObject<PushToken>(KEY_PUSH_TOKEN);
+  private async getSavedPushToken(): Promise<TPushToken | null> {
+    const pushToken = await this.storage.getObject<TPushToken>(KEY_PUSH_TOKEN);
     return pushToken ?? null;
   }
 
-  private async savePushToken(pushToken: PushToken) {
-    return this.storage.setObject<PushToken>(KEY_PUSH_TOKEN, pushToken);
+  private async savePushToken(pushToken: TPushToken) {
+    return this.storage.setObject<TPushToken>(KEY_PUSH_TOKEN, pushToken);
   }
 
-  private tokenNeedsRefreshing(pushToken: PushToken) {
+  private tokenNeedsRefreshing(pushToken: TPushToken) {
     return isDateBefore(pushToken.lastUpdated, yesterday());
   }
 

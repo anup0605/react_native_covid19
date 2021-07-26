@@ -1,5 +1,5 @@
-import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 
 export interface IVaccineState {
-  vaccines: VaccineRequest[];
+  vaccines: TVaccineRequest[];
 }

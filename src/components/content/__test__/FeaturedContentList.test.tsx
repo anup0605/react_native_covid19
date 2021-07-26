@@ -1,5 +1,5 @@
 import FeaturedContentJson from '@covid/components/Content/__mock__/featured-content.json';
-import { FeaturedContentList, FeaturedContentType } from '@covid/components/Content/FeaturedContentList';
+import { EFeaturedContentType, FeaturedContentList } from '@covid/components/Content/FeaturedContentList';
 import ApiClient from '@covid/core/api/ApiClient';
 import { fetchFeaturedContent } from '@covid/core/content/state/contentSlice';
 import MockAdapter from 'axios-mock-adapter';
@@ -45,7 +45,7 @@ describe('FeaturedContentList tests', () => {
 
     const instance = renderer.create(
       <Provider store={testContentStore}>
-        <FeaturedContentList disableLoadingState screenName="Screen name" type={FeaturedContentType.Home} />
+        <FeaturedContentList disableLoadingState screenName="Screen name" type={EFeaturedContentType.Home} />
       </Provider>,
     );
 
@@ -73,7 +73,7 @@ describe('FeaturedContentList tests', () => {
 
     const instance = renderer.create(
       <Provider store={testContentStore}>
-        <FeaturedContentList disableLoadingState screenName="Screen name" type={FeaturedContentType.ThankYou} />
+        <FeaturedContentList disableLoadingState screenName="Screen name" type={EFeaturedContentType.ThankYou} />
       </Provider>,
     );
 

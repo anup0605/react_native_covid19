@@ -1,11 +1,11 @@
-import { SvgProps } from '@assets/Svg';
+import { TSvgProps } from '@assets/Svg';
 import { colors } from '@theme';
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
 const color = colors.textDark;
 
-const EditProfilesIcon: React.FC<SvgProps> = ({ width = 18, height = 20, style = {} }) => {
+const EditProfilesIcon: React.FC<TSvgProps> = ({ width = 18, height = 20, style = {} }) => {
   return (
     <Svg height={height} style={style} viewBox="0 0 18 20" width={width}>
       <Path

@@ -6,7 +6,7 @@ import { HeaderText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { ISchoolGroupModel } from '@covid/core/schools/Schools.dto';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
@@ -17,11 +17,11 @@ import * as React from 'react';
 import { Alert, PickerItemProps, StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
-type Props = {
-  route: RouteProp<ScreenParamList, 'JoinSchoolGroup'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'JoinSchoolGroup'>;
 };
 
-type JoinGroupData = {
+type TJoinGroupData = {
   groupId: string;
 };
 
@@ -31,7 +31,7 @@ const ValidationSchema = () => {
   });
 };
 
-export const JoinSchoolGroupScreen: React.FC<Props> = ({ route }) => {
+export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
   const [groupList, setGroupList] = React.useState<PickerItemProps[]>([]);
 
   React.useEffect(() => {
@@ -51,7 +51,7 @@ export const JoinSchoolGroupScreen: React.FC<Props> = ({ route }) => {
     schoolNetworkCoordinator.gotoNextScreen(route.name);
   };
 
-  const onSubmit = async (schoolData: JoinGroupData) => {
+  const onSubmit = async (schoolData: TJoinGroupData) => {
     try {
       await schoolNetworkCoordinator.addPatientToGroup(schoolData.groupId, route.params?.patientData?.patientId);
       next();
@@ -90,7 +90,7 @@ export const JoinSchoolGroupScreen: React.FC<Props> = ({ route }) => {
         initialValues={
           {
             groupId: '',
-          } as JoinGroupData
+          } as TJoinGroupData
         }
         onSubmit={onSubmit}
         validationSchema={ValidationSchema()}

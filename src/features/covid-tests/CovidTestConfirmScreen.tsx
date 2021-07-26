@@ -4,7 +4,7 @@ import Screen, { Header } from '@covid/components/Screen';
 import { HeaderText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { covidTestService } from '@covid/core/user/CovidTestService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -13,7 +13,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 interface IProps {
-  route: RouteProp<ScreenParamList, 'CovidTestConfirm'>;
+  route: RouteProp<TScreenParamList, 'CovidTestConfirm'>;
 }
 
 export default function CovidTestConfirmScreen({ route }: IProps) {

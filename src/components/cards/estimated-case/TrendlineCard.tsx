@@ -1,10 +1,10 @@
 import ChevronRight from '@assets/icons/ChevronRight';
 import { Link, ShareButton } from '@covid/components/buttons';
-import { TrendLineChart, TrendlineTimeFilters, TrendLineViewMode } from '@covid/components/stats/TrendLineChart';
+import { ETrendlineTimeFilters, ETrendLineViewMode, TrendLineChart } from '@covid/components/stats/TrendLineChart';
 import { Text } from '@covid/components/typography';
 import Analytics, { events } from '@covid/core/Analytics';
 import { ITrendLineData } from '@covid/core/content/dto/ContentAPIContracts';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
 import { openWebLink } from '@covid/utils/links';
 import { useNavigation } from '@react-navigation/native';
@@ -24,7 +24,7 @@ export function TrendlineCard({ ctaOnPress = () => null, isSharing = false }: IP
   const { navigate } = useNavigation();
   const viewRef = React.useRef<View>(null);
 
-  const localTrendline = useSelector<RootState, ITrendLineData | undefined>((state) => ({
+  const localTrendline = useSelector<TRootState, ITrendLineData | undefined>((state) => ({
     delta: state.content.localTrendline?.delta,
     name: state.content.personalizedLocalData?.name,
     timeseries: state.content.localTrendline?.timeseries,
@@ -53,7 +53,7 @@ export function TrendlineCard({ ctaOnPress = () => null, isSharing = false }: IP
         </View>
 
         <View style={styles.chartContainer}>
-          <TrendLineChart filter={TrendlineTimeFilters.week} viewMode={TrendLineViewMode.overview} />
+          <TrendLineChart filter={ETrendlineTimeFilters.week} viewMode={ETrendLineViewMode.overview} />
           {/* use absolute overlay to prevent displaying blank chart */}
           {!isSharing ? (
             <TouchableWithoutFeedback onPress={onPress} style={styles.hit}>

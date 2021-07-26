@@ -4,12 +4,12 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-type Props = {
+type TProps = {
   onPress: VoidFunction;
   group: ISchoolGroupModel;
 };
 
-export const SchoolGroupRow: React.FC<Props> = ({ onPress, group }) => {
+export const SchoolGroupRow: React.FC<TProps> = ({ onPress, group }) => {
   return (
     <View style={styles.container}>
       <RegularText>{group.name}</RegularText>

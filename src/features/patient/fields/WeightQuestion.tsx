@@ -17,17 +17,17 @@ export interface IWeightData {
   weightUnit: string;
 }
 
-interface FCWithStatic<P> extends React.FC<P> {
+interface IFCWithStatic<P> extends React.FC<P> {
   initialFormValues: () => IWeightData;
   schema: () => Yup.ObjectSchema;
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IWeightData>;
   label: string;
 }
 
-export const WeightQuestion: FCWithStatic<Props> = ({ formikProps, label }) => {
+export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) => {
   return (
     <FieldWrapper style={styles.fieldWrapper}>
       <RegularText>

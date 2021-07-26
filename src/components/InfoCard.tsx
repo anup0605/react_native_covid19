@@ -6,13 +6,13 @@ import { ImageBackground, StyleSheet } from 'react-native';
 
 import { RegularBoldText, RegularText } from './Text';
 
-type CardProps = {
+type TProps = {
   header: string;
   body: string;
   backgroundVariant?: 1 | 2 | 3;
 };
 
-export const InfoCard: React.FC<CardProps> = (props) => {
+export const InfoCard: React.FC<TProps> = (props) => {
   const backgroundImage = (backgroundVariant: number) => {
     switch (backgroundVariant) {
       case 1:

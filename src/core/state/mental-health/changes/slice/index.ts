@@ -1,5 +1,5 @@
 import { IMentalHealthChanges, TMentalHealthChange } from '@covid/core/state/mental-health/changes/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialStateMentalHealthChanges: IMentalHealthChanges = {
@@ -134,5 +134,5 @@ export const {
   setTimeWithPets,
   setWorking,
 } = mentalHealthChangesSlice.actions;
-export const selectMentalHealthChanges = (state: RootState) => state.mentalHealthChanges;
+export const selectMentalHealthChanges = (state: TRootState) => state.mentalHealthChanges;
 export default mentalHealthChangesSlice.reducer;

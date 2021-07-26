@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-type CheckProps = {
+type TProps = {
   width?: number | string;
   height?: number | string;
   color?: string;
 };
 
-const InfoCircle: React.FC<CheckProps> = ({ width = 20, height = 20, color = '#AAACAD' }) => {
+const InfoCircle: React.FC<TProps> = ({ width = 20, height = 20, color = '#AAACAD' }) => {
   return (
     <Svg fill="none" height={height} viewBox="0 0 16 16" width={width}>
       <Path

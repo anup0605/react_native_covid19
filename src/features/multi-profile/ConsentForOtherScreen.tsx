@@ -3,11 +3,11 @@ import { CheckboxItem } from '@covid/components/Checkbox';
 import { LoadingModal } from '@covid/components/Loading';
 import Screen, { Header } from '@covid/components/Screen';
 import { ClickableText, ErrorText, HeaderText, RegularText } from '@covid/components/Text';
-import { ApiErrorState, initialErrorState } from '@covid/core/api/ApiServiceErrors';
+import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
 import { patientService } from '@covid/core/patient/PatientService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
-import { ConsentType, ScreenParamList } from '@covid/features/ScreenParamList';
+import { EConsentType, TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { offlineService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
@@ -15,24 +15,24 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 import { View } from 'react-native';
 
-type RenderProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'ConsentForOther'>;
-  route: RouteProp<ScreenParamList, 'ConsentForOther'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'ConsentForOther'>;
+  route: RouteProp<TScreenParamList, 'ConsentForOther'>;
 };
 
-type ConsentState = {
+type TState = {
   consentChecked: boolean;
   errorMessage: string;
-} & ApiErrorState;
+} & TApiErrorState;
 
-const initialState: ConsentState = {
+const initialState: TState = {
   ...initialErrorState,
   consentChecked: false,
   errorMessage: '',
 };
 
-export default class ConsentForOtherScreen extends React.Component<RenderProps, ConsentState> {
-  constructor(props: RenderProps) {
+export default class ConsentForOtherScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -42,7 +42,7 @@ export default class ConsentForOtherScreen extends React.Component<RenderProps, 
   };
 
   isAdultConsent = () => {
-    return this.props.route.params?.consentType === ConsentType.Adult;
+    return this.props.route.params?.consentType === EConsentType.Adult;
   };
 
   headerText = this.isAdultConsent() ? i18n.t('adult-consent-title') : i18n.t('child-consent-title');
@@ -54,7 +54,7 @@ export default class ConsentForOtherScreen extends React.Component<RenderProps, 
       avatar_name: this.props.route.params?.avatarName,
       name: this.props.route.params?.profileName,
       reported_by_another: true,
-    } as Partial<PatientInfosRequest>;
+    } as Partial<TPatientInfosRequest>;
 
     const response = await patientService.createPatient(newPatient);
     return response.id;
@@ -86,7 +86,7 @@ export default class ConsentForOtherScreen extends React.Component<RenderProps, 
 
   render() {
     return (
-      <Screen showBackButton navigation={this.props.navigation} testID="consent-for-other-screen">
+      <Screen showBackButton testID="consent-for-other-screen">
         {this.state.isApiError ? (
           <LoadingModal
             error={this.state.error}

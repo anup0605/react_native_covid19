@@ -11,11 +11,11 @@ export interface IAtopyData {
   hasLungDisease: string;
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IAtopyData>;
 }
 
-export class AtopyQuestions extends React.Component<Props, object> {
+export class AtopyQuestions extends React.Component<IProps, object> {
   static initialFormValues = () => {
     return {
       hasAsthma: 'no',

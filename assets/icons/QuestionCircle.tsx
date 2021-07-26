@@ -1,19 +1,14 @@
 import * as React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 
-type QuestionCircleProps = {
+type TProps = {
   width?: number | string;
   height?: number | string;
   colorBg?: string;
   colorIcon?: string;
 };
 
-const QuestionCircle: React.FC<QuestionCircleProps> = ({
-  width = 18,
-  height = 18,
-  colorIcon = '#0165B5',
-  colorBg = '#FFF',
-}) => {
+const QuestionCircle: React.FC<TProps> = ({ width = 18, height = 18, colorIcon = '#0165B5', colorBg = '#FFF' }) => {
   return (
     <Svg fill={colorBg} height={height} viewBox="0 0 16 16" width={width}>
       <Circle

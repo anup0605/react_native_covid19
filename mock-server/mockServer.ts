@@ -1,5 +1,5 @@
 import mockDb from './mockDb';
-import { Assessment, DietStudy,Patient } from './types';
+import { IAssessment, IDietStudy,IPatient } from './types';
 import bodyParser = require('body-parser');
 import express = require('express');
 import moment = require('moment');
@@ -125,7 +125,7 @@ app.get('/profile/', (_, res) => {
   return res.status(200).send({
     ask_for_rating: askForRating,
     authorizations: [],
-    patients: (db.patients.get() as Patient[]).map((patient) => patient.id),
+    patients: (db.patients.get() as IPatient[]).map((patient) => patient.id),
     pii: '00000000-0000-0000-0000-000000000000',
     push_tokens: [],
     username: 'testuser@example.com',
@@ -217,7 +217,7 @@ app.get('/patient_list/', (_, res) => {
  */
 
 app.post('/diet_study/', (req, res) => {
-  const { body: study } = req as { body: DietStudy };
+  const { body: study } = req as { body: IDietStudy };
   const id = uuid.v1();
 
   res.header('Content-type', 'application/json');
@@ -240,10 +240,10 @@ app.patch('/diet_study/:studyId', (req, res) => {
  * Assessment
  */
 app.post('/assessments', (req, res) => {
-  const { body: assessment } = req as { body: Assessment };
+  const { body: assessment } = req as { body: IAssessment };
   const id = uuid.v1();
 
-  const patient = db.patients.get(assessment.patient) as Patient;
+  const patient = db.patients.get(assessment.patient) as IPatient;
   db.patients.save(patient.id, { ...patient, last_reported_at: moment().format() });
 
   res.header('Content-type', 'application/json');
@@ -251,11 +251,11 @@ app.post('/assessments', (req, res) => {
 });
 
 app.patch('/assessments/:assessmentId', (req, res) => {
-  const { body: updatedAssessment } = req as { body: Assessment };
+  const { body: updatedAssessment } = req as { body: IAssessment };
   const { assessmentId } = req.params;
-  const assessment = db.assessments.get(assessmentId) as Assessment;
+  const assessment = db.assessments.get(assessmentId) as IAssessment;
 
-  const patient = db.patients.get(assessment.patient) as Patient;
+  const patient = db.patients.get(assessment.patient) as IPatient;
   db.patients.save(patient.id, { ...patient, last_reported_at: moment().format() });
 
   res.header('Content-type', 'application/json');

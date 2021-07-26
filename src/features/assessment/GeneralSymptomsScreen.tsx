@@ -5,8 +5,8 @@ import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordina
 import { localisationService } from '@covid/core/localisation/LocalisationService';
 import { ScreenParamList } from '@covid/features';
 import {
-  GeneralSymptomsData,
   GeneralSymptomsQuestions,
+  TGeneralSymptomsData,
 } from '@covid/features/assessment/fields/GeneralSymptomsQuestions';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
@@ -17,17 +17,17 @@ import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-type Props = {
+type TProps = {
   route: RouteProp<ScreenParamList, 'GeneralSymptoms'>;
 };
 
-export const GeneralSymptomsScreen: React.FC<Props> = ({ route }) => {
+export const GeneralSymptomsScreen: React.FC<TProps> = ({ route }) => {
   const config = localisationService.getConfig();
   const registerSchema = Yup.object().shape({}).concat(GeneralSymptomsQuestions.schema());
 
   const patientState = route.params?.assessmentData?.patientData?.patientState;
 
-  function onSubmit(values: GeneralSymptomsData, formikHelpers: FormikHelpers<GeneralSymptomsData>) {
+  function onSubmit(values: TGeneralSymptomsData, formikHelpers: FormikHelpers<TGeneralSymptomsData>) {
     assessmentService.saveAssessment(GeneralSymptomsQuestions.createAssessment(values, patientState?.hasHayfever));
     assessmentCoordinator.gotoNextScreen(route.name);
     formikHelpers.setSubmitting(false);

@@ -1,20 +1,20 @@
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { ClickableText, RegularBoldText, RegularText } from '@covid/components/Text';
 import { HeaderText, SimpleTextBlock } from '@covid/features/register/components/LegalComponents';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 import { ScrollView } from 'react-native';
 
-type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'Consent'>;
-  route: RouteProp<ScreenParamList, 'Consent'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
+  route: RouteProp<TScreenParamList, 'Consent'>;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ConsentScreenSE: React.FC<PropsType> = ({ navigation, route, setAgreed }) => {
+const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed }) => {
   const [participateChecked, setParticipateChecked] = React.useState(false);
   const [processingChecked, setProcessingChecked] = React.useState(false);
   const [agreeChecked, setAgreeChecked] = React.useState(false);

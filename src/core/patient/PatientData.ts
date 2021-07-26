@@ -1,10 +1,10 @@
-import { PatientStateType } from '@covid/core/patient/PatientState';
+import { TPatientStateType } from '@covid/core/patient/PatientState';
 import { TProfile } from '@covid/core/profile/ProfileService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 
-export type PatientData = {
+export type TPatientData = {
   patientId: string;
-  patientState: PatientStateType;
-  patientInfo?: PatientInfosRequest;
+  patientState: TPatientStateType;
+  patientInfo?: TPatientInfosRequest;
   profile?: TProfile;
 };

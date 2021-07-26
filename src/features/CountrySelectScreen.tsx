@@ -1,10 +1,10 @@
 import { gbFlag, svFlag, usFlag } from '@assets';
 import { BasicNavHeader, SafeLayout } from '@covid/components';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
-import { SupportedCountryCodes } from '@covid/core/user/dto/UserAPIContracts';
+import { TSupportedCountryCodes } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
 import { appCoordinator } from '@covid/features/AppCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { grid, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
@@ -14,12 +14,12 @@ import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'CountrySelect'>;
-  route: RouteProp<ScreenParamList, 'CountrySelect'>;
+  navigation: StackNavigationProp<TScreenParamList, 'CountrySelect'>;
+  route: RouteProp<TScreenParamList, 'CountrySelect'>;
 }
 
 type TCountry = {
-  code: SupportedCountryCodes;
+  code: TSupportedCountryCodes;
   source: any;
 };
 
@@ -39,7 +39,7 @@ const countries: TCountry[] = [
 ];
 
 export function CountrySelectScreen(props: IProps) {
-  async function selectCountry(countryCode: SupportedCountryCodes) {
+  async function selectCountry(countryCode: TSupportedCountryCodes) {
     await localisationService.setUserCountry(countryCode);
 
     if (appCoordinator.shouldShowCountryPicker && props.route?.params?.onComplete) {

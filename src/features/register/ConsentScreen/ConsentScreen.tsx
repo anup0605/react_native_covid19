@@ -3,7 +3,7 @@ import { BrandedButton } from '@covid/components';
 import { consentService } from '@covid/core/consent/ConsentService';
 import { isGBCountry, isSECountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { appCoordinator } from '@covid/features/AppCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -15,12 +15,12 @@ import ConsentScreenGB from './ConsentScreenGB';
 import ConsentScreenSE from './ConsentScreenSE';
 import ConsentScreenUS from './ConsentScreenUS';
 
-type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'Consent'>;
-  route: RouteProp<ScreenParamList, 'Consent'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
+  route: RouteProp<TScreenParamList, 'Consent'>;
 };
 
-const ConsentScreen: React.FC<PropsType> = (props) => {
+const ConsentScreen: React.FC<TProps> = (props) => {
   const [agreed, setAgreed] = React.useState(false);
 
   const handleAgreeClicked = React.useCallback(async () => {

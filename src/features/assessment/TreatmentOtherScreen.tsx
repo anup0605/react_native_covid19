@@ -2,7 +2,7 @@ import { BrandedButton, TextareaWithCharCount } from '@covid/components';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen, { FieldWrapper } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
@@ -22,18 +22,18 @@ interface ITreatmentData {
   description: string;
 }
 
-type TreatmentOtherProps = {
+type TTreatmentOtherProps = {
   navigation: StackNavigationProp<ScreenParamList, 'TreatmentOther'>;
   route: RouteProp<ScreenParamList, 'TreatmentOther'>;
 };
 
-export default class TreatmentOtherScreen extends React.Component<TreatmentOtherProps> {
+export default class TreatmentOtherScreen extends React.Component<TTreatmentOtherProps> {
   registerSchema = Yup.object().shape({
     description: Yup.string(),
   });
 
   handleUpdateTreatment = async (formData: ITreatmentData) => {
-    let assessment: Partial<AssessmentInfosRequest> = {};
+    let assessment: Partial<TAssessmentInfosRequest> = {};
 
     if (formData.description) {
       assessment = {
@@ -60,7 +60,6 @@ export default class TreatmentOtherScreen extends React.Component<TreatmentOther
 
     return (
       <Screen
-        navigation={this.props.navigation}
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="treatment-other-screen"
       >

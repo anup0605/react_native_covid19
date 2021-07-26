@@ -10,7 +10,7 @@ import { ValidationError } from '@covid/components/ValidationError';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import { AtopyQuestions, IAtopyData } from '@covid/features/patient/fields/AtopyQuestions';
 import { BloodGroupQuestion, IBloodGroupData } from '@covid/features/patient/fields/BloodGroupQuestion';
@@ -64,25 +64,25 @@ const initialFormValues = {
   takesImmunosuppressants: 'no',
 };
 
-type HealthProps = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'YourHealth'>;
   route: RouteProp<ScreenParamList, 'YourHealth'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   showPregnancyQuestion: boolean;
   showDiabetesQuestion: boolean;
 };
 
-const initialState: State = {
+const initialState: TState = {
   errorMessage: '',
   showDiabetesQuestion: false,
   showPregnancyQuestion: false,
 };
 
-export default class YourHealthScreen extends React.Component<HealthProps, State> {
-  constructor(props: HealthProps) {
+export default class YourHealthScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     const config = localisationService.getConfig();
     this.state = {
@@ -173,7 +173,7 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
       takes_corticosteroids: formData.takesCorticosteroids === 'yes',
       takes_immunosuppressants: formData.takesImmunosuppressants === 'yes',
       ...BloodGroupQuestion.createDTO(formData),
-    } as Partial<PatientInfosRequest>;
+    } as Partial<TPatientInfosRequest>;
 
     if (this.state.showPregnancyQuestion) {
       infos = {
@@ -235,11 +235,7 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
       { label: i18n.t('your-health.yes-smoking'), value: 'yes' },
     ];
     return (
-      <Screen
-        navigation={this.props.navigation}
-        profile={patientCoordinator.patientData?.patientState?.profile}
-        testID="your-health-screen"
-      >
+      <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-health-screen">
         <ProgressHeader maxSteps={6} step={3} title={i18n.t('your-health.page-title')} />
 
         <Formik

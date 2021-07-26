@@ -1,10 +1,10 @@
 import { CheckboxList } from '@covid/components/Checkbox';
 import { RegularText } from '@covid/components/Text';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import {
   createSymptomCheckboxes,
   ISymptomQuestions,
-  SymptomCheckBoxData,
+  TSymptomCheckBoxData,
 } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
@@ -12,9 +12,9 @@ import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-export type HeadSymptomsData = HeadSymptomsCheckBoxData & HeadSymptomsFollowUpData;
+export type THeadSymptomsData = THeadSymptomsCheckBoxData & THeadSymptomsFollowUpData;
 
-type HeadSymptomsCheckBoxData = {
+type THeadSymptomsCheckBoxData = {
   headache: boolean;
   dizzy: boolean;
   lossTasteSmell: boolean;
@@ -28,18 +28,18 @@ type HeadSymptomsCheckBoxData = {
   tongueSurface: boolean;
 };
 
-type HeadSymptomsFollowUpData = {
+type THeadSymptomsFollowUpData = {
   headacheFollowUp: string;
 };
 
-type Props = {
-  formikProps: FormikProps<HeadSymptomsData>;
+type TProps = {
+  formikProps: FormikProps<THeadSymptomsData>;
 };
 
-export const HeadSymptomsQuestions: ISymptomQuestions<Props, HeadSymptomsData> = (props: Props) => {
+export const HeadSymptomsQuestions: ISymptomQuestions<TProps, THeadSymptomsData> = (props: TProps) => {
   const { formikProps } = props;
 
-  const checkboxes: SymptomCheckBoxData<HeadSymptomsCheckBoxData, HeadSymptomsFollowUpData>[] = [
+  const checkboxes: TSymptomCheckBoxData<THeadSymptomsCheckBoxData, THeadSymptomsFollowUpData>[] = [
     {
       followUp: {
         label: i18n.t('describe-symptoms.head-headache-follow-up'),
@@ -73,7 +73,7 @@ export const HeadSymptomsQuestions: ISymptomQuestions<Props, HeadSymptomsData> =
   );
 };
 
-HeadSymptomsQuestions.initialFormValues = (): HeadSymptomsData => {
+HeadSymptomsQuestions.initialFormValues = (): THeadSymptomsData => {
   return {
     alteredTasteSmell: false,
     dizzy: false,
@@ -99,7 +99,7 @@ HeadSymptomsQuestions.schema = () => {
   });
 };
 
-HeadSymptomsQuestions.createAssessment = (formData: HeadSymptomsData): Partial<AssessmentInfosRequest> => {
+HeadSymptomsQuestions.createAssessment = (formData: THeadSymptomsData): Partial<TAssessmentInfosRequest> => {
   return {
     altered_smell: formData.alteredTasteSmell,
     dizzy_light_headed: formData.dizzy,

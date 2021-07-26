@@ -3,7 +3,7 @@ import {
   THasDisability,
   TMentalHealthLearning,
 } from '@covid/core/state/mental-health/learning/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialStateMentalHealthLearning: IMentalHealthLearning = {
@@ -43,5 +43,5 @@ const mentalHealthLearningSlice = createSlice({
 
 export const { addLearningCondition, removeLearningCondition, setHasLearningDisability, setLearningOtherText } =
   mentalHealthLearningSlice.actions;
-export const selectMentalHealthLearning = (state: RootState) => state.mentalHealthLearning;
+export const selectMentalHealthLearning = (state: TRootState) => state.mentalHealthLearning;
 export default mentalHealthLearningSlice.reducer;

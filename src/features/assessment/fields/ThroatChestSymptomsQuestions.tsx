@@ -1,10 +1,10 @@
 import { CheckboxList } from '@covid/components/Checkbox';
 import { RegularText } from '@covid/components/Text';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import {
   createSymptomCheckboxes,
   ISymptomQuestions,
-  SymptomCheckBoxData,
+  TSymptomCheckBoxData,
 } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
@@ -12,9 +12,9 @@ import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-export type ThroatChestSymptomsData = ThroatChestSymptomsCheckBoxData & ThroatChestSymptomsFollowUpData;
+export type TThroatChestSymptomsData = TThroatChestSymptomsCheckBoxData & TThroatChestSymptomsFollowUpData;
 
-type ThroatChestSymptomsCheckBoxData = {
+type TThroatChestSymptomsCheckBoxData = {
   soreThroat: boolean;
   swollenGlands: boolean;
   hoarseVoice: boolean;
@@ -24,18 +24,18 @@ type ThroatChestSymptomsCheckBoxData = {
   heartbeat: boolean;
 };
 
-type ThroatChestSymptomsFollowUpData = {
+type TThroatChestSymptomsFollowUpData = {
   shortBreathFollowUp: string;
 };
 
-type Props = {
-  formikProps: FormikProps<ThroatChestSymptomsData>;
+type TProps = {
+  formikProps: FormikProps<TThroatChestSymptomsData>;
 };
 
-export const ThroatChestSymptomsQuestions: ISymptomQuestions<Props, ThroatChestSymptomsData> = (props: Props) => {
+export const ThroatChestSymptomsQuestions: ISymptomQuestions<TProps, TThroatChestSymptomsData> = (props: TProps) => {
   const { formikProps } = props;
 
-  const checkboxes: SymptomCheckBoxData<ThroatChestSymptomsCheckBoxData, ThroatChestSymptomsFollowUpData>[] = [
+  const checkboxes: TSymptomCheckBoxData<TThroatChestSymptomsCheckBoxData, TThroatChestSymptomsFollowUpData>[] = [
     { label: i18n.t('describe-symptoms.throat-chest-sore-throat'), value: 'soreThroat' },
     { label: i18n.t('describe-symptoms.throat-chest-swollen-glands'), value: 'swollenGlands' },
     { label: i18n.t('describe-symptoms.throat-chest-hoarse-voice'), value: 'hoarseVoice' },
@@ -65,7 +65,7 @@ export const ThroatChestSymptomsQuestions: ISymptomQuestions<Props, ThroatChestS
   );
 };
 
-ThroatChestSymptomsQuestions.initialFormValues = (): ThroatChestSymptomsData => {
+ThroatChestSymptomsQuestions.initialFormValues = (): TThroatChestSymptomsData => {
   return {
     chestPain: false,
     heartbeat: false,
@@ -88,8 +88,8 @@ ThroatChestSymptomsQuestions.schema = () => {
 };
 
 ThroatChestSymptomsQuestions.createAssessment = (
-  formData: ThroatChestSymptomsData,
-): Partial<AssessmentInfosRequest> => {
+  formData: TThroatChestSymptomsData,
+): Partial<TAssessmentInfosRequest> => {
   return {
     chest_pain: formData.chestPain,
     hoarse_voice: formData.hoarseVoice,

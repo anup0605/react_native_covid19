@@ -4,14 +4,14 @@ import { RegularText } from '@covid/components/Text';
 import { ITest } from '@covid/components/types';
 import { AsyncStorageService } from '@covid/core/AsyncStorageService';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-enum CountryCode {
+enum ECountryCode {
   NONE = '',
   US = 'US',
   GB = 'GB',
@@ -21,12 +21,12 @@ enum CountryCode {
 interface IProps extends ITest {
   closeModal: () => void;
   isModalVisible: boolean;
-  navigation: StackNavigationProp<ScreenParamList, 'Welcome'>;
+  navigation: StackNavigationProp<TScreenParamList, 'Welcome'>;
 }
 
-type tItem = {
+type TItem = {
   label: string;
-  value: CountryCode;
+  value: ECountryCode;
 };
 
 export default React.memo(function CountryIpModal({ navigation, isModalVisible, closeModal }: IProps) {
@@ -37,7 +37,7 @@ export default React.memo(function CountryIpModal({ navigation, isModalVisible, 
       await localisationService.setUserCountry(countryCode);
 
       const screenStack = () => {
-        if (countryCode === CountryCode.US) {
+        if (countryCode === ECountryCode.US) {
           return [
             { name: 'Welcome', params: {} },
             { name: 'BeforeWeStartUS', params: {} },
@@ -68,10 +68,10 @@ export default React.memo(function CountryIpModal({ navigation, isModalVisible, 
     [closeModal, setCountrySelected, selectCountry],
   );
 
-  const items: tItem[] = [
-    { label: i18n.t('united-states'), value: CountryCode.US },
-    { label: i18n.t('united-kingdom'), value: CountryCode.GB },
-    { label: i18n.t('sweden'), value: CountryCode.SV },
+  const items: TItem[] = [
+    { label: i18n.t('united-states'), value: ECountryCode.US },
+    { label: i18n.t('united-kingdom'), value: ECountryCode.GB },
+    { label: i18n.t('sweden'), value: ECountryCode.SV },
   ];
 
   return (

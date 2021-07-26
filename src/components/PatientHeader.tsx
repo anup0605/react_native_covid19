@@ -1,7 +1,7 @@
 import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { AvatarName, getAvatarByName } from '@covid/utils/avatar';
+import { getAvatarByName, TAvatarName } from '@covid/utils/avatar';
 import { colors } from '@theme';
 import { Icon } from 'native-base';
 import * as React from 'react';
@@ -9,17 +9,17 @@ import { Image, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 
 
 import { ClippedText, RegularText } from './Text';
 
-type BackButtonProps = {
+type TBackButtonProps = {
   showCloseButton?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-export enum CallOutType {
+export enum ECallOutType {
   Simple,
   Tag,
 }
 
-export const BackButton: React.FC<BackButtonProps> = ({ style: containerStyle, showCloseButton }) => {
+export const BackButton: React.FC<TBackButtonProps> = ({ style: containerStyle, showCloseButton }) => {
   return showCloseButton ? (
     <TouchableOpacity onPress={NavigatorService.goBack} style={containerStyle} testID="button-back-navigation">
       <View style={styles.iconButton}>
@@ -35,20 +35,20 @@ export const BackButton: React.FC<BackButtonProps> = ({ style: containerStyle, s
   );
 };
 
-type PatientHeaderProps = {
+type TPatientHeaderProps = {
   profile: TProfile;
   simpleCallout?: boolean;
-  type?: CallOutType;
+  type?: ECallOutType;
   calloutTitle?: string;
   showCloseButton?: boolean;
 };
 
-type NavbarProps = {
+type TNavHeaderProps = {
   rightComponent?: React.ReactNode;
   showCloseButton?: boolean;
 };
 
-export const NavHeader: React.FC<NavbarProps> = ({ rightComponent, showCloseButton }) => {
+export const NavHeader: React.FC<TNavHeaderProps> = ({ rightComponent, showCloseButton }) => {
   return (
     <View style={styles.headerBar}>
       <View style={styles.left}>
@@ -63,14 +63,14 @@ export const NavHeader: React.FC<NavbarProps> = ({ rightComponent, showCloseButt
 export function PatientHeader({
   profile,
   simpleCallout = false,
-  type = !profile.reported_by_another ? CallOutType.Simple : CallOutType.Tag,
+  type = !profile.reported_by_another ? ECallOutType.Simple : ECallOutType.Tag,
   calloutTitle = !profile.reported_by_another ? profile.name : i18n.t('answer-for', { name: profile.name }),
   showCloseButton = false,
-}: PatientHeaderProps) {
-  const avatarImage = getAvatarByName(profile.avatar_name as AvatarName);
+}: TPatientHeaderProps) {
+  const avatarImage = getAvatarByName(profile.avatar_name as TAvatarName);
   const avatarComponent = (
     <>
-      {type === CallOutType.Simple || simpleCallout ? (
+      {type === ECallOutType.Simple || simpleCallout ? (
         <View style={styles.regularTextBox}>
           <RegularText style={styles.regularText}>{calloutTitle}</RegularText>
         </View>

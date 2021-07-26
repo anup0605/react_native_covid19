@@ -4,8 +4,8 @@ import Screen from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
 import {
-  GutStomachSymptomsData,
   GutStomachSymptomsQuestions,
+  TGutStomachSymptomsData,
 } from '@covid/features/assessment/fields/GutStomachSymptomsQuestions';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
@@ -16,12 +16,12 @@ import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-type Props = {
+type TProps = {
   route: RouteProp<ScreenParamList, 'GutStomachSymptoms'>;
 };
 
-export const GutStomachSymptomsScreen: React.FC<Props> = ({ route }) => {
-  function onSubmit(values: GutStomachSymptomsData, formikHelpers: FormikHelpers<GutStomachSymptomsData>) {
+export const GutStomachSymptomsScreen: React.FC<TProps> = ({ route }) => {
+  function onSubmit(values: TGutStomachSymptomsData, formikHelpers: FormikHelpers<TGutStomachSymptomsData>) {
     assessmentService.saveAssessment(GutStomachSymptomsQuestions.createAssessment(values));
     assessmentCoordinator.gotoNextScreen(route.name);
     formikHelpers.setSubmitting(false);

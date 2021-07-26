@@ -16,21 +16,21 @@ const initialFormValues = {
   name: '',
 };
 
-interface FormData {
+interface IFormData {
   name: string;
 }
 
-type RenderProps = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'CreateProfile'>;
   route: RouteProp<ScreenParamList, 'CreateProfile'>;
 };
 
-export default class CreateProfileScreen extends React.Component<RenderProps> {
+export default class CreateProfileScreen extends React.Component<TProps> {
   registerSchema = Yup.object().shape({
     name: Yup.string().required().max(32, i18n.t('profile-name-too-long')),
   });
 
-  handleClick = (formData: FormData) => {
+  handleClick = (formData: IFormData) => {
     this.props.navigation.navigate('AdultOrChild', {
       avatarName: this.props.route.params?.avatarName,
       profileName: formData.name,
@@ -39,7 +39,7 @@ export default class CreateProfileScreen extends React.Component<RenderProps> {
 
   render() {
     return (
-      <Screen showBackButton navigation={this.props.navigation} testID="create-profile-screen">
+      <Screen showBackButton testID="create-profile-screen">
         <Header>
           <HeaderText style={{ marginBottom: 12 }}>{i18n.t('create-profile-title')}</HeaderText>
           <SecondaryText>{i18n.t('create-profile-text')}</SecondaryText>
@@ -50,7 +50,7 @@ export default class CreateProfileScreen extends React.Component<RenderProps> {
           validateOnChange
           validateOnMount
           initialValues={initialFormValues}
-          onSubmit={(values: FormData) => {
+          onSubmit={(values: IFormData) => {
             return this.handleClick(values);
           }}
           validationSchema={this.registerSchema}

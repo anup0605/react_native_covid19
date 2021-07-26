@@ -6,12 +6,12 @@ import { LoadingModal } from '@covid/components/Loading';
 import { PartnerLogoSE, PartnerLogoUS } from '@covid/components/logos/PartnerLogo';
 import { PoweredByZoe } from '@covid/components/logos/PoweredByZoe';
 import { RegularText } from '@covid/components/Text';
-import { ApiErrorState, initialErrorState } from '@covid/core/api/ApiServiceErrors';
+import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
 import { contentService } from '@covid/core/content/ContentService';
-import { ScreenContent } from '@covid/core/content/ScreenContentContracts';
+import { TScreenContent } from '@covid/core/content/ScreenContentContracts';
 import { isSECountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { appCoordinator } from '@covid/features/AppCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { offlineService, pushNotificationService } from '@covid/services';
 import { openWebLink } from '@covid/utils/links';
@@ -25,19 +25,19 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-n
 
 import { ContributionCounter } from './components/ContributionCounter';
 
-type PropsType = {
+type TProps = {
   navigation: CompositeNavigationProp<
-    StackNavigationProp<ScreenParamList, 'WelcomeRepeat'>,
-    DrawerNavigationProp<ScreenParamList>
+    StackNavigationProp<TScreenParamList, 'WelcomeRepeat'>,
+    DrawerNavigationProp<TScreenParamList>
   >;
-  route: RouteProp<ScreenParamList, 'WelcomeRepeat'>;
+  route: RouteProp<TScreenParamList, 'WelcomeRepeat'>;
 };
 
-type WelcomeRepeatScreenState = {
+type TState = {
   userCount: number | null;
   onRetry?: () => void;
-  calloutBoxContent: ScreenContent;
-} & ApiErrorState;
+  calloutBoxContent: TScreenContent;
+} & TApiErrorState;
 
 const initialState = {
   ...initialErrorState,
@@ -45,8 +45,8 @@ const initialState = {
   userCount: null,
 };
 
-export class WelcomeRepeatScreen extends React.Component<PropsType, WelcomeRepeatScreenState> {
-  state: WelcomeRepeatScreenState = initialState;
+export class WelcomeRepeatScreen extends React.Component<TProps, TState> {
+  state: TState = initialState;
 
   async componentDidMount() {
     const userCount = await contentService.getUserCount();
@@ -99,7 +99,7 @@ export class WelcomeRepeatScreen extends React.Component<PropsType, WelcomeRepea
         <ScrollView>
           <View style={styles.headerContainer}>
             <DrawerToggle
-              navigation={this.props.navigation as DrawerNavigationProp<ScreenParamList>}
+              navigation={this.props.navigation as DrawerNavigationProp<TScreenParamList>}
               style={{ tintColor: colors.white }}
             />
           </View>

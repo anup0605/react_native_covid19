@@ -2,8 +2,8 @@ import { covidByZoeIcon, covidIcon } from '@assets';
 import { BrandedButton } from '@covid/components';
 import { CaptionText, Header3Text, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
-import { ContentState } from '@covid/core/content/state/contentSlice';
-import { RootState } from '@covid/core/state/root';
+import { TContentState } from '@covid/core/content/state/contentSlice';
+import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
 import { cleanIntegerVal } from '@covid/utils/number';
 import { colors } from '@theme';
@@ -16,13 +16,13 @@ interface IProps {
   reportOnPress: VoidFunction;
 }
 
-enum HeaderType {
+enum EHeaderType {
   Compact = 'compact',
   Expanded = 'expanded',
 }
 
 export function Header({ reportedCount, reportOnPress }: IProps) {
-  const content = useSelector<RootState, ContentState>((state) => state.content);
+  const content = useSelector<TRootState, TContentState>((state) => state.content);
   const [contributors, setContributors] = React.useState<string | null>(null);
 
   const prettyContributorsValue = i18n.toNumber(contributors ? cleanIntegerVal(contributors) : 0, {
@@ -35,7 +35,7 @@ export function Header({ reportedCount, reportOnPress }: IProps) {
   }, [content.startupInfo]);
 
   const onReport = () => {
-    Analytics.track(events.REPORT_NOW_CLICKED, { headerType: HeaderType.Expanded });
+    Analytics.track(events.REPORT_NOW_CLICKED, { headerType: EHeaderType.Expanded });
     reportOnPress();
   };
 
@@ -71,7 +71,7 @@ export function Header({ reportedCount, reportOnPress }: IProps) {
 
 export function CompactHeader({ reportOnPress }: IProps) {
   const onReport = () => {
-    Analytics.track(events.REPORT_NOW_CLICKED, { headerType: HeaderType.Compact });
+    Analytics.track(events.REPORT_NOW_CLICKED, { headerType: EHeaderType.Compact });
     reportOnPress();
   };
 

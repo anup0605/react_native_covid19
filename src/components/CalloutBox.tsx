@@ -1,14 +1,14 @@
 import { vaccineBg } from '@assets';
 import AnnouncementIcon from '@assets/icons/AnnouncementIcon';
-import { ScreenContent } from '@covid/core/content/ScreenContentContracts';
+import { TScreenContent } from '@covid/core/content/ScreenContentContracts';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, StyleProp, StyleSheet, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 import { RegularText } from './Text';
 
-type CalloutBoxProps = {
-  content: ScreenContent;
+type TProps = {
+  content: TScreenContent;
   onPress?: () => void;
   image?: boolean;
   boxStyle?: StyleProp<ViewStyle>;
@@ -16,7 +16,7 @@ type CalloutBoxProps = {
   linkStyle?: StyleProp<TextStyle>;
 };
 
-export const CalloutBox = ({ content, boxStyle, titleStyle, linkStyle, onPress, image }: CalloutBoxProps) => {
+export const CalloutBox = ({ content, boxStyle, titleStyle, linkStyle, onPress, image }: TProps) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.discoveriesContainer, boxStyle]}>
       {image ? <Image source={vaccineBg} style={[styles.backgroundImage, { borderRadius: 16 }]} /> : null}

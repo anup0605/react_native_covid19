@@ -3,7 +3,7 @@ import {
   TMentalHealthConsent,
   TMentalHealthSection,
 } from '@covid/core/state/mental-health/state/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialStateMentalHealth: IMentalHealthState = {
@@ -45,5 +45,5 @@ const mentalHealthStateSlice = createSlice({
 });
 
 export const { setCompleted, setCurrentSection, setConsent, setLastPresentedDate } = mentalHealthStateSlice.actions;
-export const selectMentalHealthState = (state: RootState) => state.mentalHealthState;
+export const selectMentalHealthState = (state: TRootState) => state.mentalHealthState;
 export default mentalHealthStateSlice.reducer;

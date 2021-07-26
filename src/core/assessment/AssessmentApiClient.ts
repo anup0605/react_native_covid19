@@ -1,27 +1,27 @@
 import appConfig from '@covid/appConfig';
 import ApiClient from '@covid/core/api/ApiClient';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
-import { AssessmentResponse } from '@covid/core/assessment/dto/AssessmentInfosResponse';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentResponse } from '@covid/core/assessment/dto/AssessmentInfosResponse';
 
 export interface IAssessmentRemoteClient {
-  addAssessment(assessment: AssessmentInfosRequest): Promise<AssessmentResponse>;
-  updateAssessment(assessmentId: string, assessment: AssessmentInfosRequest): Promise<AssessmentResponse>;
+  addAssessment(assessment: TAssessmentInfosRequest): Promise<TAssessmentResponse>;
+  updateAssessment(assessmentId: string, assessment: TAssessmentInfosRequest): Promise<TAssessmentResponse>;
 }
 
 const apiClient = new ApiClient();
 
 export class AssessmentApiClient implements IAssessmentRemoteClient {
-  addAssessment(assessment: AssessmentInfosRequest): Promise<AssessmentResponse> {
+  addAssessment(assessment: TAssessmentInfosRequest): Promise<TAssessmentResponse> {
     assessment = {
       ...assessment,
       version: appConfig.assessmentVersion,
     };
-    return apiClient.post<AssessmentInfosRequest, AssessmentResponse>('/assessments/', assessment);
+    return apiClient.post<TAssessmentInfosRequest, TAssessmentResponse>('/assessments/', assessment);
   }
 
-  updateAssessment(assessmentId: string, assessment: AssessmentInfosRequest): Promise<AssessmentResponse> {
+  updateAssessment(assessmentId: string, assessment: TAssessmentInfosRequest): Promise<TAssessmentResponse> {
     const assessmentUrl = `/assessments/${assessmentId}/`;
-    return apiClient.patch<AssessmentInfosRequest, AssessmentResponse>(assessmentUrl, assessment);
+    return apiClient.patch<TAssessmentInfosRequest, TAssessmentResponse>(assessmentUrl, assessment);
   }
 }
 

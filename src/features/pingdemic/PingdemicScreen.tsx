@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 
 import { CovidTestDateQuestion, ICovidTestDateData } from '../covid-tests/fields';
 import { PingdemicApiClient } from './PingdemicApiClient';
-import { PingdemicRequest } from './PingdemicRequest';
+import { TPingdemicRequest } from './PingdemicRequest';
 
 const pingdemicApiClient = new PingdemicApiClient();
 
@@ -107,7 +107,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
       isolate_date_specific: formatDateToPost(pingdemicData.values.dateTakenSpecific),
       other_text: pingdemicData.values.otherText,
       patient: patientId,
-    } as PingdemicRequest;
+    } as TPingdemicRequest;
 
     try {
       await pingdemicApiClient.add(pingdemicRequestData);

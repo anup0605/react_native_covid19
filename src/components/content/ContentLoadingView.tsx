@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
   },
 });
 
-type ContentErrorViewProps = {
+type TContentErrorViewProps = {
   message: string;
 };
 
-export const ContentErrorView: React.FC<ContentErrorViewProps> = ({ message }) => {
+export const ContentErrorView: React.FC<TContentErrorViewProps> = ({ message }) => {
   return (
     <View
       style={[
@@ -50,13 +50,13 @@ export const ContentErrorView: React.FC<ContentErrorViewProps> = ({ message }) =
   );
 };
 
-type ContentLoadingViewProps = {
+type TContentLoadingViewProps = {
   loading?: boolean;
   errorMessage?: string;
   disableShimmers?: boolean;
 };
 
-export const ContentLoadingView: React.FC<ContentLoadingViewProps> = ({
+export const ContentLoadingView: React.FC<TContentLoadingViewProps> = ({
   loading,
   errorMessage,
   disableShimmers,

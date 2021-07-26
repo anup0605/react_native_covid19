@@ -2,7 +2,7 @@ import { Button } from '@covid/components/buttons/Button';
 import { Header } from '@covid/components/Screen';
 import { ClickableText, Header3Text, HeaderText, RegularText } from '@covid/components/Text';
 import { TwoButtonModal } from '@covid/components/TwoButtonModal';
-import { PatientStateType } from '@covid/core/patient/PatientState';
+import { TPatientStateType } from '@covid/core/patient/PatientState';
 import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import i18n from '@covid/locale/i18n';
@@ -19,7 +19,7 @@ interface IProps {
   linkLabel?: string;
   organisation?: string;
   currentJoinedGroup: ISubscribedSchoolGroupStats;
-  currentPatient: PatientStateType;
+  currentPatient: TPatientStateType;
   removeText: string;
   hasBubbles?: boolean;
 }

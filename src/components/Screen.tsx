@@ -20,33 +20,33 @@ import { NavHeader, PatientHeader } from './PatientHeader';
 export const screenWidth = Math.round(Dimensions.get('window').width) - 32;
 export const screenHeight = Math.round(Dimensions.get('window').height);
 
-type HeaderProp = {
+type THeaderProps = {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
 };
 
-export const Header = (props: HeaderProp) => {
+export const Header = (props: THeaderProps) => {
   return <View style={[styles.headerBlock, props.style]}>{props.children}</View>;
 };
 
-type ProgressBlockType = {
+type TProgressBlockProps = {
   children: React.ReactNode;
 };
 
-export const ProgressBlock = (props: ProgressBlockType) => {
+export const ProgressBlock = (props: TProgressBlockProps) => {
   return <View style={styles.progressBlock}>{props.children}</View>;
 };
 
-type FieldWrapperType = {
+type TFieldWrapperProps = {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 };
 
-export const FieldWrapper = (props: FieldWrapperType) => {
+export const FieldWrapper = (props: TFieldWrapperProps) => {
   return <View style={[styles.fieldWrapper, props.style]}>{props.children}</View>;
 };
 
-type TProps = {
+type TScreenProps = {
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
   profile?: TProfile;
@@ -59,7 +59,7 @@ type TProps = {
   testID?: string;
 };
 
-function renderHeader(props: TProps) {
+function renderHeader(props: TScreenProps) {
   if (props.profile) {
     return (
       <PatientHeader
@@ -82,7 +82,7 @@ function renderHeader(props: TProps) {
   return <View style={styles.statusBarBlock} />;
 }
 
-export default function Screen(props: TProps) {
+export default function Screen(props: TScreenProps) {
   const scrollEnabled = props.scrollEnabled === undefined ? true : props.scrollEnabled;
 
   return (

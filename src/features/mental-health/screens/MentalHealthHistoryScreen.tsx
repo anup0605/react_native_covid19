@@ -11,7 +11,7 @@ import {
   TMentalHealthCondition,
 } from '@covid/core/state/mental-health';
 import { initialOptions, questions, TQuestion } from '@covid/features/mental-health/data';
-import { MentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
+import { TMentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
@@ -78,7 +78,7 @@ export default function MentalHealthHistoryScreen() {
   const saveStateAndNavigate = async () => {
     const existingMentalHealthListForUser = await mentalHealthApiClient.get();
     const existingMentalHealth = existingMentalHealthListForUser[0];
-    const updatedMentalHealth: MentalHealthInfosRequest = mentalHealthApiClient.buildRequestObject(
+    const updatedMentalHealth: TMentalHealthInfosRequest = mentalHealthApiClient.buildRequestObject(
       existingMentalHealth,
       { mentalHealthHistory: MentalHealthHistory },
     );

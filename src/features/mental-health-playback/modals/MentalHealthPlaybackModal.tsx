@@ -1,9 +1,9 @@
 import { QuoteMarks } from '@assets';
 import { BrandedButton, DoctorProfile, Modal, Tag, Text } from '@covid/components';
 import { events, track } from '@covid/core/Analytics';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { selectFirstPatientId } from '@covid/core/state/user';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
 import util from '@covid/features/mental-health-playback/util';
@@ -22,7 +22,7 @@ interface IProps {
 export default function MentalHealthPlaybackModal(props: IProps) {
   const [tracked, setTracked] = React.useState(false);
   const patientId = useSelector(selectFirstPatientId);
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const testGroupId = React.useMemo(() => util.determineTestGroupId(patientId), [patientId]);
 
   React.useEffect(() => {

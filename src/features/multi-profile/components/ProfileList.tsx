@@ -1,5 +1,5 @@
 import { Loading, LoadingModal } from '@covid/components/Loading';
-import { ApiErrorState } from '@covid/core/api/ApiServiceErrors';
+import { TApiErrorState } from '@covid/core/api/ApiServiceErrors';
 import { TProfile } from '@covid/core/profile/ProfileService';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -7,7 +7,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { NewProfileCard } from './NewProfileCard';
 
-interface IProps extends ApiErrorState {
+interface IProps extends TApiErrorState {
   profiles: TProfile[];
   isLoaded: boolean;
   addProfile?: VoidFunction;

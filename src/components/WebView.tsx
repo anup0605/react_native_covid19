@@ -1,11 +1,11 @@
 import * as React from 'react';
 import NativeWebView, { WebViewMessageEvent, WebViewProps } from 'react-native-webview';
 
-interface Props extends WebViewProps {
+interface IProps extends WebViewProps {
   onEvent?: (type: string, payload?: object) => void;
 }
 
-export class WebView extends React.Component<Props, object> {
+export class WebView extends React.Component<IProps, object> {
   private webview: NativeWebView | null;
 
   render() {

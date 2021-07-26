@@ -9,12 +9,12 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 
-type RenderProps = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'ArchiveReason'>;
   route: RouteProp<ScreenParamList, 'ArchiveReason'>;
 };
 
-export const ArchiveReasonScreen: React.FC<RenderProps> = (props) => {
+export const ArchiveReasonScreen: React.FC<TProps> = (props) => {
   const reasons = [
     {
       text: i18n.t('archive-reason.choice-duplicate-account'),

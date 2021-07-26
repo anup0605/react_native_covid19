@@ -3,17 +3,17 @@ import VaccineDemoUS from '@assets/vaccines/VaccineDemoUS';
 import Screen, { Header } from '@covid/components/Screen';
 import { HeaderText, RegularText } from '@covid/components/Text';
 import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import * as React from 'react';
 import { View } from 'react-native';
 
-type Props = {
-  route: RouteProp<ScreenParamList, 'VaccineFindInfo'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'VaccineFindInfo'>;
 };
 
-export const VaccineFindInfoScreen: React.FC<Props> = ({ route }) => {
+export const VaccineFindInfoScreen: React.FC<TProps> = ({ route }) => {
   // No case for SE, just GB and US atm (Feb 2021)
   let exampleSVG;
   if (isGBCountry()) {

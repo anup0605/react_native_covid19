@@ -8,7 +8,7 @@ import { ValidationError } from '@covid/components/ValidationError';
 import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { covidTestService } from '@covid/core/user/CovidTestService';
-import { CovidTest, CovidTestType } from '@covid/core/user/dto/CovidTestContracts';
+import { ECovidTestType, TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import {
   CovidTestDateQuestion,
   CovidTestInvitedQuestion,
@@ -23,7 +23,7 @@ import {
   ICovidTestMechanismData,
   ICovidTestResultData,
 } from '@covid/features/covid-tests/fields/';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
@@ -41,23 +41,23 @@ interface ICovidTestData
     ICovidTestInvitedData,
     ICovidTestIsRapidData {}
 
-type CovidProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'CovidTestDetail'>;
-  route: RouteProp<ScreenParamList, 'CovidTestDetail'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'CovidTestDetail'>;
+  route: RouteProp<TScreenParamList, 'CovidTestDetail'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   submitting: boolean;
 };
 
-const initialState: State = {
+const initialState: TState = {
   errorMessage: '',
   submitting: false,
 };
 
-export default class CovidTestDetailScreen extends React.Component<CovidProps, State> {
-  constructor(props: CovidProps) {
+export default class CovidTestDetailScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -66,7 +66,7 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
     return this.props.route.params?.test?.id;
   }
 
-  submitCovidTest(infos: Partial<CovidTest>) {
+  submitCovidTest(infos: Partial<TCovidTest>) {
     const { test } = this.props.route.params;
     if (this.props.route.params?.test?.id) {
       if (
@@ -76,7 +76,7 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
       ) {
         this.setState({ submitting: false });
         infos.id = this.testId;
-        assessmentCoordinator.goToTestConfirm(infos as CovidTest);
+        assessmentCoordinator.goToTestConfirm(infos as TCovidTest);
       } else {
         covidTestService
           .updateTest(this.props.route.params?.test?.id, infos)
@@ -93,7 +93,7 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
       this.props.route.params?.assessmentData?.patientData?.patientState?.hasSchoolGroup
     ) {
       this.setState({ submitting: false });
-      assessmentCoordinator.goToTestConfirm(infos as CovidTest);
+      assessmentCoordinator.goToTestConfirm(infos as TCovidTest);
     } else {
       covidTestService
         .addTest(infos)
@@ -127,14 +127,14 @@ export default class CovidTestDetailScreen extends React.Component<CovidProps, S
 
       const infos = {
         patient: assessmentCoordinator.assessmentData?.patientData?.patientId,
-        type: CovidTestType.Generic,
+        type: ECovidTestType.Generic,
         ...CovidTestDateQuestion.createDTO(formData),
         ...CovidTestMechanismQuestion.createDTO(formData),
         ...CovidTestResultQuestion.createDTO(formData),
         ...CovidTestInvitedQuestion.createDTO(formData),
         ...CovidTestLocationQuestion.createDTO(formData),
         ...CovidTestIsRapidQuestion.createDTO(formData),
-      } as Partial<CovidTest>;
+      } as Partial<TCovidTest>;
 
       this.submitCovidTest(infos);
     }

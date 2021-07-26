@@ -1,5 +1,5 @@
 import { IMentalHealthPlayback } from '@covid/core/state/mental-health-playback/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import store from '@covid/core/state/store';
 import { IMHInsights } from '@covid/features/mental-health-playback/types';
 import { mentalHealthApiClient } from '@covid/services';
@@ -28,8 +28,8 @@ const slice = createSlice({
   },
 });
 
-export const selectInsights = (state: RootState) => state.mentalHealthPlayback.mh_insights;
-export const isLoading = (state: RootState) => state.mentalHealthPlayback.loading;
+export const selectInsights = (state: TRootState) => state.mentalHealthPlayback.mh_insights;
+export const isLoading = (state: TRootState) => state.mentalHealthPlayback.loading;
 export function requestInsights() {
   return async (dispatch: typeof store.dispatch) => {
     dispatch(slice.actions.isLoading(true));

@@ -5,7 +5,7 @@ import { ErrorText, RegularText, SecondaryText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
 import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
-import { VaccineBrands } from '@covid/core/vaccine/dto/VaccineRequest';
+import { EVaccineBrands } from '@covid/core/vaccine/dto/VaccineRequest';
 import i18n from '@covid/locale/i18n';
 import { colors } from '@theme';
 import { FormikProps } from 'formik';
@@ -19,11 +19,11 @@ import { VaccineNameQuestion } from './VaccineNameQuestion';
 export interface IVaccineDoseData {
   firstDoseDate: Date | undefined;
   firstBatchNumber: string | undefined;
-  firstBrand: VaccineBrands | undefined | null;
+  firstBrand: EVaccineBrands | undefined | null;
   firstDescription: string | undefined;
   secondDoseDate: Date | undefined;
   secondBatchNumber: string | undefined;
-  secondBrand: VaccineBrands | undefined | null;
+  secondBrand: EVaccineBrands | undefined | null;
   secondDescription: string | undefined;
   hasSecondDose: boolean;
 }

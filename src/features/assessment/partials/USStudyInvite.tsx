@@ -2,7 +2,7 @@ import { blobs, closeIcon } from '@assets';
 import { BrandedButton } from '@covid/components/buttons';
 import { HeaderText, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
-import { AssessmentData } from '@covid/core/assessment/AssessmentCoordinator';
+import { TAssessmentData } from '@covid/core/assessment/AssessmentCoordinator';
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { patientService } from '@covid/core/patient/PatientService';
 import i18n from '@covid/locale/i18n';
@@ -10,11 +10,11 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { Image, ImageBackground, Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-type StudyInviteProps = {
-  assessmentData: AssessmentData;
+type TProps = {
+  assessmentData: TAssessmentData;
 };
 
-export const USStudyInvite: React.FC<StudyInviteProps> = (props: StudyInviteProps) => {
+export const USStudyInvite: React.FC<TProps> = (props: TProps) => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const currentPatient = props.assessmentData?.patientData?.patientState;
 

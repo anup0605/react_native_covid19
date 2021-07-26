@@ -1,10 +1,10 @@
-export type AppScreenContent = {
-  ThankYou: ScreenContent;
-  Welcome: ScreenContent;
-  WelcomeRepeat: ScreenContent;
+export type TAppScreenContent = {
+  ThankYou: TScreenContent;
+  Welcome: TScreenContent;
+  WelcomeRepeat: TScreenContent;
 };
 
-export type ScreenContent = {
+export type TScreenContent = {
   title_text: string;
   body_text: string;
   body_link: string;

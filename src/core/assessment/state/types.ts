@@ -1,16 +1,16 @@
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 
-export enum ActionTypes {
+export enum EActionTypes {
   ASSESSMENT_UPDATED = 'ASSESSMENT_UPDATED',
   ASSESSMENT_CLEARED = 'ASSESSMENT_CLEARED',
 }
 
-export type ActionType = {
-  type: ActionTypes;
+export type TActionType = {
+  type: EActionTypes;
 };
 
-export type PayloadActionType = ActionType & {
-  payload: Partial<AssessmentInfosRequest>;
+export type TPayloadActionType = TActionType & {
+  payload: Partial<TAssessmentInfosRequest>;
 };
 
-export type AssessmentActions = ActionType | PayloadActionType;
+export type TAssessmentActions = TActionType | TPayloadActionType;

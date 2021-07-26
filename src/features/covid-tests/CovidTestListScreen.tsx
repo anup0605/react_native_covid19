@@ -5,8 +5,8 @@ import Screen from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { covidTestService } from '@covid/core/user/CovidTestService';
-import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -18,18 +18,18 @@ import key from 'weak-key';
 
 import { CovidTestRow } from './components/CovidTestRow';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'CovidTestList'>;
-  route: RouteProp<ScreenParamList, 'CovidTestList'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'CovidTestList'>;
+  route: RouteProp<TScreenParamList, 'CovidTestList'>;
 };
 
-type State = {
-  covidTests: CovidTest[];
+type TState = {
+  covidTests: TCovidTest[];
   isLoading: boolean;
 };
 
-export default class CovidTestListScreen extends React.Component<Props, State> {
-  state: State = {
+export default class CovidTestListScreen extends React.Component<TProps, TState> {
+  state: TState = {
     covidTests: [],
     isLoading: false,
   };
@@ -69,7 +69,7 @@ export default class CovidTestListScreen extends React.Component<Props, State> {
 
     return (
       <View style={styles.rootContainer}>
-        <Screen navigation={this.props.navigation} profile={currentPatient?.profile} testID="covid-test-list-screen">
+        <Screen profile={currentPatient?.profile} testID="covid-test-list-screen">
           <ProgressHeader maxSteps={1} step={0} title={i18n.t('covid-test-list.title')} />
 
           <View style={styles.content}>
@@ -84,7 +84,7 @@ export default class CovidTestListScreen extends React.Component<Props, State> {
             <Loading error={null} status="" />
           ) : (
             <View style={styles.content}>
-              {this.state.covidTests.map((item: CovidTest) => {
+              {this.state.covidTests.map((item: TCovidTest) => {
                 return <CovidTestRow item={item} key={key(item)} />;
               })}
             </View>

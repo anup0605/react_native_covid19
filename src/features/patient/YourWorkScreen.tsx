@@ -10,13 +10,13 @@ import { ValidationError } from '@covid/components/ValidationError';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
 import {
-  AvailabilityAlwaysOptions,
-  AvailabilityNeverOptions,
-  AvailabilitySometimesOptions,
-  EquipmentUsageOptions,
-  HealthCareStaffOptions,
-  PatientInfosRequest,
-  PatientInteractions,
+  EAvailabilityAlwaysOptions,
+  EAvailabilityNeverOptions,
+  EAvailabilitySometimesOptions,
+  EEquipmentUsageOptions,
+  EHealthCareStaffOptions,
+  EPatientInteractions,
+  TPatientInfosRequest,
 } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
@@ -29,21 +29,21 @@ import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
 export interface IYourWorkData {
-  isHealthcareStaff: HealthCareStaffOptions;
+  isHealthcareStaff: EHealthCareStaffOptions;
   isCarer: 'yes' | 'no';
-  hasPatientInteraction: PatientInteractions;
-  hasUsedPPEEquipment: EquipmentUsageOptions;
-  ppeAvailabilityAlways: AvailabilityAlwaysOptions;
-  ppeAvailabilitySometimes: AvailabilitySometimesOptions;
-  ppeAvailabilityNever: AvailabilityNeverOptions;
+  hasPatientInteraction: EPatientInteractions;
+  hasUsedPPEEquipment: EEquipmentUsageOptions;
+  ppeAvailabilityAlways: EAvailabilityAlwaysOptions;
+  ppeAvailabilitySometimes: EAvailabilitySometimesOptions;
+  ppeAvailabilityNever: EAvailabilityNeverOptions;
 }
 
-export type YourWorkProps = {
+export type TYourWorkProps = {
   navigation: StackNavigationProp<ScreenParamList, 'YourWork'>;
   route: RouteProp<ScreenParamList, 'YourWork'>;
 };
 
-export type State = {
+export type TState = {
   isDiabetesRegistry: boolean;
   atHospitalInpatient: boolean;
   atHospitalOutpatient: boolean;
@@ -56,7 +56,7 @@ export type State = {
   errorMessage: string;
 };
 
-const initialState: State = {
+const initialState: TState = {
   atCareFacility: false,
   atClinicOutsideHospital: false,
   atHomeHealth: false,
@@ -69,8 +69,8 @@ const initialState: State = {
   isDiabetesRegistry: false,
 };
 
-export default class YourWorkScreen extends React.Component<YourWorkProps, State> {
-  constructor(props: YourWorkProps) {
+export default class YourWorkScreen extends React.Component<TYourWorkProps, TState> {
+  constructor(props: TYourWorkProps) {
     super(props);
     this.state = initialState;
   }
@@ -89,7 +89,7 @@ export default class YourWorkScreen extends React.Component<YourWorkProps, State
       .updatePatientInfo(currentPatient?.patientId, infos)
       .then(() => {
         currentPatient.isHealthWorker =
-          infos.healthcare_professional === HealthCareStaffOptions.DOES_INTERACT || infos.is_carer_for_community;
+          infos.healthcare_professional === EHealthCareStaffOptions.DOES_INTERACT || infos.is_carer_for_community;
         patientCoordinator.gotoNextScreen(this.props.route.name);
       })
       .catch(() =>
@@ -105,9 +105,9 @@ export default class YourWorkScreen extends React.Component<YourWorkProps, State
         healthcare_professional: formData.isHealthcareStaff,
       }),
       is_carer_for_community: formData.isCarer === 'yes',
-    } as PatientInfosRequest;
+    } as TPatientInfosRequest;
 
-    if (formData.isHealthcareStaff === HealthCareStaffOptions.DOES_INTERACT || formData.isCarer === 'yes') {
+    if (formData.isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT || formData.isCarer === 'yes') {
       infos = {
         ...infos,
         have_worked_in_hospital_care_facility: this.state.atCareFacility,
@@ -145,12 +145,12 @@ export default class YourWorkScreen extends React.Component<YourWorkProps, State
   registerSchema = Yup.object().shape({
     hasPatientInteraction: Yup.string().when(['isHealthcareStaff', 'isCarer'], {
       is: (isHealthcareStaff, isCarer) =>
-        isHealthcareStaff === HealthCareStaffOptions.DOES_INTERACT || isCarer === 'yes',
+        isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT || isCarer === 'yes',
       then: Yup.string().required(i18n.t('required-has-patient-interaction')),
     }),
     hasUsedPPEEquipment: Yup.string().when(['isHealthcareStaff', 'isCarer'], {
       is: (isHealthcareStaff, isCarer) =>
-        isHealthcareStaff === HealthCareStaffOptions.DOES_INTERACT || isCarer === 'yes',
+        isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT || isCarer === 'yes',
       then: Yup.string().required(i18n.t('required-has-used-ppe-equipment')),
     }),
     isCarer: Yup.string().required(i18n.t('required-is-carer')),
@@ -173,92 +173,88 @@ export default class YourWorkScreen extends React.Component<YourWorkProps, State
     const healthcareStaffOptions = [
       {
         label: i18n.t('picker-no'),
-        value: HealthCareStaffOptions.NO,
+        value: EHealthCareStaffOptions.NO,
       },
       {
         label: i18n.t('yes-interacting-patients'),
-        value: HealthCareStaffOptions.DOES_INTERACT,
+        value: EHealthCareStaffOptions.DOES_INTERACT,
       },
       {
         label: i18n.t('yes-not-interacting-patients'),
-        value: HealthCareStaffOptions.DOES_NOT_INTERACT,
+        value: EHealthCareStaffOptions.DOES_NOT_INTERACT,
       },
     ];
 
     const equipmentUsageOptions = [
       {
         label: i18n.t('health-worker-exposure-picker-ppe-always'),
-        value: EquipmentUsageOptions.ALWAYS,
+        value: EEquipmentUsageOptions.ALWAYS,
       },
       {
         label: i18n.t('health-worker-exposure-picker-ppe-sometimes'),
-        value: EquipmentUsageOptions.SOMETIMES,
+        value: EEquipmentUsageOptions.SOMETIMES,
       },
       {
         label: i18n.t('health-worker-exposure-picker-ppe-never'),
-        value: EquipmentUsageOptions.NEVER,
+        value: EEquipmentUsageOptions.NEVER,
       },
     ];
 
     const availabilityAlwaysOptions = [
       {
         label: i18n.t('health-worker-exposure-picker-ppe-always-all-needed'),
-        value: AvailabilityAlwaysOptions.ALL_NEEDED,
+        value: EAvailabilityAlwaysOptions.ALL_NEEDED,
       },
       {
         label: i18n.t('health-worker-exposure-picker-ppe-always-reused'),
-        value: AvailabilityAlwaysOptions.REUSED,
+        value: EAvailabilityAlwaysOptions.REUSED,
       },
     ];
 
     const availabilitySometimesOptions = [
       {
         label: i18n.t('health-worker-exposure-picker-ppe-sometimes-all-needed'),
-        value: AvailabilitySometimesOptions.ALL_NEEDED,
+        value: EAvailabilitySometimesOptions.ALL_NEEDED,
       },
       {
         label: i18n.t('health-worker-exposure-picker-ppe-sometimes-not-enough'),
-        value: AvailabilitySometimesOptions.NOT_ENOUGH,
+        value: EAvailabilitySometimesOptions.NOT_ENOUGH,
       },
       {
         label: i18n.t('health-worker-exposure-picker-ppe-sometimes-reused'),
-        value: AvailabilitySometimesOptions.REUSED,
+        value: EAvailabilitySometimesOptions.REUSED,
       },
     ];
 
     const availabilityNeverOptions = [
       {
         label: i18n.t('health-worker-exposure-picker-ppe-never-not-needed'),
-        value: AvailabilityNeverOptions.NOT_NEEDED,
+        value: EAvailabilityNeverOptions.NOT_NEEDED,
       },
       {
         label: i18n.t('health-worker-exposure-picker-ppe-never-not-available'),
-        value: AvailabilityNeverOptions.NOT_AVAILABLE,
+        value: EAvailabilityNeverOptions.NOT_AVAILABLE,
       },
     ];
 
     const patientInteractionOptions = [
       {
         label: i18n.t('exposed-yes-documented'),
-        value: PatientInteractions.YES_DOCUMENTED,
+        value: EPatientInteractions.YES_DOCUMENTED,
       },
       {
         label: i18n.t('exposed-yes-undocumented'),
-        value: PatientInteractions.YES_SUSPECTED,
+        value: EPatientInteractions.YES_SUSPECTED,
       },
       {
         label: i18n.t('exposed-both'),
-        value: PatientInteractions.YES_DOCUMENTED_SUSPECTED,
+        value: EPatientInteractions.YES_DOCUMENTED_SUSPECTED,
       },
-      { label: i18n.t('exposed-no'), value: PatientInteractions.NO },
+      { label: i18n.t('exposed-no'), value: EPatientInteractions.NO },
     ];
 
     return (
-      <Screen
-        navigation={this.props.navigation}
-        profile={patientCoordinator.patientData?.patientState?.profile}
-        testID="your-work-screen"
-      >
+      <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-work-screen">
         <ProgressHeader maxSteps={6} step={2} title={i18n.t('title-about-work')} />
 
         <Formik
@@ -279,7 +275,7 @@ export default class YourWorkScreen extends React.Component<YourWorkProps, State
             const { handleSubmit, handleChange, touched, errors } = props;
 
             const showWorkerAndCarerQuestions: boolean =
-              (!!isHealthcareStaff && isHealthcareStaff === HealthCareStaffOptions.DOES_INTERACT) ||
+              (!!isHealthcareStaff && isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT) ||
               (!!isCarer && isCarer === 'yes');
             return (
               <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>

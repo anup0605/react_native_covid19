@@ -1,7 +1,7 @@
 import { CheckboxItem } from '@covid/components/Checkbox';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
-import { DoseSymptomsRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TDoseSymptomsRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { PickerItemProps, View } from 'react-native';
@@ -10,32 +10,32 @@ import * as Yup from 'yup';
 export interface ISymptomQuestions<P, Data> extends React.FC<P> {
   initialFormValues: (defaultTemperatureUnit?: string) => Data;
   schema: () => Yup.ObjectSchema;
-  createAssessment: (data: Data, param?: any) => Partial<AssessmentInfosRequest>;
+  createAssessment: (data: Data, param?: any) => Partial<TAssessmentInfosRequest>;
 }
 
 export interface IDoseSymptomQuestions<P, Data> extends React.FC<P> {
   initialFormValues: () => Data;
   schema: () => Yup.ObjectSchema;
-  createDoseSymptoms: (data: Data, param?: any) => Partial<DoseSymptomsRequest>;
+  createDoseSymptoms: (data: Data, param?: any) => Partial<TDoseSymptomsRequest>;
 }
 
-type BoolObject = { [key: string]: boolean | undefined };
-type StringObject = { [key: string]: string };
+type TBoolObject = { [key: string]: boolean | undefined };
+type TStringObject = { [key: string]: string };
 
-export type SymptomCheckBoxData<T extends BoolObject, F extends StringObject> = {
+export type TSymptomCheckBoxData<T extends TBoolObject, F extends TStringObject> = {
   label: string;
   value: Extract<keyof T, string>; // Extract used because by default keyof can be (string | number | symbol)
-  followUp?: FollowUpQuestion<F>;
+  followUp?: TFollowUpQuestion<F>;
 };
 
-export type FollowUpQuestion<F> = {
+export type TFollowUpQuestion<F> = {
   label: string;
   value: Extract<keyof F, string>; // Extract used because by default keyof can be (string | number | symbol)
   options: PickerItemProps[];
 };
 
-export function createSymptomCheckboxes<T extends BoolObject, F extends StringObject>(
-  data: SymptomCheckBoxData<T, F>[],
+export function createSymptomCheckboxes<T extends TBoolObject, F extends TStringObject>(
+  data: TSymptomCheckBoxData<T, F>[],
   props: FormikProps<T & F>,
 ): JSX.Element[] {
   return data.map((checkBoxData) => {

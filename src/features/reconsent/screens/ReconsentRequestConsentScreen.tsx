@@ -6,9 +6,9 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { consentService } from '@covid/core/consent/ConsentService';
 import { patientService } from '@covid/core/patient/PatientService';
 import { selectDiseasePreferences } from '@covid/core/state/reconsent';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { grid } from '@covid/themes';
@@ -19,7 +19,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 interface IProps {
-  route: RouteProp<ScreenParamList, 'ReconsentRequestConsent'>;
+  route: RouteProp<TScreenParamList, 'ReconsentRequestConsent'>;
 }
 
 const hitSlop = {
@@ -43,7 +43,7 @@ const Callout = (props: { title: string; description: string }) => {
 export default function ReconsentRequestConsentScreen(props: IProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
-  const patientId = useSelector<RootState, string>((state) => state.user.patients[0]);
+  const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
 
   const diseasePreferences = useSelector(selectDiseasePreferences);
 

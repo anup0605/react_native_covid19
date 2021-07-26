@@ -1,5 +1,5 @@
 import { DrawerToggle } from '@covid/components/DrawerToggle';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -7,19 +7,19 @@ import { Animated, Dimensions, SafeAreaView, StyleSheet, View } from 'react-nati
 
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
-type CollapsibleHeaderHeightConfig = {
+type TCollapsibleHeaderHeightConfig = {
   compact: number;
   expanded: number;
 };
 
-interface CollapsibleHeaderScrollViewProps {
-  navigation: DrawerNavigationProp<ScreenParamList>;
+interface ICollapsibleHeaderScrollViewProps {
+  navigation: DrawerNavigationProp<TScreenParamList>;
   compactHeader: React.ReactNode;
   expandedHeader: React.ReactNode;
-  config: CollapsibleHeaderHeightConfig;
+  config: TCollapsibleHeaderHeightConfig;
 }
 
-export const CollapsibleHeaderScrollView: React.FC<CollapsibleHeaderScrollViewProps> = ({
+export const CollapsibleHeaderScrollView: React.FC<ICollapsibleHeaderScrollViewProps> = ({
   navigation,
   compactHeader,
   expandedHeader,

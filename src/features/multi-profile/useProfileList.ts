@@ -1,5 +1,6 @@
 import { AppException } from '@covid/core/api/ApiServiceErrors';
 import { patientService } from '@covid/core/patient/PatientService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
 import { offlineService } from '@covid/services';
 import * as React from 'react';
@@ -9,7 +10,7 @@ export const useProfileList = () => {
   const [error, setError] = React.useState<AppException | null>(null);
   const [isApiError, setIsApiError] = React.useState<boolean>(false);
 
-  const [profiles, setProfiles] = React.useState<Profile[]>([]);
+  const [profiles, setProfiles] = React.useState<TProfile[]>([]);
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
 
   const retryListProfiles = () => {

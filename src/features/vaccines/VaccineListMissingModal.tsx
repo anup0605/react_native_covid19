@@ -1,6 +1,6 @@
 import { BrandedButton, HeaderText, Text } from '@covid/components';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -8,12 +8,12 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'VaccineList'>;
-  route: RouteProp<ScreenParamList, 'VaccineList'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'VaccineList'>;
+  route: RouteProp<TScreenParamList, 'VaccineList'>;
 };
 
-export const VaccineListMissingModal: React.FC<Props> = ({ route }) => {
+export const VaccineListMissingModal: React.FC<TProps> = ({ route }) => {
   const coordinator = assessmentCoordinator;
 
   const close = () => {

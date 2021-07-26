@@ -1,8 +1,8 @@
-export type CovidTest = {
-  id: string; // Test schema version
-  version: string; // Test schema version
+export type TCovidTest = {
+  id: string;
+  version: string;
   patient: string;
-  type: CovidTestType;
+  type: ECovidTestType;
 
   result: string;
   mechanism: string;
@@ -18,11 +18,11 @@ export type CovidTest = {
   is_rapid_test: boolean;
 };
 
-export enum CovidTestType {
+export enum ECovidTestType {
   Generic = 'generic',
   NHSStudy = 'nhs_study',
 }
 
-export type CovidTestResponse = {
+export type TCovidTestResponse = {
   id: string;
 };
