@@ -133,7 +133,7 @@ export function TrendLineChart({ filter, viewMode }: IProps) {
           payload: {
             data: timeseriesSorted,
             max: Math.max(...values),
-            min: Math.min(...values),
+            min: Math.min(...values) -1, // The "Explore" chart does not like it when the trendline touches the x-axis
           },
         });
       }

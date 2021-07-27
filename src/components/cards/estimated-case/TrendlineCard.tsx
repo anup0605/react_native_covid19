@@ -53,7 +53,7 @@ export function TrendlineCard({ ctaOnPress = () => null, isSharing = false }: IP
         </View>
 
         <View style={styles.chartContainer}>
-          <TrendLineChart filter={ETrendlineTimeFilters.week} viewMode={ETrendLineViewMode.overview} />
+          <TrendLineChart filter={ETrendlineTimeFilters.all} viewMode={ETrendLineViewMode.overview} />
           {/* use absolute overlay to prevent displaying blank chart */}
           {!isSharing ? (
             <TouchableWithoutFeedback onPress={onPress} style={styles.hit}>
