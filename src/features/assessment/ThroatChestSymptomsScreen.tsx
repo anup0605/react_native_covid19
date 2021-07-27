@@ -33,7 +33,7 @@ export const ThroatChestSymptomsScreen: React.FC<TProps> = ({ route }) => {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="throat-chest-symptoms-screen"
     >
-      <ProgressHeader maxSteps={6} step={3} title={i18n.t('describe-symptoms.throat-chest-symptoms')} />
+      <ProgressHeader currentStep={3} maxSteps={6} title={i18n.t('describe-symptoms.throat-chest-symptoms')} />
 
       <Formik
         initialValues={{

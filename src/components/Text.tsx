@@ -84,6 +84,8 @@ export const CaptionText = ({ style, children }: IProps) => (
 
 export const ErrorText = ({ style, children }: IProps) => <Text style={[styles.errorText, style]}>{children}</Text>;
 
+export const DeleteText = ({ style, children }: IProps) => <Text style={[styles.deleteText, style]}>{children}</Text>;
+
 export const RegularBoldText = ({ style, children }: IProps) => (
   <Text style={[styles.regularBoldText, style]}>{children}</Text>
 );
@@ -105,6 +107,10 @@ const styles = StyleSheet.create({
   clickableText: {
     ...fontStyles.bodyReg,
     color: colors.purple,
+  },
+  deleteText: {
+    ...fontStyles.bodyReg,
+    color: colors.red,
   },
   divider: {
     borderBottomWidth: 2,

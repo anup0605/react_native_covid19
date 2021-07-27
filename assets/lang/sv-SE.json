@@ -637,10 +637,11 @@
   "adult-consent-text-2": "skärm för den individ som du anger uppgifterna åt, att denne är 18 år eller äldre och att han eller hon har gett sitt medgivande till att du delar uppgifterna med oss.",
   "consent-create-profile": "Skapa profil",
 
-  "create-profile-title": "Ge den nya profilen ett namn",
-  "create-profile-text": "Det här namnet är bara till för dig. Välj ett namn som gör det enkelt för dig att veta vilken person du rapporterar åt.",
-  "create-profile-placeholder": "t.ex. namn, smeknamn eller relation",
   "create-profile-button": "Fortsätt",
+  "create-profile-label": "Namn",
+  "create-profile-placeholder": "t.ex. namn, smeknamn eller relation",
+  "create-profile-text": "Det här namnet är bara till för dig. Välj ett namn som gör det enkelt för dig att veta vilken person du rapporterar åt.",
+  "create-profile-title": "Ge den nya profilen ett namn",
 
   "answer-for": "Svara åt %{name}",
   "profile-name-too-long": "Ange ett profilnamn med färre än 32 tecken",

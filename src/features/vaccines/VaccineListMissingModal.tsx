@@ -3,13 +3,11 @@ import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordina
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 type TProps = {
-  navigation: StackNavigationProp<TScreenParamList, 'VaccineList'>;
   route: RouteProp<TScreenParamList, 'VaccineList'>;
 };
 

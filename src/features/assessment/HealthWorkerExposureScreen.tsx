@@ -12,7 +12,6 @@ import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -37,7 +36,6 @@ interface IHealthWorkerExposureData {
 }
 
 type TProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'HealthWorkerExposure'>;
   route: RouteProp<ScreenParamList, 'HealthWorkerExposure'>;
 };
 
@@ -139,7 +137,7 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
 
     return (
       <Screen profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}>
-        <ProgressHeader maxSteps={5} step={1} title={i18n.t('title-health-worker-exposure')} />
+        <ProgressHeader currentStep={1} maxSteps={5} title={i18n.t('title-health-worker-exposure')} />
 
         <Formik
           initialValues={initialFormValues}

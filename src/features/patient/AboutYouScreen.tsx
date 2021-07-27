@@ -15,9 +15,9 @@ import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { cleanFloatVal, cleanIntegerVal } from '@covid/utils/number';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
@@ -53,7 +53,6 @@ export interface IAboutYouData extends IRaceEthnicityData, IHeightData, IWeightD
 }
 
 type TProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'AboutYou'>;
   route: RouteProp<ScreenParamList, 'AboutYou'>;
 };
 
@@ -327,7 +326,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
 
     return (
       <ScreenNew profile={this.coordinator.patientData?.patientState?.profile} testID="about-you-screen">
-        <ProgressHeader maxSteps={6} step={2} title={i18n.t('title-about-you')} />
+        <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('title-about-you')} />
 
         <Formik
           validateOnChange
@@ -341,7 +340,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
             const isMinor = isMinorAge(cleanIntegerVal(props.values.yearOfBirth));
 
             return (
-              <Form hasRequiredFields style={{ marginTop: 32 }}>
+              <Form hasRequiredFields style={styling.marginTopHuge}>
                 <GenericTextField
                   required
                   showError
@@ -451,6 +450,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
                 <BrandedButton
                   enabled={props.isValid && props.dirty}
                   onPress={props.handleSubmit}
+                  style={styling.marginTop}
                   testID="button-submit"
                 >
                   {this.props.route.params?.editing ? i18n.t('edit-profile.done') : i18n.t('next-question')}

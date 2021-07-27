@@ -2,6 +2,7 @@ import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { getAvatarByName, TAvatarName } from '@covid/utils/avatar';
+import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Icon } from 'native-base';
 import * as React from 'react';
@@ -19,15 +20,15 @@ export enum ECallOutType {
   Tag,
 }
 
-export const BackButton: React.FC<TBackButtonProps> = ({ style: containerStyle, showCloseButton }) => {
+export const BackButton: React.FC<TBackButtonProps> = ({ style, showCloseButton }) => {
   return showCloseButton ? (
-    <TouchableOpacity onPress={NavigatorService.goBack} style={containerStyle} testID="button-back-navigation">
+    <TouchableOpacity onPress={NavigatorService.goBack} style={style} testID="button-back-navigation">
       <View style={styles.iconButton}>
         <Icon name="cross" style={styles.icon} type="Entypo" />
       </View>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity onPress={NavigatorService.goBack} style={containerStyle} testID="button-back-navigation">
+    <TouchableOpacity onPress={NavigatorService.goBack} style={style} testID="button-back-navigation">
       <View style={styles.iconButton}>
         <Icon name="chevron-thin-left" style={styles.icon} type="Entypo" />
       </View>
@@ -49,11 +50,14 @@ type TNavHeaderProps = {
 };
 
 export const NavHeader: React.FC<TNavHeaderProps> = ({ rightComponent, showCloseButton }) => {
+  const navigation = useNavigation();
+  const showBackButton = navigation.canGoBack() || showCloseButton;
+  if (!showBackButton && !rightComponent) {
+    return null;
+  }
   return (
     <View style={styles.headerBar}>
-      <View style={styles.left}>
-        <BackButton showCloseButton={showCloseButton} />
-      </View>
+      <View style={styles.left}>{showBackButton ? <BackButton showCloseButton={showCloseButton} /> : null}</View>
       <View style={styles.center} />
       <View style={styles.right}>{rightComponent}</View>
     </View>
@@ -72,7 +76,7 @@ export function PatientHeader({
     <>
       {type === ECallOutType.Simple || simpleCallout ? (
         <View style={styles.regularTextBox}>
-          <RegularText style={styles.regularText}>{calloutTitle}</RegularText>
+          <RegularText>{calloutTitle}</RegularText>
         </View>
       ) : (
         <>
@@ -138,7 +142,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
-  regularText: {},
   regularTextBox: {
     justifyContent: 'center',
   },

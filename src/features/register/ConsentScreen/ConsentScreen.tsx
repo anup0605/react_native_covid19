@@ -1,26 +1,25 @@
 import appConfig from '@covid/appConfig';
 import { BrandedButton } from '@covid/components';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { consentService } from '@covid/core/consent/ConsentService';
 import { isGBCountry, isSECountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { appCoordinator } from '@covid/features/AppCoordinator';
+import ConsentScreenGB from '@covid/features/register/ConsentScreen/ConsentScreenGB';
+import ConsentScreenSE from '@covid/features/register/ConsentScreen/ConsentScreenSE';
+import ConsentScreenUS from '@covid/features/register/ConsentScreen/ConsentScreenUS';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-
-import ConsentScreenGB from './ConsentScreenGB';
-import ConsentScreenSE from './ConsentScreenSE';
-import ConsentScreenUS from './ConsentScreenUS';
 
 type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
   route: RouteProp<TScreenParamList, 'Consent'>;
 };
 
-const ConsentScreen: React.FC<TProps> = (props) => {
+export default React.memo((props: TProps) => {
   const [agreed, setAgreed] = React.useState(false);
 
   const handleAgreeClicked = React.useCallback(async () => {
@@ -42,40 +41,27 @@ const ConsentScreen: React.FC<TProps> = (props) => {
 
   const renderConsent = React.useCallback(() => {
     if (isUSCountry()) {
-      return <ConsentScreenUS {...props} setAgreed={setAgreed} />;
-    }
-    if (isGBCountry()) {
-      return <ConsentScreenGB {...props} setAgreed={setAgreed} />;
+      return <ConsentScreenUS {...props} setAgreed={setAgreed} style={styling.flex} />;
     }
     if (isSECountry()) {
-      return <ConsentScreenSE {...props} setAgreed={setAgreed} />;
+      return <ConsentScreenSE {...props} setAgreed={setAgreed} style={styling.flex} />;
     }
-    return <ConsentScreenGB {...props} setAgreed={setAgreed} />;
+    return <ConsentScreenGB {...props} setAgreed={setAgreed} style={styling.flex} />;
   }, [props, setAgreed]);
 
   return (
-    <View style={styles.rootContainer}>
+    <ScreenNew testID="consent-screen">
       {renderConsent()}
       {!props.route.params?.viewOnly ? (
-        <BrandedButton enabled={agreed} onPress={handleAgreeClicked} style={styles.button} testID="button-agree">
+        <BrandedButton
+          enabled={agreed}
+          onPress={handleAgreeClicked}
+          style={styling.marginTopHuge}
+          testID="button-agree"
+        >
           {i18n.t('legal.i-agree')}
         </BrandedButton>
       ) : null}
-    </View>
+    </ScreenNew>
   );
-};
-
-export default React.memo(ConsentScreen);
-
-const styles = StyleSheet.create({
-  button: {
-    marginTop: 20,
-  },
-  rootContainer: {
-    backgroundColor: colors.backgroundPrimary,
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingVertical: 24,
-  },
 });

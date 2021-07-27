@@ -7,58 +7,52 @@ import { Animated, Dimensions, SafeAreaView, StyleSheet, View } from 'react-nati
 
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
-type TCollapsibleHeaderHeightConfig = {
+type TConfig = {
   compact: number;
   expanded: number;
 };
 
-interface ICollapsibleHeaderScrollViewProps {
-  navigation: DrawerNavigationProp<TScreenParamList>;
+interface Iprops {
   compactHeader: React.ReactNode;
+  config: TConfig;
   expandedHeader: React.ReactNode;
-  config: TCollapsibleHeaderHeightConfig;
+  navigation: DrawerNavigationProp<TScreenParamList>;
 }
 
-export const CollapsibleHeaderScrollView: React.FC<ICollapsibleHeaderScrollViewProps> = ({
-  navigation,
-  compactHeader,
-  expandedHeader,
-  config,
-  children,
-}) => {
+export const CollapsibleHeaderScrollView: React.FC<Iprops> = (props) => {
   const [scrollY, _] = React.useState<Animated.Value>(new Animated.Value(0));
 
   const headerHeight = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [0, config.expanded - config.compact],
-    outputRange: [config.expanded, config.compact],
+    inputRange: [0, props.config.expanded - props.config.compact],
+    outputRange: [props.config.expanded, props.config.compact],
   });
 
   // Fade in Compact header as user scroll down
   const compactHeaderOpacity = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [config.compact, config.expanded - config.compact],
+    inputRange: [props.config.compact, props.config.expanded - props.config.compact],
     outputRange: [0, 1],
   });
 
   // Fade out Expanded header as user scroll down
   const expandedHeaderOpacity = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [0, config.expanded - config.compact - 75],
+    inputRange: [0, props.config.expanded - props.config.compact - 75],
     outputRange: [1, 0],
   });
 
   // Slide up Compact header as user scroll down
   const compactHeaderY = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [0, config.expanded - config.compact],
+    inputRange: [0, props.config.expanded - props.config.compact],
     outputRange: [50, 0],
   });
 
   // Slide up Expanded header as user scroll down
   const expandedHeaderY = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [0, config.expanded - config.compact],
+    inputRange: [0, props.config.expanded - props.config.compact],
     outputRange: [0, -25],
   });
 
@@ -66,7 +60,7 @@ export const CollapsibleHeaderScrollView: React.FC<ICollapsibleHeaderScrollViewP
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
         <View style={styles.drawerToggleContainer}>
-          <DrawerToggle navigation={navigation} style={{ tintColor: colors.white }} testID="drawer-toggle" />
+          <DrawerToggle navigation={props.navigation} style={{ tintColor: colors.white }} testID="drawer-toggle" />
         </View>
         <Animated.View style={[styles.header, { height: headerHeight }]}>
           <Animated.View
@@ -78,7 +72,7 @@ export const CollapsibleHeaderScrollView: React.FC<ICollapsibleHeaderScrollViewP
               styles.expandedHeaderContainer,
             ]}
           >
-            {expandedHeader}
+            {props.expandedHeader}
           </Animated.View>
           <Animated.View
             style={{
@@ -86,11 +80,11 @@ export const CollapsibleHeaderScrollView: React.FC<ICollapsibleHeaderScrollViewP
               paddingTop: compactHeaderY,
             }}
           >
-            {compactHeader}
+            {props.compactHeader}
           </Animated.View>
         </Animated.View>
         <Animated.ScrollView
-          contentContainerStyle={{ paddingTop: config.expanded }}
+          contentContainerStyle={{ paddingTop: props.config.expanded }}
           onScroll={Animated.event(
             [
               {
@@ -105,11 +99,11 @@ export const CollapsibleHeaderScrollView: React.FC<ICollapsibleHeaderScrollViewP
           )}
           scrollEventThrottle={16}
           scrollIndicatorInsets={{
-            top: config.expanded,
+            top: props.config.expanded,
           }}
           style={styles.scrollContainer}
         >
-          {children}
+          {props.children}
         </Animated.ScrollView>
       </View>
     </SafeAreaView>
@@ -120,7 +114,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.predict,
     flex: 1,
-    marginBottom: -34,
   },
   drawerToggleContainer: {
     marginRight: 16,

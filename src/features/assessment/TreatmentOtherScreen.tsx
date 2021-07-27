@@ -7,7 +7,6 @@ import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import { Form, Item, Label } from 'native-base';
 import * as React from 'react';
@@ -23,7 +22,6 @@ interface ITreatmentData {
 }
 
 type TTreatmentOtherProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'TreatmentOther'>;
   route: RouteProp<ScreenParamList, 'TreatmentOther'>;
 };
 
@@ -63,7 +61,7 @@ export default class TreatmentOtherScreen extends React.Component<TTreatmentOthe
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="treatment-other-screen"
       >
-        <ProgressHeader maxSteps={5} step={5} title={title} />
+        <ProgressHeader currentStep={5} maxSteps={5} title={title} />
 
         <Formik
           initialValues={initialFormValues}

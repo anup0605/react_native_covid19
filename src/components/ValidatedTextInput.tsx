@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 8,
     paddingRight: 8,
   },
   multipleLines: {

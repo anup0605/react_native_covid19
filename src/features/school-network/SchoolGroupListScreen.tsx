@@ -61,7 +61,7 @@ export const SchoolGroupListScreen: React.FC<TProps> = ({ route }) => {
         </RegularText>
 
         <ProgressBlock>
-          <ProgressStatus maxSteps={4} step={2} />
+          <ProgressStatus currentStep={2} maxSteps={4} />
         </ProgressBlock>
 
         {isModalVisible ? (

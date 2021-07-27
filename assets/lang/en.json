@@ -696,10 +696,11 @@
   "adult-consent-text-2": "screen to the individual on whose behalf you are entering the data, that they are 18 or over, and that they have given their consent for you to share their data with us.",
   "consent-create-profile": "Create profile",
 
-  "create-profile-title": "Give new profile a name",
-  "create-profile-text": "This name is just for you. Choose a name that would allow you to know which person you are reporting for.",
-  "create-profile-placeholder": "e.g. name, nickname or relation",
   "create-profile-button": "Continue",
+  "create-profile-label": "Name",
+  "create-profile-placeholder": "e.g. name, nickname or relation",
+  "create-profile-text": "This name is just for you. Choose a name that would allow you to know which person you are reporting for.",
+  "create-profile-title": "Give new profile a name",
 
   "select-profile-title-assessment": "Select profile you want to report for",
   "select-profile-title-edit": "Select profile you want to edit",

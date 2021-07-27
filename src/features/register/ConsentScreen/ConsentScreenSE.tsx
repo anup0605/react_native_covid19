@@ -6,15 +6,16 @@ import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
-import { ScrollView } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 
 type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
   route: RouteProp<TScreenParamList, 'Consent'>;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
+  style?: StyleProp<ViewStyle>;
 };
 
-const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed }) => {
+const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed, style }) => {
   const [participateChecked, setParticipateChecked] = React.useState(false);
   const [processingChecked, setProcessingChecked] = React.useState(false);
   const [agreeChecked, setAgreeChecked] = React.useState(false);
@@ -47,7 +48,7 @@ const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed }) => 
   }, [participateChecked, processingChecked, agreeChecked]);
 
   return (
-    <ScrollView>
+    <View style={style}>
       <RegularText>
         Vi vill fråga dig om du vill delta i ett forskningsprojekt som handlar om covid-19. I det här dokumentet får du
         information om projektet och om vad det innebär att delta.
@@ -198,7 +199,7 @@ const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed }) => 
           </CheckboxItem>
         </CheckboxList>
       ) : null}
-    </ScrollView>
+    </View>
   );
 };
 

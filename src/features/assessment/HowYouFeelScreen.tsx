@@ -10,6 +10,7 @@ import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
+import { styling } from '@covid/themes';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
@@ -110,7 +111,7 @@ export const HowYouFeelScreen: React.FC<TProps> = ({ route, navigation }) => {
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="how-you-feel-screen"
       >
-        <ProgressHeader maxSteps={1} step={0} title={i18n.t('how-you-feel.question-health-status')} />
+        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('how-you-feel.question-health-status')} />
 
         <TouchableOpacity onPress={() => assessmentCoordinator.editLocation()} style={{ padding: 16 }}>
           <RegularText>
@@ -125,6 +126,7 @@ export const HowYouFeelScreen: React.FC<TProps> = ({ route, navigation }) => {
         <View style={{ marginHorizontal: 16 }}>
           <SelectorButton
             onPress={() => handlePress(true)}
+            style={styling.marginBottomHuge}
             testID="button-status-healthy"
             text={i18n.t('how-you-feel.picker-health-status-healthy')}
           />

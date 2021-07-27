@@ -4,12 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-function TimelineFooter() {
+export default function TimelineFooter() {
   const { navigate } = useNavigation();
   const label = 'Join the ZOE COVID Symptom Study App today to help science';
   return (
-    <View style={styles.container}>
-      <Text rhythm={32} style={styles.header} textAlign="center" textClass="p">
+    <View>
+      <Text rhythm={32} style={styles.paddingHorizontal} textAlign="center" textClass="p">
         Check in soon to see how your personal timeline evolves!
       </Text>
       <TouchableOpacity
@@ -37,13 +37,7 @@ const styles = StyleSheet.create({
     height: 56,
     justifyContent: 'center',
   },
-  container: {
-    marginBottom: 96,
-    padding: 16,
-  },
-  header: {
-    paddingHorizontal: 40,
+  paddingHorizontal: {
+    paddingHorizontal: 32,
   },
 });
-
-export default TimelineFooter;

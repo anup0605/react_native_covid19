@@ -1,8 +1,7 @@
-import { BrandedButton } from '@covid/components';
-import { ClearButton } from '@covid/components/buttons/ClearButton';
+import { BrandedButton, DeleteButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import Analytics, { events } from '@covid/core/Analytics';
@@ -26,11 +25,12 @@ import {
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
-import { Alert, View } from 'react-native';
+import { Alert } from 'react-native';
 import * as Yup from 'yup';
 
 interface ICovidTestData
@@ -67,7 +67,6 @@ export default class CovidTestDetailScreen extends React.Component<TProps, TStat
   }
 
   submitCovidTest(infos: Partial<TCovidTest>) {
-    const { test } = this.props.route.params;
     if (this.props.route.params?.test?.id) {
       if (
         this.props.route.params?.test?.result !== 'positive' &&
@@ -180,13 +179,13 @@ export default class CovidTestDetailScreen extends React.Component<TProps, TStat
       .concat(CovidTestIsRapidQuestion.schema());
 
     return (
-      <Screen
+      <ScreenNew
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="covid-test-detail-screen"
       >
         <ProgressHeader
+          currentStep={1}
           maxSteps={2}
-          step={1}
           title={i18n.t(this.testId ? 'covid-test.page-title-detail-update' : 'covid-test.page-title-detail-add')}
         />
 
@@ -207,33 +206,25 @@ export default class CovidTestDetailScreen extends React.Component<TProps, TStat
         >
           {(props) => {
             return (
-              <Form hasRequiredFields>
-                <View style={{ marginHorizontal: 16 }}>
-                  <CovidTestDateQuestion formikProps={props as FormikProps<ICovidTestDateData>} test={test} />
-                  <CovidTestMechanismQuestion formikProps={props as FormikProps<ICovidTestMechanismData>} test={test} />
-                  <CovidTestLocationQuestion formikProps={props as FormikProps<ICovidTestLocationData>} test={test} />
-                  <CovidTestResultQuestion formikProps={props as FormikProps<ICovidTestResultData>} test={test} />
-                  <CovidTestIsRapidQuestion formikProps={props as FormikProps<ICovidTestIsRapidData>} test={test} />
-                  <CovidTestInvitedQuestion formikProps={props as FormikProps<ICovidTestInvitedData>} test={test} />
+              <Form hasRequiredFields style={styling.marginTop}>
+                <CovidTestDateQuestion formikProps={props as FormikProps<ICovidTestDateData>} test={test} />
+                <CovidTestMechanismQuestion formikProps={props as FormikProps<ICovidTestMechanismData>} test={test} />
+                <CovidTestLocationQuestion formikProps={props as FormikProps<ICovidTestLocationData>} test={test} />
+                <CovidTestResultQuestion formikProps={props as FormikProps<ICovidTestResultData>} test={test} />
+                <CovidTestIsRapidQuestion formikProps={props as FormikProps<ICovidTestIsRapidData>} test={test} />
+                <CovidTestInvitedQuestion formikProps={props as FormikProps<ICovidTestInvitedData>} test={test} />
 
-                  <ErrorText>{this.state.errorMessage}</ErrorText>
-                  {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
-                    <ValidationError error={i18n.t('validation-error-text')} />
-                  ) : null}
+                <ErrorText>{this.state.errorMessage}</ErrorText>
+                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                  <ValidationError error={i18n.t('validation-error-text')} />
+                ) : null}
 
-                  {this.testId ? (
-                    <ClearButton
-                      onPress={async () => {
-                        await this.promptDeleteTest();
-                      }}
-                      text={i18n.t('covid-test.delete-test')}
-                    />
-                  ) : null}
-                </View>
+                {this.testId ? <DeleteButton onPress={this.promptDeleteTest} /> : null}
 
                 <BrandedButton
                   enabled={!this.state.submitting && props.isValid}
                   onPress={props.handleSubmit}
+                  style={styling.marginTop}
                   testID="button-submit"
                 >
                   {i18n.t(this.testId ? 'covid-test.update-test' : 'covid-test.add-test')}
@@ -242,7 +233,7 @@ export default class CovidTestDetailScreen extends React.Component<TProps, TStat
             );
           }}
         </Formik>
-      </Screen>
+      </ScreenNew>
     );
   }
 }

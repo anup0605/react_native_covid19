@@ -10,7 +10,6 @@ import { ErrorText, RegularText } from './Text';
 type TProps = {
   error: AppException | null;
   status?: string;
-  style?: StyleSheet | object;
   onRetry?: () => void;
   onPress?: () => void;
 };

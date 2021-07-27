@@ -4,15 +4,16 @@ import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
-import { ScrollView } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 
 type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
   route: RouteProp<TScreenParamList, 'Consent'>;
+  style?: StyleProp<ViewStyle>;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ConsentScreenGB: React.FC<TProps> = ({ navigation, route, setAgreed }) => {
+const ConsentScreenGB: React.FC<TProps> = ({ navigation, route, setAgreed, style }) => {
   const onInfoLinkPress = React.useCallback(
     () => openWebLink('https://www.nhs.uk/conditions/coronavirus-covid-19/'),
     [],
@@ -28,7 +29,7 @@ const ConsentScreenGB: React.FC<TProps> = ({ navigation, route, setAgreed }) => 
   }, []);
 
   return (
-    <ScrollView>
+    <View style={style}>
       <RegularText>
         By using this app and tracking if you are well or have symptoms, you will be helping medical science and the NHS
         to better understand Coronavirus (COVID-19) and helping us follow the spread of the virus.
@@ -81,7 +82,7 @@ const ConsentScreenGB: React.FC<TProps> = ({ navigation, route, setAgreed }) => 
         {'\n\n'}
         Any questions may be sent to <RegularBoldText>covidtrackingquestions@joinzoe.com</RegularBoldText>
       </RegularText>
-    </ScrollView>
+    </View>
   );
 };
 

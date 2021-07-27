@@ -13,7 +13,6 @@ import { ScreenParamList } from '@covid/features';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import { Form, Item, Label } from 'native-base';
 import * as React from 'react';
@@ -21,7 +20,6 @@ import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
 type TYourStudyProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'YourStudy'>;
   route: RouteProp<ScreenParamList, 'YourStudy'>;
 };
 
@@ -310,7 +308,7 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
 
     return (
       <Screen simpleCallout profile={this.coordinator.patientData?.patientState?.profile} testID="your-study-screen">
-        <ProgressHeader maxSteps={6} step={1} title={i18n.t('your-study.title')} />
+        <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
 
         <Formik
           initialValues={this.getInitialFormValues()}

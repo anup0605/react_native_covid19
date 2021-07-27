@@ -6,15 +6,16 @@ import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
-import { ScrollView } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 
 type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
   route: RouteProp<TScreenParamList, 'Consent'>;
   setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
+  style?: StyleProp<ViewStyle>;
 };
 
-const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed }) => {
+const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed, style }) => {
   const [processingChecked, setProcessingChecked] = React.useState(false);
   const [termsOfUseChecked, setTermsOfUseChecked] = React.useState(false);
 
@@ -51,7 +52,7 @@ const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed }) => 
   }, [processingChecked, termsOfUseChecked]);
 
   return (
-    <ScrollView>
+    <View style={style}>
       <RegularText>
         {i18n.t('consent-normal-us.existing-study')}{' '}
         <ClickableText onPress={onNurseConsentPress} testID="nurse-consent">
@@ -118,7 +119,7 @@ const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed }) => 
           </CheckboxItem>
         </CheckboxList>
       ) : null}
-    </ScrollView>
+    </View>
   );
 };
 

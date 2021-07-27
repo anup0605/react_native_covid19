@@ -21,7 +21,6 @@ import {
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
 import { Item, Label } from 'native-base';
 import * as React from 'react';
@@ -39,7 +38,6 @@ export interface IYourWorkData {
 }
 
 export type TYourWorkProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'YourWork'>;
   route: RouteProp<ScreenParamList, 'YourWork'>;
 };
 
@@ -255,7 +253,7 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
 
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-work-screen">
-        <ProgressHeader maxSteps={6} step={2} title={i18n.t('title-about-work')} />
+        <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('title-about-work')} />
 
         <Formik
           initialValues={{} as IYourWorkData}

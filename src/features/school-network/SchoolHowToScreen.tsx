@@ -30,7 +30,7 @@ export const SchoolHowToScreen: React.FC<TProps> = ({ route }) => {
     <View style={styles.container}>
       <Screen simpleCallout profile={currentPatient?.profile} style={styles.container} testID="school-how-to-screen">
         <View style={styles.container}>
-          <ProgressHeader maxSteps={6} step={1} title={i18n.t('school-networks.how-to.title')} />
+          <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('school-networks.how-to.title')} />
 
           <View style={styles.description}>
             <RegularBoldText>{i18n.t('school-networks.how-to.point-1.title')}</RegularBoldText>

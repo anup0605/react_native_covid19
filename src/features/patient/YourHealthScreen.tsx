@@ -17,7 +17,6 @@ import { BloodGroupQuestion, IBloodGroupData } from '@covid/features/patient/fie
 import i18n from '@covid/locale/i18n';
 import { stripAndRound } from '@covid/utils/number';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -65,7 +64,6 @@ const initialFormValues = {
 };
 
 type TProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'YourHealth'>;
   route: RouteProp<ScreenParamList, 'YourHealth'>;
 };
 
@@ -236,7 +234,7 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
     ];
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-health-screen">
-        <ProgressHeader maxSteps={6} step={3} title={i18n.t('your-health.page-title')} />
+        <ProgressHeader currentStep={3} maxSteps={6} title={i18n.t('your-health.page-title')} />
 
         <Formik
           initialValues={{

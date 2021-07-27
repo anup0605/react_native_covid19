@@ -1,5 +1,6 @@
 import { gbFlag, svFlag, usFlag } from '@assets';
-import { BasicNavHeader, SafeLayout } from '@covid/components';
+import { RegularText } from '@covid/components';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
 import { TSupportedCountryCodes } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
@@ -11,7 +12,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 interface IProps {
   navigation: StackNavigationProp<TScreenParamList, 'CountrySelect'>;
@@ -54,10 +55,9 @@ export function CountrySelectScreen(props: IProps) {
   }
 
   return (
-    <SafeLayout style={styles.safeLayout} testID="select-country-screen">
+    <ScreenNew backgroundColor={colors.predict} testID="select-country-screen">
       <View style={styles.container}>
-        <BasicNavHeader style={styles.navHeader} />
-        <Text style={styles.text}>{i18n.t('select-country')}</Text>
+        <RegularText style={styles.text}>{i18n.t('select-country')}</RegularText>
         <View style={styles.flagRow}>
           {countries.map((country, index) => (
             <TouchableOpacity
@@ -71,7 +71,7 @@ export function CountrySelectScreen(props: IProps) {
           ))}
         </View>
       </View>
-    </SafeLayout>
+    </ScreenNew>
   );
 }
 
@@ -81,24 +81,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: grid.gutter,
-    position: 'relative',
   },
   flagRow: {
     alignSelf: 'stretch',
     flexDirection: 'row',
   },
-  navHeader: {
-    left: 0,
-    position: 'absolute',
-    top: 0,
-  },
-  safeLayout: {
-    backgroundColor: colors.predict,
-  },
   text: {
     color: colors.white,
     fontSize: 24,
-    paddingBottom: 40,
+    paddingBottom: 32,
     textAlign: 'center',
   },
 });

@@ -6,13 +6,11 @@ import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profi
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 type TProps = {
-  navigation: StackNavigationProp<TScreenParamList, 'EditProfile'>;
   route: RouteProp<TScreenParamList, 'EditProfile'>;
 };
 
@@ -28,12 +26,7 @@ export const EditProfileScreen: React.FC<TProps> = (props) => {
 
   return (
     <>
-      <Screen
-        simpleCallout
-        navigation={props.navigation}
-        profile={props.route.params?.patientData?.profile}
-        testID="edit-profile-screen"
-      >
+      <Screen simpleCallout profile={props.route.params?.patientData?.profile} testID="edit-profile-screen">
         <Header>
           <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.title')}</HeaderText>
           <SecondaryText>{i18n.t('edit-profile.text')}</SecondaryText>

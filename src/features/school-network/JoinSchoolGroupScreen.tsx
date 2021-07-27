@@ -83,7 +83,7 @@ export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
       </Header>
 
       <ProgressBlock>
-        <ProgressStatus color={colors.brand} maxSteps={4} step={3} />
+        <ProgressStatus color={colors.brand} currentStep={3} maxSteps={4} />
       </ProgressBlock>
 
       <Formik

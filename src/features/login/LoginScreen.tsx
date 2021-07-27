@@ -10,7 +10,6 @@ import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import { grid, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Input, Item, Label, Toast } from 'native-base';
 import * as React from 'react';
@@ -18,7 +17,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'Login'>;
   route: RouteProp<ScreenParamList, 'Login'>;
 }
 

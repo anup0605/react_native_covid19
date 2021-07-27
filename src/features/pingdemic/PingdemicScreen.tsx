@@ -8,7 +8,6 @@ import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { styling } from '@covid/themes';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import * as React from 'react';
@@ -34,7 +33,6 @@ interface IPingdemicData extends ICovidTestDateData {
 }
 
 type TProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'Pingdemic'>;
   route: RouteProp<ScreenParamList, 'Pingdemic'>;
 };
 
@@ -69,7 +67,7 @@ const ValidationSchema = () => {
   });
 };
 
-export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
+export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
   const [errorMessage, setErrorMessage] = React.useState('');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const isFocused = useIsFocused();
@@ -171,7 +169,6 @@ export const PingdemicScreen: React.FC<TProps> = ({ route, navigation }) => {
   return (
     <>
       <Screen
-        navigation={navigation}
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="how-you-feel-screen"
       >

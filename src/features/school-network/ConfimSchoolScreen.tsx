@@ -1,43 +1,41 @@
-import { Button } from '@covid/components/buttons/Button';
-import Screen from '@covid/components/Screen';
+import { BrandedButton } from '@covid/components/buttons';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { RegularText } from '@covid/components/Text';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-
-import { JoinHeader } from './partials';
 
 interface IProps {
   route: RouteProp<TScreenParamList, 'ConfirmSchool'>;
 }
 
 function ConfirmSchoolScreen({ route }: IProps) {
-  const handleOnPress = async () => {
+  async function onPress() {
     await schoolNetworkCoordinator.setSelectedSchool(route.params?.school);
     schoolNetworkCoordinator.goToJoinGroup();
-  };
+  }
 
   return (
-    <Screen profile={route.params?.patientData?.patientState?.profile} testID="confirm-school-screen">
-      <View style={styles.container}>
-        <JoinHeader
-          bodyText="school-networks.join-school.school-code-confirm-instructions"
-          currentStep={2}
-          headerText="school-networks.join-school.school-code-confirm"
-          maxSteps={4}
-        />
-        <View style={styles.box}>
-          <RegularText>{route.params?.school.name}</RegularText>
-        </View>
+    <ScreenNew profile={route.params?.patientData?.patientState?.profile} testID="confirm-school-screen">
+      <ProgressHeader
+        currentStep={2}
+        description={i18n.t('school-networks.join-school.school-code-confirm-instructions')}
+        maxSteps={4}
+        title={i18n.t('school-networks.join-school.school-code-confirm')}
+      />
+      <View style={styles.box}>
+        <RegularText>{route.params?.school.name}</RegularText>
       </View>
-      <Button branded onPress={handleOnPress}>
+      <BrandedButton onPress={onPress} style={styling.marginTopAuto}>
         {i18n.t('legal.confirm')}
-      </Button>
-    </Screen>
+      </BrandedButton>
+    </ScreenNew>
   );
 }
 
@@ -47,11 +45,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundTertiary,
     borderRadius: 8,
     justifyContent: 'center',
-    marginHorizontal: 16,
-    marginTop: 16,
+    marginVertical: 32,
     padding: 16,
   },
-  container: {
+  flex: {
     flex: 1,
   },
 });

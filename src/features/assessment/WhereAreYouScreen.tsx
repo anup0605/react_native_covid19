@@ -55,21 +55,24 @@ function WhereAreYouScreen({ route }: IProps) {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="where-are-you-screen"
     >
-      <ProgressHeader maxSteps={6} step={6} title={i18n.t('where-are-you.question-location')} />
+      <ProgressHeader currentStep={6} maxSteps={6} title={i18n.t('where-are-you.question-location')} />
 
-      <View style={styles.content}>
+      <View style={styles.marginVertical}>
         <SelectorButton
           onPress={() => handleLocationSelection('home', true)}
+          style={styles.marginBottom}
           testID="button-location-home"
           text={i18n.t('where-are-you.picker-location-home')}
         />
         <SelectorButton
           onPress={() => handleLocationSelection('hospital', false)}
+          style={styles.marginBottom}
           testID="button-location-hospital"
           text={i18n.t('where-are-you.picker-location-hospital')}
         />
         <SelectorButton
           onPress={() => handleLocationSelection('back_from_hospital', false)}
+          style={styles.marginBottom}
           testID="button-location-back-from-hospital"
           text={i18n.t('where-are-you.picker-location-back-from-hospital')}
         />
@@ -84,7 +87,10 @@ function WhereAreYouScreen({ route }: IProps) {
 }
 
 const styles = StyleSheet.create({
-  content: {
+  marginBottom: {
+    marginBottom: 32,
+  },
+  marginVertical: {
     marginVertical: 32,
   },
 });

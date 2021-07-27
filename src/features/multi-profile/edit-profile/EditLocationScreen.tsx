@@ -12,14 +12,12 @@ import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profi
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { PickerItemProps, View } from 'react-native';
 import * as Yup from 'yup';
 
 type TProps = {
-  navigation: StackNavigationProp<TScreenParamList, 'EditLocation'>;
   route: RouteProp<TScreenParamList, 'EditLocation'>;
 };
 
@@ -113,12 +111,7 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
     .sort((a: PickerItemProps, b: PickerItemProps) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0));
 
   return (
-    <Screen
-      simpleCallout
-      navigation={props.navigation}
-      profile={props.route.params?.patientData?.profile}
-      testID="edit-location-screen"
-    >
+    <Screen simpleCallout profile={props.route.params?.patientData?.profile} testID="edit-location-screen">
       <Header>
         <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.location.title')}</HeaderText>
       </Header>

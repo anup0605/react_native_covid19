@@ -50,7 +50,7 @@ function TreatmentSelectionScreen({ route }: IProps) {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="treatment-selection-screen"
     >
-      <ProgressHeader maxSteps={5} step={4} title={title} />
+      <ProgressHeader currentStep={4} maxSteps={5} title={title} />
 
       <View style={styles.content}>
         <FieldWrapper style={styles.fieldWrapper}>

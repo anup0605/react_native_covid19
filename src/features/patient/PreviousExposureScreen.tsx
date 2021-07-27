@@ -15,7 +15,6 @@ import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { stripAndRound } from '@covid/utils/number';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import { Item, Label } from 'native-base';
 import * as React from 'react';
@@ -39,7 +38,6 @@ const initialFormValues = {
 };
 
 type TProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'PreviousExposure'>;
   route: RouteProp<ScreenParamList, 'PreviousExposure'>;
 };
 
@@ -155,7 +153,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
     ];
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="previous-exposure-screen">
-        <ProgressHeader maxSteps={6} step={4} title={i18n.t('previous-exposure-title')} />
+        <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('previous-exposure-title')} />
 
         <Formik
           validateOnChange

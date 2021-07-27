@@ -1,3 +1,4 @@
+import { NavHeader, PatientHeader } from '@covid/components/PatientHeader';
 import { TProfile } from '@covid/core/profile/ProfileService';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -14,8 +15,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { NavHeader, PatientHeader } from './PatientHeader';
 
 export const screenWidth = Math.round(Dimensions.get('window').width) - 32;
 export const screenHeight = Math.round(Dimensions.get('window').height);

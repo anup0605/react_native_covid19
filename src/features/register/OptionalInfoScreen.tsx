@@ -10,7 +10,6 @@ import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import { offlineService, pushNotificationService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import Constants from 'expo-constants';
 import { Formik } from 'formik';
@@ -20,7 +19,6 @@ import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutF
 import * as Yup from 'yup';
 
 type TProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'OptionalInfo'>;
   route: RouteProp<ScreenParamList, 'OptionalInfo'>;
 };
 

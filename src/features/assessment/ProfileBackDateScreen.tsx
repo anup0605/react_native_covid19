@@ -16,10 +16,8 @@ import {
 } from '@covid/features/patient/fields/BloodPressureMedicationQuestion';
 import { DiabetesQuestions, IDiabetesData } from '@covid/features/patient/fields/DiabetesQuestions';
 import { IRaceEthnicityData, RaceEthnicityQuestion } from '@covid/features/patient/fields/RaceEthnicityQuestion';
-import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
 import { Form } from 'native-base';
 import * as React from 'react';
@@ -28,8 +26,7 @@ import * as Yup from 'yup';
 interface IBackfillData extends IBloodPressureData, IRaceEthnicityData, IAtopyData, IDiabetesData, IBloodGroupData {}
 
 type TProps = {
-  navigation: StackNavigationProp<TScreenParamList, 'ProfileBackDate'>;
-  route: RouteProp<TScreenParamList, 'ProfileBackDate'>;
+  route: RouteProp<ScreenParamList, 'ProfileBackDate'>;
 };
 
 type TState = {
@@ -201,7 +198,7 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="profile-back-date-screen"
       >
-        <ProgressHeader maxSteps={6} step={1} title={i18n.t('back-date-profile-title')} />
+        <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('back-date-profile-title')} />
 
         <Formik
           initialValues={{

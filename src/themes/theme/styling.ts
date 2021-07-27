@@ -72,11 +72,20 @@ export default StyleSheet.create({
   marginTop: {
     marginTop: sizes.spacing,
   },
+  marginTopAuto: {
+    marginTop: 'auto',
+  },
   marginTopBig: {
     marginTop: sizes.spacingBig,
   },
+  marginTopHuge: {
+    marginTop: sizes.spacingHuge,
+  },
   marginTopSmall: {
     marginTop: sizes.spacingSmall,
+  },
+  marginVertical: {
+    marginVertical: sizes.spacing,
   },
   marginVerticalAuto: {
     marginBottom: 'auto',
@@ -97,6 +106,9 @@ export default StyleSheet.create({
   },
   padding: {
     padding: sizes.spacing,
+  },
+  paddingVertical: {
+    paddingVertical: sizes.spacing,
   },
   relative: {
     position: 'relative',

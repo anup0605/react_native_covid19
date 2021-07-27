@@ -9,7 +9,6 @@ import Splash from '@covid/features/splash/components/Splash';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as Linking from 'expo-linking';
 import * as React from 'react';
@@ -18,7 +17,6 @@ import RNSplashScreen from 'react-native-splash-screen';
 import { connect } from 'react-redux';
 
 type TProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'Splash'>;
   route: RouteProp<ScreenParamList, 'Splash'>;
   setUsername: (username: string) => void;
   setPatients: (patients: string[]) => void;

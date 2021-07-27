@@ -177,9 +177,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
         <SchoolNetworks schoolGroups={schoolGroups} style={styles.marginVertical} />
       </View>
 
-      <View style={styles.zoe}>
-        <PoweredByZoeSmall />
-      </View>
+      <PoweredByZoeSmall style={styling.marginVertical} />
     </CollapsibleHeaderScrollView>
   );
 }
@@ -197,9 +195,5 @@ const styles = StyleSheet.create({
   },
   marginVertical: {
     marginVertical: 8,
-  },
-  zoe: {
-    marginVertical: 32,
-    paddingVertical: 32,
   },
 });

@@ -12,6 +12,7 @@ import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/fields/VaccineDoseQuestion';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { formatDateToPost } from '@covid/utils/datetime';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -204,7 +205,7 @@ export function AboutYourVaccineScreen({ route }: TProps) {
         {(props: FormikProps<IAboutYourVaccineData>) => {
           return (
             <Form hasRequiredFields style={styles.flex}>
-              <Header3Text style={styles.label}>{i18n.t('vaccines.your-vaccine.first-dose')}</Header3Text>
+              <Header3Text style={styling.marginVertical}>{i18n.t('vaccines.your-vaccine.first-dose')}</Header3Text>
               <VaccineDoseQuestion
                 firstDose
                 formikProps={props as FormikProps<IVaccineDoseData>}
@@ -239,7 +240,7 @@ export function AboutYourVaccineScreen({ route }: TProps) {
 
               <View style={styles.footerWrapper}>
                 {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
-                  <ValidationError error={i18n.t('validation-error-text')} style={styles.marginBottom} />
+                  <ValidationError error={i18n.t('validation-error-text')} style={styling.marginBottom} />
                 ) : null}
 
                 <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
@@ -284,9 +285,6 @@ const styles = StyleSheet.create({
   infoWrapper: {
     flexDirection: 'row',
     marginVertical: 32,
-  },
-  label: {
-    marginVertical: 16,
   },
   marginBottom: {
     marginBottom: 16,

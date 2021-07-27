@@ -1,15 +1,15 @@
 import { BrandedButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
-import Screen, { Header } from '@covid/components/Screen';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import * as React from 'react';
-import { View } from 'react-native';
 import * as Yup from 'yup';
 
 const initialFormValues = {
@@ -39,11 +39,10 @@ export default class CreateProfileScreen extends React.Component<TProps> {
 
   render() {
     return (
-      <Screen showBackButton testID="create-profile-screen">
-        <Header>
-          <HeaderText style={{ marginBottom: 12 }}>{i18n.t('create-profile-title')}</HeaderText>
-          <SecondaryText>{i18n.t('create-profile-text')}</SecondaryText>
-        </Header>
+      <ScreenNew testID="create-profile-screen">
+        <HeaderText style={styling.marginBottom}>{i18n.t('create-profile-title')}</HeaderText>
+
+        <SecondaryText style={styling.marginBottomHuge}>{i18n.t('create-profile-text')}</SecondaryText>
 
         <Formik
           validateOnBlur
@@ -58,23 +57,28 @@ export default class CreateProfileScreen extends React.Component<TProps> {
           {(props) => {
             return (
               <Form hasRequiredFields>
-                <View style={{ marginHorizontal: 16 }}>
-                  <GenericTextField
-                    required
-                    formikProps={props}
-                    name="name"
-                    placeholder={i18n.t('create-profile-placeholder')}
-                    testID="input-profile-name"
-                  />
-                </View>
-                <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
+                <GenericTextField
+                  required
+                  formikProps={props}
+                  label={i18n.t('create-profile-label')}
+                  name="name"
+                  placeholder={i18n.t('create-profile-placeholder')}
+                  style={styling.marginBottomHuge}
+                  testID="input-profile-name"
+                />
+                <BrandedButton
+                  enabled={props.isValid}
+                  onPress={props.handleSubmit}
+                  style={styling.marginTopAuto}
+                  testID="button-submit"
+                >
                   {i18n.t('create-profile-button')}
                 </BrandedButton>
               </Form>
             );
           }}
         </Formik>
-      </Screen>
+      </ScreenNew>
     );
   }
 }

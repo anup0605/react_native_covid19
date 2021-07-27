@@ -1,7 +1,7 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem } from '@covid/components/Checkbox';
 import { LoadingModal } from '@covid/components/Loading';
-import Screen, { Header } from '@covid/components/Screen';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { ClickableText, ErrorText, HeaderText, RegularText } from '@covid/components/Text';
 import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
 import { patientService } from '@covid/core/patient/PatientService';
@@ -10,6 +10,7 @@ import { appCoordinator } from '@covid/features/AppCoordinator';
 import { EConsentType, TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { offlineService } from '@covid/services';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
@@ -86,7 +87,7 @@ export default class ConsentForOtherScreen extends React.Component<TProps, TStat
 
   render() {
     return (
-      <Screen showBackButton testID="consent-for-other-screen">
+      <ScreenNew testID="consent-for-other-screen">
         {this.state.isApiError ? (
           <LoadingModal
             error={this.state.error}
@@ -95,45 +96,49 @@ export default class ConsentForOtherScreen extends React.Component<TProps, TStat
             status={this.state.status}
           />
         ) : null}
-        <Header>
-          <HeaderText style={{ marginBottom: 12 }}>{this.headerText}</HeaderText>
-          {this.isAdultConsent() ? (
-            <RegularText>
-              {i18n.t('adult-consent-text-1')}{' '}
-              <ClickableText onPress={() => this.props.navigation.navigate('Consent', { viewOnly: true })}>
-                {i18n.t('consent')}
-              </ClickableText>{' '}
-              {i18n.t('adult-consent-text-2')}
-            </RegularText>
-          ) : (
-            <RegularText>
-              {i18n.t('child-consent-text-1')}{' '}
-              <ClickableText onPress={() => this.props.navigation.navigate('Consent', { viewOnly: true })}>
-                {i18n.t('consent-summary')}
-              </ClickableText>{' '}
-              {i18n.t('child-consent-text-2')}
-            </RegularText>
-          )}
-        </Header>
+        <HeaderText style={styling.marginBottom}>{this.headerText}</HeaderText>
 
-        <View style={{ marginHorizontal: 16 }}>
-          <CheckboxItem onChange={this.handleConsentClick} testID="checkbox-consent" value={this.state.consentChecked}>
-            {this.consentLabel}
-          </CheckboxItem>
-        </View>
+        {this.isAdultConsent() ? (
+          <RegularText style={styling.marginBottom}>
+            {i18n.t('adult-consent-text-1')}{' '}
+            <ClickableText onPress={() => this.props.navigation.navigate('Consent', { viewOnly: true })}>
+              {i18n.t('consent')}
+            </ClickableText>{' '}
+            {i18n.t('adult-consent-text-2')}
+          </RegularText>
+        ) : (
+          <RegularText style={styling.marginBottom}>
+            {i18n.t('child-consent-text-1')}{' '}
+            <ClickableText onPress={() => this.props.navigation.navigate('Consent', { viewOnly: true })}>
+              {i18n.t('consent-summary')}
+            </ClickableText>{' '}
+            {i18n.t('child-consent-text-2')}
+          </RegularText>
+        )}
 
-        <ErrorText>{this.state.errorMessage}</ErrorText>
-
-        <BrandedButton
-          enabled={this.state.consentChecked}
-          onPress={this.handleCreatePatient}
-          testID="button-create-profile"
+        <CheckboxItem
+          onChange={this.handleConsentClick}
+          style={styling.marginBottomHuge}
+          testID="checkbox-consent"
+          value={this.state.consentChecked}
         >
-          {i18n.t('consent-create-profile')}
-        </BrandedButton>
+          {this.consentLabel}
+        </CheckboxItem>
 
-        <View style={{ height: 16 }} />
-      </Screen>
+        <View style={styling.marginTopAuto}>
+          {this.state.errorMessage ? (
+            <ErrorText style={styling.marginBottom}>{this.state.errorMessage}</ErrorText>
+          ) : null}
+
+          <BrandedButton
+            enabled={this.state.consentChecked}
+            onPress={this.handleCreatePatient}
+            testID="button-create-profile"
+          >
+            {i18n.t('consent-create-profile')}
+          </BrandedButton>
+        </View>
+      </ScreenNew>
     );
   }
 }

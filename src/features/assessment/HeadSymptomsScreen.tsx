@@ -30,7 +30,7 @@ export const HeadSymptomsScreen: React.FC<TProps> = ({ route }) => {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="head-symptoms-screen"
     >
-      <ProgressHeader maxSteps={6} step={2} title={i18n.t('describe-symptoms.head-symptoms')} />
+      <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('describe-symptoms.head-symptoms')} />
 
       <Formik
         initialValues={{

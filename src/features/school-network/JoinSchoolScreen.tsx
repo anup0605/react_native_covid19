@@ -1,13 +1,15 @@
+import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen from '@covid/components/Screen';
 import { selectPatientsJoinedGroups } from '@covid/core/schools/Schools.slice';
 import { TRootState } from '@covid/core/state/root';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
+import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 
 import { SchoolForm } from './forms';
-import { JoinHeader, SelectedSchool } from './partials';
+import { SelectedSchool } from './partials';
 
 interface IProps {
   route: RouteProp<TScreenParamList, 'JoinSchool'>;
@@ -36,11 +38,11 @@ function JoinSchoolScreen({ route }: IProps) {
         />
       ) : (
         <>
-          <JoinHeader
-            bodyText="school-networks.join-school.school-code-instructions"
+          <ProgressHeader
             currentStep={1}
-            headerText="school-networks.join-school.school-code-title"
+            description={i18n.t('school-networks.join-school.school-code-instructions')}
             maxSteps={4}
+            title={i18n.t('school-networks.join-school.school-code-title')}
           />
           <SchoolForm patientData={route.params?.patientData} />
         </>
