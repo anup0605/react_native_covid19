@@ -68,9 +68,9 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
     try {
       setLoading(true);
       await consentService.postConsent(
-        'UK Disease Research Consent',
-        appConfig.diseaseResearchConsentVersionUK,
-        appConfig.diseaseResearchPrivacyPolicyVersionUK,
+        'Health Study Consent',
+        appConfig.healthStudyConsentVersionUK,
+        appConfig.privacyPolicyVersionUK,
       );
       await patientService.updatePatientInfo(patientId, diseasePreferencesPayload);
       NavigatorService.navigate('ReconsentNewsletterSignup');

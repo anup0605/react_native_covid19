@@ -2,7 +2,7 @@ import { ApiClientBase } from '@covid/core/api/ApiClientBase';
 import { AsyncStorageService } from '@covid/core/AsyncStorageService';
 import { TConsent } from '@covid/core/user/dto/UserAPIContracts';
 
-type TConsentDocument = 'US' | 'UK' | 'SE' | '' | 'US Nurses' | 'UK Disease Research Consent';
+type TConsentDocument = 'US' | 'UK' | 'SE' | '' | 'US Nurses' | 'Health Study Consent';
 
 export interface IConsentService {
   postConsent(document: TConsentDocument, version: string, privacy_policy_version: string): void; // TODO: define return object

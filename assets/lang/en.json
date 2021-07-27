@@ -452,7 +452,7 @@
     "prefer-not-to-say": "Prefer not to say",
     "dates": "What date were you asked to start self-isolating?",
     "approx": "Approximate date range",
-    "no-app": "Do you have the NHS COVID-19 app?",
+    "no-app": "Do you have the NHS COVID-19 app, the Protect Scotland app or the StopCOVID NI app?",
     "no-app-yes": "Yes",
     "no-app-never-had": "No, I never had it",
     "no-app-used-to-have": "No, I used to have it",
