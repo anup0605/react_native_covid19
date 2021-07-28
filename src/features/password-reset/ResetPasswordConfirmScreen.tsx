@@ -7,16 +7,16 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 
-type PropsType = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'ResetPasswordConfirm'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   enableSubmit: boolean;
 };
 
-export class ResetPasswordConfirmScreen extends React.Component<PropsType, State> {
+export class ResetPasswordConfirmScreen extends React.Component<TProps, TState> {
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

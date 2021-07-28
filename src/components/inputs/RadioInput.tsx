@@ -1,4 +1,4 @@
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import { RadioButton } from '@covid/components/RadioButton';
 import { ErrorText, LabelText, SecondaryText } from '@covid/components/Text';
 import i18n from '@covid/locale/i18n';

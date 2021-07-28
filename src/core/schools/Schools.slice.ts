@@ -1,13 +1,13 @@
 import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { schoolService } from '@covid/core/schools/SchoolService';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type SchoolState = {
+export type TSchoolState = {
   joinedSchoolGroups: ISubscribedSchoolGroupStats[]; // TODO Rename
 };
 
-export const initialStateSchools: SchoolState = {
+export const initialStateSchools: TSchoolState = {
   joinedSchoolGroups: [],
 };
 
@@ -38,10 +38,10 @@ export const schoolSlice = createSlice({
 });
 
 // Selectors
-export const selectAllJoinedGroups = (state: RootState, higherEducation: boolean = false) =>
+export const selectAllJoinedGroups = (state: TRootState, higherEducation: boolean = false) =>
   state.school.joinedSchoolGroups?.filter((group) => group.school.higher_education === higherEducation);
 
-export const selectPatientsJoinedGroups = (state: RootState, patientId: string, higherEduction: boolean = false) => {
+export const selectPatientsJoinedGroups = (state: TRootState, patientId: string, higherEduction: boolean = false) => {
   const allJoinedGroups = selectAllJoinedGroups(state, higherEduction);
   return allJoinedGroups ? allJoinedGroups.find((s) => s.patient_id === patientId) : undefined;
 };

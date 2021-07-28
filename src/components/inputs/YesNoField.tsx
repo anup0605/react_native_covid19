@@ -1,7 +1,6 @@
+import { ButtonsGroup, ISingleButton } from '@covid/components/inputs/ButtonsGroup';
 import i18n from '@covid/locale/i18n';
 import * as React from 'react';
-
-import { ButtonsGroup, ISingleButton } from './inputs/ButtonsGroup';
 
 interface IProps {
   error?: any;
@@ -13,7 +12,7 @@ interface IProps {
   required?: boolean;
 }
 
-const Items = (): ISingleButton[] => [
+const getItems = (): ISingleButton[] => [
   {
     label: i18n.t('picker-no'),
     value: 'no',
@@ -25,7 +24,5 @@ const Items = (): ISingleButton[] => [
 ];
 
 export function YesNoField({ label, onValueChange, ...props }: IProps) {
-  return <ButtonsGroup items={Items()} label={label} onValueChange={onValueChange} {...props} />;
+  return <ButtonsGroup items={getItems()} label={label} onValueChange={onValueChange} {...props} />;
 }
-
-export default YesNoField;

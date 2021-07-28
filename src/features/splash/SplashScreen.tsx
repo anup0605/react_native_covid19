@@ -1,5 +1,5 @@
 import { ApiException } from '@covid/core/api/ApiServiceErrors';
-import { ScreenName } from '@covid/core/Coordinator';
+import { TScreenName } from '@covid/core/Coordinator';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import { setPatients, setUsername } from '@covid/core/state/user';
 import { userService } from '@covid/core/user/UserService';
@@ -9,7 +9,6 @@ import Splash from '@covid/features/splash/components/Splash';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as Linking from 'expo-linking';
 import * as React from 'react';
@@ -17,21 +16,20 @@ import { StyleSheet, View } from 'react-native';
 import RNSplashScreen from 'react-native-splash-screen';
 import { connect } from 'react-redux';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'Splash'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'Splash'>;
   setUsername: (username: string) => void;
   setPatients: (patients: string[]) => void;
 };
 
-type SplashState = {
+type TState = {
   status: string;
   isRetryable: boolean;
   isRetryEnabled: boolean;
 };
 
-class SplashScreen extends React.Component<Props, SplashState> {
-  constructor(props: Props) {
+class SplashScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
 
     this.state = {
@@ -43,7 +41,7 @@ class SplashScreen extends React.Component<Props, SplashState> {
 
   async componentDidMount() {
     Linking.getInitialURL().then(async (url) => {
-      const screenName: ScreenName = this.props.route.name; // change to let when implemented
+      const screenName: TScreenName = this.props.route.name; // change to let when implemented
       if (url) {
         // TODO - set screenName to url deeplink
       }
@@ -55,7 +53,7 @@ class SplashScreen extends React.Component<Props, SplashState> {
     });
   }
 
-  async initAppState(screenName: ScreenName) {
+  async initAppState(screenName: TScreenName) {
     await appCoordinator.init(this.props.setUsername, this.props.setPatients);
     RNSplashScreen.hide();
     // reset router if deeplinking this ensures the dashboard is loaded as the default route

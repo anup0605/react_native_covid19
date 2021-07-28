@@ -1,3 +1,4 @@
+import { ScreenNew } from '@covid/components/ScreenNew';
 import ApiClient from '@covid/core/api/ApiClient';
 import {
   LoadingIndicator,
@@ -11,7 +12,7 @@ import {
 import { ITimeline } from '@covid/features/anniversary/types';
 import { colors } from '@theme/colors';
 import * as React from 'react';
-import { Alert, FlatList, SafeAreaView } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 
 type TRowType = 'ERROR' | 'FOOTER' | 'INTRODUCTION' | 'LOADER' | 'REPORT_CARD' | 'TIMELINE';
 
@@ -47,17 +48,17 @@ export default function AnniversaryScreen() {
   const renderItem = ({ item }: { item: TRowItem }) => {
     switch (item.id) {
       case 'ERROR':
-        return <>{hasError ? <TimelineError /> : null}</>;
+        return hasError ? <TimelineError /> : null;
       case 'INTRODUCTION':
         return <TimelineIntroduction />;
       case 'LOADER':
-        return <>{timeline || hasError ? null : <LoadingIndicator />}</>;
+        return timeline || hasError ? null : <LoadingIndicator />;
       case 'REPORT_CARD':
-        return <>{timeline ? <ReportCard reportedEvents={timeline.badges} /> : null}</>;
+        return timeline ? <ReportCard reportedEvents={timeline.badges} /> : null;
       case 'TIMELINE':
-        return <>{timeline ? <Timeline timelineEvents={timeline.items} /> : null}</>;
+        return timeline ? <Timeline timelineEvents={timeline.items} /> : null;
       case 'FOOTER':
-        return <>{timeline ? <TimelineFooter /> : null}</>;
+        return timeline ? <TimelineFooter /> : null;
       default:
         return null;
     }
@@ -85,7 +86,7 @@ export default function AnniversaryScreen() {
   ];
 
   return (
-    <SafeAreaView style={{ backgroundColor: colors.backgroundTertiary }}>
+    <ScreenNew backgroundColor={colors.backgroundTertiary} testID="anniversary-screen">
       <TimelineHeader />
       <FlatList
         data={data}
@@ -93,6 +94,6 @@ export default function AnniversaryScreen() {
         renderItem={renderItem}
         style={{ backgroundColor: colors.backgroundTertiary }}
       />
-    </SafeAreaView>
+    </ScreenNew>
   );
 }

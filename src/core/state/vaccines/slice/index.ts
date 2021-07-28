@@ -1,5 +1,5 @@
 import { IVaccineState } from '@covid/core/state/vaccines/types';
-import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -8,7 +8,7 @@ export const initialStateVaccine: IVaccineState = {
 };
 
 export const fetchVaccines = createAsyncThunk('vaccines/fetchVaccines', async (patientId: string): Promise<
-  VaccineRequest[]
+  TVaccineRequest[]
 > => {
   const response = await vaccineService.listVaccines();
   const patientVaccines = response.filter((vaccine) => vaccine.patient === patientId);
@@ -17,7 +17,7 @@ export const fetchVaccines = createAsyncThunk('vaccines/fetchVaccines', async (p
 
 const vaccinesSlice = createSlice({
   extraReducers: {
-    [fetchVaccines.fulfilled.type]: (state, action: { payload: VaccineRequest[] }) => {
+    [fetchVaccines.fulfilled.type]: (state, action: { payload: TVaccineRequest[] }) => {
       state.vaccines = action.payload;
     },
   },
@@ -28,7 +28,7 @@ const vaccinesSlice = createSlice({
       state = initialStateVaccine;
     },
     // Added 14.01.2021. Not currently used but should be useful for setting and saving vaccine
-    setVaccine: (state, action: PayloadAction<VaccineRequest[]>) => {
+    setVaccine: (state, action: PayloadAction<TVaccineRequest[]>) => {
       state.vaccines = action.payload;
     },
   },

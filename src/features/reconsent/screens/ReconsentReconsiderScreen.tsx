@@ -2,10 +2,10 @@ import { BrandedButton, Text } from '@covid/components';
 import Analytics, { events } from '@covid/core/Analytics';
 import { patientService } from '@covid/core/patient/PatientService';
 import { resetFeedback, selectFeedbackData } from '@covid/core/state/reconsent';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import VimeoVideo from '@covid/features/reconsent//components/VimeoVideo';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { generalApiClient } from '@covid/services';
@@ -16,7 +16,7 @@ import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'ReconsentReconsider'>;
+  navigation: StackNavigationProp<TScreenParamList, 'ReconsentReconsider'>;
 }
 
 const VIMEO_ID = '571660625';
@@ -28,7 +28,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const feedbackData = useSelector(selectFeedbackData);
-  const patientId = useSelector<RootState, string>((state) => state.user.patients[0]);
+  const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
 
   const videoWidth = windowDimensions.width;
   const videoHeight = videoWidth / VIDEO_RATIO;

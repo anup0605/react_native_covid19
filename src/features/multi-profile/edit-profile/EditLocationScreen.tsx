@@ -1,34 +1,32 @@
 import { BrandedButton } from '@covid/components';
 import DropdownField from '@covid/components/DropdownField';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
 import Screen, { Header } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
-import YesNoField from '@covid/components/YesNoField';
 import { fetchStartUpInfo } from '@covid/core/content/state/contentSlice';
 import { useAppDispatch } from '@covid/core/state/store';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { PickerItemProps, View } from 'react-native';
 import * as Yup from 'yup';
 
-type RenderProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'EditLocation'>;
-  route: RouteProp<ScreenParamList, 'EditLocation'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'EditLocation'>;
 };
 
-type CountryData = {
+type TCountryData = {
   code: string;
   name: string;
 };
 
-type EditLocationData = {
+type TEditLocationData = {
   postcode: string;
   differentAddress: string;
   stillInUK: string;
@@ -36,12 +34,12 @@ type EditLocationData = {
   currentCountry: string;
 };
 
-export const EditLocationScreen: React.FC<RenderProps> = (props) => {
+export const EditLocationScreen: React.FC<TProps> = (props) => {
   const [errorMessage, setErrorMessage] = React.useState('');
 
   const dispatch = useAppDispatch();
 
-  const initialFormValues: EditLocationData = {
+  const initialFormValues: TEditLocationData = {
     currentCountry: props.route.params?.patientData?.patientInfo!.current_country_code ?? '',
     currentPostcode: props.route.params?.patientData?.patientInfo!.current_postcode ?? '',
     differentAddress: props.route.params?.patientData?.patientInfo!.current_postcode
@@ -74,8 +72,8 @@ export const EditLocationScreen: React.FC<RenderProps> = (props) => {
     }),
   });
 
-  const handleLocationUpdate = (formData: EditLocationData) => {
-    const infos: Partial<PatientInfosRequest> = {};
+  const handleLocationUpdate = (formData: TEditLocationData) => {
+    const infos: Partial<TPatientInfosRequest> = {};
 
     if (formData.differentAddress === 'no') {
       infos.postcode = formData.postcode;
@@ -104,7 +102,7 @@ export const EditLocationScreen: React.FC<RenderProps> = (props) => {
 
   const countryList: PickerItemProps[] = require('country-list')
     .getData()
-    .map((countryData: CountryData) => {
+    .map((countryData: TCountryData) => {
       return {
         label: countryData.name,
         value: countryData.code,
@@ -113,26 +111,21 @@ export const EditLocationScreen: React.FC<RenderProps> = (props) => {
     .sort((a: PickerItemProps, b: PickerItemProps) => (a.label > b.label ? 1 : b.label > a.label ? -1 : 0));
 
   return (
-    <Screen
-      simpleCallout
-      navigation={props.navigation}
-      profile={props.route.params?.patientData?.profile}
-      testID="edit-location-screen"
-    >
+    <Screen simpleCallout profile={props.route.params?.patientData?.profile} testID="edit-location-screen">
       <Header>
         <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.location.title')}</HeaderText>
       </Header>
 
       <Formik
         initialValues={initialFormValues}
-        onSubmit={(formData: EditLocationData) => {
+        onSubmit={(formData: TEditLocationData) => {
           return handleLocationUpdate(formData);
         }}
         validationSchema={validation}
       >
         {(props) => {
           return (
-            <FormWrapper hasRequiredFields>
+            <Form>
               <View style={{ marginHorizontal: 16 }}>
                 <GenericTextField
                   required
@@ -187,7 +180,7 @@ export const EditLocationScreen: React.FC<RenderProps> = (props) => {
                   {i18n.t('edit-profile.done')}
                 </BrandedButton>
               </View>
-            </FormWrapper>
+            </Form>
           );
         }}
       </Formik>

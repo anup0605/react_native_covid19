@@ -5,10 +5,9 @@ import { HeaderText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { ScreenParamList } from '@covid/features';
-import { DoseSymptomsData, DoseSymptomsQuestions } from '@covid/features/vaccines/fields/DoseSymptomsQuestions';
+import { DoseSymptomsQuestions, TDoseSymptomsData } from '@covid/features/vaccines/fields/DoseSymptomsQuestions';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Formik } from 'formik';
 import { Form } from 'native-base';
@@ -16,16 +15,15 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'VaccineDoseSymptoms'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'VaccineDoseSymptoms'>;
 };
 
-export const VaccineDoseSymptomsScreen: React.FC<Props> = ({ route, navigation }) => {
+export const VaccineDoseSymptomsScreen: React.FC<TProps> = ({ route }) => {
   const [errorMessage, setErrorMessage] = React.useState('');
   const [isSubmitting, setSubmitting] = React.useState(false);
 
-  const handleSubmit = async (formData: DoseSymptomsData) => {
+  const handleSubmit = async (formData: TDoseSymptomsData) => {
     if (!isSubmitting) {
       setSubmitting(true);
       try {
@@ -45,7 +43,6 @@ export const VaccineDoseSymptomsScreen: React.FC<Props> = ({ route, navigation }
   return (
     <View style={styles.rootContainer}>
       <Screen
-        navigation={navigation}
         profile={route.params?.assessmentData?.patientData?.patientState?.profile}
         testID="vaccine-dose-symptoms-screen"
       >
@@ -67,7 +64,7 @@ export const VaccineDoseSymptomsScreen: React.FC<Props> = ({ route, navigation }
             initialValues={{
               ...DoseSymptomsQuestions.initialFormValues(),
             }}
-            onSubmit={(values: DoseSymptomsData) => handleSubmit(values)}
+            onSubmit={(values: TDoseSymptomsData) => handleSubmit(values)}
             validationSchema={registerSchema}
           >
             {(props) => {

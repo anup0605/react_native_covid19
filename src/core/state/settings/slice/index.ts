@@ -1,5 +1,5 @@
 import ApiClient from '@covid/core/api/ApiClient';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { ISettings } from '@covid/core/state/settings/types';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -36,5 +36,5 @@ const settingsSlice = createSlice({
 });
 
 export const { setHasEmailSubscription } = settingsSlice.actions;
-export const selectSettings = (state: RootState) => state.settings;
+export const selectSettings = (state: TRootState) => state.settings;
 export default settingsSlice.reducer;

@@ -1,5 +1,5 @@
 import DropdownField from '@covid/components/DropdownField';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
@@ -17,17 +17,17 @@ export interface IWeightData {
   weightUnit: string;
 }
 
-interface FCWithStatic<P> extends React.FC<P> {
+interface IFCWithStatic<P> extends React.FC<P> {
   initialFormValues: () => IWeightData;
   schema: () => Yup.ObjectSchema;
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IWeightData>;
   label: string;
 }
 
-export const WeightQuestion: FCWithStatic<Props> = ({ formikProps, label }) => {
+export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) => {
   return (
     <FieldWrapper style={styles.fieldWrapper}>
       <RegularText>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   secondaryField: {
     flex: 2,
     marginLeft: 4,
-    marginTop: -8,
+    marginTop: -16,
   },
 
   stonesField: {

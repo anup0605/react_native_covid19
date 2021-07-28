@@ -1,5 +1,5 @@
-import YesNoField from '@covid/components/YesNoField';
-import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -11,13 +11,13 @@ export interface ICovidTestIsRapidData {
 
 interface IProps {
   formikProps: FormikProps<ICovidTestIsRapidData>;
-  test?: CovidTest;
+  test?: TCovidTest;
 }
 
 export interface ICovidTestIsRapidQuestion<P, Data> extends React.FC<P> {
-  initialFormValues: (test?: CovidTest) => Data;
+  initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
-  createDTO: (data: Data) => Partial<CovidTest>;
+  createDTO: (data: Data) => Partial<TCovidTest>;
 }
 
 export const CovidTestIsRapidQuestion: ICovidTestIsRapidQuestion<IProps, ICovidTestIsRapidData> = (props: IProps) => {
@@ -34,8 +34,8 @@ export const CovidTestIsRapidQuestion: ICovidTestIsRapidQuestion<IProps, ICovidT
   );
 };
 
-CovidTestIsRapidQuestion.initialFormValues = (test?: CovidTest): ICovidTestIsRapidData => {
-  function getIsRapidTest(test?: CovidTest) {
+CovidTestIsRapidQuestion.initialFormValues = (test?: TCovidTest): ICovidTestIsRapidData => {
+  function getIsRapidTest(test?: TCovidTest) {
     if (test?.id) {
       if (test.is_rapid_test === null) {
         return '';
@@ -54,8 +54,8 @@ CovidTestIsRapidQuestion.schema = () => {
   return Yup.object().shape({});
 };
 
-CovidTestIsRapidQuestion.createDTO = (formData: ICovidTestIsRapidData): Partial<CovidTest> => {
+CovidTestIsRapidQuestion.createDTO = (formData: ICovidTestIsRapidData): Partial<TCovidTest> => {
   return {
     ...(formData.isRapidTest && { is_rapid_test: formData.isRapidTest === 'yes' }),
-  } as Partial<CovidTest>;
+  } as Partial<TCovidTest>;
 };

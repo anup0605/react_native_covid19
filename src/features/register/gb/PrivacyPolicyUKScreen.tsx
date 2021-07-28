@@ -9,12 +9,12 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-type PropsType = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'PrivacyPolicyUK'>;
   route: RouteProp<ScreenParamList, 'PrivacyPolicyUK'>;
 };
 
-export class PrivacyPolicyUKScreen extends React.Component<PropsType, object> {
+export class PrivacyPolicyUKScreen extends React.Component<TProps, object> {
   viewOnly = this.props.route.params?.viewOnly;
 
   render() {

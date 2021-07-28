@@ -1,29 +1,29 @@
+import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen from '@covid/components/Screen';
 import { selectPatientsJoinedGroups } from '@covid/core/schools/Schools.slice';
-import { RootState } from '@covid/core/state/root';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TRootState } from '@covid/core/state/root';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
+import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 
 import { SchoolForm } from './forms';
-import { JoinHeader, SelectedSchool } from './partials';
+import { SelectedSchool } from './partials';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'JoinSchool'>;
-  route: RouteProp<ScreenParamList, 'JoinSchool'>;
+  route: RouteProp<TScreenParamList, 'JoinSchool'>;
 }
 
-function JoinSchoolScreen({ route, navigation }: IProps) {
+function JoinSchoolScreen({ route }: IProps) {
   const currentPatient = route.params?.patientData?.patientState;
 
-  const currentJoinedGroup = useSelector((state: RootState) =>
+  const currentJoinedGroup = useSelector((state: TRootState) =>
     selectPatientsJoinedGroups(state, currentPatient?.patientId, false),
   );
 
   return (
-    <Screen simpleCallout navigation={navigation} profile={currentPatient?.profile} testID="join-school-screen">
+    <Screen simpleCallout profile={currentPatient?.profile} testID="join-school-screen">
       {currentJoinedGroup ? (
         <SelectedSchool
           hasBubbles
@@ -38,11 +38,11 @@ function JoinSchoolScreen({ route, navigation }: IProps) {
         />
       ) : (
         <>
-          <JoinHeader
-            bodyText="school-networks.join-school.school-code-instructions"
+          <ProgressHeader
             currentStep={1}
-            headerText="school-networks.join-school.school-code-title"
+            description={i18n.t('school-networks.join-school.school-code-instructions')}
             maxSteps={4}
+            title={i18n.t('school-networks.join-school.school-code-title')}
           />
           <SchoolForm patientData={route.params?.patientData} />
         </>

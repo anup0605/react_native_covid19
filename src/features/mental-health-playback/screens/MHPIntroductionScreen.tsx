@@ -4,9 +4,9 @@ import { BasicPage, Text } from '@covid/components';
 import Card from '@covid/components/cards/Card';
 import UL from '@covid/components/UL';
 import { requestInsights } from '@covid/core/state/mental-health-playback/slice';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { selectFirstPatientId } from '@covid/core/state/user';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import util from '@covid/features/mental-health-playback/util';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -29,7 +29,7 @@ const personalItems = [
 export default function MHPIntroductionScreen() {
   const dispatch = useDispatch();
   const patientId = useSelector(selectFirstPatientId);
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const windowWidth = useWindowDimensions().width;
   const testGroupId = React.useMemo(() => util.determineTestGroupId(patientId), [patientId]);
 

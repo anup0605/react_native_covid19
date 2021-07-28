@@ -1,18 +1,18 @@
 import { chevronRight, pending, tick } from '@assets';
 import { RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';
 import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-type Props = {
-  item: CovidTest;
+type TProps = {
+  item: TCovidTest;
 };
 
-export const CovidTestRow: React.FC<Props> = ({ item }) => {
+export const CovidTestRow: React.FC<TProps> = ({ item }) => {
   const formatTestResult = (result: string) => {
     switch (result) {
       case 'positive':
@@ -34,7 +34,7 @@ export const CovidTestRow: React.FC<Props> = ({ item }) => {
     return moment(dateString).format(format);
   };
 
-  const formatTestDate = (test: CovidTest) => {
+  const formatTestDate = (test: TCovidTest) => {
     if (test.date_taken_specific) {
       return formatDateString(test.date_taken_specific);
     }

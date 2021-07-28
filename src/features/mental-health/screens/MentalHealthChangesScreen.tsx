@@ -18,7 +18,7 @@ import {
   setWorking,
 } from '@covid/core/state/mental-health';
 import { IUser, selectUser } from '@covid/core/state/user';
-import { MentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
+import { TMentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
 import { ChangesQuestion } from '@covid/features/mental-health/partials';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -115,7 +115,7 @@ export default function MentalHealthChangesScreen() {
 
   const createNewMentalHealthRecord = async () => {
     const currentPatientId: string = user.patients[0];
-    const newMentalHealth: MentalHealthInfosRequest = {};
+    const newMentalHealth: TMentalHealthInfosRequest = {};
     await mentalHealthApiClient.add(currentPatientId, newMentalHealth);
   };
 
@@ -133,7 +133,7 @@ export default function MentalHealthChangesScreen() {
   const saveStateAndNavigate = async () => {
     const existingMentalHealthListForUser = await mentalHealthApiClient.get();
     const existingMentalHealth = existingMentalHealthListForUser[0];
-    const updatedMentalHealth: MentalHealthInfosRequest = mentalHealthApiClient.buildRequestObject(
+    const updatedMentalHealth: TMentalHealthInfosRequest = mentalHealthApiClient.buildRequestObject(
       existingMentalHealth,
       { mentalHealthChanges },
     );

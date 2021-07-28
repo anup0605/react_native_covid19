@@ -4,7 +4,7 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { View } from 'react-native';
 
-function TimelineIntroduction() {
+export default function TimelineIntroduction() {
   const { grid } = useTheme();
   return (
     <View accessible style={{ padding: grid.gutter }}>
@@ -18,5 +18,3 @@ function TimelineIntroduction() {
     </View>
   );
 }
-
-export default TimelineIntroduction;

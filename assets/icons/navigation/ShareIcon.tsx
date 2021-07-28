@@ -1,11 +1,11 @@
-import { SvgProps } from '@assets/Svg';
+import { TSvgProps } from '@assets/Svg';
 import { colors } from '@theme';
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
 const color = colors.textDark;
 
-const ShareIcon: React.FC<SvgProps> = ({ width = 20, height = 20, style = {} }) => {
+const ShareIcon: React.FC<TSvgProps> = ({ width = 20, height = 20, style = {} }) => {
   return (
     <Svg height={height} style={style} viewBox="0 0 20 20" width={width}>
       <Path

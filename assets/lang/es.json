@@ -864,10 +864,11 @@
     "back": "Volver"
   },
 
-  "create-profile-title": "Dar un nombre al perfil nuevo",
-  "create-profile-text": "Este nombre es solo para usted. Elija un nombre que le permita saber la persona por la que está informando.",
-  "create-profile-placeholder": "por ej., nombre, alias o relación",
   "create-profile-button": "Continuar",
+  "create-profile-label": "Nombre",
+  "create-profile-placeholder": "por ej., nombre, alias o relación",
+  "create-profile-text": "Este nombre es solo para usted. Elija un nombre que le permita saber la persona por la que está informando.",
+  "create-profile-title": "Dar un nombre al perfil nuevo",
 
   "select-profile-title-assessment": "Seleccione el perfil para el que informará",
   "select-profile-title-edit": "Seleccione el perfil que desea editar",

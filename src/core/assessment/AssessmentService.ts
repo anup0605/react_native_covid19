@@ -1,16 +1,16 @@
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 
 import { assessmentApiClient } from './AssessmentApiClient';
 import { IAssessmentState } from './AssessmentState';
-import { AssessmentInfosRequest } from './dto/AssessmentInfosRequest';
-import { AssessmentResponse } from './dto/AssessmentInfosResponse';
+import { TAssessmentInfosRequest } from './dto/AssessmentInfosRequest';
+import { TAssessmentResponse } from './dto/AssessmentInfosResponse';
 
 export interface IAssessmentService {
   initAssessment(patientId: string): void;
-  saveAssessment(assessment: Partial<AssessmentInfosRequest>): void;
+  saveAssessment(assessment: Partial<TAssessmentInfosRequest>): void;
   completeAssessment(
-    assessment: Partial<AssessmentInfosRequest> | null,
-    patientInfo: PatientInfosRequest,
+    assessment: Partial<TAssessmentInfosRequest> | null,
+    patientInfo: TPatientInfosRequest,
   ): Promise<boolean>;
 }
 
@@ -21,12 +21,12 @@ export default class AssessmentService implements IAssessmentService {
     this.state = state;
   }
 
-  private async saveToApi(assessment: Partial<AssessmentInfosRequest>): Promise<AssessmentResponse> {
+  private async saveToApi(assessment: Partial<TAssessmentInfosRequest>): Promise<TAssessmentResponse> {
     let response;
     if (assessment.id) {
-      response = await assessmentApiClient.updateAssessment(assessment.id, assessment as AssessmentInfosRequest);
+      response = await assessmentApiClient.updateAssessment(assessment.id, assessment as TAssessmentInfosRequest);
     } else {
-      response = await assessmentApiClient.addAssessment(assessment as AssessmentInfosRequest);
+      response = await assessmentApiClient.addAssessment(assessment as TAssessmentInfosRequest);
     }
     return response;
   }
@@ -40,25 +40,25 @@ export default class AssessmentService implements IAssessmentService {
     return response;
   }
 
-  private saveToState(assessment: Partial<AssessmentInfosRequest>) {
+  private saveToState(assessment: Partial<TAssessmentInfosRequest>) {
     return this.state.updateAssessment(assessment);
   }
 
   initAssessment(patientId: string) {
     const assessment = {
       patient: patientId,
-    } as Partial<AssessmentInfosRequest>;
+    } as Partial<TAssessmentInfosRequest>;
 
     this.state.initAssessment(assessment);
   }
 
-  saveAssessment(assessment: Partial<AssessmentInfosRequest>) {
+  saveAssessment(assessment: Partial<TAssessmentInfosRequest>) {
     this.saveToState(assessment);
   }
 
   async completeAssessment(
-    assessment: Partial<AssessmentInfosRequest>,
-    patientInfo: PatientInfosRequest,
+    assessment: Partial<TAssessmentInfosRequest>,
+    patientInfo: TPatientInfosRequest,
   ): Promise<boolean> {
     if (assessment) {
       if (patientInfo.current_country_code) {

@@ -1,24 +1,21 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem } from '@covid/components/Checkbox';
-import Screen, { Header } from '@covid/components/Screen';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { HeaderText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { covidTestService } from '@covid/core/user/CovidTestService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
-import { ListItem } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'CovidTestConfirm'>;
-  route: RouteProp<ScreenParamList, 'CovidTestConfirm'>;
+  route: RouteProp<TScreenParamList, 'CovidTestConfirm'>;
 }
 
-export default function CovidTestConfirmScreen({ navigation, route }: IProps) {
+export default function CovidTestConfirmScreen({ route }: IProps) {
   const [agreed, setAgreed] = React.useState(false);
 
   const handleConsentClick = (checked: boolean) => {
@@ -44,39 +41,18 @@ export default function CovidTestConfirmScreen({ navigation, route }: IProps) {
   };
 
   return (
-    <Screen showBackButton navigation={navigation} style={styles.container} testID="covid-test-confirm-screen">
-      <Header>
-        <HeaderText>{i18n.t('covid-test.confirm-test.title')}</HeaderText>
-      </Header>
+    <ScreenNew backgroundColor={colors.backgroundSecondary} testID="covid-test-confirm-screen">
+      <HeaderText style={styling.marginBottomHuge}>{i18n.t('covid-test.confirm-test.title')}</HeaderText>
 
-      <RegularText style={styles.body}>{i18n.t('covid-test.confirm-test.body')}</RegularText>
+      <RegularText style={styling.marginBottom}>{i18n.t('covid-test.confirm-test.body')}</RegularText>
 
-      <View style={{ flex: 1 }} />
+      <CheckboxItem onChange={handleConsentClick} style={styling.marginTopAuto} value={agreed}>
+        {i18n.t('covid-test.confirm-test.consent')}
+      </CheckboxItem>
 
-      <ListItem>
-        <CheckboxItem onChange={handleConsentClick} value={agreed}>
-          {i18n.t('covid-test.confirm-test.consent')}
-        </CheckboxItem>
-      </ListItem>
-
-      <BrandedButton enabled={agreed} onPress={handleAgreeClicked} style={styles.button} testID="confirm">
+      <BrandedButton enabled={agreed} onPress={handleAgreeClicked} style={styling.marginTopHuge} testID="confirm">
         {i18n.t('legal.confirm')}
       </BrandedButton>
-    </Screen>
+    </ScreenNew>
   );
 }
-
-const styles = StyleSheet.create({
-  body: {
-    fontSize: 17,
-    marginHorizontal: 16,
-    marginVertical: 32,
-  },
-  button: {
-    marginTop: 20,
-  },
-  container: {
-    backgroundColor: colors.backgroundSecondary,
-    flex: 1,
-  },
-});

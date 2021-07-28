@@ -6,13 +6,13 @@ import { PartnerLogoUSDash } from '@covid/components/logos/PartnerLogo';
 import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
 import AnalyticsService, { events } from '@covid/core/Analytics';
 import { updateTodayDate } from '@covid/core/content/state/contentSlice';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { CollapsibleHeaderScrollView } from '@covid/features/dashboard/CollapsibleHeaderScrollView';
 import { CompactHeader, Header } from '@covid/features/dashboard/Header';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -25,14 +25,14 @@ const HEADER_EXPANDED_HEIGHT = 328;
 const HEADER_COLLAPSED_HEIGHT = 100;
 
 interface IProps {
-  navigation: DrawerNavigationProp<ScreenParamList>;
-  route: RouteProp<ScreenParamList, 'DashboardUS'>;
+  navigation: DrawerNavigationProp<TScreenParamList>;
+  route: RouteProp<TScreenParamList, 'DashboardUS'>;
 }
 
 export function DashboardUSScreen({ route, navigation }: IProps) {
   const dispatch = useAppDispatch();
 
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const [showDietStudyPlayback] = React.useState<boolean | undefined>(startupInfo?.show_diet_score);
 
   const headerConfig = {

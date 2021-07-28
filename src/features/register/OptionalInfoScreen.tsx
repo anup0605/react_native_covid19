@@ -2,15 +2,14 @@ import { BrandedButton } from '@covid/components';
 import { LoadingModal } from '@covid/components/Loading';
 import { ErrorText, HeaderText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
-import { ApiErrorState, initialErrorState } from '@covid/core/api/ApiServiceErrors';
-import { PiiRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
+import { TPiiRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
 import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import { offlineService, pushNotificationService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import Constants from 'expo-constants';
 import { Formik } from 'formik';
@@ -19,29 +18,28 @@ import * as React from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import * as Yup from 'yup';
 
-type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'OptionalInfo'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'OptionalInfo'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
-} & ApiErrorState;
+} & TApiErrorState;
 
-const initialState: State = {
+const initialState: TState = {
   ...initialErrorState,
   errorMessage: '',
 };
 
-interface OptionalInfoData {
+interface IOptionalInfoData {
   name: string;
   phone: string;
 }
 
-export class OptionalInfoScreen extends React.Component<PropsType, State> {
+export class OptionalInfoScreen extends React.Component<TProps, TState> {
   private phoneComponent: any;
 
-  constructor(props: PropsType) {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -52,19 +50,19 @@ export class OptionalInfoScreen extends React.Component<PropsType, State> {
     }
   }
 
-  private async savePiiData(formData: OptionalInfoData) {
+  private async savePiiData(formData: IOptionalInfoData) {
     const hasFormData = formData.phone?.trim() || formData.name?.trim();
 
     if (hasFormData) {
       const piiDoc = {
         ...(formData.name && { name: formData.name }),
         ...(formData.phone && { phone_number: formData.phone }),
-      } as Partial<PiiRequest>;
+      } as Partial<TPiiRequest>;
       await userService.updatePii(piiDoc);
     }
   }
 
-  private async handleSaveOptionalInfos(formData: OptionalInfoData) {
+  private async handleSaveOptionalInfos(formData: IOptionalInfoData) {
     try {
       await this.subscribeForPushNotifications();
       await this.savePiiData(formData);
@@ -109,7 +107,7 @@ export class OptionalInfoScreen extends React.Component<PropsType, State> {
           <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.rootContainer}>
             <Formik
               initialValues={{ name: '', phone: '' }}
-              onSubmit={(values: OptionalInfoData) => this.handleSaveOptionalInfos(values)}
+              onSubmit={(values: IOptionalInfoData) => this.handleSaveOptionalInfos(values)}
               validationSchema={this.registerSchema}
             >
               {(props) => {

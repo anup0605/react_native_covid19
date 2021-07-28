@@ -26,7 +26,7 @@ export type TText = {
   textDecorationLine: TTtextDecorationLine;
 };
 
-export type ITextClass = {
+export type TTextStyles = {
   h0: TText;
   //
   h1: TText;
@@ -68,4 +68,4 @@ export type ITextClass = {
   label: TText;
 };
 
-export type TTextClass = keyof ITextClass;
+export type TTextClass = keyof TTextStyles;

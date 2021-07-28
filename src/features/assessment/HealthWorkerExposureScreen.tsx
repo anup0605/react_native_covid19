@@ -1,18 +1,17 @@
 import { BrandedButton } from '@covid/components';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import YesNoField from '@covid/components/YesNoField';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -36,21 +35,20 @@ interface IHealthWorkerExposureData {
   ppeAvailabilityNever: string;
 }
 
-type HealthWorkerExposureProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'HealthWorkerExposure'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'HealthWorkerExposure'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
 };
 
-const initialState: State = {
+const initialState: TState = {
   errorMessage: '',
 };
 
-export default class HealthWorkerExposureScreen extends React.Component<HealthWorkerExposureProps, State> {
-  constructor(props: HealthWorkerExposureProps) {
+export default class HealthWorkerExposureScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -77,7 +75,7 @@ export default class HealthWorkerExposureScreen extends React.Component<HealthWo
         formData.ppeAvailabilitySometimes && { sometimes_used_shortage: formData.ppeAvailabilitySometimes }),
       ...(formData.hasUsedPPEEquipment === 'never' &&
         formData.ppeAvailabilityNever && { never_used_shortage: formData.ppeAvailabilityNever }),
-    } as Partial<AssessmentInfosRequest>;
+    } as Partial<TAssessmentInfosRequest>;
   }
 
   registerSchema = Yup.object().shape({
@@ -138,17 +136,8 @@ export default class HealthWorkerExposureScreen extends React.Component<HealthWo
     ];
 
     return (
-      <Screen
-        navigation={this.props.navigation}
-        profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
-      >
-        <Header>
-          <HeaderText>{i18n.t('title-health-worker-exposure')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={5} step={1} />
-        </ProgressBlock>
+      <Screen profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}>
+        <ProgressHeader currentStep={1} maxSteps={5} title={i18n.t('title-health-worker-exposure')} />
 
         <Formik
           initialValues={initialFormValues}
@@ -157,7 +146,7 @@ export default class HealthWorkerExposureScreen extends React.Component<HealthWo
         >
           {(props) => {
             return (
-              <FormWrapper hasRequiredFields>
+              <Form hasRequiredFields>
                 <View>
                   <YesNoField
                     label={i18n.t('health-worker-exposure-question-interacted-any-patients')}
@@ -225,7 +214,7 @@ export default class HealthWorkerExposureScreen extends React.Component<HealthWo
                 <BrandedButton enabled={props.isValid} onPress={props.handleSubmit}>
                   {i18n.t('next-question')}
                 </BrandedButton>
-              </FormWrapper>
+              </Form>
             );
           }}
         </Formik>

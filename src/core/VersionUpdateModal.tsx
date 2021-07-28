@@ -1,5 +1,5 @@
 import { BrandedButton, HeaderText, Modal, Text } from '@covid/components';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { openWebLink } from '@covid/utils/links';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'VersionUpdateModal'>;
+  navigation: StackNavigationProp<TScreenParamList, 'VersionUpdateModal'>;
 }
 
 function goToStore() {

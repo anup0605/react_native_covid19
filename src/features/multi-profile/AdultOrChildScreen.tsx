@@ -1,20 +1,21 @@
-import Screen, { Header } from '@covid/components/Screen';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { SelectorButton } from '@covid/components/SelectorButton';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
-import { ConsentType, ScreenParamList } from '@covid/features/ScreenParamList';
+import { EConsentType, TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-type HowYouFeelProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'AdultOrChild'>;
-  route: RouteProp<ScreenParamList, 'AdultOrChild'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'AdultOrChild'>;
+  route: RouteProp<TScreenParamList, 'AdultOrChild'>;
 };
 
-export default class AdultOrChildScreen extends React.Component<HowYouFeelProps> {
-  buildRouteParams = (consentType: ConsentType) => {
+export default class AdultOrChildScreen extends React.Component<TProps> {
+  buildRouteParams = (consentType: EConsentType) => {
     return {
       avatarName: this.props.route.params?.avatarName,
       consentType,
@@ -24,32 +25,25 @@ export default class AdultOrChildScreen extends React.Component<HowYouFeelProps>
 
   render() {
     return (
-      <Screen>
-        <Header>
-          <HeaderText style={{ marginBottom: 12 }}>{i18n.t('adult-or-child-title')}</HeaderText>
-          <SecondaryText>{i18n.t('adult-or-child-text')}</SecondaryText>
-        </Header>
+      <ScreenNew testID="adult-child-screen">
+        <HeaderText style={styling.marginBottomSmall}>{i18n.t('adult-or-child-title')}</HeaderText>
+        <SecondaryText>{i18n.t('adult-or-child-text')}</SecondaryText>
 
-        <View style={styles.content}>
+        <View style={styling.marginVerticalHuge}>
           <SelectorButton
-            onPress={() => this.props.navigation.navigate('ConsentForOther', this.buildRouteParams(ConsentType.Adult))}
+            onPress={() => this.props.navigation.navigate('ConsentForOther', this.buildRouteParams(EConsentType.Adult))}
+            style={styling.marginBottomHuge}
             testID="button-over-18"
             text={i18n.t('person-over-18')}
           />
 
           <SelectorButton
-            onPress={() => this.props.navigation.navigate('ConsentForOther', this.buildRouteParams(ConsentType.Child))}
+            onPress={() => this.props.navigation.navigate('ConsentForOther', this.buildRouteParams(EConsentType.Child))}
             testID="button-under-18"
             text={i18n.t('person-under-18')}
           />
         </View>
-      </Screen>
+      </ScreenNew>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  content: {
-    marginVertical: 32,
-  },
-});

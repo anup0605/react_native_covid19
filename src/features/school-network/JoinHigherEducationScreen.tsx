@@ -1,25 +1,26 @@
+import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen from '@covid/components/Screen';
 import { ISchoolModel } from '@covid/core/schools/Schools.dto';
 import { selectPatientsJoinedGroups } from '@covid/core/schools/Schools.slice';
 import { schoolService } from '@covid/core/schools/SchoolService';
-import { RootState } from '@covid/core/state/root';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TRootState } from '@covid/core/state/root';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
+import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { UniversityForm } from './forms';
-import { JoinHeader, SelectedSchool } from './partials';
+import { SelectedSchool } from './partials';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'ConfirmSchool'>;
-  route: RouteProp<ScreenParamList, 'ConfirmSchool'>;
+  route: RouteProp<TScreenParamList, 'ConfirmSchool'>;
 }
 
-export default function JoinHigherEducationScreen({ navigation, route }: IProps) {
+export default function JoinHigherEducationScreen({ route }: IProps) {
   const [schools, setSchools] = React.useState<ISchoolModel[]>([]);
-  const currentJoinedGroup = useSelector((state: RootState) =>
+  const currentJoinedGroup = useSelector((state: TRootState) =>
     selectPatientsJoinedGroups(state, route.params?.patientData?.patientId, true),
   );
 
@@ -31,11 +32,7 @@ export default function JoinHigherEducationScreen({ navigation, route }: IProps)
   }, []);
 
   return (
-    <Screen
-      navigation={navigation}
-      profile={route.params?.patientData?.patientState?.profile}
-      testID="join-higher-education-screen"
-    >
+    <Screen profile={route.params?.patientData?.patientState?.profile} testID="join-higher-education-screen">
       {currentJoinedGroup ? (
         <SelectedSchool
           currentJoinedGroup={currentJoinedGroup}
@@ -44,15 +41,15 @@ export default function JoinHigherEducationScreen({ navigation, route }: IProps)
           title="school-networks.join-school.university-network-header"
         />
       ) : (
-        <>
-          <JoinHeader
-            bodyText="school-networks.join-school.description-higher-education"
-            currentStep={1}
-            headerText="school-networks.join-school.title-higher-education"
+        <View style={{ marginHorizontal: 16 }}>
+          <ProgressHeader
+            currentStep={0}
+            description={i18n.t('school-networks.join-school.description-higher-education')}
             maxSteps={1}
+            title={i18n.t('school-networks.join-school.title-higher-education')}
           />
           <UniversityForm currentJoinedGroup={currentJoinedGroup} schools={schools} />
-        </>
+        </View>
       )}
     </Screen>
   );

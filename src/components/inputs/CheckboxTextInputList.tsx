@@ -1,6 +1,6 @@
 import Check from '@assets/icons/Check';
 import { Text, TextareaWithCharCount } from '@covid/components';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import { styling } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';

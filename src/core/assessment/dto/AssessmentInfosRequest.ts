@@ -1,4 +1,4 @@
-export type AssessmentInfosRequest = {
+export type TAssessmentInfosRequest = {
   version: string; // document/schema version
   patient: string; //	Patient id
   id: string; // Assessment id

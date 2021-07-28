@@ -9,7 +9,7 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-type PropsType = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'PrivacyPolicyUS'>;
   route: RouteProp<ScreenParamList, 'PrivacyPolicyUS'>;
 };
@@ -23,7 +23,7 @@ const HeaderText = (props: { text: string }) => {
   );
 };
 
-export class PrivacyPolicyUSScreen extends React.Component<PropsType, object> {
+export class PrivacyPolicyUSScreen extends React.Component<TProps, object> {
   viewOnly = this.props.route.params?.viewOnly;
 
   render() {

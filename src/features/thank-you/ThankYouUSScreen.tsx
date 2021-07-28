@@ -7,17 +7,15 @@ import i18n from '@covid/locale/i18n';
 import { openWebLink } from '@covid/utils/links';
 import { AntDesign } from '@expo/vector-icons';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'ThankYouUS'>;
   route: RouteProp<ScreenParamList, 'ThankYouUS'>;
 }
 
-export default function ThankYouUSScreen({ navigation, route }: IProps) {
+export default function ThankYouUSScreen({ route }: IProps) {
   const [askForRating, setAskForRating] = React.useState<boolean>(false);
 
   React.useEffect(() => {

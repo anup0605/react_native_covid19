@@ -1,7 +1,7 @@
-export type VaccineResponse = {
+export type TVaccineResponse = {
   id: string;
 };
 
-export type DoseSymptomsResponse = {
+export type TDoseSymptomsResponse = {
   id: string;
 };

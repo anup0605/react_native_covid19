@@ -1,14 +1,11 @@
 import { colors, fontStyles } from '@theme';
 import { Text } from 'native-base';
 import * as React from 'react';
-import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native';
-
-import { FieldWrapper } from './Screen';
-
-type IButtonPress = ((event: GestureResponderEvent) => void) | undefined;
+import { GestureResponderEvent, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface IProps {
-  onPress?: IButtonPress;
+  onPress?: (event: GestureResponderEvent) => void;
+  style?: StyleProp<ViewStyle>;
   text: string;
   testID?: string;
   disable?: boolean;
@@ -16,13 +13,16 @@ interface IProps {
 
 export function SelectorButton(props: IProps) {
   return (
-    <FieldWrapper style={styles.fieldWrapper}>
-      <TouchableOpacity disabled={props.disable} onPress={props.onPress} testID={props.testID ?? 'button-test-ID'}>
-        <View style={styles.bigButton}>
-          <Text style={[fontStyles.bodyReg, styles.buttonText]}>{props.text}</Text>
-        </View>
-      </TouchableOpacity>
-    </FieldWrapper>
+    <TouchableOpacity
+      disabled={props.disable}
+      onPress={props.onPress}
+      style={props.style}
+      testID={props.testID ?? 'button-test-ID'}
+    >
+      <View style={styles.bigButton}>
+        <Text style={[fontStyles.bodyReg, styles.buttonText]}>{props.text}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 
@@ -38,9 +38,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: colors.brand,
     textAlign: 'center',
-  },
-
-  fieldWrapper: {
-    marginVertical: 16,
   },
 });

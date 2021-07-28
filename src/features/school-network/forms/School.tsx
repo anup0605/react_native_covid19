@@ -1,7 +1,7 @@
 import { Button } from '@covid/components/buttons/Button';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { ValidationError } from '@covid/components/ValidationError';
-import { PatientData } from '@covid/core/patient/PatientData';
+import { TPatientData } from '@covid/core/patient/PatientData';
 import { schoolService } from '@covid/core/schools/SchoolService';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -12,7 +12,7 @@ import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
 interface IProps {
-  patientData: PatientData;
+  patientData: TPatientData;
 }
 
 function SchoolForm({ patientData }: IProps) {

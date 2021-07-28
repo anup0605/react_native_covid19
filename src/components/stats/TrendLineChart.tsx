@@ -1,25 +1,25 @@
 import { MutedText, RegularText } from '@covid/components/Text';
 import { WebView } from '@covid/components/WebView';
 import { ITrendLineData } from '@covid/core/content/dto/ContentAPIContracts';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { loadTrendLineExplore, loadTrendLineOverview } from '@covid/utils/files';
 import moment from 'moment';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-export enum TrendlineTimeFilters {
+export enum ETrendlineTimeFilters {
   week = 'WEEK',
   month = 'MONTH',
   all = 'ALL',
 }
 
 interface IProps {
-  filter: TrendlineTimeFilters;
-  viewMode: TrendLineViewMode;
+  filter: ETrendlineTimeFilters;
+  viewMode: ETrendLineViewMode;
 }
 
-export enum TrendLineViewMode {
+export enum ETrendLineViewMode {
   overview,
   explore,
 }
@@ -41,8 +41,8 @@ export function TrendLineChart({ filter, viewMode }: IProps) {
   const [html, setHtml] = React.useState<string>('');
   const [monthRangeLabel, setMonthRangeLabel] = React.useState<string>('');
   const webview = React.useRef<WebView>(null);
-  const trendline = useSelector<RootState, ITrendLineData | undefined>((state) => {
-    if (viewMode === TrendLineViewMode.explore) {
+  const trendline = useSelector<TRootState, ITrendLineData | undefined>((state) => {
+    if (viewMode === ETrendLineViewMode.explore) {
       return state.content.exploreTrendline;
     }
     return state.content.localTrendline;
@@ -52,7 +52,8 @@ export function TrendLineChart({ filter, viewMode }: IProps) {
     let isMounted = true;
     const runAsync = async () => {
       try {
-        const x = viewMode === TrendLineViewMode.explore ? await loadTrendLineExplore() : await loadTrendLineOverview();
+        const x =
+          viewMode === ETrendLineViewMode.explore ? await loadTrendLineExplore() : await loadTrendLineOverview();
         setHtml(x);
       } catch (_) {}
     };
@@ -98,7 +99,7 @@ export function TrendLineChart({ filter, viewMode }: IProps) {
     });
 
     switch (viewMode) {
-      case TrendLineViewMode.overview: {
+      case ETrendLineViewMode.overview: {
         const overviewSorted = timeseries.sort((a: any, b: any) => (a.date < b.date ? 1 : -1));
         const filtered = overviewSorted.filter((_: any, index: number) => index <= 90);
         const monthLabels = (filtered ?? []).map((data) => moment(data.date).format('MMM'));
@@ -125,14 +126,14 @@ export function TrendLineChart({ filter, viewMode }: IProps) {
         });
         return;
       }
-      case TrendLineViewMode.explore: {
+      case ETrendLineViewMode.explore: {
         const timeseriesSorted = timeseries.sort((a, b) => (a.date > b.date ? 1 : -1));
         const values = timeseriesSorted.map((item) => item.value);
         webview.current?.call('setData', {
           payload: {
             data: timeseriesSorted,
             max: Math.max(...values),
-            min: Math.min(...values),
+            min: Math.max(1, Math.min(...values)), // The "Explore" chart does not like it when the trendline touches the x-axis
           },
         });
       }

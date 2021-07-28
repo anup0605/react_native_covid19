@@ -3,6 +3,7 @@ export { default as BackButton } from './back-button';
 export { default as BigButton } from './big-button';
 export { default as BrandedButton } from './branded-button';
 export { default as CheckBoxButton } from './check-box-button';
+export { default as DeleteButton } from './DeleteButton';
 export { default as IconButton } from './icon-button';
 export { default as Link } from './link';
 export { default as RoundIconButton } from './round-icon-button';

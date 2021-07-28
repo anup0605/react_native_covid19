@@ -1,7 +1,5 @@
-import { ScreenName } from '@covid/core/Coordinator';
-import { Profile } from '@covid/core/profile/ProfileService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { NavHeader, PatientHeader } from '@covid/components/PatientHeader';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import { colors } from '@theme';
 import * as React from 'react';
 import {
@@ -18,44 +16,40 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import PatientHeader, { CallOutType, NavHeader } from './PatientHeader';
-
 export const screenWidth = Math.round(Dimensions.get('window').width) - 32;
 export const screenHeight = Math.round(Dimensions.get('window').height);
 
-type HeaderProp = {
+type THeaderProps = {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
 };
 
-export const Header = (props: HeaderProp) => {
+export const Header = (props: THeaderProps) => {
   return <View style={[styles.headerBlock, props.style]}>{props.children}</View>;
 };
 
-type ProgressBlockType = {
+type TProgressBlockProps = {
   children: React.ReactNode;
 };
 
-export const ProgressBlock = (props: ProgressBlockType) => {
+export const ProgressBlock = (props: TProgressBlockProps) => {
   return <View style={styles.progressBlock}>{props.children}</View>;
 };
 
-type FieldWrapperType = {
+type TFieldWrapperProps = {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 };
 
-export const FieldWrapper = (props: FieldWrapperType) => {
+export const FieldWrapper = (props: TFieldWrapperProps) => {
   return <View style={[styles.fieldWrapper, props.style]}>{props.children}</View>;
 };
 
-type TProps = {
+type TScreenProps = {
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
-  navigation?: StackNavigationProp<ScreenParamList, ScreenName>;
-  profile?: Profile;
+  profile?: TProfile;
   simpleCallout?: boolean;
-  calloutType?: CallOutType;
   calloutTitle?: string;
   showBackButton?: boolean;
   showCloseButton?: boolean;
@@ -64,35 +58,22 @@ type TProps = {
   testID?: string;
 };
 
-function renderHeader(props: TProps) {
-  if (props.profile && props.navigation) {
-    return (
-      <PatientHeader
-        calloutTitle={props.calloutTitle}
-        navigation={props.navigation}
-        profile={props.profile}
-        showCloseButton={props.showCloseButton}
-        simpleCallout={props.simpleCallout}
-        type={props.calloutType}
-      />
-    );
-  }
-  if (props.profile && !props.navigation) {
+function renderHeader(props: TScreenProps) {
+  if (props.profile) {
     return (
       <PatientHeader
         calloutTitle={props.calloutTitle}
         profile={props.profile}
         showCloseButton={props.showCloseButton}
         simpleCallout={props.simpleCallout}
-        type={props.calloutType}
       />
     );
   }
-  if (props.navigation && props.showBackButton) {
-    return <NavHeader navigation={props.navigation} showCloseButton={props.showCloseButton} />;
+  if (props.showBackButton) {
+    return <NavHeader showCloseButton={props.showCloseButton} />;
   }
-  if (props.navigation && props.showCloseButton) {
-    return <NavHeader navigation={props.navigation} showCloseButton={props.showCloseButton} />;
+  if (props.showCloseButton) {
+    return <NavHeader showCloseButton={props.showCloseButton} />;
   }
   if (props.extendEdges) {
     return <View />;
@@ -100,7 +81,7 @@ function renderHeader(props: TProps) {
   return <View style={styles.statusBarBlock} />;
 }
 
-export default function Screen(props: TProps) {
+export default function Screen(props: TScreenProps) {
   const scrollEnabled = props.scrollEnabled === undefined ? true : props.scrollEnabled;
 
   return (

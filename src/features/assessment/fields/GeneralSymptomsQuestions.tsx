@@ -2,11 +2,11 @@ import { CheckboxList } from '@covid/components/Checkbox';
 import DropdownField from '@covid/components/DropdownField';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import {
   createSymptomCheckboxes,
   ISymptomQuestions,
-  SymptomCheckBoxData,
+  TSymptomCheckBoxData,
 } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
 import { cleanFloatVal } from '@covid/utils/number';
@@ -15,9 +15,9 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
-export type GeneralSymptomsData = GeneralSymptomsCheckBoxData & GeneralSymptomsFollowUpData;
+export type TGeneralSymptomsData = TGeneralSymptomsCheckBoxData & TGeneralSymptomsFollowUpData;
 
-type GeneralSymptomsCheckBoxData = {
+type TGeneralSymptomsCheckBoxData = {
   fever: boolean;
   chills: boolean;
   fatigue: boolean;
@@ -34,25 +34,25 @@ type GeneralSymptomsCheckBoxData = {
   typicalHayFever: boolean;
 };
 
-type GeneralSymptomsFollowUpData = {
+type TGeneralSymptomsFollowUpData = {
   fatigueFollowUp: string;
   temperature: string; // Temperature: 37.3
   temperatureUnit: string;
 };
 
-type Props = {
-  formikProps: FormikProps<GeneralSymptomsData>;
+type TProps = {
+  formikProps: FormikProps<TGeneralSymptomsData>;
   hasHayfever: boolean;
 };
 
-export const GeneralSymptomsQuestions: ISymptomQuestions<Props, GeneralSymptomsData> = (props: Props) => {
+export const GeneralSymptomsQuestions: ISymptomQuestions<TProps, TGeneralSymptomsData> = (props: TProps) => {
   const { formikProps } = props;
 
-  const fever_checkbox: SymptomCheckBoxData<GeneralSymptomsCheckBoxData, GeneralSymptomsFollowUpData>[] = [
+  const fever_checkbox: TSymptomCheckBoxData<TGeneralSymptomsCheckBoxData, TGeneralSymptomsFollowUpData>[] = [
     { label: i18n.t('describe-symptoms.general-fever'), value: 'fever' },
   ];
 
-  const checkboxes: SymptomCheckBoxData<GeneralSymptomsCheckBoxData, GeneralSymptomsFollowUpData>[] = [
+  const checkboxes: TSymptomCheckBoxData<TGeneralSymptomsCheckBoxData, TGeneralSymptomsFollowUpData>[] = [
     { label: i18n.t('describe-symptoms.general-chills'), value: 'chills' },
     {
       followUp: {
@@ -89,12 +89,12 @@ export const GeneralSymptomsQuestions: ISymptomQuestions<Props, GeneralSymptomsD
 
   return (
     <View style={{ marginBottom: 32, marginTop: 16 }}>
-      <RegularText style={{ paddingTop: 16 }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
+      <RegularText style={{ paddingVertical: 16 }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
 
       <CheckboxList>{createSymptomCheckboxes(fever_checkbox, formikProps)}</CheckboxList>
 
       {formikProps.values.fever ? (
-        <View style={{ marginVertical: 16 }}>
+        <View style={{ margin: 16 }}>
           <RegularText>{i18n.t('describe-symptoms.question-your-temperature')}</RegularText>
           <View style={styles.fieldRow}>
             <View style={styles.primaryField}>
@@ -127,7 +127,7 @@ export const GeneralSymptomsQuestions: ISymptomQuestions<Props, GeneralSymptomsD
   );
 };
 
-GeneralSymptomsQuestions.initialFormValues = (defaultTemperatureUnit = 'C'): GeneralSymptomsData => {
+GeneralSymptomsQuestions.initialFormValues = (defaultTemperatureUnit = 'C'): TGeneralSymptomsData => {
   return {
     blisters: false,
     brainFog: false,
@@ -159,10 +159,10 @@ GeneralSymptomsQuestions.schema = () => {
 };
 
 GeneralSymptomsQuestions.createAssessment = (
-  formData: GeneralSymptomsData,
+  formData: TGeneralSymptomsData,
   hasHayfever: boolean,
-): Partial<AssessmentInfosRequest> => {
-  let assessment: Partial<AssessmentInfosRequest> = {
+): Partial<TAssessmentInfosRequest> => {
+  let assessment: Partial<TAssessmentInfosRequest> = {
     blisters_on_feet: formData.blisters,
     brain_fog: formData.brainFog,
     chills_or_shivers: formData.chills,
@@ -208,6 +208,6 @@ const styles = StyleSheet.create({
   secondaryField: {
     flex: 1,
     marginLeft: 4,
-    marginTop: -8,
+    marginTop: -16,
   },
 });

@@ -1,6 +1,6 @@
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { isGBCountry, isSECountry } from '@covid/core/localisation/LocalisationService';
-import { vaccineBrandDisplayName, VaccineBrands, VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { EVaccineBrands, TVaccineRequest, vaccineBrandDisplayName } from '@covid/core/vaccine/dto/VaccineRequest';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -14,30 +14,30 @@ interface IProps {
 }
 
 export interface IVaccineNameQuestion<P, Data> extends React.FC<P> {
-  initialFormValues: (vaccine?: VaccineRequest) => Partial<Data>;
+  initialFormValues: (vaccine?: TVaccineRequest) => Partial<Data>;
 }
 
 export const VaccineNameQuestion: IVaccineNameQuestion<IProps, IVaccineDoseData> = (props: IProps) => {
   const gbVaccineOptions = [
-    { label: vaccineBrandDisplayName[VaccineBrands.PFIZER], value: VaccineBrands.PFIZER },
-    { label: vaccineBrandDisplayName[VaccineBrands.ASTRAZENECA], value: VaccineBrands.ASTRAZENECA },
-    { label: vaccineBrandDisplayName[VaccineBrands.MODERNA], value: VaccineBrands.MODERNA },
-    { label: vaccineBrandDisplayName[VaccineBrands.JOHNSON], value: VaccineBrands.JOHNSON },
-    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: VaccineBrands.NOT_SURE },
+    { label: vaccineBrandDisplayName[EVaccineBrands.PFIZER], value: EVaccineBrands.PFIZER },
+    { label: vaccineBrandDisplayName[EVaccineBrands.ASTRAZENECA], value: EVaccineBrands.ASTRAZENECA },
+    { label: vaccineBrandDisplayName[EVaccineBrands.MODERNA], value: EVaccineBrands.MODERNA },
+    { label: vaccineBrandDisplayName[EVaccineBrands.JOHNSON], value: EVaccineBrands.JOHNSON },
+    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: EVaccineBrands.NOT_SURE },
   ];
 
   const seVaccineOptions = [
-    { label: vaccineBrandDisplayName[VaccineBrands.PFIZER], value: VaccineBrands.PFIZER },
-    { label: vaccineBrandDisplayName[VaccineBrands.ASTRAZENECA], value: VaccineBrands.ASTRAZENECA },
-    { label: vaccineBrandDisplayName[VaccineBrands.MODERNA], value: VaccineBrands.MODERNA },
-    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: VaccineBrands.NOT_SURE },
+    { label: vaccineBrandDisplayName[EVaccineBrands.PFIZER], value: EVaccineBrands.PFIZER },
+    { label: vaccineBrandDisplayName[EVaccineBrands.ASTRAZENECA], value: EVaccineBrands.ASTRAZENECA },
+    { label: vaccineBrandDisplayName[EVaccineBrands.MODERNA], value: EVaccineBrands.MODERNA },
+    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: EVaccineBrands.NOT_SURE },
   ];
 
   const usVaccineOptions = [
-    { label: vaccineBrandDisplayName[VaccineBrands.PFIZER], value: VaccineBrands.PFIZER },
-    { label: vaccineBrandDisplayName[VaccineBrands.JOHNSON], value: VaccineBrands.JOHNSON },
-    { label: vaccineBrandDisplayName[VaccineBrands.MODERNA], value: VaccineBrands.MODERNA },
-    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: VaccineBrands.NOT_SURE },
+    { label: vaccineBrandDisplayName[EVaccineBrands.PFIZER], value: EVaccineBrands.PFIZER },
+    { label: vaccineBrandDisplayName[EVaccineBrands.JOHNSON], value: EVaccineBrands.JOHNSON },
+    { label: vaccineBrandDisplayName[EVaccineBrands.MODERNA], value: EVaccineBrands.MODERNA },
+    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: EVaccineBrands.NOT_SURE },
   ];
 
   const nameOptions = isGBCountry() ? gbVaccineOptions : isSECountry() ? seVaccineOptions : usVaccineOptions;
@@ -104,7 +104,7 @@ export const VaccineNameQuestion: IVaccineNameQuestion<IProps, IVaccineDoseData>
   );
 };
 
-VaccineNameQuestion.initialFormValues = (vaccine?: VaccineRequest): Partial<IVaccineDoseData> => {
+VaccineNameQuestion.initialFormValues = (vaccine?: TVaccineRequest): Partial<IVaccineDoseData> => {
   return {
     firstBrand: vaccine?.doses[0]?.brand,
     firstDescription: vaccine?.doses[0]?.description,

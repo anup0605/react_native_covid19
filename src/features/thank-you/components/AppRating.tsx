@@ -10,9 +10,9 @@ import { Toast } from 'native-base';
 import * as React from 'react';
 import { Linking, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-type PropsType = object;
+type TPropsType = object;
 
-type State = {
+type TState = {
   isModalOpen: boolean;
   showTakeToStore: boolean;
 };
@@ -29,7 +29,7 @@ export async function shouldAskForRating(): Promise<boolean> {
   return !askedToRateStatus && eligibleToAskForRating;
 }
 
-export class AppRating extends React.Component<PropsType, State> {
+export class AppRating extends React.Component<TPropsType, TState> {
   state = {
     isModalOpen: true,
     showTakeToStore: false,

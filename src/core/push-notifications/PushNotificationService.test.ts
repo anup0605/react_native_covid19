@@ -3,12 +3,12 @@ import { IStorageService } from '@covid/core/LocalStorageService';
 import moment from 'moment';
 
 import PushNotificationService, { IPushTokenEnvironment } from './PushNotificationService';
-import { IPushTokenRemoteClient, PushToken } from './types';
+import { IPushTokenRemoteClient, TPushToken } from './types';
 
 class MockApiClient implements IPushTokenRemoteClient {
-  pushToken: PushToken;
+  pushToken: TPushToken;
 
-  updatePushToken(pushToken: PushToken) {
+  updatePushToken(pushToken: TPushToken) {
     this.pushToken = pushToken;
     return Promise.resolve();
   }
@@ -58,19 +58,19 @@ describe('PushNotificationService', () => {
       lastUpdated: moment().subtract(30, 'days').toISOString(),
       platform: 'iOS',
       token: 'MOCK',
-    } as PushToken;
+    } as TPushToken;
 
     const tokenFromFiveDaysAgo = {
       lastUpdated: moment().subtract(5, 'days').toISOString(),
       platform: 'iOS',
       token: 'MOCK',
-    } as PushToken;
+    } as TPushToken;
 
     const tokenFromTheFuture = {
       lastUpdated: moment().add(1, 'days').toISOString(),
       platform: 'iOS',
       token: 'MOCK',
-    } as PushToken;
+    } as TPushToken;
 
     // @ts-ignore
     expect(service.tokenNeedsRefreshing(tokenFromThirtyDaysAgo)).toBeTruthy();

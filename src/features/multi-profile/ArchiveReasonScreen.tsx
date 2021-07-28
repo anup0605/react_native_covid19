@@ -1,20 +1,19 @@
-import Screen, { Header } from '@covid/components/Screen';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { SelectorButton } from '@covid/components/SelectorButton';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
 import { patientService } from '@covid/core/patient/PatientService';
 import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 
-type RenderProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'ArchiveReason'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'ArchiveReason'>;
 };
 
-export const ArchiveReasonScreen: React.FC<RenderProps> = (props) => {
+export const ArchiveReasonScreen: React.FC<TProps> = (props) => {
   const reasons = [
     {
       text: i18n.t('archive-reason.choice-duplicate-account'),
@@ -54,18 +53,21 @@ export const ArchiveReasonScreen: React.FC<RenderProps> = (props) => {
   }
 
   return (
-    <Screen navigation={props.navigation} testID="archive-reason-screen">
-      <Header>
-        <HeaderText style={{ marginBottom: 12 }}>{i18n.t('archive-reason.title')}</HeaderText>
-        <SecondaryText>{i18n.t('archive-reason.text')}</SecondaryText>
-      </Header>
+    <ScreenNew testID="archive-reason-screen">
+      <HeaderText>{i18n.t('archive-reason.title')}</HeaderText>
+      <SecondaryText style={styling.marginVertical}>{i18n.t('archive-reason.text')}</SecondaryText>
 
       {reasons.map((reason, i) => {
         return (
-          // eslint-disable-next-line react/no-array-index-key
-          <SelectorButton key={`archive-reason-${i}`} onPress={() => submitReason(reason.value)} text={reason.text} />
+          <SelectorButton
+            // eslint-disable-next-line react/no-array-index-key
+            key={`archive-reason-${i}`}
+            onPress={() => submitReason(reason.value)}
+            style={styling.marginTop}
+            text={reason.text}
+          />
         );
       })}
-    </Screen>
+    </ScreenNew>
   );
 };

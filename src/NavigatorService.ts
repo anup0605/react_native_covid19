@@ -1,6 +1,6 @@
 import Analytics from '@covid/core/Analytics';
-import { ScreenName } from '@covid/core/Coordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenName } from '@covid/core/Coordinator';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { CommonActions, NavigationContainerRef, NavigationState, Route, StackActions } from '@react-navigation/native';
 
 let navigation: NavigationContainerRef;
@@ -10,7 +10,7 @@ function setContainer(navigationRef: NavigationContainerRef) {
   navigation = navigationRef;
 }
 
-function reset<RouteName extends ScreenName>(routeList: Omit<Route<RouteName>, 'key'>[], index?: number) {
+function reset<RouteName extends TScreenName>(routeList: Omit<Route<RouteName>, 'key'>[], index?: number) {
   const value = index ?? 0;
   navigation?.dispatch(
     CommonActions.reset({
@@ -20,11 +20,11 @@ function reset<RouteName extends ScreenName>(routeList: Omit<Route<RouteName>, '
   );
 }
 
-function navigate<RouteName extends ScreenName>(routeName: RouteName, params?: ScreenParamList[RouteName]) {
+function navigate<RouteName extends TScreenName>(routeName: RouteName, params?: TScreenParamList[RouteName]) {
   navigation?.navigate(routeName, params);
 }
 
-function replace<RouteName extends ScreenName>(routeName: RouteName, params?: ScreenParamList[RouteName]) {
+function replace<RouteName extends TScreenName>(routeName: RouteName, params?: TScreenParamList[RouteName]) {
   navigation?.dispatch(StackActions.replace(routeName, params));
 }
 

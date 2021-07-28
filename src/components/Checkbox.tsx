@@ -1,9 +1,9 @@
 import Check from '@assets/icons/Check';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import { colors } from '@theme/colors';
 import { Item } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 import { RegularText } from './Text';
 import { ITest } from './types';
@@ -13,6 +13,7 @@ interface ICheckboxProps extends ITest {
   onChange: (value: boolean) => void;
   children: React.ReactNode;
   dark?: boolean;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
 }
 
@@ -24,7 +25,7 @@ interface ICheckboxListProps {
 
 export function CheckboxItem(props: ICheckboxProps) {
   return (
-    <Item style={styles.checkboxRow}>
+    <Item style={[styles.checkboxRow, props.style]}>
       <TouchableOpacity
         accessible
         accessibilityRole="checkbox"

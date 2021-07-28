@@ -1,16 +1,16 @@
-import { BrandedButton, FeaturedContentList, FeaturedContentType } from '@covid/components';
+import { BrandedButton, EFeaturedContentType, FeaturedContentList } from '@covid/components';
 import { Header } from '@covid/components/Screen';
 import { ClickableText, HeaderText, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { appActions } from '@covid/core/state/app/slice';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { selectFirstPatientId } from '@covid/core/state/user';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { ImpactTimelineCard } from '@covid/features/anniversary';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import util from '@covid/features/mental-health-playback/util';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { AppRating, shouldAskForRating } from '@covid/features/thank-you/components/AppRating';
 import { ShareAppCard } from '@covid/features/thank-you/components/ShareApp';
 import i18n from '@covid/locale/i18n';
@@ -23,13 +23,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BigGreenTickFilled } from './components/BigGreenTick';
 
 interface IProps {
-  route: RouteProp<ScreenParamList, 'ThankYouUK'>;
+  route: RouteProp<TScreenParamList, 'ThankYouUK'>;
 }
 
 export default function ThankYouUKScreen(props: IProps) {
   const dispatch = useDispatch();
   const patientId = useSelector(selectFirstPatientId);
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const [askForRating, setAskForRating] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -67,7 +67,7 @@ export default function ThankYouUKScreen(props: IProps) {
 
             <RegularText style={styles.signOff}>{i18n.t('thank-you-uk.sign-off')}</RegularText>
 
-            <FeaturedContentList screenName={props.route.name} type={FeaturedContentType.ThankYou} />
+            <FeaturedContentList screenName={props.route.name} type={EFeaturedContentType.ThankYou} />
 
             {startupInfo?.show_timeline ? (
               <ImpactTimelineCard

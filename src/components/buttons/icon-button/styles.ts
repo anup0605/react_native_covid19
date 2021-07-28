@@ -2,14 +2,14 @@ import { TColorPalette, TColorShade } from '@covid/themes';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
-interface SProps {
+interface IProps {
   colorPalette: TColorPalette;
   colorShade: TColorShade;
   outline: boolean;
   simple: boolean;
 }
 
-export const STouchableOpacity = styled(TouchableOpacity)<SProps>`
+export const STouchableOpacity = styled(TouchableOpacity)<IProps>`
   ${(props) => `
     align-items: center;
     background-color: ${

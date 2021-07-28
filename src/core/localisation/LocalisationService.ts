@@ -1,6 +1,6 @@
 import { AsyncStorageService } from '@covid/core/AsyncStorageService';
-import { ConfigType, getCountryConfig } from '@covid/core/Config';
-import { ScreenName } from '@covid/core/Coordinator';
+import { getCountryConfig, TConfigType } from '@covid/core/Config';
+import { TScreenName } from '@covid/core/Coordinator';
 import i18n from '@covid/locale/i18n';
 import * as Localization from 'expo-localization';
 
@@ -11,13 +11,13 @@ export interface ILocalisationService {
   shouldAskCountryConfirmation(): Promise<boolean>;
   defaultCountryFromLocale(): void;
   updateUserCountry(isLoggedIn: boolean): void;
-  getConfig(): ConfigType | undefined;
+  getConfig(): TConfigType | undefined;
 }
 
 export class LocalisationService implements ILocalisationService {
   public static userCountry = 'US';
 
-  public static countryConfig: ConfigType | undefined;
+  public static countryConfig: TConfigType | undefined;
 
   public static ipCountry = '';
 
@@ -25,7 +25,7 @@ export class LocalisationService implements ILocalisationService {
     LocalisationService.countryConfig = getCountryConfig(countryCode);
   }
 
-  getConfig(): ConfigType | undefined {
+  getConfig(): TConfigType | undefined {
     return LocalisationService.countryConfig;
   }
 
@@ -104,11 +104,11 @@ export class LocalisationService implements ILocalisationService {
   }
 }
 
-export const homeScreenName = (): ScreenName => {
+export const homeScreenName = (): TScreenName => {
   return isGBCountry() ? 'Dashboard' : isUSCountry() ? 'DashboardUS' : 'WelcomeRepeat';
 };
 
-export const thankYouScreenName = (): ScreenName => {
+export const thankYouScreenName = (): TScreenName => {
   return isUSCountry() ? 'ThankYouUS' : isSECountry() ? 'ThankYouSE' : 'ThankYouUK';
 };
 

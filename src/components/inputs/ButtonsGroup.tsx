@@ -1,4 +1,3 @@
-import { FieldWrapper } from '@covid/components/Screen';
 import { SelectableButton } from '@covid/components/SelectableButton';
 import { ValidationError } from '@covid/components/ValidationError';
 import { colors } from '@theme';
@@ -6,7 +5,7 @@ import { Label } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { requiredFormMarker } from '../Forms';
+import { requiredFormMarker } from '../Form';
 
 export interface ISingleButton {
   label?: string;
@@ -42,9 +41,9 @@ export function ButtonsGroup({
   };
 
   return (
-    <FieldWrapper style={styles.fieldWrapper}>
+    <View style={styles.flex}>
       {hideLabel ? null : (
-        <Label style={styles.labelStyle}>
+        <Label style={styles.label}>
           {label}
           {required ? requiredFormMarker : null}
         </Label>
@@ -52,15 +51,14 @@ export function ButtonsGroup({
       <View
         style={{
           flexDirection: 'row',
-          marginTop: 8,
         }}
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <SelectableButton
             key={item.value}
             onPress={() => onSelect(item.value)}
             selected={selected === item.value}
-            style={{ flex: 1, marginEnd: 8 }}
+            style={{ flex: 1, marginStart: index !== 0 ? 8 : 0 }}
             testID={`button-${item.value}${testID ? `-${testID}` : ''}`}
           >
             {item.label}
@@ -73,21 +71,20 @@ export function ButtonsGroup({
           <ValidationError error={error} />
         </View>
       ) : null}
-    </FieldWrapper>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  fieldWrapper: {
+  flex: {
     flex: 1,
   },
-  labelStyle: {
+  label: {
     color: colors.primary,
     fontFamily: 'SofiaProRegular',
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 8,
+    marginTop: 24,
   },
 });
-
-export default ButtonsGroup;

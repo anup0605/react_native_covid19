@@ -3,7 +3,7 @@ import GBConfig from './config/GB.json';
 import SEConfig from './config/SE.json';
 import USConfig from './config/US.json';
 
-export type ConfigType = {
+export type TConfigType = {
   country: string;
   enableMultiplePatients: boolean;
   enablePersonalInformation: boolean;
@@ -19,17 +19,17 @@ export type ConfigType = {
   thousandSeparator: string;
 };
 
-const configs = new Map<string, ConfigType>([
-  ['GB', { ...DefaultConfig, ...GBConfig } as ConfigType],
-  ['SE', { ...DefaultConfig, ...SEConfig } as ConfigType],
-  ['US', { ...DefaultConfig, ...USConfig } as ConfigType],
+const configs = new Map<string, TConfigType>([
+  ['GB', { ...DefaultConfig, ...GBConfig } as TConfigType],
+  ['SE', { ...DefaultConfig, ...SEConfig } as TConfigType],
+  ['US', { ...DefaultConfig, ...USConfig } as TConfigType],
 ]);
 
 let countryCode = 'GB';
 let config = configs.get(countryCode);
 
-export const getCountryConfig = (countryCode: string): ConfigType => {
-  return configs.get(countryCode) ?? (DefaultConfig as ConfigType);
+export const getCountryConfig = (countryCode: string): TConfigType => {
+  return configs.get(countryCode) ?? (DefaultConfig as TConfigType);
 };
 
 export const setConfigCountry = (country: string) => {

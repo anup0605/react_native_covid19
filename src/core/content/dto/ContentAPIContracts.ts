@@ -1,4 +1,4 @@
-export type TrendLineResponse = {
+export type TTrendLineResponse = {
   lad: string;
   name: string;
   today: number;
@@ -37,4 +37,4 @@ export interface IFeaturedContent {
   published_at: Date;
 }
 
-export type FeaturedContentResponse = IFeaturedContent[];
+export type TFeaturedContentResponse = IFeaturedContent[];

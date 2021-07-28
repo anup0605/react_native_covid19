@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-type Props = {
+type TProps = {
   width?: number | string;
   height?: number | string;
 };
 
-const NHSLogo: React.FC<Props> = ({ width = 71, height = 29 }) => {
+const NHSLogo: React.FC<TProps> = ({ width = 71, height = 29 }) => {
   return (
     <Svg fill="none" height={height} viewBox="0 0 71 29" width={width}>
       <Path

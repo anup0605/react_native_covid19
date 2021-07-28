@@ -11,7 +11,7 @@ import {
   TMentalHealthLearning,
 } from '@covid/core/state/mental-health';
 import { learningInitialOptions, learningQuestions, TLearningQuestion } from '@covid/features/mental-health/data';
-import { MentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
+import { TMentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
@@ -73,7 +73,7 @@ export default function MentalHealthLearningScreen() {
   const saveStateAndNavigate = async () => {
     const existingMentalHealthListForUser = await mentalHealthApiClient.get();
     const existingMentalHealth = existingMentalHealthListForUser[0];
-    const updatedMentalHealth: MentalHealthInfosRequest = mentalHealthApiClient.buildRequestObject(
+    const updatedMentalHealth: TMentalHealthInfosRequest = mentalHealthApiClient.buildRequestObject(
       existingMentalHealth,
       { mentalHealthLearning: MentalHealthLearning },
     );

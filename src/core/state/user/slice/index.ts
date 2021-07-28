@@ -1,4 +1,4 @@
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { IUser } from '@covid/core/state/user/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -34,7 +34,7 @@ const userSlice = createSlice({
 });
 
 export const { reset, setProfile, setUsername, setPatients } = userSlice.actions;
-export const selectUser = (state: RootState) => state.user;
-export const selectFirstPatientId = (state: RootState) => state.user.patients[0];
+export const selectUser = (state: TRootState) => state.user;
+export const selectFirstPatientId = (state: TRootState) => state.user.patients[0];
 
 export default userSlice.reducer;

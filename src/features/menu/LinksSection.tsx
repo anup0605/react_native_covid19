@@ -3,7 +3,7 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { isGBCountry, isSECountry } from '@covid/core/localisation/LocalisationService';
 import PushNotificationService from '@covid/core/push-notifications/PushNotificationService';
 import { userService } from '@covid/core/user/UserService';
-import { DrawerMenuItem, LinkItem } from '@covid/features/menu/DrawerMenuItem';
+import { EDrawerMenuItem, LinkItem } from '@covid/features/menu/DrawerMenuItem';
 import { useLogout } from '@covid/features/menu/useLogout';
 import i18n from '@covid/locale/i18n';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
@@ -15,7 +15,7 @@ export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = (
 
   function goToPrivacy() {
     Analytics.track(events.CLICK_DRAWER_MENU_ITEM, {
-      name: DrawerMenuItem.PRIVACY_POLICY,
+      name: EDrawerMenuItem.PRIVACY_POLICY,
     });
     if (isGBCountry()) {
       navigation.navigate('PrivacyPolicyUK', { viewOnly: true });
@@ -39,7 +39,7 @@ export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = (
           onPress: async () => {
             Analytics.track(events.DELETE_ACCOUNT_DATA);
             Analytics.track(events.CLICK_DRAWER_MENU_ITEM, {
-              name: DrawerMenuItem.DELETE_MY_DATA,
+              name: EDrawerMenuItem.DELETE_MY_DATA,
             });
             await userService.deleteRemoteUserData();
             logout();
@@ -54,7 +54,7 @@ export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = (
 
   async function openPushNotificationSettings() {
     Analytics.track(events.CLICK_DRAWER_MENU_ITEM, {
-      name: DrawerMenuItem.TURN_ON_REMINDERS,
+      name: EDrawerMenuItem.TURN_ON_REMINDERS,
     });
     await PushNotificationService.openSettings();
   }
@@ -63,15 +63,15 @@ export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = (
     <>
       <Divider styles={styles.divider} />
 
-      <LinkItem onPress={openPushNotificationSettings} type={DrawerMenuItem.TURN_ON_REMINDERS} />
+      <LinkItem onPress={openPushNotificationSettings} type={EDrawerMenuItem.TURN_ON_REMINDERS} />
 
-      <LinkItem link={i18n.t('blog-link')} type={DrawerMenuItem.RESEARCH_UPDATE} />
+      <LinkItem link={i18n.t('blog-link')} type={EDrawerMenuItem.RESEARCH_UPDATE} />
 
-      <LinkItem link={i18n.t('faq-link')} type={DrawerMenuItem.FAQ} />
+      <LinkItem link={i18n.t('faq-link')} type={EDrawerMenuItem.FAQ} />
 
-      <LinkItem onPress={goToPrivacy} type={DrawerMenuItem.PRIVACY_POLICY} />
+      <LinkItem onPress={goToPrivacy} type={EDrawerMenuItem.PRIVACY_POLICY} />
 
-      <LinkItem onPress={showDeleteAlert} type={DrawerMenuItem.DELETE_MY_DATA} />
+      <LinkItem onPress={showDeleteAlert} type={EDrawerMenuItem.DELETE_MY_DATA} />
 
       <Divider styles={styles.divider} />
     </>

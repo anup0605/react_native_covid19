@@ -3,7 +3,7 @@ import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { ClickableText, RegularBoldText, RegularText } from '@covid/components/Text';
 import { consentService } from '@covid/core/consent/ConsentService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
@@ -12,18 +12,18 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'NursesConsentUS'>;
-  route: RouteProp<ScreenParamList, 'NursesConsentUS'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'NursesConsentUS'>;
+  route: RouteProp<TScreenParamList, 'NursesConsentUS'>;
 };
 
-interface TermsState {
+interface ITermsState {
   processingChecked: boolean;
   termsOfUseChecked: boolean;
 }
 
-export class NursesConsentUSScreen extends React.Component<PropsType, TermsState> {
-  constructor(props: PropsType) {
+export class NursesConsentUSScreen extends React.Component<TProps, ITermsState> {
+  constructor(props: TProps) {
     super(props);
     this.state = {
       processingChecked: false,

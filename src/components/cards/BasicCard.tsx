@@ -3,12 +3,12 @@ import { Card } from 'native-base';
 import * as React from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
-type CardProps = {
+type TProps = {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 };
 
-export const BasicCard: React.FC<CardProps> = (c) => {
+export const BasicCard: React.FC<TProps> = (c) => {
   return <Card style={[styles.card, c.style]}>{c.children}</Card>;
 };
 

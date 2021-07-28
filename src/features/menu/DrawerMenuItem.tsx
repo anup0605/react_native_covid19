@@ -6,7 +6,7 @@ import { openWebLink } from '@covid/utils/links';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export enum DrawerMenuItem {
+export enum EDrawerMenuItem {
   RESEARCH_UPDATE = 'RESEARCH_UPDATE',
   TURN_ON_REMINDERS = 'TURN_ON_REMINDERS',
   FAQ = 'FAQ',
@@ -26,7 +26,7 @@ interface IMenuItemProps {
 
 interface ILinkMenuItemProps {
   link?: string;
-  type: DrawerMenuItem;
+  type: EDrawerMenuItem;
   onPress?: () => void;
 }
 
@@ -55,15 +55,15 @@ export function LinkItem({
 }: ILinkMenuItemProps) {
   const getLabel = (): string => {
     switch (type) {
-      case DrawerMenuItem.FAQ:
+      case EDrawerMenuItem.FAQ:
         return i18n.t('faqs');
-      case DrawerMenuItem.RESEARCH_UPDATE:
+      case EDrawerMenuItem.RESEARCH_UPDATE:
         return i18n.t('research-updates');
-      case DrawerMenuItem.PRIVACY_POLICY:
+      case EDrawerMenuItem.PRIVACY_POLICY:
         return i18n.t('privacy-policy');
-      case DrawerMenuItem.DELETE_MY_DATA:
+      case EDrawerMenuItem.DELETE_MY_DATA:
         return i18n.t('delete-my-data');
-      case DrawerMenuItem.TURN_ON_REMINDERS:
+      case EDrawerMenuItem.TURN_ON_REMINDERS:
         return i18n.t('push-notifications');
       default:
         return '';

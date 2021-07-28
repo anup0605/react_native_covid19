@@ -4,23 +4,21 @@ import Screen, { Header } from '@covid/components/Screen';
 import { HeaderText, RegularBoldText, RegularText } from '@covid/components/Text';
 import { Coordinator } from '@covid/core/Coordinator';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'SchoolIntro'>;
-  route: RouteProp<ScreenParamList, 'SchoolIntro'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'SchoolIntro'>;
 };
 
 const enableCTAs = false;
 
-export const SchoolIntroScreen: React.FC<Props> = ({ route, navigation }) => {
+export const SchoolIntroScreen: React.FC<TProps> = ({ route }) => {
   const coordinator: Coordinator = schoolNetworkCoordinator;
 
   const goNext = () => {
@@ -29,7 +27,7 @@ export const SchoolIntroScreen: React.FC<Props> = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Screen showBackButton navigation={navigation} style={styles.container} testID="school-intro-screen">
+      <Screen showBackButton style={styles.container} testID="school-intro-screen">
         <View style={styles.container}>
           <Connect style={{ marginBottom: 24, marginLeft: 16, marginTop: 24 }} />
 

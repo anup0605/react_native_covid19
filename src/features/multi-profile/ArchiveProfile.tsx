@@ -6,11 +6,11 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-type Props = {
+type TProps = {
   patientId: string;
 };
 
-export const ArchiveProfile: React.FC<Props> = (props) => {
+export const ArchiveProfile: React.FC<TProps> = (props) => {
   const [isConfirmModalVisible, setConfirmModalVisibility] = React.useState(false);
 
   function clickArchive() {

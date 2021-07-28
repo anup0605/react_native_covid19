@@ -11,14 +11,14 @@ const STATUS_UNAUTHORIZED = 401;
 const STATUS_SERVER_BUSY = 429;
 const STATUS_SERVER_ERROR = 500;
 
-type ReceivedError = {
+type TReceivedError = {
   message: string;
   isAxiosError?: boolean;
   response?: AxiosResponse;
   code?: string;
 };
 
-export type ApiErrorState = {
+export type TApiErrorState = {
   isApiError: boolean;
   error: AppException | null;
   status: string;
@@ -59,7 +59,7 @@ class RetryableApiException extends ApiException {
   isRetryable = true;
 }
 
-export const handleServiceError = (error: ReceivedError) => {
+export const handleServiceError = (error: TReceivedError) => {
   if (error.isAxiosError && error.response) {
     switch (error.response.status) {
       case STATUS_NOT_FOUND:

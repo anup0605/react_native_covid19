@@ -1,8 +1,8 @@
 import CalendarPicker from '@covid/components/CalendarPicker';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import Switch from '@covid/components/Switch';
 import { RegularText } from '@covid/components/Text';
-import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';
 import { grid } from '@covid/themes';
 import { colors, fontStyles } from '@theme';
@@ -21,15 +21,15 @@ export interface ICovidTestDateData {
 
 interface IProps {
   formikProps: FormikProps<ICovidTestDateData>;
-  test?: CovidTest;
+  test?: TCovidTest;
   dateChangeCallback?: Function;
   label?: string;
 }
 
 export interface ICovidTestDateQuestion<P, Data> extends React.FC<P> {
-  initialFormValues: (test?: CovidTest) => Data;
+  initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
-  createDTO: (data: Data) => Partial<CovidTest>;
+  createDTO: (data: Data) => Partial<TCovidTest>;
 }
 
 export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDateData> = (props: IProps) => {
@@ -65,7 +65,7 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
 
   return (
     <>
-      <RegularText style={styles.labelStyle}>
+      <RegularText style={styles.label}>
         {props.label ? props.label : i18n.t('covid-test.question-date-test-occurred')}
         {requiredFormMarker}
       </RegularText>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     paddingBottom: 10,
   },
-  labelStyle: {
+  label: {
     marginVertical: 16,
   },
   switch: {
@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
   },
 });
 
-CovidTestDateQuestion.initialFormValues = (test?: CovidTest): ICovidTestDateData => {
-  function getInitialUseApproximateDate(test: CovidTest | undefined): boolean {
+CovidTestDateQuestion.initialFormValues = (test?: TCovidTest): ICovidTestDateData => {
+  function getInitialUseApproximateDate(test: TCovidTest | undefined): boolean {
     if (test === undefined) {
       return false;
     }
@@ -154,10 +154,10 @@ function formatDateToPost(date: Date | undefined) {
   return date ? moment(date).format('YYYY-MM-DD') : null;
 }
 
-CovidTestDateQuestion.createDTO = (formData: ICovidTestDateData): Partial<CovidTest> => {
+CovidTestDateQuestion.createDTO = (formData: ICovidTestDateData): Partial<TCovidTest> => {
   return {
     date_taken_between_end: formatDateToPost(formData.dateTakenBetweenEnd),
     date_taken_between_start: formatDateToPost(formData.dateTakenBetweenStart),
     date_taken_specific: formatDateToPost(formData.dateTakenSpecific),
-  } as Partial<CovidTest>;
+  } as Partial<TCovidTest>;
 };

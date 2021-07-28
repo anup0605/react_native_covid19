@@ -1,18 +1,18 @@
 import { menuIcon } from '@assets';
-import { ScreenName } from '@covid/core/Coordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenName } from '@covid/core/Coordinator';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, ImageStyle, StyleProp, StyleSheet, TouchableOpacity } from 'react-native';
 
-type Props = {
-  navigation: DrawerNavigationProp<ScreenParamList, ScreenName>;
+type TProps = {
+  navigation: DrawerNavigationProp<TScreenParamList, TScreenName>;
   style?: StyleProp<ImageStyle>;
   testID?: string;
 };
 
-export const DrawerToggle: React.FC<Props> = (props) => (
+export const DrawerToggle: React.FC<TProps> = (props) => (
   <TouchableOpacity
     accessible
     accessibilityLabel="Menu"

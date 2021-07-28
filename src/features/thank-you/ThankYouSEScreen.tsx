@@ -12,7 +12,6 @@ import { FacebookSECard } from '@covid/features/thank-you/components/FacebookSE'
 import { ShareAppCard } from '@covid/features/thank-you/components/ShareApp';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors, fontStyles } from '@theme';
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
@@ -20,13 +19,12 @@ import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import VisitWebsite from './components/VisitWebsite';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'ThankYouSE'>;
   route: RouteProp<ScreenParamList, 'ThankYouSE'>;
 }
 
 const pushService: IPushTokenEnvironment = new ExpoPushTokenEnvironment();
 
-export default function ThankYouSEScreen({ navigation, route }: IProps) {
+export default function ThankYouSEScreen({ route }: IProps) {
   const [askForRating, setAskForRating] = React.useState<boolean>(false);
   const [shouldShowReminders, setShouldShowReminders] = React.useState<boolean>(false);
 

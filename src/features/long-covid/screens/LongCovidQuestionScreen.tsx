@@ -13,7 +13,7 @@ import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { homeScreenName, thankYouScreenName } from '@covid/core/localisation/LocalisationService';
 import { ILongCovid } from '@covid/features/long-covid/types';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { longCovidApiClient } from '@covid/services';
@@ -32,7 +32,7 @@ import {
 } from './consts.questions';
 
 interface IProps {
-  route: RouteProp<ScreenParamList, 'LongCovidStart'>;
+  route: RouteProp<TScreenParamList, 'LongCovidStart'>;
 }
 
 const renderBulletLine = (text: string) => (

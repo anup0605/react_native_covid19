@@ -3,7 +3,7 @@ import { BrandedButton } from '@covid/components';
 import { ClickableText, RegularText } from '@covid/components/Text';
 import { contentService } from '@covid/core/content/ContentService';
 import { isGBCountry, isSECountry, LocalisationService } from '@covid/core/localisation/LocalisationService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { cleanIntegerVal } from '@covid/utils/number';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -14,11 +14,11 @@ import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-nat
 import { ContributionCounter } from './components/ContributionCounter';
 import { getLocaleFlagIcon } from './helpers';
 
-type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'Welcome'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'Welcome'>;
 };
 
-const Welcome1Screen: React.FC<PropsType> = ({ navigation }) => {
+const Welcome1Screen: React.FC<TProps> = ({ navigation }) => {
   const [userCount, setUserCount] = React.useState<number>(0);
 
   React.useEffect(() => {

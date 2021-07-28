@@ -1,6 +1,6 @@
-import { DbConfig } from './types';
+import { IDbConfig } from './types';
 
-const config: DbConfig = {
+const config: IDbConfig = {
   assessments: {
     path: 'assessments.json',
   },

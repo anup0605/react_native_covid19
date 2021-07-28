@@ -1,5 +1,4 @@
 import { BrandedButton } from '@covid/components';
-import { Field, FieldError } from '@covid/components/Forms';
 import { ClickableText, ErrorText, HeaderLightText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import Analytics, { events } from '@covid/core/Analytics';
@@ -19,25 +18,25 @@ import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutF
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
-type PropsType = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'Register'>;
   route: RouteProp<ScreenParamList, 'Register'>;
   setUsername: (username: string) => void;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   enableSubmit: boolean;
   accountExists: boolean;
 };
 
-const initialState: State = {
+const initialState: TState = {
   accountExists: false,
   enableSubmit: false,
   errorMessage: '',
 };
 
-interface RegistrationData {
+interface IRegistrationData {
   email: string;
   password: string;
 }
@@ -47,10 +46,10 @@ const initialRegistrationValues = {
   password: '',
 };
 
-class RegisterScreen extends React.Component<PropsType, State> {
+class RegisterScreen extends React.Component<TProps, TState> {
   private passwordComponent: any;
 
-  constructor(props: PropsType) {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -60,7 +59,7 @@ class RegisterScreen extends React.Component<PropsType, State> {
     return true;
   };
 
-  private handleCreateAccount(formData: RegistrationData) {
+  private handleCreateAccount(formData: IRegistrationData) {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false }); // Stop resubmissions
       userService
@@ -130,7 +129,7 @@ class RegisterScreen extends React.Component<PropsType, State> {
       <View style={styles.flex} testID="register-screen">
         <Formik
           initialValues={initialRegistrationValues}
-          onSubmit={(values: RegistrationData) => this.handleCreateAccount(values)}
+          onSubmit={(values: IRegistrationData) => this.handleCreateAccount(values)}
           validationSchema={this.registerSchema}
         >
           {(props) => {
@@ -155,58 +154,54 @@ class RegisterScreen extends React.Component<PropsType, State> {
 
                     <Form style={styles.form}>
                       <View style={styles.formItem}>
-                        <Field>
-                          <Label style={styles.labelStyle}>{i18n.t('create-account.email')}</Label>
-                          <ValidatedTextInput
-                            autoCapitalize="none"
-                            autoCompleteType="email"
-                            error={(props.touched.email && !!props.errors.email) || this.state.accountExists}
-                            keyboardType="email-address"
-                            onBlur={props.handleBlur('email')}
-                            onChangeText={(text) => {
-                              // this.setState({ enableSubmit: true });
-                              props.handleChange('email')(text);
-                              this.setIsEnabled(text, props.values.password);
-                            }}
-                            onSubmitEditing={() => {
-                              this.passwordComponent.focus();
-                            }}
-                            placeholder={i18n.t('create-account.email')}
-                            returnKeyType="next"
-                            testID="input-email-address"
-                            value={props.values.email}
-                          />
-                          {!!props.touched.email && !!props.errors.email ? (
-                            <FieldError>{props.errors.email}</FieldError>
-                          ) : null}
-                          {this.state.accountExists ? (
-                            <FieldError>{i18n.t('create-account.already-registered')}</FieldError>
-                          ) : null}
-                        </Field>
+                        <Label style={styles.label}>{i18n.t('create-account.email')}</Label>
+                        <ValidatedTextInput
+                          autoCapitalize="none"
+                          autoCompleteType="email"
+                          error={(props.touched.email && !!props.errors.email) || this.state.accountExists}
+                          keyboardType="email-address"
+                          onBlur={props.handleBlur('email')}
+                          onChangeText={(text) => {
+                            // this.setState({ enableSubmit: true });
+                            props.handleChange('email')(text);
+                            this.setIsEnabled(text, props.values.password);
+                          }}
+                          onSubmitEditing={() => {
+                            this.passwordComponent.focus();
+                          }}
+                          placeholder={i18n.t('create-account.email')}
+                          returnKeyType="next"
+                          testID="input-email-address"
+                          value={props.values.email}
+                        />
+                        {!!props.touched.email && !!props.errors.email ? (
+                          <ErrorText>{props.errors.email}</ErrorText>
+                        ) : null}
+                        {this.state.accountExists ? (
+                          <ErrorText>{i18n.t('create-account.already-registered')}</ErrorText>
+                        ) : null}
                       </View>
 
                       <View style={styles.formItem}>
-                        <Field>
-                          <Label style={styles.labelStyle}>{i18n.t('create-account.password')}</Label>
-                          <ValidatedTextInput
-                            secureTextEntry
-                            error={props.touched.password && props.errors.password}
-                            onBlur={props.handleBlur('password')}
-                            onChangeText={(text) => {
-                              props.handleChange('password')(text);
-                              this.setIsEnabled(props.values.email, text);
-                            }}
-                            onSubmitEditing={(event) => props.handleSubmit()}
-                            placeholder={i18n.t('create-account.password')}
-                            ref={(input) => (this.passwordComponent = input)}
-                            returnKeyType="go"
-                            testID="input-password"
-                            value={props.values.password}
-                          />
-                          {!!props.touched.password && !!props.errors.password ? (
-                            <FieldError>{props.errors.password}</FieldError>
-                          ) : null}
-                        </Field>
+                        <Label style={styles.label}>{i18n.t('create-account.password')}</Label>
+                        <ValidatedTextInput
+                          secureTextEntry
+                          error={props.touched.password && props.errors.password}
+                          onBlur={props.handleBlur('password')}
+                          onChangeText={(text) => {
+                            props.handleChange('password')(text);
+                            this.setIsEnabled(props.values.email, text);
+                          }}
+                          onSubmitEditing={(event) => props.handleSubmit()}
+                          placeholder={i18n.t('create-account.password')}
+                          ref={(input) => (this.passwordComponent = input)}
+                          returnKeyType="go"
+                          testID="input-password"
+                          value={props.values.password}
+                        />
+                        {!!props.touched.password && !!props.errors.password ? (
+                          <ErrorText>{props.errors.password}</ErrorText>
+                        ) : null}
                       </View>
                     </Form>
 
@@ -265,7 +260,7 @@ const styles = StyleSheet.create({
   formItem: {
     paddingVertical: 4,
   },
-  labelStyle: {
+  label: {
     color: colors.tertiary,
     fontSize: 16,
     left: -16384,

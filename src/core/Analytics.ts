@@ -6,7 +6,7 @@ import { LocalisationService } from './localisation/LocalisationService';
 
 let isInitialized = false;
 
-type AdditionalUserProperties = {
+type TAdditionalProps = {
   isTester?: boolean;
   Experiment_001?: string;
   Experiment_mhip?: string;
@@ -138,7 +138,7 @@ export function trackScreenView(screenName: string): void {
   track(events.VIEW_SCREEN, { screenName });
 }
 
-export function identify(additionalProps?: AdditionalUserProperties): void {
+export function identify(additionalProps?: TAdditionalProps): void {
   initialize();
 
   // WARNING: Do not send any PII or Health Data here!

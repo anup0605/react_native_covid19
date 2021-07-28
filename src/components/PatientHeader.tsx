@@ -1,10 +1,8 @@
-import { ScreenName } from '@covid/core/Coordinator';
-import { Profile } from '@covid/core/profile/ProfileService';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
-import { AvatarName, getAvatarByName } from '@covid/utils/avatar';
-import { NavigationProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import NavigatorService from '@covid/NavigatorService';
+import { getAvatarByName, TAvatarName } from '@covid/utils/avatar';
+import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Icon } from 'native-base';
 import * as React from 'react';
@@ -12,26 +10,25 @@ import { Image, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 
 
 import { ClippedText, RegularText } from './Text';
 
-type BackButtonProps = {
-  navigation: NavigationProp<ScreenParamList, ScreenName>;
+type TBackButtonProps = {
   showCloseButton?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-export enum CallOutType {
+export enum ECallOutType {
   Simple,
   Tag,
 }
 
-export const BackButton: React.FC<BackButtonProps> = ({ navigation, style: containerStyle, showCloseButton }) => {
+export const BackButton: React.FC<TBackButtonProps> = ({ style, showCloseButton }) => {
   return showCloseButton ? (
-    <TouchableOpacity onPress={navigation.goBack} style={containerStyle} testID="button-back-navigation">
+    <TouchableOpacity onPress={NavigatorService.goBack} style={style} testID="button-back-navigation">
       <View style={styles.iconButton}>
         <Icon name="cross" style={styles.icon} type="Entypo" />
       </View>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity onPress={navigation.goBack} style={containerStyle} testID="button-back-navigation">
+    <TouchableOpacity onPress={NavigatorService.goBack} style={style} testID="button-back-navigation">
       <View style={styles.iconButton}>
         <Icon name="chevron-thin-left" style={styles.icon} type="Entypo" />
       </View>
@@ -39,47 +36,47 @@ export const BackButton: React.FC<BackButtonProps> = ({ navigation, style: conta
   );
 };
 
-type PatientHeaderProps = {
-  profile: Profile;
-  navigation?: StackNavigationProp<ScreenParamList>;
+type TPatientHeaderProps = {
+  profile: TProfile;
   simpleCallout?: boolean;
-  type?: CallOutType;
+  type?: ECallOutType;
   calloutTitle?: string;
   showCloseButton?: boolean;
 };
 
-type NavbarProps = {
-  navigation?: StackNavigationProp<ScreenParamList>;
+type TNavHeaderProps = {
   rightComponent?: React.ReactNode;
   showCloseButton?: boolean;
 };
 
-export const NavHeader: React.FC<NavbarProps> = ({ navigation, rightComponent, showCloseButton }) => {
+export const NavHeader: React.FC<TNavHeaderProps> = ({ rightComponent, showCloseButton }) => {
+  const navigation = useNavigation();
+  const showBackButton = navigation.canGoBack() || showCloseButton;
+  if (!showBackButton && !rightComponent) {
+    return null;
+  }
   return (
     <View style={styles.headerBar}>
-      <View style={styles.left}>
-        {navigation ? <BackButton navigation={navigation} showCloseButton={showCloseButton} /> : null}
-      </View>
+      <View style={styles.left}>{showBackButton ? <BackButton showCloseButton={showCloseButton} /> : null}</View>
       <View style={styles.center} />
       <View style={styles.right}>{rightComponent}</View>
     </View>
   );
 };
 
-const PatientHeader: React.FC<PatientHeaderProps> = ({
+export function PatientHeader({
   profile,
-  navigation,
   simpleCallout = false,
-  type = !profile.reported_by_another ? CallOutType.Simple : CallOutType.Tag,
+  type = !profile.reported_by_another ? ECallOutType.Simple : ECallOutType.Tag,
   calloutTitle = !profile.reported_by_another ? profile.name : i18n.t('answer-for', { name: profile.name }),
   showCloseButton = false,
-}) => {
-  const avatarImage = getAvatarByName(profile.avatar_name as AvatarName);
+}: TPatientHeaderProps) {
+  const avatarImage = getAvatarByName(profile.avatar_name as TAvatarName);
   const avatarComponent = (
     <>
-      {type === CallOutType.Simple || simpleCallout ? (
+      {type === ECallOutType.Simple || simpleCallout ? (
         <View style={styles.regularTextBox}>
-          <RegularText style={styles.regularText}>{calloutTitle}</RegularText>
+          <RegularText>{calloutTitle}</RegularText>
         </View>
       ) : (
         <>
@@ -93,8 +90,8 @@ const PatientHeader: React.FC<PatientHeaderProps> = ({
     </>
   );
 
-  return <NavHeader navigation={navigation} rightComponent={avatarComponent} showCloseButton={showCloseButton} />;
-};
+  return <NavHeader rightComponent={avatarComponent} showCloseButton={showCloseButton} />;
+}
 
 const styles = StyleSheet.create({
   altText: {
@@ -145,7 +142,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
-  regularText: {},
   regularTextBox: {
     justifyContent: 'center',
   },
@@ -166,5 +162,3 @@ const styles = StyleSheet.create({
     right: -8,
   },
 });
-
-export default PatientHeader;

@@ -1,4 +1,4 @@
-export type PingdemicRequest = {
+export type TPingdemicRequest = {
   patient: string; //	Patient id
   id?: string; // PingdemicRequest entry id
   asked_to_isolate?: string;

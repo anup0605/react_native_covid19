@@ -1,4 +1,4 @@
-import { AsyncStorageService, DISMISSED_CALLOUTS, PersonalisedLocalData } from '@covid/core/AsyncStorageService';
+import { AsyncStorageService, DISMISSED_CALLOUTS, TPersonalisedLocalData } from '@covid/core/AsyncStorageService';
 import { contentService } from '@covid/core/content/ContentService';
 import {
   IFeaturedContent,
@@ -6,20 +6,20 @@ import {
   ITrendLineTimeSeriesData,
 } from '@covid/core/content/dto/ContentAPIContracts';
 import { predictiveMetricsClient } from '@covid/core/content/PredictiveMetricsClient';
-import { RootState } from '@covid/core/state/root';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TRootState } from '@covid/core/state/root';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { createAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 
 // State interface
 
-type ApiState = 'ready' | 'loading' | 'finished' | 'error';
+type TApiState = 'ready' | 'loading' | 'finished' | 'error';
 
-export type ContentState = {
+export type TContentState = {
   // Startup info
-  infoApiState: ApiState;
-  startupInfo?: StartupInfo;
-  personalizedLocalData?: PersonalisedLocalData;
+  infoApiState: TApiState;
+  startupInfo?: TStartupInfo;
+  personalizedLocalData?: TPersonalisedLocalData;
   localTrendline?: ITrendLineData;
 
   // Featured content
@@ -31,7 +31,7 @@ export type ContentState = {
   exploreTrendlineUpdating: boolean;
 
   // Metrics
-  ukMetricsApiState: ApiState;
+  ukMetricsApiState: TApiState;
   ukActive?: string;
   ukDaily?: string;
 
@@ -44,7 +44,7 @@ export type ContentState = {
 
 const todaysDate = (): string => moment().format('dddd Do MMMM');
 
-export const initialStateContent: ContentState = {
+export const initialStateContent: TContentState = {
   dismissedCallouts: [],
   exploreTrendlineUpdating: false,
   featuredHome: [],
@@ -65,7 +65,7 @@ const getTrendLineDelta = (timeseries: ITrendLineTimeSeriesData[], from: number)
 // Async Actions
 
 export const fetchDismissedCallouts = createAsyncThunk('content/dismissed_callouts', async (): Promise<
-  Partial<ContentState>
+  Partial<TContentState>
 > => {
   const arrayString = await AsyncStorageService.getItem<string>(DISMISSED_CALLOUTS);
   return {
@@ -73,7 +73,7 @@ export const fetchDismissedCallouts = createAsyncThunk('content/dismissed_callou
   };
 });
 
-export const fetchStartUpInfo = createAsyncThunk('content/startup_info', async (): Promise<Partial<ContentState>> => {
+export const fetchStartUpInfo = createAsyncThunk('content/startup_info', async (): Promise<Partial<TContentState>> => {
   // TODO: refactor the ContentService - localData is a property set async on the class within getStartupInfo() (line 107)
   // TICKET: https://www.notion.so/joinzoe/Refactor-ContentService-7ea01969fff54f8299d53f95f05dcb6d
   const serviceData = await contentService.getStartupInfo();
@@ -83,20 +83,20 @@ export const fetchStartUpInfo = createAsyncThunk('content/startup_info', async (
   };
 });
 
-export const fetchUKMetrics = createAsyncThunk('content/uk_metrics', async (): Promise<Partial<ContentState>> => {
+export const fetchUKMetrics = createAsyncThunk('content/uk_metrics', async (): Promise<Partial<TContentState>> => {
   return {
     ukActive: (await predictiveMetricsClient.getActiveCases()) ?? undefined,
     ukDaily: (await predictiveMetricsClient.getDailyCases()) ?? undefined,
   };
 });
 
-export type FetchLocalTrendlinePayload = {
+export type TFetchLocalTrendlinePayload = {
   localTrendline: ITrendLineData;
 };
 
-export const fetchLocalTrendLine = createAsyncThunk<Promise<Partial<ContentState>>>(
+export const fetchLocalTrendLine = createAsyncThunk<Promise<Partial<TContentState>>>(
   'content/fetch_local_trend_line',
-  async (): Promise<Partial<ContentState>> => {
+  async (): Promise<Partial<TContentState>> => {
     const { timeseries, ...trendline } = await contentService.getTrendLines();
     return {
       localTrendline: {
@@ -104,12 +104,12 @@ export const fetchLocalTrendLine = createAsyncThunk<Promise<Partial<ContentState
         timeseries,
         ...trendline,
       },
-    } as Partial<ContentState>;
+    } as Partial<TContentState>;
   },
 );
 
 export const fetchFeaturedContent = createAsyncThunk('content/featured_content', async (): Promise<
-  Partial<ContentState>
+  Partial<TContentState>
 > => {
   try {
     const content = await contentService.getFeaturedContent();
@@ -130,7 +130,7 @@ export const fetchFeaturedContent = createAsyncThunk('content/featured_content',
 });
 
 export const searchTrendLine = createAsyncThunk('content/search_trend_line', async (query?: string): Promise<
-  Partial<ContentState>
+  Partial<TContentState>
 > => {
   const { timeseries, ...trendline } = await contentService.getTrendLines(query);
   return {
@@ -165,7 +165,7 @@ export const contentSlice = createSlice({
     [fetchStartUpInfo.rejected.type]: (current) => {
       current.infoApiState = 'error';
     },
-    [fetchStartUpInfo.fulfilled.type]: (current, action: { payload: Partial<ContentState> }) => {
+    [fetchStartUpInfo.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
       current.infoApiState = !action.payload ? 'error' : 'finished';
       const { startupInfo, personalizedLocalData } = action.payload;
       current.startupInfo = startupInfo;
@@ -173,7 +173,7 @@ export const contentSlice = createSlice({
     },
 
     // DismissedCallouts reducer
-    [fetchDismissedCallouts.fulfilled.type]: (current, action: { payload: Partial<ContentState> }) => {
+    [fetchDismissedCallouts.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
       current.dismissedCallouts = action.payload.dismissedCallouts ?? [];
     },
 
@@ -184,7 +184,7 @@ export const contentSlice = createSlice({
     [fetchUKMetrics.rejected.type]: (current) => {
       current.ukMetricsApiState = 'error';
     },
-    [fetchUKMetrics.fulfilled.type]: (current, action: { payload: Partial<ContentState> }) => {
+    [fetchUKMetrics.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
       current.ukMetricsApiState = !action.payload ? 'error' : 'finished';
       const { ukActive, ukDaily } = action.payload;
       current.ukActive = ukActive;
@@ -192,18 +192,18 @@ export const contentSlice = createSlice({
     },
 
     // Featured content
-    [fetchFeaturedContent.fulfilled.type]: (current, action: { payload: Partial<ContentState> }) => {
+    [fetchFeaturedContent.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
       current.featuredHome = action.payload?.featuredHome ?? [];
       current.featuredThankyou = action.payload?.featuredThankyou ?? [];
     },
 
     // Trendline data
-    [fetchLocalTrendLine.fulfilled.type]: (current, action: { payload: Partial<ContentState> }) => {
+    [fetchLocalTrendLine.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
       current.localTrendline = action.payload?.localTrendline;
       current.exploreTrendline = action.payload?.localTrendline;
     },
 
-    [searchTrendLine.fulfilled.type]: (current, action: { payload: Partial<ContentState> }) => {
+    [searchTrendLine.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
       current.exploreTrendline = action.payload?.exploreTrendline;
       current.exploreTrendlineUpdating = false;
     },
@@ -219,4 +219,4 @@ export const contentSlice = createSlice({
   reducers: {},
 });
 
-export const selectContent = (state: RootState) => state.content;
+export const selectContent = (state: TRootState) => state.content;

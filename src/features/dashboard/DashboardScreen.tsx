@@ -1,5 +1,5 @@
 import { notificationReminders } from '@assets';
-import { FeaturedContentList, FeaturedContentType, SchoolNetworks, StudyCard } from '@covid/components';
+import { EFeaturedContentType, FeaturedContentList, SchoolNetworks, StudyCard } from '@covid/components';
 import { TrendlineCard, UKEstimatedCaseCard } from '@covid/components/cards/estimated-case';
 import { EstimatedCasesMapCard } from '@covid/components/cards/EstimatedCasesMapCard';
 import { ShareVaccineCard } from '@covid/components/cards/ShareVaccineCard';
@@ -11,14 +11,14 @@ import PushNotificationService, { IPushTokenEnvironment } from '@covid/core/push
 import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { fetchSubscribedSchoolGroups } from '@covid/core/schools/Schools.slice';
 import { appActions, appSelectors } from '@covid/core/state/app/slice';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import { selectFirstPatientId } from '@covid/core/state/user';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { getDietStudyDoctorImage, getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
 import util from '@covid/features/mental-health-playback/util';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
 import { colors, styling } from '@covid/themes';
@@ -37,8 +37,8 @@ const HEADER_EXPANDED_HEIGHT = 328;
 const HEADER_COLLAPSED_HEIGHT = 100;
 
 interface IProps {
-  navigation: DrawerNavigationProp<ScreenParamList>;
-  route: RouteProp<ScreenParamList, 'Dashboard'>;
+  navigation: DrawerNavigationProp<TScreenParamList>;
+  route: RouteProp<TScreenParamList, 'Dashboard'>;
 }
 
 const pushService: IPushTokenEnvironment = new ExpoPushTokenEnvironment();
@@ -52,10 +52,10 @@ export function DashboardScreen({ navigation, route }: IProps) {
   const patientId = useSelector(selectFirstPatientId);
   const app = useSelector(appSelectors.selectApp);
   const dispatch = useAppDispatch();
-  const schoolGroups = useSelector<RootState, ISubscribedSchoolGroupStats[]>(
+  const schoolGroups = useSelector<TRootState, ISubscribedSchoolGroupStats[]>(
     (state) => state.school.joinedSchoolGroups,
   );
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
 
   const [showTrendline, setShowTrendline] = React.useState<boolean>(false);
 
@@ -156,7 +156,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
           />
         ) : null}
 
-        <FeaturedContentList screenName={route.name} type={FeaturedContentType.Home} />
+        <FeaturedContentList screenName={route.name} type={EFeaturedContentType.Home} />
 
         {startupInfo?.show_diet_score ? (
           <StudyCard
@@ -177,9 +177,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
         <SchoolNetworks schoolGroups={schoolGroups} style={styles.marginVertical} />
       </View>
 
-      <View style={styles.zoe}>
-        <PoweredByZoeSmall />
-      </View>
+      <PoweredByZoeSmall style={styling.marginVertical} />
     </CollapsibleHeaderScrollView>
   );
 }
@@ -197,9 +195,5 @@ const styles = StyleSheet.create({
   },
   marginVertical: {
     marginVertical: 8,
-  },
-  zoe: {
-    marginVertical: 32,
-    paddingVertical: 32,
   },
 });

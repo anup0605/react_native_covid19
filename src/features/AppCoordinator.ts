@@ -1,17 +1,17 @@
 import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { ConfigType } from '@covid/core/Config';
+import { TConfigType } from '@covid/core/Config';
 import { ConsentService } from '@covid/core/consent/ConsentService';
 import { contentService } from '@covid/core/content/ContentService';
 import {
   fetchDismissedCallouts,
   fetchFeaturedContent,
   fetchLocalTrendLine,
-  FetchLocalTrendlinePayload,
   fetchStartUpInfo,
   fetchUKMetrics,
+  TFetchLocalTrendlinePayload,
 } from '@covid/core/content/state/contentSlice';
-import { Coordinator, IEditableProfile, ISelectProfile, ScreenFlow } from '@covid/core/Coordinator';
+import { Coordinator, IEditableProfile, ISelectProfile, TScreenFlow } from '@covid/core/Coordinator';
 import { dietScoreApiClient } from '@covid/core/diet-score/DietScoreApiClient';
 import {
   homeScreenName,
@@ -21,29 +21,29 @@ import {
   localisationService,
 } from '@covid/core/localisation/LocalisationService';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
-import { PatientData } from '@covid/core/patient/PatientData';
+import { TPatientData } from '@covid/core/patient/PatientData';
 import { patientService } from '@covid/core/patient/PatientService';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import store from '@covid/core/state/store';
-import { StartupInfo, UserResponse } from '@covid/core/user/dto/UserAPIContracts';
+import { TStartupInfo, TUserResponse } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
 import { dietStudyPlaybackCoordinator } from '@covid/features/diet-study-playback/DietStudyPlaybackCoordinator';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import NavigatorService from '@covid/NavigatorService';
 import { assessmentService } from '@covid/services';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-export type NavigationType = StackNavigationProp<ScreenParamList, keyof ScreenParamList>;
+export type TNavigationType = StackNavigationProp<TScreenParamList, keyof TScreenParamList>;
 
 export class AppCoordinator extends Coordinator implements ISelectProfile, IEditableProfile {
-  navigation: NavigationType;
+  navigation: TNavigationType;
 
-  patientData: PatientData;
+  patientData: TPatientData;
 
   shouldShowCountryPicker: boolean = false;
 
-  screenFlow: Partial<ScreenFlow> = {
+  screenFlow: Partial<TScreenFlow> = {
     // added to make available to gotoNextscreen
     Anniversary: () => {
       NavigatorService.navigate('Anniversary');
@@ -117,7 +117,7 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
   };
 
   async init(setUsername: (username: string) => void, setPatients: (patients: string[]) => void) {
-    let user: UserResponse | null = null;
+    let user: TUserResponse | null = null;
     let patientId: string | null = null;
 
     await userService.loadUser();
@@ -166,7 +166,7 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     }
   }
 
-  getConfig(): ConfigType | undefined {
+  getConfig(): TConfigType | undefined {
     return localisationService.getConfig();
   }
 
@@ -175,31 +175,31 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     this.startAssessmentFlow(this.patientData);
   }
 
-  startPatientFlow(patientData: PatientData) {
+  startPatientFlow(patientData: TPatientData) {
     patientCoordinator.init(this, patientData, userService);
     patientCoordinator.startPatient();
   }
 
-  async startAssessmentFlow(patientData: PatientData) {
+  async startAssessmentFlow(patientData: TPatientData) {
     // TODO: Does not need to be async
     assessmentCoordinator.init(this, { patientData }, assessmentService);
     assessmentCoordinator.startAssessment();
   }
 
-  async startEditProfile(profile: Profile) {
+  async startEditProfile(profile: TProfile) {
     await this.setPatientByProfile(profile);
 
     editProfileCoordinator.init(this.patientData, userService);
     editProfileCoordinator.startEditProfile();
   }
 
-  async startEditLocation(profile: Profile, patientData?: PatientData) {
+  async startEditLocation(profile: TProfile, patientData?: TPatientData) {
     if (!patientData) await this.setPatientByProfile(profile);
     editProfileCoordinator.init(patientData ?? this.patientData, userService);
     editProfileCoordinator.goToEditLocation();
   }
 
-  async profileSelected(profile: Profile) {
+  async profileSelected(profile: TProfile) {
     await this.setPatientByProfile(profile);
     this.startAssessmentFlow(this.patientData);
   }
@@ -208,7 +208,7 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     this.patientData = await patientService.getPatientDataById(patientId);
   }
 
-  async setPatientByProfile(profile: Profile) {
+  async setPatientByProfile(profile: TProfile) {
     this.patientData = await patientService.getPatientDataByProfile(profile);
   }
 
@@ -276,7 +276,7 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
       const result = await store.dispatch(fetchLocalTrendLine());
 
       // TODO: Warning this is not typed. Need to look into typing with async thunk
-      const { localTrendline } = result.payload as FetchLocalTrendlinePayload;
+      const { localTrendline } = result.payload as TFetchLocalTrendlinePayload;
 
       // Double check local trendline results
       if (!result || !localTrendline) {
@@ -293,7 +293,7 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     NavigatorService.navigate('MentalHealthChanges');
   }
 
-  goToMentalHealthStudyPlayback(startupInfo: StartupInfo | undefined) {
+  goToMentalHealthStudyPlayback(startupInfo: TStartupInfo | undefined) {
     if (startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_c') {
       NavigatorService.navigate('MentalHealthPlaybackBlogPost');
     } else {

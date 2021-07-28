@@ -1,4 +1,4 @@
-import YesNoField from '@covid/components/YesNoField';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -10,11 +10,11 @@ export interface IBloodPressureData {
   takesBloodPressureMedicationsSartan: string;
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IBloodPressureData>;
 }
 
-export class BloodPressureMedicationQuestion extends React.Component<Props, object> {
+export class BloodPressureMedicationQuestion extends React.Component<IProps, object> {
   static initialFormValues = () => {
     return {
       takesAnyBloodPressureMedications: 'no',

@@ -1,23 +1,22 @@
 import { BrandedButton } from '@covid/components';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import YesNoField from '@covid/components/YesNoField';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import { AtopyQuestions, IAtopyData } from '@covid/features/patient/fields/AtopyQuestions';
 import { BloodGroupQuestion, IBloodGroupData } from '@covid/features/patient/fields/BloodGroupQuestion';
 import i18n from '@covid/locale/i18n';
 import { stripAndRound } from '@covid/utils/number';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -64,25 +63,24 @@ const initialFormValues = {
   takesImmunosuppressants: 'no',
 };
 
-type HealthProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'YourHealth'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'YourHealth'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   showPregnancyQuestion: boolean;
   showDiabetesQuestion: boolean;
 };
 
-const initialState: State = {
+const initialState: TState = {
   errorMessage: '',
   showDiabetesQuestion: false,
   showPregnancyQuestion: false,
 };
 
-export default class YourHealthScreen extends React.Component<HealthProps, State> {
-  constructor(props: HealthProps) {
+export default class YourHealthScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     const config = localisationService.getConfig();
     this.state = {
@@ -173,7 +171,7 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
       takes_corticosteroids: formData.takesCorticosteroids === 'yes',
       takes_immunosuppressants: formData.takesImmunosuppressants === 'yes',
       ...BloodGroupQuestion.createDTO(formData),
-    } as Partial<PatientInfosRequest>;
+    } as Partial<TPatientInfosRequest>;
 
     if (this.state.showPregnancyQuestion) {
       infos = {
@@ -235,19 +233,7 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
       { label: i18n.t('your-health.yes-smoking'), value: 'yes' },
     ];
     return (
-      <Screen
-        navigation={this.props.navigation}
-        profile={patientCoordinator.patientData?.patientState?.profile}
-        testID="your-health-screen"
-      >
-        <Header>
-          <HeaderText>{i18n.t('your-health.page-title')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={3} />
-        </ProgressBlock>
-
+      <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-health-screen">
         <Formik
           initialValues={{
             ...initialFormValues,
@@ -270,8 +256,10 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
         >
           {(props) => {
             return (
-              <FormWrapper hasRequiredFields>
+              <Form>
                 <View style={{ marginHorizontal: 16 }}>
+                  <ProgressHeader currentStep={3} maxSteps={6} title={i18n.t('your-health.page-title')} />
+
                   <YesNoField
                     required
                     label={i18n.t('your-health.health-problems-that-limit-activity')}
@@ -399,7 +387,7 @@ export default class YourHealthScreen extends React.Component<HealthProps, State
                 >
                   {i18n.t('next-question')}
                 </BrandedButton>
-              </FormWrapper>
+              </Form>
             );
           }}
         </Formik>

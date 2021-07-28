@@ -1,31 +1,29 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { GenericTextField } from '@covid/components/GenericTextField';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText, RegularText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { ErrorText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { Coordinator, IUpdatePatient } from '@covid/core/Coordinator';
 import { isUSCountry, LocalisationService } from '@covid/core/localisation/LocalisationService';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import { Form, Item, Label } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
-type YourStudyProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'YourStudy'>;
+type TYourStudyProps = {
   route: RouteProp<ScreenParamList, 'YourStudy'>;
 };
 
-type CohortDefinition = {
+type TCohortDefinition = {
   key: string;
   label: string;
   country: string;
@@ -45,11 +43,11 @@ interface IYourStudyData {
   clinicalStudyNctIds: string;
 }
 
-type State = {
+type TState = {
   errorMessage: string;
 };
 
-const AllCohorts: CohortDefinition[] = [
+const AllCohorts: TCohortDefinition[] = [
   {
     country: 'GB',
     key: 'is_in_uk_guys_trust',
@@ -238,7 +236,7 @@ const AllCohorts: CohortDefinition[] = [
   },
 ];
 
-export default class YourStudyScreen extends React.Component<YourStudyProps, State> {
+export default class YourStudyScreen extends React.Component<TYourStudyProps, TState> {
   private coordinator: Coordinator & IUpdatePatient = this.props.route.params?.editing
     ? editProfileCoordinator
     : patientCoordinator;
@@ -250,7 +248,7 @@ export default class YourStudyScreen extends React.Component<YourStudyProps, Sta
     clinicalStudyNctId: Yup.string(),
   });
 
-  filterCohortsByCountry(allCohorts: CohortDefinition[], country: string) {
+  filterCohortsByCountry(allCohorts: TCohortDefinition[], country: string) {
     return AllCohorts.filter((cohort) => {
       return cohort.country === country;
     });
@@ -278,7 +276,7 @@ export default class YourStudyScreen extends React.Component<YourStudyProps, Sta
     };
   }
 
-  buildInitCohortsValues(cohorts: CohortDefinition[]): { [index: string]: boolean } {
+  buildInitCohortsValues(cohorts: TCohortDefinition[]): { [index: string]: boolean } {
     const initialValues: { [index: string]: boolean } = {};
     cohorts.forEach((cohort) => {
       initialValues[cohort.key] = false;
@@ -286,7 +284,7 @@ export default class YourStudyScreen extends React.Component<YourStudyProps, Sta
     return initialValues;
   }
 
-  constructor(props: YourStudyProps) {
+  constructor(props: TYourStudyProps) {
     super(props);
 
     this.state = {
@@ -309,19 +307,10 @@ export default class YourStudyScreen extends React.Component<YourStudyProps, Sta
     const countrySpecificCohorts = this.filterCohortsByCountry(AllCohorts, LocalisationService.userCountry);
 
     return (
-      <Screen
-        simpleCallout
-        navigation={this.props.navigation}
-        profile={this.coordinator.patientData?.patientState?.profile}
-        testID="your-study-screen"
-      >
-        <Header>
-          <HeaderText>{i18n.t('your-study.title')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={1} />
-        </ProgressBlock>
+      <Screen simpleCallout profile={this.coordinator.patientData?.patientState?.profile} testID="your-study-screen">
+        <View style={{ marginHorizontal: 16 }}>
+          <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
+        </View>
 
         <Formik
           initialValues={this.getInitialFormValues()}
@@ -413,7 +402,7 @@ export default class YourStudyScreen extends React.Component<YourStudyProps, Sta
     const { clinicalStudyNames, clinicalStudyContacts, clinicalStudyInstitutions, clinicalStudyNctIds, ...cohorts } =
       formData;
 
-    let infos = { ...cohorts } as Partial<PatientInfosRequest>;
+    let infos = { ...cohorts } as Partial<TPatientInfosRequest>;
 
     if (isUSCountry()) {
       infos = {

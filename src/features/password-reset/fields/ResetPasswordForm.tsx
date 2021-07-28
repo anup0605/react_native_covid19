@@ -1,5 +1,5 @@
 import { BrandedButton } from '@covid/components';
-import { FormWrapper, requiredFormMarker } from '@covid/components/Forms';
+import { Form, requiredFormMarker } from '@covid/components/Form';
 import { ErrorText, HeaderText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import i18n from '@covid/locale/i18n';
@@ -40,7 +40,7 @@ function ResetPasswordForm({
           {i18n.t('reset-password.title')}
           {requiredFormMarker}
         </HeaderText>
-        <FormWrapper>
+        <Form>
           <ValidatedTextInput
             autoCapitalize="none"
             autoCompleteType="email"
@@ -54,7 +54,7 @@ function ResetPasswordForm({
           />
 
           {touched.email && errors.email ? <ErrorText> {i18n.t('reset-password.email-error')}</ErrorText> : null}
-        </FormWrapper>
+        </Form>
       </View>
       <View>
         <ErrorText>{errorMessage}</ErrorText>

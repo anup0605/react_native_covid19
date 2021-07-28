@@ -1,14 +1,12 @@
 import { BrandedButton, TextareaWithCharCount } from '@covid/components';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { HeaderText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen, { FieldWrapper } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import { Form, Item, Label } from 'native-base';
 import * as React from 'react';
@@ -23,18 +21,17 @@ interface ITreatmentData {
   description: string;
 }
 
-type TreatmentOtherProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'TreatmentOther'>;
+type TTreatmentOtherProps = {
   route: RouteProp<ScreenParamList, 'TreatmentOther'>;
 };
 
-export default class TreatmentOtherScreen extends React.Component<TreatmentOtherProps> {
+export default class TreatmentOtherScreen extends React.Component<TTreatmentOtherProps> {
   registerSchema = Yup.object().shape({
     description: Yup.string(),
   });
 
   handleUpdateTreatment = async (formData: ITreatmentData) => {
-    let assessment: Partial<AssessmentInfosRequest> = {};
+    let assessment: Partial<TAssessmentInfosRequest> = {};
 
     if (formData.description) {
       assessment = {
@@ -61,17 +58,10 @@ export default class TreatmentOtherScreen extends React.Component<TreatmentOther
 
     return (
       <Screen
-        navigation={this.props.navigation}
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="treatment-other-screen"
       >
-        <Header>
-          <HeaderText>{title}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={5} step={5} />
-        </ProgressBlock>
+        <ProgressHeader currentStep={5} maxSteps={5} title={title} />
 
         <Formik
           initialValues={initialFormValues}

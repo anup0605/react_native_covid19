@@ -14,18 +14,18 @@ export interface IRaceEthnicityData {
   ethnicity: string;
 }
 
-interface RaceEthnicityQuestionProps {
+interface IRaceEthnicityQuestionProps {
   showRaceQuestion: boolean;
   showEthnicityQuestion: boolean;
   formikProps: FormikProps<IRaceEthnicityData>;
 }
 
-type RaceCheckBoxData = {
+type TRaceCheckBoxData = {
   label: string;
   value: string;
 };
 
-function renderRaceCheckboxes(data: RaceCheckBoxData[], props: FormikProps<IRaceEthnicityData>) {
+function renderRaceCheckboxes(data: TRaceCheckBoxData[], props: FormikProps<IRaceEthnicityData>) {
   return data.map((checkBoxData) => (
     <CheckboxItem
       key={checkBoxData.value}
@@ -49,7 +49,7 @@ function renderRaceCheckboxes(data: RaceCheckBoxData[], props: FormikProps<IRace
   ));
 }
 
-export class RaceEthnicityQuestion extends React.Component<RaceEthnicityQuestionProps, object> {
+export class RaceEthnicityQuestion extends React.Component<IRaceEthnicityQuestionProps, object> {
   UKRaceCheckboxes = [
     { label: i18n.t('uk-asian'), value: 'uk_asian' },
     { label: i18n.t('uk-black'), value: 'uk_black' },

@@ -4,7 +4,7 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-type Props = {
+type TProps = {
   headerText?: string;
   bodyText: string;
   button1Text: string;
@@ -15,7 +15,7 @@ type Props = {
   button2Color?: string;
 };
 
-export const TwoButtonModal: React.FC<Props> = (props) => {
+export const TwoButtonModal: React.FC<TProps> = (props) => {
   const button1Color = {
     color: props.button1Color ? props.button1Color : colors.linkBlue,
   };

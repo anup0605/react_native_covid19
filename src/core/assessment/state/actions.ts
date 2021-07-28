@@ -1,16 +1,16 @@
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 
-import { ActionType, ActionTypes, PayloadActionType } from './types';
+import { EActionTypes, TActionType, TPayloadActionType } from './types';
 
-export const updateAssessment = (assessment: Partial<AssessmentInfosRequest>): PayloadActionType => {
+export const updateAssessment = (assessment: Partial<TAssessmentInfosRequest>): TPayloadActionType => {
   return {
     payload: assessment,
-    type: ActionTypes.ASSESSMENT_UPDATED,
+    type: EActionTypes.ASSESSMENT_UPDATED,
   };
 };
 
-export const clearAssessment = (): ActionType => {
+export const clearAssessment = (): TActionType => {
   return {
-    type: ActionTypes.ASSESSMENT_CLEARED,
+    type: EActionTypes.ASSESSMENT_CLEARED,
   };
 };

@@ -1,17 +1,17 @@
 import ApiClient from '@covid/core/api/ApiClient';
-import { TokenInfoRequest, TokenInfoResponse } from '@covid/core/user/dto/UserAPIContracts';
+import { TTokenInfoRequest, TTokenInfoResponse } from '@covid/core/user/dto/UserAPIContracts';
 
-import { IPushTokenRemoteClient, PushToken } from './types';
+import { IPushTokenRemoteClient, TPushToken } from './types';
 
 const apiClient = new ApiClient();
 
 export default class PushNotificationApiClient implements IPushTokenRemoteClient {
-  updatePushToken(pushToken: PushToken): Promise<TokenInfoResponse> {
+  updatePushToken(pushToken: TPushToken): Promise<TTokenInfoResponse> {
     const tokenDoc = {
       ...pushToken,
       active: true,
-    } as TokenInfoRequest;
-    return apiClient.post<TokenInfoRequest, TokenInfoResponse>(`/tokens/`, tokenDoc);
+    } as TTokenInfoRequest;
+    return apiClient.post<TTokenInfoRequest, TTokenInfoResponse>(`/tokens/`, tokenDoc);
   }
 }
 

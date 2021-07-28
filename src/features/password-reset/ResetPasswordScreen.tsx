@@ -11,31 +11,31 @@ import * as React from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import * as Yup from 'yup';
 
-type PropsType = {
+type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'ResetPassword'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
   enableSubmit: boolean;
 };
 
-const initialState: State = {
+const initialState: TState = {
   enableSubmit: true,
   errorMessage: '',
 };
 
-interface ResetPasswordData {
+interface IResetPasswordData {
   email: string;
 }
 
-export class ResetPasswordScreen extends React.Component<PropsType, State> {
-  constructor(props: PropsType) {
+export class ResetPasswordScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
 
-  handleClick = (formData: ResetPasswordData) => {
+  handleClick = (formData: IResetPasswordData) => {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false });
       userService

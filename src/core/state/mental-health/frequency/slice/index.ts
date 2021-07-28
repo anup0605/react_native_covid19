@@ -1,5 +1,5 @@
 import { IMentalHealthFrequency, TMentalHealthFrequency } from '@covid/core/state/mental-health/frequency/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialStateMentalHealthFrequency: IMentalHealthFrequency = {
@@ -42,5 +42,5 @@ const mentalHealthFrequencySlice = createSlice({
 
 export const { setFeelingDown, setFeelingNervous, setPleasureInDoingThings, setStopWorrying } =
   mentalHealthFrequencySlice.actions;
-export const selectMentalHealthFrequency = (state: RootState) => state.mentalHealthFrequency;
+export const selectMentalHealthFrequency = (state: TRootState) => state.mentalHealthFrequency;
 export default mentalHealthFrequencySlice.reducer;

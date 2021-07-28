@@ -1,6 +1,6 @@
 import { IColorPalettes } from './colors';
 import { IGrid } from './grid';
-import { ITextClass } from './typography';
+import { TTextStyles } from './typography';
 
 export interface IThemeVars {
   // colors
@@ -8,5 +8,5 @@ export interface IThemeVars {
   // layout
   grid: IGrid;
   // typography
-  text: ITextClass;
+  text: TTextStyles;
 }

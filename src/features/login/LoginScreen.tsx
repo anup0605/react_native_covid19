@@ -10,7 +10,6 @@ import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import { grid, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Input, Item, Label, Toast } from 'native-base';
 import * as React from 'react';
@@ -18,7 +17,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'Login'>;
   route: RouteProp<ScreenParamList, 'Login'>;
 }
 
@@ -81,7 +79,7 @@ function LoginScreen({ route }: IProps) {
       <View style={styles.contentWrapper}>
         <HeaderLightText>{i18n.t('login.title')}</HeaderLightText>
         <Item floatingLabel error={hasErrors} style={styles.item}>
-          <Label style={styles.labelStyle}>{i18n.t('login.email-label')}</Label>
+          <Label style={styles.label}>{i18n.t('login.email-label')}</Label>
           <Input
             autoCapitalize="none"
             autoCompleteType="email"
@@ -96,7 +94,7 @@ function LoginScreen({ route }: IProps) {
           />
         </Item>
         <Item floatingLabel error={hasErrors} style={styles.item}>
-          <Label style={styles.labelStyle}>{i18n.t('login.password-label')}</Label>
+          <Label style={styles.label}>{i18n.t('login.password-label')}</Label>
           <Input
             secureTextEntry
             onChangeText={(password) => {
@@ -149,7 +147,7 @@ const styles = StyleSheet.create({
   item: {
     marginTop: 12,
   },
-  labelStyle: {
+  label: {
     color: colors.tertiary,
     fontSize: 16,
   },
