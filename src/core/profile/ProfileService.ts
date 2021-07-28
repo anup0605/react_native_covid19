@@ -1,6 +1,6 @@
 import { patientService } from '@covid/core/patient/PatientService';
 
-export type Profile = {
+export type TProfile = {
   id: string;
   name?: string;
   avatar_name?: string;

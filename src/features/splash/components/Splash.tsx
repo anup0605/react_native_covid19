@@ -8,7 +8,7 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { FlexView } from './FlexView';
 
-type SplashProps = {
+type TProps = {
   status: string;
   onRetry?: VoidFunction;
   onLogout?: VoidFunction;
@@ -16,7 +16,7 @@ type SplashProps = {
 
 const Spacer: React.FC = () => <View style={{ height: 12 }} />;
 
-const Splash = (props: SplashProps) => {
+const Splash = (props: TProps) => {
   return (
     <FlexView>
       <FlexView />

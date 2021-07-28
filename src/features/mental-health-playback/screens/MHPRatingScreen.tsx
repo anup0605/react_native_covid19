@@ -1,6 +1,7 @@
 import Star from '@assets/mental-health-playback/Star';
 import { BasicPage, Text, TextareaWithCharCount } from '@covid/components';
 import Card from '@covid/components/cards/Card';
+import Analytics from '@covid/core/Analytics';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -32,10 +33,11 @@ export default function MHPRatingScreen() {
     if (!loading) {
       setLoading(true);
       const result = await mentalHealthApiClient.feedback(selectedRating, comments);
-      setLoading(false);
       if (result) {
         NavigatorService.reset([{ name: homeScreenName() }, { name: 'MentalHealthPlaybackThankYou' }]);
+        Analytics.track(Analytics.events.MENTAL_HEALTH_PLAYBACK_RATING, { rating: selectedRating });
       }
+      setLoading(false);
     }
   }
 

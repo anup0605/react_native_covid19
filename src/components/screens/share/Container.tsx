@@ -6,10 +6,10 @@ import * as React from 'react';
 
 import { SShareContainerView } from './styles';
 
-type Sharable = 'MAP' | 'TRENDLINE' | 'VACCINES' | 'TIMELINE';
+type TSharable = 'MAP' | 'TRENDLINE' | 'VACCINES' | 'TIMELINE';
 
 interface IProps {
-  sharable?: Sharable;
+  sharable?: TSharable;
 }
 
 function ShareContainer({ sharable = 'MAP' }: IProps) {

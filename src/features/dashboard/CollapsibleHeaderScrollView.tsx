@@ -1,72 +1,70 @@
 import { DrawerToggle } from '@covid/components/DrawerToggle';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Animated, Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
-type CollapsibleHeaderHeightConfig = {
+type TConfig = {
   compact: number;
   expanded: number;
 };
 
-interface CollapsibleHeaderScrollViewProps {
-  navigation: DrawerNavigationProp<ScreenParamList>;
+interface Iprops {
   compactHeader: React.ReactNode;
+  config: TConfig;
   expandedHeader: React.ReactNode;
-  config: CollapsibleHeaderHeightConfig;
+  navigation: DrawerNavigationProp<TScreenParamList>;
 }
 
-export const CollapsibleHeaderScrollView: React.FC<CollapsibleHeaderScrollViewProps> = ({
-  navigation,
-  compactHeader,
-  expandedHeader,
-  config,
-  children,
-}) => {
+export const CollapsibleHeaderScrollView: React.FC<Iprops> = (props) => {
+  const safeAreaInsets = useSafeAreaInsets();
+
   const [scrollY, _] = React.useState<Animated.Value>(new Animated.Value(0));
 
   const headerHeight = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [0, config.expanded - config.compact],
-    outputRange: [config.expanded, config.compact],
+    inputRange: [0, props.config.expanded - props.config.compact],
+    outputRange: [props.config.expanded, props.config.compact],
   });
 
   // Fade in Compact header as user scroll down
   const compactHeaderOpacity = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [config.compact, config.expanded - config.compact],
+    inputRange: [props.config.compact, props.config.expanded - props.config.compact],
     outputRange: [0, 1],
   });
 
   // Fade out Expanded header as user scroll down
   const expandedHeaderOpacity = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [0, config.expanded - config.compact - 75],
+    inputRange: [0, props.config.expanded - props.config.compact - 75],
     outputRange: [1, 0],
   });
 
   // Slide up Compact header as user scroll down
   const compactHeaderY = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [0, config.expanded - config.compact],
+    inputRange: [0, props.config.expanded - props.config.compact],
     outputRange: [50, 0],
   });
 
   // Slide up Expanded header as user scroll down
   const expandedHeaderY = scrollY.interpolate({
     extrapolate: 'clamp',
-    inputRange: [0, config.expanded - config.compact],
+    inputRange: [0, props.config.expanded - props.config.compact],
     outputRange: [0, -25],
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <View style={{ height: safeAreaInsets.top }} />
       <View style={styles.subContainer}>
         <View style={styles.drawerToggleContainer}>
-          <DrawerToggle navigation={navigation} style={{ tintColor: colors.white }} testID="drawer-toggle" />
+          <DrawerToggle navigation={props.navigation} style={{ tintColor: colors.white }} testID="drawer-toggle" />
         </View>
         <Animated.View style={[styles.header, { height: headerHeight }]}>
           <Animated.View
@@ -78,7 +76,7 @@ export const CollapsibleHeaderScrollView: React.FC<CollapsibleHeaderScrollViewPr
               styles.expandedHeaderContainer,
             ]}
           >
-            {expandedHeader}
+            {props.expandedHeader}
           </Animated.View>
           <Animated.View
             style={{
@@ -86,11 +84,16 @@ export const CollapsibleHeaderScrollView: React.FC<CollapsibleHeaderScrollViewPr
               paddingTop: compactHeaderY,
             }}
           >
-            {compactHeader}
+            {props.compactHeader}
           </Animated.View>
         </Animated.View>
         <Animated.ScrollView
-          contentContainerStyle={{ paddingTop: config.expanded }}
+          contentContainerStyle={{
+            paddingBottom: safeAreaInsets.bottom,
+            paddingLeft: safeAreaInsets.left,
+            paddingRight: safeAreaInsets.right,
+            paddingTop: props.config.expanded,
+          }}
           onScroll={Animated.event(
             [
               {
@@ -105,14 +108,14 @@ export const CollapsibleHeaderScrollView: React.FC<CollapsibleHeaderScrollViewPr
           )}
           scrollEventThrottle={16}
           scrollIndicatorInsets={{
-            top: config.expanded,
+            top: props.config.expanded,
           }}
           style={styles.scrollContainer}
         >
-          {children}
+          {props.children}
         </Animated.ScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -120,7 +123,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.predict,
     flex: 1,
-    marginBottom: -34,
   },
   drawerToggleContainer: {
     marginRight: 16,

@@ -1,25 +1,23 @@
 import { Button } from '@covid/components/buttons/Button';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { HeaderText, RegularBoldText, RegularText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
+import { RegularBoldText, RegularText } from '@covid/components/Text';
 import { Coordinator } from '@covid/core/Coordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { schoolNetworkCoordinator } from './SchoolNetworkCoordinator';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'SchoolHowTo'>;
-  route: RouteProp<ScreenParamList, 'SchoolHowTo'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'SchoolHowTo'>;
 };
 
-export const SchoolHowToScreen: React.FC<Props> = ({ route, navigation }) => {
+export const SchoolHowToScreen: React.FC<TProps> = ({ route }) => {
   const coordinator: Coordinator = schoolNetworkCoordinator;
 
   const goNext = () => {
@@ -30,21 +28,9 @@ export const SchoolHowToScreen: React.FC<Props> = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Screen
-        simpleCallout
-        navigation={navigation}
-        profile={currentPatient?.profile}
-        style={styles.container}
-        testID="school-how-to-screen"
-      >
+      <Screen simpleCallout profile={currentPatient?.profile} style={styles.container} testID="school-how-to-screen">
         <View style={styles.container}>
-          <Header>
-            <HeaderText style={styles.header}>{i18n.t('school-networks.how-to.title')}</HeaderText>
-          </Header>
-
-          <ProgressBlock>
-            <ProgressStatus maxSteps={6} step={1} />
-          </ProgressBlock>
+          <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('school-networks.how-to.title')} />
 
           <View style={styles.description}>
             <RegularBoldText>{i18n.t('school-networks.how-to.point-1.title')}</RegularBoldText>

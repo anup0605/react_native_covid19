@@ -6,7 +6,7 @@ import {
   setPleasureInDoingThings,
   setStopWorrying,
 } from '@covid/core/state/mental-health';
-import { MentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
+import { TMentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
 import { FrequencyQuestion } from '@covid/features/mental-health/partials';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -55,7 +55,7 @@ export default function MentalHealthFrequencyScreen() {
   const saveStateAndNavigate = async () => {
     const existingMentalHealthListForUser = await mentalHealthApiClient.get();
     const existingMentalHealth = existingMentalHealthListForUser[0];
-    const updatedMentalHealth: MentalHealthInfosRequest = mentalHealthApiClient.buildRequestObject(
+    const updatedMentalHealth: TMentalHealthInfosRequest = mentalHealthApiClient.buildRequestObject(
       existingMentalHealth,
       { mentalHealthFrequency: MentalHealthFrequency },
     );

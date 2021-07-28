@@ -1,8 +1,8 @@
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 
-export type PatientStateType = {
+export type TPatientStateType = {
   patientId: string;
-  profile: Profile;
+  profile: TProfile;
   isHealthWorker: boolean;
   hasCompletedPatientDetails: boolean;
   hasBloodPressureAnswer: boolean;
@@ -24,7 +24,7 @@ export type PatientStateType = {
   shouldShowVaccineList: boolean;
 };
 
-const initPatientState: PatientStateType = {
+const initPatientState: TPatientStateType = {
   hasAtopyAnswers: true,
   hasBloodGroupAnswer: true,
   hasBloodPressureAnswer: true,
@@ -53,11 +53,11 @@ const initPatientState: PatientStateType = {
   shouldShowVaccineList: false,
 };
 
-export const getInitialPatientState = (patientId: string): PatientStateType => {
+export const getInitialPatientState = (patientId: string): TPatientStateType => {
   return {
     ...initPatientState,
     patientId,
-  } as PatientStateType;
+  } as TPatientStateType;
 };
 
 export const isMinorAge = (yearOfBirth: number): boolean => {

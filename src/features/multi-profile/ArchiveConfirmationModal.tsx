@@ -5,12 +5,12 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-type Props = {
+type TProps = {
   cancelArchive: () => void;
   confirmArchive: () => void;
 };
 
-export const ArchiveConfirmationModal: React.FC<Props> = (props) => {
+export const ArchiveConfirmationModal: React.FC<TProps> = (props) => {
   return (
     <ModalContainer>
       <RegularBoldText style={styles.header}>{i18n.t('archive-confirmation.title')}</RegularBoldText>

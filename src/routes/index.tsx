@@ -1,16 +1,16 @@
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import * as screens from '@covid/features/screens';
 import i18n from '@covid/locale/i18n';
+import AnniversaryNavigator from '@covid/routes/AnniversaryNavigator';
+import DebugScreens from '@covid/routes/DebugScreens';
+import DietStudyPlaybackNavigator from '@covid/routes/DietStudyPlaybackNavigator';
+import MentalHealthNavigator from '@covid/routes/MentalHealthNavigator';
+import MentalHealthPlaybackNavigator from '@covid/routes/MentalHealthPlaybackNavigator';
+import ReconsentNavigator from '@covid/routes/ReconsentNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
-import AnniversaryNavigator from './AnniversaryNavigator';
-import DietStudyPlaybackNavigator from './DietStudyPlaybackNavigator';
-import MentalHealthNavigator from './MentalHealthNavigator';
-import MentalHealthPlaybackNavigator from './MentalHealthPlaybackNavigator';
-import ReconsentNavigator from './ReconsentNavigator';
-
-const Stack = createStackNavigator<ScreenParamList>();
+const Stack = createStackNavigator<TScreenParamList>();
 
 const noHeader = {
   headerShown: false,
@@ -40,7 +40,7 @@ export default function MainNavigator() {
       <Stack.Screen component={screens.CovidTestDetailScreen} name="CovidTestDetail" options={noHeader} />
       <Stack.Screen component={screens.CovidTestListScreen} name="CovidTestList" options={noHeader} />
       <Stack.Screen component={screens.CreateProfileScreen} name="CreateProfile" options={noHeader} />
-      <Stack.Screen component={screens.DashboardScreen} name="Dashboard" options={noHeader} />
+      <Stack.Screen component={DebugScreens} name="Dashboard" options={noHeader} />
       <Stack.Screen component={screens.DashboardUSScreen} name="DashboardUS" options={noHeader} />
       <Stack.Screen component={screens.EditLocationScreen} name="EditLocation" options={noHeader} />
       <Stack.Screen component={screens.EditProfileScreen} name="EditProfile" options={noHeader} />

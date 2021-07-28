@@ -864,10 +864,11 @@
     "back": "Volver"
   },
 
-  "create-profile-title": "Dar un nombre al perfil nuevo",
-  "create-profile-text": "Este nombre es solo para usted. Elija un nombre que le permita saber la persona por la que está informando.",
-  "create-profile-placeholder": "por ej., nombre, alias o relación",
   "create-profile-button": "Continuar",
+  "create-profile-label": "Nombre",
+  "create-profile-placeholder": "por ej., nombre, alias o relación",
+  "create-profile-text": "Este nombre es solo para usted. Elija un nombre que le permita saber la persona por la que está informando.",
+  "create-profile-title": "Dar un nombre al perfil nuevo",
 
   "select-profile-title-assessment": "Seleccione el perfil para el que informará",
   "select-profile-title-edit": "Seleccione el perfil que desea editar",
@@ -1468,7 +1469,8 @@
       "description-personal": "We've crunched the data and have prepared your very own personal insights into your unique habits during the pandemic for you to look at!\n\nThanks for your participation.",
       "tag": "INSIGHTS AVAILABLE",
       "title": "Mental Health during the pandemic",
-      "title-new": "Your Mental Health insights report is ready!"
+      "title-new": "The Mental Health insights report is ready!",
+      "title-new-personal": "Your Mental Health insights report is ready!"
     },
 
     "general": {

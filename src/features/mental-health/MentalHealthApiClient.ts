@@ -8,14 +8,14 @@ import {
 import { IMentalHealthSupport } from '@covid/core/state/mental-health/support/types';
 import { IMHInsights } from '@covid/features/mental-health-playback/types';
 
-import { MentalHealthInfosRequest } from './MentalHealthInfosRequest';
+import { TMentalHealthInfosRequest } from './MentalHealthInfosRequest';
 
 const PATH = '/mental_health/';
 
 export interface IMentalHealthApiClient {
-  get(id: any): Promise<MentalHealthInfosRequest[]>;
-  add(patientId: string, mentalHealth: MentalHealthInfosRequest): Promise<MentalHealthInfosRequest>;
-  update(mentalHealth: MentalHealthInfosRequest): Promise<MentalHealthInfosRequest>;
+  get(id: any): Promise<TMentalHealthInfosRequest[]>;
+  add(patientId: string, mentalHealth: TMentalHealthInfosRequest): Promise<TMentalHealthInfosRequest>;
+  update(mentalHealth: TMentalHealthInfosRequest): Promise<TMentalHealthInfosRequest>;
 }
 
 export interface IMentalHealthApiClientBuildRequest {
@@ -30,7 +30,7 @@ const apiClient = new ApiClient();
 
 export class MentalHealthApiClient implements IMentalHealthApiClient {
   get() {
-    return apiClient.get<MentalHealthInfosRequest[]>(PATH);
+    return apiClient.get<TMentalHealthInfosRequest[]>(PATH);
   }
 
   getInsights() {
@@ -45,21 +45,21 @@ export class MentalHealthApiClient implements IMentalHealthApiClient {
     });
   }
 
-  add(patientId: string, mentalHealth: MentalHealthInfosRequest) {
+  add(patientId: string, mentalHealth: TMentalHealthInfosRequest) {
     mentalHealth = {
       patient: patientId,
       ...mentalHealth,
     };
-    return apiClient.post<MentalHealthInfosRequest, MentalHealthInfosRequest>(PATH, mentalHealth);
+    return apiClient.post<TMentalHealthInfosRequest, TMentalHealthInfosRequest>(PATH, mentalHealth);
   }
 
-  update(mentalHealth: MentalHealthInfosRequest) {
+  update(mentalHealth: TMentalHealthInfosRequest) {
     const url = `${PATH}${mentalHealth.id}/`;
-    return apiClient.patch<MentalHealthInfosRequest, MentalHealthInfosRequest>(url, mentalHealth);
+    return apiClient.patch<TMentalHealthInfosRequest, TMentalHealthInfosRequest>(url, mentalHealth);
   }
 
-  buildRequestObject(existingMentalHealth: MentalHealthInfosRequest, data: IMentalHealthApiClientBuildRequest) {
-    let updatedMentalHealth: MentalHealthInfosRequest = {
+  buildRequestObject(existingMentalHealth: TMentalHealthInfosRequest, data: IMentalHealthApiClientBuildRequest) {
+    let updatedMentalHealth: TMentalHealthInfosRequest = {
       id: existingMentalHealth.id,
       patient: existingMentalHealth.patient,
     };

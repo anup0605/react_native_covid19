@@ -1,8 +1,8 @@
-import { SvgProps } from '@assets/Svg';
+import { TSvgProps } from '@assets/Svg';
 import * as React from 'react';
 import { Defs, Path, RadialGradient, Rect, Stop, Svg } from 'react-native-svg';
 
-const VaccineDemoUK: React.FC<SvgProps> = () => {
+const VaccineDemoUK: React.FC<TSvgProps> = () => {
   return (
     <Svg fill="none" height={262} viewBox="0 0 375 262" width={375}>
       <Path d="M0 0h375v261.719H0z" fill="url(#prefix__paint0_radial)" />

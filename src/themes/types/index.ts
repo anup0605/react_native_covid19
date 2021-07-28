@@ -7,6 +7,7 @@ export type {
   TText,
   TTextAlign,
   TTextClass,
+  TTextStyles,
   TTtextDecorationLine,
   TTypeSizes,
 } from './typography';

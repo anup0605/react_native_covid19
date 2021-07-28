@@ -2,7 +2,7 @@ import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 
 import { IFormikDiabetesInputFC } from './DiabetesQuestions';
 
-enum DiabetesTreatmentsFieldnames {
+enum EDiabetesTreatmentsFieldnames {
   NONE = 'diabetes_treatment_none',
   LIFESTYLE = 'diabetes_treatment_lifestyle',
   BASAL_INSULIN = 'diabetes_treatment_basal_insulin',
@@ -23,26 +23,26 @@ enum DiabetesTreatmentsFieldnames {
 }
 
 export interface IDiabetesTreatmentsData {
-  diabetesTreatments: DiabetesTreatmentsFieldnames[];
+  diabetesTreatments: EDiabetesTreatmentsFieldnames[];
   diabetesTreatmentOtherOral: boolean;
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IDiabetesTreatmentsData>;
 }
 
-type DiabetesTreatmentCheckBoxData = {
-  fieldName: DiabetesTreatmentsFieldnames;
+type TDiabetesTreatmentCheckBoxData = {
+  fieldName: EDiabetesTreatmentsFieldnames;
   label: string;
 };
 
-interface DiabetesTreatmentsCheckboxProps {
-  data: DiabetesTreatmentCheckBoxData;
+interface IDiabetesTreatmentsCheckboxProps {
+  data: TDiabetesTreatmentCheckBoxData;
   formikProps: FormikProps<IDiabetesTreatmentsData>;
   value: boolean;
 }
 
-const DiabetesTreatmentsCheckbox: React.FC<DiabetesTreatmentsCheckboxProps> = ({ data, formikProps, value }) => {
+const DiabetesTreatmentsCheckbox: React.FC<IDiabetesTreatmentsCheckboxProps> = ({ data, formikProps, value }) => {
   const toggled = (checked: boolean) => {
     let result = formikProps.values.diabetesTreatments;
     if (checked) {
@@ -51,7 +51,7 @@ const DiabetesTreatmentsCheckbox: React.FC<DiabetesTreatmentsCheckboxProps> = ({
       result = result.filter((o) => o !== data.fieldName);
     }
     formikProps.setFieldValue('diabetesTreatments', result);
-    formikProps.setFieldValue('diabetesTreatmentOtherOral', result.includes(DiabetesTreatmentsFieldnames.OTHER_ORAL));
+    formikProps.setFieldValue('diabetesTreatmentOtherOral', result.includes(EDiabetesTreatmentsFieldnames.OTHER_ORAL));
   };
 
   return (
@@ -59,7 +59,7 @@ const DiabetesTreatmentsCheckbox: React.FC<DiabetesTreatmentsCheckboxProps> = ({
       onChange={(checked: boolean) => {
         toggled(checked);
         // Reset conditional fields on unchecked
-        if (data.fieldName === DiabetesTreatmentsFieldnames.OTHER_ORAL && !checked) {
+        if (data.fieldName === EDiabetesTreatmentsFieldnames.OTHER_ORAL && !checked) {
           formikProps.setFieldValue('diabetesOralMeds', []);
           formikProps.setFieldValue('diabetesOralOtherMedication', '');
           formikProps.setFieldValue('diabetesOralOtherMedicationNotListed', false);
@@ -72,44 +72,50 @@ const DiabetesTreatmentsCheckbox: React.FC<DiabetesTreatmentsCheckboxProps> = ({
   );
 };
 
-export const DiabetesTreatmentsQuestion: IFormikDiabetesInputFC<Props, IDiabetesTreatmentsData> = ({ formikProps }) => {
+export const DiabetesTreatmentsQuestion: IFormikDiabetesInputFC<IProps, IDiabetesTreatmentsData> = ({
+  formikProps,
+}) => {
   const diabetesTreatmentCheckboxes = [
-    { fieldName: DiabetesTreatmentsFieldnames.NONE, label: i18n.t('diabetes.answer-none'), value: false },
-    { fieldName: DiabetesTreatmentsFieldnames.LIFESTYLE, label: i18n.t('diabetes.answer-lifestyle-mod'), value: false },
+    { fieldName: EDiabetesTreatmentsFieldnames.NONE, label: i18n.t('diabetes.answer-none'), value: false },
     {
-      fieldName: DiabetesTreatmentsFieldnames.BASAL_INSULIN,
+      fieldName: EDiabetesTreatmentsFieldnames.LIFESTYLE,
+      label: i18n.t('diabetes.answer-lifestyle-mod'),
+      value: false,
+    },
+    {
+      fieldName: EDiabetesTreatmentsFieldnames.BASAL_INSULIN,
       label: i18n.t('diabetes.answer-daily-injections'),
       value: false,
     },
     {
-      fieldName: DiabetesTreatmentsFieldnames.RAPID_INSULIN,
+      fieldName: EDiabetesTreatmentsFieldnames.RAPID_INSULIN,
       label: i18n.t('diabetes.answer-rapid-injections'),
       value: false,
     },
     {
-      fieldName: DiabetesTreatmentsFieldnames.INSULIN_PUMP,
+      fieldName: EDiabetesTreatmentsFieldnames.INSULIN_PUMP,
       label: i18n.t('diabetes.answer-insulin-pump'),
       value: false,
     },
     {
-      fieldName: DiabetesTreatmentsFieldnames.OTHER_INJECTION,
+      fieldName: EDiabetesTreatmentsFieldnames.OTHER_INJECTION,
       label: i18n.t('diabetes.answer-non-insulin-injections'),
       value: false,
     },
     {
-      fieldName: DiabetesTreatmentsFieldnames.OTHER_ORAL,
+      fieldName: EDiabetesTreatmentsFieldnames.OTHER_ORAL,
       label: i18n.t('diabetes.answer-other-oral-meds'),
       value: false,
     },
     {
-      fieldName: DiabetesTreatmentsFieldnames.PREFER_NOT_TO_SAY,
+      fieldName: EDiabetesTreatmentsFieldnames.PREFER_NOT_TO_SAY,
       label: i18n.t('prefer-not-to-say'),
       value: false,
     },
   ];
 
   const createDiabetesCheckboxes = (
-    data: DiabetesTreatmentCheckBoxData[],
+    data: TDiabetesTreatmentCheckBoxData[],
     props: FormikProps<IDiabetesTreatmentsData>,
   ) => {
     return data.map((item) => {
@@ -151,8 +157,8 @@ DiabetesTreatmentsQuestion.schema = () => {
   });
 };
 
-DiabetesTreatmentsQuestion.createDTO = (data): Partial<PatientInfosRequest> => {
-  const dto: Partial<PatientInfosRequest> = {
+DiabetesTreatmentsQuestion.createDTO = (data): Partial<TPatientInfosRequest> => {
+  const dto: Partial<TPatientInfosRequest> = {
     diabetes_treatment_basal_insulin: false,
     diabetes_treatment_insulin_pump: false,
     diabetes_treatment_lifestyle: false,

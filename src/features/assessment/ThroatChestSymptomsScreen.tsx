@@ -1,30 +1,27 @@
 import { BrandedButton } from '@covid/components';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { HeaderText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
 import {
-  ThroatChestSymptomsData,
   ThroatChestSymptomsQuestions,
+  TThroatChestSymptomsData,
 } from '@covid/features/assessment/fields/ThroatChestSymptomsQuestions';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikHelpers } from 'formik';
 import { Form } from 'native-base';
 import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'ThroatChestSymptoms'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'ThroatChestSymptoms'>;
 };
 
-export const ThroatChestSymptomsScreen: React.FC<Props> = ({ route, navigation }) => {
-  function onSubmit(values: ThroatChestSymptomsData, formikHelpers: FormikHelpers<ThroatChestSymptomsData>) {
+export const ThroatChestSymptomsScreen: React.FC<TProps> = ({ route }) => {
+  function onSubmit(values: TThroatChestSymptomsData, formikHelpers: FormikHelpers<TThroatChestSymptomsData>) {
     assessmentService.saveAssessment(ThroatChestSymptomsQuestions.createAssessment(values));
     assessmentCoordinator.gotoNextScreen(route.name);
     formikHelpers.setSubmitting(false);
@@ -33,18 +30,9 @@ export const ThroatChestSymptomsScreen: React.FC<Props> = ({ route, navigation }
   const registerSchema = Yup.object().shape({}).concat(ThroatChestSymptomsQuestions.schema());
   return (
     <Screen
-      navigation={navigation}
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="throat-chest-symptoms-screen"
     >
-      <Header>
-        <HeaderText>{i18n.t('describe-symptoms.throat-chest-symptoms')}</HeaderText>
-      </Header>
-
-      <ProgressBlock>
-        <ProgressStatus maxSteps={6} step={3} />
-      </ProgressBlock>
-
       <Formik
         initialValues={{
           ...ThroatChestSymptomsQuestions.initialFormValues(),
@@ -56,6 +44,11 @@ export const ThroatChestSymptomsScreen: React.FC<Props> = ({ route, navigation }
           return (
             <Form style={{ flexGrow: 1 }}>
               <View style={{ marginHorizontal: 16 }}>
+                <ProgressHeader
+                  currentStep={3}
+                  maxSteps={6}
+                  title={i18n.t('describe-symptoms.throat-chest-symptoms')}
+                />
                 <ThroatChestSymptomsQuestions formikProps={props} />
               </View>
 

@@ -1,10 +1,10 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join, parse } from 'path';
 
-type DirectoryName = string;
-type FilePath = string;
-type Translations = object;
-type Locale = string;
+type TDirectoryName = string;
+type TFilePath = string;
+type TTranslations = object;
+type TLocale = string;
 
 const JSON_EXT = '.json';
 const EMPTY_STRING = '';
@@ -36,7 +36,7 @@ export default class Locales {
 
   locales: object;
 
-  constructor(localeDir: DirectoryName) {
+  constructor(localeDir: TDirectoryName) {
     if (this.isDir(localeDir)) {
       this.localeDir = localeDir;
       this.locales = listLocales(this.localeDir);
@@ -45,20 +45,20 @@ export default class Locales {
     }
   }
 
-  private isDir(dir: DirectoryName): boolean {
+  private isDir(dir: TDirectoryName): boolean {
     return existsSync(dir);
   }
 
-  private isFile(file: FilePath): boolean {
+  private isFile(file: TFilePath): boolean {
     return existsSync(file);
   }
 
-  private getLocaleFile(locale: Locale): Translations {
+  private getLocaleFile(locale: TLocale): TTranslations {
     const filePath = join(this.localeDir, locale + JSON_EXT);
     return this.isFile(filePath) ? JSON.parse(readFileSync(filePath).toString()) : {};
   }
 
-  public getI18nKeys(locale: Locale) {
+  public getI18nKeys(locale: TLocale) {
     const localeFile = this.getLocaleFile(locale);
     const keys = flattenKeys(localeFile);
     return keys;

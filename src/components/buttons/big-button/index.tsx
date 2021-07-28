@@ -2,10 +2,8 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export type IButtonPress = ((event: GestureResponderEvent) => void) | undefined;
-
-type IProps = {
-  onPress: IButtonPress;
+type TProps = {
+  onPress?: (event: GestureResponderEvent) => void;
   children: React.ReactNode;
 };
 
@@ -26,7 +24,7 @@ const buttonStyles = StyleSheet.create({
   },
 });
 
-function BigButton(props: IProps) {
+function BigButton(props: TProps) {
   return (
     <TouchableOpacity onPress={props.onPress} testID="button-test-ID">
       <View style={buttonStyles.bigButton}>

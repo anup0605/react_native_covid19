@@ -4,12 +4,12 @@ import { useFormikContext } from 'formik';
 import * as React from 'react';
 import { TextInputProps, View } from 'react-native';
 
-export type BooleanCheckBoxData = {
+type TBooleanCheckBoxData = {
   label: string;
   formKey: string;
 };
 
-type AdditionalInputProps = {
+type TAdditionalInputProps = {
   show: boolean;
   key: string;
   label: string;
@@ -17,14 +17,14 @@ type AdditionalInputProps = {
   inputProps?: TextInputProps;
 };
 
-export type BooleanCheckBoxesProps = {
-  data: BooleanCheckBoxData[];
-  showAdditionalInputProps?: AdditionalInputProps;
+type TProps = {
+  data: TBooleanCheckBoxData[];
+  showAdditionalInputProps?: TAdditionalInputProps;
 };
 
 // Label is what is shown to user
 // value is what will be marked as true or false in form data
-export const BooleanCheckboxes: React.FC<BooleanCheckBoxesProps> = ({ data, showAdditionalInputProps }) => {
+export const BooleanCheckboxes: React.FC<TProps> = ({ data, showAdditionalInputProps }) => {
   const { values, setFieldValue, ...formik } = useFormikContext();
   return (
     <>

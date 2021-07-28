@@ -1,5 +1,5 @@
 import { IDietStudy, TDietStudyConsent } from '@covid/core/state/diet-study/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialStateDietStudy: IDietStudy = {
@@ -20,5 +20,5 @@ const dietStudySlice = createSlice({
 });
 
 export const { setDietStudyConsent } = dietStudySlice.actions;
-export const selectDietStudy = (state: RootState) => state.dietStudy;
+export const selectDietStudy = (state: TRootState) => state.dietStudy;
 export default dietStudySlice.reducer;

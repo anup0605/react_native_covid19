@@ -1,31 +1,31 @@
 import { handleServiceError } from '@covid/core/api/ApiServiceErrors';
 import { camelizeKeys } from '@covid/core/api/utils';
-import { AsyncStorageService, PERSONALISED_LOCAL_DATA, PersonalisedLocalData } from '@covid/core/AsyncStorageService';
+import { AsyncStorageService, PERSONALISED_LOCAL_DATA, TPersonalisedLocalData } from '@covid/core/AsyncStorageService';
 import { contentApiClient } from '@covid/core/content/ContentApiClient';
-import { ScreenContent } from '@covid/core/content/ScreenContentContracts';
+import { TScreenContent } from '@covid/core/content/ScreenContentContracts';
 import { isSECountry, isUSCountry, LocalisationService } from '@covid/core/localisation/LocalisationService';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import Constants from '@covid/utils/Constants';
 
-import { FeaturedContentResponse, TrendLineResponse } from './dto/ContentAPIContracts';
+import { TFeaturedContentResponse, TTrendLineResponse } from './dto/ContentAPIContracts';
 
 export interface IContentService {
-  localData?: PersonalisedLocalData;
+  localData?: TPersonalisedLocalData;
   getUserCount(): Promise<string | null>;
-  getCalloutBoxDefault(): ScreenContent;
+  getCalloutBoxDefault(): TScreenContent;
   getAskedToRateStatus(): Promise<string | null>;
   setAskedToRateStatus(status: string): void;
   getUserCount(): Promise<string | null>;
-  getStartupInfo(): Promise<StartupInfo | null>;
-  getTrendLines(lad?: string): Promise<TrendLineResponse>;
-  getFeaturedContent(): Promise<FeaturedContentResponse>;
+  getStartupInfo(): Promise<TStartupInfo | null>;
+  getTrendLines(lad?: string): Promise<TTrendLineResponse>;
+  getFeaturedContent(): Promise<TFeaturedContentResponse>;
   signUpForDietNewsletter(signup: boolean): Promise<void>;
   signUpForDiseaseResearchNewsletter(signup: boolean): Promise<void>;
 }
 
 export default class ContentService implements IContentService {
-  localData: PersonalisedLocalData;
+  localData: TPersonalisedLocalData;
 
   static getWebsiteUrl = () => {
     if (isUSCountry()) {
@@ -37,7 +37,7 @@ export default class ContentService implements IContentService {
     return 'https://covid.joinzoe.com/';
   };
 
-  getCalloutBoxDefault(): ScreenContent {
+  getCalloutBoxDefault(): TScreenContent {
     return {
       analytics: '',
       body_link: ContentService.getWebsiteUrl(),
@@ -117,11 +117,11 @@ export default class ContentService implements IContentService {
     AsyncStorageService.setAskedToRateStatus(status);
   }
 
-  public async getTrendLines(lad?: string): Promise<TrendLineResponse> {
+  public async getTrendLines(lad?: string): Promise<TTrendLineResponse> {
     return contentApiClient.getTrendLines(lad);
   }
 
-  public async getFeaturedContent(): Promise<FeaturedContentResponse> {
+  public async getFeaturedContent(): Promise<TFeaturedContentResponse> {
     return contentApiClient.getFeaturedContent();
   }
 

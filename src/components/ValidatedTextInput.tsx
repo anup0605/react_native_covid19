@@ -1,15 +1,16 @@
 import Error from '@assets/icons/Error';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
+import { StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle } from 'react-native';
 
-interface Props extends TextInputProps {
+interface IProps extends TextInputProps {
   error?: boolean;
   label?: string;
   testID?: string;
+  viewStyle?: StyleProp<ViewStyle>;
 }
 
-export class ValidatedTextInput extends React.Component<Props, object> {
+export class ValidatedTextInput extends React.Component<IProps, object> {
   private textInput: TextInput | null;
 
   focus() {
@@ -24,13 +25,14 @@ export class ValidatedTextInput extends React.Component<Props, object> {
           {
             borderColor: this.props.error ? colors.feedbackBad : 'transparent',
           },
+          this.props.viewStyle,
         ]}
       >
         <TextInput
           placeholderTextColor={colors.secondary}
           ref={(input) => (this.textInput = input)}
-          style={[styles.inputStyle, this.props.multiline ? styles.multipleLines : styles.singleLine]}
           {...this.props}
+          style={[styles.inputStyle, this.props.multiline ? styles.multipleLines : styles.singleLine, this.props.style]}
         />
         {this.props.error ? <Error /> : null}
       </View>
@@ -54,15 +56,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 8,
     paddingRight: 8,
-  },
-  labelStyle: {
-    color: colors.primary,
-    fontFamily: 'SofiaProRegular',
-    fontSize: 16,
-    lineHeight: 30,
-    marginBottom: 8,
   },
   multipleLines: {
     height: 96,

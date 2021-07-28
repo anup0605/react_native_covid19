@@ -1,47 +1,46 @@
 import { BrandedButton } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { LoadingModal } from '@covid/components/Loading';
+import { ScreenNew } from '@covid/components/ScreenNew';
 import { ErrorText, HeaderText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
-import { ApiErrorState, initialErrorState } from '@covid/core/api/ApiServiceErrors';
-import { PiiRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
+import { TPiiRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
 import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import { offlineService, pushNotificationService } from '@covid/services';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { colors } from '@theme';
 import Constants from 'expo-constants';
 import { Formik } from 'formik';
-import { Form } from 'native-base';
 import * as React from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
-type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'OptionalInfo'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'OptionalInfo'>;
 };
 
-type State = {
+type TState = {
   errorMessage: string;
-} & ApiErrorState;
+} & TApiErrorState;
 
-const initialState: State = {
+const initialState: TState = {
   ...initialErrorState,
   errorMessage: '',
 };
 
-interface OptionalInfoData {
+interface IOptionalInfoData {
   name: string;
   phone: string;
 }
 
-export class OptionalInfoScreen extends React.Component<PropsType, State> {
+export class OptionalInfoScreen extends React.Component<TProps, TState> {
   private phoneComponent: any;
 
-  constructor(props: PropsType) {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -52,19 +51,19 @@ export class OptionalInfoScreen extends React.Component<PropsType, State> {
     }
   }
 
-  private async savePiiData(formData: OptionalInfoData) {
+  private async savePiiData(formData: IOptionalInfoData) {
     const hasFormData = formData.phone?.trim() || formData.name?.trim();
 
     if (hasFormData) {
       const piiDoc = {
         ...(formData.name && { name: formData.name }),
         ...(formData.phone && { phone_number: formData.phone }),
-      } as Partial<PiiRequest>;
+      } as Partial<TPiiRequest>;
       await userService.updatePii(piiDoc);
     }
   }
 
-  private async handleSaveOptionalInfos(formData: OptionalInfoData) {
+  private async handleSaveOptionalInfos(formData: IOptionalInfoData) {
     try {
       await this.subscribeForPushNotifications();
       await this.savePiiData(formData);
@@ -105,69 +104,56 @@ export class OptionalInfoScreen extends React.Component<PropsType, State> {
             status={this.state.status}
           />
         )}
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} testID="optional-info-screen">
-          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.rootContainer}>
-            <Formik
-              initialValues={{ name: '', phone: '' }}
-              onSubmit={(values: OptionalInfoData) => this.handleSaveOptionalInfos(values)}
-              validationSchema={this.registerSchema}
-            >
-              {(props) => {
-                return (
-                  <View>
-                    <View>
-                      <HeaderText style={{ marginBottom: 24 }}>{i18n.t('optional-info.title')}</HeaderText>
+        <ScreenNew testID="optional-info-screen">
+          <Formik
+            initialValues={{ name: '', phone: '' }}
+            onSubmit={(values: IOptionalInfoData) => this.handleSaveOptionalInfos(values)}
+            validationSchema={this.registerSchema}
+          >
+            {(props) => {
+              return (
+                <Form>
+                  <HeaderText style={{ marginBottom: 24 }}>{i18n.t('optional-info.title')}</HeaderText>
 
-                      <RegularText>{i18n.t('optional-info.description')}</RegularText>
+                  <RegularText>{i18n.t('optional-info.description')}</RegularText>
+                  <ValidatedTextInput
+                    error={props.touched.name && props.errors.name}
+                    onBlur={props.handleBlur('name')}
+                    onChangeText={props.handleChange('name')}
+                    onSubmitEditing={() => {
+                      this.phoneComponent.focus();
+                    }}
+                    placeholder={i18n.t('optional-info.name-placeholder')}
+                    returnKeyType="next"
+                    testID="input-name"
+                    value={props.values.name}
+                    viewStyle={styling.marginVertical}
+                  />
 
-                      <Form>
-                        <ValidatedTextInput
-                          error={props.touched.name && props.errors.name}
-                          onBlur={props.handleBlur('name')}
-                          onChangeText={props.handleChange('name')}
-                          onSubmitEditing={() => {
-                            this.phoneComponent.focus();
-                          }}
-                          placeholder={i18n.t('optional-info.name-placeholder')}
-                          returnKeyType="next"
-                          testID="input-name"
-                          value={props.values.name}
-                        />
+                  <ValidatedTextInput
+                    error={props.touched.phone && props.errors.phone}
+                    onBlur={props.handleBlur('phone')}
+                    onChangeText={props.handleChange('phone')}
+                    placeholder={i18n.t('optional-info.phone-placeholder')}
+                    ref={(input) => (this.phoneComponent = input)}
+                    testID="input-phone"
+                    value={props.values.phone}
+                    viewStyle={styling.marginBottom}
+                  />
+                  {props.errors.phone ? <ErrorText>{props.errors.phone}</ErrorText> : null}
 
-                        <ValidatedTextInput
-                          error={props.touched.phone && props.errors.phone}
-                          onBlur={props.handleBlur('phone')}
-                          onChangeText={props.handleChange('phone')}
-                          placeholder={i18n.t('optional-info.phone-placeholder')}
-                          ref={(input) => (this.phoneComponent = input)}
-                          testID="input-phone"
-                          value={props.values.phone}
-                        />
-                        {props.errors.phone ? <ErrorText>{props.errors.phone}</ErrorText> : null}
-                      </Form>
-                    </View>
-                    <ErrorText>{this.state.errorMessage}</ErrorText>
+                  <View style={styling.flex} />
+                  {this.state.errorMessage ? <ErrorText>{this.state.errorMessage}</ErrorText> : null}
 
-                    <BrandedButton onPress={props.handleSubmit} testID="button-submit">
-                      {i18n.t('optional-info.button')}
-                    </BrandedButton>
-                  </View>
-                );
-              }}
-            </Formik>
-          </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+                  <BrandedButton onPress={props.handleSubmit} testID="button-submit">
+                    {i18n.t('optional-info.button')}
+                  </BrandedButton>
+                </Form>
+              );
+            }}
+          </Formik>
+        </ScreenNew>
       </>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  rootContainer: {
-    backgroundColor: colors.backgroundPrimary,
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingTop: 56,
-  },
-});

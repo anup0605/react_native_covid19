@@ -1,6 +1,6 @@
 import moment, { Moment } from 'moment';
 
-type DateTypes = Moment | string;
+type TDateTypes = Moment | string;
 
 export function getDaysAgo(startDate: Date): number {
   const now = new Date();
@@ -25,7 +25,7 @@ export const yesterday = () => {
   return moment().subtract(1, 'days');
 };
 
-export const isDateBefore = (date: DateTypes, compDate: DateTypes): boolean => {
+export const isDateBefore = (date: TDateTypes, compDate: TDateTypes): boolean => {
   return moment(date).isBefore(compDate);
 };
 

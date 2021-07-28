@@ -1,4 +1,4 @@
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
@@ -15,15 +15,15 @@ interface IProps extends TextInputProps {
   keyboardType?: KeyboardTypeOptions;
   showError?: boolean;
   inputProps?: TextInputProps;
-  wrapperStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   required?: boolean;
 }
 
 export function GenericTextField(props: IProps) {
-  const { formikProps, name, label, placeholder, keyboardType, showError, inputProps, ...otherProps } = props;
+  const { formikProps, name, label, placeholder, keyboardType, showError, style, inputProps, ...otherProps } = props;
 
   return (
-    <FieldWrapper style={[styles.fieldWrapper, props.wrapperStyle]}>
+    <FieldWrapper style={[styles.flex, style]}>
       {label ? (
         <RegularText>
           {label}
@@ -52,7 +52,7 @@ export function GenericTextField(props: IProps) {
 }
 
 const styles = StyleSheet.create({
-  fieldWrapper: {
+  flex: {
     flex: 1,
   },
 });

@@ -1,5 +1,5 @@
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -11,13 +11,13 @@ export interface ICovidTestResultData {
 
 interface IProps {
   formikProps: FormikProps<ICovidTestResultData>;
-  test?: CovidTest;
+  test?: TCovidTest;
 }
 
 export interface ICovidTestResultQuestion<P, Data> extends React.FC<P> {
-  initialFormValues: (test?: CovidTest) => Data;
+  initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
-  createDTO: (data: Data) => Partial<CovidTest>;
+  createDTO: (data: Data) => Partial<TCovidTest>;
 }
 
 export const CovidTestResultQuestion: ICovidTestResultQuestion<IProps, ICovidTestResultData> = (props: IProps) => {
@@ -43,7 +43,7 @@ export const CovidTestResultQuestion: ICovidTestResultQuestion<IProps, ICovidTes
   );
 };
 
-CovidTestResultQuestion.initialFormValues = (test?: CovidTest): ICovidTestResultData => {
+CovidTestResultQuestion.initialFormValues = (test?: TCovidTest): ICovidTestResultData => {
   return {
     result: test?.result ? test.result : 'waiting',
   };
@@ -55,8 +55,8 @@ CovidTestResultQuestion.schema = () => {
   });
 };
 
-CovidTestResultQuestion.createDTO = (formData: ICovidTestResultData): Partial<CovidTest> => {
+CovidTestResultQuestion.createDTO = (formData: ICovidTestResultData): Partial<TCovidTest> => {
   return {
     ...(formData.result && { result: formData.result }),
-  } as Partial<CovidTest>;
+  } as Partial<TCovidTest>;
 };

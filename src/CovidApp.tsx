@@ -4,7 +4,7 @@ import { appActions, appSelectors } from '@covid/core/state/app/slice';
 import VersionUpdateModal from '@covid/core/VersionUpdateModal';
 import MentalHealthPlaybackModal from '@covid/features/mental-health-playback/modals/MentalHealthPlaybackModal';
 import { DrawerMenu } from '@covid/features/menu/DrawerMenu';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { VaccineListMissingModal } from '@covid/features/vaccines/VaccineListMissingModal';
 import NavigatorService from '@covid/NavigatorService';
 import MainNavigator from '@covid/routes';
@@ -17,7 +17,7 @@ import * as React from 'react';
 import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Stack = createStackNavigator<ScreenParamList>();
+const Stack = createStackNavigator<TScreenParamList>();
 const Drawer = createDrawerNavigator();
 
 function DrawNavigator() {

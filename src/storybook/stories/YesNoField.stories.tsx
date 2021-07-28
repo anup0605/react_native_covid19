@@ -1,4 +1,4 @@
-import { YesNoField } from '@covid/components/YesNoField';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { action, HandlerFunction } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react-native';
 import * as React from 'react';

@@ -452,7 +452,7 @@
     "prefer-not-to-say": "Prefer not to say",
     "dates": "What date were you asked to start self-isolating?",
     "approx": "Approximate date range",
-    "no-app": "Do you have the NHS COVID-19 app?",
+    "no-app": "Do you have the NHS COVID-19 app, the Protect Scotland app or the StopCOVID NI app?",
     "no-app-yes": "Yes",
     "no-app-never-had": "No, I never had it",
     "no-app-used-to-have": "No, I used to have it",
@@ -696,10 +696,11 @@
   "adult-consent-text-2": "screen to the individual on whose behalf you are entering the data, that they are 18 or over, and that they have given their consent for you to share their data with us.",
   "consent-create-profile": "Create profile",
 
-  "create-profile-title": "Give new profile a name",
-  "create-profile-text": "This name is just for you. Choose a name that would allow you to know which person you are reporting for.",
-  "create-profile-placeholder": "e.g. name, nickname or relation",
   "create-profile-button": "Continue",
+  "create-profile-label": "Name",
+  "create-profile-placeholder": "e.g. name, nickname or relation",
+  "create-profile-text": "This name is just for you. Choose a name that would allow you to know which person you are reporting for.",
+  "create-profile-title": "Give new profile a name",
 
   "select-profile-title-assessment": "Select profile you want to report for",
   "select-profile-title-edit": "Select profile you want to edit",
@@ -1262,7 +1263,7 @@
       "title-higher-education": "Select your university",
       "description": "Select the school you would like to link this account to. More information about",
       "description-link": "School Bubbles.",
-      "description-higher-education": "Select the university you would like to link this profile to.\n\nWe only list universities that are part of our pilot programme. Please only add your university if you have been directed to do so by a university representative.",
+      "description-higher-education": "We only list universities that are part of our pilot programme. Please only add your university if you have been directed to do so by a university representative.",
       "disclaimer-1": "We only list schools that are part of our pilot programme. Encourage your school's headteacher to register interest ",
       "disclaimer-2": "here.",
       "disclaimer-3": "Please only add your child's profile to a School Bubble if directed to by their school.",
@@ -1467,7 +1468,8 @@
       "description-personal": "We've crunched the data and have prepared your very own personal insights into your unique habits during the pandemic for you to look at!\n\nThanks for your participation.",
       "tag": "INSIGHTS AVAILABLE",
       "title": "Mental Health during the pandemic",
-      "title-new": "Your Mental Health insights report is ready!"
+      "title-new": "The Mental Health insights report is ready!",
+      "title-new-personal": "Your Mental Health insights report is ready!"
     },
 
     "general": {

@@ -1,8 +1,8 @@
 import { ClippedText, SecondaryText } from '@covid/components/Text';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
-import { AvatarName, getAvatarByName } from '@covid/utils/avatar';
+import { getAvatarByName, TAvatarName } from '@covid/utils/avatar';
 import { getDaysAgo } from '@covid/utils/datetime';
 import { colors } from '@theme';
 import { Card } from 'native-base';
@@ -14,13 +14,13 @@ import LastReported from './LastReported';
 
 type TProps = {
   index: number;
-  profile: Profile;
+  profile: TProfile;
   onEditPressed?: VoidFunction;
   testID?: string;
 };
 
 export function ProfileCard(props: TProps) {
-  const avatarImage = getAvatarByName(props.profile.avatar_name as AvatarName);
+  const avatarImage = getAvatarByName(props.profile.avatar_name as TAvatarName);
   const hasReportedToday = props.profile.last_reported_at && getDaysAgo(props.profile.last_reported_at) === 0;
   const profileName = isSECountry() && props.index === 0 ? 'Jag' : props.profile.name;
 

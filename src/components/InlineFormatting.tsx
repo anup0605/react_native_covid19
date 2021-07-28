@@ -2,12 +2,12 @@ import { colors, fontStyles } from '@theme';
 import * as React from 'react';
 import Markdown from 'react-native-easy-markdown';
 
-type FormattingProps = {
+type TProps = {
   text: string;
   textAlign?: 'center' | 'left' | 'right';
 };
 
-export const InlineFormatting = ({ text, textAlign }: FormattingProps) => {
+export const InlineFormatting = ({ text, textAlign }: TProps) => {
   const defaultStyles = {
     em: {
       color: colors.white,

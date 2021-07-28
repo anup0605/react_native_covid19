@@ -1,7 +1,7 @@
 import Background from '@assets/mental-health-playback/Background';
 import { Card, Spacer, Text, TextHighlight } from '@covid/components';
-import { RootState } from '@covid/core/state/root';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TRootState } from '@covid/core/state/root';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import BarChart from '@covid/features/mental-health-playback/components/BarChart';
 import InsightIllustration from '@covid/features/mental-health-playback/components/InsightIllustration';
 import { IInsight } from '@covid/features/mental-health-playback/types';
@@ -20,7 +20,7 @@ type TNumberObject = { [key: number]: number };
 
 export default React.memo(function Insights(props: IProps) {
   const [illustrationHeights, setIllustrationHeights] = React.useState<TNumberObject>({});
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const windowWidth = useWindowDimensions().width;
 
   const isGeneral = startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_b';

@@ -1,5 +1,5 @@
-import { ContentState } from '@covid/core/content/state/contentSlice';
-import { RootState } from '@covid/core/state/root';
+import { TContentState } from '@covid/core/content/state/contentSlice';
+import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export function UKEstimatedCaseCard({ onPress }: IProps) {
-  const metrics = useSelector<RootState, Partial<ContentState>>((state) => ({
+  const metrics = useSelector<TRootState, Partial<TContentState>>((state) => ({
     ukActive: state.content.ukActive,
     ukDaily: state.content.ukDaily,
   }));

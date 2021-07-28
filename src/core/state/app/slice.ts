@@ -1,5 +1,5 @@
 import { IApp } from '@covid/core/state/app/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const appInitialState: IApp = {
@@ -36,5 +36,5 @@ export const appSlice = createSlice({
 export const appActions = appSlice.actions;
 export const appReducer = appSlice.reducer;
 export const appSelectors = {
-  selectApp: (state: RootState) => state.app,
+  selectApp: (state: TRootState) => state.app,
 };

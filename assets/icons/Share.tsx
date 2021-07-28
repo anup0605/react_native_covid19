@@ -1,9 +1,9 @@
-import { SvgProps } from '@assets/Svg';
+import { TSvgProps } from '@assets/Svg';
 import { colors } from '@theme';
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-const Share: React.FC<SvgProps> = ({ width = 15, height = 17, style }) => {
+const Share: React.FC<TSvgProps> = ({ width = 15, height = 17, style }) => {
   return (
     <Svg fill="none" height={height} style={style} viewBox="0 0 15 17" width={width}>
       <Path

@@ -2,12 +2,12 @@ import { colors } from '@theme/colors';
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-type CheckProps = {
+type TProps = {
   width?: number | string;
   height?: number | string;
 };
 
-const QuotationMark: React.FC<CheckProps> = ({ width = 20, height = 18 }) => {
+const QuotationMark: React.FC<TProps> = ({ width = 20, height = 18 }) => {
   return (
     <Svg fill="none" height={height} viewBox="0 0 20 18" width={width}>
       <Path

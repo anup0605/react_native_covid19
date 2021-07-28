@@ -1,17 +1,17 @@
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 
-import { ActionTypes, AssessmentActions, PayloadActionType } from './types';
+import { EActionTypes, TAssessmentActions, TPayloadActionType } from './types';
 
-export const initialStateAssessment: Partial<AssessmentInfosRequest> = {};
+export const initialStateAssessment: Partial<TAssessmentInfosRequest> = {};
 
-const reducer = (state = initialStateAssessment, action: AssessmentActions): Partial<AssessmentInfosRequest> => {
+const reducer = (state = initialStateAssessment, action: TAssessmentActions): Partial<TAssessmentInfosRequest> => {
   switch (action.type) {
-    case ActionTypes.ASSESSMENT_CLEARED:
+    case EActionTypes.ASSESSMENT_CLEARED:
       return initialStateAssessment;
-    case ActionTypes.ASSESSMENT_UPDATED:
+    case EActionTypes.ASSESSMENT_UPDATED:
       return {
         ...state,
-        ...(action as PayloadActionType).payload,
+        ...(action as TPayloadActionType).payload,
       };
     default:
       return state;

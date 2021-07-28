@@ -1,8 +1,8 @@
-import { Coordinator, IUpdatePatient, ScreenFlow } from '@covid/core/Coordinator';
+import { Coordinator, IUpdatePatient, TScreenFlow } from '@covid/core/Coordinator';
 import { isGBCountry, localisationService } from '@covid/core/localisation/LocalisationService';
-import { PatientData } from '@covid/core/patient/PatientData';
+import { TPatientData } from '@covid/core/patient/PatientData';
 import { patientService } from '@covid/core/patient/PatientService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { IUserService } from '@covid/core/user/UserService';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import NavigatorService from '@covid/NavigatorService';
@@ -10,9 +10,9 @@ import NavigatorService from '@covid/NavigatorService';
 export class EditProfileCoordinator extends Coordinator implements IUpdatePatient {
   userService: IUserService;
 
-  patientData: PatientData;
+  patientData: TPatientData;
 
-  screenFlow: Partial<ScreenFlow> = {
+  screenFlow: Partial<TScreenFlow> = {
     AboutYou: () => {
       NavigatorService.goBack();
     },
@@ -24,12 +24,12 @@ export class EditProfileCoordinator extends Coordinator implements IUpdatePatien
     },
   };
 
-  init = (patientData: PatientData, userService: IUserService) => {
+  init = (patientData: TPatientData, userService: IUserService) => {
     this.patientData = patientData;
     this.userService = userService;
   };
 
-  updatePatientInfo(patientInfo: Partial<PatientInfosRequest>) {
+  updatePatientInfo(patientInfo: Partial<TPatientInfosRequest>) {
     return patientService.updatePatientInfo(this.patientData.patientId, patientInfo).then((info) => {
       Object.assign(this.patientData.patientInfo, patientInfo);
       return info;
@@ -63,15 +63,15 @@ export class EditProfileCoordinator extends Coordinator implements IUpdatePatien
   }
 
   shouldShowEditStudy() {
-    const currentPatient = this.patientData?.patientState;
     const config = localisationService.getConfig();
 
-    return config?.enableCohorts && currentPatient.shouldAskStudy;
+    return config?.enableCohorts && this.patientData?.patientState?.shouldAskStudy;
   }
 
   shouldShowSchoolNetwork() {
-    const currentPatient = this.patientData?.patientState;
-    return isGBCountry() && currentPatient.isReportedByAnother && currentPatient.isMinor;
+    return (
+      isGBCountry() && this.patientData?.patientState?.isReportedByAnother && this.patientData?.patientState?.isMinor
+    );
   }
 
   shouldShowUniNetwork() {

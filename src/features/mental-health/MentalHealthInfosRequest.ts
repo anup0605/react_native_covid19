@@ -1,6 +1,6 @@
 import { THasDiagnosis, TMentalHealthChange, TMentalHealthFrequency } from '@covid/core/state';
 
-export type MentalHealthInfosRequest = {
+export type TMentalHealthInfosRequest = {
   patient?: string; //	Patient id
   id?: string; // Mental Health entry id
 

@@ -1,5 +1,5 @@
 import { Icon } from '@covid/components/icons';
-import { Profile } from '@covid/core/profile/ProfileService';
+import { TProfile } from '@covid/core/profile/ProfileService';
 import * as React from 'react';
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -9,13 +9,13 @@ const { height } = Dimensions.get('window');
 const size = 72;
 
 interface IProps {
-  profiles: Profile[];
+  profiles: TProfile[];
 }
 
 function Fab({ profiles }: IProps) {
   const [active, setActive] = React.useState(false);
 
-  const handleOnPress = (profile: Profile) => {
+  const handleOnPress = (profile: TProfile) => {
     // TODO - navigate to...
     setActive(false);
   };

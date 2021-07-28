@@ -1,23 +1,23 @@
 import { IAssessmentService } from '@covid/core/assessment/AssessmentService';
-import { ConfigType } from '@covid/core/Config';
-import { Coordinator, ScreenFlow, ScreenName } from '@covid/core/Coordinator';
+import { TConfigType } from '@covid/core/Config';
+import { Coordinator, TScreenFlow, TScreenName } from '@covid/core/Coordinator';
 import {
   homeScreenName,
   isSECountry,
   isUSCountry,
   localisationService,
 } from '@covid/core/localisation/LocalisationService';
-import { PatientData } from '@covid/core/patient/PatientData';
-import { PatientStateType } from '@covid/core/patient/PatientState';
-import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
-import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TPatientData } from '@covid/core/patient/PatientData';
+import { TPatientStateType } from '@covid/core/patient/PatientState';
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { AppCoordinator } from '@covid/features/AppCoordinator';
 import NavigatorService from '@covid/NavigatorService';
 
-export type AssessmentData = {
+export type TAssessmentData = {
   assessmentId?: string;
-  patientData: PatientData;
-  vaccineData?: VaccineRequest;
+  patientData: TPatientData;
+  vaccineData?: TVaccineRequest;
 };
 
 export class AssessmentCoordinator extends Coordinator {
@@ -25,11 +25,11 @@ export class AssessmentCoordinator extends Coordinator {
 
   assessmentService: IAssessmentService;
 
-  assessmentData: AssessmentData;
+  assessmentData: TAssessmentData;
 
   appCoordinator: AppCoordinator;
 
-  screenFlow: Partial<ScreenFlow> = {
+  screenFlow: Partial<TScreenFlow> = {
     AboutYourVaccine: () => {
       NavigatorService.goBack();
     },
@@ -122,7 +122,7 @@ export class AssessmentCoordinator extends Coordinator {
     },
   };
 
-  init = (appCoordinator: AppCoordinator, assessmentData: AssessmentData, assessmentService: IAssessmentService) => {
+  init = (appCoordinator: AppCoordinator, assessmentData: TAssessmentData, assessmentService: IAssessmentService) => {
     this.appCoordinator = appCoordinator;
     this.assessmentData = assessmentData;
     this.assessmentService = assessmentService;
@@ -155,7 +155,7 @@ export class AssessmentCoordinator extends Coordinator {
     }
   };
 
-  goToAddEditTest = (covidTest?: CovidTest) => {
+  goToAddEditTest = (covidTest?: TCovidTest) => {
     NavigatorService.navigate('CovidTestDetail', { assessmentData: this.assessmentData, test: covidTest });
   };
 
@@ -171,7 +171,7 @@ export class AssessmentCoordinator extends Coordinator {
     });
   };
 
-  goToAddEditVaccine = (vaccine?: VaccineRequest) => {
+  goToAddEditVaccine = (vaccine?: TVaccineRequest) => {
     if (vaccine) {
       this.assessmentData.vaccineData = vaccine;
     }
@@ -180,7 +180,7 @@ export class AssessmentCoordinator extends Coordinator {
     });
   };
 
-  static mustBackFillProfile(currentPatient: PatientStateType, config: ConfigType | undefined) {
+  static mustBackFillProfile(currentPatient: TPatientStateType, config: TConfigType | undefined) {
     return (
       ((config?.showRaceQuestion || config?.showEthnicityQuestion) && !currentPatient.hasRaceEthnicityAnswer) ||
       currentPatient.shouldAskExtendedDiabetes ||
@@ -207,18 +207,18 @@ export class AssessmentCoordinator extends Coordinator {
     );
   }
 
-  goToTestConfirm(test: CovidTest) {
+  goToTestConfirm(test: TCovidTest) {
     NavigatorService.navigate('CovidTestConfirm', { assessmentData: this.assessmentData, test });
   }
 
   goToThankYouScreen() {
-    const homeScreen: ScreenName = homeScreenName();
-    const thankYouScreen: ScreenName = isUSCountry() ? 'ThankYouUS' : isSECountry() ? 'ThankYouSE' : 'ThankYouUK';
+    const homeScreen: TScreenName = homeScreenName();
+    const thankYouScreen: TScreenName = isUSCountry() ? 'ThankYouUS' : isSECountry() ? 'ThankYouSE' : 'ThankYouUK';
     NavigatorService.reset([{ name: homeScreen }, { name: thankYouScreen }], 1);
   }
 
   resetToCreateProfile() {
-    const homeScreen: ScreenName = homeScreenName();
+    const homeScreen: TScreenName = homeScreenName();
     NavigatorService.reset(
       [
         { name: homeScreen },
@@ -232,7 +232,7 @@ export class AssessmentCoordinator extends Coordinator {
     );
   }
 
-  setVaccine(vaccine: Partial<VaccineRequest>) {
+  setVaccine(vaccine: Partial<TVaccineRequest>) {
     this.assessmentData.vaccineData = {
       ...this.assessmentData.vaccineData!,
       ...vaccine,

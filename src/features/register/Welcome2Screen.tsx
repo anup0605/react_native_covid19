@@ -9,7 +9,7 @@ import {
   localisationService,
 } from '@covid/core/localisation/LocalisationService';
 import { appCoordinator } from '@covid/features/AppCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
@@ -23,12 +23,12 @@ import { getLocaleFlagIcon } from './helpers';
 
 const Slash = () => <RegularBoldText style={styles.slash}> / </RegularBoldText>;
 
-type PropsType = {
-  navigation: StackNavigationProp<ScreenParamList, 'Welcome'>;
-  route: RouteProp<ScreenParamList, 'Welcome'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'Welcome'>;
+  route: RouteProp<TScreenParamList, 'Welcome'>;
 };
 
-const Welcome2Screen: React.FC<PropsType> = ({ navigation }) => {
+const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
   const [ipModalVisible, setIpModalVisible] = React.useState(false);
 
   const onLoginPress = React.useCallback(() => navigation.navigate('Login'), [navigation.navigate]);

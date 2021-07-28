@@ -1,5 +1,5 @@
 import DropdownIcon from '@assets/icons/DropdownIcon';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import i18n from '@covid/locale/i18n';
 import { colors } from '@theme';
 import { Label } from 'native-base';
@@ -126,7 +126,7 @@ export function DropdownField({
   return (
     <FieldWrapper style={styles.fieldWrapper}>
       {hideLabel ? null : (
-        <Label style={styles.labelStyle}>
+        <Label style={styles.label}>
           {label}
           {required ? requiredFormMarker : null}
         </Label>
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   fieldWrapper: {
     flex: 1,
   },
-  labelStyle: {
+  label: {
     color: colors.primary,
     fontFamily: 'SofiaProRegular',
     fontSize: 16,

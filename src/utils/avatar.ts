@@ -1,6 +1,6 @@
 import * as AvatarImages from '@assets';
 
-export type AvatarName =
+export type TAvatarName =
   | 'profile1'
   | 'profile2'
   | 'profile3'
@@ -13,6 +13,6 @@ export type AvatarName =
   | 'profile10';
 export const DEFAULT_PROFILE = 'profile1';
 
-export const getAvatarByName = (name: AvatarName) => {
+export const getAvatarByName = (name: TAvatarName) => {
   return AvatarImages[name] || AvatarImages[DEFAULT_PROFILE];
 };

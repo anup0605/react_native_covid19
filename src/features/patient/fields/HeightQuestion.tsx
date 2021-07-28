@@ -1,5 +1,5 @@
 import DropdownField from '@covid/components/DropdownField';
-import { requiredFormMarker } from '@covid/components/Forms';
+import { requiredFormMarker } from '@covid/components/Form';
 import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
@@ -17,15 +17,15 @@ export interface IHeightData {
   heightUnit: string;
 }
 
-interface FCWithStatic<P> extends React.FC<P> {
+interface IFCWithStatic<P> extends React.FC<P> {
   initialFormValues: () => IHeightData;
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IHeightData>;
 }
 
-const HeightInInches: React.FC<Props> = ({ formikProps }) => {
+const HeightInInches: React.FC<IProps> = ({ formikProps }) => {
   return (
     <View style={styles.primaryFieldRow}>
       <View style={styles.feetField}>
@@ -58,7 +58,7 @@ const HeightInInches: React.FC<Props> = ({ formikProps }) => {
   );
 };
 
-const HeightInCm: React.FC<Props> = ({ formikProps }) => {
+const HeightInCm: React.FC<IProps> = ({ formikProps }) => {
   return (
     <View style={styles.cmField}>
       <ValidatedTextInput
@@ -76,7 +76,7 @@ const HeightInCm: React.FC<Props> = ({ formikProps }) => {
   );
 };
 
-export const HeightQuestion: FCWithStatic<Props> = ({ formikProps }) => {
+export const HeightQuestion: IFCWithStatic<IProps> = ({ formikProps }) => {
   return (
     <FieldWrapper style={styles.fieldWrapper}>
       <RegularText>
@@ -165,6 +165,6 @@ const styles = StyleSheet.create({
   unitsField: {
     flex: 2,
     marginLeft: 4,
-    marginTop: -8,
+    marginTop: -16,
   },
 });

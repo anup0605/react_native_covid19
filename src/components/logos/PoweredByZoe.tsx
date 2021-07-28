@@ -6,20 +6,18 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { Image, ImageStyle, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
-interface INormalProps {
+interface Iprops {
   style?: StyleProp<ViewStyle>;
 }
 
-export const PoweredByZoe = (props: INormalProps) => {
+export const PoweredByZoe = (props: Iprops) => {
   return (
     <View style={[styles.block, props.style]}>
       <View style={styles.poweredBy}>
         <RegularText style={styles.whiteRegularText}>{i18n.t('partners.powered-by')}</RegularText>
         <Image source={zoe} style={styles.zoeLogo} />
       </View>
-      <View style={styles.analysisBlock}>
-        <InlineFormatting text={i18n.t('partners.data-analysis')} textAlign="center" />
-      </View>
+      <InlineFormatting text={i18n.t('partners.data-analysis')} textAlign="center" />
     </View>
   );
 };
@@ -33,7 +31,6 @@ export const PoweredByZoeSmall = (props: ISmallProps) => (
 );
 
 const styles = StyleSheet.create({
-  analysisBlock: {},
   block: {
     flex: 0,
     marginVertical: 20,

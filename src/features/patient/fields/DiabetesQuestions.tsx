@@ -1,15 +1,14 @@
 import DropdownField from '@covid/components/DropdownField';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
-import YesNoField from '@covid/components/YesNoField';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { cleanFloatVal, cleanIntegerVal } from '@covid/utils/number';
-import { colors } from '@theme';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -28,7 +27,7 @@ export interface IDiabetesData extends IDiabetesTreatmentsData, IDiabetesOralMed
   diabetesUsesCGM: string;
 }
 
-export enum DiabetesTypeValues {
+export enum EDiabetesTypeValues {
   TYPE_1 = 'type_1',
   TYPE_2 = 'type_2',
   GESTATIONAL = 'gestational',
@@ -37,34 +36,34 @@ export enum DiabetesTypeValues {
   PREFER_NOT_TO_SAY = 'pfnts',
 }
 
-export enum HemoglobinMeasureUnits {
+export enum EHemoglobinMeasureUnits {
   PERCENT = '%',
   MOL = 'mmol/mol',
 }
 
-interface Props {
+interface IProps {
   formikProps: FormikProps<IDiabetesData>;
 }
 
 export interface IFormikDiabetesInputFC<P, Data> extends React.FC<P> {
   initialFormValues: () => Data;
   schema: () => Yup.ObjectSchema;
-  createDTO: (data: Data) => Partial<PatientInfosRequest>;
+  createDTO: (data: Data) => Partial<TPatientInfosRequest>;
 }
 
-export const DiabetesQuestions: IFormikDiabetesInputFC<Props, IDiabetesData> = ({ formikProps }) => {
+export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = ({ formikProps }) => {
   const diabetesTypeOptions = [
-    { label: i18n.t('diabetes.answer-type-1'), value: DiabetesTypeValues.TYPE_1 },
-    { label: i18n.t('diabetes.answer-type-2'), value: DiabetesTypeValues.TYPE_2 },
-    { label: i18n.t('diabetes.answer-gestational'), value: DiabetesTypeValues.GESTATIONAL },
-    { label: i18n.t('diabetes.answer-unsure'), value: DiabetesTypeValues.UNSURE },
-    { label: i18n.t('diabetes.answer-other'), value: DiabetesTypeValues.OTHER },
-    { label: i18n.t('prefer-not-to-say'), value: DiabetesTypeValues.PREFER_NOT_TO_SAY },
+    { label: i18n.t('diabetes.answer-type-1'), value: EDiabetesTypeValues.TYPE_1 },
+    { label: i18n.t('diabetes.answer-type-2'), value: EDiabetesTypeValues.TYPE_2 },
+    { label: i18n.t('diabetes.answer-gestational'), value: EDiabetesTypeValues.GESTATIONAL },
+    { label: i18n.t('diabetes.answer-unsure'), value: EDiabetesTypeValues.UNSURE },
+    { label: i18n.t('diabetes.answer-other'), value: EDiabetesTypeValues.OTHER },
+    { label: i18n.t('prefer-not-to-say'), value: EDiabetesTypeValues.PREFER_NOT_TO_SAY },
   ];
 
   const hemoglobinUnitsOptions = [
-    { label: i18n.t('diabetes.hemoglobin-measurement-unit-percent'), value: HemoglobinMeasureUnits.PERCENT },
-    { label: i18n.t('diabetes.hemoglobin-measurement-unit-mol'), value: HemoglobinMeasureUnits.MOL },
+    { label: i18n.t('diabetes.hemoglobin-measurement-unit-percent'), value: EHemoglobinMeasureUnits.PERCENT },
+    { label: i18n.t('diabetes.hemoglobin-measurement-unit-mol'), value: EHemoglobinMeasureUnits.MOL },
   ];
 
   return (
@@ -77,7 +76,7 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<Props, IDiabetesData> = (
         onValueChange={formikProps.handleChange('diabetesType')}
         selectedValue={formikProps.values.diabetesType}
       />
-      {formikProps.values.diabetesType === DiabetesTypeValues.OTHER ? (
+      {formikProps.values.diabetesType === EDiabetesTypeValues.OTHER ? (
         <GenericTextField formikProps={formikProps} name="diabetesTypeOther" />
       ) : null}
 
@@ -165,12 +164,12 @@ DiabetesQuestions.schema = () => {
   return Yup.object()
     .shape({
       a1cMeasurementMol: Yup.number().when('hemoglobinMeasureUnit', {
-        is: (val: string) => val === HemoglobinMeasureUnits.MOL,
+        is: (val: string) => val === EHemoglobinMeasureUnits.MOL,
         then: Yup.number(),
       }),
 
       a1cMeasurementPercent: Yup.number().when('hemoglobinMeasureUnit', {
-        is: (val: string) => val === HemoglobinMeasureUnits.PERCENT,
+        is: (val: string) => val === EHemoglobinMeasureUnits.PERCENT,
         then: Yup.number(),
       }),
 
@@ -179,7 +178,7 @@ DiabetesQuestions.schema = () => {
       diabetesType: Yup.string().required(i18n.t('diabetes.please-select-diabetes-type')),
 
       diabetesTypeOther: Yup.string().when('diabetesType', {
-        is: (val: string) => val === DiabetesTypeValues.OTHER,
+        is: (val: string) => val === EDiabetesTypeValues.OTHER,
         then: Yup.string(),
       }),
 
@@ -205,10 +204,10 @@ DiabetesQuestions.createDTO = (data) => {
   }
 
   switch (data.hemoglobinMeasureUnit) {
-    case HemoglobinMeasureUnits.PERCENT:
+    case EHemoglobinMeasureUnits.PERCENT:
       if (data.a1cMeasurementPercent) dto.a1c_measurement_percent = cleanFloatVal(data.a1cMeasurementPercent ?? '0');
       break;
-    case HemoglobinMeasureUnits.MOL:
+    case EHemoglobinMeasureUnits.MOL:
       if (data.a1cMeasurementMol) dto.a1c_measurement_mmol = cleanFloatVal(data.a1cMeasurementMol ?? '0');
       break;
   }
@@ -222,13 +221,6 @@ const styles = StyleSheet.create({
   },
   fieldWrapper: {
     flex: 1,
-  },
-  labelStyle: {
-    color: colors.primary,
-    fontSize: 16,
-    lineHeight: 30,
-    marginHorizontal: 16,
-    marginTop: 16,
   },
   primaryField: {
     flex: 4,

@@ -1,7 +1,12 @@
 import { tick } from '@assets';
 import QuestionCircle from '@assets/icons/QuestionCircle';
 import { Header3Text, RegularText } from '@covid/components/Text';
-import { Dose, vaccineBrandDisplayName, VaccineBrands, VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import {
+  EVaccineBrands,
+  TDose,
+  TVaccineRequest,
+  vaccineBrandDisplayName,
+} from '@covid/core/vaccine/dto/VaccineRequest';
 import i18n from '@covid/locale/i18n';
 import { colors } from '@theme';
 import moment from 'moment';
@@ -14,13 +19,13 @@ export const displayDescriptionNameMap = {
   not_sure: i18n.t('vaccines.your-vaccine.name-i-dont-know'),
 };
 
-type Props = {
-  vaccine: VaccineRequest;
+type TProps = {
+  vaccine: TVaccineRequest;
   style?: ViewStyle;
   onPressEdit: (index: number) => void;
 };
 
-export const VaccineCard: React.FC<Props> = ({ vaccine, style, onPressEdit }) => {
+export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) => {
   const formatDateString = (dateString: string): string => {
     return moment(dateString).format('MMM D YYYY');
   };
@@ -29,7 +34,7 @@ export const VaccineCard: React.FC<Props> = ({ vaccine, style, onPressEdit }) =>
     return hasDate && hasName ? <Image source={tick} style={styles.tick} /> : <></>;
   };
 
-  const formatVaccineDate = (dose: Dose) => {
+  const formatVaccineDate = (dose: TDose) => {
     return dose.date_taken_specific ? formatDateString(dose.date_taken_specific) : '';
   };
 
@@ -43,8 +48,8 @@ export const VaccineCard: React.FC<Props> = ({ vaccine, style, onPressEdit }) =>
   const dateRequired = warningIconAndText('vaccines.vaccine-card.date-missing');
   const notYetLogged = warningIconAndText('vaccines.vaccine-card.not-logged');
 
-  const dose1: Partial<Dose> | undefined = vaccine.doses[0];
-  const dose2: Partial<Dose> | undefined = vaccine.doses[1];
+  const dose1: Partial<TDose> | undefined = vaccine.doses[0];
+  const dose2: Partial<TDose> | undefined = vaccine.doses[1];
   const hasFirstDoseDate = !!dose1?.date_taken_specific;
   const hasSecondDoseDate = !!dose2?.date_taken_specific;
   const hasFirstDoseBrand = !!dose1?.brand;
@@ -75,13 +80,13 @@ export const VaccineCard: React.FC<Props> = ({ vaccine, style, onPressEdit }) =>
           {hasFirstDoseDate ? (
             <View style={{ marginBottom: 0, marginTop: 8 }}>
               <RegularText style={[!hasFirstDoseDate && styles.pendingText]}>
-                {hasFirstDoseDate ? formatVaccineDate(dose1 as Dose) : null}
+                {hasFirstDoseDate ? formatVaccineDate(dose1 as TDose) : null}
               </RegularText>
             </View>
           ) : null}
         </View>
 
-        {dose1.brand && dose1.brand === VaccineBrands.JOHNSON ? (
+        {dose1.brand && dose1.brand === EVaccineBrands.JOHNSON ? (
           <></>
         ) : (
           <View style={styles.dose}>
@@ -103,7 +108,7 @@ export const VaccineCard: React.FC<Props> = ({ vaccine, style, onPressEdit }) =>
             ) : null}
 
             <RegularText style={[!hasSecondDoseDate && styles.pendingText]}>
-              {hasSecondDoseDate ? formatVaccineDate(dose2 as Dose) : notYetLogged}
+              {hasSecondDoseDate ? formatVaccineDate(dose2 as TDose) : notYetLogged}
             </RegularText>
           </View>
         )}

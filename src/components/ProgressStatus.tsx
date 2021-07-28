@@ -5,14 +5,14 @@ import * as Progress from 'react-native-progress';
 
 import { screenWidth } from './Screen';
 
-type ProgressProps = {
-  step: number;
+type TProps = {
+  currentStep: number;
   maxSteps: number;
   color?: string;
 };
 
-const ProgressStatus: React.FC<ProgressProps> = (props) => {
-  const progress = (props.step * 100) / props.maxSteps;
+const ProgressStatus: React.FC<TProps> = (props) => {
+  const progress = (props.currentStep * 100) / props.maxSteps;
   const color = props.color ?? colors.predict;
   return (
     <View style={styles.progressBar}>

@@ -3,15 +3,12 @@ import { DeltaTag } from '@covid/components/cards/estimated-case/DeltaTag';
 import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
 import { BackButton } from '@covid/components/PatientHeader';
 import { Header } from '@covid/components/Screen';
-import { TrendLineChart, TrendlineTimeFilters, TrendLineViewMode } from '@covid/components/stats/TrendLineChart';
+import { ETrendlineTimeFilters, ETrendLineViewMode, TrendLineChart } from '@covid/components/stats/TrendLineChart';
 import { Header3Text, RegularText } from '@covid/components/Text';
 import { ITrendLineData } from '@covid/core/content/dto/ContentAPIContracts';
 import { fetchLocalTrendLine } from '@covid/core/content/state/contentSlice';
-import { RootState } from '@covid/core/state/root';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors, fontStyles } from '@theme';
 import * as Sharing from 'expo-sharing';
 import * as React from 'react';
@@ -19,15 +16,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import { useDispatch, useSelector } from 'react-redux';
 
-type Props = {
-  navigation?: StackNavigationProp<ScreenParamList, 'Trendline'>;
-  route?: RouteProp<ScreenParamList, 'Trendline'>;
-};
-
-export const TrendlineScreen: React.FC<Props> = ({ route, navigation }) => {
+export const TrendlineScreen: React.FC = () => {
   const dispatch = useDispatch();
   const viewRef = React.useRef<View>(null);
-  const trendline = useSelector<RootState, ITrendLineData | undefined>((state) => ({
+  const trendline = useSelector<TRootState, ITrendLineData | undefined>((state) => ({
     ...state.content.exploreTrendline,
   }));
 
@@ -45,7 +37,7 @@ export const TrendlineScreen: React.FC<Props> = ({ route, navigation }) => {
   return (
     <View style={styles.root}>
       <View style={styles.nav}>
-        <BackButton navigation={navigation} />
+        <BackButton />
       </View>
       <View collapsable={false} ref={viewRef} style={styles.container}>
         <Header>
@@ -64,7 +56,7 @@ export const TrendlineScreen: React.FC<Props> = ({ route, navigation }) => {
         ) : null}
 
         <View style={styles.chartContainer}>
-          <TrendLineChart filter={TrendlineTimeFilters.all} viewMode={TrendLineViewMode.explore} />
+          <TrendLineChart filter={ETrendlineTimeFilters.all} viewMode={ETrendLineViewMode.explore} />
         </View>
 
         <View style={styles.buttonsContainer}>

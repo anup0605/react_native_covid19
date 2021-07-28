@@ -1,21 +1,21 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
-import { FormWrapper } from '@covid/components/Forms';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { ErrorText, HeaderText } from '@covid/components/Text';
+import { YesNoField } from '@covid/components/inputs/YesNoField';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
-import YesNoField from '@covid/components/YesNoField';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { stripAndRound } from '@covid/utils/number';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import { Item, Label } from 'native-base';
 import * as React from 'react';
@@ -38,12 +38,11 @@ const initialFormValues = {
   unwellMonthBefore: 'no',
 };
 
-type HealthProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'PreviousExposure'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'PreviousExposure'>;
 };
 
-type State = {
+type TState = {
   pastSymptomAnosmia: boolean;
   pastSymptomShortnessOfBreath: boolean;
   pastSymptomFatigue: boolean;
@@ -58,7 +57,7 @@ type State = {
   errorMessage: string;
 };
 
-const initialState: State = {
+const initialState: TState = {
   errorMessage: '',
   pastSymptomAbdominalPain: false,
   pastSymptomAnosmia: false,
@@ -73,8 +72,8 @@ const initialState: State = {
   pastSymptomSkippedMeals: false,
 };
 
-export default class PreviousExposureScreen extends React.Component<HealthProps, State> {
-  constructor(props: HealthProps) {
+export default class PreviousExposureScreen extends React.Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
@@ -114,7 +113,7 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
   private createPatientInfos(formData: IYourHealthData) {
     let infos = {
       unwell_month_before: formData.unwellMonthBefore === 'yes',
-    } as Partial<PatientInfosRequest>;
+    } as Partial<TPatientInfosRequest>;
 
     if (infos.unwell_month_before) {
       infos = {
@@ -154,19 +153,7 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
       { label: i18n.t('past-symptom-changed-much-worse'), value: 'much_worse' },
     ];
     return (
-      <Screen
-        navigation={this.props.navigation}
-        profile={patientCoordinator.patientData?.patientState?.profile}
-        testID="previous-exposure-screen"
-      >
-        <Header>
-          <HeaderText>{i18n.t('previous-exposure-title')}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={6} step={4} />
-        </ProgressBlock>
-
+      <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="previous-exposure-screen">
         <Formik
           validateOnChange
           initialValues={initialFormValues}
@@ -177,8 +164,10 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
         >
           {(props) => {
             return (
-              <FormWrapper hasRequiredFields>
-                <View style={{ marginHorizontal: 16 }}>
+              <Form>
+                <View style={{ flex: 1, marginHorizontal: 16 }}>
+                  <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('previous-exposure-title')} />
+
                   <YesNoField
                     required
                     label={i18n.t('label-unwell-month-before')}
@@ -293,12 +282,14 @@ export default class PreviousExposureScreen extends React.Component<HealthProps,
                   {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
                     <ValidationError error={i18n.t('validation-error-text')} />
                   ) : null}
-                </View>
 
-                <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
-                  {i18n.t('next-question')}
-                </BrandedButton>
-              </FormWrapper>
+                  <View style={styling.flex} />
+
+                  <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
+                    {i18n.t('next-question')}
+                  </BrandedButton>
+                </View>
+              </Form>
             );
           }}
         </Formik>

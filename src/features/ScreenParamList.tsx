@@ -1,15 +1,15 @@
-import { AssessmentData } from '@covid/core/assessment/AssessmentCoordinator';
-import { PatientData } from '@covid/core/patient/PatientData';
+import { TAssessmentData } from '@covid/core/assessment/AssessmentCoordinator';
+import { TPatientData } from '@covid/core/patient/PatientData';
 import { ISchoolModel, ISubscribedSchoolStats } from '@covid/core/schools/Schools.dto';
-import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
-import { VaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 
-export enum ConsentType {
+export enum EConsentType {
   Adult = 'adult',
   Child = 'child',
 }
 
-export type ScreenParamList = {
+export type TScreenParamList = {
   Splash: undefined;
 
   // Welcome screens
@@ -38,44 +38,44 @@ export type ScreenParamList = {
   SelectProfile: { assessmentFlow: boolean };
   CreateProfile: { avatarName: string };
   AdultOrChild: { profileName: string; avatarName?: string };
-  ConsentForOther: { profileName: string; avatarName?: string; consentType: ConsentType };
+  ConsentForOther: { profileName: string; avatarName?: string; consentType: EConsentType };
   ArchiveReason: { patientId: string };
 
-  EditProfile: { patientData: PatientData };
-  EditLocation: { patientData: PatientData };
+  EditProfile: { patientData: TPatientData };
+  EditLocation: { patientData: TPatientData };
 
   // Patient screens
-  YourStudy: { patientData: PatientData; editing: boolean };
-  YourWork: { patientData: PatientData };
-  AboutYou: { patientData: PatientData; editing: boolean };
-  YourHealth: { patientData: PatientData };
-  PreviousExposure: { patientData: PatientData };
+  YourStudy: { patientData: TPatientData; editing: boolean };
+  YourWork: { patientData: TPatientData };
+  AboutYou: { patientData: TPatientData; editing: boolean };
+  YourHealth: { patientData: TPatientData };
+  PreviousExposure: { patientData: TPatientData };
 
   // Assessment screens
-  HealthWorkerExposure: { assessmentData: AssessmentData };
-  CovidTestList: { assessmentData: AssessmentData; tests?: CovidTest[] };
-  CovidTestDetail: { assessmentData: AssessmentData; test?: CovidTest };
-  CovidTestConfirm: { assessmentData: AssessmentData; test: CovidTest };
-  HowYouFeel: { assessmentData: AssessmentData };
-  WhereAreYou: { assessmentData: AssessmentData };
-  TreatmentSelection: { assessmentData: AssessmentData; location: string };
-  TreatmentOther: { assessmentData: AssessmentData; location: string };
-  ProfileBackDate: { assessmentData: AssessmentData };
-  GeneralSymptoms: { assessmentData: AssessmentData };
-  HeadSymptoms: { assessmentData: AssessmentData };
-  ThroatChestSymptoms: { assessmentData: AssessmentData };
-  GutStomachSymptoms: { assessmentData: AssessmentData };
-  OtherSymptoms: { assessmentData: AssessmentData };
+  HealthWorkerExposure: { assessmentData: TAssessmentData };
+  CovidTestList: { assessmentData: TAssessmentData; tests?: TCovidTest[] };
+  CovidTestDetail: { assessmentData: TAssessmentData; test?: TCovidTest };
+  CovidTestConfirm: { assessmentData: TAssessmentData; test: TCovidTest };
+  HowYouFeel: { assessmentData: TAssessmentData };
+  WhereAreYou: { assessmentData: TAssessmentData };
+  TreatmentSelection: { assessmentData: TAssessmentData; location: string };
+  TreatmentOther: { assessmentData: TAssessmentData; location: string };
+  ProfileBackDate: { assessmentData: TAssessmentData };
+  GeneralSymptoms: { assessmentData: TAssessmentData };
+  HeadSymptoms: { assessmentData: TAssessmentData };
+  ThroatChestSymptoms: { assessmentData: TAssessmentData };
+  GutStomachSymptoms: { assessmentData: TAssessmentData };
+  OtherSymptoms: { assessmentData: TAssessmentData };
 
   // Pingdemic
-  Pingdemic: { assessmentData: AssessmentData };
+  Pingdemic: { assessmentData: TAssessmentData };
 
   // Vaccines
-  VaccineDoseSymptoms: { assessmentData: AssessmentData; dose: string };
-  VaccineList: { assessmentData: AssessmentData };
-  AboutYourVaccine: { assessmentData: AssessmentData; editIndex?: number };
-  VaccineLogSymptomsInfo: { assessmentData: AssessmentData };
-  VaccineFindInfo: { assessmentData: AssessmentData };
+  VaccineDoseSymptoms: { assessmentData: TAssessmentData; dose: string };
+  VaccineList: { assessmentData: TAssessmentData };
+  AboutYourVaccine: { assessmentData: TAssessmentData; editIndex?: number };
+  VaccineLogSymptomsInfo: { assessmentData: TAssessmentData };
+  VaccineFindInfo: { assessmentData: TAssessmentData };
 
   // Completion screens
   ThankYouSE: undefined;
@@ -88,15 +88,15 @@ export type ScreenParamList = {
 
   // School network
   SchoolIntro: undefined;
-  SchoolHowTo: { patientData: PatientData };
+  SchoolHowTo: { patientData: TPatientData };
   SelectSchool: undefined;
-  JoinSchool: { patientData: PatientData; higherEducation: boolean };
-  JoinSchoolGroup: { patientData: PatientData; selectedSchool: ISchoolModel };
+  JoinSchool: { patientData: TPatientData; higherEducation: boolean };
+  JoinSchoolGroup: { patientData: TPatientData; selectedSchool: ISchoolModel };
   SchoolSuccess: undefined;
-  SchoolGroupList: { patientData: PatientData; selectedSchool: ISchoolModel };
+  SchoolGroupList: { patientData: TPatientData; selectedSchool: ISchoolModel };
   SchoolDashboard: { school: ISubscribedSchoolStats };
-  ConfirmSchool: { patientData: PatientData; school: ISchoolModel };
-  JoinHigherEducation: { patientData: PatientData };
+  ConfirmSchool: { patientData: TPatientData; school: ISchoolModel };
+  JoinHigherEducation: { patientData: TPatientData };
 
   // Diet study
   DietStudy: undefined;
@@ -132,13 +132,13 @@ export type ScreenParamList = {
   Modal: undefined;
   Main: undefined;
   Share: undefined;
-  VaccineListMissingModal: { vaccine: VaccineRequest };
+  VaccineListMissingModal: { vaccine: TVaccineRequest };
   VersionUpdateModal: undefined;
 
   Trendline: { lad?: string };
 
   Anniversary: undefined;
 
-  LongCovidStart: { patientData: PatientData };
-  LongCovidQuestion: { patientData: PatientData };
+  LongCovidStart: { patientData: TPatientData };
+  LongCovidQuestion: { patientData: TPatientData };
 };

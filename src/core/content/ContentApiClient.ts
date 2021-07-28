@@ -1,12 +1,12 @@
 import ApiClient from '@covid/core/api/ApiClient';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 
-import { FeaturedContentResponse, TrendLineResponse } from './dto/ContentAPIContracts';
+import { TFeaturedContentResponse, TTrendLineResponse } from './dto/ContentAPIContracts';
 
 export interface IContentApiClient {
-  getStartupInfo(): Promise<StartupInfo>;
-  getTrendLines(lad?: string): Promise<TrendLineResponse>;
-  getFeaturedContent(): Promise<FeaturedContentResponse>;
+  getStartupInfo(): Promise<TStartupInfo>;
+  getTrendLines(lad?: string): Promise<TTrendLineResponse>;
+  getFeaturedContent(): Promise<TFeaturedContentResponse>;
   signUpForDietNewsletter(signup: boolean): Promise<void>;
   signUpForDiseaseResearchNewsletter(signup: boolean): Promise<void>;
 }
@@ -14,17 +14,17 @@ export interface IContentApiClient {
 const apiClient = new ApiClient();
 
 export class ContentApiClient implements IContentApiClient {
-  getStartupInfo(): Promise<StartupInfo> {
-    return apiClient.get<StartupInfo>('/users/startup_info/');
+  getStartupInfo(): Promise<TStartupInfo> {
+    return apiClient.get<TStartupInfo>('/users/startup_info/');
   }
 
-  getTrendLines(lad?: string): Promise<TrendLineResponse> {
+  getTrendLines(lad?: string): Promise<TTrendLineResponse> {
     const path = lad ? `/trendlines/?lad=${lad}` : `/trendlines/`;
-    return apiClient.get<TrendLineResponse>(path);
+    return apiClient.get<TTrendLineResponse>(path);
   }
 
-  getFeaturedContent(): Promise<FeaturedContentResponse> {
-    return apiClient.get<FeaturedContentResponse>('/content/');
+  getFeaturedContent(): Promise<TFeaturedContentResponse> {
+    return apiClient.get<TFeaturedContentResponse>('/content/');
   }
 
   signUpForDietNewsletter(signup: boolean): Promise<void> {

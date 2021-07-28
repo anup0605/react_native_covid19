@@ -3,7 +3,7 @@ import {
   THasDiagnosis,
   TMentalHealthCondition,
 } from '@covid/core/state/mental-health/history/types';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialStateMentalHealthHistory: IMentalHealthHistory = {
@@ -43,5 +43,5 @@ const mentalHealthHistorySlice = createSlice({
 
 export const { addHistoryCondition, removeHistoryCondition, setHasHistoryDiagnosis, setHistoryOtherText } =
   mentalHealthHistorySlice.actions;
-export const selectMentalHealthHistory = (state: RootState) => state.mentalHealthHistory;
+export const selectMentalHealthHistory = (state: TRootState) => state.mentalHealthHistory;
 export default mentalHealthHistorySlice.reducer;

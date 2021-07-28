@@ -2,7 +2,7 @@ import { closeIcon } from '@assets';
 import { ContentLoadingView } from '@covid/components/content/ContentLoadingView';
 import Analytics, { events } from '@covid/core/Analytics';
 import { addDismissCallout } from '@covid/core/content/state/contentSlice';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import i18n from '@covid/locale/i18n';
 import { openWebLink } from '@covid/utils/links';
@@ -20,7 +20,7 @@ import {
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 
-type ExternalCalloutProps = {
+type TProps = {
   aspectRatio: number;
   calloutID: string;
   canDismiss?: boolean;
@@ -34,8 +34,8 @@ type ExternalCalloutProps = {
   screenName: string;
 };
 
-export const ExternalCallout: React.FC<ExternalCalloutProps> = (props) => {
-  const dismissedCalloutIds = useSelector<RootState, string[]>((state) => state.content.dismissedCallouts);
+export const ExternalCallout: React.FC<TProps> = (props) => {
+  const dismissedCalloutIds = useSelector<TRootState, string[]>((state) => state.content.dismissedCallouts);
   const [dismissed, setDismissed] = React.useState<boolean>(false);
   const [imageLoading, setImageLoading] = React.useState<boolean>(false);
   const [imageLoadError, setImageLoadError] = React.useState<string | undefined>(undefined);

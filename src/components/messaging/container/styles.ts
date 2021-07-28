@@ -1,13 +1,13 @@
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 
-interface SProps {
+interface IProps {
   active: boolean;
   height: number;
   width: number;
 }
 
-export const SContainerView = styled(View)<SProps>`
+export const SContainerView = styled(View)<IProps>`
   ${(props) => `
     background-color: rgba(0,0,0,0.5);
     height: ${props.active ? props.height : 0}px;

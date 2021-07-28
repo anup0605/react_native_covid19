@@ -4,30 +4,28 @@ import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
 import { HeaderText, RegularText } from '@covid/components/Text';
 import { TwoButtonModal } from '@covid/components/TwoButtonModal';
 import { ISchoolGroupModel, ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import { SchoolGroupRow } from '@covid/features/school-network/SchoolGroupRow';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import { Text } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'SchoolGroupList'>;
-  route: RouteProp<ScreenParamList, 'SchoolGroupList'>;
+type TProps = {
+  route: RouteProp<TScreenParamList, 'SchoolGroupList'>;
 };
 
-export const SchoolGroupListScreen: React.FC<Props> = ({ route, navigation }) => {
+export const SchoolGroupListScreen: React.FC<TProps> = ({ route }) => {
   const [joinedGroups, setJoinedGroups] = React.useState<ISchoolGroupModel[]>([]);
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false);
   const [pressedGroup, setPressedGroup] = React.useState<ISchoolGroupModel>();
 
-  const allGroups = useSelector<RootState, ISubscribedSchoolGroupStats[]>((state) => state.school.joinedSchoolGroups);
+  const allGroups = useSelector<TRootState, ISubscribedSchoolGroupStats[]>((state) => state.school.joinedSchoolGroups);
 
   React.useEffect(() => {
     const currentJoinedGroups = allGroups.filter(
@@ -53,7 +51,7 @@ export const SchoolGroupListScreen: React.FC<Props> = ({ route, navigation }) =>
 
   return (
     <View style={styles.rootContainer}>
-      <Screen navigation={navigation} profile={route.params?.patientData.profile} testID="school-group-list-screen">
+      <Screen profile={route.params?.patientData.profile} testID="school-group-list-screen">
         <Header>
           <HeaderText>{i18n.t('school-networks.groups-list.title')}</HeaderText>
         </Header>
@@ -63,7 +61,7 @@ export const SchoolGroupListScreen: React.FC<Props> = ({ route, navigation }) =>
         </RegularText>
 
         <ProgressBlock>
-          <ProgressStatus maxSteps={4} step={2} />
+          <ProgressStatus currentStep={2} maxSteps={4} />
         </ProgressBlock>
 
         {isModalVisible ? (

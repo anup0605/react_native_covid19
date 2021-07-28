@@ -13,12 +13,12 @@ const Manifest = {
   from: (path: string) => `${path}/manifest.json`,
 };
 
-type ManifestSearchResult = {
+type TManifestSearchResult = {
   found: boolean;
   path?: string;
 };
 
-const firstInList = async (fromList: string[]): Promise<ManifestSearchResult> => {
+const firstInList = async (fromList: string[]): Promise<TManifestSearchResult> => {
   let i = 0;
   let found = false;
   let path;

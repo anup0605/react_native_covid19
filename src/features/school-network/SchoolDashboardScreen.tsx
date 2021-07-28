@@ -1,7 +1,7 @@
 import Screen, { Header } from '@covid/components/Screen';
 import { ClickableText, Header3Text, HeaderText, RegularText, SecondaryText } from '@covid/components/Text';
 import { ISubscribedSchoolStats } from '@covid/core/schools/Schools.dto';
-import { ScreenParamList } from '@covid/features/ScreenParamList';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,12 +10,12 @@ import moment from 'moment';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'SchoolDashboard'>;
-  route: RouteProp<ScreenParamList, 'SchoolDashboard'>;
+type TProps = {
+  navigation: StackNavigationProp<TScreenParamList, 'SchoolDashboard'>;
+  route: RouteProp<TScreenParamList, 'SchoolDashboard'>;
 };
 
-export const SchoolDashboardScreen: React.FC<Props> = (props) => {
+export const SchoolDashboardScreen: React.FC<TProps> = (props) => {
   const school = props.route.params?.school as ISubscribedSchoolStats | undefined;
 
   const infoBox = (
@@ -72,12 +72,14 @@ export const SchoolDashboardScreen: React.FC<Props> = (props) => {
 
   return (
     <View style={styles.container}>
-      <Screen showBackButton navigation={props.navigation} style={styles.container} testID="school-dashboard-screen">
+      <Screen showBackButton style={styles.container} testID="school-dashboard-screen">
         <View style={styles.container}>
           <Header>
             <HeaderText style={styles.header}>
-              <HeaderText>{`${school?.name} `}</HeaderText>
-              <HeaderText>{i18n.t('school-networks.dashboard.title')}</HeaderText>
+              <HeaderText>
+                {school?.name ? `${school?.name} ` : ''}
+                {i18n.t('school-networks.dashboard.title')}
+              </HeaderText>
             </HeaderText>
           </Header>
 

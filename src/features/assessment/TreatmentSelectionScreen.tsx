@@ -1,23 +1,21 @@
 import { BigButton } from '@covid/components';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { CaptionText, HeaderText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { CaptionText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Text } from 'native-base';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 interface IProps {
-  navigation: StackNavigationProp<ScreenParamList, 'TreatmentSelection'>;
   route: RouteProp<ScreenParamList, 'TreatmentSelection'>;
 }
 
-function TreatmentSelectionScreen({ navigation, route }: IProps) {
+function TreatmentSelectionScreen({ route }: IProps) {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const title =
     route.params?.location === 'back_from_hospital'
@@ -49,17 +47,10 @@ function TreatmentSelectionScreen({ navigation, route }: IProps) {
 
   return (
     <Screen
-      navigation={navigation}
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="treatment-selection-screen"
     >
-      <Header>
-        <HeaderText>{title}</HeaderText>
-      </Header>
-
-      <ProgressBlock>
-        <ProgressStatus maxSteps={5} step={4} />
-      </ProgressBlock>
+      <ProgressHeader currentStep={4} maxSteps={5} title={title} />
 
       <View style={styles.content}>
         <FieldWrapper style={styles.fieldWrapper}>

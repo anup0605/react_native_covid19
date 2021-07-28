@@ -1,6 +1,10 @@
 import { BasicPage } from '@covid/components';
+import Analytics from '@covid/core/Analytics';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import { requestInsights, selectInsights } from '@covid/core/state/mental-health-playback/slice';
+import { TRootState } from '@covid/core/state/root';
+import { selectFirstPatientId } from '@covid/core/state/user';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { colors, styling } from '@covid/themes';
@@ -35,8 +39,9 @@ export default function MHPBlogPostScreen() {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = React.useState(false);
   const mhInsights = useSelector(selectInsights);
-  const { completed_feedback } = mhInsights;
   const webView = React.useRef<WebView>(null);
+  const patientId = useSelector(selectFirstPatientId);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
 
   React.useEffect(() => {
     dispatch(requestInsights());
@@ -55,6 +60,8 @@ export default function MHPBlogPostScreen() {
       if (navUrl.hostname !== url.hostname || navUrl.pathname !== url.pathname) {
         webView.current?.stopLoading();
         Linking.openURL(navState.url);
+
+        Analytics.track(Analytics.events.MENTAL_HEALTH_PLAYBACK_BLOG_POST_LINK_CLICKED, { url: navState.url });
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -63,7 +70,7 @@ export default function MHPBlogPostScreen() {
   }
 
   function onPress() {
-    if (completed_feedback) {
+    if (mhInsights.completed_feedback) {
       NavigatorService.navigate(homeScreenName());
     } else {
       NavigatorService.navigate('MentalHealthPlaybackRating');

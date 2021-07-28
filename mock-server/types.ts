@@ -1,31 +1,31 @@
-export interface DbConfig {
+export interface IDbConfig {
   [x: string]: { path: string; defaultData?: unknown };
 }
-export interface Patient {
+export interface IPatient {
   id: string;
   last_reported_at: string;
 }
 
-export interface Assessment {
+export interface IAssessment {
   id: string;
   patient: string;
   profile_attributes_updated_at: string;
 }
 
-export interface DietStudy {
+export interface IDietStudy {
   id: string;
   patient: string;
 }
 
-export interface CovidTest {
+export interface ICovidTest {
   id: string;
   patient: string;
 }
 
-export interface Consent {
+export interface IConsent {
   id: string;
 }
 
-export interface StudyConsent {
+export interface IStudyConsent {
   id: string;
 }

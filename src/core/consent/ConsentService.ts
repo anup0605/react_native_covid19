@@ -1,19 +1,19 @@
 import { ApiClientBase } from '@covid/core/api/ApiClientBase';
 import { AsyncStorageService } from '@covid/core/AsyncStorageService';
-import { Consent } from '@covid/core/user/dto/UserAPIContracts';
+import { TConsent } from '@covid/core/user/dto/UserAPIContracts';
 
-type TConsentDocument = 'US' | 'UK' | 'SE' | '' | 'US Nurses' | 'UK Disease Research Consent';
+type TConsentDocument = 'US' | 'UK' | 'SE' | '' | 'US Nurses' | 'Health Study Consent';
 
 export interface IConsentService {
   postConsent(document: TConsentDocument, version: string, privacy_policy_version: string): void; // TODO: define return object
-  getConsentSigned(): Promise<Consent | null>;
+  getConsentSigned(): Promise<TConsent | null>;
   setConsentSigned(document: TConsentDocument, version: string, privacy_policy_version: string): void;
 }
 
 export class ConsentService extends ApiClientBase implements IConsentService {
   protected client = ApiClientBase.client;
 
-  public static consentSigned: Consent = {
+  public static consentSigned: TConsent = {
     document: '',
     privacy_policy_version: '',
     version: '',
@@ -28,7 +28,7 @@ export class ConsentService extends ApiClientBase implements IConsentService {
     return this.client.post(`/consent/`, payload);
   }
 
-  async getConsentSigned(): Promise<Consent | null> {
+  async getConsentSigned(): Promise<TConsent | null> {
     const consent: string | null = await AsyncStorageService.getConsentSigned();
     return consent ? JSON.parse(consent) : null;
   }

@@ -1,4 +1,4 @@
-import { DbConfig } from './types';
+import { IDbConfig } from './types';
 
 const fs = require('fs');
 
@@ -11,7 +11,7 @@ export default (dbPath: string) => {
     fs.writeFileSync(`${dbPath}/${path}`, JSON.stringify(data, null, ' '), 'utf-8');
 
   return {
-    bootstrap: (config: DbConfig) => {
+    bootstrap: (config: IDbConfig) => {
       // Bootstrap: creates the db folder and files
       fs.access(dbPath, fs.constants.F_OK, (err) => {
         if (err) {

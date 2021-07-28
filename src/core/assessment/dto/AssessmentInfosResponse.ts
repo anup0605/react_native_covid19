@@ -1,3 +1,3 @@
-export type AssessmentResponse = {
+export type TAssessmentResponse = {
   id: string;
 };

@@ -1,51 +1,40 @@
 import { BrandedButton } from '@covid/components';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
-import { HeaderText } from '@covid/components/Text';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
 import { ScreenParamList } from '@covid/features';
 import {
-  GeneralSymptomsData,
   GeneralSymptomsQuestions,
+  TGeneralSymptomsData,
 } from '@covid/features/assessment/fields/GeneralSymptomsQuestions';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikHelpers } from 'formik';
 import { Form } from 'native-base';
 import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-type Props = {
-  navigation: StackNavigationProp<ScreenParamList, 'GeneralSymptoms'>;
+type TProps = {
   route: RouteProp<ScreenParamList, 'GeneralSymptoms'>;
 };
 
-export const GeneralSymptomsScreen: React.FC<Props> = ({ route, navigation }) => {
+export const GeneralSymptomsScreen: React.FC<TProps> = ({ route }) => {
   const config = localisationService.getConfig();
   const registerSchema = Yup.object().shape({}).concat(GeneralSymptomsQuestions.schema());
 
   const patientState = route.params?.assessmentData?.patientData?.patientState;
 
-  function onSubmit(values: GeneralSymptomsData, formikHelpers: FormikHelpers<GeneralSymptomsData>) {
+  function onSubmit(values: TGeneralSymptomsData, formikHelpers: FormikHelpers<TGeneralSymptomsData>) {
     assessmentService.saveAssessment(GeneralSymptomsQuestions.createAssessment(values, patientState?.hasHayfever));
     assessmentCoordinator.gotoNextScreen(route.name);
     formikHelpers.setSubmitting(false);
   }
 
   return (
-    <Screen navigation={navigation} profile={patientState?.profile} testID="general-symptoms-screen">
-      <Header>
-        <HeaderText>{i18n.t('describe-symptoms.general-symptoms')}</HeaderText>
-      </Header>
-
-      <ProgressBlock>
-        <ProgressStatus maxSteps={6} step={1} />
-      </ProgressBlock>
-
+    <Screen profile={patientState?.profile} testID="general-symptoms-screen">
       <Formik
         initialValues={{
           ...GeneralSymptomsQuestions.initialFormValues(config?.defaultTemperatureUnit),
@@ -57,6 +46,7 @@ export const GeneralSymptomsScreen: React.FC<Props> = ({ route, navigation }) =>
           return (
             <Form style={{ flexGrow: 1 }}>
               <View style={{ marginHorizontal: 16 }}>
+                <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('describe-symptoms.general-symptoms')} />
                 <GeneralSymptomsQuestions formikProps={props} hasHayfever={patientState?.hasHayfever} />
               </View>
               <View style={{ flex: 1 }} />

@@ -1,8 +1,8 @@
 export interface IPushTokenRemoteClient {
-  updatePushToken(pushToken: PushToken): Promise<any>;
+  updatePushToken(pushToken: TPushToken): Promise<any>;
 }
 
-export type PushToken = {
+export type TPushToken = {
   token: string;
   lastUpdated: string;
   platform: string;

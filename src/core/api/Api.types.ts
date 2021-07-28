@@ -1,1 +1,1 @@
-export type ApiState = 'ready' | 'loading' | 'finished' | 'error';
+export type TApiState = 'ready' | 'loading' | 'finished' | 'error';

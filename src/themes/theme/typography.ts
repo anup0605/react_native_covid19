@@ -1,4 +1,4 @@
-import { ITextClass, TFontFamily, TText, TTypeSizes } from '@covid/themes/types/typography';
+import { TFontFamily, TText, TTextStyles, TTypeSizes } from '@covid/themes/types/typography';
 
 const getTextProperties = (
   fontSize: TTypeSizes,
@@ -16,7 +16,7 @@ const getTextProperties = (
   };
 };
 
-export const styles: ITextClass = {
+export const styles: TTextStyles = {
   button: {
     fontFamily: 'SofiaPro-Bold',
     fontSize: 16,

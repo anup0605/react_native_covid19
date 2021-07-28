@@ -18,5 +18,5 @@ export * from './thank-you';
 export * from './vaccines';
 export { CountrySelectScreen } from './CountrySelectScreen';
 export { EstimatedCasesScreen } from './EstimatedCasesScreen';
-export { ScreenParamList } from './ScreenParamList';
+export { TScreenParamList as ScreenParamList } from './ScreenParamList';
 export { default as LoginScreen } from './login/LoginScreen';

@@ -1,18 +1,17 @@
 import appConfig from '@covid/appConfig';
+import { LocalisationService } from '@covid/core/localisation/LocalisationService';
 import Constants from '@covid/utils/Constants';
 import * as Amplitude from 'expo-analytics-amplitude';
 
-import { LocalisationService } from './localisation/LocalisationService';
-
 let isInitialized = false;
 
-type AdditionalUserProperties = {
+export type TUserProperties = {
   isTester?: boolean;
-  Experiment_001?: string;
   Experiment_mhip?: string;
+  Experiment_mhip_2?: string;
 };
 
-const DietStudyEvents = {
+const dietStudyEvents = {
   ACCEPT_DIET_STUDY: 'ACCEPT_DIET_STUDY',
   DECLINE_DIET_STUDY: 'DECLINE_DIET_STUDY',
   DECLINE_DIET_STUDY_CONSENT: 'DECLINE_DIET_STUDY_CONSENT',
@@ -26,7 +25,7 @@ const DietStudyEvents = {
   SIGNED_DIET_STUDY_CONSENT: 'SIGNED_DIET_STUDY_CONSENT',
 };
 
-const DashboardEvents = {
+const dashboardEvents = {
   DIET_STUDY_PLAYBACK_CLICKED: 'DIET_STUDY_PLAYBACK_CLICKED',
   DIET_STUDY_PLAYBACK_DISPLAYED: 'DIET_STUDY_PLAYBACK_DISPLAYED',
   ESTIMATED_CASES_MAP_CLICKED: 'ESTIMATED_CASES_MAP_CLICKED',
@@ -41,26 +40,15 @@ const DashboardEvents = {
   TRENDLINE_OVERVIEW_SHARE_CLICKED: 'TRENDLINE_OVERVIEW_SHARE_CLICKED',
 };
 
-const InsightEvents = {
+const insightEvents = {
   MISMATCH_COUNTRY_CODE: 'MISMATCH_COUNTRY_CODE',
 };
 
-const MentalHealthStudyEvents = {
-  MENTAL_HEALTH_CONSENT_LATER: 'MENTAL_HEALTH_CONSENT_LATER',
-  MENTAL_HEALTH_CONSENT_NO: 'MENTAL_HEALTH_CONSENT_NO',
-  MENTAL_HEALTH_CONSENT_YES: 'MENTAL_HEALTH_CONSENT_YES',
-  MENTAL_HEALTH_EMAIL: 'MENTAL_HEALTH_EMAIL',
-  MENTAL_HEALTH_PLAYBACK_SCREEN_MODAL: 'MENTAL_HEALTH_PLAYBACK_SCREEN_MODAL',
-  MENTAL_HEALTH_SCREEN_CHANGES: 'MENTAL_HEALTH_SCREEN_CHANGES',
-  MENTAL_HEALTH_SCREEN_END: 'MENTAL_HEALTH_SCREEN_END',
-  MENTAL_HEALTH_SCREEN_FREQUENCY: 'MENTAL_HEALTH_SCREEN_FREQUENCY',
-  MENTAL_HEALTH_SCREEN_HISTORY: 'MENTAL_HEALTH_SCREEN_HISTORY',
-  MENTAL_HEALTH_SCREEN_LEARNING: 'MENTAL_HEALTH_SCREEN_LEARNING',
-  MENTAL_HEALTH_SCREEN_SUPPORT: 'MENTAL_HEALTH_SCREEN_SUPPORT',
+const mentalHealthStudyEvents = {
   MENTAL_HEALTH_SHARED: 'MENTAL_HEALTH_SHARED',
 };
 
-const ReconsentEvents = {
+const reconsentEvents = {
   RECONSENT_CONFIRMED_NO_CLICKED: 'RECONSENT_CONFIRMED_NO_CLICKED',
   RECONSENT_FIRST_NO_CLICKED: 'RECONSENT_FIRST_NO_CLICKED',
   RECONSENT_PRIVACY_POLICY_CLICKED: 'RECONSENT_PRIVACY_POLICY_CLICKED',
@@ -68,10 +56,16 @@ const ReconsentEvents = {
   RECONSENT_YES_CLICKED: 'RECONSENT_YES_CLICKED',
 };
 
-const TimelineEvents = {
+const timelineEvents = {
   ANNIVERSARY_FROM_DASHBOARD: 'ANNIVERSARY_FROM_DASHBOARD',
   ANNIVERSARY_FROM_THANKYOU: 'ANNIVERSARY_FROM_THANKYOU',
   ANNIVERSARY_SHARE: 'ANNIVERSARY_SHARE',
+};
+
+const mentalHealthPlaybackEvents = {
+  MENTAL_HEALTH_PLAYBACK_BLOG_POST_LINK_CLICKED: 'MENTAL_HEALTH_PLAYBACK_BLOG_POST_LINK_CLICKED',
+  MENTAL_HEALTH_PLAYBACK_CLOSE_MODAL: 'MENTAL_HEALTH_PLAYBACK_CLOSE_MODAL',
+  MENTAL_HEALTH_PLAYBACK_RATING: 'MENTAL_HEALTH_PLAYBACK_RATING',
 };
 
 export const events = {
@@ -96,13 +90,15 @@ export const events = {
   OPEN_FROM_NOTIFICATION: 'OPEN_FROM_NOTIFICATION',
   SHARE_THIS_APP: 'SHARE_THIS_APP',
   SIGNUP: 'SIGNUP',
+  VIEW_MODAL: 'VIEW_MODAL',
   VIEW_SCREEN: 'VIEW_SCREEN',
-  ...DietStudyEvents,
-  ...DashboardEvents,
-  ...InsightEvents,
-  ...MentalHealthStudyEvents,
-  ...ReconsentEvents,
-  ...TimelineEvents,
+  ...dashboardEvents,
+  ...dietStudyEvents,
+  ...insightEvents,
+  ...mentalHealthPlaybackEvents,
+  ...mentalHealthStudyEvents,
+  ...reconsentEvents,
+  ...timelineEvents,
 };
 
 // Disable Tracking of the User Properties (Only available in Expo SDK 37)
@@ -124,13 +120,13 @@ function initialize(): void {
   isInitialized = true;
 }
 
-export function track(event: string, eventProperties?: object): void {
+export function track(eventName: string, properties?: object): void {
   initialize();
 
-  if (eventProperties) {
-    Amplitude.logEventWithPropertiesAsync(event, eventProperties);
+  if (properties) {
+    Amplitude.logEventWithPropertiesAsync(eventName, properties);
   } else {
-    Amplitude.logEventAsync(event);
+    Amplitude.logEventAsync(eventName);
   }
 }
 
@@ -138,12 +134,16 @@ export function trackScreenView(screenName: string): void {
   track(events.VIEW_SCREEN, { screenName });
 }
 
-export function identify(additionalProps?: AdditionalUserProperties): void {
+export function trackModalView(modalName: string): void {
+  track(events.VIEW_MODAL, { modalName });
+}
+
+export function identify(additionalUserProperties?: TUserProperties): void {
   initialize();
 
   // WARNING: Do not send any PII or Health Data here!
   const payload = {
-    ...additionalProps,
+    ...additionalUserProperties,
     appCountry: LocalisationService.userCountry,
     appVersion: Constants.manifest.version,
     expoVersion: Constants.expoVersion,
@@ -157,5 +157,6 @@ export default {
   events,
   identify,
   track,
+  trackModalView,
   trackScreenView,
 };

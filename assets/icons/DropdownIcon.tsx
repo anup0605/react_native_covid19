@@ -2,7 +2,7 @@ import { colors } from '@theme';
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-type CheckProps = {
+type TProps = {
   width?: number | string;
   height?: number | string;
   style?: any;
@@ -10,7 +10,7 @@ type CheckProps = {
 
 const color = colors.primary;
 
-const Check: React.FC<CheckProps> = ({ width = 15, height = 19, style = {} }) => {
+const Check: React.FC<TProps> = ({ width = 15, height = 19, style = {} }) => {
   return (
     <Svg fill={color} height={height} style={style} viewBox="0 0 14 13" width={width}>
       <Path

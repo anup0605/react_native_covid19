@@ -6,11 +6,11 @@ export interface IPredictiveMetricsClient {
   getActiveCases(): Promise<string>;
 }
 
-type IncidenceResponse = {
+type TIncidenceResponse = {
   uk_incidence: string;
 };
 
-type PrevalenceResponse = {
+type TPrevalenceResponse = {
   uk_prevalence: string;
 };
 
@@ -31,12 +31,12 @@ export class PredictiveMetricsClient implements IPredictiveMetricsClient {
   }
 
   async getDailyCases(): Promise<string> {
-    const { uk_incidence } = await this.apiClient.get<IncidenceResponse>('/latest/incidence.json');
+    const { uk_incidence } = await this.apiClient.get<TIncidenceResponse>('/latest/incidence.json');
     return uk_incidence;
   }
 
   async getActiveCases(): Promise<string> {
-    const { uk_prevalence } = await this.apiClient.get<PrevalenceResponse>('/latest/prevalence.json');
+    const { uk_prevalence } = await this.apiClient.get<TPrevalenceResponse>('/latest/prevalence.json');
     return uk_prevalence;
   }
 }

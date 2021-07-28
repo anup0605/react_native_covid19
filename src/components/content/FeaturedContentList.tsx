@@ -1,24 +1,24 @@
 import { ExternalCallout } from '@covid/components/ExternalCallout';
 import { IFeaturedContent } from '@covid/core/content/dto/ContentAPIContracts';
-import { RootState } from '@covid/core/state/root';
+import { TRootState } from '@covid/core/state/root';
 import * as React from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-export enum FeaturedContentType {
+export enum EFeaturedContentType {
   Home,
   ThankYou,
 }
 
-export type FeaturedContentProps = {
-  type: FeaturedContentType;
+export type TProps = {
+  type: EFeaturedContentType;
   screenName: string;
   disableLoadingState?: boolean;
 };
 
-export const FeaturedContentList: React.FC<FeaturedContentProps> = ({ type, screenName, disableLoadingState }) => {
-  const home = useSelector<RootState, IFeaturedContent[]>((state) => state.content.featuredHome);
-  const thankyou = useSelector<RootState, IFeaturedContent[]>((state) => state.content.featuredThankyou);
+export const FeaturedContentList: React.FC<TProps> = ({ type, screenName, disableLoadingState }) => {
+  const home = useSelector<TRootState, IFeaturedContent[]>((state) => state.content.featuredHome);
+  const thankyou = useSelector<TRootState, IFeaturedContent[]>((state) => state.content.featuredThankyou);
 
   const mapper = (item: IFeaturedContent) => (
     <View key={item.slug} testID="featured-content-callout">
@@ -36,9 +36,9 @@ export const FeaturedContentList: React.FC<FeaturedContentProps> = ({ type, scre
 
   const content = () => {
     switch (type) {
-      case FeaturedContentType.Home:
+      case EFeaturedContentType.Home:
         return home?.map(mapper);
-      case FeaturedContentType.ThankYou:
+      case EFeaturedContentType.ThankYou:
         return thankyou?.map(mapper);
       default:
         return null;

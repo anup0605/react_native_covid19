@@ -1,18 +1,17 @@
-import { BrandedButton, TextareaWithCharCount } from '@covid/components';
-import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { FieldWrapper, Header, ProgressBlock } from '@covid/components/Screen';
-import { HeaderText } from '@covid/components/Text';
+import { BrandedButton, RegularText, TextareaWithCharCount } from '@covid/components';
+import { Form } from '@covid/components/Form';
+import { ProgressHeader } from '@covid/components/ProgressHeader';
+import Screen from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { AssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
-import { Form, Item, Label } from 'native-base';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 const initialFormValues = {
@@ -23,18 +22,17 @@ interface ITreatmentData {
   description: string;
 }
 
-type TreatmentOtherProps = {
-  navigation: StackNavigationProp<ScreenParamList, 'TreatmentOther'>;
+type TTreatmentOtherProps = {
   route: RouteProp<ScreenParamList, 'TreatmentOther'>;
 };
 
-export default class TreatmentOtherScreen extends React.Component<TreatmentOtherProps> {
+export default class TreatmentOtherScreen extends React.Component<TTreatmentOtherProps> {
   registerSchema = Yup.object().shape({
     description: Yup.string(),
   });
 
   handleUpdateTreatment = async (formData: ITreatmentData) => {
-    let assessment: Partial<AssessmentInfosRequest> = {};
+    let assessment: Partial<TAssessmentInfosRequest> = {};
 
     if (formData.description) {
       assessment = {
@@ -61,17 +59,10 @@ export default class TreatmentOtherScreen extends React.Component<TreatmentOther
 
     return (
       <Screen
-        navigation={this.props.navigation}
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="treatment-other-screen"
       >
-        <Header>
-          <HeaderText>{title}</HeaderText>
-        </Header>
-
-        <ProgressBlock>
-          <ProgressStatus maxSteps={5} step={5} />
-        </ProgressBlock>
+        <ProgressHeader currentStep={5} maxSteps={5} title={title} />
 
         <Formik
           initialValues={initialFormValues}
@@ -83,19 +74,14 @@ export default class TreatmentOtherScreen extends React.Component<TreatmentOther
           {(props) => {
             return (
               <Form>
-                <FieldWrapper style={{ marginVertical: 64 }}>
-                  <Item stackedLabel style={{ borderBottomWidth: 0 }}>
-                    <Label style={{ marginBottom: 16 }}>{question}</Label>
-                    <TextareaWithCharCount
-                      bordered
-                      onChangeText={props.handleChange('description')}
-                      placeholder={i18n.t('placeholder-optional-question')}
-                      textAreaStyle={styles.textarea}
-                      value={props.values.description}
-                    />
-                  </Item>
-                </FieldWrapper>
-
+                <RegularText style={styling.marginVertical}>{question}</RegularText>
+                <TextareaWithCharCount
+                  bordered
+                  onChangeText={props.handleChange('description')}
+                  placeholder={i18n.t('placeholder-optional-question')}
+                  value={props.values.description}
+                />
+                <View style={styling.flex} />
                 <BrandedButton onPress={props.handleSubmit}>{i18n.t('completed')}</BrandedButton>
               </Form>
             );
@@ -105,9 +91,3 @@ export default class TreatmentOtherScreen extends React.Component<TreatmentOther
     );
   }
 }
-
-const styles = StyleSheet.create({
-  textarea: {
-    width: '100%',
-  },
-});

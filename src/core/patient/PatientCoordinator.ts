@@ -1,8 +1,8 @@
-import { Coordinator, IUpdatePatient, ScreenFlow } from '@covid/core/Coordinator';
+import { Coordinator, IUpdatePatient, TScreenFlow } from '@covid/core/Coordinator';
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
-import { PatientData } from '@covid/core/patient/PatientData';
+import { TPatientData } from '@covid/core/patient/PatientData';
 import { patientService } from '@covid/core/patient/PatientService';
-import { PatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { IUserService } from '@covid/core/user/UserService';
 import { AppCoordinator } from '@covid/features/AppCoordinator';
 import NavigatorService from '@covid/NavigatorService';
@@ -14,9 +14,9 @@ export class PatientCoordinator extends Coordinator implements IUpdatePatient {
 
   userService: IUserService;
 
-  patientData: PatientData;
+  patientData: TPatientData;
 
-  screenFlow: Partial<ScreenFlow> = {
+  screenFlow: Partial<TScreenFlow> = {
     AboutYou: () => {
       if (this.patientData.patientState.isMinor && this.patientData.patientState.isReportedByAnother) {
         NavigatorService.navigate('YourHealth', { patientData: this.patientData });
@@ -38,7 +38,7 @@ export class PatientCoordinator extends Coordinator implements IUpdatePatient {
     },
   };
 
-  init = (appCoordinator: AppCoordinator, patientData: PatientData, userService: IUserService) => {
+  init = (appCoordinator: AppCoordinator, patientData: TPatientData, userService: IUserService) => {
     this.appCoordinator = appCoordinator;
     this.patientData = patientData;
     this.userService = userService;
@@ -55,7 +55,7 @@ export class PatientCoordinator extends Coordinator implements IUpdatePatient {
     }
   };
 
-  updatePatientInfo(patientInfo: Partial<PatientInfosRequest>) {
+  updatePatientInfo(patientInfo: Partial<TPatientInfosRequest>) {
     return patientService.updatePatientInfo(this.patientData.patientId, patientInfo).then((info) => {
       this.patientData.patientInfo = info;
       return info;

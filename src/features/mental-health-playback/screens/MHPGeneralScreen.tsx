@@ -2,8 +2,8 @@ import { BasicNavHeader, BrandedButton, SafeLayout, Text } from '@covid/componen
 import EmptyState from '@covid/components/EmptyState';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import { isLoading, selectInsights } from '@covid/core/state/mental-health-playback/slice';
-import { RootState } from '@covid/core/state/root';
-import { StartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TRootState } from '@covid/core/state/root';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import Insights from '@covid/features/mental-health-playback/components/Insights';
 import PaginationIndicator from '@covid/features/mental-health-playback/components/PaginationIndicator';
 import i18n from '@covid/locale/i18n';
@@ -26,7 +26,7 @@ export default function MHPGeneralScreen() {
   const mhInsights = useSelector(selectInsights);
   const loading = useSelector(isLoading);
 
-  const startupInfo = useSelector<RootState, StartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const scrollViewRef = React.useRef<ScrollView>(null);
 
   const isGeneral = startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_b';

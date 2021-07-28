@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-type Props = {
+type TProps = {
   width?: number | string;
   height?: number | string;
   color?: string;
 };
 
-const Needle: React.FC<Props> = ({ width = 16, height = 16, color = '#888B8C' }) => {
+const Needle: React.FC<TProps> = ({ width = 16, height = 16, color = '#888B8C' }) => {
   return (
     <Svg fill="none" height={height} viewBox="0 0 16 16" width={width}>
       <Path

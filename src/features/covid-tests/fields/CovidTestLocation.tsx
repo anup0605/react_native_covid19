@@ -1,7 +1,7 @@
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
-import { CovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -14,13 +14,13 @@ export interface ICovidTestLocationData {
 
 interface IProps {
   formikProps: FormikProps<ICovidTestLocationData>;
-  test?: CovidTest;
+  test?: TCovidTest;
 }
 
 export interface ICovidTestLocationQuestion<P, Data> extends React.FC<P> {
-  initialFormValues: (test?: CovidTest) => Data;
+  initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
-  createDTO: (data: Data) => Partial<CovidTest>;
+  createDTO: (data: Data) => Partial<TCovidTest>;
 }
 
 export const CovidTestLocationQuestion: ICovidTestLocationQuestion<IProps, ICovidTestLocationData> = (
@@ -85,7 +85,7 @@ export const CovidTestLocationQuestion: ICovidTestLocationQuestion<IProps, ICovi
   );
 };
 
-CovidTestLocationQuestion.initialFormValues = (test?: CovidTest): ICovidTestLocationData => {
+CovidTestLocationQuestion.initialFormValues = (test?: TCovidTest): ICovidTestLocationData => {
   return {
     location: test?.location ? test.location : '',
     locationOther: test?.location_other ? test.location_other : '',
@@ -98,10 +98,10 @@ CovidTestLocationQuestion.schema = () => {
   });
 };
 
-CovidTestLocationQuestion.createDTO = (formData: ICovidTestLocationData): Partial<CovidTest> => {
+CovidTestLocationQuestion.createDTO = (formData: ICovidTestLocationData): Partial<TCovidTest> => {
   const locationOther = formData.location && formData.location === 'other' ? formData.locationOther : '';
   return {
     ...(formData.location && { location: formData.location }),
     ...{ location_other: locationOther },
-  } as Partial<CovidTest>;
+  } as Partial<TCovidTest>;
 };
