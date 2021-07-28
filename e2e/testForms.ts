@@ -45,8 +45,8 @@ export function testAboutYourWorkForm() {
 
 export function testAboutYourHealthForm() {
   it('should be able to fill in the form about your health', async () => {
-    await scrollDownToId('scroll-view-your-health-screen', 'input-blood-group-item-pfnts');
-    await element(by.id('input-blood-group-item-pfnts')).tap();
+    await scrollDownToId('scroll-view-your-health-screen', 'input-blood-group-item-unsure');
+    await element(by.id('input-blood-group-item-unsure')).tap();
 
     await scrollDownToId('scroll-view-your-health-screen', 'button-submit');
     await element(by.id('button-submit').withAncestor(by.id('your-health-screen'))).tap();
@@ -71,7 +71,14 @@ export function testLongCovidForm() {
   });
 }
 
-// @todo
 export function testPingdemicForm() {
+  it('should complete the anti-pingdemic form (if present)', async () => {
+    try {
+      await scrollDownToId('scroll-view-pingdemic-screen', 'input-radio-asked-by-app-item-pfnts');
+      await element(by.id('input-radio-asked-by-app-item-pfnts')).tap();
 
+      await scrollDownToId('scroll-view-pingdemic-screen', 'button-submit');
+      await element(by.id('button-submit').withAncestor(by.id('pingdemic-screen'))).tap();
+    } catch (_) {}
+  });
 }

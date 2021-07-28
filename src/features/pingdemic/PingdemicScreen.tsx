@@ -170,7 +170,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
     <>
       <Screen
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
-        testID="how-you-feel-screen"
+        testID="pingdemic-screen"
       >
         <Header>
           <HeaderText>{i18n.t('pingdemic.title')}</HeaderText>
@@ -205,7 +205,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
                     label={i18n.t('pingdemic.q1')}
                     onValueChange={formikProps.handleChange('askedByApp')}
                     selectedValue={formikProps.values.askedByApp}
-                    testID="input-pingdemic-radio-asked-by-app"
+                    testID="input-radio-asked-by-app"
                   />
                   {renderOtherText(formikProps)}
                   {renderDate(formikProps)}
@@ -217,6 +217,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
                     loading={isSubmitting}
                     onPress={() => onSubmit(formikProps)}
                     style={styles.marginTop}
+                    testID="button-submit"
                   >
                     {i18n.t('vaccines.dose-symptoms.next')}
                   </BrandedButton>
