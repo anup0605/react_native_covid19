@@ -54,11 +54,6 @@ class RegisterScreen extends React.Component<TProps, TState> {
     this.state = initialState;
   }
 
-  private checkFieldsFilled = (props: any) => {
-    if (props.errors.password || props.errors.email) return false;
-    return true;
-  };
-
   private handleCreateAccount(formData: IRegistrationData) {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false }); // Stop resubmissions

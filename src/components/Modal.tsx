@@ -1,16 +1,23 @@
 import { SafeLayout } from '@covid/components';
+import Analytics from '@covid/core/Analytics';
 import * as React from 'react';
 import { Modal as RNModal, ScrollView, StyleSheet } from 'react-native';
 
 interface IProps {
   children?: React.ReactNode;
+  modalName?: string;
   onRequestClose: () => void;
   visible: boolean;
 }
 
 export default function Modal(props: IProps) {
+  React.useEffect(() => {
+    if (props.modalName) {
+      Analytics.trackModalView(props.modalName);
+    }
+  }, [props.modalName]);
   return (
-    <RNModal transparent animationType="slide" onRequestClose={props.onRequestClose} visible={props.visible}>
+    <RNModal transparent animationType="fade" onRequestClose={props.onRequestClose} visible={props.visible}>
       <SafeLayout style={styles.modal}>
         <ScrollView
           alwaysBounceVertical={false}

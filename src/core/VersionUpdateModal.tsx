@@ -27,7 +27,7 @@ export default function VersionUpdateModal({ navigation }: IProps) {
   }, [navigation]);
 
   return (
-    <Modal visible onRequestClose={goToStore}>
+    <Modal visible modalName="VersionUpdate" onRequestClose={goToStore}>
       <HeaderText style={styles.text}>{i18n.t('version-update.title')}</HeaderText>
       <Text style={styles.text}>{i18n.t('version-update.body')}</Text>
       <BrandedButton onPress={goToStore} style={styles.button}>
