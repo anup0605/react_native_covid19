@@ -3,7 +3,8 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Animated, Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
@@ -20,6 +21,8 @@ interface Iprops {
 }
 
 export const CollapsibleHeaderScrollView: React.FC<Iprops> = (props) => {
+  const safeAreaInsets = useSafeAreaInsets();
+
   const [scrollY, _] = React.useState<Animated.Value>(new Animated.Value(0));
 
   const headerHeight = scrollY.interpolate({
@@ -57,7 +60,8 @@ export const CollapsibleHeaderScrollView: React.FC<Iprops> = (props) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <View style={{ height: safeAreaInsets.top }} />
       <View style={styles.subContainer}>
         <View style={styles.drawerToggleContainer}>
           <DrawerToggle navigation={props.navigation} style={{ tintColor: colors.white }} testID="drawer-toggle" />
@@ -84,7 +88,12 @@ export const CollapsibleHeaderScrollView: React.FC<Iprops> = (props) => {
           </Animated.View>
         </Animated.View>
         <Animated.ScrollView
-          contentContainerStyle={{ paddingTop: props.config.expanded }}
+          contentContainerStyle={{
+            paddingBottom: safeAreaInsets.bottom,
+            paddingLeft: safeAreaInsets.left,
+            paddingRight: safeAreaInsets.right,
+            paddingTop: props.config.expanded,
+          }}
           onScroll={Animated.event(
             [
               {
@@ -106,7 +115,7 @@ export const CollapsibleHeaderScrollView: React.FC<Iprops> = (props) => {
           {props.children}
         </Animated.ScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

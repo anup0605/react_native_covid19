@@ -5,9 +5,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const screenEntries = Object.entries(screens);
 
 export default function DebugScreens(props: any) {
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(14);
+  const [showInfo, setShowInfo] = React.useState(true);
   if (!__DEV__) {
     return null;
+  }
+  function onLongPress() {
+    setShowInfo((previousShowInfo) => !previousShowInfo);
   }
   function onPress() {
     setIndex((previousIndex) => (previousIndex === screenEntries.length - 1 ? 0 : previousIndex + 1));
@@ -18,9 +22,13 @@ export default function DebugScreens(props: any) {
       {/* @ts-expect-error */}
       <Screen {...props} />
       <View pointerEvents="box-none" style={styles.view}>
-        <TouchableOpacity onPress={onPress} style={styles.touchableOpacity}>
-          <Text>{index}</Text>
-          <Text>{screenEntries[index][0]}</Text>
+        <TouchableOpacity onLongPress={onLongPress} onPress={onPress} style={styles.touchableOpacity}>
+          {showInfo ? (
+            <>
+              <Text style={styles.text}>{index}</Text>
+              <Text style={styles.text}>{screenEntries[index][0]}</Text>
+            </>
+          ) : null}
         </TouchableOpacity>
       </View>
     </>
@@ -28,6 +36,9 @@ export default function DebugScreens(props: any) {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    color: 'red',
+  },
   touchableOpacity: {
     alignItems: 'center',
     aspectRatio: 1,

@@ -13,6 +13,7 @@ import { patientService } from '@covid/core/patient/PatientService';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { stripAndRound } from '@covid/utils/number';
 import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
@@ -164,7 +165,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
           {(props) => {
             return (
               <Form>
-                <View style={{ marginHorizontal: 16 }}>
+                <View style={{ flex: 1, marginHorizontal: 16 }}>
                   <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('previous-exposure-title')} />
 
                   <YesNoField
@@ -281,11 +282,13 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
                   {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
                     <ValidationError error={i18n.t('validation-error-text')} />
                   ) : null}
-                </View>
 
-                <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
-                  {i18n.t('next-question')}
-                </BrandedButton>
+                  <View style={styling.flex} />
+
+                  <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
+                    {i18n.t('next-question')}
+                  </BrandedButton>
+                </View>
               </Form>
             );
           }}

@@ -76,8 +76,10 @@ export const SchoolDashboardScreen: React.FC<TProps> = (props) => {
         <View style={styles.container}>
           <Header>
             <HeaderText style={styles.header}>
-              <HeaderText>{`${school?.name} `}</HeaderText>
-              <HeaderText>{i18n.t('school-networks.dashboard.title')}</HeaderText>
+              <HeaderText>
+                {school?.name ? `${school?.name} ` : ''}
+                {i18n.t('school-networks.dashboard.title')}
+              </HeaderText>
             </HeaderText>
           </Header>
 
