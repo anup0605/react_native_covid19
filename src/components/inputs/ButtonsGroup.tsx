@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 8,
+    marginTop: 24,
   },
 });
-
-export default ButtonsGroup;

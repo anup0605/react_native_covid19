@@ -111,7 +111,9 @@ export const HowYouFeelScreen: React.FC<TProps> = ({ route, navigation }) => {
         profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
         testID="how-you-feel-screen"
       >
-        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('how-you-feel.question-health-status')} />
+        <View style={{ marginHorizontal: 16 }}>
+          <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('how-you-feel.question-health-status')} />
+        </View>
 
         <TouchableOpacity onPress={() => assessmentCoordinator.editLocation()} style={{ padding: 16 }}>
           <RegularText>

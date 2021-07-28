@@ -56,7 +56,7 @@ export default class CreateProfileScreen extends React.Component<TProps> {
         >
           {(props) => {
             return (
-              <Form hasRequiredFields>
+              <Form>
                 <GenericTextField
                   required
                   formikProps={props}

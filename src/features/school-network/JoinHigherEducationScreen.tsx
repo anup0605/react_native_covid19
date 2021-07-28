@@ -8,6 +8,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import * as React from 'react';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { UniversityForm } from './forms';
@@ -40,15 +41,15 @@ export default function JoinHigherEducationScreen({ route }: IProps) {
           title="school-networks.join-school.university-network-header"
         />
       ) : (
-        <>
+        <View style={{ marginHorizontal: 16 }}>
           <ProgressHeader
-            currentStep={1}
+            currentStep={0}
             description={i18n.t('school-networks.join-school.description-higher-education')}
             maxSteps={1}
             title={i18n.t('school-networks.join-school.title-higher-education')}
           />
           <UniversityForm currentJoinedGroup={currentJoinedGroup} schools={schools} />
-        </>
+        </View>
       )}
     </Screen>
   );

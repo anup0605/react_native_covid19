@@ -70,7 +70,9 @@ export default class CovidTestListScreen extends React.Component<TProps, TState>
     return (
       <View style={styles.rootContainer}>
         <Screen profile={currentPatient?.profile} testID="covid-test-list-screen">
-          <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('covid-test-list.title')} />
+          <View style={{ marginHorizontal: 16 }}>
+            <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('covid-test-list.title')} />
+          </View>
 
           <View style={styles.content}>
             <RegularText>{i18n.t('covid-test-list.text')}</RegularText>

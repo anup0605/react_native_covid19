@@ -67,7 +67,7 @@ export const HeadSymptomsQuestions: ISymptomQuestions<TProps, THeadSymptomsData>
 
   return (
     <View style={{ marginVertical: 16 }}>
-      <RegularText style={{ paddingTop: 16 }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
+      <RegularText style={{ paddingVertical: 16 }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
       <CheckboxList>{createSymptomCheckboxes(checkboxes, formikProps)}</CheckboxList>
     </View>
   );

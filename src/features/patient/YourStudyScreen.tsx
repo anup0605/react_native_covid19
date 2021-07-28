@@ -308,7 +308,9 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
 
     return (
       <Screen simpleCallout profile={this.coordinator.patientData?.patientState?.profile} testID="your-study-screen">
-        <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
+        <View style={{ marginHorizontal: 16 }}>
+          <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
+        </View>
 
         <Formik
           initialValues={this.getInitialFormValues()}

@@ -55,9 +55,11 @@ function WhereAreYouScreen({ route }: IProps) {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="where-are-you-screen"
     >
-      <ProgressHeader currentStep={6} maxSteps={6} title={i18n.t('where-are-you.question-location')} />
+      <View style={{ marginHorizontal: 16 }}>
+        <ProgressHeader currentStep={6} maxSteps={6} title={i18n.t('where-are-you.question-location')} />
+      </View>
 
-      <View style={styles.marginVertical}>
+      <View style={[styles.marginVertical, styles.marginHorizontal]}>
         <SelectorButton
           onPress={() => handleLocationSelection('home', true)}
           style={styles.marginBottom}
@@ -89,6 +91,9 @@ function WhereAreYouScreen({ route }: IProps) {
 const styles = StyleSheet.create({
   marginBottom: {
     marginBottom: 32,
+  },
+  marginHorizontal: {
+    marginHorizontal: 8,
   },
   marginVertical: {
     marginVertical: 32,

@@ -253,8 +253,6 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
 
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-work-screen">
-        <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('title-about-work')} />
-
         <Formik
           initialValues={{} as IYourWorkData}
           onSubmit={(values: IYourWorkData) => this.handleUpdateWork(values)}
@@ -277,8 +275,10 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
               (!!isCarer && isCarer === 'yes');
             return (
               <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-                <Form hasRequiredFields>
+                <Form>
                   <View style={{ marginHorizontal: 16 }}>
+                    <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('title-about-work')} />
+
                     <RadioInput
                       required
                       error={touched.isHealthcareStaff ? errors.isHealthcareStaff : ''}

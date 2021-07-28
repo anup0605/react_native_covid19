@@ -33,8 +33,6 @@ export const GutStomachSymptomsScreen: React.FC<TProps> = ({ route }) => {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="gut-stomach-symptoms-screen"
     >
-      <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('describe-symptoms.gut-stomach-symptoms')} />
-
       <Formik
         initialValues={{
           ...GutStomachSymptomsQuestions.initialFormValues(),
@@ -46,6 +44,7 @@ export const GutStomachSymptomsScreen: React.FC<TProps> = ({ route }) => {
           return (
             <Form style={{ flexGrow: 1 }}>
               <View style={{ marginHorizontal: 16 }}>
+                <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('describe-symptoms.gut-stomach-symptoms')} />
                 <GutStomachSymptomsQuestions formikProps={props} />
               </View>
 

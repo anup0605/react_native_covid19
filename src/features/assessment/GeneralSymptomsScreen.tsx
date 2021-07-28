@@ -35,8 +35,6 @@ export const GeneralSymptomsScreen: React.FC<TProps> = ({ route }) => {
 
   return (
     <Screen profile={patientState?.profile} testID="general-symptoms-screen">
-      <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('describe-symptoms.general-symptoms')} />
-
       <Formik
         initialValues={{
           ...GeneralSymptomsQuestions.initialFormValues(config?.defaultTemperatureUnit),
@@ -48,6 +46,7 @@ export const GeneralSymptomsScreen: React.FC<TProps> = ({ route }) => {
           return (
             <Form style={{ flexGrow: 1 }}>
               <View style={{ marginHorizontal: 16 }}>
+                <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('describe-symptoms.general-symptoms')} />
                 <GeneralSymptomsQuestions formikProps={props} hasHayfever={patientState?.hasHayfever} />
               </View>
               <View style={{ flex: 1 }} />

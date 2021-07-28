@@ -153,8 +153,6 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
     ];
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="previous-exposure-screen">
-        <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('previous-exposure-title')} />
-
         <Formik
           validateOnChange
           initialValues={initialFormValues}
@@ -165,8 +163,10 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
         >
           {(props) => {
             return (
-              <Form hasRequiredFields>
+              <Form>
                 <View style={{ marginHorizontal: 16 }}>
+                  <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('previous-exposure-title')} />
+
                   <YesNoField
                     required
                     label={i18n.t('label-unwell-month-before')}

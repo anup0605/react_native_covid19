@@ -43,7 +43,8 @@ export function ScreenNew(props: IProps) {
 const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
-    padding: 16,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
   },
   flex: {
     flex: 1,

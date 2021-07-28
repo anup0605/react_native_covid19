@@ -89,12 +89,12 @@ export const GeneralSymptomsQuestions: ISymptomQuestions<TProps, TGeneralSymptom
 
   return (
     <View style={{ marginBottom: 32, marginTop: 16 }}>
-      <RegularText style={{ paddingTop: 16 }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
+      <RegularText style={{ paddingVertical: 16 }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
 
       <CheckboxList>{createSymptomCheckboxes(fever_checkbox, formikProps)}</CheckboxList>
 
       {formikProps.values.fever ? (
-        <View style={{ marginVertical: 16 }}>
+        <View style={{ margin: 16 }}>
           <RegularText>{i18n.t('describe-symptoms.question-your-temperature')}</RegularText>
           <View style={styles.fieldRow}>
             <View style={styles.primaryField}>
@@ -208,6 +208,6 @@ const styles = StyleSheet.create({
   secondaryField: {
     flex: 1,
     marginLeft: 4,
-    marginTop: -8,
+    marginTop: -16,
   },
 });

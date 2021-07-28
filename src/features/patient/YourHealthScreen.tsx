@@ -234,8 +234,6 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
     ];
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-health-screen">
-        <ProgressHeader currentStep={3} maxSteps={6} title={i18n.t('your-health.page-title')} />
-
         <Formik
           initialValues={{
             ...initialFormValues,
@@ -258,8 +256,10 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
         >
           {(props) => {
             return (
-              <Form hasRequiredFields>
+              <Form>
                 <View style={{ marginHorizontal: 16 }}>
+                  <ProgressHeader currentStep={3} maxSteps={6} title={i18n.t('your-health.page-title')} />
+
                   <YesNoField
                     required
                     label={i18n.t('your-health.health-problems-that-limit-activity')}

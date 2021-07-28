@@ -125,7 +125,7 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
       >
         {(props) => {
           return (
-            <Form hasRequiredFields>
+            <Form>
               <View style={{ marginHorizontal: 16 }}>
                 <GenericTextField
                   required

@@ -30,8 +30,6 @@ export const HeadSymptomsScreen: React.FC<TProps> = ({ route }) => {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="head-symptoms-screen"
     >
-      <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('describe-symptoms.head-symptoms')} />
-
       <Formik
         initialValues={{
           ...HeadSymptomsQuestions.initialFormValues(),
@@ -43,6 +41,7 @@ export const HeadSymptomsScreen: React.FC<TProps> = ({ route }) => {
           return (
             <Form style={{ flexGrow: 1 }}>
               <View style={{ marginHorizontal: 16 }}>
+                <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('describe-symptoms.head-symptoms')} />
                 <HeadSymptomsQuestions formikProps={props} />
               </View>
               <View style={{ flex: 1 }} />

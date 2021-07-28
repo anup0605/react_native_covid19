@@ -165,6 +165,6 @@ const styles = StyleSheet.create({
   unitsField: {
     flex: 2,
     marginLeft: 4,
-    marginTop: -8,
+    marginTop: -16,
   },
 });
