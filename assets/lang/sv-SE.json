@@ -1452,7 +1452,8 @@
       "description-personal": "We've crunched the data and have prepared your very own personal insights into your unique habits during the pandemic for you to look at!\n\nThanks for your participation.",
       "tag": "INSIGHTS AVAILABLE",
       "title": "Mental Health during the pandemic",
-      "title-new": "Your Mental Health insights report is ready!"
+      "title-new": "The Mental Health insights report is ready!",
+      "title-new-personal": "Your Mental Health insights report is ready!"
     },
 
     "general": {

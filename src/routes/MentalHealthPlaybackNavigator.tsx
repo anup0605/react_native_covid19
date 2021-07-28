@@ -13,6 +13,14 @@ const noHeader = {
   headerShown: false,
 };
 
+export type TScreenNameMHP =
+  | 'MentalHealthPlaybackBlogPost'
+  | 'MentalHealthPlaybackGeneral'
+  | 'MentalHealthPlaybackIntroduction'
+  | 'MentalHealthPlaybackRating'
+  | 'MentalHealthPlaybackThankYou'
+  | 'MentalHealthPlaybackModal';
+
 export default function MentalHealthPlaybackNavigator({ Stack }: IProps) {
   return (
     <>

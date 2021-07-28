@@ -1,4 +1,4 @@
-import Analytics, { events } from '@covid/core/Analytics';
+import Analytics, { events, TUserProperties } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TConfigType } from '@covid/core/Config';
 import { ConsentService } from '@covid/core/consent/ConsentService';
@@ -28,6 +28,7 @@ import store from '@covid/core/state/store';
 import { TStartupInfo, TUserResponse } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
 import { dietStudyPlaybackCoordinator } from '@covid/features/diet-study-playback/DietStudyPlaybackCoordinator';
+import util from '@covid/features/mental-health-playback/util';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import NavigatorService from '@covid/NavigatorService';
@@ -142,15 +143,13 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
       this.goToVersionUpdateModal();
     }
 
-    // Setup Amplitude analytics
-    if (startupInfo?.mh_insight_cohort) {
-      // Identity Mental Health Insights experiment cohort
-      Analytics.identify({
-        Experiment_mhip: startupInfo.mh_insight_cohort,
-      });
-    } else {
-      Analytics.identify();
+    const userProperties: TUserProperties = {};
+    if (startupInfo?.mh_insight_cohort && patientId) {
+      const testGroupId = util.determineTestGroupId(patientId, startupInfo?.mh_insight_cohort!);
+      userProperties.Experiment_mhip = startupInfo?.mh_insight_cohort;
+      userProperties.Experiment_mhip_2 = testGroupId;
     }
+    Analytics.identify(userProperties);
 
     if (this.shouldShowCountryPicker) {
       Analytics.track(events.MISMATCH_COUNTRY_CODE, { current_country_code: LocalisationService.userCountry });
@@ -293,12 +292,12 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     NavigatorService.navigate('MentalHealthChanges');
   }
 
-  goToMentalHealthStudyPlayback(startupInfo: TStartupInfo | undefined) {
-    if (startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_c') {
-      NavigatorService.navigate('MentalHealthPlaybackBlogPost');
-    } else {
-      NavigatorService.navigate('MentalHealthPlaybackIntroduction');
-    }
+  goToMentalHealthStudyPlayback(startupInfo?: TStartupInfo) {
+    const screenName =
+      startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_c'
+        ? 'MentalHealthPlaybackBlogPost'
+        : 'MentalHealthPlaybackIntroduction';
+    NavigatorService.navigate(screenName);
   }
 
   goToAnniversary() {

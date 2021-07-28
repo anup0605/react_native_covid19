@@ -63,15 +63,15 @@ export class EditProfileCoordinator extends Coordinator implements IUpdatePatien
   }
 
   shouldShowEditStudy() {
-    const currentPatient = this.patientData?.patientState;
     const config = localisationService.getConfig();
 
-    return config?.enableCohorts && currentPatient.shouldAskStudy;
+    return config?.enableCohorts && this.patientData?.patientState?.shouldAskStudy;
   }
 
   shouldShowSchoolNetwork() {
-    const currentPatient = this.patientData?.patientState;
-    return isGBCountry() && currentPatient.isReportedByAnother && currentPatient.isMinor;
+    return (
+      isGBCountry() && this.patientData?.patientState?.isReportedByAnother && this.patientData?.patientState?.isMinor
+    );
   }
 
   shouldShowUniNetwork() {

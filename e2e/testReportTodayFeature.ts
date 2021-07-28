@@ -1,7 +1,6 @@
 import { by, element } from 'detox';
 
 import { scrollDownToElement, scrollDownToId, scrollUpToElement } from './helpers';
-import { testLongCovidForm, testPingdemicForm } from './testForms';
 
 type TReportTodayConfig = {
   addTest: boolean;
@@ -232,9 +231,6 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
         await element(by.id('button-rating-later')).tap();
       } catch (_) {}
     });
-
-    testLongCovidForm();
-    testPingdemicForm();
 
     it('should go to the dashboard screen', async () => {
       await scrollDownToId('scroll-view-thank-you-screen', 'button-complete');

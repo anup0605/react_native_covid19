@@ -11,6 +11,7 @@ import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentIn
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as React from 'react';
@@ -137,7 +138,12 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
 
     return (
       <Screen profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}>
-        <ProgressHeader currentStep={1} maxSteps={5} title={i18n.t('title-health-worker-exposure')} />
+        <ProgressHeader
+          currentStep={1}
+          maxSteps={5}
+          style={styling.marginBottomHuge}
+          title={i18n.t('title-health-worker-exposure')}
+        />
 
         <Formik
           initialValues={initialFormValues}
@@ -147,63 +153,63 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
           {(props) => {
             return (
               <Form hasRequiredFields>
-                <View>
-                  <YesNoField
-                    label={i18n.t('health-worker-exposure-question-interacted-any-patients')}
-                    onValueChange={props.handleChange('interactedAnyPatients')}
-                    selectedValue={props.values.interactedAnyPatients}
-                  />
+                <YesNoField
+                  label={i18n.t('health-worker-exposure-question-interacted-any-patients')}
+                  onValueChange={props.handleChange('interactedAnyPatients')}
+                  selectedValue={props.values.interactedAnyPatients}
+                />
 
-                  {!!props.values.interactedAnyPatients && props.values.interactedAnyPatients === 'yes' ? (
-                    <View style={{ marginHorizontal: 16 }}>
+                {!!props.values.interactedAnyPatients && props.values.interactedAnyPatients === 'yes' ? (
+                  <View style={{ marginHorizontal: 16 }}>
+                    <RadioInput
+                      required
+                      items={patientInteractionOptions}
+                      label={i18n.t('health-worker-exposure-question-treated-patients-with-covid')}
+                      onValueChange={props.handleChange('treatedPatientsWithCovid')}
+                      selectedValue={props.values.treatedPatientsWithCovid}
+                    />
+
+                    <RadioInput
+                      required
+                      items={equipmentUsageOptions}
+                      label={i18n.t('health-worker-exposure-question-has-used-ppe-equipment')}
+                      onValueChange={props.handleChange('hasUsedPPEEquipment')}
+                      selectedValue={props.values.hasUsedPPEEquipment}
+                    />
+
+                    {props.values.hasUsedPPEEquipment === 'always' ? (
                       <RadioInput
                         required
-                        items={patientInteractionOptions}
-                        label={i18n.t('health-worker-exposure-question-treated-patients-with-covid')}
-                        onValueChange={props.handleChange('treatedPatientsWithCovid')}
-                        selectedValue={props.values.treatedPatientsWithCovid}
+                        items={availabilityAlwaysOptions}
+                        label={i18n.t('label-chose-an-option')}
+                        onValueChange={props.handleChange('ppeAvailabilityAlways')}
+                        selectedValue={props.values.ppeAvailabilityAlways}
                       />
+                    ) : null}
 
+                    {props.values.hasUsedPPEEquipment === 'sometimes' ? (
                       <RadioInput
                         required
-                        items={equipmentUsageOptions}
-                        label={i18n.t('health-worker-exposure-question-has-used-ppe-equipment')}
-                        onValueChange={props.handleChange('hasUsedPPEEquipment')}
-                        selectedValue={props.values.hasUsedPPEEquipment}
+                        items={availabilitySometimesOptions}
+                        label={i18n.t('label-chose-an-option')}
+                        onValueChange={props.handleChange('ppeAvailabilitySometimes')}
+                        selectedValue={props.values.ppeAvailabilitySometimes}
                       />
+                    ) : null}
 
-                      {props.values.hasUsedPPEEquipment === 'always' ? (
-                        <RadioInput
-                          required
-                          items={availabilityAlwaysOptions}
-                          label={i18n.t('label-chose-an-option')}
-                          onValueChange={props.handleChange('ppeAvailabilityAlways')}
-                          selectedValue={props.values.ppeAvailabilityAlways}
-                        />
-                      ) : null}
+                    {props.values.hasUsedPPEEquipment === 'never' ? (
+                      <RadioInput
+                        required
+                        items={availabilityNeverOptions}
+                        label={i18n.t('label-chose-an-option')}
+                        onValueChange={props.handleChange('ppeAvailabilityNever')}
+                        selectedValue={props.values.ppeAvailabilityNever}
+                      />
+                    ) : null}
+                  </View>
+                ) : null}
 
-                      {props.values.hasUsedPPEEquipment === 'sometimes' ? (
-                        <RadioInput
-                          required
-                          items={availabilitySometimesOptions}
-                          label={i18n.t('label-chose-an-option')}
-                          onValueChange={props.handleChange('ppeAvailabilitySometimes')}
-                          selectedValue={props.values.ppeAvailabilitySometimes}
-                        />
-                      ) : null}
-
-                      {props.values.hasUsedPPEEquipment === 'never' ? (
-                        <RadioInput
-                          required
-                          items={availabilityNeverOptions}
-                          label={i18n.t('label-chose-an-option')}
-                          onValueChange={props.handleChange('ppeAvailabilityNever')}
-                          selectedValue={props.values.ppeAvailabilityNever}
-                        />
-                      ) : null}
-                    </View>
-                  ) : null}
-                </View>
+                <View style={styling.flex} />
 
                 {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
                   <ValidationError error={i18n.t('validation-error-text')} />

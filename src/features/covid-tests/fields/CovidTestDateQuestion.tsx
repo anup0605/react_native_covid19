@@ -36,7 +36,7 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
   const { formikProps } = props;
   const today = moment().add(moment().utcOffset(), 'minutes').toDate();
 
-  function convertToDate(selectedDate: Moment) {
+  function convertToDate(selectedDate: Moment): Date {
     const offset = selectedDate.utcOffset();
     selectedDate.add(offset, 'minutes');
     return selectedDate.toDate();

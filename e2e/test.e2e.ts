@@ -39,11 +39,6 @@ testRegisterFeature({
   password: defaultPassword,
   phoneNumber: tempPhoneNumber,
 });
-testLogoutFeature();
-testLoginScreen({
-  emailAddress: defaultEmailAddress,
-  password: defaultPassword,
-});
 testReconsentFeature({
   consent: false,
   fillInAllFeedback: false,
@@ -58,6 +53,11 @@ testReconsentFeature({
     'research_consent_womens_health',
     'research_consent_autoimmune_conditions',
   ],
+});
+testLogoutFeature();
+testLoginScreen({
+  emailAddress: defaultEmailAddress,
+  password: defaultPassword,
 });
 testCreateNewProfileFeature({
   profileName,

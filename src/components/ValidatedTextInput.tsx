@@ -1,12 +1,13 @@
 import Error from '@assets/icons/Error';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
+import { StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle } from 'react-native';
 
 interface IProps extends TextInputProps {
   error?: boolean;
   label?: string;
   testID?: string;
+  viewStyle?: StyleProp<ViewStyle>;
 }
 
 export class ValidatedTextInput extends React.Component<IProps, object> {
@@ -24,13 +25,14 @@ export class ValidatedTextInput extends React.Component<IProps, object> {
           {
             borderColor: this.props.error ? colors.feedbackBad : 'transparent',
           },
+          this.props.viewStyle,
         ]}
       >
         <TextInput
           placeholderTextColor={colors.secondary}
           ref={(input) => (this.textInput = input)}
-          style={[styles.inputStyle, this.props.multiline ? styles.multipleLines : styles.singleLine]}
           {...this.props}
+          style={[styles.inputStyle, this.props.multiline ? styles.multipleLines : styles.singleLine, this.props.style]}
         />
         {this.props.error ? <Error /> : null}
       </View>

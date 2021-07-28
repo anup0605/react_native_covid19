@@ -237,11 +237,6 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
     navigate('Share', { sharable: 'MAP' });
   };
 
-  const showMap = () => {
-    Analytics.track(events.ESTIMATED_CASES_MAP_CLICKED, { origin: EMapEventOrigin.Arrow });
-    NavigatorService.navigate('EstimatedCases');
-  };
-
   const onMapTapped = () => {
     Analytics.track(events.ESTIMATED_CASES_MAP_CLICKED, { origin: EMapEventOrigin.Map });
     NavigatorService.navigate('EstimatedCases');

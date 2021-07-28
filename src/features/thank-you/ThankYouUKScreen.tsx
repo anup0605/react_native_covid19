@@ -35,8 +35,8 @@ export default function ThankYouUKScreen(props: IProps) {
   React.useEffect(() => {
     (async () => {
       if (startupInfo?.show_modal === 'mental-health-playback') {
-        const testGroupId = util.determineTestGroupId(patientId);
-        if (testGroupId === 'GROUP_B') {
+        const testGroupId = util.determineTestGroupId(patientId, startupInfo?.mh_insight_cohort!);
+        if (testGroupId !== 'GROUP_1') {
           dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
           return;
         }

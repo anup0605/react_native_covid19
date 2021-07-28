@@ -101,8 +101,8 @@ export function DashboardScreen({ navigation, route }: IProps) {
           if (startupInfo?.show_research_consent) {
             appCoordinator.goToReconsent();
           } else if (startupInfo?.show_modal === 'mental-health-playback') {
-            const testGroupId = util.determineTestGroupId(patientId);
-            if (testGroupId === 'GROUP_A') {
+            const testGroupId = util.determineTestGroupId(patientId, startupInfo?.mh_insight_cohort!);
+            if (testGroupId === 'GROUP_1') {
               dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
             }
           }
@@ -117,6 +117,10 @@ export function DashboardScreen({ navigation, route }: IProps) {
   React.useEffect(() => {
     Linking.addEventListener('url', () => {});
   }, []);
+
+  function goToMentalHealthStudyPlayback() {
+    appCoordinator.goToMentalHealthStudyPlayback(startupInfo);
+  }
 
   return (
     <CollapsibleHeaderScrollView
@@ -149,7 +153,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
             doctorName={i18n.t('mental-health.doctor-name')}
             doctorTitle={i18n.t('mental-health.doctor-title')}
             imageNode={getMentalHealthStudyDoctorImage()}
-            onPress={() => appCoordinator.goToMentalHealthStudyPlayback(startupInfo)}
+            onPress={goToMentalHealthStudyPlayback}
             style={styling.marginVerticalSmall}
             tagColor={colors.coral.main.bgColor}
             title={i18n.t('mental-health-playback.results-ready')}
