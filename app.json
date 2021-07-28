@@ -28,7 +28,6 @@
     "orientation": "portrait",
     "owner": "julien.lavigne",
     "packagerOpts": {
-      "config": "metro.config.js",
       "sourceExts": [
         "expo.js",
         "expo.jsx",
@@ -58,6 +57,6 @@
     "updates": {
       "fallbackToCacheTimeout": 10000
     },
-    "version": "2.5.0"
+    "version": "2.6.0"
   }
 }
