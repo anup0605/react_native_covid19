@@ -2,7 +2,6 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import * as screens from '@covid/features/screens';
 import i18n from '@covid/locale/i18n';
 import AnniversaryNavigator from '@covid/routes/AnniversaryNavigator';
-import DebugScreens from '@covid/routes/DebugScreens';
 import DietStudyPlaybackNavigator from '@covid/routes/DietStudyPlaybackNavigator';
 import MentalHealthNavigator from '@covid/routes/MentalHealthNavigator';
 import MentalHealthPlaybackNavigator from '@covid/routes/MentalHealthPlaybackNavigator';
@@ -26,7 +25,6 @@ export default function MainNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen component={screens.SplashScreen} name="Splash" options={noHeader} />
-
       <Stack.Screen component={screens.AboutYouScreen} name="AboutYou" options={noHeader} />
       <Stack.Screen component={screens.AboutYourVaccineScreen} name="AboutYourVaccine" options={noHeader} />
       <Stack.Screen component={screens.AdultOrChildScreen} name="AdultOrChild" options={noHeader} />
@@ -40,7 +38,7 @@ export default function MainNavigator() {
       <Stack.Screen component={screens.CovidTestDetailScreen} name="CovidTestDetail" options={noHeader} />
       <Stack.Screen component={screens.CovidTestListScreen} name="CovidTestList" options={noHeader} />
       <Stack.Screen component={screens.CreateProfileScreen} name="CreateProfile" options={noHeader} />
-      <Stack.Screen component={DebugScreens} name="Dashboard" options={noHeader} />
+      <Stack.Screen component={screens.DashboardScreen} name="Dashboard" options={noHeader} />
       <Stack.Screen component={screens.DashboardUSScreen} name="DashboardUS" options={noHeader} />
       <Stack.Screen component={screens.EditLocationScreen} name="EditLocation" options={noHeader} />
       <Stack.Screen component={screens.EditProfileScreen} name="EditProfile" options={noHeader} />
@@ -102,6 +100,9 @@ export default function MainNavigator() {
       {MentalHealthNavigator({ Stack })}
       {MentalHealthPlaybackNavigator({ Stack })}
       {ReconsentNavigator({ Stack })}
+
+      {/* Uncomment this line to replace the Dashboard with DebugScreens to allow quick debugging */}
+      {/* <Stack.Screen component={DebugScreens} name="Dashboard" options={noHeader} /> */}
     </Stack.Navigator>
   );
 }
