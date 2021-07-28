@@ -1,16 +1,17 @@
-import { BrandedButton, TextareaWithCharCount } from '@covid/components';
+import { BrandedButton, RegularText, TextareaWithCharCount } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen, { FieldWrapper } from '@covid/components/Screen';
+import Screen from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
-import { Form, Item, Label } from 'native-base';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 const initialFormValues = {
@@ -73,19 +74,14 @@ export default class TreatmentOtherScreen extends React.Component<TTreatmentOthe
           {(props) => {
             return (
               <Form>
-                <FieldWrapper style={{ marginVertical: 64 }}>
-                  <Item stackedLabel style={{ borderBottomWidth: 0 }}>
-                    <Label style={{ marginBottom: 16 }}>{question}</Label>
-                    <TextareaWithCharCount
-                      bordered
-                      onChangeText={props.handleChange('description')}
-                      placeholder={i18n.t('placeholder-optional-question')}
-                      textAreaStyle={styles.textarea}
-                      value={props.values.description}
-                    />
-                  </Item>
-                </FieldWrapper>
-
+                <RegularText style={styling.marginVertical}>{question}</RegularText>
+                <TextareaWithCharCount
+                  bordered
+                  onChangeText={props.handleChange('description')}
+                  placeholder={i18n.t('placeholder-optional-question')}
+                  value={props.values.description}
+                />
+                <View style={styling.flex} />
                 <BrandedButton onPress={props.handleSubmit}>{i18n.t('completed')}</BrandedButton>
               </Form>
             );
@@ -95,9 +91,3 @@ export default class TreatmentOtherScreen extends React.Component<TTreatmentOthe
     );
   }
 }
-
-const styles = StyleSheet.create({
-  textarea: {
-    width: '100%',
-  },
-});
