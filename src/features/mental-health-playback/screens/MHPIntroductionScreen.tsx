@@ -48,15 +48,13 @@ export default function MHPIntroductionScreen() {
       style={styling.backgroundWhite}
     >
       <Introduction scale={windowWidth / introductionWidth} />
-      <View style={[styling.padding, styling.marginVerticalAuto, styling.zIndex10]}>
+      <View style={[styling.padding, styling.marginVerticalAuto]}>
         <Card backgroundColor="#F5F9FC" style={styling.marginBottom}>
           <Text style={styling.marginBottom} textClass="h4">
             {isGeneral
               ? i18n.t('mental-health-playback.introduction.title-general')
               : i18n.t('mental-health-playback.introduction.title-personal')}
           </Text>
-          <UL items={isGeneral ? generalItems : personalItems} />
-          <UL items={isGeneral ? generalItems : personalItems} />
           <UL items={isGeneral ? generalItems : personalItems} />
         </Card>
         <View style={styling.row}>
