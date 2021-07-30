@@ -10,6 +10,7 @@
   "no-change": "No change",
   "skip": "Omitir",
   "you": "You",
+  "ok": "OK",
 
   "create-account": {
     "title": "Crear nueva cuenta",
@@ -266,7 +267,7 @@
 
   "covid-test": {
     "page-title": "Estado de COVID-19",
-    "page-title-detail-add": "Agregar nuevo examen",
+    "page-title-detail-add": "Añade un nuevo test de COVID-19",
     "page-title-detail-update": "Actualizar examen",
     "add-test": "Agregar examen",
     "update-test": "Actualizar examen",
@@ -282,19 +283,30 @@
     "question-time-test-taken-error": "Ingrese la hora de su cita",
     "question-pick-a-time": "Elige una hora",
 
-    "question-mechanism": "¿Cómo se realizó este examen?",
+    "question-mechanism": "¿Qué tipo de test es?",
     "picker-nose-swab": "Usaron un hisopo en mi nariz",
     "picker-throat-swab": "Usaron un hisopo en mi garganta",
     "picker-nose-throat-swab": "Con un hisopo en mi nariz o garganta",
     "picker-nose-throat-swab-and-saliva": "Con un hisopo en mi nariz o garganta y escupí",
     "picker-saliva-sample": "Escupí en un vaso/tubo",
+    "picker-lateral": "Test de antígenos",
+    "picker-pcr": "Test PCR",
     "picker-blood-sample": "Di una muestra de sangre",
     "picker-finger-prick": "Un examen de sangre con un pinchazo en el dedo",
     "picker-blood-draw": "Un examen de sangre, hecho usando un aguja",
     "picker-other": "Otro, especifique",
 
-    "question-mechanism-specify": "Indique cómo se realizó el examen",
-    "question-trained-worker": "¿Un trabajador calificado te hizo la prueba mediante un hisopo?",
+    "question-mechanism-specify": "Otro (especifique)",
+    "question-trained-worker": "Did a trained worker swab you?",
+    "question-test-performed-by": "¿Quién realizo el test?",
+    "picker-myself-no-guidance": "Yo mismo - sin supervisión",
+    "picker-myself-guidance": "Yo mismo - con la supervisión de un professional",
+    "picker-trained-worker": "Un professional",
+
+    "question-antibody": "¿Era Anti-N o Anti-S?",
+    "picker-anti-n": "Anti-N",
+    "picker-anti-s": "Anti-S",
+    "picker-dont-know": "No lo se",
 
     "location": {
       "question": "¿Dónde se realizó la prueba?",
@@ -314,14 +326,12 @@
       }
     },
 
-    "question-result": "¿Cuáles son los resultados de esta prueba?",
+    "question-result": "¿Cuál fue el resultado del test?",
     "picker-positive": "Positivo",
     "picker-negative": "Negativo",
     "picker-waiting": "Esperando resultados",
     "picker-test-failed": "No está claro / Falló el examen",
-
-    "question-knows-date-of-test": "¿Sabe la fecha de su examen?",
-    "question-date-test-occurred": "¿Cuándo fue su examen?",
+    "question-date-test-occurred": "¿Cuándo te hiciste el test?",
     "question-date-approximate": "Rango aproximado de fechas",
     "required-date": "Indique la fecha de este examen",
     "required-dates": "Indique las fechas entre las que ocurrió este examen",
@@ -332,6 +342,26 @@
       "title": "",
       "body": "",
       "consent": ""
+    },
+
+    "mechanism-modal": {
+      "title": "Tipos de test",
+      "lateral-flow-title": "Test de antígenos",
+      "lateral-flow-description": "Estos tests tambien se llaman tests o pruebas rápidas ya que producen resultados en unos 30 minutos.",
+      "pcr-title": "Test PCR",
+      "pcr-description": "Estos test se envian al laboratorio y suelen tardar entre 24 horas y tres dias a devolver un resultado. Los tests PCR son capaces de detectar una persona infectada antes de que sea contagiosa.",
+      "finger-prick-title": "Test por punción en el dedo (anticuerpos)",
+      "finger-prick-description": "Estos son tests rápidos para la detección de anticuerpos del COVID-19. En general, el testeo de anticuerpos no es recomendable hasta al menos 14 días después del comienzo de los síntomas.",
+      "blood-draw-title": "Test por extracción de sangre venosa (anticuerpos)",
+      "blood-draw-description": "Estos tests tienden a ser más precisos para la detección de anticuerpos. Requieren una extracción de sangre de una vena y análisis en el laboratorio."
+    },
+
+    "antibody-modal": {
+      "title": "Anti-N y Anti-S",
+      "anti-n-title": "Test de anticuerpos antinucleares (Anti-N)",
+      "anti-n-description": "Detectan la presencia de anticuerpos dirigidos a la proteina N del COVID-19. Los anticuerpos Anti-N no son producidos por ninguna de las vacunas en el mercado. Sin embargo, se pueden encontrar en gente que se ha recuperado del COVID-19 pero desaparecen con el paso del tiempo.",
+      "anti-s-title": "Test de anticuerpos de la proteina S (Anti-S)",
+      "anti-s-description": "Detectan la presencia de anticuerpos dirigidos a la proteina S del COVID-19. Los anticuerpos Anti-S se pueden encontrar en gente que se ha vacunado para el COVID-19 y que se ha recuperado del COVID-19."
     }
   },
 
@@ -458,7 +488,6 @@
     "active-no": "",
     "active-not-sure": ""
   },
-
 
   "long-covid": {
     "apology": "We kindly ask anyone who already completed this to do so once more as we made a mistake in our previous version - thank you!",
@@ -914,14 +943,19 @@
   "covid-test-list": {
     "title": "Sus exámenes de COVID-19",
     "text": "Si se realizó un examen de COVID-19, agregue a continuación. Puede editarlos en cualquier momento.",
-    "add-new-test": "Agregar nuevo examen",
+    "add-new-test": "Añada un nuevo test",
     "positive": "Positivo",
     "negative": "Negativo",
     "failed": "Falló",
     "pending": "Pendiente",
     "update": "Actualizar ",
     "never-had-test": "Nunca me he hecho un examen de COVID",
-    "above-list-correct": "La lista anterior es correcta"
+    "above-list-correct": "La lista anterior es correcta",
+    "tabs-title": "Tipo de test",
+    "tab-lateral": "Antígenos",
+    "tab-pcr": "PCR",
+    "tab-antibody": "Anticuerpos",
+    "tab-other": "Otros"
   },
 
   "errors": {

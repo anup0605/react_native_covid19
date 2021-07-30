@@ -6,6 +6,7 @@ type TReportTodayConfig = {
   addTest: boolean;
   addVaccine: boolean;
   healthy: boolean;
+  updateTest: boolean;
 };
 
 export function testReportTodayFeature(config: TReportTodayConfig) {
@@ -21,32 +22,58 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
     function testAddTest() {
       it('should be able to add a COVID-19 test', async () => {
         await element(by.id('button-add-test')).tap();
-        await element(by.id('button-yes-covid-test-date-question')).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-mechanism-question');
-        await element(by.id('covid-test-mechanism-question-item-spit_tube')).tap();
+        await element(by.id('covid-test-mechanism-question-item-pcr')).tap();
 
-        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-location-question');
-        await element(by.id('covid-test-location-question-item-home')).tap();
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-performed-by-question');
+        await element(by.id('covid-test-performed-by-question-item-trained')).tap();
+
+        // TODO: need better way of selecting date in calendar
+        await element(by.id('scroll-view-covid-test-detail-screen')).scroll(150, 'down');
+        await element(by.text('1')).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-result-question');
         await element(by.id('covid-test-result-question-item-negative')).tap();
-
-        await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-no-covid-test-is-rapid-question');
-        await element(by.id('button-no-covid-test-is-rapid-question')).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-no-covid-test-invited-question');
         await element(by.id('button-no-covid-test-invited-question')).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-submit');
         await element(by.id('button-submit').withAncestor(by.id('covid-test-detail-screen'))).tap();
-
-        // The test can't be completed because the date input is not testable.
-        await element(by.id('button-back-navigation').withAncestor(by.id('covid-test-detail-screen'))).tap();
       });
     }
     if (config.addTest) {
       testAddTest();
+    }
+
+    function testUpdateTest() {
+      it('should be able to update a COVID-19 test', async () => {
+        // TODO: Not sure why multiple instances error shows up
+        await element(by.id('covid-test-row-0')).atIndex(0).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-mechanism-question');
+        await element(by.id('covid-test-mechanism-question-item-blood_sample_finger_prick')).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-antibody-question');
+        await element(by.id('covid-test-antibody-question-item-anti_n')).tap();
+
+        // TODO: need better way of selecting date in calendar
+        await element(by.id('scroll-view-covid-test-detail-screen')).scroll(150, 'down');
+        await element(by.text('1')).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-result-question');
+        await element(by.id('covid-test-result-question-item-positive')).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-no-covid-test-invited-question');
+        await element(by.id('button-no-covid-test-invited-question')).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-submit');
+        await element(by.id('button-submit').withAncestor(by.id('covid-test-detail-screen'))).tap();
+      });
+    }
+    if (config.updateTest) {
+      testUpdateTest();
     }
 
     it('should open the vaccine list screen', async () => {

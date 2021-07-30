@@ -66,10 +66,12 @@ testReportTodayFeature({
   addTest: false,
   addVaccine: false,
   healthy: false,
+  updateTest: false,
 });
 testReportTodayFeature({
   addTest: true,
-  addVaccine: true,
+  addVaccine: false, // Change to true once new vaccine flow implemented
   healthy: true,
+  updateTest: true,
 });
 testLogoutFeature();

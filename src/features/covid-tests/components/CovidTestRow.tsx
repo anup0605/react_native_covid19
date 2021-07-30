@@ -10,9 +10,10 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 type TProps = {
   item: TCovidTest;
+  testID: string;
 };
 
-export const CovidTestRow: React.FC<TProps> = ({ item }) => {
+export const CovidTestRow: React.FC<TProps> = ({ item, testID }) => {
   const formatTestResult = (result: string) => {
     switch (result) {
       case 'positive':
@@ -47,7 +48,11 @@ export const CovidTestRow: React.FC<TProps> = ({ item }) => {
   };
 
   return (
-    <TouchableOpacity onPress={() => assessmentCoordinator.goToAddEditTest(item)} style={styles.itemTouchable}>
+    <TouchableOpacity
+      onPress={() => assessmentCoordinator.goToAddEditTest(item)}
+      style={styles.itemTouchable}
+      testID={testID}
+    >
       <Image source={getRowIcon(item.result)} style={styles.tick} />
       <RegularText style={[item.result === 'waiting' && styles.pendingText]}>{formatTestDate(item)}</RegularText>
       <View style={{ flex: 1 }} />
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
   itemTouchable: {
     alignItems: 'center',
     flexDirection: 'row',
-    height: 40,
+    paddingVertical: 12,
   },
   pendingText: {
     color: colors.secondary,

@@ -1,13 +1,14 @@
 import { BrandedButton, DeleteButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
-import { ProgressHeader } from '@covid/components/ProgressHeader';
+import { Header } from '@covid/components/Screen';
 import { ScreenNew } from '@covid/components/ScreenNew';
-import { ErrorText } from '@covid/components/Text';
+import { ErrorText, HeaderText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { covidTestService } from '@covid/core/user/CovidTestService';
 import { ECovidTestType, TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
 import {
   CovidTestDateQuestion,
   CovidTestInvitedQuestion,
@@ -33,6 +34,8 @@ import * as React from 'react';
 import { Alert } from 'react-native';
 import * as Yup from 'yup';
 
+import { isZoeInviteOfferTest } from './helpers';
+
 interface ICovidTestData
   extends ICovidTestDateData,
     ICovidTestMechanismData,
@@ -41,77 +44,68 @@ interface ICovidTestData
     ICovidTestInvitedData,
     ICovidTestIsRapidData {}
 
-type TProps = {
+type TCovidProps = {
   navigation: StackNavigationProp<TScreenParamList, 'CovidTestDetail'>;
   route: RouteProp<TScreenParamList, 'CovidTestDetail'>;
 };
 
-type TState = {
-  errorMessage: string;
-  submitting: boolean;
-};
+export default function CovidTestDetailScreen(props: TCovidProps) {
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
+  const [submitting, setSubmitting] = React.useState<boolean>(false);
+  const testId = props.route.params?.test?.id;
 
-const initialState: TState = {
-  errorMessage: '',
-  submitting: false,
-};
-
-export default class CovidTestDetailScreen extends React.Component<TProps, TState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = initialState;
-  }
-
-  get testId(): string | undefined {
-    return this.props.route.params?.test?.id;
-  }
-
-  submitCovidTest(infos: Partial<TCovidTest>) {
-    if (this.props.route.params?.test?.id) {
+  function submitCovidTest(infos: Partial<TCovidTest>) {
+    if (testId) {
       if (
-        this.props.route.params?.test?.result !== 'positive' &&
+        props.route.params?.test?.result !== 'positive' &&
         infos.result === 'positive' &&
-        this.props.route.params?.assessmentData?.patientData?.patientState?.hasSchoolGroup
+        props.route.params?.assessmentData?.patientData?.patientState?.hasSchoolGroup
       ) {
-        this.setState({ submitting: false });
-        infos.id = this.testId;
+        setSubmitting(false);
+        infos.id = testId;
         assessmentCoordinator.goToTestConfirm(infos as TCovidTest);
       } else {
         covidTestService
-          .updateTest(this.props.route.params?.test?.id, infos)
+          .updateTest(testId, infos)
           .then(() => {
-            NavigatorService.goBack();
+            NavigatorService.navigate({
+              name: 'CovidTestList',
+              params: { is_rapid_test: infos.is_rapid_test, mechanism: infos.mechanism },
+            });
           })
           .catch(() => {
-            this.setState({ errorMessage: i18n.t('something-went-wrong') });
-            this.setState({ submitting: false });
+            setErrorMessage(i18n.t('something-went-wrong'));
+            setSubmitting(false);
           });
       }
     } else if (
       infos.result === 'positive' &&
-      this.props.route.params?.assessmentData?.patientData?.patientState?.hasSchoolGroup
+      props.route.params?.assessmentData?.patientData?.patientState?.hasSchoolGroup
     ) {
-      this.setState({ submitting: false });
+      setSubmitting(false);
       assessmentCoordinator.goToTestConfirm(infos as TCovidTest);
     } else {
       covidTestService
         .addTest(infos)
         .then(() => {
-          NavigatorService.goBack();
+          NavigatorService.navigate({
+            name: 'CovidTestList',
+            params: { is_rapid_test: infos.is_rapid_test, mechanism: infos.mechanism },
+          });
         })
         .catch(() => {
-          this.setState({ errorMessage: i18n.t('something-went-wrong') });
-          this.setState({ submitting: false });
+          setErrorMessage(i18n.t('something-went-wrong'));
+          setSubmitting(false);
         });
     }
   }
 
-  handleAction(formData: ICovidTestData) {
-    if (!this.state.submitting) {
-      this.setState({ submitting: true });
+  function handleAction(formData: ICovidTestData) {
+    if (!submitting) {
+      setSubmitting(true);
       if (!formData.useApproximateDate && !formData.dateTakenSpecific) {
-        this.setState({ errorMessage: i18n.t('covid-test.required-date') });
-        this.setState({ submitting: false });
+        setErrorMessage(i18n.t('covid-test.required-date'));
+        setSubmitting(false);
         return;
       }
 
@@ -119,8 +113,8 @@ export default class CovidTestDetailScreen extends React.Component<TProps, TStat
         formData.useApproximateDate &&
         (formData.dateTakenBetweenStart === undefined || formData.dateTakenBetweenEnd === undefined)
       ) {
-        this.setState({ errorMessage: i18n.t('covid-test.required-dates') });
-        this.setState({ submitting: false });
+        setErrorMessage(i18n.t('covid-test.required-dates'));
+        setSubmitting(false);
         return;
       }
 
@@ -135,11 +129,11 @@ export default class CovidTestDetailScreen extends React.Component<TProps, TStat
         ...CovidTestIsRapidQuestion.createDTO(formData),
       } as Partial<TCovidTest>;
 
-      this.submitCovidTest(infos);
+      submitCovidTest(infos);
     }
   }
 
-  async promptDeleteTest() {
+  async function promptDeleteTest() {
     Alert.alert(
       i18n.t('covid-test.delete-test-alert-title'),
       i18n.t('covid-test.delete-test-alert-text'),
@@ -150,7 +144,7 @@ export default class CovidTestDetailScreen extends React.Component<TProps, TStat
         },
         {
           onPress: async () => {
-            await this.deleteTest();
+            await deleteTest();
           },
           style: 'destructive',
           text: i18n.t('delete'),
@@ -160,80 +154,102 @@ export default class CovidTestDetailScreen extends React.Component<TProps, TStat
     );
   }
 
-  async deleteTest() {
-    await covidTestService.deleteTest(this.testId!);
-    this.props.navigation.goBack();
+  async function deleteTest() {
+    await covidTestService.deleteTest(testId!);
+    props.navigation.goBack();
     Analytics.track(events.DELETE_COVID_TEST);
   }
 
-  render() {
-    const test = this.props.route.params?.test;
+  const test = props.route.params?.test;
+  const isV1Test = test?.version[0] === '1';
 
-    const registerSchema = Yup.object()
-      .shape({})
-      .concat(CovidTestDateQuestion.schema())
-      .concat(CovidTestMechanismQuestion.schema())
-      .concat(CovidTestResultQuestion.schema())
-      .concat(CovidTestInvitedQuestion.schema())
-      .concat(CovidTestLocationQuestion.schema())
-      .concat(CovidTestIsRapidQuestion.schema());
+  const registerSchema = Yup.object()
+    .shape({})
+    .concat(CovidTestDateQuestion.schema())
+    .concat(CovidTestMechanismQuestion.schema())
+    .concat(CovidTestResultQuestion.schema())
+    .concat(CovidTestInvitedQuestion.schema())
+    .concat(CovidTestLocationQuestion.schema())
+    .concat(CovidTestIsRapidQuestion.schema());
 
-    return (
-      <ScreenNew
-        profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
-        testID="covid-test-detail-screen"
+  return (
+    <ScreenNew
+      profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
+      testID="covid-test-detail-screen"
+    >
+      <Header>
+        <HeaderText>
+          {i18n.t(testId ? 'covid-test.page-title-detail-update' : 'covid-test.page-title-detail-add')}
+        </HeaderText>
+      </Header>
+
+      <Formik
+        validateOnMount
+        initialValues={{
+          ...CovidTestDateQuestion.initialFormValues(test),
+          ...CovidTestMechanismQuestion.initialFormValues(test),
+          ...CovidTestResultQuestion.initialFormValues(test),
+          ...CovidTestInvitedQuestion.initialFormValues(test),
+          ...CovidTestLocationQuestion.initialFormValues(test),
+          ...CovidTestIsRapidQuestion.initialFormValues(test),
+        }}
+        onSubmit={(values: ICovidTestData) => {
+          return handleAction(values);
+        }}
+        validationSchema={registerSchema}
       >
-        <ProgressHeader
-          currentStep={1}
-          maxSteps={2}
-          title={i18n.t(this.testId ? 'covid-test.page-title-detail-update' : 'covid-test.page-title-detail-add')}
-        />
+        {(props) => {
+          return (
+            <Form hasRequiredFields>
+              <CovidTestMechanismQuestion
+                formikProps={props as unknown as FormikProps<ICovidTestMechanismData>}
+                test={test}
+              />
+              <CovidTestDateQuestion formikProps={props as unknown as FormikProps<ICovidTestDateData>} test={test} />
+              {test !== undefined && test?.location ? (
+                <CovidTestLocationQuestion
+                  formikProps={props as unknown as FormikProps<ICovidTestLocationData>}
+                  test={test}
+                />
+              ) : null}
+              <CovidTestResultQuestion
+                formikProps={props as unknown as FormikProps<ICovidTestResultData>}
+                test={test}
+              />
+              {test !== undefined && test?.is_rapid_test !== null && isV1Test ? (
+                <CovidTestIsRapidQuestion
+                  formikProps={props as unknown as FormikProps<ICovidTestIsRapidData>}
+                  test={test}
+                />
+              ) : null}
+              {(test !== undefined && test?.invited_to_test !== null) ||
+              isZoeInviteOfferTest(props.values.mechanism as ECovidTestMechanismOptions) ? (
+                <CovidTestInvitedQuestion
+                  formikProps={props as unknown as FormikProps<ICovidTestInvitedData>}
+                  test={test}
+                />
+              ) : null}
 
-        <Formik
-          validateOnMount
-          initialValues={{
-            ...CovidTestDateQuestion.initialFormValues(test),
-            ...CovidTestMechanismQuestion.initialFormValues(test),
-            ...CovidTestResultQuestion.initialFormValues(test),
-            ...CovidTestInvitedQuestion.initialFormValues(test),
-            ...CovidTestLocationQuestion.initialFormValues(test),
-            ...CovidTestIsRapidQuestion.initialFormValues(test),
-          }}
-          onSubmit={(values: ICovidTestData) => {
-            return this.handleAction(values);
-          }}
-          validationSchema={registerSchema}
-        >
-          {(props) => {
-            return (
-              <Form hasRequiredFields style={styling.marginTop}>
-                <CovidTestDateQuestion formikProps={props as FormikProps<ICovidTestDateData>} test={test} />
-                <CovidTestMechanismQuestion formikProps={props as FormikProps<ICovidTestMechanismData>} test={test} />
-                <CovidTestLocationQuestion formikProps={props as FormikProps<ICovidTestLocationData>} test={test} />
-                <CovidTestResultQuestion formikProps={props as FormikProps<ICovidTestResultData>} test={test} />
-                <CovidTestIsRapidQuestion formikProps={props as FormikProps<ICovidTestIsRapidData>} test={test} />
-                <CovidTestInvitedQuestion formikProps={props as FormikProps<ICovidTestInvitedData>} test={test} />
+              <ErrorText>{errorMessage}</ErrorText>
 
-                <ErrorText>{this.state.errorMessage}</ErrorText>
-                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
-                  <ValidationError error={i18n.t('validation-error-text')} />
-                ) : null}
+              {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                <ValidationError error={i18n.t('validation-error-text')} />
+              ) : null}
 
-                {this.testId ? <DeleteButton onPress={this.promptDeleteTest} /> : null}
+              {testId ? <DeleteButton onPress={promptDeleteTest} /> : null}
 
-                <BrandedButton
-                  enabled={!this.state.submitting && props.isValid}
-                  onPress={props.handleSubmit}
-                  style={styling.marginTop}
-                  testID="button-submit"
-                >
-                  {i18n.t(this.testId ? 'covid-test.update-test' : 'covid-test.add-test')}
-                </BrandedButton>
-              </Form>
-            );
-          }}
-        </Formik>
-      </ScreenNew>
-    );
-  }
+              <BrandedButton
+                enabled={!submitting && props.isValid}
+                onPress={props.handleSubmit}
+                style={styling.marginTop}
+                testID="button-submit"
+              >
+                {i18n.t(testId ? 'covid-test.update-test' : 'covid-test.add-test')}
+              </BrandedButton>
+            </Form>
+          );
+        }}
+      </Formik>
+    </ScreenNew>
+  );
 }

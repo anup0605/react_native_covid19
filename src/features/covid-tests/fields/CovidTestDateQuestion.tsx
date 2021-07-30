@@ -44,6 +44,7 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
 
   function setTestDate(selectedDate: Moment): void {
     formikProps.values.dateTakenSpecific = convertToDate(selectedDate);
+
     if (props.dateChangeCallback) {
       props.dateChangeCallback();
     }
@@ -84,6 +85,7 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
             formikProps.values.dateTakenSpecific = undefined;
           }
           formikProps.setFieldValue('useApproximateDate', newValue);
+
           if (props.dateChangeCallback) {
             props.dateChangeCallback();
           }

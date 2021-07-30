@@ -94,7 +94,7 @@ CovidTestLocationQuestion.initialFormValues = (test?: TCovidTest): ICovidTestLoc
 
 CovidTestLocationQuestion.schema = () => {
   return Yup.object().shape({
-    location: Yup.string().required(i18n.t('please-select-option')),
+    location: Yup.string(),
   });
 };
 

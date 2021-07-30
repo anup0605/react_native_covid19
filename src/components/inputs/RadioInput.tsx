@@ -26,6 +26,8 @@ interface IProps<V = any> {
   required?: boolean;
   selectedValue?: V;
   testID?: string;
+  IconComponent?: React.ComponentType<any>;
+  iconOnPress?: () => void;
 }
 
 const defaultItems: IItem[] = [
@@ -42,6 +44,11 @@ export function RadioInput(props: IProps) {
         <LabelText style={styles.marginBottom}>
           {props.label}
           {props.required ? requiredFormMarker : null}
+          {props.IconComponent ? (
+            <TouchableOpacity onPress={props.iconOnPress} style={styles.icon}>
+              <props.IconComponent />
+            </TouchableOpacity>
+          ) : null}
         </LabelText>
       )}
       {items.map((item, index) => (
@@ -74,6 +81,11 @@ const styles = StyleSheet.create({
   firstItem: {
     ...itemStyle,
     paddingBottom: 12,
+  },
+  icon: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingLeft: 4,
   },
   image: {
     height: 24,

@@ -2,6 +2,7 @@ import { TAssessmentData } from '@covid/core/assessment/AssessmentCoordinator';
 import { TPatientData } from '@covid/core/patient/PatientData';
 import { ISchoolModel, ISubscribedSchoolStats } from '@covid/core/schools/Schools.dto';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
 import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 
 export enum EConsentType {
@@ -53,7 +54,12 @@ export type TScreenParamList = {
 
   // Assessment screens
   HealthWorkerExposure: { assessmentData: TAssessmentData };
-  CovidTestList: { assessmentData: TAssessmentData; tests?: TCovidTest[] };
+  CovidTestList: {
+    assessmentData: TAssessmentData;
+    tests?: TCovidTest[];
+    mechanism: ECovidTestMechanismOptions;
+    is_rapid_test: boolean;
+  };
   CovidTestDetail: { assessmentData: TAssessmentData; test?: TCovidTest };
   CovidTestConfirm: { assessmentData: TAssessmentData; test: TCovidTest };
   HowYouFeel: { assessmentData: TAssessmentData };
