@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     marginTop: grid.xxl,
   },
   modalTitle: {
-    marginBottom: grid.xxxl,
     marginTop: grid.m,
     textAlign: 'center',
   },

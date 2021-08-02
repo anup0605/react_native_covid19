@@ -1,6 +1,5 @@
 import { BrandedButton, DeleteButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
-import { Header } from '@covid/components/Screen';
 import { ScreenNew } from '@covid/components/ScreenNew';
 import { ErrorText, HeaderText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
@@ -26,7 +25,7 @@ import {
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { styling } from '@covid/themes';
+import { grid, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
@@ -177,11 +176,9 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="covid-test-detail-screen"
     >
-      <Header>
-        <HeaderText>
-          {i18n.t(testId ? 'covid-test.page-title-detail-update' : 'covid-test.page-title-detail-add')}
-        </HeaderText>
-      </Header>
+      <HeaderText style={{ marginBottom: grid.s }}>
+        {i18n.t(testId ? 'covid-test.page-title-detail-update' : 'covid-test.page-title-detail-add')}
+      </HeaderText>
 
       <Formik
         validateOnMount

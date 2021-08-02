@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   icon: {
     alignItems: 'center',
     flexDirection: 'row',
+    paddingBottom: 2,
     paddingLeft: 4,
   },
   image: {

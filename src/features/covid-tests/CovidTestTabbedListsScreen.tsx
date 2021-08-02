@@ -100,7 +100,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
         style: { marginBottom: 12 },
         tabStyle: { paddingHorizontal: 6, paddingVertical: 14, width: tabWidth },
       }}
-      timingConfig={{ duration: 50 }}
+      timingConfig={{ duration: 25 }}
     >
       <Tab.Screen
         children={() => <CovidListByType covidTests={lateralFlowTests} />}
