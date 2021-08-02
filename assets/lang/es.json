@@ -958,6 +958,23 @@
     "tab-other": "Otros"
   },
 
+  "covid-test-modal": {
+    "screen-0": {
+      "title": "Navega por tus varios tests"
+    },
+    "screen-1": {
+      "title": "Tus tests más recientes estan ahora arriba"
+    },
+    "screen-2": {
+      "title": "Introduce fácilmente nuevos tests, incl. tests de anticuerpos."
+    },
+    "screen-3": {
+      "title": "Introduce y continue para reportar tu síntomas diarios"
+    },
+    "new-design": "Nuevo diseño",
+    "button": "OK"
+  },
+
   "errors": {
     "button-retry": "Reintentar",
     "button-okay": "Aceptar",

@@ -792,6 +792,23 @@
     "tab-other": "Other"
   },
 
+  "covid-test-modal": {
+    "screen-0": {
+      "title": "Tap between your various logged tests"
+    },
+    "screen-1": {
+      "title": "Your most recent tests are now placed at the top"
+    },
+    "screen-2": {
+      "title": "Easily log new tests incl. Antibody tests"
+    },
+    "screen-3": {
+      "title": "Submit and continue to log your daily symptoms"
+    },
+    "new-design": "New design",
+    "button": "OK"
+  },
+
   "errors": {
     "button-retry": "Retry",
     "button-okay": "Ok",

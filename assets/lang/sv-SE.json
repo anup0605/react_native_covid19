@@ -718,6 +718,23 @@
     "tab-other": "Annat"
   },
 
+  "covid-test-modal": {
+    "screen-0": {
+      "title": "Växla mellan dina registrerade tester"
+    },
+    "screen-1": {
+      "title": "Du hittar nu dina senaste tester högst upp"
+    },
+    "screen-2": {
+      "title": "Registrera enkelt nya tester, bl.a. antikroppstester"
+    },
+    "screen-3": {
+      "title": "Skicka in och rapportera sedan hur du mår i dag"
+    },
+    "new-design": "Ny design",
+    "button": "OK"
+  },
+
   "errors": {
     "button-retry": "Försök igen",
     "button-okay": "Ok",

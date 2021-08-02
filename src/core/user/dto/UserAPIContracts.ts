@@ -288,6 +288,9 @@ export type TPatientInfosRequest = {
   research_consent_neurological_conditions: boolean;
   research_consent_nutrition_and_gut_health: boolean;
   research_consent_skin_conditions: boolean;
+
+  // Covid tests
+  has_seen_covid_test_onboarding: boolean;
   research_consent_vision_and_hearing_conditions: boolean;
   research_consent_womens_health: boolean;
 };
@@ -337,6 +340,7 @@ export type TStartupInfo = {
   ip_country: string;
   mh_insight_cohort?: TMHInsightCohort;
   min_supported_app_version?: string;
+  show_covid_test_onboarding: boolean;
   show_diet_score: boolean;
   show_edit_location: boolean;
   show_long_covid: boolean;

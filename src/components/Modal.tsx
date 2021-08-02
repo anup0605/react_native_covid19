@@ -3,6 +3,7 @@ import Analytics from '@covid/core/Analytics';
 import * as React from 'react';
 import { Modal as RNModal, ScrollView, StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 interface IProps {
   children?: React.ReactNode;
@@ -11,6 +12,13 @@ interface IProps {
   onRequestClose: () => void;
   visible: boolean;
   showVerticalScrollIndicator?: boolean;
+  animationType?: 'fade' | 'none' | 'slide';
+  swipeUp?: Function;
+  swipeDown?: Function;
+  swipeLeft?: Function;
+  swipeRight?: Function;
+  testID?: string;
+
 }
 
 const BORDER_RADIUS = 16;
@@ -33,30 +41,84 @@ export default function Modal(props: IProps) {
       Analytics.trackModalView(props.modalName);
     }
   }, [props.modalName]);
-  return (
-    <RNModal transparent animationType="fade" onRequestClose={props.onRequestClose} visible={props.visible}>
-      <SafeLayout style={styles.safeLayout}>
-        <View style={styles.view}>
-          <View style={styles.view2}>
-            <ScrollView
-              alwaysBounceVertical={false}
-              contentContainerStyle={styles.contentContainer}
-              scrollIndicatorInsets={INSETS}
-              showsVerticalScrollIndicator={props.showVerticalScrollIndicator || false}
-              style={styles.scrollView}
-            >
-              {props.children}
-            </ScrollView>
-            {props.footerChildren ? (
-              <View style={styles.padding}>
-                <LinearGradient colors={COLORS} style={styles.linearGradient} />
-                {props.footerChildren}
-              </View>
-            ) : null}
+
+  function onSwipeUp() {
+    if (props.swipeUp) {
+      props.swipeUp();
+    }
+  }
+
+  function onSwipeDown() {
+    if (props.swipeDown) {
+      props.swipeDown();
+    }
+  }
+
+  function onSwipeLeft() {
+    if (props.swipeLeft) {
+      props.swipeLeft();
+    }
+  }
+
+  function onSwipeRight() {
+    if (props.swipeRight) {
+      props.swipeRight();
+    }
+  }
+
+  function hasSwipe(): boolean {
+    return (
+      props.swipeUp !== undefined ||
+      props.swipeDown !== undefined ||
+      props.swipeLeft !== undefined ||
+      props.swipeRight !== undefined
+    );
+  }
+
+  function renderContent() {
+    return (
+      <RNModal
+        transparent
+        animationType={props.animationType ?? 'fade'}
+        onRequestClose={props.onRequestClose}
+        visible={props.visible}
+      >
+        <SafeLayout style={styles.safeLayout}>
+          <View style={styles.view} testID={props.testID ?? 'test-modal'}>
+            <View style={styles.view2}>
+              <ScrollView
+                alwaysBounceVertical={false}
+                contentContainerStyle={styles.contentContainer}
+                scrollIndicatorInsets={INSETS}
+                showsVerticalScrollIndicator={props.showVerticalScrollIndicator || false}
+                style={styles.scrollView}
+              >
+                {props.children}
+              </ScrollView>
+              {props.footerChildren ? (
+                <View style={styles.padding}>
+                  <LinearGradient colors={COLORS} style={styles.linearGradient} />
+                  {props.footerChildren}
+                </View>
+              ) : null}
+            </View>
           </View>
-        </View>
-      </SafeLayout>
-    </RNModal>
+        </SafeLayout>
+      </RNModal>
+    );
+  }
+
+  return hasSwipe() ? (
+    <GestureRecognizer
+      onSwipeUp={(state) => onSwipeUp()}
+      onSwipeDown={(state) => onSwipeDown()}
+      onSwipeLeft={(state) => onSwipeLeft()}
+      onSwipeRight={(state) => onSwipeRight()}
+    >
+      {renderContent()}
+    </GestureRecognizer>
+  ) : (
+    renderContent()
   );
 }
 

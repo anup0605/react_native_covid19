@@ -4,8 +4,10 @@ import { ProgressHeader } from '@covid/components/ProgressHeader';
 import Screen from '@covid/components/Screen';
 import { ErrorText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
+import { TRootState } from '@covid/core/state/root';
 import { covidTestService } from '@covid/core/user/CovidTestService';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { CovidTestTabbedListsScreen } from '@covid/features/covid-tests';
 import { getTestType } from '@covid/features/covid-tests/helpers';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -15,6 +17,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { useSelector } from 'react-redux';
+
+import CovidTestListOnboardingModal from './modals/CovidTestListOnboardingModal';
 
 interface IProps {
   navigation: StackNavigationProp<TScreenParamList, 'CovidTestList'>;
@@ -28,6 +33,8 @@ export default function CovidTestListScreen(props: IProps) {
   const [covidTests, setCovidTests] = React.useState<TCovidTest[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
+  const [showOnboardingModal, setShowOnboardingModal] = React.useState<boolean>(false);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
 
   const windowDimensions = useWindowDimensions();
   const minTabViewHeight = SINGLE_TEST_ROW_HEIGHT * 5;
@@ -35,6 +42,10 @@ export default function CovidTestListScreen(props: IProps) {
 
   useFocusEffect(
     React.useCallback(() => {
+      if (startupInfo?.show_covid_test_onboarding) {
+        setShowOnboardingModal(true);
+      }
+
       let isActive = true;
 
       const fetchTestList = async () => {
@@ -76,12 +87,25 @@ export default function CovidTestListScreen(props: IProps) {
     ? getTestType(props.route.params.mechanism, props.route.params.is_rapid_test) || 'Lateral'
     : 'Lateral';
 
+  const renderModal = () =>
+    showOnboardingModal ? (
+      <CovidTestListOnboardingModal
+        visible
+        onRequestClose={() => {
+          setShowOnboardingModal(false);
+        }}
+        patientId={assessmentCoordinator.assessmentData?.patientData?.patientId}
+      />
+    ) : null;
+
   return (
     <View style={styles.rootContainer}>
       <Screen profile={currentPatient?.profile} testID="covid-test-list-screen">
         <View style={{ marginHorizontal: 16 }}>
           <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('covid-test-list.title')} />
         </View>
+
+        {renderModal()}
 
         {covidTests.length ? null : (
           <View style={styles.content}>

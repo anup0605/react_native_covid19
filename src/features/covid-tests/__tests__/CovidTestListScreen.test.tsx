@@ -2,16 +2,25 @@
 import { Text } from '@covid/components';
 import CovidTestListScreen from '@covid/features/covid-tests/CovidTestListScreen';
 import { theme } from '@covid/themes';
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import * as React from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
 import renderer from 'react-test-renderer';
+import createMockStore from 'redux-mock-store';
 import { ThemeProvider } from 'styled-components/native';
 
+import { initialState } from '../../../../__mocks__/mockedInitialState';
 import MockedNavigator from '../../../../__mocks__/MockedNavigator';
+
+const middlewares = getDefaultMiddleware();
+const mockStore = createMockStore(middlewares);
+const store = mockStore(initialState);
 
 describe('CovidTestListScreen tests', () => {
   it('renders conditional introductory copy', () => {
     const elementBase = <MockedNavigator Component={CovidTestListScreen} />;
-    const element = <ThemeProvider theme={theme}>{elementBase}</ThemeProvider>;
+    const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
+    const element = <ThemeProvider theme={theme}>{elementWithRedux}</ThemeProvider>;
     const instance = renderer.create(element).root;
 
     // NOTE: It seems that no covid tests are loading from service for this case.
