@@ -121,11 +121,11 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
         patient: assessmentCoordinator.assessmentData?.patientData?.patientId,
         type: ECovidTestType.Generic,
         ...CovidTestDateQuestion.createDTO(formData),
+        ...CovidTestIsRapidQuestion.createDTO(formData),
         ...CovidTestMechanismQuestion.createDTO(formData),
         ...CovidTestResultQuestion.createDTO(formData),
         ...CovidTestInvitedQuestion.createDTO(formData),
         ...CovidTestLocationQuestion.createDTO(formData),
-        ...CovidTestIsRapidQuestion.createDTO(formData),
       } as Partial<TCovidTest>;
 
       submitCovidTest(infos);
