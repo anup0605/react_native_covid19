@@ -1,7 +1,6 @@
 import { fingerPrickX3, noseSwabX3, otherTestX3, syringeX3 } from '@assets';
 import { TextareaWithCharCount } from '@covid/components';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import { isSECountry } from '@covid/core/localisation/LocalisationService';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import {
   ECovidTestAntibodyOptions,
@@ -49,7 +48,7 @@ export const CovidTestMechanismQuestion: ICovidTestMechanismQuestion<IProps, ICo
     ECovidTestMechanismOptions.THROAT_SWAB,
     ECovidTestMechanismOptions.BLOOD_SAMPLE,
   ];
-  const showMechanismIcons = (!test || (test && !noIcons.includes(test.mechanism))) && !isSECountry();
+  const showMechanismIcons = !test || (test && !noIcons.includes(test.mechanism));
 
   const mechanismItems = [
     {
