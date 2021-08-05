@@ -70,7 +70,7 @@ export default function CovidTestListScreen(props: IProps) {
       return () => {
         isActive = false;
       };
-    }, []),
+    }, [startupInfo]),
   );
 
   function gotoAddTest() {
