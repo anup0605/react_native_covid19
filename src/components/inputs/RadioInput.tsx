@@ -64,7 +64,7 @@ export function RadioInput(props: IProps) {
         >
           <RadioButton selected={props.selectedValue === item.value} />
           {item.iconSource ? <Image source={item.iconSource} style={styles.image} /> : null}
-          <SecondaryText style={styles.marginLeft}>{item.label}</SecondaryText>
+          <SecondaryText style={[styles.marginLeft, styles.textWrap]}>{item.label}</SecondaryText>
         </TouchableOpacity>
       ))}
       {props.error ? <ErrorText style={styles.marginTop}>{props.error}</ErrorText> : null}
@@ -112,5 +112,9 @@ const styles = StyleSheet.create({
   middleItem: {
     ...itemStyle,
     paddingVertical: 12,
+  },
+  textWrap: {
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });

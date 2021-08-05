@@ -282,8 +282,8 @@
     "question-mechanism": "What test did you have?",
     "picker-lateral": "Lateral flow test (Antigen)",
     "picker-pcr": "PCR test (Antigen)",
-    "picker-finger-prick": "A finger-prick blood test (Antibody)",
-    "picker-blood-draw": "A blood test, done using a needle \n(Antibody)",
+    "picker-finger-prick": "Finger-prick blood test (Antibody)",
+    "picker-blood-draw": "Blood test, done using a needle (Antibody)",
     "picker-other": "Other, please specify",
 
     "question-mechanism-specify": "Other (please specify)",
@@ -346,7 +346,7 @@
     "mechanism-modal": {
       "title": "Types of tests",
       "lateral-flow-title": "Lateral flow test (Antigen)",
-      "lateral-flow-description": "These are often referred to as a rapid tests as they generally show results within 30 minutes.",
+      "lateral-flow-description": "These are often referred to as rapid tests as they generally show results within 30 minutes.",
       "pcr-title": "PCR test (Antigen)",
       "pcr-description": "These are sent away to a lab and often take between 24 hours to three days to return a result. PCR tests are able to detect an infected person even before they become infectious.",
       "finger-prick-title": "Finger-prick blood test (Antibody)",

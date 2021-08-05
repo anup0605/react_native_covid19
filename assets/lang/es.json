@@ -286,8 +286,8 @@
     "question-mechanism": "¿Qué tipo de test es?",
     "picker-lateral": "Test de antígenos",
     "picker-pcr": "Test PCR",
-    "picker-finger-prick": "Un examen de sangre con un pinchazo en el dedo",
-    "picker-blood-draw": "Un examen de sangre, hecho usando un aguja",
+    "picker-finger-prick": "Examen de sangre con un pinchazo en el dedo",
+    "picker-blood-draw": "Examen de sangre, hecho usando un aguja",
     "picker-other": "Otro, especifique",
 
     "question-mechanism-specify": "Otro (especifique)",
