@@ -92,7 +92,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
         <HeaderText style={styles.text}>
           {i18n.t(`covid-test-modal.screen-${onboardingModalScreenIndex}.title`)}
         </HeaderText>
-        <Image source={selectedGif} />
+        <Image source={selectedGif} style={styles.gif}/>
       </View>
     </Modal>
   );
@@ -106,6 +106,11 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 16,
     marginTop: 64,
+  },
+  gif: {
+    resizeMode: 'contain',
+    height: 500,
+    flex: 1,
   },
   text: {
     marginBottom: 24,
