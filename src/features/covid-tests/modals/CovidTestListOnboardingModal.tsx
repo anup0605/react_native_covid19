@@ -44,14 +44,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
   function nextModalOrComplete() {
     const selectedIndex = onboardingModalScreenIndex + 1;
     if (selectedIndex >= ONBOARDING_SCREENS.length) {
-      const infos: Partial<TPatientInfosRequest> = {
-        has_seen_covid_test_onboarding: true,
-      };
-      patientService.updatePatientInfo(props.patientId, infos).then(async (_) => {
-        props.onRequestClose();
-        // Renew app's startup info
-        await store.dispatch(fetchStartUpInfo());
-      });
+      closeAndUpateStartupInfo();
     } else {
       setIndexAndGif(selectedIndex);
     }
@@ -65,20 +58,34 @@ export default function CovidTestListOnboardingModal(props: IProps) {
     setIndexAndGif(selectedIndex);
   }
 
+  async function closeAndUpateStartupInfo() {
+    const infos: Partial<TPatientInfosRequest> = {
+      has_seen_covid_test_onboarding: true,
+    };
+    patientService.updatePatientInfo(props.patientId, infos).then(async (_) => {
+      props.onRequestClose();
+      // Renew app's startup info
+      await store.dispatch(fetchStartUpInfo());
+    });
+  }
+
   const footerChildren = (
     <BrandedButton onPress={nextModalOrComplete} style={styles.button} testID={'covid-test-modal-button'}>
-      {i18n.t('covid-test-modal.button')}
+      {onboardingModalScreenIndex === ONBOARDING_SCREENS.length - 1
+        ? i18n.t('covid-test-modal.button-end')
+        : i18n.t('covid-test-modal.button')}
     </BrandedButton>
   );
 
   return (
     <Modal
       visible
-      onRequestClose={props.onRequestClose}
+      onRequestClose={closeAndUpateStartupInfo}
       footerChildren={footerChildren}
       swipeRight={previousModal}
       swipeLeft={nextModalOrComplete}
       testID={`covid-test-modal-screen-${onboardingModalScreenIndex}`}
+      showCloseButton
     >
       <View style={styles.wrapper}>
         <ProgressBlock>

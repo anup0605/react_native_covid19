@@ -93,4 +93,21 @@ describe('Covid tests onboarding modal tests', () => {
     expect(screen2).toBeFalsy();
     expect(screen3).toBeTruthy();
   });
+
+  it('displays close button and calls onRequestClose on tap', async () => {
+    const onRequestClose = jest.fn();
+    const { getByTestId } = render(
+      <CovidTestListOnboardingModal
+        visible
+        onRequestClose={() => {
+          onRequestClose();
+        }}
+        patientId={DUMMY_PATIENT_ID}
+      />,
+    );
+    expect(onRequestClose).toHaveBeenCalledTimes(0);
+    const closeButton = getByTestId('test-modal-close-button');
+    await fireEvent.press(closeButton);
+    expect(onRequestClose).toHaveBeenCalledTimes(1);
+  });
 });

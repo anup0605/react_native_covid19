@@ -800,7 +800,8 @@
       "title": "Submit and continue to log your daily symptoms"
     },
     "new-design": "New design",
-    "button": "OK"
+    "button": "Next",
+    "button-end": "OK"
   },
 
   "errors": {
@@ -1844,5 +1845,6 @@
     }
   },
 
-  "required-field": "Required field"
+  "required-field": "Required field",
+  "modal-close": "Close"
 }

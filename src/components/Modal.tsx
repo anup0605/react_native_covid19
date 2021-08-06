@@ -1,7 +1,9 @@
-import { SafeLayout } from '@covid/components';
+import { RegularText, SafeLayout } from '@covid/components';
 import Analytics from '@covid/core/Analytics';
+import i18n from '@covid/locale/i18n';
+import { colors } from '@theme';
 import * as React from 'react';
-import { Modal as RNModal, ScrollView, StyleSheet, View } from 'react-native';
+import { Modal as RNModal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
@@ -18,7 +20,7 @@ interface IProps {
   swipeLeft?: Function;
   swipeRight?: Function;
   testID?: string;
-
+  showCloseButton?: boolean;
 }
 
 const BORDER_RADIUS = 16;
@@ -75,6 +77,14 @@ export default function Modal(props: IProps) {
     );
   }
 
+  function renderCloseButton() {
+    return props.showCloseButton && props.onRequestClose ? (
+      <TouchableOpacity onPress={props.onRequestClose} testID={'test-modal-close-button'}>
+        <RegularText style={styles.closeButton}>{i18n.t(`modal-close`)}</RegularText>
+      </TouchableOpacity>
+    ) : null;
+  }
+
   function renderContent() {
     return (
       <RNModal
@@ -86,6 +96,7 @@ export default function Modal(props: IProps) {
         <SafeLayout style={styles.safeLayout}>
           <View style={styles.view} testID={props.testID ?? 'test-modal'}>
             <View style={styles.view2}>
+              {renderCloseButton()}
               <ScrollView
                 alwaysBounceVertical={false}
                 contentContainerStyle={styles.contentContainer}
@@ -123,6 +134,14 @@ export default function Modal(props: IProps) {
 }
 
 const styles = StyleSheet.create({
+  closeButton: {
+    alignItems: 'flex-end',
+    textAlign: 'right',
+    padding: 16,
+    paddingBottom: 0,
+    fontWeight: '600',
+    color: colors.lightBrand,
+  },
   contentContainer: {
     padding: CONTENT_SPACING - SCROLL_INDICATOR_OFFSET,
   },

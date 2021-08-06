@@ -726,7 +726,8 @@
       "title": "Skicka in och rapportera sedan hur du mår i dag"
     },
     "new-design": "Ny design",
-    "button": "OK"
+    "button": "Nästa",
+    "button-end": "OK"
   },
 
   "errors": {
@@ -1827,5 +1828,6 @@
     }
   },
 
-  "required-field": "Obligatoriska fält"
+  "required-field": "Obligatoriska fält",
+  "modal-close": "Stänga"
 }

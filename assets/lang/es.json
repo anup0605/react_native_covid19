@@ -966,7 +966,8 @@
       "title": "Introduce y continue para reportar tu síntomas diarios"
     },
     "new-design": "Nuevo diseño",
-    "button": "OK"
+    "button": "Siguiente",
+    "button-end": "OK"
   },
 
   "errors": {
@@ -1843,5 +1844,6 @@
     }
   },
 
-  "required-field": "Required Field"
+  "required-field": "Required Field",
+  "modal-close": "Close"
 }
