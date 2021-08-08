@@ -99,7 +99,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
         <HeaderText style={styles.text}>
           {i18n.t(`covid-test-modal.screen-${onboardingModalScreenIndex}.title`)}
         </HeaderText>
-        <Image source={selectedGif} style={styles.gif}/>
+        <Image source={selectedGif} style={styles.gif} />
       </View>
     </Modal>
   );

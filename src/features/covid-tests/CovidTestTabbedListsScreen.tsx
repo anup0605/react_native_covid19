@@ -38,7 +38,7 @@ function CovidListByType(props: ICovidListByTypeProps) {
   );
 }
 
-const GUTTER = 75;
+const GUTTER = 65;
 const MIN_TAB_WIDTH = 85;
 
 export default function CovidTestTabbedListsScreen(props: IProps) {
@@ -70,16 +70,12 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
     [props.covidTests],
   );
 
-  // 4.5 to achieve the cut off effect of "other" tab
-  const tabWidth = Math.max(
-    MIN_TAB_WIDTH,
-    otherTests.length ? windowDimensions.width / 4.5 : (windowDimensions.width - GUTTER) / 3,
-  );
+  const barwidth = windowDimensions.width - GUTTER;
+  const tabWidth = Math.max(MIN_TAB_WIDTH, otherTests.length ? barwidth / 4 : barwidth / 3);
 
   return (
     <Tab.Navigator
       backBehavior="none"
-      initialLayout={{ width: windowDimensions.width }}
       initialRouteName={props.showTab}
       sceneContainerStyle={{
         backgroundColor: colors.backgroundPrimary,
@@ -100,22 +96,23 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
         style: { marginBottom: 12 },
         tabStyle: { paddingHorizontal: 6, paddingVertical: 14, width: tabWidth },
       }}
-      timingConfig={{ duration: 25 }}
     >
       <Tab.Screen
         children={() => <CovidListByType covidTests={lateralFlowTests} />}
         name={i18n.t('covid-test-list.tab-lateral')}
+        options={{ tabBarLabel: i18n.t('covid-test-list.tab-lateral') }}
       />
-      <Tab.Screen children={() => <CovidListByType covidTests={pcrTests} />} name={i18n.t('covid-test-list.tab-pcr')} />
+      <Tab.Screen children={() => <CovidListByType covidTests={pcrTests} />} name={i18n.t('covid-test-list.tab-pcr')} options={{ tabBarLabel: i18n.t('covid-test-list.tab-pcr') }} />
       <Tab.Screen
         children={() => <CovidListByType covidTests={antibodyTests} />}
         name={i18n.t('covid-test-list.tab-antibody')}
+        options={{ tabBarLabel: i18n.t('covid-test-list.tab-antibody') }}
       />
-
       {otherTests.length ? (
         <Tab.Screen
           children={() => <CovidListByType covidTests={otherTests} />}
           name={i18n.t('covid-test-list.tab-other')}
+          options={{ tabBarLabel: i18n.t('covid-test-list.tab-other') }}
         />
       ) : null}
     </Tab.Navigator>

@@ -9,7 +9,6 @@ import { covidTestService } from '@covid/core/user/CovidTestService';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { CovidTestTabbedListsScreen } from '@covid/features/covid-tests';
-import { getTestType } from '@covid/features/covid-tests/helpers';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
@@ -18,6 +17,7 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { getTestType } from './helpers';
 
 import CovidTestListOnboardingModal from './modals/CovidTestListOnboardingModal';
 
