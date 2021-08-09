@@ -26,6 +26,8 @@ interface IProps<V = any> {
   required?: boolean;
   selectedValue?: V;
   testID?: string;
+  IconComponent?: React.ComponentType<any>;
+  iconOnPress?: () => void;
 }
 
 const defaultItems: IItem[] = [
@@ -42,6 +44,11 @@ export function RadioInput(props: IProps) {
         <LabelText style={styles.marginBottom}>
           {props.label}
           {props.required ? requiredFormMarker : null}
+          {props.IconComponent ? (
+            <TouchableOpacity onPress={props.iconOnPress} style={styles.icon}>
+              <props.IconComponent />
+            </TouchableOpacity>
+          ) : null}
         </LabelText>
       )}
       {items.map((item, index) => (
@@ -57,7 +64,7 @@ export function RadioInput(props: IProps) {
         >
           <RadioButton selected={props.selectedValue === item.value} />
           {item.iconSource ? <Image source={item.iconSource} style={styles.image} /> : null}
-          <SecondaryText style={styles.marginLeft}>{item.label}</SecondaryText>
+          <SecondaryText style={[styles.marginLeft, styles.textWrap]}>{item.label}</SecondaryText>
         </TouchableOpacity>
       ))}
       {props.error ? <ErrorText style={styles.marginTop}>{props.error}</ErrorText> : null}
@@ -74,6 +81,12 @@ const styles = StyleSheet.create({
   firstItem: {
     ...itemStyle,
     paddingBottom: 12,
+  },
+  icon: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: 2,
+    paddingLeft: 4,
   },
   image: {
     height: 24,
@@ -99,5 +112,9 @@ const styles = StyleSheet.create({
   middleItem: {
     ...itemStyle,
     paddingVertical: 12,
+  },
+  textWrap: {
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });

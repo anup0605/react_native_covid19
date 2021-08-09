@@ -10,6 +10,7 @@ export const colors = {
   primary: '#24262B',
   secondary: '#565A5C',
   tertiary: '#888B8C',
+  quaternary: '#AAACAD',
 
   backgroundPrimary: '#FFFFFF',
   backgroundSecondary: '#F7F7F7',

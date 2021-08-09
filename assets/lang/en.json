@@ -10,6 +10,7 @@
   "no-change": "No change",
   "skip": "Skip",
   "you": "You",
+  "ok": "OK",
 
   "create-account": {
     "title": "Create new account",
@@ -266,9 +267,9 @@
 
   "covid-test": {
     "page-title": "COVID-19 status",
-    "page-title-detail-add": "Add COVID test",
+    "page-title-detail-add": "Add new test for COVID-19",
     "page-title-detail-update": "Update test",
-    "add-test": "Add new test",
+    "add-test": "Add test",
     "update-test": "Update test",
     "delete-test": "Delete test",
 
@@ -278,20 +279,25 @@
     "question-select-a-date-range": "Select a date range",
     "question-select-a-date": "Select a date",
 
-    "question-mechanism": "How was this test performed?",
-    "picker-nose-swab": "Someone swabbed my nose",
-    "picker-throat-swab": "Someone swabbed my throat",
-    "picker-nose-throat-swab": "A swab of my nose or throat",
-    "picker-nose-throat-swab-and-saliva": "A swab of my nose or throat and saliva",
-    "picker-saliva-sample": "I spat in a cup/tube",
-    "picker-blood-sample": "I gave a blood sample",
-    "picker-finger-prick": "A finger-prick blood test",
-    "picker-blood-draw": "A blood test, done using a needle",
+    "question-mechanism": "What test did you have?",
+    "picker-lateral": "Lateral flow test (Antigen)",
+    "picker-pcr": "PCR test (Antigen)",
+    "picker-finger-prick": "Finger-prick blood test (Antibody)",
+    "picker-blood-draw": "Blood test, done using a needle (Antibody)",
     "picker-other": "Other, please specify",
 
-    "question-mechanism-specify": "Please indicate how the test was performed",
+    "question-mechanism-specify": "Other (please specify)",
 
     "question-trained-worker": "Did a trained worker swab you?",
+    "question-test-performed-by": "Who performed this test?",
+    "picker-myself-no-guidance": "Myself - without any supervision",
+    "picker-myself-guidance": "Myself - under the guidance of a trained professional",
+    "picker-trained-worker": "A trained professional",
+
+    "question-antibody": "Was it Anti-N or Anti-S?",
+    "picker-anti-n": "Anti-N",
+    "picker-anti-s": "Anti-S",
+    "picker-dont-know": "I don't know",
 
     "location": {
       "question": "Where was your test performed?",
@@ -314,13 +320,12 @@
 
     "question-invite-to-test": "Did we invite you to perform this test?",
 
-    "question-result": "What are the results of this test?",
+    "question-result": "What was the result of the test?",
     "picker-positive": "Positive",
     "picker-negative": "Negative",
     "picker-waiting": "Waiting for results",
     "picker-test-failed": "Not clear / failed",
 
-    "question-knows-date-of-test": "Do you know the date of your test?",
     "question-date-test-occurred": "When was your test?",
     "question-time-test-taken": "What time did you take the test?",
     "question-pick-a-time": "Pick a time",
@@ -336,6 +341,26 @@
       "title": "Confirmation of\npositive test result",
       "body": "Your child’s positive test result will be shared anonymously with their school and the parents of the children within your child’s School Bubble.\n\nWe will only share the below details:\n\n• Date of test \n• Result of test\n• School Bubble name\n\nIf you have not already done so, please contact the school immediately to notify them of this positive result.",
       "consent": "I confirm that the information I entered is true and accurate to the extent of my knowledge and I agree to this data being shared anonymously with my school network."
+    },
+
+    "mechanism-modal": {
+      "title": "Types of tests",
+      "lateral-flow-title": "Lateral flow test (Antigen)",
+      "lateral-flow-description": "These are often referred to as rapid tests as they generally show results within 30 minutes.",
+      "pcr-title": "PCR test (Antigen)",
+      "pcr-description": "These are sent away to a lab and often take between 24 hours to three days to return a result. PCR tests are able to detect an infected person even before they become infectious.",
+      "finger-prick-title": "Finger-prick blood test (Antibody)",
+      "finger-prick-description": "These are quick tests for detection of protective antibodies against COVID-19. In general, antibody testing is not recommended until at least 14 days after the onset of symptoms.",
+      "blood-draw-title": "Blood test using a needle (Antibody)",
+      "blood-draw-description": "These tend to be more accurate tests for detection of antibodies. They require blood draw from a vein and analysis in a lab."
+    },
+
+    "antibody-modal": {
+      "title": "Anti-N and Anti-S",
+      "anti-n-title": "Anti-N antibody test",
+      "anti-n-description": "Detects the presence of antibodies targeted against the so-called (N) protein of COVID-19. Anti-N antibodies are not produced in response to any of the current vaccines on the market. They are, however, seen in most people who have recovered from COVID-19 but do drop over time.",
+      "anti-s-title": "Anti-S antibody tests",
+      "anti-s-description": "Detects the presence of antibodies targeted against the so-called spike (S) protein of the virus. Anti-S antibodies might be found in both people who have been vaccinated against COVID-19 and people who have recovered from COVID-19."
     }
   },
 
@@ -746,14 +771,37 @@
   "covid-test-list": {
     "title": "Your COVID-19 tests",
     "text": "If you’ve ever had a COVID-19 test, please add below. This includes PCR, antigen and antibody tests. You can edit these at any time in the future.",
-    "add-new-test": "Add new test",
+    "add-new-test": "Add a new test",
     "positive": "Positive",
     "negative": "Negative",
     "failed": "Failed",
     "pending": "Waiting for result",
     "update": "Update",
     "never-had-test": "I have never had a COVID test",
-    "above-list-correct": "This list is correct"
+    "above-list-correct": "This list is correct",
+    "tabs-title": "Test type",
+    "tab-lateral": "Lateral",
+    "tab-pcr": "PCR",
+    "tab-antibody": "Antibody",
+    "tab-other": "Other"
+  },
+
+  "covid-test-modal": {
+    "screen-0": {
+      "title": "Tap between your various logged tests"
+    },
+    "screen-1": {
+      "title": "Your most recent tests are now placed at the top"
+    },
+    "screen-2": {
+      "title": "Easily log new tests incl. Antibody tests"
+    },
+    "screen-3": {
+      "title": "Submit and continue to log your daily symptoms"
+    },
+    "new-design": "New design",
+    "button": "Next",
+    "button-end": "OK"
   },
 
   "errors": {
@@ -1797,5 +1845,6 @@
     }
   },
 
-  "required-field": "Required Field"
+  "required-field": "Required field",
+  "modal-close": "Close"
 }

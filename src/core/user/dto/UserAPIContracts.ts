@@ -36,21 +36,36 @@ export enum EPatientInteractions {
 }
 
 export enum ECovidTestMechanismOptions {
+  NOSE_SWAB = 'nose_swab', // Deprecated
+  THROAT_SWAB = 'throat_swab', // Deprecated
+  LATERAL_FLOW = 'lateral_flow',
+  PCR = 'pcr',
+  NOSE_OR_THROAT_SWAB = 'nose_throat_swab',
+  NOSE_OR_THROAT_SWAB_AND_SALIVA = 'nose_throat_swab_and_saliva', // Deprecated
+  SPIT_TUBE = 'spit_tube',
+  BLOOD_SAMPLE = 'blood_sample', // Deprecated
   BLOOD_FINGER_PRICK = 'blood_sample_finger_prick',
   BLOOD_NEEDLE_DRAW = 'blood_sample_needle_draw',
-  BLOOD_SAMPLE = 'blood_sample', // Deprecated
-  NOSE_OR_THROAT_SWAB = 'nose_throat_swab',
-  NOSE_OR_THROAT_SWAB_AND_SALIVA = 'nose_throat_swab_and_saliva', // SE Only
-  NOSE_SWAB = 'nose_swab', // Deprecated
   OTHER = 'other',
-  SPIT_TUBE = 'spit_tube',
-  THROAT_SWAB = 'throat_swab', // Deprecated
 }
 
+// Deprecated
 export enum ECovidTestTrainedWorkerOptions {
   TRAINED = 'trained',
   UNTRAINED = 'untrained',
   UNSURE = 'unsure',
+}
+
+export enum ECovidTestTestPerformedByOptions {
+  TRAINED = 'trained',
+  SELF_NO_SUPERVISION = 'self_no_supervision',
+  SELF_SUPERVISION = 'self_supervision',
+}
+
+export enum ECovidTestAntibodyOptions {
+  ANTI_N = 'anti_n',
+  ANTI_S = 'anti_s',
+  DONT_KNOW = 'dont_know',
 }
 
 export type TLoginOrRegisterResponse = {
@@ -273,6 +288,9 @@ export type TPatientInfosRequest = {
   research_consent_neurological_conditions: boolean;
   research_consent_nutrition_and_gut_health: boolean;
   research_consent_skin_conditions: boolean;
+
+  // Covid tests
+  has_seen_covid_test_onboarding: boolean;
   research_consent_vision_and_hearing_conditions: boolean;
   research_consent_womens_health: boolean;
 };
@@ -322,6 +340,7 @@ export type TStartupInfo = {
   ip_country: string;
   mh_insight_cohort?: TMHInsightCohort;
   min_supported_app_version?: string;
+  show_covid_test_onboarding: boolean;
   show_diet_score: boolean;
   show_edit_location: boolean;
   show_long_covid: boolean;

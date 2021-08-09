@@ -54,8 +54,14 @@ export const ColourHighlightHeaderTextText = ({ text, style, highlightColor }: I
   );
 };
 
-export const RegularText = ({ style, children, passProps }: IProps) => (
-  <Text style={[fontStyles.bodyReg, style]} {...passProps}>
+export const LightText = ({ style, children, passProps }: IProps) => (
+  <Text style={[fontStyles.bodyLight, style]} {...passProps}>
+    {children}
+  </Text>
+);
+
+export const RegularText = ({ style, children, testID }: IProps) => (
+  <Text style={[fontStyles.bodyReg, style]} testID={testID}>
     {children}
   </Text>
 );
@@ -102,6 +108,9 @@ export const Divider: React.FC<{ styles?: StyleProp<ViewStyle> }> = ({ styles: p
 );
 
 export const LabelText = ({ style, children }: IProps) => <Text style={[fontStyles.label, style]}>{children}</Text>;
+export const LabelSecondaryText = ({ style, children }: IProps) => (
+  <Text style={[fontStyles.labelSecondary, style]}>{children}</Text>
+);
 
 const styles = StyleSheet.create({
   clickableText: {
