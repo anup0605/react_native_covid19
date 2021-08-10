@@ -37,8 +37,8 @@ export default function JoinHigherEducationScreen({ route }: IProps) {
         <SelectedSchool
           currentJoinedGroup={currentJoinedGroup}
           currentPatient={route.params?.patientData?.patientState}
-          removeText="school-networks.join-school.removeHigherEducation"
-          title="school-networks.join-school.university-network-header"
+          removeText={i18n.t('school-networks.join-school.removeHigherEducation')}
+          title={i18n.t('school-networks.join-school.university-network-header')}
         />
       ) : (
         <View style={{ marginHorizontal: 16 }}>

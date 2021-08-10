@@ -15,14 +15,12 @@ type TProps = {
 };
 
 const ErrorMessaging = ({ error, status, onRetry, onPress }: TProps) => {
-  let messageKey: string | null = null;
-  let message: string | null = null;
+  let message = '';
   let shouldRetry = false;
   let shouldCancel = true;
 
   if (error) {
-    messageKey = error.friendlyI18n;
-    message = messageKey && i18n.t(messageKey);
+    message = error.message;
     shouldRetry = !!error.isRetryable && !!onRetry;
     shouldCancel = !shouldRetry && !!error;
   }

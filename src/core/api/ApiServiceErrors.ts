@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file */
+import i18n from '@covid/locale/i18n';
 import { AxiosResponse } from 'axios';
 
 const NETWORK_ERROR = 'Network Error';
@@ -32,8 +33,6 @@ export const initialErrorState = {
 };
 
 export class AppException extends Error {
-  friendlyI18n: string | null;
-
   isRetryable = false;
 
   status: number;
@@ -41,18 +40,15 @@ export class AppException extends Error {
 
 class OfflineException extends AppException {
   isRetryable = true;
-
-  friendlyI18n = 'errors.user-is-offline';
 }
 
 export class ApiException extends AppException {
   response: AxiosResponse;
 
-  constructor(message: string, status: number, i18nString: string | null = null) {
-    super(message);
-    this.message = message;
+  constructor(message: string, status: number, fallbackMessage: string) {
+    super(message || fallbackMessage);
+    this.message = message || fallbackMessage;
     this.status = status;
-    this.friendlyI18n = i18nString ?? this.friendlyI18n;
   }
 }
 class RetryableApiException extends ApiException {
@@ -64,13 +60,13 @@ export const handleServiceError = (error: TReceivedError) => {
     switch (error.response.status) {
       case STATUS_NOT_FOUND:
       case STATUS_UNAUTHORIZED:
-        throw new RetryableApiException(error.message, error.response.status, 'errors.resource-not-found');
+        throw new RetryableApiException(error.message, error.response.status, i18n.t('errors.resource-not-found'));
       case STATUS_SERVER_BUSY:
-        throw new RetryableApiException(error.message, error.response.status, 'errors.server-is-busy');
+        throw new RetryableApiException(error.message, error.response.status, i18n.t('errors.server-is-busy'));
       case STATUS_SERVER_ERROR:
-        throw new RetryableApiException(error.message, error.response.status, 'errors.server-error');
+        throw new RetryableApiException(error.message, error.response.status, i18n.t('errors.server-error'));
       default:
-        throw new ApiException(error.message, error.response.status);
+        throw new ApiException(error.message, error.response.status, i18n.t('errors.user-is-offline'));
     }
   } else if (error.message === NETWORK_ERROR) {
     throw new OfflineException(error.message);

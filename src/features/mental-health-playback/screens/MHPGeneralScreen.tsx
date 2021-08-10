@@ -83,11 +83,9 @@ export default function MHPGeneralScreen() {
               <View style={{ height: scrollViewHeight }}>
                 <View style={styles.view}>
                   <Text textAlign="center" textClass="h3Regular">
-                    {i18n.t(
-                      isGeneral
-                        ? 'mental-health-playback.general.end-title-general'
-                        : 'mental-health-playback.general.end-title-personal',
-                    )}
+                    {isGeneral
+                      ? i18n.t('mental-health-playback.general.end-title-general')
+                      : i18n.t('mental-health-playback.general.end-title-personal')}
                   </Text>
                   <Text
                     inverted
