@@ -88,7 +88,7 @@ export default function CovidTestListScreen(props: IProps) {
     : 'Lateral';
 
   const renderModal = () =>
-    showOnboardingModal ? (
+    showOnboardingModal && !assessmentCoordinator.assessmentData?.patientData?.patientInfo?.reported_by_another ? (
       <CovidTestListOnboardingModal
         visible
         onRequestClose={() => {
