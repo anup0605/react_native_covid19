@@ -93,7 +93,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
         </ProgressBlock>
 
         <View style={styles.newDesign}>
-          <RegularText style={styles.newDesignText}>{i18n.t(`covid-test-modal.new-design`)}</RegularText>
+          <RegularText style={styles.newDesignText}>{i18n.t('covid-test-modal.new-design')}</RegularText>
         </View>
 
         <HeaderText style={styles.text}>

@@ -221,7 +221,7 @@ VaccineDoseQuestion.schema = () => {
       // Dose 2
       secondDoseDate: Yup.date().when('hasSecondDose', {
         is: true,
-        then: Yup.date().required(i18n.t('validation-error-daterequired')),
+        then: Yup.date().required(i18n.t('validation-error-date-required')),
       }),
     },
     // These are to flag against circular dependency errors:

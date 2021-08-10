@@ -77,13 +77,10 @@ class SplashScreen extends React.Component<TProps, TState> {
   };
 
   private handleBootstrapError = (error: ApiException) => {
-    const messageKey = error.friendlyI18n;
-    const message = messageKey ? i18n.t(messageKey) : error.message;
-
     this.setState({
       isRetryEnabled: true,
       isRetryable: !!error.isRetryable,
-      status: message,
+      status: error.message,
     });
   };
 

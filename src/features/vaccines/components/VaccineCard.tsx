@@ -38,15 +38,15 @@ export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) =
     return dose.date_taken_specific ? formatDateString(dose.date_taken_specific) : '';
   };
 
-  const warningIconAndText = (textKey: string) => (
+  const warningIconAndText = (text: string) => (
     <View style={styles.row}>
       <QuestionCircle colorBg={colors.feedbackBad} colorIcon={colors.white} />
-      <RegularText style={{ ...styles.warningText, marginLeft: 4 }}>{i18n.t(textKey)}</RegularText>
+      <RegularText style={{ ...styles.warningText, marginLeft: 4 }}>{text}</RegularText>
     </View>
   );
 
-  const dateRequired = warningIconAndText('vaccines.vaccine-card.date-missing');
-  const notYetLogged = warningIconAndText('vaccines.vaccine-card.not-logged');
+  const dateRequired = warningIconAndText(i18n.t('vaccines.vaccine-card.date-missing'));
+  const notYetLogged = warningIconAndText(i18n.t('vaccines.vaccine-card.not-logged'));
 
   const dose1: Partial<TDose> | undefined = vaccine.doses[0];
   const dose2: Partial<TDose> | undefined = vaccine.doses[1];
@@ -72,7 +72,7 @@ export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) =
               ? hasFirstDoseBrand
                 ? vaccineBrandDisplayName[dose1.brand]
                 : displayDescriptionNameMap[dose1.description]
-              : warningIconAndText('vaccines.vaccine-card.name-missing')}
+              : warningIconAndText(i18n.t('vaccines.vaccine-card.name-missing'))}
           </RegularText>
 
           {!hasFirstDoseDate ? dateRequired : null}
@@ -102,7 +102,7 @@ export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) =
                     ? hasSecondDoseBrand
                       ? vaccineBrandDisplayName[dose2.brand]
                       : displayDescriptionNameMap[dose2.description]
-                    : warningIconAndText('vaccines.vaccine-card.name-missing')}
+                    : warningIconAndText(i18n.t('vaccines.vaccine-card.name-missing'))}
                 </RegularText>
               </View>
             ) : null}

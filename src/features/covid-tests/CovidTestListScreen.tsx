@@ -42,7 +42,7 @@ export default function CovidTestListScreen(props: IProps) {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (startupInfo?.show_covid_test_onboarding) {
+      if (startupInfo?.show_covid_test_onboarding && !assessmentCoordinator.assessmentData?.patientData?.patientInfo?.reported_by_another ) {
         setShowOnboardingModal(true);
       }
 
