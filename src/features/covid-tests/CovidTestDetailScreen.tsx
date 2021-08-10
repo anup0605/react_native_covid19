@@ -177,7 +177,7 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
       testID="covid-test-detail-screen"
     >
       <HeaderText style={{ marginBottom: grid.s }}>
-        {i18n.t(testId ? 'covid-test.page-title-detail-update' : 'covid-test.page-title-detail-add')}
+        {testId ? i18n.t('covid-test.page-title-detail-update') : i18n.t('covid-test.page-title-detail-add')}
       </HeaderText>
 
       <Formik
@@ -241,7 +241,7 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
                 style={styling.marginTop}
                 testID="button-submit"
               >
-                {i18n.t(testId ? 'covid-test.update-test' : 'covid-test.add-test')}
+                {testId ? i18n.t('covid-test.update-test') : i18n.t('covid-test.add-test')}
               </BrandedButton>
             </Form>
           );

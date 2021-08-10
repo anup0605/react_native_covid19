@@ -47,10 +47,8 @@ function SelectedSchool({
     if (body.length) {
       return (
         <View style={styles.body}>
-          <RegularText>{i18n.t(body)} </RegularText>
-          {link.length ? (
-            <ClickableText onPress={() => openWebLink(i18n.t(link))}>{i18n.t(linkLabel)}</ClickableText>
-          ) : null}
+          <RegularText>{body} </RegularText>
+          {link.length ? <ClickableText onPress={() => openWebLink(link)}>{linkLabel}</ClickableText> : null}
         </View>
       );
     }
@@ -60,7 +58,7 @@ function SelectedSchool({
   return (
     <>
       <Header>
-        <HeaderText>{i18n.t(title)}</HeaderText>
+        <HeaderText>{title}</HeaderText>
         {getBody()}
       </Header>
       <Header>

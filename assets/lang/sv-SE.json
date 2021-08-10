@@ -11,7 +11,6 @@
   "skip": "Hoppa över",
   "you": "You",
   "ok": "OK",
-
   "create-account": {
     "title": "Skapa nytt konto",
     "btn": "Skapa konto",
@@ -27,13 +26,11 @@
     "something-went-wrong": "Någonting gick fel: %{msg}",
     "error": "Fel nr 01. Rapportera detta till covid-bugs@joinzoe.com: %{msg}"
   },
-
   "legal": {
     "i-agree": "Jag godkänner",
     "back": "Tillbaka",
     "confirm": ""
   },
-
   "title-about-work": "Om ditt arbete",
   "are-you-healthcare-staff": "Arbetar du inom hälso- och sjukvården (sjukhus, primärvård, kommunal omsorg, privat vård eller omsorg)?",
   "yes-interacting-patients": "Ja, och jag träffar patienter",
@@ -51,96 +48,65 @@
     "worked-school-clinic": "Elevhälsa",
     "worked-other-facility": "Annan vårdanläggning"
   },
-
   "label-interacted-with-infected-patients": "Har du NÅGONSIN haft direktkontakt med patienter med bekräftad eller sannolik covid-19-infektion?",
   "required-has-patient-interaction": "Ange om du har haft direktkontakt med en patient med covid-19",
-
   "label-used-ppe-equipment": "Sedan covid-19-epidemin startade, har du använt skyddsutrustning på arbetet?",
-  "label-used-ppe-equipment-footnote": "*Beroende på särskilda krav på arbetsplatsen kan skyddsutrustning omfatta handskar, visir, andningsskydd, munskydd osv.",
-  "label-ppe-equipment-available": "Är all den personliga skyddsutrustning du behöver tillgänglig?",
   "label-chose-an-option": "Välj ett av alternativen",
-  "label-check-all-that-apply": "Markera alla som är tillämpliga",
   "required-ppe-availability": "Ange tillgänglighetsnivån för skyddsutrustning på arbetet.",
-
   "title-about-you": "Om dig",
-
   "what-year-were-you-born": "Vilket år är du född?",
   "placeholder-year-of-birth": "Födelseår",
   "required-year-of-birth": "Ange ditt födelseår",
   "correct-year-of-birth": "Korrigera ditt födelseår",
-
   "your-sex-at-birth": "Vilket kön tilldelades du när du föddes?",
   "sex-at-birth-male": "Man",
   "sex-at-birth-female": "Kvinna",
   "sex-at-birth-intersex": "Intersex",
   "sex-at-birth-pfnts": "Vill inte ange",
-  "placeholder-sex": "Tilldelat kön",
   "required-sex-at-birth": "Ange det kön du tilldelades vid födseln",
-
   "label-gender-identity": "Vilket kön identifierar du dig mest med?",
   "label-gender-identity-other": "Ange som du vill:",
-
   "gender-identity-male": "Man",
   "gender-identity-female": "Kvinna",
   "gender-identity-pfnts": "Vill inte ange",
-  "placeholder-gender-identity": "Din könsidentitet",
   "required-gender-identity": "Ange det kön du identifierar dig mest med",
   "gender-identity-other": "Annat, ange",
   "error-gender-identity-length": "Maximalt 30 tecken",
-
   "your-height": "Längd",
   "placeholder-height": "Längd",
   "placeholder-feet": "Feet",
   "placeholder-inches": "Inches",
-  "placeholder-height-unit": "Height Units",
-  "picker-feet": "ft",
-  "picker-cm": "cm",
   "required-height-in-cm": "Ange din längd i centimeter",
   "required-height-in-ft-in": "Please enter your height in feet & inches",
-
   "your-weight": "Vikt",
   "placeholder-weight": "Vikt",
   "placeholder-stones": "Stones",
   "placeholder-pounds": "Pounds",
   "required-weight-in-kg": "Ange din vikt i kg",
   "required-weight-in-lb": "Please enter your weight in pounds",
-
-  "placeholder-weight-unit": "Weight units",
-  "picker-pounds": "lbs",
-  "picker-kg": "kg",
-
   "your-postcode": "Postnummer",
   "placeholder-postcode": "Postnummer",
   "required-postcode": "Ange ditt postnummer",
   "postcode-too-long": "Korrigera ditt postnummer",
-
   "picker-yes": "Ja",
   "picker-no": "Nej",
-  "picker-do-not-know": "Vet ej/osäker",
   "picker-unsure": "Osäker",
   "please-select-option": "Välj ett alternativ",
   "placeholder-optional-question": "*Valfritt",
   "placeholder-optional": "Valfri",
-  "placeholder-max-500": "",
-
   "have-you-been-exposed": "Har du NÅGONSIN exponerats för en person med bekräftad eller sannolik covid-19-infektion (t.ex. kollega, familjemedlem eller annan)? Markera alla som är relevanta.",
   "exposed-yes-documented": "Ja, bekräftat covid-19-fall",
   "exposed-yes-undocumented": "Ja, sannolikt covid-19-fall",
   "exposed-both": "Ja, både bekräftat och sannolikt covid-19-fall",
   "exposed-no": "Inte vad jag vet",
-
   "housebound-problems": "Har du några hälsoproblem som gör att du har svårt att lämna hemmet?",
   "needs-help": "Behöver du regelbundet hjälp från andra personer?",
   "help-available": "Om du behöver hjälp, har du någon nära dig som kan hjälpa dig?",
   "mobility-aid": "Använder du regelbundet käpp, rullator eller rullstol för att ta dig fram?",
-
   "your-health": {
     "page-title": "Om din hälsa",
     "health-problems-that-limit-activity": "Har du några hälsoproblem som vanligtvis kräver att du begränsar dina aktiviteter?",
     "are-you-pregnant": "Är du gravid?",
-    "picker-pregnant": "Jag är gravid",
-    "picker-pfnts": "Vill ej uppge",
-    "picker-other": "Annat",
     "have-heart-disease": "Har du någon hjärtsjukdom?",
     "have-diabetes": "Har du diabetes?",
     "have-hayfever": "Har du pollenallergi (säsongsbetonad allergi)?",
@@ -163,11 +129,9 @@
     "takes-pril-blood-pressure-medication": "Tar du regelbundet blodtrycksmediciner där den aktiva substansen slutar med -pril, t.ex. enalapril (t.ex. Enalapril®, Renitec®), lisinopril (t.ex. Lisinopril®, Zestril®), captopril (t.ex. Captopril®) eller ramipril (t.ex. Ramipril®, Triatec®)?",
     "takes-sartan-blood-pressure-medication": "Tar du regelbundet blodtrycksmediciner där den aktiva substansen slutar på -sartan, t.ex. candesartan (t.ex. Candesartan®, Atacand®, Candexetil®) losartan (t.ex. Losartan®, Cozaar®), valsartan (Valsartan®, Diovan®) eller irbesartan (t.ex. Ibesartan®, Aprovel®)?"
   },
-
   "previous-exposure-title": "Tidigare exponering för covid-19",
   "required-ever-exposed": "Ange om du har träffat någon med covid-19-infektion",
   "label-unwell-month-before": "Har du känt dig sjuk under månaden innan du började rapportera i denna app?",
-
   "label-past-symptoms": "Hade du någon av följande symtom (markera alla som stämde in på dig):",
   "label-past-symptom-anosmia": "Förlust av lukt/smak",
   "label-past-symptom-breath": "Andningsbesvär",
@@ -180,17 +144,14 @@
   "label-past-symptom-hoarse-voice": "Heshet",
   "label-past-symptom-abdominal-pain": "Ont i magen",
   "label-past-symptom-confusion": "Förvirring, desorientering eller dåsighet",
-
   "label-past-symptoms-days-ago": "För hur många dagar sedan började dina symtom?",
   "label-past-symptoms-still-have": "Har du fortfarande symtom?",
-
   "label-past-symptoms-changed": "Hur har dina symtom förändrats under de senaste dagarna?",
   "past-symptom-changed-much-better": "Blivit mycket bättre",
   "past-symptom-changed-little-better": "Blivit lite bättre",
   "past-symptom-changed-same": "Ingen förändring",
   "past-symptom-changed-little-worse": "Blivit lite sämre",
   "past-symptom-changed-much-worse": "Blivit mycket sämre",
-
   "title-health-worker-exposure": "Exponering för covid-19 för vårdpersonal",
   "health-worker-exposure-question-interacted-any-patients": "Har du det senaste dygnet träffat patienter (ej via telefon eller videolänk)?",
   "health-worker-exposure-question-treated-patients-with-covid": "Har du det senaste dygnet personligen träffat patienter med bekräftad eller sannolik covid-19-infektion?",
@@ -198,12 +159,10 @@
   "health-worker-exposure-picker-patient-interaction-yes-suspected": "Ja, sannolikt covid-19-fall",
   "health-worker-exposure-picker-patient-interaction-yes-both": "Ja, både bekräftade och sannolika covid-19-fall",
   "health-worker-exposure-picker-patient-interaction-no": "Inte vad jag vet",
-
   "health-worker-exposure-question-has-used-ppe-equipment": "Har du det senaste dygnet använt skyddsutrustning på arbetet *Beroende på särskilda krav på arbetsplatsen kan skyddsutrustning omfatta handskar, visir, andningsskydd, munskydd osv.",
   "health-worker-exposure-picker-ppe-always": "Alltid",
   "health-worker-exposure-picker-ppe-sometimes": "Ibland",
   "health-worker-exposure-picker-ppe-never": "Aldrig",
-
   "health-worker-exposure-picker-ppe-always-all-needed": "Jag har haft tillgång till all skyddsutrustning jag behöver för arbetet",
   "health-worker-exposure-picker-ppe-always-reused": "Jag har varit tvungen att återanvända skyddsutrustning pga bristande tillgång",
   "health-worker-exposure-picker-ppe-sometimes-all-needed": "Jag har inte behövt använda skyddsutrustning hela tiden, men när jag behövt det så har det funnits tillräckligt",
@@ -211,50 +170,35 @@
   "health-worker-exposure-picker-ppe-sometimes-reused": "Jag har varit tvungen att återanvända skyddsutrustning pga bristande tillgång",
   "health-worker-exposure-picker-ppe-never-not-needed": "Jag har inte behövt någon skyddsutrustning",
   "health-worker-exposure-picker-ppe-never-not-available": "Jag behövde skyddsutrustning, men ingen fanns tillgänglig",
-
   "required-treated-patients-with-covid": "Ange om du har behandlat några patienter med covid-19 det senaste dygnet",
   "required-has-used-ppe-equipment": "Ange hur ofta du har använt skyddsutrustning",
   "required-ppe-availability-always": "Ange tillgängligheten av skyddsutrustning för dig",
   "required-ppe-availability-sometimes": "Ange tillgängligheten av skyddsutrustning för dig",
   "required-ppe-availability-never": "Ange tillgängligheten av skyddsutrustning för dig",
-
   "covid-test": {
-    "page-title": "Test för covid-19",
     "page-title-detail-add": "Lägg till nytt covid-19-test",
     "page-title-detail-update": "Uppdatera test",
     "add-test": "Lägg till test",
     "update-test": "Uppdatera test",
-
     "delete-test": "Ta bort testet",
     "delete-test-alert-title": "Ta bort testet?",
     "delete-test-alert-text": "Informationen kommer att gå förlorad. Vill du fortsätta?",
-
-    "question-select-a-date-range": "Välj ett datumintervall",
-    "question-select-a-date": "Välj ett datum",
-
-    "question-time-test-taken": "Vilken tid tog du testet?",
-    "question-time-test-taken-error": "Ange tidpunkten för ditt möte",
-    "question-pick-a-time": "Välj en tid",
-
     "question-mechanism": "Vilken typ av test gjorde du?",
     "picker-lateral": "Snabbtest (lateral flow test)",
     "picker-pcr": "PCR-test (antigen)",
     "picker-finger-prick": "Blodprov, stick i fingret (antikroppstest)",
     "picker-blood-draw": "Blodprov i armvecket (antikroppstest)",
     "picker-other": "Annat sätt, ange vilket",
-
     "question-mechanism-specify": "Annat sätt (ange vilket)",
     "question-trained-worker": "Utfördes testet av utbildad personal?",
     "question-test-performed-by": "Vem genomförde testet?",
     "picker-myself-no-guidance": "Jag själv - utan handledning",
     "picker-myself-guidance": "Jag själv - under vägledning av en utbildad person",
     "picker-trained-worker": "En utbildad person",
-
     "question-antibody": "Testades du för antikroppar mot N-proteinet eller S-proteinet?",
     "picker-anti-n": "N-protein",
     "picker-anti-s": "S-protein",
     "picker-dont-know": "Jag vet inte",
-
     "location": {
       "question": "Var utfördes testet?",
       "specify": "Ange var testet utfördes",
@@ -272,30 +216,24 @@
         "other": "Annat, ange"
       }
     },
-
     "question-result": "Vad visade testet?",
     "picker-positive": "Positivt",
     "picker-negative": "Negativt",
     "picker-waiting": "Väntar på mina resultat",
     "picker-test-failed": "Inkonklusivt / provtagning misslyckades",
-
     "question-date-test-occurred": "När testades du?",
     "question-date-approximate": "Ungefärligt datumintervall",
-
     "required-date": "Ange datum när testet utfördes",
     "required-dates": "Ange mellan vilka två datum testet utfördes",
     "required-mechanism": "Ange hur testet utfördes",
     "required-result": "Ange testresultatet",
-
     "question-is-rapid-test": "Var det ett snabbtest för pågående infektion (s.k. lateral flow test)? Dessa test tas vanligtvis med en testpinne i näsa/svalg och svaret kommer inom minuter/timmar.",
     "question-invite-to-test": "Har vi bjudit in dig att utföra detta test?",
-
     "confirm-test": {
       "title": "",
       "body": "",
       "consent": ""
     },
-
     "mechanism-modal": {
       "title": "Typer av test",
       "lateral-flow-title": "Snabbtest (lateral flow test)",
@@ -307,7 +245,6 @@
       "blood-draw-title": "Blodtest med nål (antikroppar)",
       "blood-draw-description": "Dessa tenderar ha högre precision när det gäller att upptäcka antikroppar. Blod dras från ett kärl och anlyseras därefter i ett laboratorium."
     },
-
     "antibody-modal": {
       "title": "N-protein eller S-protein",
       "anti-n-title": "Test för antikroppar mot N-proteinet",
@@ -316,7 +253,6 @@
       "anti-s-description": "Upptäcker förekomsten av antikroppar riktade mot det så kallade S-proteinet i viruset. Antikroppar mot S-proteinet kan återfinnas både hos personer som har vaccinerats mot covid-19 och hos personer som har genomgått en covid-19-infektion."
     }
   },
-
   "how-you-feel": {
     "question-health-status": "Hur mår du i kroppen just nu?",
     "picker-health-status-healthy": "Jag känner mig lika frisk som vanligt",
@@ -326,7 +262,6 @@
     "vaccine-reporting-message": "Fortsätt gärna att rapportera hur du mår dagligen efter att du vaccinerats mot covid-19 och ange eventuella allmänna symtom som du upplever.",
     "vaccine-reporting-link": "Varför är detta viktigt?"
   },
-
   "pingdemic": {
     "title": "",
     "body": "",
@@ -335,11 +270,7 @@
     "q1-no": "",
     "q1-other": "",
     "q1-prefer-not-to-say": "",
-    "yes": "",
-    "no": "",
-    "prefer-not-to-say": "",
     "dates": "",
-    "approx": "",
     "no-app": "",
     "no-app-yes": "",
     "no-app-never-had": "",
@@ -350,13 +281,11 @@
     "active-no": "",
     "active-not-sure": ""
   },
-
   "long-covid": {
     "apology": "Vi ber alla som redan har fyllt i detta att göra det igen eftersom vi hade ett fel i våran tidigare version -tack så mycket!",
     "one-off": "Engångsenkät",
     "title": "Undersökning av hur länge symtomen varar och långdragna covid-19-symtom",
     "time": "MINDRE ÄN 2 MINUTER",
-    "body-1": "Tack för att du rapporterar!",
     "body-2": "Vi vill fråga dig några frågor som rör långdragna symtom vid covid-19",
     "body-3": "Svaren hjälper oss att förstå de långvariga effekterna av covid-19",
     "q1": "Tror/vet du att du har/har haft covid-19?",
@@ -441,7 +370,6 @@
     "button": "Nästa",
     "finish": "Klar"
   },
-
   "describe-symptoms": {
     "picker-fatigue-mild": "Lindrig trötthet",
     "picker-fatigue-severe": "Svår trötthet - Jag har svårt att ta mig upp ur sängen",
@@ -452,9 +380,6 @@
     "picker-headache-frequency-mostday": "Största delen av dagen",
     "picker-headache-frequency-someday": "Del av dagen",
     "required-headache-frequency": "Ange hur stor del av dagen du har haft huvudvärk",
-    "question-other-symptoms": "Andra viktiga symtom eller troliga orsaker du vill berätta om?",
-    "placeholder-other-symptoms": "Annan information",
-
     "check-all-that-apply": "Markera alla tillämpliga alternativ",
     "general-symptoms": "Har du några av följande symtom?",
     "general-fever": "Jag har feber eller känner mig varm",
@@ -465,8 +390,6 @@
     "general-chills": "Jag har frossa eller huttrar (känner mig kall)",
     "general-fatigue": "Ovanlig trötthet",
     "general-fatigue-follow-up": "Hur uttalad är din trötthet?",
-    "general-fatigue-mild": "Lindrig trötthet",
-    "general-fatigue-severe": "Allvarlig trötthet - Jag har svårt att ta mig upp ur sängen",
     "general-rash": "Utslag på armar eller bål",
     "general-foot-sores": "Röda/lila sår eller blåsor på fötterna, inklusive tårna",
     "general-face-welts": "Upphöjda, röda, kliande utslag på huden eller plötslig svullnad i ansikte eller av läpparna",
@@ -479,7 +402,6 @@
     "general-delirium": "Förvirring, desorientering eller dåsighet",
     "general-allergy-increase": "Jag har mer allergisymtom än vanligt",
     "follow-up-required": "Svara på uppföljningsfrågan.",
-
     "head-symptoms": "Har du några symtom från huvud, näsa, ögon eller öron?",
     "head-headache": "Huvudvärk",
     "head-headache-follow-up": "Hur ofta har du huvudvärk?",
@@ -493,7 +415,6 @@
     "head-ear-ringing": "Det ringer i öronen",
     "head-mouth-ulcers": "Blåsor i munnen eller på tungan",
     "head-tongue-surface": "Förändringar på tungans yta",
-
     "throat-chest-symptoms": "Har du några symtom i hals- eller bröstregionen?",
     "throat-chest-sore-throat": "Ont eller irriterad i halsen",
     "throat-chest-swollen-glands": "Svullna lymfkörtlar på halsen",
@@ -503,17 +424,14 @@
     "throat-chest-short-breath-follow-up": "Hur allvarliga är dina andningsbesvär?",
     "throat-chest-chest-pain": "Ovanlig bröstsmärta eller stramhet i bröstet",
     "throat-chest-heart-beat": "Ovanligt snabbt eller oregelbundet hjärtslag (hjärtklappning)",
-
     "gut-stomach-symptoms": "Har du symtom i området kring buken eller magen?",
     "gut-stomach-abdominal-pain": "Ovanligt ont i buken eller magen",
     "gut-stomach-nausea": "Illamående eller kräkningar",
     "gut-stomach-diarrhoea": "Diarré",
     "gut-stomach-skipped-meals": "Hoppat över måltider",
-
     "other-symptoms": "Andra viktiga symtom du vill berätta om?",
     "next": "Nästa"
   },
-
   "where-are-you": {
     "question-location": "Var befinner du dig just nu?",
     "picker-location-home": "Jag är hemma (eller på annan plats) och har inte varit på ett sjukhus pga misstänkt covid-19.",
@@ -521,12 +439,10 @@
     "picker-location-back-from-hospital": "Jag har kommit hem från sjukhuset och jag vill gärna berätta om min behandling.",
     "picker-location-back-from-hospital-already-reported": "Jag har kommit hem från sjukhuset och jag har redan berättat om behandlingen jag fick."
   },
-
   "treatment-other-title-after": "Vilken behandling fick du på sjukhuset",
   "treatment-other-title-during": "Vilken behandling får du på sjukhuset?",
   "treatment-other-question-treatment-after": "Vilken medicinsk behandling fick du?",
   "treatment-other-question-treatment-during": "Vilken medicinsk behandling får du?",
-
   "treatment-selection-title-after": "Vilken behandling fick du under tiden du var på sjukhuset?",
   "treatment-selection-title-during": "Vilken behandling får du just nu?",
   "treatment-selection-picker-none": "Ingen",
@@ -537,7 +453,6 @@
   "treatment-selection-picker-invasive-ventilation": "Respiratorvård*",
   "treatment-selection-picker-subtext-invasive-ventilation": "* Andningshjälp med respirator. Man är oftast sövd om man vårdas i respirator",
   "treatment-selection-picker-other": "Annat",
-
   "login": {
     "title": "Logga in på ditt konto",
     "email-label": "E-postadress",
@@ -548,7 +463,6 @@
     "user-not-found-exception": "Vi kunde inte identifiera dig. Försök igen.",
     "exception": "Det gick inte att logga in. Försök igen."
   },
-
   "reset-password": {
     "title": "Ange din e-postadress så skickar vi dig en länk för att återställa ditt lösenord",
     "email-label": "E-postadress",
@@ -556,13 +470,11 @@
     "button": "Återställ lösenord",
     "error": "Fel nr 02. Rapportera detta till covid-bugs@joinzoe.com: %{msg}"
   },
-
   "reset-password-confirm": {
     "title": "Kolla din e-post",
     "text": "Vi har skickat en länk för återställning av lösenordet.",
     "button": "Tillbaka"
   },
-
   "welcome": {
     "title": "COVID Symptom Study",
     "take-a-minute": "Lägg 1 minut om dagen på att hjälpa oss bekämpa covid-19.",
@@ -583,19 +495,16 @@
   },
   "total-people-contributing": "%{total} personer bidrar",
   "join-total-people-contributing": "Bli en av de %{total} personerna i världen som bidrar",
-
   "select-country": "Välj det land du bor i",
   "your-country-title": "Ditt land",
   "your-country-text": "Vi är inte säker på vilket land du befinner dig i på grund av hur ditt telefonnummer är konfigurerat.",
   "united-states": "USA",
   "united-kingdom": "Storbritannien",
   "sweden": "Sverige",
-
   "thank-you": {
     "check-for-updates": "Håll gärna utkik efter uppdateringar i vårt %{link}.",
     "news-feed": "nyhetsflöde"
   },
-
   "share-this-app": {
     "message": "Hjälp till att bromsa spridningen av #COVID19 och skydda de som tillhör en riskgrupp genom att själv rapportera dina symtom varje dag, även om du känner dig frisk 🙏. Ladda ned appen",
     "url": "https://covid19app.lu.se/",
@@ -603,15 +512,12 @@
     "secondary-text": "Ju fler som rapporterar hur de mår, desto bättre kan vi kartlägga smittspridningen av covid-19",
     "button-text": "Dela appen"
   },
-
   "thank-you-title": "Tack för att du rapporterar!",
   "blog-link": "https://covid19app.lu.se/",
   "thank-you-body": "Vi har nu tagit emot dagens rapport. Ditt deltagande är viktigare än någonsin i kampen mot covid-19.",
   "check-in-tomorrow": "Besök 1177.se om du har frågor som rör din hälsa eller covid-19.",
-  "check-news-feed": "Håll gärna utkik efter uppdateringar i vårt <b>nyhetsflöde</b>.",
   "faq-link": "https://www.covid19app.lu.se/faq",
   "thank-you-completed": "Startsida",
-
   "rating": {
     "how-are-we-doing": "Vad tycker du om vårt arbete?",
     "would-you-recommend": "Skulle du rekommendera appen till en vän eller kollega?",
@@ -623,7 +529,6 @@
     "cta-later": "Inte nu",
     "thank-you-for-rating": "Tack för din feedback.\nVi jobbar hela tiden på att förbättra appen"
   },
-
   "research-updates": "Aktuella forskningsnyheter",
   "faqs": "Vanliga frågor",
   "privacy-policy": "Integritetsmeddelande",
@@ -636,64 +541,49 @@
   "cancel": "Avbryt",
   "confirm": "Bekräfta",
   "delete": "Ta bort",
-  "estimated-cases": "Uppskattade fall",
   "logout": "Logga ut",
-
   "never-reported": "Aldrig rapporterat",
   "today": "I dag",
   "yesterday": "I går",
   "days-ago": "%{diffDays} dagar sedan",
-
   "adult-or-child-title": "Vem vill du rapportera åt?",
   "adult-or-child-text": "Just nu kan du bara skapa ytterligare profiler för personer som är bosatta i Sverige.",
   "person-over-18": "Person över 18 år",
   "person-under-18": "Person under 18 år",
-
   "adult-consent-title": "Vuxens medgivande",
   "child-consent-title": "Barns medgivande",
   "adult-consent-confirm": "Jag bekräftar ovan",
   "child-consent-confirm": "Jag bekräftar att jag är barnets vårdnadshavare och att jag har gjort ovan",
   "consent": "consent",
   "consent-summary": "sammanfattning av vad vi gör",
-
   "child-consent-text-1": "Om barnet är tillräckligt gammalt för att förstå våra",
   "child-consent-text-2": "krav ber vi dig förklara för barnet att du delar information om honom eller henne med oss och vad vi kommer att göra med den. Om du tror att barnet är tillräckligt gammalt för att fatta ett eget beslut ber vi dig bekräfta att han eller hon har gett sitt medgivande till att du delar uppgifterna med oss.",
   "adult-consent-text-1": "Bekräfta att du har visat eller läst vår",
   "adult-consent-text-2": "skärm för den individ som du anger uppgifterna åt, att denne är 18 år eller äldre och att han eller hon har gett sitt medgivande till att du delar uppgifterna med oss.",
   "consent-create-profile": "Skapa profil",
-
   "create-profile-button": "Fortsätt",
   "create-profile-label": "Namn",
   "create-profile-placeholder": "t.ex. namn, smeknamn eller relation",
   "create-profile-text": "Det här namnet är bara till för dig. Välj ett namn som gör det enkelt för dig att veta vilken person du rapporterar åt.",
   "create-profile-title": "Ge den nya profilen ett namn",
-
   "answer-for": "Svara åt %{name}",
   "profile-name-too-long": "Ange ett profilnamn med färre än 32 tecken",
-
   "select-profile-title-assessment": "Välj den profil du vill rapportera åt",
   "select-profile-title-edit": "Välj den profil du vill redigera",
   "select-profile-text": "Eller lägg till fler profiler",
   "select-profile-button": "Ny profil",
   "select-profile-last-report": "Sista rapport:",
   "default-profile-name": "Jag",
-
   "next-question": "Nästa fråga",
   "completed": "Klar",
   "something-went-wrong": "Någonting gick fel, var god försök igen senare",
   "prefer-not-to-say": "Föredrar att inte svara",
-
+  "validation-error-date-required": "Please provide a date",
   "validation-error-text": "Vänligen bläddra upp och fyll i de saknade detaljerna eller korrigera ovanstående information",
   "validation-error-please-select-option": "Please select an option",
-
   "validation-error-text-required": "Vänligen ge mer information",
-
-  "website-home": "https://covid.joinzoe.com/",
-
   "back-date-profile-title": "Några fler frågor om dig",
   "update-profile": "Uppdatera profilen",
-  "create-profile": "Skapa",
-
   "covid-test-list": {
     "title": "Dina covid-19-tester",
     "text": "Lägg till dina eventuella covid-19-tester nedan. Detta innefattar tester för pågående infektion såsom PCR-tester och antigentester (näsa/svalg/saliv), samt tester för tidigare covid-19-infektion, såsom antikroppstester (blodprov). Du kan redigera listan när som helst i framtiden.",
@@ -701,7 +591,6 @@
     "positive": "Positivt",
     "negative": "Negativt",
     "failed": "Misslyckades",
-    "pending": "Väntar",
     "update": "Uppdatera",
     "never-had-test": "Jag har aldrig testats för covid-19",
     "above-list-correct": "Listan ovan är korrekt",
@@ -711,7 +600,6 @@
     "tab-antibody": "Antikropp",
     "tab-other": "Annat"
   },
-
   "covid-test-modal": {
     "screen-0": {
       "title": "Växla mellan dina registrerade tester"
@@ -729,7 +617,6 @@
     "button": "Nästa",
     "button-end": "OK"
   },
-
   "errors": {
     "button-retry": "Försök igen",
     "button-okay": "Ok",
@@ -740,17 +627,13 @@
     "server-is-busy": "Servern är upptagen. Vänta och försök sedan igen",
     "server-error": "Servern kunde inte svara just nu. Vänta och försök sedan igen."
   },
-
   "back": "Tillbaka",
-
   "edit-profile": {
     "title": "Min profil",
     "your-location": "Din plats",
     "text": "",
     "archive-cta": "",
     "done": "Klar",
-    "next": "Nästa",
-
     "location": {
       "title": "Min plats",
       "label": "Postnumret till din hemadress (t.ex. 205 02)",
@@ -761,25 +644,7 @@
       "select-country": "Välj det land du befinner dig i just nu"
     }
   },
-
-  "face-mask": {
-    "worn-a-mask-question": "Har du under den senaste veckan använt ett munskydd när du har lämnat ditt hem?",
-    "worn-a-mask-justification": "Varför frågar vi dig detta: Dessa uppgifter kan hjälpa oss förstå hur social distansering och användning av munskydd kan påverka smittspridningen. Alla frågor är helt frivilliga men gör gärna en ungefärlig uppskattning av antalet gånger.",
-    "never": "Aldrig",
-    "sometimes": "Ibland",
-    "most-of-the-time": "För det mesta",
-    "always": "Alltid",
-    "not-applicable": "Inte tillämpligt",
-    "type-of-mask-question": "Vilken typ av munskydd/andningsmask använder du? Markera alla tillämpliga",
-    "cloth_scarf": "Tyg eller scarf",
-    "surgical": "Kirurgiskt munskydd",
-    "respirator": "N95-/FFP-skyddsmask",
-    "not-sure": "Inte säker/föredrar att inte berätta",
-    "other": "Annan, ange vilken:"
-  },
-
   "diabetes": {
-    "justification": "Du angav tidigare att du har diabetes, vilket är en viktig riskfaktor för covid-19. Våra forskare har några uppföljande frågor för att de ska förstå mer om detta. Alla frågor är helt frivilliga.",
     "which-type": "Vilken typ av diabetes har du?",
     "answer-type-1": "Diabetes typ 1",
     "answer-type-2": "Diabetes typ 2",
@@ -811,9 +676,7 @@
     "please-select-diabetes-treatment": "Välj ett eller flera av alternativen ovan",
     "question-use-cgm": "Använder du en kontinuerlig glukosmonitor (CGM)?"
   },
-
   "blood-group": {
-    "justification": "Vi frågar detta då andra studier har visat att vilken blodgrupp man har kan påverka både risken att drabbas av covid-19 samt hur allvarligt sjuk man blir. Vi vill undersöka detta i vår stora deltagargrupp.",
     "question": "Känner du till vilken blodgrupp du har? Vilken?",
     "answers": {
       "type-a": "A",
@@ -824,7 +687,6 @@
       "pfnts": "Föredrar att inte berätta"
     }
   },
-
   "__IGNORE__": {
     "optional-info.title": false,
     "optional-info.description": false,
@@ -858,13 +720,11 @@
     "us-other": false,
     "hispanic": false,
     "not-hispanic": false,
-
     "before-we-start": {
       "title": false,
       "yes": false,
       "no": false
     },
-
     "thank-you": {
       "check-for-updates": false,
       "news-feed": false,
@@ -889,12 +749,10 @@
       "nct-number": false,
       "if-not": false
     },
-
     "partners": {
       "powered-by": false,
       "data-analysis": false
     },
-
     "consent-normal-us": {
       "existing-study": false,
       "click-here": false,
@@ -911,7 +769,6 @@
       "terms": false,
       "read-accepted": false
     },
-
     "consent-nurses-us": {
       "header-1": false,
       "para-1": false,
@@ -959,7 +816,6 @@
       "privacy-policy": false,
       "i-agree": false
     },
-
     "terms-of-use-us": {
       "header-1": false,
       "para-1": false,
@@ -1067,23 +923,19 @@
     },
     "thank-you-uk": {
       "title": false,
-      "subtitle": false,
       "sign-off": false,
       "cta-single-profile": false,
       "cta-multi-profile": false
     },
-
     "archive-confirmation": {
       "title": false,
       "text": false,
       "confirm": false,
       "cancel": false
     },
-
     "archive-reason": {
       "title": false,
       "text": false,
-      "text2": false,
       "choice-duplicate-account": false,
       "choice-no-report": false,
       "choice-moved-away": false,
@@ -1091,33 +943,12 @@
       "choice-pfnts": false,
       "choice-passed-away": false
     },
-
     "us-study-invite": {
       "title": false,
       "body": false,
       "button": false
-    },
-
-    "vaccine-registry": {
-      "covid-prevention": false,
-      "can-we-contact": false,
-      "yes": false,
-      "no": false,
-      "next": false,
-      "creating-registry": false,
-      "not-ourselves": false,
-      "not-share": false,
-      "prioritise": false,
-      "tell-friends": false,
-      "share-title": false,
-      "share-text": false,
-      "callout-title": false,
-      "callout-text": false,
-      "callout-link-text": false,
-      "menu-item": false
     }
   },
-
   "vaccines": {
     "banner": {
       "body": "Även efter att du vaccinerats är det viktigt att du fortsätter att följa de allmäna råd som utfärdas av Folkhälsomyndigheten."
@@ -1169,13 +1000,9 @@
       "when-injection": "När blev du vaccinerad?",
       "have-had-second": "Har du redan fått din andra dos?",
       "select-date": "Välj datum",
-      "placeholder-name": "Välj ett",
       "label-name": "Vilket vaccin fick du?",
       "name-i-dont-know": "Annat/Jag vet inte",
       "label-name-other": "Vilken typ av vaccin var det?",
-      "label-name-other-2": "",
-      "placeholder-name-other-2": "",
-      "placeholder-type": "Välj ett",
       "placeholder-batch": "T.ex. EL0141",
       "label-batch": "Batch-/satsnummer (valfritt)",
       "date-change-confirm": "Bekräfta datumändring?",
@@ -1186,47 +1013,36 @@
       "details-missing-body": "Lägg till datum och namn för de vaccindoser du fått för att gå vidare",
       "details-missing-button": "Lägg till vaccinuppgifter"
     },
-
     "vaccine-card": {
       "dose-1": "Dos 1",
       "dose-2": "Dos 2",
-      "add-date": "",
-      "add-info": "",
       "date-missing": "Rapporterad, men redigera för att lägga till datum",
       "name-missing": "Redigera för att lägga till typ",
       "not-logged": "Inte rapporterad än",
       "edit-vaccine": "Redigera vaccin"
     }
   },
-
   "dashboard": {
     "report-today": "Rapportera idag, även om du har det bra",
     "report-now": "Rapportera nu",
     "you-have-reported-x-times": "Du har rapporterat %{count} gånger",
     "contributors-so-far": "Bidragsgivare hittills:",
-
     "trendline-card": {
-      "cta": "",
       "delta": {
         "up": "",
         "down": "",
         "from-last-week": ""
       },
       "share-cta": ""
-    },
-    "share-cta": "Share"
+    }
   },
-
   "explore-trend-line": {
     "title": "",
-    "delta-week": "",
     "cta": "",
     "active-covid-cases": "",
-    "evolution-of": "",
     "active-cases-in-your-area": "",
     "trendline-change": ""
   },
-
   "estimated-cases-card": {
     "covid-in-the-uk": "",
     "estimated-cases": "Casos estimados",
@@ -1234,35 +1050,14 @@
     "active": "Casos activos",
     "cta": "Más detalles"
   },
-
-  "tab-navigator": {
-    "first-tab": "Dashboard",
-    "second-tab": "Senaste nytt"
-  },
-
-  "latest-news": {
-    "title": "Senaste nytt"
-  },
-
   "covid-cases-map": {
     "covid-in-x": "covid på {{location}}",
     "current-estimates": "Aktuella uppskattningar",
-    "active-cases-in-area": "Aktiva ärenden\ni ditt område",
-    "not-enough-contributors": "Inte tillräckligt med bidragsgivare\npå detta område",
     "share": "Dela din karta",
     "update-postcode": "Uppdatera ditt postnummer för att se våra uppskattade fall i ditt område",
     "update-postcode-cta": "Uppdatera postnumret"
   },
-
   "school-networks": {
-    "title": "",
-    "whole-school": "",
-    "awaiting-members": "",
-    "no-cases": "",
-    "confirmed-cases": "",
-    "children-being-reported-for": "",
-    "child-being-reported-for": "",
-
     "intro": {
       "title": "",
       "point-1": {
@@ -1279,7 +1074,6 @@
       },
       "cta": ""
     },
-
     "how-to": {
       "title": "",
       "point-1": {
@@ -1292,76 +1086,37 @@
       },
       "cta": ""
     },
-
     "join-school": {
-      "title": "",
       "title-higher-education": "",
-      "description": "",
-      "description-link": "",
       "description-higher-education": "",
-      "disclaimer-1": "",
-      "disclaimer-2": "",
-      "disclaimer-3": "",
       "remove": "",
       "removeHigherEducation": "",
-
-      "search": {
-        "label": "",
-        "placeholder": ""
-      },
-
       "school-code-title": "",
       "school-code-instructions": "",
       "school-code-placeholder": "",
       "school-code-confirm": "",
       "school-code-confirm-instructions": "",
-
       "cta": "",
       "modal-body": "",
       "button-1": "Avbryt",
       "button-2": "",
-
       "university-network-header": "",
-      "university-network-body": "",
       "school-network-header": "",
-      "school-network-body": "",
       "more-information": "",
       "school-url-label": "",
       "school-url": "",
-      "university-url-label": "",
-      "university-url": ""
+      "dropdown": {
+        "label-higher-education": ""
+      }
     },
-
     "join-group": {
       "title": "",
       "description": "",
-
       "dropdown": {
-        "label": "",
-        "label-higher-education": "Select your university"
+        "label": ""
       },
-
-      "input": {
-        "label": "",
-        "placeholder": ""
-      },
-
-      "cta": "",
       "next": ""
     },
-
-    "success": {
-      "joined-title": "",
-      "joined-description": "",
-      "created-title": "",
-      "school-name": "",
-      "group-name": "",
-      "ref-code-is": "",
-      "copy-code": "",
-      "share": "",
-      "cta": ""
-    },
-
     "join-error": {
       "cta-okay": "",
       "duplicated-membership": {
@@ -1369,7 +1124,6 @@
         "description": ""
       }
     },
-
     "groups-list": {
       "title": "",
       "subtitle": "",
@@ -1379,7 +1133,6 @@
       "button-1": "",
       "button-2": ""
     },
-
     "dashboard": {
       "title": "",
       "at-the-school": "",
@@ -1399,26 +1152,22 @@
       "more-parents-singular": "",
       "reported-unwell": "",
       "report-for-today": "",
-      "report-for-today-singular": "",
-      "share-log-vaccine": ""
+      "report-for-today-singular": ""
     }
   },
   "generic": {
     "share-this-with-someone": "Dela detta med någon",
     "content-can-not-be-loaded-atm": "Detta innehåll kan inte laddas just nu"
   },
-
   "error-boundary": {
     "something-went-wrong": "Hoppsan! Något gick fel.",
     "encountered-error": "Tyvärr har appen stött på ett fel:",
     "notified": "Utvecklingsteamet har meddelats och förhoppningsvis bör problemet åtgärdas så fort! Försök att starta om appen för att fortsätta."
   },
-
   "mental-health": {
     "doctor-name": "Dr Ellen Jo Thompson",
     "doctor-title": "Mental Health Researcher",
     "doctor-location": "King’s College London",
-    "introduction-condition": "This study is only available for the “Me” primary profile.",
     "question-changes": "During this pandemic, have you changed the way you have spent time doing the following:",
     "question-devices-with-screen": "Using devices with a screen",
     "question-drinking-alcohol": "Drinking alcohol",
@@ -1490,24 +1239,17 @@
   },
   "mental-health-playback": {
     "results-ready": "Insights on COVID & Mental Health are ready",
-
     "modal": {
       "button-negative": "Skip for now",
-      "button-positive": "View insights",
       "button-positive-new": "View insights report",
-      "description-general": "We're excited to share the insights we found into how habits and lifestyle affected mental health during the pandemic\n\nThank you for your participation!",
       "description-new": "Thanks for being part of one of the world's largest studies in Mental Health during the pandemic",
-      "description-personal": "We've crunched the data and have prepared your very own personal insights into your unique habits during the pandemic for you to look at!\n\nThanks for your participation.",
       "tag": "INSIGHTS AVAILABLE",
-      "title": "Mental Health during the pandemic",
       "title-new": "The Mental Health insights report is ready!",
       "title-new-personal": "Your Mental Health insights report is ready!"
     },
-
     "general": {
       "chart-label": "Reported activity level",
       "correlated-description": "Reporting more of this was linked to",
-      "default-abbreviation": "...",
       "default-title": "This insight",
       "end-button": "Close",
       "end-description": "You can always return to these via the Home Page",
@@ -1667,7 +1409,6 @@
     "introduction-more-title": "Want more detail?",
     "introduction-more-body": "If you would like to get into the details behind what we have shared, we have a blog that explains more of the science",
     "introduction-more-link-0": "Read about the science behind these results on our blog",
-    "introduction-more-link-1": "Learn about the latest research in our nutrition newsletter",
     "card-0-title": "Traditional Diet Score",
     "card-0-body": "This diet quality score is a measure of how healthy and balanced your diet is.",
     "card-0-action": "View Traditional Diet Score",
@@ -1703,25 +1444,21 @@
     "email-action-title": "Would you like to learn about the latest nutrition research?",
     "email-action-body": "We will keep you up-to-date by email with the latest nutritional science, including ZOE’s own discoveries. You can opt-out at any time, and will only receive science updates.",
     "email-action-cta": "Yes, I’d love to know more",
-    "email-action-cta-success": "Great, keep an eye on your inbox!",
     "email-action-cta-unsubscribe": "Opt-out of email updates"
   },
   "navigation": {
     "back": "Tillbaka",
     "cta-email-success": "Toppen! Håll utkik i din inkorg",
-    "cta-unsubscribe": "Avregistrera dig från uppdateringar per e-post",
     "dismiss": "Ignorera",
     "learn-more": "Läs mer",
     "next": "Nästa",
-    "insights": "Insikter",
-    "start": "Starta"
+    "insights": "Insikter"
   },
   "version-update": {
     "title": "Din appversion behöver uppdateras!",
     "body": "Uppdatera din app för att fortsätta använda den. Vid uppdateringen får du tillgång till de senaste funktionerna.",
     "cta": "Uppdatera nu"
   },
-
   "reconsent": {
     "disease-summary": {
       "button": "Next",
@@ -1776,7 +1513,6 @@
       "consent-no": "No, I do not consent"
     }
   },
-
   "disease-cards": {
     "research_consent_dementia": {
       "name": "Dementia",
@@ -1827,7 +1563,6 @@
       "description": "600,000 people are diagnosed with a brain disorder every year in the UK"
     }
   },
-
   "required-field": "Obligatoriska fält",
   "modal-close": "Stänga"
 }

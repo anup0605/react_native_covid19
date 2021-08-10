@@ -80,7 +80,7 @@ export default function Modal(props: IProps) {
   function renderCloseButton() {
     return props.showCloseButton && props.onRequestClose ? (
       <TouchableOpacity onPress={props.onRequestClose} testID={'test-modal-close-button'}>
-        <RegularText style={styles.closeButton}>{i18n.t(`modal-close`)}</RegularText>
+        <RegularText style={styles.closeButton}>{i18n.t('modal-close')}</RegularText>
       </TouchableOpacity>
     ) : null;
   }

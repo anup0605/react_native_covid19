@@ -93,15 +93,15 @@ export default React.memo(function Insights(props: IProps) {
               style={styles.description}
               textClass="p"
             >
-              {i18n.t(
-                isGeneral
-                  ? 'mental-health-playback.general.insight-description-general'
-                  : 'mental-health-playback.general.insight-description-personal',
-                {
-                  anxiety: insight.anxiety,
-                  level_of_association: insight.level_of_association,
-                },
-              )}
+              {isGeneral
+                ? i18n.t('mental-health-playback.general.insight-description-general', {
+                    anxiety: insight.anxiety,
+                    level_of_association: insight.level_of_association,
+                  })
+                : i18n.t('mental-health-playback.general.insight-description-personal', {
+                    anxiety: insight.anxiety,
+                    level_of_association: insight.level_of_association,
+                  })}
             </TextHighlight>
             <Text inverted colorPalette="uiDark" colorShade="main" style={styles.label} textClass="pSmall">
               {i18n.t('mental-health-playback.general.chart-label')}
