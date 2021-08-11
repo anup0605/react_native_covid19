@@ -17,7 +17,7 @@ export default {
   patientVersion: '1.6.0',
 
   privacyPolicyVersionSE: 'v3.0',
-  privacyPolicyVersionUK: 'v3.1',
+  privacyPolicyVersionUK: 'v4.0',
   privacyPolicyVersionUS: 'v1.3',
 
   ukValidationStudyAdVersion: 'v2',
