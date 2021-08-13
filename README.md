@@ -88,7 +88,7 @@ echo "AMPLITUDE_KEY=test_key" >> .env
 echo "{}" > google-services.json
 ```
 
-### Runing the Mock Server (Extranl Contributors)
+### Run the Mock Server (External Contributors)
 
 Start the mock server in a different terminal. 
 
