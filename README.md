@@ -1,4 +1,4 @@
-# COVID-19 Symptom Study
+# ZOE COVID Study
 
 [![Coverage Status](https://coveralls.io/repos/github/zoe/covid-tracker-react-native/badge.svg?branch=selvach/coverage)](https://coveralls.io/github/zoe/covid-tracker-react-native?branch=selvach/coverage)
 
@@ -41,7 +41,6 @@ If you're doing research on COVID-19 and you want to contribute or believe this 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -89,32 +88,43 @@ echo "AMPLITUDE_KEY=test_key" >> .env
 echo "{}" > google-services.json
 ```
 
-### Running the project
+### Runing the App
 
+
+## Mockserver (External Contributor) 
+
+Start the mock server in a different terminal. 
+
+The address of the mock-server should be added as API_URL in the .env file.
+
+The iOS Simulator won't work with the value http://localhost:3000
+
+You must use your local IP address or use a tunnel like ngrok.
 
 ```sh
-# Start the mock server. The address of the mock-server should be added as API_URL in the .env file.
-# The iOS Simulator won't work with the value http://localhost:3000
-# You must use your local IP address or use a tunnel like ngrok  
 yarn mock-server
+```
 
-## In a new terminal build and run the project
+## Build & Run the App
+
+```sh
 yarn install
 yarn ios
+yarn android
 ```
 
 
 ### Tests
 
-1. Run the standard suite of integration tests
+Run unit & integration tests
 
 ```bash
 yarn test
 ```
 
-2. Run the Detox E2E tests (iOS only as of April 2021) 
+Run the Detox E2E tests (iOS only as of April 2021) 
 
-[Set up Detox] (https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md) (Pay attention to the iOS dependencies!)
+[Set up Detox](https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md) Pay attention to the iOS dependencies!
    
 Build a binary with Detox - this will be used by the test suite to conduct your tests:
 ```bash
