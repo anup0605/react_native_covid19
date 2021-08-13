@@ -1,4 +1,5 @@
 import { IDbConfig } from './types';
+import ErrnoException = NodeJS.ErrnoException;
 
 const fs = require('fs');
 
@@ -13,7 +14,7 @@ export default (dbPath: string) => {
   return {
     bootstrap: (config: IDbConfig) => {
       // Bootstrap: creates the db folder and files
-      fs.access(dbPath, fs.constants.F_OK, (err) => {
+      fs.access(dbPath, fs.constants.F_OK, (err: ErrnoException | null) => {
         if (err) {
           console.log(`~~ mockDb: create folder ${dbPath}`);
           fs.mkdirSync(dbPath);
@@ -21,13 +22,13 @@ export default (dbPath: string) => {
 
         Object.values(config).forEach((dbObject) => {
           const { path, defaultData } = dbObject;
-          fs.access(`${dbPath}/${path}`, fs.constants.F_OK, (err) => {
+          fs.access(`${dbPath}/${path}`, fs.constants.F_OK, (err: ErrnoException | null) => {
             if (!err) {
               return;
             }
 
             console.log(`~~ mockDb: create file ${dbPath}/${path}`);
-            fs.writeFile(`${dbPath}/${path}`, JSON.stringify(defaultData, null, ' '), () => {});
+            fs.writeFile(`${dbPath}/${path}`, JSON.stringify(defaultData || '', null, ' '), () => {});
           });
         });
       });
