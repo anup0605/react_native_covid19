@@ -1,13 +1,12 @@
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { GenericTextField } from '@covid/components/GenericTextField';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { FormikProps } from 'formik';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 import { IFormikDiabetesInputFC } from './DiabetesQuestions';
@@ -110,12 +109,10 @@ export const DiabetesOralMedsQuestion: IFormikDiabetesInputFC<IProps, IDiabetesO
 
   return (
     <View>
-      <FieldWrapper>
-        <View style={styles.textItemStyle}>
-          <RegularText>{i18n.t('diabetes.which-oral-treatment')}</RegularText>
-          <CheckboxList>{createDiabetesCheckboxes(diabetesOralMedsOptions, formikProps)}</CheckboxList>
-        </View>
-      </FieldWrapper>
+      <View style={{ marginVertical: 16 }}>
+        <RegularText>{i18n.t('diabetes.which-oral-treatment')}</RegularText>
+        <CheckboxList>{createDiabetesCheckboxes(diabetesOralMedsOptions, formikProps)}</CheckboxList>
+      </View>
 
       {formikProps.values.diabetesOralOtherMedicationNotListed ? (
         <GenericTextField
@@ -126,11 +123,9 @@ export const DiabetesOralMedsQuestion: IFormikDiabetesInputFC<IProps, IDiabetesO
         />
       ) : null}
 
-      <View style={{ marginHorizontal: 16 }}>
-        {!!formikProps.errors.diabetesOralMeds && formikProps.submitCount > 0 ? (
-          <ValidationError error={formikProps.errors.diabetesOralMeds as string} />
-        ) : null}
-      </View>
+      {!!formikProps.errors.diabetesOralMeds && formikProps.submitCount > 0 ? (
+        <ValidationError error={formikProps.errors.diabetesOralMeds as string} />
+      ) : null}
     </View>
   );
 };
@@ -174,9 +169,3 @@ DiabetesOralMedsQuestion.createDTO = (data): Partial<TPatientInfosRequest> => {
 
   return dto;
 };
-
-const styles = StyleSheet.create({
-  textItemStyle: {
-    borderColor: 'transparent',
-  },
-});

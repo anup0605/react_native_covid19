@@ -1,7 +1,8 @@
-import { Button } from '@covid/components/buttons/Button';
+import { BrandedButton } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import ProgressStatus from '@covid/components/ProgressStatus';
-import Screen, { Header, ProgressBlock } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { HeaderText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { ISchoolGroupModel } from '@covid/core/schools/Schools.dto';
@@ -9,10 +10,10 @@ import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolN
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Formik } from 'formik';
-import { Form } from 'native-base';
 import * as React from 'react';
 import { Alert, PickerItemProps, StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
@@ -73,18 +74,14 @@ export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
 
   return (
     <Screen profile={route.params?.patientData?.patientState?.profile} testID="join-school-group-screen">
-      <Header>
-        <HeaderText>{i18n.t('school-networks.join-group.title')}</HeaderText>
-        <RegularText style={styles.topText}>
-          {i18n.t('school-networks.join-group.description', {
-            school: route.params?.selectedSchool?.name ?? '',
-          })}
-        </RegularText>
-      </Header>
+      <HeaderText>{i18n.t('school-networks.join-group.title')}</HeaderText>
+      <RegularText style={styles.topText}>
+        {i18n.t('school-networks.join-group.description', {
+          school: route.params?.selectedSchool?.name ?? '',
+        })}
+      </RegularText>
 
-      <ProgressBlock>
-        <ProgressStatus color={colors.brand} currentStep={3} maxSteps={4} />
-      </ProgressBlock>
+      <ProgressStatus color={colors.brand} currentStep={3} maxSteps={4} style={styling.marginVertical} />
 
       <Formik
         initialValues={
@@ -97,8 +94,7 @@ export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
       >
         {(formikProps) => {
           return (
-            <Form style={styles.formContainer}>
-              <View style={{ height: 16 }} />
+            <Form>
               <RadioInput
                 error={formikProps.touched.groupId ? formikProps.errors.groupId : ''}
                 items={groupList}
@@ -106,15 +102,13 @@ export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
                 onValueChange={formikProps.handleChange('groupId')}
                 selectedValue={formikProps.values.groupId}
               />
-
-              <View style={styles.view}>
-                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
-                  <ValidationError error={i18n.t('validation-error-text')} style={{ marginHorizontal: 16 }} />
-                ) : null}
-                <Button branded onPress={formikProps.handleSubmit}>
-                  {i18n.t('school-networks.join-group.next')}
-                </Button>
-              </View>
+              <View style={styles.flex} />
+              {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
+                <ValidationError error={i18n.t('validation-error-text')} style={{ marginHorizontal: 16 }} />
+              ) : null}
+              <BrandedButton onPress={formikProps.handleSubmit}>
+                {i18n.t('school-networks.join-group.next')}
+              </BrandedButton>
             </Form>
           );
         }}
@@ -124,8 +118,8 @@ export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  formContainer: {
-    flexGrow: 1,
+  flex: {
+    flex: 1,
   },
   primaryButton: {
     backgroundColor: colors.brand,
@@ -142,8 +136,5 @@ const styles = StyleSheet.create({
   },
   topText: {
     marginTop: 16,
-  },
-  view: {
-    marginTop: 'auto',
   },
 });

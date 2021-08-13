@@ -1,6 +1,6 @@
 import { BrandedButton } from '@covid/components/buttons';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -22,7 +22,7 @@ function ConfirmSchoolScreen({ route }: IProps) {
   }
 
   return (
-    <ScreenNew profile={route.params?.patientData?.patientState?.profile} testID="confirm-school-screen">
+    <Screen profile={route.params?.patientData?.patientState?.profile} testID="confirm-school-screen">
       <ProgressHeader
         currentStep={2}
         description={i18n.t('school-networks.join-school.school-code-confirm-instructions')}
@@ -35,7 +35,7 @@ function ConfirmSchoolScreen({ route }: IProps) {
       <BrandedButton onPress={onPress} style={styling.marginTopAuto}>
         {i18n.t('legal.confirm')}
       </BrandedButton>
-    </ScreenNew>
+    </Screen>
   );
 }
 

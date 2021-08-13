@@ -1,7 +1,6 @@
 import { Loading, LoadingModal } from '@covid/components/Loading';
 import { TApiErrorState } from '@covid/core/api/ApiServiceErrors';
 import { TProfile } from '@covid/core/profile/ProfileService';
-import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -13,7 +12,6 @@ interface IProps extends TApiErrorState {
   addProfile?: VoidFunction;
   onProfileSelected: (profile: TProfile, index: number) => void;
   renderItem: (profile: TProfile, index: number) => React.ReactNode;
-  renderCreateItem?: () => React.ReactNode;
 }
 
 export function ProfileList({
@@ -26,7 +24,6 @@ export function ProfileList({
   onProfileSelected,
   onRetry,
   renderItem,
-  renderCreateItem = () => <NewProfileCard />,
 }: IProps) {
   if (!isLoaded) {
     return <Loading error={error} onRetry={onRetry} status={status} />;
@@ -38,7 +35,7 @@ export function ProfileList({
       <View style={styles.profileList}>
         {profiles.map((profile, i) => {
           return (
-            <View key={profile.id} style={styles.cardContainer}>
+            <View key={profile.id} style={i % 2 === 0 ? styles.wrapperEven : styles.wrapperOdd}>
               <TouchableOpacity onPress={() => onProfileSelected(profile, i)}>
                 {renderItem(profile, i)}
               </TouchableOpacity>
@@ -47,8 +44,10 @@ export function ProfileList({
         })}
 
         {addProfile ? (
-          <View key="new" style={styles.cardContainer}>
-            <TouchableOpacity onPress={addProfile}>{renderCreateItem()}</TouchableOpacity>
+          <View style={profiles.length % 2 === 0 ? styles.wrapperEven : styles.wrapperOdd}>
+            <TouchableOpacity onPress={addProfile}>
+              <NewProfileCard />
+            </TouchableOpacity>
           </View>
         ) : null}
       </View>
@@ -57,26 +56,19 @@ export function ProfileList({
 }
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    marginHorizontal: 8,
-    marginVertical: 4,
-    width: '45%',
-  },
-
-  inputStyle: {
-    color: colors.primary,
-    flex: 1,
-    fontSize: 16,
-    paddingLeft: 12,
-    paddingRight: 16,
-  },
-
   profileList: {
-    alignContent: 'stretch',
-    alignItems: 'flex-start',
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: '100%',
+  },
+  wrapperEven: {
+    paddingRight: 8,
+    paddingTop: 16,
+    width: '50%',
+  },
+  wrapperOdd: {
+    paddingLeft: 8,
+    paddingTop: 16,
+    width: '50%',
   },
 });

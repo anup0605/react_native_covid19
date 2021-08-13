@@ -1,6 +1,6 @@
 import { BrandedButton, DeleteButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import Analytics, { events } from '@covid/core/Analytics';
@@ -172,7 +172,7 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
     .concat(CovidTestIsRapidQuestion.schema());
 
   return (
-    <ScreenNew
+    <Screen
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="covid-test-detail-screen"
     >
@@ -247,6 +247,6 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
           );
         }}
       </Formik>
-    </ScreenNew>
+    </Screen>
   );
 }

@@ -2,6 +2,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import * as screens from '@covid/features/screens';
 import i18n from '@covid/locale/i18n';
 import AnniversaryNavigator from '@covid/routes/AnniversaryNavigator';
+import DebugScreens from '@covid/routes/DebugScreens';
 import DietStudyPlaybackNavigator from '@covid/routes/DietStudyPlaybackNavigator';
 import MentalHealthNavigator from '@covid/routes/MentalHealthNavigator';
 import MentalHealthPlaybackNavigator from '@covid/routes/MentalHealthPlaybackNavigator';

@@ -1,5 +1,6 @@
-import { BasicPage, CheckBoxButton, GenericSelectableList, Text } from '@covid/components';
+import { CheckBoxButton, GenericSelectableList, Text } from '@covid/components';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
+import { Screen } from '@covid/components/Screen';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import {
   addHistoryCondition,
@@ -16,6 +17,7 @@ import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
 import { useTheme } from '@covid/themes';
+import { colors } from '@theme';
 import * as React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -97,29 +99,33 @@ export default function MentalHealthHistoryScreen() {
   ) : null;
 
   return (
-    <BasicPage active={canSubmit} footerTitle={i18n.t('navigation.next')} onPress={saveStateAndNavigate}>
-      <View style={{ paddingHorizontal: grid.gutter }}>
-        <Text rhythm={16} textClass="h3">
-          {i18n.t('mental-health.question-history-title')}
-        </Text>
-        <RadioInput
-          items={initialOptions}
-          label={i18n.t('mental-health.question-history')}
-          onValueChange={handleSetHasHistoryDiagnosis}
-          selectedValue={MentalHealthHistory.hasDiagnosis}
-        />
-        {MentalHealthHistory.hasDiagnosis === 'YES' ? (
-          <>
-            <GenericSelectableList
-              collection={questions}
-              onPress={(data) => handleAddRemoveCondition(data.value)}
-              renderRow={(data) => renderRow(data)}
-              style={{ paddingBottom: grid.s, paddingTop: grid.s }}
-            />
-            {renderOtherTextInput}
-          </>
-        ) : null}
-      </View>
-    </BasicPage>
+    <Screen
+      backgroundColor={colors.backgroundTertiary}
+      footerEnabled={canSubmit}
+      footerOnPress={saveStateAndNavigate}
+      footerTitle={i18n.t('navigation.next')}
+      testID="mental-health-history-screen"
+    >
+      <Text rhythm={16} textClass="h3">
+        {i18n.t('mental-health.question-history-title')}
+      </Text>
+      <RadioInput
+        items={initialOptions}
+        label={i18n.t('mental-health.question-history')}
+        onValueChange={handleSetHasHistoryDiagnosis}
+        selectedValue={MentalHealthHistory.hasDiagnosis}
+      />
+      {MentalHealthHistory.hasDiagnosis === 'YES' ? (
+        <>
+          <GenericSelectableList
+            collection={questions}
+            onPress={(data) => handleAddRemoveCondition(data.value)}
+            renderRow={(data) => renderRow(data)}
+            style={{ paddingBottom: grid.s, paddingTop: grid.s }}
+          />
+          {renderOtherTextInput}
+        </>
+      ) : null}
+    </Screen>
   );
 }

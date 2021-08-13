@@ -1,4 +1,4 @@
-import Triangle from '@covid/features/reconsent/components/Triangle';
+import Triangle from '@covid/components/Triangle';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';

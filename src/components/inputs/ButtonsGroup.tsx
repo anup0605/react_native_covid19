@@ -41,18 +41,14 @@ export function ButtonsGroup({
   };
 
   return (
-    <View style={styles.flex}>
+    <View>
       {hideLabel ? null : (
         <Label style={styles.label}>
           {label}
           {required ? requiredFormMarker : null}
         </Label>
       )}
-      <View
-        style={{
-          flexDirection: 'row',
-        }}
-      >
+      <View style={styles.row}>
         {items.map((item, index) => (
           <SelectableButton
             key={item.value}
@@ -76,9 +72,6 @@ export function ButtonsGroup({
 }
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-  },
   label: {
     color: colors.primary,
     fontFamily: 'SofiaProRegular',
@@ -86,5 +79,8 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginBottom: 8,
     marginTop: 24,
+  },
+  row: {
+    flexDirection: 'row',
   },
 });

@@ -12,12 +12,12 @@ interface IProps {
   textColor?: string;
 }
 
-function ActionCard({ actionTitle, buttonColor, children, onPress, outline, textColor }: IProps) {
+export default function ActionCard({ actionTitle, buttonColor, children, onPress, outline, textColor }: IProps) {
   const { colors, grid } = useTheme();
   const bColor = buttonColor || colors.blue.main.bgColor;
   const tColor = textColor || 'white';
   return (
-    <View style={[styles.wrapper, { padding: grid.gutter }]}>
+    <View style={styles.wrapper}>
       <TouchableOpacity
         accessible
         accessibilityRole="button"
@@ -34,13 +34,12 @@ function ActionCard({ actionTitle, buttonColor, children, onPress, outline, text
             borderColor: bColor,
             borderRadius: grid.xxl,
             borderWidth: 1,
-            height: grid.xxxxl,
             justifyContent: 'center',
+            padding: 12,
           }}
         >
           <Text style={{ color: outline ? bColor : tColor }}>{actionTitle}</Text>
         </View>
-        <View />
       </TouchableOpacity>
     </View>
   );
@@ -65,8 +64,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
+    paddingVertical: 16,
     width: '100%',
   },
 });
-
-export default ActionCard;

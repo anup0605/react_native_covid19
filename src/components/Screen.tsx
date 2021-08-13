@@ -1,106 +1,103 @@
-import { NavHeader, PatientHeader } from '@covid/components/PatientHeader';
+import { BrandedButton } from '@covid/components/buttons';
+import { NavHeader } from '@covid/components/NavHeader';
+import { PatientHeader } from '@covid/components/PatientHeader';
 import { TProfile } from '@covid/core/profile/ProfileService';
+import { sizes, styling } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import {
-  Dimensions,
-  ImageStyle,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StyleProp,
   StyleSheet,
-  TextStyle,
+  TouchableWithoutFeedback,
   View,
-  ViewStyle,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const screenWidth = Math.round(Dimensions.get('window').width) - 32;
-export const screenHeight = Math.round(Dimensions.get('window').height);
-
-type THeaderProps = {
-  children: React.ReactNode;
-  style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
-};
-
-export const Header = (props: THeaderProps) => {
-  return <View style={[styles.headerBlock, props.style]}>{props.children}</View>;
-};
-
-type TProgressBlockProps = {
-  children: React.ReactNode;
-};
-
-export const ProgressBlock = (props: TProgressBlockProps) => {
-  return <View style={styles.progressBlock}>{props.children}</View>;
-};
-
-type TFieldWrapperProps = {
-  children: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
-};
-
-export const FieldWrapper = (props: TFieldWrapperProps) => {
-  return <View style={[styles.fieldWrapper, props.style]}>{props.children}</View>;
-};
-
-type TScreenProps = {
-  style?: StyleProp<ViewStyle>;
-  children: React.ReactNode;
+interface IProps {
+  backgroundColor?: string;
+  children?: React.ReactNode;
+  footerEnabled?: boolean;
+  footerLoading?: boolean;
+  footerOnPress?: () => void;
+  footerTitle?: string;
+  fullWidth?: boolean;
+  hideBackButton?: boolean;
+  noPadding?: boolean;
+  noScrollView?: boolean;
   profile?: TProfile;
+  renderFooter?: (props: IProps) => React.ReactNode;
+  renderHeader?: (props: IProps) => React.ReactNode;
   simpleCallout?: boolean;
-  calloutTitle?: string;
-  showBackButton?: boolean;
-  showCloseButton?: boolean;
-  extendEdges?: boolean;
-  scrollEnabled?: boolean;
-  testID?: string;
-};
-
-function renderHeader(props: TScreenProps) {
-  if (props.profile) {
-    return (
-      <PatientHeader
-        calloutTitle={props.calloutTitle}
-        profile={props.profile}
-        showCloseButton={props.showCloseButton}
-        simpleCallout={props.simpleCallout}
-      />
-    );
-  }
-  if (props.showBackButton) {
-    return <NavHeader showCloseButton={props.showCloseButton} />;
-  }
-  if (props.showCloseButton) {
-    return <NavHeader showCloseButton={props.showCloseButton} />;
-  }
-  if (props.extendEdges) {
-    return <View />;
-  }
-  return <View style={styles.statusBarBlock} />;
+  testID: string;
 }
 
-export default function Screen(props: TScreenProps) {
-  const scrollEnabled = props.scrollEnabled === undefined ? true : props.scrollEnabled;
+function renderHeader(props: IProps) {
+  if (props.renderHeader) {
+    return props.renderHeader(props);
+  }
+  if (props.profile) {
+    return <PatientHeader profile={props.profile} simpleCallout={props.simpleCallout} />;
+  }
+  if (!props.hideBackButton) {
+    return <NavHeader />;
+  }
+  return null;
+}
 
+function renderBody(props: IProps) {
+  const viewStyle = props.fullWidth ? styles.flex : styles.view;
+  const element = (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={viewStyle}>{props.children}</View>
+    </TouchableWithoutFeedback>
+  );
+  return props.noScrollView ? (
+    element
+  ) : (
+    <ScrollView
+      alwaysBounceVertical={false}
+      contentContainerStyle={props.noPadding ? styling.flexGrow : styles.contentContainer}
+      testID={`scroll-view-${props.testID || 'screen'}`}
+    >
+      {element}
+    </ScrollView>
+  );
+}
+
+function renderFooter(props: IProps) {
+  if (props.renderFooter) {
+    return props.renderFooter(props);
+  }
+  return props.footerTitle ? (
+    <View style={styles.footerWrapper}>
+      <BrandedButton
+        enabled={props.footerEnabled}
+        loading={props.footerLoading}
+        onPress={props.footerOnPress}
+        testID="button-footer"
+      >
+        {props.footerTitle}
+      </BrandedButton>
+    </View>
+  ) : null;
+}
+
+// Keep in mind that certain styling properties don't work on the SafeAreaView.
+// For example setting a padding is ignored.
+
+export function Screen(props: IProps) {
   return (
-    <SafeAreaView style={[styles.screen, props.style]} testID={props.testID}>
-      {renderHeader(props)}
+    <SafeAreaView
+      style={[styling.flex, { backgroundColor: props.backgroundColor || colors.backgroundPrimary }]}
+      testID={props.testID}
+    >
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.flex}>
-        {!scrollEnabled ? <View style={styles.pageBlock}>{props.children}</View> : null}
-        {scrollEnabled ? (
-          <ScrollView
-            contentContainerStyle={styles.contentContainer}
-            testID={`scroll-view-${props.testID || 'screen'}`}
-          >
-            {props.extendEdges ? (
-              <View style={styles.pageBlockExtendedEdges}>{props.children}</View>
-            ) : (
-              <View style={styles.pageBlock}>{props.children}</View>
-            )}
-          </ScrollView>
-        ) : null}
+        {renderHeader(props)}
+        {renderBody(props)}
+        {renderFooter(props)}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -109,34 +106,24 @@ export default function Screen(props: TScreenProps) {
 const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
-    justifyContent: 'space-between',
-  },
-  fieldWrapper: {
-    marginVertical: 16,
+    paddingHorizontal: sizes.screenHorizontalPadding,
+    paddingVertical: sizes.screenVerticalPadding,
   },
   flex: {
     flex: 1,
   },
-  headerBlock: {
-    marginHorizontal: 16,
-    marginVertical: 16,
+  footerWrapper: {
+    alignSelf: 'center',
+    maxWidth: sizes.maxScreenWidth,
+    paddingBottom: sizes.screenVerticalPadding,
+    paddingHorizontal: sizes.screenHorizontalPadding,
+    width: '100%',
   },
-  pageBlock: {
+  view: {
     flexGrow: 1,
-    marginBottom: 16,
-    marginHorizontal: 16,
-  },
-  pageBlockExtendedEdges: {
-    marginHorizontal: 0,
-  },
-  progressBlock: {
-    marginHorizontal: 16,
-  },
-  screen: {
-    backgroundColor: colors.backgroundPrimary,
-    flex: 1,
-  },
-  statusBarBlock: {
-    marginVertical: 32,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    maxWidth: sizes.maxScreenWidth,
+    width: '100%',
   },
 });

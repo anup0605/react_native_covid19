@@ -1,11 +1,13 @@
-import { BackButton } from '@covid/components/PatientHeader';
+import { BackButton } from '@covid/components/BackButton';
+import { sizes } from '@covid/themes';
 import { loadEstimatedCasesCartoMap } from '@covid/utils/files';
-import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ViewStyle } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 
 export function EstimatedCasesScreen() {
+  const safeAreaInsets = useSafeAreaInsets();
   const [html, setHtml] = React.useState<string>('');
 
   React.useEffect(() => {
@@ -23,29 +25,20 @@ export function EstimatedCasesScreen() {
     };
   }, []);
 
+  const style = React.useMemo<ViewStyle>(
+    () => ({
+      left: safeAreaInsets.left + sizes.screenHorizontalPadding,
+      position: 'absolute',
+      top: safeAreaInsets.top + sizes.screenVerticalPadding / 2,
+      zIndex: 100,
+    }),
+    [safeAreaInsets],
+  );
+
   return (
-    <View style={{ backgroundColor: 'white', flex: 1, marginBottom: 0 }}>
-      <View
-        style={{
-          display: 'flex',
-          left: 20,
-          position: 'absolute',
-          top: 48,
-          zIndex: 100,
-        }}
-      >
-        <BackButton />
-      </View>
-      <WebView originWhitelist={['*']} source={{ html }} style={styles.webview} />
-    </View>
+    <>
+      <BackButton style={style} />
+      <WebView originWhitelist={['*']} source={{ html }} />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.white,
-    flex: 1,
-    marginBottom: 0,
-  },
-  webview: {},
-});

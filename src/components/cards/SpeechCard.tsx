@@ -7,10 +7,10 @@ interface IProps {
   children: React.ReactNode;
 }
 
-function SpeechCard({ children }: IProps) {
+export default function SpeechCard({ children }: IProps) {
   const { grid } = useTheme();
   return (
-    <View style={[styles.wrapper, { padding: grid.gutter }]}>
+    <View style={styles.wrapper}>
       <View style={[styles.arrow, styles.shadow]} />
       <View style={[styles.container, styles.shadow, { paddingHorizontal: grid.gutter, paddingVertical: grid.xxl }]}>
         <View style={{ marginBottom: grid.l }}>
@@ -50,8 +50,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
+    paddingTop: 16,
     width: '100%',
   },
 });
-
-export default SpeechCard;

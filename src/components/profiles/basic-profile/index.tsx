@@ -10,19 +10,15 @@ interface IProps {
   title: string;
 }
 
-function BasicProfile({ location, name, title }: IProps) {
+export default function BasicProfile({ location, name, title }: IProps) {
   const { colors, grid } = useTheme();
   return (
-    <View>
-      <View style={{ marginBottom: grid.xs, paddingHorizontal: grid.gutter }}>
-        {getDietStudyDoctorImage()}
-        <Text rhythm={8}>{name}</Text>
-        <Text style={{ color: colors.uiDark.dark.bgColor }} textClass="pSmallLight">
-          {title}, {location}
-        </Text>
-      </View>
+    <View style={{ marginBottom: grid.xs }}>
+      {getDietStudyDoctorImage()}
+      <Text rhythm={8}>{name}</Text>
+      <Text style={{ color: colors.uiDark.dark.bgColor }} textClass="pSmallLight">
+        {title}, {location}
+      </Text>
     </View>
   );
 }
-
-export default BasicProfile;

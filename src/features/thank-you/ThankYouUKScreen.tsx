@@ -1,5 +1,5 @@
 import { BrandedButton, EFeaturedContentType, FeaturedContentList } from '@covid/components';
-import { Header } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ClickableText, HeaderText, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
@@ -17,7 +17,7 @@ import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { BigGreenTickFilled } from './components/BigGreenTick';
@@ -54,66 +54,46 @@ export default function ThankYouUKScreen(props: IProps) {
   return (
     <>
       {askForRating && <AppRating />}
-      <SafeAreaView>
-        <ScrollView contentContainerStyle={styles.scrollView} testID="scroll-view-thank-you-screen">
-          <View style={styles.rootContainer}>
-            <View style={{ marginTop: 24 }}>
-              <BigGreenTickFilled />
-            </View>
+      <Screen backgroundColor={colors.backgroundSecondary} testID="thank-you-screen">
+        <BigGreenTickFilled />
 
-            <Header>
-              <HeaderText style={styles.headerText}>{i18n.t('thank-you-uk.title')}</HeaderText>
-            </Header>
+        <HeaderText style={styles.headerText}>{i18n.t('thank-you-uk.title')}</HeaderText>
 
-            <RegularText style={styles.signOff}>{i18n.t('thank-you-uk.sign-off')}</RegularText>
+        <RegularText style={styles.signOff}>{i18n.t('thank-you-uk.sign-off')}</RegularText>
 
-            <FeaturedContentList screenName={props.route.name} type={EFeaturedContentType.ThankYou} />
+        <FeaturedContentList screenName={props.route.name} type={EFeaturedContentType.ThankYou} />
 
-            {startupInfo?.show_timeline ? (
-              <ImpactTimelineCard
-                onPress={() => {
-                  Analytics.track(events.ANNIVERSARY_FROM_THANKYOU);
-                  appCoordinator.goToAnniversary();
-                }}
-                size="LARGE"
-              />
-            ) : null}
+        {startupInfo?.show_timeline ? (
+          <ImpactTimelineCard
+            onPress={() => {
+              Analytics.track(events.ANNIVERSARY_FROM_THANKYOU);
+              appCoordinator.goToAnniversary();
+            }}
+            size="LARGE"
+          />
+        ) : null}
 
-            <View style={{ margin: 6 }} />
+        <ShareAppCard />
 
-            <ShareAppCard />
+        <BrandedButton
+          onPress={() => assessmentCoordinator.gotoNextScreen(props.route.name)}
+          style={styles.ctaSingleProfile}
+          testID="button-complete"
+        >
+          <RegularText style={styles.ctaSingleProfileText}>{i18n.t('thank-you-uk.cta-single-profile')}</RegularText>
+        </BrandedButton>
 
-            <BrandedButton
-              onPress={() => assessmentCoordinator.gotoNextScreen(props.route.name)}
-              style={styles.ctaSingleProfile}
-              testID="button-complete"
-            >
-              <RegularText style={styles.ctaSingleProfileText}>{i18n.t('thank-you-uk.cta-single-profile')}</RegularText>
-            </BrandedButton>
-
-            <View style={styles.ctaMultipleProfile}>
-              <ClickableText
-                onPress={() => assessmentCoordinator.gotoSelectProfile()}
-                style={styles.ctaMultipleProfileText}
-              >
-                {i18n.t('thank-you-uk.cta-multi-profile')}
-              </ClickableText>
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+        <ClickableText onPress={() => assessmentCoordinator.gotoSelectProfile()} style={styles.ctaMultipleProfileText}>
+          {i18n.t('thank-you-uk.cta-multi-profile')}
+        </ClickableText>
+      </Screen>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  ctaMultipleProfile: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingBottom: 24,
-    paddingTop: 15,
-  },
   ctaMultipleProfileText: {
+    alignSelf: 'center',
     color: colors.purple,
   },
   ctaSingleProfile: {
@@ -126,48 +106,13 @@ const styles = StyleSheet.create({
   ctaSingleProfileText: {
     color: colors.brand,
   },
-  dateLabel: {
-    marginBottom: 8,
-    marginTop: -16,
-    textAlign: 'center',
-  },
-  dietStudyImage: {
-    aspectRatio: 1200 / 1266,
-    height: undefined,
-    marginVertical: 8,
-    resizeMode: 'contain',
-    width: '100%',
-  },
   headerText: {
+    marginTop: 32,
     textAlign: 'center',
-  },
-  rootContainer: {
-    maxWidth: 500,
-    padding: 16,
-  },
-  scrollView: {
-    backgroundColor: colors.backgroundSecondary,
-    flexGrow: 1,
   },
   signOff: {
-    marginBottom: 16,
-    marginHorizontal: 16,
-    textAlign: 'center',
-  },
-  socialIcon: {
-    aspectRatio: 1,
-    height: undefined,
-    resizeMode: 'contain',
-    width: '100%',
-  },
-  socialIconContainer: {
-    alignSelf: 'center',
-    borderRadius: 10,
-    marginHorizontal: 10,
-    marginVertical: -10,
-  },
-  subTitle: {
-    marginBottom: 15,
+    marginBottom: 32,
+    marginTop: 16,
     textAlign: 'center',
   },
 });

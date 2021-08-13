@@ -286,8 +286,6 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
 }
 
 const styles = StyleSheet.create({
-  backIcon: {},
-
   detailsButton: {
     backgroundColor: 'transparent',
     borderColor: colors.purple,

@@ -1,5 +1,5 @@
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { selectPatientsJoinedGroups } from '@covid/core/schools/Schools.slice';
 import { TRootState } from '@covid/core/state/root';
 import { TScreenParamList } from '@covid/features/ScreenParamList';

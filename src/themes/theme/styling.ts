@@ -107,6 +107,9 @@ export default StyleSheet.create({
   padding: {
     padding: sizes.spacing,
   },
+  paddingBig: {
+    padding: sizes.spacingBig,
+  },
   paddingVertical: {
     paddingVertical: sizes.spacing,
   },
@@ -140,8 +143,5 @@ export default StyleSheet.create({
   textarea: {
     backgroundColor: '#EEEEEF',
     borderRadius: 16,
-  },
-  zIndex10: {
-    zIndex: 10,
   },
 });

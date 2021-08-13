@@ -34,7 +34,7 @@ export const CovidTestAntibodyInfoModal: React.FC<IProps> = (props) => {
 
   return (
     <Modal
-      showVerticalScrollIndicator
+      showsVerticalScrollIndicator
       footerChildren={footerChildren}
       onRequestClose={props.onRequestClose}
       visible={props.visible}

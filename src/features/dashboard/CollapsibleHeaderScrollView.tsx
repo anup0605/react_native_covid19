@@ -1,5 +1,6 @@
 import { DrawerToggle } from '@covid/components/DrawerToggle';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
+import { sizes } from '@covid/themes';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   },
   drawerToggleContainer: {
     marginRight: 16,
-    marginTop: 32,
+    marginTop: 32 + sizes.drawerToggle / 2,
     position: 'absolute',
     right: 0,
     zIndex: 999,

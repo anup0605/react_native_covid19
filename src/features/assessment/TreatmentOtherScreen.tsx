@@ -1,7 +1,7 @@
 import { BrandedButton, RegularText, TextareaWithCharCount } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ScreenParamList } from '@covid/features';

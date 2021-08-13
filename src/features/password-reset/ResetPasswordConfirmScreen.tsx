@@ -1,11 +1,13 @@
 import { BrandedButton } from '@covid/components';
+import { Screen } from '@covid/components/Screen';
 import { HeaderText, RegularText } from '@covid/components/Text';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { View } from 'react-native';
 
 type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'ResetPasswordConfirm'>;
@@ -19,33 +21,17 @@ type TState = {
 export class ResetPasswordConfirmScreen extends React.Component<TProps, TState> {
   render() {
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.rootContainer}>
-          <View style={styles.formItem}>
-            <HeaderText>{i18n.t('reset-password-confirm.title')}</HeaderText>
+      <Screen backgroundColor={colors.backgroundPrimary} testID="reset-password-confirm-screen">
+        <HeaderText>{i18n.t('reset-password-confirm.title')}</HeaderText>
 
-            <RegularText style={{ paddingTop: 24 }}>{i18n.t('reset-password-confirm.text')}</RegularText>
+        <RegularText style={{ paddingTop: 24 }}>{i18n.t('reset-password-confirm.text')}</RegularText>
 
-            <BrandedButton onPress={() => this.props.navigation.navigate('Login')} style={{ marginTop: 32 }}>
-              {i18n.t('reset-password-confirm.button')}
-            </BrandedButton>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
+        <View style={styling.flex} />
+
+        <BrandedButton onPress={() => this.props.navigation.navigate('Login')}>
+          {i18n.t('reset-password-confirm.button')}
+        </BrandedButton>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  formItem: {
-    paddingHorizontal: 16,
-    paddingVertical: 4,
-  },
-  rootContainer: {
-    backgroundColor: colors.backgroundPrimary,
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingTop: 56,
-  },
-});

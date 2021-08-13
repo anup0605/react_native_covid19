@@ -1,6 +1,6 @@
 import { gbFlag, svFlag, usFlag } from '@assets';
 import { RegularText } from '@covid/components';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
 import { TSupportedCountryCodes } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
@@ -55,7 +55,7 @@ export function CountrySelectScreen(props: IProps) {
   }
 
   return (
-    <ScreenNew backgroundColor={colors.predict} testID="select-country-screen">
+    <Screen backgroundColor={colors.predict} testID="select-country-screen">
       <View style={styles.container}>
         <RegularText style={styles.text}>{i18n.t('select-country')}</RegularText>
         <View style={styles.flagRow}>
@@ -71,7 +71,7 @@ export function CountrySelectScreen(props: IProps) {
           ))}
         </View>
       </View>
-    </ScreenNew>
+    </Screen>
   );
 }
 

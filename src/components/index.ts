@@ -8,7 +8,6 @@ export * from './content';
 export { default as Fab } from './fab';
 export * from './icons';
 export * from './inputs';
-export * from './layouts';
 export * from './lists';
 export * from './messaging';
 export * from './profiles';

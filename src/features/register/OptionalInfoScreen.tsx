@@ -1,7 +1,7 @@
 import { BrandedButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { LoadingModal } from '@covid/components/Loading';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
@@ -104,7 +104,7 @@ export class OptionalInfoScreen extends React.Component<TProps, TState> {
             status={this.state.status}
           />
         )}
-        <ScreenNew testID="optional-info-screen">
+        <Screen testID="optional-info-screen">
           <Formik
             initialValues={{ name: '', phone: '' }}
             onSubmit={(values: IOptionalInfoData) => this.handleSaveOptionalInfos(values)}
@@ -152,7 +152,7 @@ export class OptionalInfoScreen extends React.Component<TProps, TState> {
               );
             }}
           </Formik>
-        </ScreenNew>
+        </Screen>
       </>
     );
   }

@@ -1,14 +1,16 @@
 import Info from '@assets/mental-health-playback/Info';
 import Introduction, { defaultWidth as introductionWidth } from '@assets/mental-health-playback/Introduction';
-import { BasicPage, Text } from '@covid/components';
+import { Text } from '@covid/components';
 import Card from '@covid/components/cards/Card';
+import { Screen } from '@covid/components/Screen';
 import UL from '@covid/components/UL';
 import { requestInsights } from '@covid/core/state/mental-health-playback/slice';
 import { TRootState } from '@covid/core/state/root';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
+import { colors } from '@theme';
 import * as React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +29,7 @@ const personalItems = [
 export default function MHPIntroductionScreen() {
   const dispatch = useDispatch();
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
-  const windowWidth = useWindowDimensions().width;
+  const windowWidth = Math.min(sizes.maxScreenWidth, useWindowDimensions().width);
 
   React.useEffect(() => {
     dispatch(requestInsights());
@@ -40,12 +42,12 @@ export default function MHPIntroductionScreen() {
   }
 
   return (
-    <BasicPage
-      active
-      hasStickyHeader
+    <Screen
+      noPadding
+      backgroundColor={colors.white}
+      footerOnPress={onPress}
       footerTitle={i18n.t('mental-health-playback.introduction.button')}
-      onPress={onPress}
-      style={styling.backgroundWhite}
+      testID="mhp-introduction-screen"
     >
       <Introduction scale={windowWidth / introductionWidth} />
       <View style={[styling.padding, styling.marginVerticalAuto]}>
@@ -64,6 +66,6 @@ export default function MHPIntroductionScreen() {
           </Text>
         </View>
       </View>
-    </BasicPage>
+    </Screen>
   );
 }

@@ -1,5 +1,5 @@
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { SelectorButton } from '@covid/components/SelectorButton';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -7,7 +7,7 @@ import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 interface IProps {
   route: RouteProp<TScreenParamList, 'WhereAreYou'>;
@@ -55,45 +55,39 @@ function WhereAreYouScreen({ route }: IProps) {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="where-are-you-screen"
     >
-      <View style={{ marginHorizontal: 16 }}>
-        <ProgressHeader currentStep={6} maxSteps={6} title={i18n.t('where-are-you.question-location')} />
-      </View>
+      <ProgressHeader currentStep={6} maxSteps={6} title={i18n.t('where-are-you.question-location')} />
 
-      <View style={[styles.marginVertical, styles.marginHorizontal]}>
-        <SelectorButton
-          onPress={() => handleLocationSelection('home', true)}
-          style={styles.marginBottom}
-          testID="button-location-home"
-          text={i18n.t('where-are-you.picker-location-home')}
-        />
-        <SelectorButton
-          onPress={() => handleLocationSelection('hospital', false)}
-          style={styles.marginBottom}
-          testID="button-location-hospital"
-          text={i18n.t('where-are-you.picker-location-hospital')}
-        />
-        <SelectorButton
-          onPress={() => handleLocationSelection('back_from_hospital', false)}
-          style={styles.marginBottom}
-          testID="button-location-back-from-hospital"
-          text={i18n.t('where-are-you.picker-location-back-from-hospital')}
-        />
-        <SelectorButton
-          onPress={() => handleLocationSelection('back_from_hospital', true)}
-          testID="button-location-back-from-hospital-already-reported"
-          text={i18n.t('where-are-you.picker-location-back-from-hospital-already-reported')}
-        />
-      </View>
+      <SelectorButton
+        onPress={() => handleLocationSelection('home', true)}
+        style={styles.marginTop}
+        testID="button-location-home"
+        text={i18n.t('where-are-you.picker-location-home')}
+      />
+      <SelectorButton
+        onPress={() => handleLocationSelection('hospital', false)}
+        style={styles.marginTop}
+        testID="button-location-hospital"
+        text={i18n.t('where-are-you.picker-location-hospital')}
+      />
+      <SelectorButton
+        onPress={() => handleLocationSelection('back_from_hospital', false)}
+        style={styles.marginTop}
+        testID="button-location-back-from-hospital"
+        text={i18n.t('where-are-you.picker-location-back-from-hospital')}
+      />
+      <SelectorButton
+        onPress={() => handleLocationSelection('back_from_hospital', true)}
+        style={styles.marginTop}
+        testID="button-location-back-from-hospital-already-reported"
+        text={i18n.t('where-are-you.picker-location-back-from-hospital-already-reported')}
+      />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  marginBottom: {
-    marginBottom: 32,
-  },
-  marginHorizontal: {
-    marginHorizontal: 8,
+  marginTop: {
+    marginTop: 32,
   },
   marginVertical: {
     marginVertical: 32,

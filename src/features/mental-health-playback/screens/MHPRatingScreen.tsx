@@ -1,12 +1,14 @@
 import Star from '@assets/mental-health-playback/Star';
-import { BasicPage, Text, TextareaWithCharCount } from '@covid/components';
+import { Text, TextareaWithCharCount } from '@covid/components';
 import Card from '@covid/components/cards/Card';
+import { Screen } from '@covid/components/Screen';
 import Analytics from '@covid/core/Analytics';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
 import { grid, styling } from '@covid/themes';
+import { colors } from '@theme';
 import lodash from 'lodash';
 import * as React from 'react';
 import { LayoutChangeEvent, TouchableOpacity, View } from 'react-native';
@@ -46,68 +48,66 @@ export default function MHPRatingScreen() {
   }
 
   return (
-    <BasicPage
-      hasStickyHeader
-      active={!loading && selectedRating > 0}
+    <Screen
+      backgroundColor={colors.white}
+      footerEnabled={!loading && selectedRating > 0}
+      footerLoading={loading}
+      footerOnPress={() => throttledFunction(onPress)}
       footerTitle={i18n.t('mental-health-playback.rating.button')}
-      loading={loading}
-      onPress={() => throttledFunction(onPress)}
-      style={styling.backgroundWhite}
+      testID="mhp-introduction-screen"
     >
-      <View style={styling.marginHorizontal}>
-        <Card useShadow padding={grid.xxxl} style={[styling.marginTop, styling.marginBottomHuge]}>
-          <View onLayout={onLayout} style={styling.measureWidth} />
-          <Text
-            inverted
-            colorPalette="accentBlue"
-            colorShade="main"
-            style={styling.marginBottomBig}
-            textAlign="center"
-            textClass="h3Regular"
-          >
-            {i18n.t('mental-health-playback.rating.card')}
-          </Text>
-          <View style={styling.row}>
-            {ratings.map((_, index) => (
-              <TouchableOpacity
-                // eslint-disable-next-line react/no-array-index-key
-                key={`touchable-star-${index}`}
-                onPress={() => setSelectedRating(index + 1)}
-                style={{
-                  paddingHorizontal: spacingSize,
-                  paddingVertical: grid.xl,
-                }}
-              >
-                <Star color={selectedRating - 1 >= index ? '#0165B5' : '#E2E2E2'} height={starSize} width={starSize} />
-              </TouchableOpacity>
-            ))}
-          </View>
-          <View style={styling.rowBetween}>
-            <Text inverted colorPalette="accentBlue" colorShade="main" textClass="h6Regular">
-              {i18n.t('mental-health-playback.rating.not-helpful')}
-            </Text>
-            <Text inverted colorPalette="accentBlue" colorShade="main" textClass="h6Regular">
-              {i18n.t('mental-health-playback.rating.very-helpful')}
-            </Text>
-          </View>
-        </Card>
+      <Card useShadow padding={grid.xxxl} style={[styling.marginTop, styling.marginBottomHuge]}>
+        <View onLayout={onLayout} style={styling.measureWidth} />
         <Text
           inverted
           colorPalette="accentBlue"
           colorShade="main"
-          style={styling.marginBottom}
+          style={styling.marginBottomBig}
           textAlign="center"
-          textClass="p"
+          textClass="h3Regular"
         >
-          {i18n.t('mental-health-playback.rating.feedback')}
+          {i18n.t('mental-health-playback.rating.card')}
         </Text>
-        <TextareaWithCharCount
-          onChangeText={setComments}
-          style={styling.marginBottomAuto}
-          textAreaStyle={styling.textarea}
-          value={comments}
-        />
-      </View>
-    </BasicPage>
+        <View style={styling.row}>
+          {ratings.map((_, index) => (
+            <TouchableOpacity
+              // eslint-disable-next-line react/no-array-index-key
+              key={`touchable-star-${index}`}
+              onPress={() => setSelectedRating(index + 1)}
+              style={{
+                paddingHorizontal: spacingSize,
+                paddingVertical: grid.xl,
+              }}
+            >
+              <Star color={selectedRating - 1 >= index ? '#0165B5' : '#E2E2E2'} height={starSize} width={starSize} />
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View style={styling.rowBetween}>
+          <Text inverted colorPalette="accentBlue" colorShade="main" textClass="h6Regular">
+            {i18n.t('mental-health-playback.rating.not-helpful')}
+          </Text>
+          <Text inverted colorPalette="accentBlue" colorShade="main" textClass="h6Regular">
+            {i18n.t('mental-health-playback.rating.very-helpful')}
+          </Text>
+        </View>
+      </Card>
+      <Text
+        inverted
+        colorPalette="accentBlue"
+        colorShade="main"
+        style={styling.marginBottom}
+        textAlign="center"
+        textClass="p"
+      >
+        {i18n.t('mental-health-playback.rating.feedback')}
+      </Text>
+      <TextareaWithCharCount
+        onChangeText={setComments}
+        style={styling.marginBottomAuto}
+        textAreaStyle={styling.textarea}
+        value={comments}
+      />
+    </Screen>
   );
 }

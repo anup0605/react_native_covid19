@@ -2,7 +2,6 @@ import DropdownField from '@covid/components/DropdownField';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
@@ -80,10 +79,10 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
         <GenericTextField formikProps={formikProps} name="diabetesTypeOther" />
       ) : null}
 
-      <FieldWrapper style={styles.fieldWrapper}>
+      <View style={styles.view}>
         <RegularText>{i18n.t('diabetes.most-recent-hemoglobin-measure')}</RegularText>
         <View style={styles.fieldRow}>
-          <View style={styles.primaryField}>
+          <View style={styles.flex4}>
             {formikProps.values.hemoglobinMeasureUnit === '%' ? (
               <ValidatedTextInput
                 error={formikProps.touched.a1cMeasurementPercent && formikProps.errors.a1cMeasurementPercent}
@@ -109,7 +108,7 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
               />
             ) : null}
           </View>
-          <View style={styles.secondaryField}>
+          <View style={styles.flex4}>
             <DropdownField
               hideLabel
               items={hemoglobinUnitsOptions}
@@ -118,7 +117,7 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
             />
           </View>
         </View>
-      </FieldWrapper>
+      </View>
 
       <GenericTextField
         showError
@@ -219,19 +218,11 @@ const styles = StyleSheet.create({
   fieldRow: {
     flexDirection: 'row',
   },
-  fieldWrapper: {
+  flex4: {
+    flex: 4,
+  },
+  view: {
     flex: 1,
-  },
-  primaryField: {
-    flex: 4,
-    marginRight: 4,
-  },
-  secondaryField: {
-    flex: 4,
-    margin: -8,
-    marginHorizontal: 4,
-  },
-  textItemStyle: {
-    borderColor: 'transparent',
+    marginVertical: 16,
   },
 });

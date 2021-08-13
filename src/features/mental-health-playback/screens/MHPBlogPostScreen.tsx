@@ -1,10 +1,10 @@
-import { BasicPage } from '@covid/components';
+import { Screen } from '@covid/components/Screen';
 import Analytics from '@covid/core/Analytics';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import { requestInsights, selectInsights } from '@covid/core/state/mental-health-playback/slice';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { colors, styling } from '@covid/themes';
+import { colors } from '@covid/themes';
 import * as React from 'react';
 import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
 import WebView, { WebViewNavigation } from 'react-native-webview';
@@ -73,24 +73,29 @@ export default function MHPBlogPostScreen() {
   }
 
   return (
-    <BasicPage active footerTitle={i18n.t('continue')} onPress={onPress} style={styling.backgroundWhite}>
-      <View style={styling.flex}>
-        <WebView
-          injectedJavaScript={js}
-          injectedJavaScriptBeforeContentLoaded={js}
-          onLoad={() => webView.current?.injectJavaScript(js)}
-          onLoadEnd={onLoadEnd}
-          onNavigationStateChange={onNavigationStateChange}
-          ref={webView}
-          source={source}
-        />
-        {!loaded ? (
-          <View style={styles.view}>
-            <ActivityIndicator color={colors.coral.main.bgColor} size="large" />
-          </View>
-        ) : null}
-      </View>
-    </BasicPage>
+    <Screen
+      fullWidth
+      noPadding
+      backgroundColor="white"
+      footerOnPress={onPress}
+      footerTitle={i18n.t('continue')}
+      testID="mhp-blog-post-screen"
+    >
+      <WebView
+        injectedJavaScript={js}
+        injectedJavaScriptBeforeContentLoaded={js}
+        onLoad={() => webView.current?.injectJavaScript(js)}
+        onLoadEnd={onLoadEnd}
+        onNavigationStateChange={onNavigationStateChange}
+        ref={webView}
+        source={source}
+      />
+      {!loaded ? (
+        <View style={styles.view}>
+          <ActivityIndicator color={colors.coral.main.bgColor} size="large" />
+        </View>
+      ) : null}
+    </Screen>
   );
 }
 

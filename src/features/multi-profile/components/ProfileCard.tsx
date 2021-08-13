@@ -56,14 +56,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.white,
     borderRadius: 16,
+    marginBottom: 0,
+    marginTop: 0,
     minHeight: 224,
     paddingVertical: 12,
     shadowRadius: 0,
     width: '100%',
   },
-  placeholder: {
-    height: 20,
-    width: 20,
+  secondaryText: {
+    color: colors.accent,
+    fontSize: 12,
+    textAlign: 'center',
   },
-  secondaryText: { color: colors.accent, fontSize: 12, textAlign: 'center' },
 });

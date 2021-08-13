@@ -1,8 +1,9 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { Coordinator, IUpdatePatient } from '@covid/core/Coordinator';
@@ -14,9 +15,8 @@ import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profi
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
-import { Form, Item, Label } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 type TYourStudyProps = {
@@ -308,10 +308,6 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
 
     return (
       <Screen simpleCallout profile={this.coordinator.patientData?.patientState?.profile} testID="your-study-screen">
-        <View style={{ marginHorizontal: 16 }}>
-          <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
-        </View>
-
         <Formik
           initialValues={this.getInitialFormValues()}
           onSubmit={(values: IYourStudyData) => this.handleSubmit(values)}
@@ -320,66 +316,65 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
           {(props) => {
             return (
               <Form>
-                <FieldWrapper>
-                  <Item stackedLabel style={styles.textItemStyle}>
-                    <Label style={{ marginBottom: 16 }}>{i18n.t('your-study.label-cohort')}</Label>
-                    <CheckboxList>
-                      {countrySpecificCohorts.map((cohort) => (
-                        <CheckboxItem
-                          key={cohort.key}
+                <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
+                <RegularText style={{ marginBottom: 16, marginTop: 32 }}>
+                  {i18n.t('your-study.label-cohort')}
+                </RegularText>
+                <CheckboxList>
+                  {countrySpecificCohorts.map((cohort) => (
+                    <CheckboxItem
+                      key={cohort.key}
+                      // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
+                      onChange={(value: boolean) => {
+                        if (cohort.key === 'is_in_none_of_the_above') {
                           // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
-                          onChange={(value: boolean) => {
-                            if (cohort.key === 'is_in_none_of_the_above') {
-                              // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
-                              props.setValues(this.buildInitCohortsValues(countrySpecificCohorts));
-                            } else if (Object.keys(props.values).includes('is_in_none_of_the_above')) {
-                              props.setFieldValue('is_in_none_of_the_above', false);
-                            }
-                            props.setFieldValue(cohort.key, value);
-                          }}
-                          value={props.values[cohort.key]}
-                        >
-                          {cohort.label}
-                        </CheckboxItem>
-                      ))}
-                    </CheckboxList>
-                  </Item>
-                </FieldWrapper>
+                          props.setValues(this.buildInitCohortsValues(countrySpecificCohorts));
+                        } else if (Object.keys(props.values).includes('is_in_none_of_the_above')) {
+                          props.setFieldValue('is_in_none_of_the_above', false);
+                        }
+                        props.setFieldValue(cohort.key, value);
+                      }}
+                      value={props.values[cohort.key]}
+                    >
+                      {cohort.label}
+                    </CheckboxItem>
+                  ))}
+                </CheckboxList>
 
                 {isUSCountry() ? (
                   <>
-                    <RegularText style={styles.standaloneLabel}>{i18n.t('your-study.if-not')}</RegularText>
+                    <RegularText>{i18n.t('your-study.if-not')}</RegularText>
 
-                    <View style={{ marginHorizontal: 16 }}>
-                      <GenericTextField
-                        formikProps={props}
-                        label={i18n.t('your-study.add-study-names')}
-                        name="clinicalStudyNames"
-                        placeholder={i18n.t('placeholder-optional')}
-                      />
+                    <GenericTextField
+                      formikProps={props}
+                      label={i18n.t('your-study.add-study-names')}
+                      name="clinicalStudyNames"
+                      placeholder={i18n.t('placeholder-optional')}
+                    />
 
-                      <GenericTextField
-                        formikProps={props}
-                        label={i18n.t('your-study.contact-name')}
-                        name="clinicalStudyContacts"
-                        placeholder={i18n.t('placeholder-optional')}
-                      />
-                      <GenericTextField
-                        formikProps={props}
-                        label={i18n.t('your-study.uni-hospital')}
-                        name="clinicalStudyInstitutions"
-                        placeholder={i18n.t('placeholder-optional')}
-                      />
+                    <GenericTextField
+                      formikProps={props}
+                      label={i18n.t('your-study.contact-name')}
+                      name="clinicalStudyContacts"
+                      placeholder={i18n.t('placeholder-optional')}
+                    />
+                    <GenericTextField
+                      formikProps={props}
+                      label={i18n.t('your-study.uni-hospital')}
+                      name="clinicalStudyInstitutions"
+                      placeholder={i18n.t('placeholder-optional')}
+                    />
 
-                      <GenericTextField
-                        formikProps={props}
-                        label={i18n.t('your-study.nct-number')}
-                        name="clinicalStudyNctIds"
-                        placeholder={i18n.t('placeholder-optional')}
-                      />
-                    </View>
+                    <GenericTextField
+                      formikProps={props}
+                      label={i18n.t('your-study.nct-number')}
+                      name="clinicalStudyNctIds"
+                      placeholder={i18n.t('placeholder-optional')}
+                    />
                   </>
                 ) : null}
+
+                <View style={{ flex: 1 }} />
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
                 {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
@@ -416,12 +411,3 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
     return infos;
   }
 }
-
-const styles = StyleSheet.create({
-  standaloneLabel: {
-    marginHorizontal: 16,
-  },
-  textItemStyle: {
-    borderColor: 'transparent',
-  },
-});

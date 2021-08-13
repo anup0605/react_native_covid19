@@ -2,7 +2,7 @@ import QuestionCircle from '@assets/icons/QuestionCircle';
 import { BrandedButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { ClickableText, Header3Text, HeaderText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
@@ -186,7 +186,7 @@ export function AboutYourVaccineScreen({ route }: TProps) {
   };
 
   return (
-    <ScreenNew profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
+    <Screen profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
       <HeaderText>{i18n.t('vaccines.your-vaccine.title')}</HeaderText>
       <TouchableOpacity onPress={assessmentCoordinator.goToVaccineFindInfo} style={styles.infoWrapper}>
         <QuestionCircle colorIcon={colors.linkBlue} />
@@ -257,7 +257,7 @@ export function AboutYourVaccineScreen({ route }: TProps) {
           );
         }}
       </Formik>
-    </ScreenNew>
+    </Screen>
   );
 }
 

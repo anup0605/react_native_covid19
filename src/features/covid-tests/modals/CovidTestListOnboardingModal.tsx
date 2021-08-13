@@ -1,15 +1,14 @@
 import { BrandedButton, HeaderText, Modal, RegularText } from '@covid/components';
 import ProgressStatus from '@covid/components/ProgressStatus';
-import { ProgressBlock } from '@covid/components/Screen';
 import { events, track } from '@covid/core/Analytics';
 import { fetchStartUpInfo } from '@covid/core/content/state/contentSlice';
 import { patientService } from '@covid/core/patient/PatientService';
-import store from '@covid/core/state/store';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, Image, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 const ONBOARDING_SCREENS = [
   require('@covid/features/covid-tests/modals/gifs/screen_1.gif'),
@@ -18,6 +17,13 @@ const ONBOARDING_SCREENS = [
   require('@covid/features/covid-tests/modals/gifs/screen_4.gif'),
 ];
 
+const HIT_SLOP = {
+  bottom: 12,
+  left: 12,
+  right: 12,
+  top: 12,
+};
+
 interface IProps {
   onRequestClose: () => void;
   visible: boolean;
@@ -25,6 +31,7 @@ interface IProps {
 }
 
 export default function CovidTestListOnboardingModal(props: IProps) {
+  const dispatch = useDispatch();
   const [tracked, setTracked] = React.useState(false);
   const [onboardingModalScreenIndex, setOboardingModalScreenIndex] = React.useState<number>(0);
   const [selectedGif, setSelectedGif] = React.useState<any>(ONBOARDING_SCREENS[0]);
@@ -35,6 +42,16 @@ export default function CovidTestListOnboardingModal(props: IProps) {
       setTracked(true);
     }
   });
+
+  function closeAndUpateStartupInfo() {
+    const infos: Partial<TPatientInfosRequest> = {
+      has_seen_covid_test_onboarding: true,
+    };
+    patientService.updatePatientInfo(props.patientId, infos).then(() => {
+      props.onRequestClose();
+      dispatch(fetchStartUpInfo());
+    });
+  }
 
   function setIndexAndGif(selectedIndex: number) {
     setOboardingModalScreenIndex(selectedIndex);
@@ -58,39 +75,43 @@ export default function CovidTestListOnboardingModal(props: IProps) {
     setIndexAndGif(selectedIndex);
   }
 
-  async function closeAndUpateStartupInfo() {
-    const infos: Partial<TPatientInfosRequest> = {
-      has_seen_covid_test_onboarding: true,
-    };
-    patientService.updatePatientInfo(props.patientId, infos).then(async (_) => {
-      props.onRequestClose();
-      // Renew app's startup info
-      await store.dispatch(fetchStartUpInfo());
-    });
-  }
+  const headerChildren = React.useMemo(
+    () => (
+      <TouchableOpacity
+        hitSlop={HIT_SLOP}
+        onPress={closeAndUpateStartupInfo}
+        style={styles.closeTouchable}
+        testID="modal-close-button"
+      >
+        <RegularText style={styles.closeText}>{i18n.t(`modal-close`)}</RegularText>
+      </TouchableOpacity>
+    ),
+    [closeAndUpateStartupInfo],
+  );
 
-  const footerChildren = (
-    <BrandedButton onPress={nextModalOrComplete} style={styles.button} testID={'covid-test-modal-button'}>
-      {onboardingModalScreenIndex === ONBOARDING_SCREENS.length - 1
-        ? i18n.t('covid-test-modal.button-end')
-        : i18n.t('covid-test-modal.button')}
-    </BrandedButton>
+  const footerChildren = React.useMemo(
+    () => (
+      <BrandedButton onPress={nextModalOrComplete} style={styles.button} testID="covid-test-modal-button">
+        {onboardingModalScreenIndex === ONBOARDING_SCREENS.length - 1
+          ? i18n.t('covid-test-modal.button-end')
+          : i18n.t('covid-test-modal.button')}
+      </BrandedButton>
+    ),
+    [onboardingModalScreenIndex],
   );
 
   return (
     <Modal
-      visible
-      onRequestClose={closeAndUpateStartupInfo}
       footerChildren={footerChildren}
-      swipeRight={previousModal}
+      headerChildren={headerChildren}
+      onRequestClose={closeAndUpateStartupInfo}
       swipeLeft={nextModalOrComplete}
-      testID={`covid-test-modal-screen-${onboardingModalScreenIndex}`}
-      showCloseButton
+      swipeRight={previousModal}
+      testID={`covid-test-modal-${onboardingModalScreenIndex}`}
+      visible={props.visible}
     >
       <View style={styles.wrapper}>
-        <ProgressBlock>
-          <ProgressStatus maxSteps={4} currentStep={onboardingModalScreenIndex + 1} color={colors.lightBlueBrand} />
-        </ProgressBlock>
+        <ProgressStatus color={colors.lightBlueBrand} currentStep={onboardingModalScreenIndex + 1} maxSteps={4} />
 
         <View style={styles.newDesign}>
           <RegularText style={styles.newDesignText}>{i18n.t('covid-test-modal.new-design')}</RegularText>
@@ -106,18 +127,36 @@ export default function CovidTestListOnboardingModal(props: IProps) {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    padding: 8,
-    alignItems: 'center',
-  },
   button: {
+    marginTop: 32,
     paddingHorizontal: 16,
-    marginTop: 64,
+  },
+  closeText: {
+    color: colors.lightBrand,
+    fontWeight: '600',
+  },
+  closeTouchable: {
+    alignSelf: 'flex-end',
   },
   gif: {
-    resizeMode: 'contain',
-    height: 500,
     flex: 1,
+    height: 500,
+    resizeMode: 'contain',
+  },
+  newDesign: {
+    alignSelf: 'center',
+    backgroundColor: colors.lightBlueBrand,
+    borderRadius: 6,
+    marginBottom: 24,
+    marginTop: 32,
+    paddingHorizontal: 12,
+    paddingVertical: 3,
+    textAlign: 'center',
+  },
+  newDesignText: {
+    color: 'white',
+    fontSize: 12,
+    textTransform: 'uppercase',
   },
   text: {
     marginBottom: 24,
@@ -127,19 +166,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginTop: 16,
   },
-  newDesign: {
-    backgroundColor: colors.lightBlueBrand,
-    textAlign: 'center',
-    paddingVertical: 3,
-    paddingHorizontal: 12,
-    alignSelf: 'center',
-    marginTop: 32,
-    marginBottom: 24,
-    borderRadius: 6,
-  },
-  newDesignText: {
-    color: 'white',
-    textTransform: 'uppercase',
-    fontSize: 12,
+  wrapper: {
+    alignItems: 'center',
+    padding: 8,
   },
 });

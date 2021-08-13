@@ -1,7 +1,7 @@
 import { BrandedButton, Text } from '@covid/components';
 import { Loading } from '@covid/components/Loading';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TRootState } from '@covid/core/state/root';
@@ -17,8 +17,8 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { getTestType } from './helpers';
 
+import { getTestType } from './helpers';
 import CovidTestListOnboardingModal from './modals/CovidTestListOnboardingModal';
 
 interface IProps {
@@ -77,7 +77,7 @@ export default function CovidTestListScreen(props: IProps) {
     assessmentCoordinator.goToAddEditTest();
   }
 
-  async function handleNextButton() {
+  function handleNextButton() {
     assessmentCoordinator.gotoNextScreen(props.route.name);
   }
 
@@ -87,96 +87,79 @@ export default function CovidTestListScreen(props: IProps) {
     ? getTestType(props.route.params.mechanism, props.route.params.is_rapid_test) || 'Lateral'
     : 'Lateral';
 
-  const renderModal = () =>
-    showOnboardingModal ? (
-      <CovidTestListOnboardingModal
-        visible
-        onRequestClose={() => {
-          setShowOnboardingModal(false);
-        }}
-        patientId={assessmentCoordinator.assessmentData?.patientData?.patientId}
-      />
-    ) : null;
-
   return (
-    <View style={styles.rootContainer}>
-      <Screen profile={currentPatient?.profile} testID="covid-test-list-screen">
-        <View style={{ marginHorizontal: 16 }}>
-          <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('covid-test-list.title')} />
-        </View>
+    <Screen
+      backgroundColor={colors.backgroundPrimary}
+      profile={currentPatient?.profile}
+      testID="covid-test-list-screen"
+    >
+      <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('covid-test-list.title')} />
 
-        {renderModal()}
+      {!showOnboardingModal ? null : (
+        <CovidTestListOnboardingModal
+          onRequestClose={() => {
+            setShowOnboardingModal(false);
+          }}
+          patientId={assessmentCoordinator.assessmentData?.patientData?.patientId}
+          visible={showOnboardingModal}
+        />
+      )}
 
-        {covidTests.length ? null : (
-          <View style={styles.content}>
-            <RegularText testID="covid-test-list-introduction">{i18n.t('covid-test-list.text')}</RegularText>
-          </View>
-        )}
+      {covidTests.length ? null : (
+        <RegularText style={styles.marginTop} testID="covid-test-list-introduction">
+          {i18n.t('covid-test-list.text')}
+        </RegularText>
+      )}
 
-        <BrandedButton onPress={gotoAddTest} style={styles.newButton} testID="button-add-test">
-          <Text style={styles.newText}>{i18n.t('covid-test-list.add-new-test')}</Text>
-        </BrandedButton>
+      <BrandedButton onPress={gotoAddTest} style={styles.newButton} testID="button-add-test">
+        <Text style={styles.newText}>{i18n.t('covid-test-list.add-new-test')}</Text>
+      </BrandedButton>
 
-        {covidTests.length ? (
-          <Text style={styles.tabTitle} textAlign="center" textClass="h4Medium">
-            {i18n.t('covid-test-list.tabs-title')}
-          </Text>
-        ) : null}
+      {covidTests.length ? (
+        <Text style={styles.tabTitle} textAlign="center" textClass="h4Medium">
+          {i18n.t('covid-test-list.tabs-title')}
+        </Text>
+      ) : null}
 
-        {isLoading ? (
-          <Loading error={null} status="" />
-        ) : covidTests.length ? (
-          <View style={styles.tabView}>
-            <CovidTestTabbedListsScreen
-              covidTests={covidTests}
-              minTabViewHeight={minTabViewHeight}
-              showTab={showTab}
-              tabViewHeight={tabViewHeight}
-            />
-          </View>
-        ) : null}
+      {isLoading ? (
+        <Loading error={null} status="" />
+      ) : covidTests.length ? (
+        <CovidTestTabbedListsScreen
+          covidTests={covidTests}
+          minTabViewHeight={minTabViewHeight}
+          showTab={showTab}
+          tabViewHeight={tabViewHeight}
+        />
+      ) : null}
 
-        {error ? <ErrorText style={{ textAlign: 'center' }}>{error}</ErrorText> : null}
+      {error ? <ErrorText style={{ textAlign: 'center' }}>{error}</ErrorText> : null}
 
-        <View style={{ flex: 1 }} />
+      <View style={{ flex: 1 }} />
 
-        <BrandedButton onPress={handleNextButton} style={styles.continueButton} testID="button-covid-test-list-screen">
-          <Text style={{ color: colors.white }}>
-            {covidTests.length === 0
-              ? i18n.t('covid-test-list.never-had-test')
-              : i18n.t('covid-test-list.above-list-correct')}
-          </Text>
-        </BrandedButton>
-      </Screen>
-    </View>
+      <BrandedButton onPress={handleNextButton} testID="button-covid-test-list-screen">
+        <Text style={{ color: colors.white }}>
+          {covidTests.length === 0
+            ? i18n.t('covid-test-list.never-had-test')
+            : i18n.t('covid-test-list.above-list-correct')}
+        </Text>
+      </BrandedButton>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    marginHorizontal: 16,
+  marginTop: {
     marginTop: 24,
-  },
-  continueButton: {
-    marginHorizontal: 16,
   },
   newButton: {
     backgroundColor: colors.backgroundTertiary,
-    marginHorizontal: 16,
-    marginVertical: 24,
+    marginBottom: 16,
+    marginTop: 24,
   },
   newText: {
     color: colors.primary,
   },
-  rootContainer: {
-    backgroundColor: colors.backgroundPrimary,
-    flex: 1,
-  },
   tabTitle: {
     color: colors.secondary,
-  },
-  tabView: {
-    marginHorizontal: 16,
-    marginTop: 8,
   },
 });

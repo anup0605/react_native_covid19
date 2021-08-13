@@ -1,6 +1,7 @@
 import { BrandedButton } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
@@ -16,17 +17,19 @@ import {
 } from '@covid/features/patient/fields/BloodPressureMedicationQuestion';
 import { DiabetesQuestions, IDiabetesData } from '@covid/features/patient/fields/DiabetesQuestions';
 import { IRaceEthnicityData, RaceEthnicityQuestion } from '@covid/features/patient/fields/RaceEthnicityQuestion';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { Formik, FormikProps } from 'formik';
-import { Form } from 'native-base';
 import * as React from 'react';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 interface IBackfillData extends IBloodPressureData, IRaceEthnicityData, IAtopyData, IDiabetesData, IBloodGroupData {}
 
 type TProps = {
-  route: RouteProp<ScreenParamList, 'ProfileBackDate'>;
+  route: RouteProp<TScreenParamList, 'ProfileBackDate'>;
 };
 
 type TState = {
@@ -246,6 +249,8 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
                 {this.state.needBloodGroupAnswer ? (
                   <BloodGroupQuestion formikProps={props as FormikProps<IBloodGroupData>} />
                 ) : null}
+
+                <View style={styling.flex} />
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
                 {!!Object.keys(props.errors).length && props.submitCount > 0 ? (

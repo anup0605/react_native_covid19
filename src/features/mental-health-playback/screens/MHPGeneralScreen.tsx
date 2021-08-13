@@ -1,5 +1,7 @@
-import { BasicNavHeader, BrandedButton, SafeLayout, Text } from '@covid/components';
+import { BrandedButton, Text } from '@covid/components';
+import { BackButton } from '@covid/components/BackButton';
 import EmptyState from '@covid/components/EmptyState';
+import { Screen } from '@covid/components/Screen';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import { isLoading, selectInsights } from '@covid/core/state/mental-health-playback/slice';
 import { TRootState } from '@covid/core/state/root';
@@ -8,7 +10,7 @@ import Insights from '@covid/features/mental-health-playback/components/Insights
 import PaginationIndicator from '@covid/features/mental-health-playback/components/PaginationIndicator';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid, styling } from '@covid/themes';
+import { grid, sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import {
   NativeScrollEvent,
@@ -64,9 +66,9 @@ export default function MHPGeneralScreen() {
   const scrollViewHeight = windowDimensions.height - safeAreaInsets.top - safeAreaInsets.bottom;
 
   return (
-    <SafeLayout style={styling.backgroundWhite}>
+    <Screen hideBackButton noScrollView backgroundColor="white" testID="mhp-general-screen">
       <View style={[styling.flex, styling.relative]}>
-        <BasicNavHeader backgroundColor="transparent" style={styles.basicNavHeader} />
+        <BackButton style={styles.backButton} />
         {!mhInsights.insights.length && loading ? (
           <EmptyState />
         ) : (
@@ -112,13 +114,15 @@ export default function MHPGeneralScreen() {
           </>
         )}
       </View>
-    </SafeLayout>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  basicNavHeader: {
+  backButton: {
+    left: sizes.screenHorizontalPadding,
     position: 'absolute',
+    top: sizes.screenVerticalPadding,
     zIndex: 1,
   },
   button: {

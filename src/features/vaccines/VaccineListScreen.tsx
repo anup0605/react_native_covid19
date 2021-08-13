@@ -1,7 +1,7 @@
 import { IUIAction } from '@covid/common';
 import { BrandedButton, HeaderText, Text } from '@covid/components';
 import { Loading } from '@covid/components/Loading';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
 import { appActions, appSelectors } from '@covid/core/state/app/slice';
@@ -178,13 +178,17 @@ export const VaccineListScreen: React.FC<TProps> = ({ route }) => {
   ];
 
   return (
-    <View style={styles.rootContainer}>
+    <>
       {showVaccineWarning ? <VaccineWarning actions={actions} /> : null}
 
-      <Screen profile={route.params?.assessmentData?.patientData?.patientState?.profile} testID="vaccine-list-screen">
-        <HeaderText style={{ margin: 16 }}>{i18n.t('vaccines.vaccine-list.title')}</HeaderText>
+      <Screen
+        backgroundColor={colors.backgroundPrimary}
+        profile={route.params?.assessmentData?.patientData?.patientState?.profile}
+        testID="vaccine-list-screen"
+      >
+        <HeaderText>{i18n.t('vaccines.vaccine-list.title')}</HeaderText>
 
-        <Text style={{ marginHorizontal: 16, marginVertical: 8 }}>{i18n.t('vaccines.vaccine-list.description')}</Text>
+        <Text style={{ marginVertical: 8 }}>{i18n.t('vaccines.vaccine-list.description')}</Text>
 
         <ListContent />
 
@@ -198,13 +202,13 @@ export const VaccineListScreen: React.FC<TProps> = ({ route }) => {
           <Text style={{ color: colors.white }}>
             {vaccines.length === 0
               ? i18n.t('vaccines.vaccine-list.no-vaccine')
-              : vaccines[0]?.doses[1]?.date_taken_specific === undefined // 2nd dose not logged
+              : vaccines[0]?.doses[1]?.date_taken_specific === undefined
               ? i18n.t('vaccines.vaccine-list.no-2nd')
               : i18n.t('vaccines.vaccine-list.correct-info')}
           </Text>
         </BrandedButton>
       </Screen>
-    </View>
+    </>
   );
 };
 
@@ -221,9 +225,5 @@ const styles = StyleSheet.create({
   },
   newText: {
     color: colors.purple,
-  },
-  rootContainer: {
-    backgroundColor: colors.backgroundPrimary,
-    flex: 1,
   },
 });
