@@ -43,7 +43,6 @@ testReconsentFeature({
   consent: false,
   fillInAllFeedback: false,
   fillInFeedback: ['im_only_interested_in_fighting_covid_19_right_now', 'other'],
-  privacyPolicyScrollDown: false,
   privacyPolicyView: true,
   reconsider: true,
   selectAllDiseases: true,

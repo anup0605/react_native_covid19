@@ -10,7 +10,6 @@ type TReconsentConfig = {
   consent: boolean;
   fillInAllFeedback: boolean;
   fillInFeedback?: string[];
-  privacyPolicyScrollDown: boolean;
   privacyPolicyView: boolean;
   reconsider: boolean;
   selectAllDiseases: boolean;
@@ -82,9 +81,6 @@ export function testReconsentFeature(config: TReconsentConfig) {
       await scrollDownToId('scroll-view-reconsent-request-consent-screen', 'button-privacy-notice');
       await element(by.id('button-privacy-notice')).tap();
       await expect(element(by.id('privacy-policy-uk-screen'))).toBeVisible();
-      if (config.privacyPolicyScrollDown) {
-        await element(by.id('scroll-view-privacy-policy-uk-screen')).scrollTo('bottom');
-      }
       await element(by.id('button-back-navigation').withAncestor(by.id('privacy-policy-uk-screen'))).tap();
     });
   }

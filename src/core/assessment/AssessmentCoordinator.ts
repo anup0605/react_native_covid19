@@ -242,6 +242,11 @@ export class AssessmentCoordinator extends Coordinator {
   resetVaccine() {
     this.assessmentData.vaccineData = undefined;
   }
+
+  isReportedByOther() {
+    const isReportedByOther = this.assessmentData?.patientData?.patientInfo?.reported_by_another;
+    return isReportedByOther;
+  }
 }
 
 export const assessmentCoordinator = new AssessmentCoordinator();

@@ -1,7 +1,7 @@
 import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 
-export const EstimatedCasesCartoMap = require('@assets/carto/estimated-cases.html');
+const EstimatedCasesCartoMap = require('@assets/carto/estimated-cases.html');
 export const TrendLineOverview = require('@assets/charts/trendline-overview.html');
 export const TrendLineExplore = require('@assets/charts/trendline-explore.html');
 

@@ -2,9 +2,6 @@ import { BasicPage } from '@covid/components';
 import Analytics from '@covid/core/Analytics';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import { requestInsights, selectInsights } from '@covid/core/state/mental-health-playback/slice';
-import { TRootState } from '@covid/core/state/root';
-import { selectFirstPatientId } from '@covid/core/state/user';
-import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { colors, styling } from '@covid/themes';
@@ -40,8 +37,6 @@ export default function MHPBlogPostScreen() {
   const [loaded, setLoaded] = React.useState(false);
   const mhInsights = useSelector(selectInsights);
   const webView = React.useRef<WebView>(null);
-  const patientId = useSelector(selectFirstPatientId);
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
 
   React.useEffect(() => {
     dispatch(requestInsights());
