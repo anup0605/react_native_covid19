@@ -88,10 +88,7 @@ echo "AMPLITUDE_KEY=test_key" >> .env
 echo "{}" > google-services.json
 ```
 
-### Runing the App
-
-
-## Mockserver (External Contributor) 
+### Runing the Mock Server (Extranl Contributors)
 
 Start the mock server in a different terminal. 
 
@@ -105,7 +102,7 @@ You must use your local IP address or use a tunnel like ngrok.
 yarn mock-server
 ```
 
-## Build & Run the App
+### Build & Run the App
 
 ```sh
 yarn install
@@ -114,7 +111,7 @@ yarn android
 ```
 
 
-### Tests
+## Tests
 
 Run unit & integration tests
 
@@ -136,7 +133,7 @@ Then run the tests:
 detox test
 ```
 
-### Style guide
+## Style guide
 
 Please refer to the [contributing guidelines](CONTRIBUTING.md).
 
@@ -176,10 +173,6 @@ Contributions are what make the open source community such an amazing place to l
 4. Push to the Branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-
-## Multiple iOS simulators
-
-[How to run multiple ios simulators with expo](https://stackoverflow.com/questions/53924934/can-i-run-my-expo-app-on-multiple-ios-simulators-at-once)
 
 ## License
 
