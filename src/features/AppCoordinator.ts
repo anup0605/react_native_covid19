@@ -162,62 +162,61 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     return localisationService.getConfig();
   }
 
-  resetToProfileStartAssessment() {
+  resetToProfileStartAssessment = () => {
     NavigatorService.navigate('SelectProfile', { assessmentFlow: true });
     this.startAssessmentFlow(this.patientData);
-  }
+  };
 
-  startPatientFlow(patientData: TPatientData) {
+  startPatientFlow = (patientData: TPatientData) => {
     patientCoordinator.init(this, patientData, userService);
     patientCoordinator.startPatient();
-  }
+  };
 
-  async startAssessmentFlow(patientData: TPatientData) {
+  startAssessmentFlow = async (patientData: TPatientData) => {
     // TODO: Does not need to be async
     assessmentCoordinator.init(this, { patientData }, assessmentService);
     assessmentCoordinator.startAssessment();
-  }
+  };
 
-  async startEditProfile(profile: TProfile) {
+  startEditProfile = async (profile: TProfile) => {
     await this.setPatientByProfile(profile);
-
     editProfileCoordinator.init(this.patientData, userService);
     editProfileCoordinator.startEditProfile();
-  }
+  };
 
-  async startEditLocation(profile: TProfile, patientData?: TPatientData) {
+  startEditLocation = async (profile: TProfile, patientData?: TPatientData) => {
     if (!patientData) await this.setPatientByProfile(profile);
     editProfileCoordinator.init(patientData ?? this.patientData, userService);
     editProfileCoordinator.goToEditLocation();
-  }
+  };
 
-  async profileSelected(profile: TProfile) {
+  profileSelected = async (profile: TProfile) => {
     await this.setPatientByProfile(profile);
     this.startAssessmentFlow(this.patientData);
-  }
+  };
 
-  async setPatientById(patientId: string) {
+  setPatientById = async (patientId: string) => {
     this.patientData = await patientService.getPatientDataById(patientId);
-  }
+  };
 
-  async setPatientByProfile(profile: TProfile) {
+  setPatientByProfile = async (profile: TProfile) => {
     this.patientData = await patientService.getPatientDataByProfile(profile);
-  }
+  };
 
-  async setPatientToPrimary() {
+  setPatientToPrimary = async () => {
     const user = await userService.getUser();
     const patientId = user?.patients[0] ?? null;
 
     if (patientId) {
       await this.setPatientById(patientId);
     }
-  }
+  };
 
-  goToVersionUpdateModal() {
+  goToVersionUpdateModal = () => {
     NavigatorService.navigate('VersionUpdateModal');
-  }
+  };
 
-  async goToDietStudy() {
+  goToDietStudy = async () => {
     // Reset the current PatientData to the primary user.
     // We can get here if by viewing DietScores after reporting from a secondary profile
     if (this.patientData.patientState.isReportedByAnother) {
@@ -225,31 +224,31 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     }
     dietStudyPlaybackCoordinator.init(this, this.patientData, contentService, dietScoreApiClient);
     NavigatorService.navigate('DietStudy');
-  }
+  };
 
-  goToArchiveReason(patientId: string) {
+  goToArchiveReason = (patientId: string) => {
     NavigatorService.navigate('ArchiveReason', { patientId });
-  }
+  };
 
-  goToPreRegisterScreens() {
+  goToPreRegisterScreens = () => {
     if (isUSCountry()) {
       NavigatorService.navigate('BeforeWeStartUS');
     } else {
       NavigatorService.navigate('Consent', { viewOnly: false });
     }
-  }
+  };
 
-  goToResetPassword() {
+  goToResetPassword = () => {
     NavigatorService.navigate('ResetPassword');
-  }
+  };
 
-  goToCreateProfile(avatarName: string) {
+  goToCreateProfile = (avatarName: string) => {
     NavigatorService.navigate('CreateProfile', { avatarName });
-  }
+  };
 
-  goToTrendline(lad?: string) {
+  goToTrendline = (lad?: string) => {
     NavigatorService.navigate('Trendline', { lad });
-  }
+  };
 
   async shouldShowTrendLine(): Promise<boolean> {
     const { startupInfo } = store.getState().content;
@@ -281,21 +280,21 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     }
   }
 
-  goToMentalHealthStudy() {
+  goToMentalHealthStudy = () => {
     NavigatorService.navigate('MentalHealthChanges');
-  }
+  };
 
-  goToMentalHealthStudyPlayback() {
+  goToMentalHealthStudyPlayback = () => {
     NavigatorService.navigate('MentalHealthPlaybackIntroduction');
-  }
+  };
 
-  goToAnniversary() {
+  goToAnniversary = () => {
     NavigatorService.navigate('Anniversary');
-  }
+  };
 
-  goToReconsent() {
+  goToReconsent = () => {
     NavigatorService.navigate('ReconsentIntroduction');
-  }
+  };
 }
 
 export const appCoordinator = new AppCoordinator();

@@ -47,7 +47,7 @@ type TState = {
   errorMessage: string;
 };
 
-const AllCohorts: TCohortDefinition[] = [
+const allCohorts: TCohortDefinition[] = [
   {
     country: 'GB',
     key: 'is_in_uk_guys_trust',
@@ -248,42 +248,6 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
     clinicalStudyNctId: Yup.string(),
   });
 
-  filterCohortsByCountry(allCohorts: TCohortDefinition[], country: string) {
-    return AllCohorts.filter((cohort) => {
-      return cohort.country === country;
-    });
-  }
-
-  getInitialFormValues() {
-    const countrySpecificCohorts = this.filterCohortsByCountry(AllCohorts, LocalisationService.userCountry);
-    if (this.props.route.params?.editing) {
-      const patientInfo = this.props.route.params?.patientData.patientInfo!;
-      const patientFormData = {
-        clinicalStudyContacts: patientInfo.clinical_study_contacts ?? '',
-        clinicalStudyInstitutions: patientInfo.clinical_study_institutions ?? '',
-        clinicalStudyNames: patientInfo.clinical_study_names ?? '',
-        clinicalStudyNctIds: patientInfo.clinical_study_nct_ids ?? '',
-      };
-      countrySpecificCohorts.forEach((cohort) => {
-        // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
-        patientFormData[cohort.key] = !!patientInfo[cohort.key];
-      });
-      return patientFormData;
-    }
-    return {
-      ...initialFormValues,
-      ...this.buildInitCohortsValues(countrySpecificCohorts),
-    };
-  }
-
-  buildInitCohortsValues(cohorts: TCohortDefinition[]): { [index: string]: boolean } {
-    const initialValues: { [index: string]: boolean } = {};
-    cohorts.forEach((cohort) => {
-      initialValues[cohort.key] = false;
-    });
-    return initialValues;
-  }
-
   constructor(props: TYourStudyProps) {
     super(props);
 
@@ -292,8 +256,44 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
     };
   }
 
-  handleSubmit(formData: IYourStudyData) {
-    const infos = this.createPatientInfos(formData);
+  filterCohortsByCountry = (country: string) => {
+    return allCohorts.filter((cohort) => {
+      return cohort.country === country;
+    });
+  };
+
+  getInitialFormValues = () => {
+    const countrySpecificCohorts = this.filterCohortsByCountry(LocalisationService.userCountry);
+    const patientInfo = this.props.route.params?.patientData?.patientInfo;
+    if (this.props.route.params?.editing && patientInfo) {
+      const patientFormData = {
+        clinicalStudyContacts: patientInfo?.clinical_study_contacts ?? '',
+        clinicalStudyInstitutions: patientInfo?.clinical_study_institutions ?? '',
+        clinicalStudyNames: patientInfo?.clinical_study_names ?? '',
+        clinicalStudyNctIds: patientInfo?.clinical_study_nct_ids ?? '',
+      };
+      countrySpecificCohorts.forEach((cohort) => {
+        // @ts-ignore - error due to cohort keys being in allCohorts and not explicitly in the interface
+        patientFormData[cohort.key] = !!patientInfo[cohort.key];
+      });
+      return patientFormData;
+    }
+    return {
+      ...initialFormValues,
+      ...this.buildInitCohortsValues(countrySpecificCohorts),
+    };
+  };
+
+  buildInitCohortsValues = (cohorts: TCohortDefinition[]): { [index: string]: boolean } => {
+    const initialValues: { [index: string]: boolean } = {};
+    cohorts.forEach((cohort) => {
+      initialValues[cohort.key] = false;
+    });
+    return initialValues;
+  };
+
+  handleSubmit = (values: IYourStudyData) => {
+    const infos = this.createPatientInfos(values);
 
     this.coordinator
       .updatePatientInfo(infos)
@@ -301,16 +301,16 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
         this.coordinator.gotoNextScreen(this.props.route.name);
       })
       .catch((_) => this.setState({ errorMessage: i18n.t('something-went-wrong') }));
-  }
+  };
 
   render() {
-    const countrySpecificCohorts = this.filterCohortsByCountry(AllCohorts, LocalisationService.userCountry);
+    const countrySpecificCohorts = this.filterCohortsByCountry(LocalisationService.userCountry);
 
     return (
       <Screen simpleCallout profile={this.coordinator.patientData?.patientState?.profile} testID="your-study-screen">
         <Formik
           initialValues={this.getInitialFormValues()}
-          onSubmit={(values: IYourStudyData) => this.handleSubmit(values)}
+          onSubmit={this.handleSubmit}
           validationSchema={this.registerSchema}
         >
           {(props) => {
@@ -324,10 +324,10 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
                   {countrySpecificCohorts.map((cohort) => (
                     <CheckboxItem
                       key={cohort.key}
-                      // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
+                      // @ts-ignore - error due to cohort keys being in allCohorts and not explicitly in the interface
                       onChange={(value: boolean) => {
                         if (cohort.key === 'is_in_none_of_the_above') {
-                          // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
+                          // @ts-ignore - error due to cohort keys being in allCohorts and not explicitly in the interface
                           props.setValues(this.buildInitCohortsValues(countrySpecificCohorts));
                         } else if (Object.keys(props.values).includes('is_in_none_of_the_above')) {
                           props.setFieldValue('is_in_none_of_the_above', false);

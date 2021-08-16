@@ -190,11 +190,11 @@ export class AssessmentCoordinator extends Coordinator {
     );
   }
 
-  editLocation() {
+  editLocation = () => {
     this.appCoordinator.startEditLocation(this.patientData.patientState.profile, this.patientData);
-  }
+  };
 
-  gotoSelectProfile() {
+  gotoSelectProfile = () => {
     NavigatorService.reset(
       [
         { name: 'Dashboard' },
@@ -205,19 +205,19 @@ export class AssessmentCoordinator extends Coordinator {
       ],
       1,
     );
-  }
+  };
 
-  goToTestConfirm(test: TCovidTest) {
+  goToTestConfirm = (test: TCovidTest) => {
     NavigatorService.navigate('CovidTestConfirm', { assessmentData: this.assessmentData, test });
-  }
+  };
 
-  goToThankYouScreen() {
+  goToThankYouScreen = () => {
     const homeScreen: TScreenName = homeScreenName();
     const thankYouScreen: TScreenName = isUSCountry() ? 'ThankYouUS' : isSECountry() ? 'ThankYouSE' : 'ThankYouUK';
     NavigatorService.reset([{ name: homeScreen }, { name: thankYouScreen }], 1);
-  }
+  };
 
-  resetToCreateProfile() {
+  resetToCreateProfile = () => {
     const homeScreen: TScreenName = homeScreenName();
     NavigatorService.reset(
       [
@@ -230,23 +230,22 @@ export class AssessmentCoordinator extends Coordinator {
       ],
       2,
     );
-  }
+  };
 
-  setVaccine(vaccine: Partial<TVaccineRequest>) {
+  setVaccine = (vaccine: Partial<TVaccineRequest>) => {
     this.assessmentData.vaccineData = {
       ...this.assessmentData.vaccineData!,
       ...vaccine,
     };
-  }
+  };
 
-  resetVaccine() {
+  resetVaccine = () => {
     this.assessmentData.vaccineData = undefined;
-  }
+  };
 
-  isReportedByOther() {
-    const isReportedByOther = this.assessmentData?.patientData?.patientInfo?.reported_by_another;
-    return isReportedByOther;
-  }
+  isReportedByOther = () => {
+    return this.assessmentData?.patientData?.patientInfo?.reported_by_another;
+  };
 }
 
 export const assessmentCoordinator = new AssessmentCoordinator();

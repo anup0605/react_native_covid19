@@ -55,12 +55,12 @@ export class PatientCoordinator extends Coordinator implements IUpdatePatient {
     }
   };
 
-  updatePatientInfo(patientInfo: Partial<TPatientInfosRequest>) {
+  updatePatientInfo = (patientInfo: Partial<TPatientInfosRequest>) => {
     return patientService.updatePatientInfo(this.patientData.patientId, patientInfo).then((info) => {
       this.patientData.patientInfo = info;
       return info;
     });
-  }
+  };
 }
 
 export const patientCoordinator = new PatientCoordinator();
