@@ -15,7 +15,6 @@ interface IProps {
   headerChildren?: React.ReactNode;
   modalName?: string;
   onRequestClose: () => void;
-  showCloseButton?: boolean;
   showsVerticalScrollIndicator?: boolean;
   swipeDown?: TSwipeFunction;
   swipeLeft?: TSwipeFunction;

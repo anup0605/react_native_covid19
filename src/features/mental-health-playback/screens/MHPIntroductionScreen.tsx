@@ -15,11 +15,6 @@ import * as React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-const generalItems = [
-  i18n.t('mental-health-playback.introduction.point-general-1'),
-  i18n.t('mental-health-playback.introduction.point-general-2'),
-];
-
 const personalItems = [
   i18n.t('mental-health-playback.introduction.point-personal-1'),
   i18n.t('mental-health-playback.introduction.point-personal-2'),
@@ -34,8 +29,6 @@ export default function MHPIntroductionScreen() {
   React.useEffect(() => {
     dispatch(requestInsights());
   }, []);
-
-  const isGeneral = startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_b';
 
   function onPress() {
     NavigatorService.navigate('MentalHealthPlaybackGeneral');
@@ -53,11 +46,9 @@ export default function MHPIntroductionScreen() {
       <View style={[styling.padding, styling.marginVerticalAuto]}>
         <Card backgroundColor="#F5F9FC" style={styling.marginBottom}>
           <Text style={styling.marginBottom} textClass="h4">
-            {isGeneral
-              ? i18n.t('mental-health-playback.introduction.title-general')
-              : i18n.t('mental-health-playback.introduction.title-personal')}
+            {i18n.t('mental-health-playback.introduction.title-personal')}
           </Text>
-          <UL items={isGeneral ? generalItems : personalItems} />
+          <UL items={personalItems} />
         </Card>
         <View style={styling.row}>
           <Info style={styling.marginRightSmall} />

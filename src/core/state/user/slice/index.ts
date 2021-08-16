@@ -35,6 +35,5 @@ const userSlice = createSlice({
 
 export const { reset, setProfile, setUsername, setPatients } = userSlice.actions;
 export const selectUser = (state: TRootState) => state.user;
-export const selectFirstPatientId = (state: TRootState) => state.user.patients[0];
 
 export default userSlice.reducer;

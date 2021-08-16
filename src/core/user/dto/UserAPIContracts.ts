@@ -333,12 +333,9 @@ export type TAreaStatsResponse = {
   rank_delta: number;
 };
 
-export type TMHInsightCohort = 'MHIP-v1-cohort_a' | 'MHIP-v1-cohort_b' | 'MHIP-v1-cohort_c';
-
 export type TStartupInfo = {
   app_requires_update?: boolean;
   ip_country: string;
-  mh_insight_cohort?: TMHInsightCohort;
   min_supported_app_version?: string;
   show_covid_test_onboarding: boolean;
   show_diet_score: boolean;

@@ -23,8 +23,6 @@ export default React.memo(function Insights(props: IProps) {
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const windowWidth = useWindowDimensions().width;
 
-  const isGeneral = startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_b';
-
   function onLayoutView(event: LayoutChangeEvent, index: number) {
     setIllustrationHeights({
       ...illustrationHeights,
@@ -41,7 +39,7 @@ export default React.memo(function Insights(props: IProps) {
       {(props.insights || []).map((insight: IInsight, index: number) => (
         // eslint-disable-next-line react/no-array-index-key
         <View key={`insight-${index}`} style={{ height: props.itemHeight, justifyContent: 'space-between' }}>
-          {!isGeneral && index === 0 ? (
+          {index === 0 ? (
             <View>
               <Spacer space={60} />
               <Card useShadow style={styles.card}>
@@ -93,15 +91,10 @@ export default React.memo(function Insights(props: IProps) {
               style={styles.description}
               textClass="p"
             >
-              {isGeneral
-                ? i18n.t('mental-health-playback.general.insight-description-general', {
-                    anxiety: insight.anxiety,
-                    level_of_association: insight.level_of_association,
-                  })
-                : i18n.t('mental-health-playback.general.insight-description-personal', {
-                    anxiety: insight.anxiety,
-                    level_of_association: insight.level_of_association,
-                  })}
+              {i18n.t('mental-health-playback.general.insight-description-personal', {
+                anxiety: insight.anxiety,
+                level_of_association: insight.level_of_association,
+              })}
             </TextHighlight>
             <Text inverted colorPalette="uiDark" colorShade="main" style={styles.label} textClass="pSmall">
               {i18n.t('mental-health-playback.general.chart-label')}

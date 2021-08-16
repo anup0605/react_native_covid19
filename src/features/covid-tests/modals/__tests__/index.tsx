@@ -6,6 +6,7 @@ import * as React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as ReduxProvider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
+
 import { initialState } from '../../../../../__mocks__/mockedInitialState';
 
 const middlewares = getDefaultMiddleware();
@@ -34,15 +35,16 @@ describe('Covid tests onboarding modal tests', () => {
     const onRequestClose = jest.fn();
     const { getByTestId } = render(
       <ReduxProvider store={store}>
-      <SafeAreaProvider initialMetrics={initialMetrics}>
-        <CovidTestListOnboardingModal
-          visible
-          onRequestClose={() => {
-            onRequestClose();
-          }}
-          patientId={DUMMY_PATIENT_ID}
-        />
-      </SafeAreaProvider></ReduxProvider>,
+        <SafeAreaProvider initialMetrics={initialMetrics}>
+          <CovidTestListOnboardingModal
+            visible
+            onRequestClose={() => {
+              onRequestClose();
+            }}
+            patientId={DUMMY_PATIENT_ID}
+          />
+        </SafeAreaProvider>
+      </ReduxProvider>,
     );
     expect(onRequestClose).toHaveBeenCalledTimes(0);
     const button = getByTestId('covid-test-modal-button');
@@ -59,15 +61,17 @@ describe('Covid tests onboarding modal tests', () => {
   it('moves to next slide on tap of button', async () => {
     const onRequestClose = jest.fn();
     const { getByTestId, queryByTestId } = render(
-      <ReduxProvider store={store}><SafeAreaProvider initialMetrics={initialMetrics}>
-        <CovidTestListOnboardingModal
-          visible
-          onRequestClose={() => {
-            onRequestClose();
-          }}
-          patientId={DUMMY_PATIENT_ID}
-        />
-      </SafeAreaProvider></ReduxProvider>,
+      <ReduxProvider store={store}>
+        <SafeAreaProvider initialMetrics={initialMetrics}>
+          <CovidTestListOnboardingModal
+            visible
+            onRequestClose={() => {
+              onRequestClose();
+            }}
+            patientId={DUMMY_PATIENT_ID}
+          />
+        </SafeAreaProvider>
+      </ReduxProvider>,
     );
     const button = getByTestId('covid-test-modal-button');
 
@@ -115,15 +119,17 @@ describe('Covid tests onboarding modal tests', () => {
   it('displays close button and calls onRequestClose on tap', async () => {
     const onRequestClose = jest.fn();
     const { getByTestId } = render(
-      <ReduxProvider store={store}><SafeAreaProvider initialMetrics={initialMetrics}>
-        <CovidTestListOnboardingModal
-          visible
-          onRequestClose={() => {
-            onRequestClose();
-          }}
-          patientId={DUMMY_PATIENT_ID}
-        />
-      </SafeAreaProvider></ReduxProvider>,
+      <ReduxProvider store={store}>
+        <SafeAreaProvider initialMetrics={initialMetrics}>
+          <CovidTestListOnboardingModal
+            visible
+            onRequestClose={() => {
+              onRequestClose();
+            }}
+            patientId={DUMMY_PATIENT_ID}
+          />
+        </SafeAreaProvider>
+      </ReduxProvider>,
     );
     expect(onRequestClose).toHaveBeenCalledTimes(0);
     const closeButton = getByTestId('modal-close-button');

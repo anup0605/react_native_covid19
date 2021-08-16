@@ -30,20 +30,13 @@ export default function MentalHealthPlaybackModal(props: IProps) {
   function handlePositive() {
     generalApiClient.postUserEvent('view-mental-health-insights');
     onRequestClose(true);
-    appCoordinator.goToMentalHealthStudyPlayback(startupInfo);
+    appCoordinator.goToMentalHealthStudyPlayback();
   }
 
   function handleNegative() {
     generalApiClient.postUserEvent('skip-mental-health-insights');
     onRequestClose();
   }
-
-  const description = i18n.t('mental-health-playback.modal.description-new');
-
-  const title =
-    startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_a'
-      ? i18n.t('mental-health-playback.modal.title-new-personal')
-      : i18n.t('mental-health-playback.modal.title-new');
 
   return (
     <Modal modalName="MentalHealthPlayback" onRequestClose={onRequestClose} visible={props.visible}>
@@ -60,7 +53,7 @@ export default function MentalHealthPlaybackModal(props: IProps) {
         textAlign="center"
         textClass="h3Regular"
       >
-        {title}
+        {i18n.t('mental-health-playback.modal.title-new-personal')}
       </Text>
       <DoctorProfile
         image={getMentalHealthStudyDoctorImage()}
@@ -70,7 +63,7 @@ export default function MentalHealthPlaybackModal(props: IProps) {
       />
       <QuoteMarks />
       <Text inverted colorPalette="uiDark" colorShade="dark" style={styles.description} textClass="pLight">
-        {description}
+        {i18n.t('mental-health-playback.modal.description-new')}
       </Text>
       <BrandedButton onPress={handlePositive} style={styles.buttonPositive}>
         {i18n.t('mental-health-playback.modal.button-positive-new')}

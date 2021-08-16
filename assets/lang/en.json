@@ -1249,10 +1249,8 @@
       "default-title": "This insight",
       "end-button": "Close",
       "end-description": "You can always return to these via the Home Page",
-      "end-title-general": "That's it!\n\nYou made it through all the insights",
       "end-title-personal": "That's it!\n\nYou made it through all your insights",
       "explanation-card": "We have compared your answers against",
-      "insight-description-general": "Was {{level_of_association}} associated with {{anxiety}} anxiety and depression scores",
       "insight-description-personal": "Was {{level_of_association}} associated with {{anxiety}} anxiety and depression scores in your group"
     },
     "insights": {
@@ -1371,12 +1369,9 @@
     "introduction": {
       "button": "Let's go!",
       "info": "Mental health, in these insights, is measured based on self-reported scores for anxiety and depression",
-      "point-general-1": "How people spent their time differently during the pandemic",
-      "point-general-2": "What associations these habits and lifestyle changes had on mental health",
       "point-personal-1": "How you spent your time differently during the pandemic compared to before",
       "point-personal-2": "Unique insights into your habit changes compared with your peers",
       "point-personal-3": "How these habits were associated with mental health in different ways",
-      "title-general": "Discover people’s habits during the pandemic",
       "title-personal": "We worked hard to personalise these insights around your habits during the pandemic"
     },
     "rating": {

@@ -31,8 +31,6 @@ export default function MHPGeneralScreen() {
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const scrollViewRef = React.useRef<ScrollView>(null);
 
-  const isGeneral = startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_b';
-
   function onPress() {
     if (mhInsights.completed_feedback) {
       NavigatorService.navigate(homeScreenName());
@@ -85,9 +83,7 @@ export default function MHPGeneralScreen() {
               <View style={{ height: scrollViewHeight }}>
                 <View style={styles.view}>
                   <Text textAlign="center" textClass="h3Regular">
-                    {isGeneral
-                      ? i18n.t('mental-health-playback.general.end-title-general')
-                      : i18n.t('mental-health-playback.general.end-title-personal')}
+                    {i18n.t('mental-health-playback.general.end-title-personal')}
                   </Text>
                   <Text
                     inverted

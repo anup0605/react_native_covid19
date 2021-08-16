@@ -5,11 +5,9 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { appActions } from '@covid/core/state/app/slice';
 import { TRootState } from '@covid/core/state/root';
-import { selectFirstPatientId } from '@covid/core/state/user';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { ImpactTimelineCard } from '@covid/features/anniversary';
 import { appCoordinator } from '@covid/features/AppCoordinator';
-import util from '@covid/features/mental-health-playback/util';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { AppRating, shouldAskForRating } from '@covid/features/thank-you/components/AppRating';
 import { ShareAppCard } from '@covid/features/thank-you/components/ShareApp';
@@ -28,18 +26,14 @@ interface IProps {
 
 export default function ThankYouUKScreen(props: IProps) {
   const dispatch = useDispatch();
-  const patientId = useSelector(selectFirstPatientId);
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const [askForRating, setAskForRating] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     (async () => {
       if (startupInfo?.show_modal === 'mental-health-playback') {
-        const testGroupId = util.determineTestGroupId(patientId, startupInfo?.mh_insight_cohort!);
-        if (testGroupId !== 'GROUP_1') {
-          dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
-          return;
-        }
+        dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
+        return;
       }
       try {
         const ratingAskResponse = await shouldAskForRating();
