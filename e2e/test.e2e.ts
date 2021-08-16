@@ -44,8 +44,8 @@ testReconsentFeature({
   fillInAllFeedback: false,
   fillInFeedback: ['im_only_interested_in_fighting_covid_19_right_now', 'other'],
   privacyPolicyView: true,
-  reconsider: true,
-  selectAllDiseases: true,
+  reconsider: false,
+  selectAllDiseases: false,
   selectDiseases: [
     'research_consent_dementia',
     'research_consent_nutrition_and_gut_health',

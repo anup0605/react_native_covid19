@@ -28,6 +28,7 @@ export const ThroatChestSymptomsScreen: React.FC<TProps> = ({ route }) => {
   }
 
   const registerSchema = Yup.object().shape({}).concat(ThroatChestSymptomsQuestions.schema());
+
   return (
     <Screen
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}

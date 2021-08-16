@@ -4,7 +4,7 @@ import { extendedDiseases, initialDiseases } from '@covid/features/reconsent/dat
 import { feedback } from '@covid/features/reconsent/data/feedback';
 import { by, element, expect } from 'detox';
 
-import { scrollDownToId } from './helpers';
+import { scrollDownToId, submitForm } from './helpers';
 
 type TReconsentConfig = {
   consent: boolean;
@@ -24,16 +24,20 @@ export function testReconsentFeature(config: TReconsentConfig) {
   });
 
   it('should be able to finish the introduction screen', async () => {
-    await scrollDownToId('scroll-view-reconsent-introduction-screen', 'button-cta-reconsent-introduction-screen');
-    await element(by.id('button-cta-reconsent-introduction-screen')).tap();
+    await submitForm(
+      'reconsent-introduction-screen',
+      'scroll-view-reconsent-introduction-screen',
+      'button-cta-reconsent-introduction-screen',
+    );
   });
 
   it('should be able to continue without selecting any disease', async () => {
-    await scrollDownToId(
+    await submitForm(
+      'reconsent-disease-preferences-screen',
       'scroll-view-reconsent-disease-preferences-screen',
       'button-cta-reconsent-disease-preferences-screen',
     );
-    await element(by.id('button-cta-reconsent-disease-preferences-screen')).tap();
+
     await expect(element(by.id('reconsent-disease-summary-screen'))).toBeVisible();
     await element(by.id('button-back-navigation').withAncestor(by.id('reconsent-disease-summary-screen'))).tap();
   });
@@ -64,16 +68,19 @@ export function testReconsentFeature(config: TReconsentConfig) {
   }
 
   it('should be able to finish the disease preferences screen', async () => {
-    await scrollDownToId(
+    await submitForm(
+      'reconsent-disease-preferences-screen',
       'scroll-view-reconsent-disease-preferences-screen',
       'button-cta-reconsent-disease-preferences-screen',
     );
-    await element(by.id('button-cta-reconsent-disease-preferences-screen')).tap();
   });
 
   it('should be able to finish the summary screen', async () => {
-    await scrollDownToId('scroll-view-reconsent-disease-summary-screen', 'button-cta-reconsent-disease-summary-screen');
-    await element(by.id('button-cta-reconsent-disease-summary-screen')).tap();
+    await submitForm(
+      'reconsent-disease-summary-screen',
+      'scroll-view-reconsent-disease-summary-screen',
+      'button-cta-reconsent-disease-summary-screen',
+    );
   });
 
   if (config.privacyPolicyView) {
@@ -102,11 +109,11 @@ export function testReconsentFeature(config: TReconsentConfig) {
       await element(by.id('button-opt-in')).tap();
     });
     it('should be possible to finish the reconsent', async () => {
-      await scrollDownToId(
+      await submitForm(
+        'reconsent-newsletter-signup-screen',
         'scroll-view-reconsent-newsletter-signup-screen',
         'button-cta-reconsent-newsletter-signup-screen',
       );
-      await element(by.id('button-cta-reconsent-newsletter-signup-screen')).tap();
     });
   }
 
@@ -137,18 +144,19 @@ export function testReconsentFeature(config: TReconsentConfig) {
           }
           await element(by.id(`checkbox-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).tap();
           await scrollDownToId('scroll-view-reconsent-feedback-screen', `textarea-${feedback[i].id}`);
-          await element(by.id(`textarea-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).typeText('test');
+          await element(by.id(`textarea-${feedback[i].id}`).withAncestor(by.id('reconsent-feedback-screen'))).typeText(
+            'test',
+          );
           pressedBefore = true;
         }
       });
     }
     it('should be possible to finish the feedback screen', async () => {
-      await scrollDownToId('scroll-view-reconsent-feedback-screen', 'button-cta-reconsent-feedback-screen');
-      await element(by.id('button-cta-reconsent-feedback-screen')).tap();
-      // Press in an extra time because of the previous input focus
-      try {
-        await element(by.id('button-cta-reconsent-feedback-screen')).tap();
-      } catch (_) {}
+      await submitForm(
+        'reconsent-feedback-screen',
+        'scroll-view-reconsent-feedback-screen',
+        'button-cta-reconsent-feedback-screen',
+      );
     });
     if (config.reconsider) {
       it('should be possible to reconsider', async () => {

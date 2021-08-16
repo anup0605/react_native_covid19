@@ -81,7 +81,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
         hitSlop={HIT_SLOP}
         onPress={closeAndUpateStartupInfo}
         style={styles.closeTouchable}
-        testID="modal-close-button"
+        testID="button-close-modal"
       >
         <RegularText style={styles.closeText}>{i18n.t(`modal-close`)}</RegularText>
       </TouchableOpacity>

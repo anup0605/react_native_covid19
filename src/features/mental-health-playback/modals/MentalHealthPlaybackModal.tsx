@@ -39,7 +39,12 @@ export default function MentalHealthPlaybackModal(props: IProps) {
   }
 
   return (
-    <Modal modalName="MentalHealthPlayback" onRequestClose={onRequestClose} visible={props.visible}>
+    <Modal
+      modalName="MentalHealthPlayback"
+      onRequestClose={onRequestClose}
+      testID="mental-health-playback-modal"
+      visible={props.visible}
+    >
       <Tag
         color={colors.coral.main.bgColor}
         style={styling.selfCenter}
@@ -65,10 +70,10 @@ export default function MentalHealthPlaybackModal(props: IProps) {
       <Text inverted colorPalette="uiDark" colorShade="dark" style={styles.description} textClass="pLight">
         {i18n.t('mental-health-playback.modal.description-new')}
       </Text>
-      <BrandedButton onPress={handlePositive} style={styles.buttonPositive}>
+      <BrandedButton onPress={handlePositive} style={styles.buttonPositive} testID="button-positive">
         {i18n.t('mental-health-playback.modal.button-positive-new')}
       </BrandedButton>
-      <BrandedButton onPress={handleNegative} style={styles.buttonNegative}>
+      <BrandedButton onPress={handleNegative} style={styles.buttonNegative} testID="button-negative">
         <Text textClass="pSmallLight">{i18n.t('mental-health-playback.modal.button-negative')}</Text>
       </BrandedButton>
     </Modal>

@@ -15,17 +15,9 @@ type TProps = {
 };
 
 export class PrivacyPolicyUSScreen extends React.Component<TProps, object> {
-  viewOnly = this.props.route.params?.viewOnly;
-
   render() {
     return (
-      <Screen
-        backgroundColor={colors.backgroundPrimary}
-        footerOnPress={this.props.navigation.goBack}
-        footerTitle={this.viewOnly ? '' : i18n.t('legal.back')}
-        hideBackButton={!this.viewOnly}
-        testID="privacy-policy-us-screen"
-      >
+      <Screen backgroundColor={colors.backgroundPrimary} testID="privacy-policy-us-screen">
         <HeaderText text={i18n.t('privacy-policy-us.header-1')} />
         <RegularText>
           {i18n.t('privacy-policy-us.para-1')}

@@ -21,7 +21,7 @@ import {
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
@@ -78,9 +78,9 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
     return true;
   };
 
-  handleUpdateWork(formData: IYourWorkData) {
+  onSubmit = (values: IYourWorkData, formikHelpers: FormikHelpers<IYourWorkData>) => {
     const currentPatient = patientCoordinator.patientData?.patientState;
-    const infos = this.createPatientInfos(formData);
+    const infos = this.createPatientInfos(values);
 
     patientService
       .updatePatientInfo(currentPatient?.patientId, infos)
@@ -88,23 +88,25 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
         currentPatient.isHealthWorker =
           infos.healthcare_professional === EHealthCareStaffOptions.DOES_INTERACT || infos.is_carer_for_community;
         patientCoordinator.gotoNextScreen(this.props.route.name);
+        formikHelpers.setSubmitting(false);
       })
-      .catch(() =>
+      .catch(() => {
         this.setState({
           errorMessage: i18n.t('something-went-wrong'),
-        }),
-      );
-  }
+        });
+        formikHelpers.setSubmitting(false);
+      });
+  };
 
-  private createPatientInfos(formData: IYourWorkData) {
+  createPatientInfos = (values: IYourWorkData) => {
     let infos = {
-      ...(formData.isHealthcareStaff && {
-        healthcare_professional: formData.isHealthcareStaff,
+      ...(values.isHealthcareStaff && {
+        healthcare_professional: values.isHealthcareStaff,
       }),
-      is_carer_for_community: formData.isCarer === 'yes',
+      is_carer_for_community: values.isCarer === 'yes',
     } as TPatientInfosRequest;
 
-    if (formData.isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT || formData.isCarer === 'yes') {
+    if (values.isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT || values.isCarer === 'yes') {
       infos = {
         ...infos,
         have_worked_in_hospital_care_facility: this.state.atCareFacility,
@@ -115,29 +117,29 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
         have_worked_in_hospital_outpatient: this.state.atHospitalOutpatient,
         have_worked_in_hospital_school_clinic: this.state.atSchoolClinic,
 
-        ...(formData.hasPatientInteraction && {
-          interacted_patients_with_covid: formData.hasPatientInteraction,
+        ...(values.hasPatientInteraction && {
+          interacted_patients_with_covid: values.hasPatientInteraction,
         }),
-        ...(formData.hasUsedPPEEquipment && {
-          have_used_PPE: formData.hasUsedPPEEquipment,
+        ...(values.hasUsedPPEEquipment && {
+          have_used_PPE: values.hasUsedPPEEquipment,
         }),
-        ...(formData.hasUsedPPEEquipment === 'always' &&
-          formData.ppeAvailabilityAlways && {
-            always_used_shortage: formData.ppeAvailabilityAlways,
+        ...(values.hasUsedPPEEquipment === 'always' &&
+          values.ppeAvailabilityAlways && {
+            always_used_shortage: values.ppeAvailabilityAlways,
           }),
-        ...(formData.hasUsedPPEEquipment === 'sometimes' &&
-          formData.ppeAvailabilitySometimes && {
-            sometimes_used_shortage: formData.ppeAvailabilitySometimes,
+        ...(values.hasUsedPPEEquipment === 'sometimes' &&
+          values.ppeAvailabilitySometimes && {
+            sometimes_used_shortage: values.ppeAvailabilitySometimes,
           }),
-        ...(formData.hasUsedPPEEquipment === 'never' &&
-          formData.ppeAvailabilityNever && {
-            never_used_shortage: formData.ppeAvailabilityNever,
+        ...(values.hasUsedPPEEquipment === 'never' &&
+          values.ppeAvailabilityNever && {
+            never_used_shortage: values.ppeAvailabilityNever,
           }),
       };
     }
 
     return infos;
-  }
+  };
 
   registerSchema = Yup.object().shape({
     hasPatientInteraction: Yup.string().when(['isHealthcareStaff', 'isCarer'], {
@@ -252,12 +254,8 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
 
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-work-screen">
-        <Formik
-          initialValues={{} as IYourWorkData}
-          onSubmit={(values: IYourWorkData) => this.handleUpdateWork(values)}
-          validationSchema={this.registerSchema}
-        >
-          {(props) => {
+        <Formik initialValues={{} as IYourWorkData} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
+          {(formikProps) => {
             const {
               isHealthcareStaff,
               isCarer,
@@ -266,8 +264,7 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
               ppeAvailabilitySometimes,
               ppeAvailabilityAlways,
               ppeAvailabilityNever,
-            } = props.values;
-            const { handleSubmit, handleChange, touched, errors } = props;
+            } = formikProps.values;
 
             const showWorkerAndCarerQuestions: boolean =
               (!!isHealthcareStaff && isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT) ||
@@ -278,19 +275,19 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
 
                 <RadioInput
                   required
-                  error={touched.isHealthcareStaff ? errors.isHealthcareStaff : ''}
+                  error={formikProps.touched.isHealthcareStaff ? formikProps.errors.isHealthcareStaff : ''}
                   items={healthcareStaffOptions}
                   label={i18n.t('are-you-healthcare-staff')}
-                  onValueChange={handleChange('isHealthcareStaff')}
+                  onValueChange={formikProps.handleChange('isHealthcareStaff')}
                   selectedValue={isHealthcareStaff}
                   testID="input-healthcare-staff"
                 />
 
                 <YesNoField
                   required
-                  error={touched.isCarer && errors.isCarer}
+                  error={formikProps.touched.isCarer && formikProps.errors.isCarer}
                   label={i18n.t('are-you-carer')}
-                  onValueChange={handleChange('isCarer')}
+                  onValueChange={formikProps.handleChange('isCarer')}
                   selectedValue={isCarer}
                   testID="is-carer-question"
                 />
@@ -374,29 +371,31 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
 
                     <RadioInput
                       required
-                      error={touched.hasPatientInteraction ? errors.hasPatientInteraction : ''}
+                      error={formikProps.touched.hasPatientInteraction ? formikProps.errors.hasPatientInteraction : ''}
                       items={patientInteractionOptions}
                       label={i18n.t('label-interacted-with-infected-patients')}
-                      onValueChange={handleChange('hasPatientInteraction')}
+                      onValueChange={formikProps.handleChange('hasPatientInteraction')}
                       selectedValue={hasPatientInteraction}
                     />
 
                     <RadioInput
                       required
-                      error={touched.hasUsedPPEEquipment ? errors.hasUsedPPEEquipment : ''}
+                      error={formikProps.touched.hasUsedPPEEquipment ? formikProps.errors.hasUsedPPEEquipment : ''}
                       items={equipmentUsageOptions}
                       label={i18n.t('label-used-ppe-equipment')}
-                      onValueChange={handleChange('hasUsedPPEEquipment')}
+                      onValueChange={formikProps.handleChange('hasUsedPPEEquipment')}
                       selectedValue={hasUsedPPEEquipment}
                     />
 
                     {hasUsedPPEEquipment === 'always' ? (
                       <RadioInput
                         required
-                        error={touched.ppeAvailabilityAlways ? errors.ppeAvailabilityAlways : ''}
+                        error={
+                          formikProps.touched.ppeAvailabilityAlways ? formikProps.errors.ppeAvailabilityAlways : ''
+                        }
                         items={availabilityAlwaysOptions}
                         label={i18n.t('label-chose-an-option')}
-                        onValueChange={handleChange('ppeAvailabilityAlways')}
+                        onValueChange={formikProps.handleChange('ppeAvailabilityAlways')}
                         selectedValue={ppeAvailabilityAlways}
                       />
                     ) : null}
@@ -404,10 +403,14 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
                     {hasUsedPPEEquipment === 'sometimes' ? (
                       <RadioInput
                         required
-                        error={touched.ppeAvailabilitySometimes ? errors.ppeAvailabilitySometimes : ''}
+                        error={
+                          formikProps.touched.ppeAvailabilitySometimes
+                            ? formikProps.errors.ppeAvailabilitySometimes
+                            : ''
+                        }
                         items={availabilitySometimesOptions}
                         label={i18n.t('label-chose-an-option')}
-                        onValueChange={handleChange('ppeAvailabilitySometimes')}
+                        onValueChange={formikProps.handleChange('ppeAvailabilitySometimes')}
                         selectedValue={ppeAvailabilitySometimes}
                       />
                     ) : null}
@@ -415,10 +418,10 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
                     {hasUsedPPEEquipment === 'never' ? (
                       <RadioInput
                         required
-                        error={touched.ppeAvailabilityNever ? errors.ppeAvailabilityNever : ''}
+                        error={formikProps.touched.ppeAvailabilityNever ? formikProps.errors.ppeAvailabilityNever : ''}
                         items={availabilityNeverOptions}
                         label={i18n.t('label-chose-an-option')}
-                        onValueChange={handleChange('ppeAvailabilityNever')}
+                        onValueChange={formikProps.handleChange('ppeAvailabilityNever')}
                         selectedValue={ppeAvailabilityNever}
                       />
                     ) : null}
@@ -428,14 +431,14 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
                 <View style={{ flex: 1 }} />
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
-                {!!Object.keys(errors).length && props.submitCount > 0 ? (
+                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
                   <ValidationError error={i18n.t('validation-error-text')} />
                 ) : null}
 
                 <BrandedButton
-                  enabled={this.checkFormFilled(props)}
-                  loading={props.isSubmitting}
-                  onPress={handleSubmit}
+                  enabled={this.checkFormFilled(formikProps)}
+                  loading={formikProps.isSubmitting}
+                  onPress={formikProps.handleSubmit}
                   testID="button-submit"
                 >
                   {i18n.t('next-question')}

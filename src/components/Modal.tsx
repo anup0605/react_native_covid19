@@ -20,7 +20,7 @@ interface IProps {
   swipeLeft?: TSwipeFunction;
   swipeRight?: TSwipeFunction;
   swipeUp?: TSwipeFunction;
-  testID?: string;
+  testID: string;
   visible: boolean;
 }
 

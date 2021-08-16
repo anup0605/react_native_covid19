@@ -1,4 +1,3 @@
-import { BrandedButton } from '@covid/components';
 import { Screen } from '@covid/components/Screen';
 import { ClickableText, RegularBoldText, RegularText } from '@covid/components/Text';
 import { ScreenParamList } from '@covid/features';
@@ -7,18 +6,11 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 
 type TProps = {
   navigation: StackNavigationProp<ScreenParamList, 'TermsOfUseUS'>;
   route: RouteProp<ScreenParamList, 'TermsOfUseUS'>;
 };
-
-const styles = StyleSheet.create({
-  button: {
-    marginTop: 20,
-  },
-});
 
 export default class TermsOfUseUSScreen extends React.Component<TProps> {
   viewOnly = this.props.route.params?.viewOnly;
@@ -215,10 +207,6 @@ export default class TermsOfUseUSScreen extends React.Component<TProps> {
           {'\n'}
           {i18n.t('terms-of-use-us.para-47')}
         </RegularText>
-
-        <BrandedButton onPress={this.props.navigation.goBack} style={styles.button}>
-          {i18n.t('terms-of-use-us.back')}
-        </BrandedButton>
       </Screen>
     );
   }

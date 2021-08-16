@@ -132,7 +132,7 @@ describe('Covid tests onboarding modal tests', () => {
       </ReduxProvider>,
     );
     expect(onRequestClose).toHaveBeenCalledTimes(0);
-    const closeButton = getByTestId('modal-close-button');
+    const closeButton = getByTestId('button-close-modal');
     await fireEvent.press(closeButton);
     expect(onRequestClose).toHaveBeenCalledTimes(1);
   });

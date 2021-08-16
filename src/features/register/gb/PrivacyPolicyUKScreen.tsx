@@ -1,16 +1,17 @@
+import { Screen } from '@covid/components/Screen';
 import * as React from 'react';
 import { Linking } from 'react-native';
 import WebView, { WebViewNavigation } from 'react-native-webview';
 import UrlParse from 'url-parse';
 
 const js = `
-  divPrivacyInners = document.getElementsByClassName("privacy-inner");
+  divPrivacyInners = document.getElementsByClassName("privacy-outer");
   if (divPrivacyInners.length > 0) {
     document.body.appendChild(divPrivacyInners[0]);
   }
 
   document.querySelectorAll('body > *').forEach((element) => {
-    if (!element.classList.contains('privacy-inner')) {
+    if (!element.classList.contains('privacy-outer')) {
       element.remove();
     }
   });
@@ -49,14 +50,16 @@ export function PrivacyPolicyUKScreen() {
   }
 
   return (
-    <WebView
-      injectedJavaScript={js}
-      injectedJavaScriptBeforeContentLoaded={js}
-      onLoad={onLoad}
-      onLoadEnd={onLoadEnd}
-      onNavigationStateChange={onNavigationStateChange}
-      ref={webView}
-      source={source}
-    />
+    <Screen noScrollView testID="privacy-policy-uk-screen">
+      <WebView
+        injectedJavaScript={js}
+        injectedJavaScriptBeforeContentLoaded={js}
+        onLoad={onLoad}
+        onLoadEnd={onLoadEnd}
+        onNavigationStateChange={onNavigationStateChange}
+        ref={webView}
+        source={source}
+      />
+    </Screen>
   );
 }

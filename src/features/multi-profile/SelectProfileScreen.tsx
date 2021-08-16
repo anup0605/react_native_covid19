@@ -74,7 +74,7 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
   }
 
   return (
-    <Screen backgroundColor={colors.backgroundSecondary} testID="scroll-view-select-profile-screen">
+    <Screen backgroundColor={colors.backgroundSecondary} testID="select-profile-screen">
       <HeaderText>
         {assessmentFlow ? i18n.t('select-profile-title-assessment') : i18n.t('select-profile-title-edit')}
       </HeaderText>

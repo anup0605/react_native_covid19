@@ -50,7 +50,7 @@ export default React.memo((props: TProps) => {
   }, [props, setAgreed]);
 
   return (
-    <Screen hideBackButton testID="consent-screen">
+    <Screen testID="consent-screen">
       {renderConsent()}
       {!props.route.params?.viewOnly ? (
         <BrandedButton

@@ -58,7 +58,6 @@ export class NursesConsentUSScreen extends React.Component<TProps, ITermsState> 
         footerEnabled={this.state.processingChecked && this.state.termsOfUseChecked}
         footerOnPress={this.handleAgreeClicked}
         footerTitle={this.viewOnly ? '' : i18n.t('consent-nurses-us.i-agree')}
-        hideBackButton={!this.viewOnly}
         testID="nurses-consent-us"
       >
         <RegularBoldText>
