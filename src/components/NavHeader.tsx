@@ -32,10 +32,12 @@ const styles = StyleSheet.create({
     paddingVertical: sizes.screenVerticalPadding / 2,
   },
   left: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
   right: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },

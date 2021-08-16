@@ -1,5 +1,6 @@
 import { gbPartners, svPartners, usPartners } from '@assets';
 import { BrandedButton } from '@covid/components';
+import { NavHeader } from '@covid/components/NavHeader';
 import { Screen } from '@covid/components/Screen';
 import { ClickableText, RegularBoldText, RegularText } from '@covid/components/Text';
 import {
@@ -44,8 +45,6 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
     }
   }, [localisationService.shouldAskCountryConfirmation, setIpModalVisible, isUSCountry, navigation.navigate]);
 
-  const getFlagIcon = React.useCallback(getLocaleFlagIcon, [getLocaleFlagIcon]);
-
   const helpUrl = React.useCallback(() => {
     if (isGBCountry()) {
       openWebLink('https://www.nhs.uk/conditions/coronavirus-covid-19/');
@@ -54,7 +53,7 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
     }
   }, [isGBCountry, isSECountry]);
 
-  const partnersLogos = React.useCallback(() => {
+  const partnersLogos = React.useMemo(() => {
     if (isGBCountry()) {
       return gbPartners;
     }
@@ -62,45 +61,50 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
       return svPartners;
     }
     return usPartners;
-  }, [isGBCountry, isSECountry, gbPartners, svPartners, usPartners]);
+  }, [isGBCountry(), isSECountry(), gbPartners, svPartners, usPartners]);
 
-  return (
-    <>
-      <Screen backgroundColor={colors.backgroundSecondary} testID="welcome-2-screen">
-        <View style={styles.covidContainer}>
-          <View style={styles.headerRow}>
+  const flagIcon = getLocaleFlagIcon();
+  const renderHeader = React.useCallback(
+    () => (
+      <NavHeader
+        rightElement={
+          <>
             <ClickableText onPress={onLoginPress} style={styles.login} testID="login">
               {i18n.t('log-in')}
             </ClickableText>
             <TouchableOpacity onPress={() => navigation.navigate('CountrySelect')} testID="select-country">
-              <Image
-                source={getFlagIcon()}
-                style={styles.flagIcon}
-                testID={`flag-${LocalisationService.userCountry}`}
-              />
+              <Image source={flagIcon} style={styles.flagIcon} testID={`flag-${LocalisationService.userCountry}`} />
             </TouchableOpacity>
-          </View>
-          <View>
-            <RegularText style={styles.subtitle}>{i18n.t('welcome.how-you-can-help.title')}</RegularText>
-            <RegularText style={styles.subheader}>{i18n.t('welcome.how-you-can-help.text1')}</RegularText>
+          </>
+        }
+      />
+    ),
+    [flagIcon, LocalisationService.userCountry],
+  );
 
-            {isUSCountry() ? (
-              <RegularText style={styles.subheader2}>{i18n.t('welcome.how-you-can-help.text2')}</RegularText>
-            ) : null}
+  return (
+    <>
+      <Screen backgroundColor={colors.backgroundSecondary} renderHeader={renderHeader} testID="welcome-2-screen">
+        <View style={styles.covidContainer}>
+          <RegularText style={styles.subtitle}>{i18n.t('welcome.how-you-can-help.title')}</RegularText>
+          <RegularText style={styles.subheader}>{i18n.t('welcome.how-you-can-help.text1')}</RegularText>
 
-            {isSECountry() || isGBCountry() ? (
-              <RegularText style={styles.subheader2}>
-                {'\n'}
-                {i18n.t('welcome.disclaimer')}{' '}
-                <ClickableText onPress={helpUrl} style={[styles.subheader2, styles.nhsWebsite]} testID="disclaimer">
-                  {i18n.t('welcome.disclaimer-link')}
-                </ClickableText>
-                .
-              </RegularText>
-            ) : null}
+          {isUSCountry() ? (
+            <RegularText style={styles.subheader2}>{i18n.t('welcome.how-you-can-help.text2')}</RegularText>
+          ) : null}
 
-            <Image source={partnersLogos()} style={styles.partnersLogo} />
-          </View>
+          {isSECountry() || isGBCountry() ? (
+            <RegularText style={styles.subheader2}>
+              {'\n'}
+              {i18n.t('welcome.disclaimer')}{' '}
+              <ClickableText onPress={helpUrl} style={[styles.subheader2, styles.nhsWebsite]} testID="disclaimer">
+                {i18n.t('welcome.disclaimer-link')}
+              </ClickableText>
+              .
+            </RegularText>
+          ) : null}
+
+          <Image source={partnersLogos} style={styles.partnersLogo} />
 
           {isUSCountry() ? (
             <View style={styles.partnerContainer}>
@@ -152,11 +156,6 @@ const styles = StyleSheet.create({
   flagIcon: {
     height: 32,
     width: 32,
-  },
-  headerRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
   },
   login: {
     color: colors.primary,
