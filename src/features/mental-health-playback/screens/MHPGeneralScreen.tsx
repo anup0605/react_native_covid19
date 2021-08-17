@@ -64,7 +64,7 @@ export default function MHPGeneralScreen() {
   const scrollViewHeight = windowDimensions.height - safeAreaInsets.top - safeAreaInsets.bottom;
 
   return (
-    <Screen hideBackButton noScrollView backgroundColor="white" testID="mhp-general-screen">
+    <Screen hideBackButton noPadding noScrollView backgroundColor="white" testID="mhp-general-screen">
       <View style={[styling.flex, styling.relative]}>
         <BackButton style={styles.backButton} />
         {!mhInsights.insights.length && loading ? (

@@ -1252,7 +1252,7 @@
       "correlated-description": "Reporting more of this was linked to",
       "default-title": "This insight",
       "end-button": "Close",
-      "end-description": "You can always return to these via the Home Page",
+      "end-description": "You can always return to these via the Home Screen",
       "end-title-personal": "That's it!\n\nYou made it through all your insights",
       "explanation-card": "We have compared your answers against",
       "insight-description-personal": "Was {{level_of_association}} associated with {{anxiety}} anxiety and depression scores within your group"

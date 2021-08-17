@@ -55,7 +55,7 @@ function renderBody(props: IProps) {
     </TouchableWithoutFeedback>
   );
   return props.noScrollView ? (
-    element
+    <View style={props.noPadding ? styling.flexGrow : styles.contentContainer}>{element}</View>
   ) : (
     <ScrollView
       alwaysBounceVertical={false}

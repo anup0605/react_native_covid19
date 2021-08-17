@@ -1,20 +1,32 @@
 import { Screen } from '@covid/components/Screen';
+import { colors } from '@covid/themes';
 import * as React from 'react';
-import { Linking } from 'react-native';
+import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
 import WebView, { WebViewNavigation } from 'react-native-webview';
 import UrlParse from 'url-parse';
 
 const js = `
-  divPrivacyInners = document.getElementsByClassName("privacy-outer");
-  if (divPrivacyInners.length > 0) {
-    document.body.appendChild(divPrivacyInners[0]);
-  }
-
-  document.querySelectorAll('body > *').forEach((element) => {
-    if (!element.classList.contains('privacy-outer')) {
-      element.remove();
+  if (!window.thisvariableexists) {
+    divPrivacyInners = document.getElementsByClassName("privacy-outer");
+    if (divPrivacyInners.length > 0) {
+      // This script runs multiple times and the first time it runs might be before any
+      // content is loaded in the DOM. Besides that we only want to run this script once
+      // successfully.
+      window.thisvariableexists = true;
+      document.body.appendChild(divPrivacyInners[0]);
     }
-  });
+
+    document.querySelectorAll('body > *').forEach((element) => {
+      if (!element.classList.contains('privacy-outer') || element.id === 'privacy-policy') {
+        element.remove();
+      } else {
+        element.classList.forEach((className) => {
+          element.classList.remove(className);
+        });
+        element.id = 'privacy-policy';
+      }
+    });
+  }
 `;
 
 const uri = 'https://covid.joinzoe.com/privacy';
@@ -50,7 +62,7 @@ export function PrivacyPolicyUKScreen() {
   }
 
   return (
-    <Screen noScrollView testID="privacy-policy-uk-screen">
+    <Screen noPadding noScrollView testID="privacy-policy-uk-screen">
       <WebView
         injectedJavaScript={js}
         injectedJavaScriptBeforeContentLoaded={js}
@@ -60,6 +72,25 @@ export function PrivacyPolicyUKScreen() {
         ref={webView}
         source={source}
       />
+      {!loaded ? (
+        <View style={styles.view}>
+          <ActivityIndicator color={colors.coral.main.bgColor} size="large" />
+        </View>
+      ) : null}
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  view: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    bottom: 0,
+    justifyContent: 'center',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 1,
+  },
+});
