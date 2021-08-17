@@ -66,4 +66,7 @@ export const extendedDiseases: TDiseasePreference[] = [
     IconComponent: Neuron,
     name: 'research_consent_neurological_conditions',
   },
+  {
+    name: 'prefer_not_to_say',
+  },
 ];

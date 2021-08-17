@@ -10,7 +10,8 @@ export type TDiseaseId =
   | 'research_consent_autoimmune_conditions'
   | 'research_consent_skin_conditions'
   | 'research_consent_lung_diseases'
-  | 'research_consent_neurological_conditions';
+  | 'research_consent_neurological_conditions'
+  | 'prefer_not_to_say';
 
 export type TDiseasePreferencesData = {
   [key in TDiseaseId]?: boolean;

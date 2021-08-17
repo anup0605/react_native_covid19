@@ -51,6 +51,6 @@ export const selectDiseasePreferences = (state: TRootState) =>
   state.reconsent.diseasePreferences || initialDiseasePreferences;
 export const selectDiseasesChosen = (state: TRootState) =>
   (Object.keys(state.reconsent.diseasePreferences) as TDiseaseId[]).filter(
-    (diseaseId) => state.reconsent.diseasePreferences[diseaseId] === true,
+    (diseaseId) => state.reconsent.diseasePreferences[diseaseId] === true && diseaseId !== 'prefer_not_to_say',
   );
 export default reconsentSlice.reducer;

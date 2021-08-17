@@ -7,20 +7,20 @@ type TItem = {
 
 export const feedback: TItem[] = [
   {
-    id: 'im_only_interested_in_fighting_covid_19_right_now',
-    label: "I'm only interested in fighting COVID-19 right now",
-  },
-  {
-    id: 'commercial_purposes',
-    label: 'I don’t want my data to be used for commercial purposes',
-  },
-  {
     id: 'the_disease_or_disorder_i_care_about_isnt_listed',
     label: 'The disease or disorder I care about isn’t listed',
   },
   {
+    id: 'im_only_interested_in_fighting_covid_19_right_now',
+    label: 'I only want to log my symptoms in relation to COVID-19 right now',
+  },
+  {
     id: 'its_too_much_effort',
     label: 'It’s too much effort',
+  },
+  {
+    id: 'commercial_purposes',
+    label: 'I don’t want ZOE to build commercial health products using this research',
   },
   {
     id: 'i_dont_feel_informed_enough',

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 interface IProps {
-  IconComponent: React.ComponentType<any>;
+  IconComponent?: React.ComponentType<any>;
   description: string;
   onPress: () => void;
   selected: boolean;
@@ -25,19 +25,25 @@ export default function DiseaseCard(props: IProps) {
         style={styles.pressable}
         testID={props.testID}
       >
-        <View style={styles.icon}>
-          <props.IconComponent color={props.selected ? colors.white : colors.darkblue} />
-        </View>
+        {props.IconComponent ? (
+          <View style={styles.icon}>
+            <props.IconComponent color={props.selected ? colors.white : colors.darkblue} />
+          </View>
+        ) : null}
         <View style={styles.textSection}>
-          <Text rhythm={2} style={[styles.name, props.selected ? styles.activeName : null]} textClass="pSmallMedium">
-            {props.title}
-          </Text>
-          <Text
-            style={[styles.description, props.selected ? styles.activeDescription : styles.inactiveDescription]}
-            textClass="pLight"
-          >
-            {props.description}
-          </Text>
+          {props.title ? (
+            <Text rhythm={2} style={[styles.name, props.selected ? styles.activeName : null]} textClass="pSmallMedium">
+              {props.title}
+            </Text>
+          ) : null}
+          {props.description ? (
+            <Text
+              style={[styles.description, props.selected ? styles.activeDescription : styles.inactiveDescription]}
+              textClass="pLight"
+            >
+              {props.description}
+            </Text>
+          ) : null}
         </View>
       </Pressable>
     </View>
@@ -64,7 +70,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     maxWidth: 40,
-    width: 40,
   },
   inactiveDescription: {
     color: colors.secondary,
