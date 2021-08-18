@@ -237,8 +237,8 @@
     "picker-myself-guidance": "Myself - under the guidance of a trained professional",
     "picker-trained-worker": "A trained professional",
     "question-antibody": "Was it Anti-N or Anti-S?",
-    "picker-anti-n": "Anti-N",
-    "picker-anti-s": "Anti-S",
+    "picker-anti-n": "Test to detect antibodies from a previous infection only (Anti-N)",
+    "picker-anti-s": "Test to detect antibodies, either from a previous infection or vaccine (Anti-S)",
     "picker-dont-know": "I don't know",
     "location": {
       "question": "Where was your test performed?",
