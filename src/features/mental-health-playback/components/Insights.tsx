@@ -1,15 +1,12 @@
 import Background from '@assets/mental-health-playback/Background';
-import { Card, Spacer, Text, TextHighlight } from '@covid/components';
-import { TRootState } from '@covid/core/state/root';
-import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { Card, Text, TextHighlight } from '@covid/components';
 import BarChart from '@covid/features/mental-health-playback/components/BarChart';
 import InsightIllustration from '@covid/features/mental-health-playback/components/InsightIllustration';
 import { IInsight } from '@covid/features/mental-health-playback/types';
 import i18n from '@covid/locale/i18n';
-import { colors, grid, styling } from '@covid/themes';
+import { colors, grid, sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import { LayoutChangeEvent, StyleSheet, useWindowDimensions, View } from 'react-native';
-import { useSelector } from 'react-redux';
 
 interface IProps {
   itemHeight: number;
@@ -20,8 +17,9 @@ type TNumberObject = { [key: number]: number };
 
 export default React.memo(function Insights(props: IProps) {
   const [illustrationHeights, setIllustrationHeights] = React.useState<TNumberObject>({});
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const windowWidth = useWindowDimensions().width;
+
+  const backgroundWidth = Math.min(windowWidth, sizes.maxScreenWidth);
 
   function onLayoutView(event: LayoutChangeEvent, index: number) {
     setIllustrationHeights({
@@ -40,17 +38,14 @@ export default React.memo(function Insights(props: IProps) {
         // eslint-disable-next-line react/no-array-index-key
         <View key={`insight-${index}`} style={{ height: props.itemHeight, justifyContent: 'space-between' }}>
           {index === 0 ? (
-            <View>
-              <Spacer space={60} />
-              <Card useShadow style={styles.card}>
-                <Text>
-                  {i18n.t('mental-health-playback.general.explanation-card')}{' '}
-                  {i18n.t(`mental-health-playback.segments.${insight.segment}`, {
-                    defaultValue: i18n.t('mental-health-playback.segments.general'),
-                  })}
-                </Text>
-              </Card>
-            </View>
+            <Card useShadow style={styles.card}>
+              <Text>
+                {i18n.t('mental-health-playback.general.explanation-card')}{' '}
+                {i18n.t(`mental-health-playback.segments.${insight.segment}`, {
+                  defaultValue: i18n.t('mental-health-playback.segments.general'),
+                })}
+              </Text>
+            </Card>
           ) : null}
 
           {illustrationHeights[index] > 0 && illustrationHeights[index] < 100 ? null : (
@@ -60,7 +55,7 @@ export default React.memo(function Insights(props: IProps) {
             >
               {illustrationHeights[index] >= 100 ? (
                 <>
-                  <Background height={illustrationHeights[index]} preserveAspectRatio="none" width={windowWidth} />
+                  <Background height={illustrationHeights[index]} preserveAspectRatio="none" width={backgroundWidth} />
                   <View style={[styling.absoluteFill, styling.centerCenter]}>
                     <InsightIllustration
                       height={illustrationHeights[index] - grid.xxl * 2}
@@ -146,9 +141,8 @@ const styles = StyleSheet.create({
   },
   card: {
     alignSelf: 'center',
-    marginBottom: 'auto',
     marginHorizontal: 14,
-    marginTop: 'auto',
+    marginTop: 14,
   },
   contentWrapper: {
     marginBottom: grid.xxl,

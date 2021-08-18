@@ -34,7 +34,7 @@ export const TrendlineScreen: React.FC = () => {
   }, []);
 
   return (
-    <Screen fullWidth backgroundColor="white" testID="trendline-screen">
+    <Screen noScrollView backgroundColor="white" testID="trendline-screen">
       <View collapsable={false} ref={viewRef} style={styles.flex}>
         <RegularText style={{ textAlign: 'center' }}>{i18n.t('explore-trend-line.title')}</RegularText>
 

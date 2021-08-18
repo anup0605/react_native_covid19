@@ -100,6 +100,11 @@ export default StyleSheet.create({
   marginVerticalSmall: {
     marginVertical: sizes.spacingSmall,
   },
+  measureHeight: {
+    height: '100%',
+    position: 'absolute',
+    width: 0,
+  },
   measureWidth: {
     height: 0,
     width: '100%',

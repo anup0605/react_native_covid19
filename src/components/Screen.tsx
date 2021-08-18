@@ -23,7 +23,6 @@ interface IProps {
   footerLoading?: boolean;
   footerOnPress?: () => void;
   footerTitle?: string;
-  fullWidth?: boolean;
   hideBackButton?: boolean;
   noPadding?: boolean;
   noScrollView?: boolean;
@@ -48,21 +47,17 @@ function renderHeader(props: IProps) {
 }
 
 function renderBody(props: IProps) {
-  const viewStyle = props.fullWidth ? styles.flex : styles.view;
-  const element = (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={viewStyle}>{props.children}</View>
-    </TouchableWithoutFeedback>
-  );
   return props.noScrollView ? (
-    <View style={props.noPadding ? styling.flexGrow : styles.contentContainer}>{element}</View>
+    props.children
   ) : (
     <ScrollView
       alwaysBounceVertical={false}
       contentContainerStyle={props.noPadding ? styling.flexGrow : styles.contentContainer}
       testID={`scroll-view-${props.testID || 'screen'}`}
     >
-      {element}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.view}>{props.children}</View>
+      </TouchableWithoutFeedback>
     </ScrollView>
   );
 }
