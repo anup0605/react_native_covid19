@@ -15,11 +15,13 @@ interface IProps {
 
 type TNumberObject = { [key: number]: number };
 
+const HEIGHT_SMALL_DEVICES = 667;
+
 export default React.memo(function Insights(props: IProps) {
   const [illustrationHeights, setIllustrationHeights] = React.useState<TNumberObject>({});
-  const windowWidth = useWindowDimensions().width;
+  const windowDimensions = useWindowDimensions();
 
-  const backgroundWidth = Math.min(windowWidth, sizes.maxScreenWidth);
+  const backgroundWidth = Math.min(windowDimensions.width, sizes.maxScreenWidth);
 
   function onLayoutView(event: LayoutChangeEvent, index: number) {
     setIllustrationHeights({
@@ -35,9 +37,12 @@ export default React.memo(function Insights(props: IProps) {
   return (
     <>
       {(props.insights || []).map((insight: IInsight, index: number) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <View key={`insight-${index}`} style={{ height: props.itemHeight, justifyContent: 'space-between' }}>
-          {index === 0 ? (
+        <View
+          // eslint-disable-next-line react/no-array-index-key
+          key={`insight-${index}`}
+          style={{ height: props.itemHeight, justifyContent: 'space-between', overflow: 'hidden' }}
+        >
+          {index === 0 && windowDimensions.height > HEIGHT_SMALL_DEVICES ? (
             <Card useShadow style={styles.card}>
               <Text>
                 {i18n.t('mental-health-playback.general.explanation-card')}{' '}
@@ -91,9 +96,11 @@ export default React.memo(function Insights(props: IProps) {
                 level_of_association: insight.level_of_association,
               })}
             </TextHighlight>
-            <Text inverted colorPalette="uiDark" colorShade="main" style={styles.label} textClass="pSmall">
-              {i18n.t('mental-health-playback.general.chart-label')}
-            </Text>
+            {windowDimensions.height > HEIGHT_SMALL_DEVICES ? (
+              <Text inverted colorPalette="uiDark" colorShade="main" style={styles.label} textClass="pSmall">
+                {i18n.t('mental-health-playback.general.chart-label')}
+              </Text>
+            ) : null}
             <BarChart color="#0165B5" items={insight.answer_distribution} userAnswer={insight.user_answer} />
           </View>
 
@@ -155,6 +162,7 @@ const styles = StyleSheet.create({
     padding: grid.l,
   },
   description: {
+    marginBottom: grid.xxl,
     marginTop: grid.m,
   },
   illustrationWrapper: {
@@ -164,6 +172,5 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: grid.m,
-    marginTop: grid.xxl,
   },
 });
