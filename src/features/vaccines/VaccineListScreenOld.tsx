@@ -23,10 +23,10 @@ import { StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 type TProps = {
-  route: RouteProp<TScreenParamList, 'VaccineList'>;
+  route: RouteProp<TScreenParamList, 'VaccineListOld'>;
 };
 
-export const VaccineListScreen: React.FC<TProps> = ({ route }) => {
+export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
   const coordinator = assessmentCoordinator;
   const vaccines = useSelector<TRootState, TVaccineRequest[]>((state) => state.vaccines.vaccines);
   const [loading, setLoading] = React.useState<boolean>(true);

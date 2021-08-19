@@ -360,4 +360,5 @@ export type TStartupInfo = {
       lng: number;
     };
   };
+  show_new_vaccines_ui?: boolean;
 };

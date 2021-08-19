@@ -1,11 +1,11 @@
 import appConfig from '@covid/appConfig';
 import ApiClient from '@covid/core/api/ApiClient';
-import { TDoseSymptomsRequest, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TDose, TDoseSymptomsRequest, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { TDoseSymptomsResponse, TVaccineResponse } from '@covid/core/vaccine/dto/VaccineResponse';
 
 export interface IVaccineRemoteClient {
-  saveVaccineResponse(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse>;
-  updateVaccineResponse(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse>;
+  saveVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse>;
+  updateVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse>;
   saveDoseSymptoms(patientId: string, payload: Partial<TDoseSymptomsRequest>): Promise<TDoseSymptomsResponse>;
   listVaccines(): Promise<TVaccineRequest[]>;
   deleteVaccine(vaccineId: string): Promise<void>;
@@ -14,7 +14,7 @@ export interface IVaccineRemoteClient {
 const apiClient = new ApiClient();
 
 export class VaccineApiClient implements IVaccineRemoteClient {
-  saveVaccineResponse(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse> {
+  saveVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse> {
     payload = {
       ...payload,
       patient: patientId,
@@ -23,7 +23,7 @@ export class VaccineApiClient implements IVaccineRemoteClient {
     return apiClient.post<TVaccineRequest, TVaccineResponse>('/vaccines/', payload as TVaccineRequest);
   }
 
-  updateVaccineResponse(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse> {
+  updateVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse> {
     payload = {
       ...payload,
       patient: patientId,
@@ -47,6 +47,7 @@ export class VaccineApiClient implements IVaccineRemoteClient {
     return apiClient.get<TVaccineRequest[]>(`/vaccines/`);
   }
 
+  // Deprecated as the "new" Vaccine system treats vaccine as a "Vaccination Record", and uses PATCH to "delete" doses
   deleteVaccine(vaccineId: string): Promise<void> {
     return apiClient.delete<object, void>(`/vaccines/${vaccineId}/`, {}); // TODO CHECK THIS
   }

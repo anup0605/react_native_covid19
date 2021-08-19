@@ -1,3 +1,5 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
+
 import { IAssessmentService } from '@covid/core/assessment/AssessmentService';
 import { TConfigType } from '@covid/core/Config';
 import { Coordinator, TScreenFlow, TScreenName } from '@covid/core/Coordinator';
@@ -33,17 +35,26 @@ export class AssessmentCoordinator extends Coordinator {
     AboutYourVaccine: () => {
       NavigatorService.goBack();
     },
+    AboutYourVaccineUpdated: () => {
+      NavigatorService.goBack();
+    },
     CovidTestConfirm: () => {
       NavigatorService.navigate('CovidTestList', { assessmentData: this.assessmentData });
     },
     CovidTestList: () => {
       // After finishing with COVID Tests, we check to ask about Vaccines.
-      // UK & US users above 16 years, will be eligible (shouldShowVaccineList = True)
       if (this.patientData.patientState.shouldShowVaccineList) {
-        NavigatorService.navigate('VaccineList', { assessmentData: this.assessmentData });
+        // Note that VaccineList is currently a "feature toggle placeholder" that uses startupInfo to use old/new UI
+        NavigatorService.navigate('VaccineListFeatureToggle', {
+          assessmentData: this.assessmentData,
+          viewName: 'LIST',
+        });
       } else {
         NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });
       }
+    },
+    VaccineListFeatureToggle: () => {
+      NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });
     },
     GeneralSymptoms: () => {
       NavigatorService.navigate('HeadSymptoms', { assessmentData: this.assessmentData });
@@ -171,12 +182,15 @@ export class AssessmentCoordinator extends Coordinator {
     });
   };
 
-  goToAddEditVaccine = (vaccine?: TVaccineRequest) => {
+  goToAddEditVaccine = (vaccine?: TVaccineRequest, index?: number) => {
     if (vaccine) {
       this.assessmentData.vaccineData = vaccine;
     }
-    NavigatorService.navigate('AboutYourVaccine', {
+    // FeatureToggle: Use push to add "another" state to nav stack so that its back returns to "itself" (defaults to LIST view)
+    NavigatorService.push('VaccineListFeatureToggle', {
+      viewName: 'ADD_EDIT_DELETE',
       assessmentData: this.assessmentData,
+      editIndex: index,
     });
   };
 

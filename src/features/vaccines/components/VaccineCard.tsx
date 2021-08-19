@@ -1,5 +1,6 @@
 import { tick } from '@assets';
 import QuestionCircle from '@assets/icons/QuestionCircle';
+import { BrandedButton } from '@covid/components';
 import { Header3Text, RegularText } from '@covid/components/Text';
 import {
   EVaccineBrands,
@@ -8,6 +9,7 @@ import {
   vaccineBrandDisplayName,
 } from '@covid/core/vaccine/dto/VaccineRequest';
 import i18n from '@covid/locale/i18n';
+import { vaccineService } from '@covid/services';
 import { colors } from '@theme';
 import moment from 'moment';
 import { Text } from 'native-base';
