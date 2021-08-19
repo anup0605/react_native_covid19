@@ -1,6 +1,6 @@
 import appConfig from '@covid/appConfig';
 import { BrandedButton } from '@covid/components';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { consentService } from '@covid/core/consent/ConsentService';
 import { isGBCountry, isSECountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { appCoordinator } from '@covid/features/AppCoordinator';
@@ -50,7 +50,7 @@ export default React.memo((props: TProps) => {
   }, [props, setAgreed]);
 
   return (
-    <ScreenNew hideBackButton testID="consent-screen">
+    <Screen testID="consent-screen">
       {renderConsent()}
       {!props.route.params?.viewOnly ? (
         <BrandedButton
@@ -62,6 +62,6 @@ export default React.memo((props: TProps) => {
           {i18n.t('legal.i-agree')}
         </BrandedButton>
       ) : null}
-    </ScreenNew>
+    </Screen>
   );
 });

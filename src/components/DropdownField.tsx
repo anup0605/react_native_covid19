@@ -7,7 +7,6 @@ import * as React from 'react';
 import { Image, ImageSourcePropType, PickerItemProps, StyleSheet, Text, View } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-import { FieldWrapper } from './Screen';
 import { ValidationError } from './ValidationError';
 
 interface IProps {
@@ -124,7 +123,7 @@ export function DropdownField({
   };
 
   return (
-    <FieldWrapper style={styles.fieldWrapper}>
+    <View style={styles.view}>
       {hideLabel ? null : (
         <Label style={styles.label}>
           {label}
@@ -167,7 +166,7 @@ export function DropdownField({
           <ValidationError error={error} />
         </View>
       ) : null}
-    </FieldWrapper>
+    </View>
   );
 }
 
@@ -239,9 +238,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.feedbackBad,
   },
-  fieldWrapper: {
-    flex: 1,
-  },
   label: {
     color: colors.primary,
     fontFamily: 'SofiaProRegular',
@@ -260,6 +256,10 @@ const styles = StyleSheet.create({
   topBorderRadiusStyle: {
     borderTopEndRadius: 8,
     borderTopStartRadius: 8,
+  },
+  view: {
+    flex: 1,
+    marginVertical: 16,
   },
 });
 

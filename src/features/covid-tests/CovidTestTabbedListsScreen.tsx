@@ -102,7 +102,11 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
         name={i18n.t('covid-test-list.tab-lateral')}
         options={{ tabBarLabel: i18n.t('covid-test-list.tab-lateral') }}
       />
-      <Tab.Screen children={() => <CovidListByType covidTests={pcrTests} />} name={i18n.t('covid-test-list.tab-pcr')} options={{ tabBarLabel: i18n.t('covid-test-list.tab-pcr') }} />
+      <Tab.Screen
+        children={() => <CovidListByType covidTests={pcrTests} />}
+        name={i18n.t('covid-test-list.tab-pcr')}
+        options={{ tabBarLabel: i18n.t('covid-test-list.tab-pcr') }}
+      />
       <Tab.Screen
         children={() => <CovidListByType covidTests={antibodyTests} />}
         name={i18n.t('covid-test-list.tab-antibody')}

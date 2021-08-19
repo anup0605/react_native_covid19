@@ -1,4 +1,6 @@
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { covidByZoeIconDark } from '@assets';
+import { NavHeader } from '@covid/components/NavHeader';
+import { Screen } from '@covid/components/Screen';
 import ApiClient from '@covid/core/api/ApiClient';
 import {
   LoadingIndicator,
@@ -6,13 +8,12 @@ import {
   Timeline,
   TimelineError,
   TimelineFooter,
-  TimelineHeader,
   TimelineIntroduction,
 } from '@covid/features/anniversary/partials';
 import { ITimeline } from '@covid/features/anniversary/types';
 import { colors } from '@theme/colors';
 import * as React from 'react';
-import { Alert, FlatList } from 'react-native';
+import { Alert, FlatList, Image, StyleSheet } from 'react-native';
 
 type TRowType = 'ERROR' | 'FOOTER' | 'INTRODUCTION' | 'LOADER' | 'REPORT_CARD' | 'TIMELINE';
 
@@ -85,15 +86,27 @@ export default function AnniversaryScreen() {
     },
   ];
 
+  function renderHeader() {
+    return <NavHeader rightElement={<Image source={covidByZoeIconDark} style={styles.image} />} />;
+  }
+
   return (
-    <ScreenNew backgroundColor={colors.backgroundTertiary} testID="anniversary-screen">
-      <TimelineHeader />
+    <Screen backgroundColor={colors.backgroundTertiary} renderHeader={renderHeader} testID="anniversary-screen">
       <FlatList
         data={data}
         keyExtractor={(item: TRowItem) => item.id}
         renderItem={renderItem}
         style={{ backgroundColor: colors.backgroundTertiary }}
       />
-    </ScreenNew>
+    </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  image: {
+    aspectRatio: 2.25,
+    height: undefined,
+    resizeMode: 'contain',
+    width: 75,
+  },
+});

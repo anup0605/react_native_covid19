@@ -1,6 +1,5 @@
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { GenericTextField } from '@covid/components/GenericTextField';
-import { FieldWrapper } from '@covid/components/Screen';
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
 import { colors } from '@theme';
@@ -84,23 +83,19 @@ export class RaceEthnicityQuestion extends React.Component<IRaceEthnicityQuestio
     return (
       <View>
         {this.props.showRaceQuestion ? (
-          <FieldWrapper>
-            <View style={styles.textItemStyle}>
-              <CheckboxList required label={i18n.t('race-question')}>
-                {renderRaceCheckboxes(this.UKRaceCheckboxes, this.props.formikProps)}
-              </CheckboxList>
-            </View>
-          </FieldWrapper>
+          <View style={styles.view}>
+            <CheckboxList required label={i18n.t('race-question')}>
+              {renderRaceCheckboxes(this.UKRaceCheckboxes, this.props.formikProps)}
+            </CheckboxList>
+          </View>
         ) : null}
 
         {this.props.showEthnicityQuestion ? (
-          <FieldWrapper>
-            <View style={styles.textItemStyle}>
-              <CheckboxList required label={i18n.t('race-question')}>
-                {renderRaceCheckboxes(this.USRaceCheckboxes, this.props.formikProps)}
-              </CheckboxList>
-            </View>
-          </FieldWrapper>
+          <View style={styles.view}>
+            <CheckboxList required label={i18n.t('race-question')}>
+              {renderRaceCheckboxes(this.USRaceCheckboxes, this.props.formikProps)}
+            </CheckboxList>
+          </View>
         ) : null}
 
         {this.props.formikProps.values.race.includes('other') ? (
@@ -112,36 +107,34 @@ export class RaceEthnicityQuestion extends React.Component<IRaceEthnicityQuestio
         ) : null}
 
         {isUSCountry() ? (
-          <FieldWrapper>
-            <View style={styles.textItemStyle}>
-              <CheckboxList required label={i18n.t('ethnicity-question')}>
-                <CheckboxItem
-                  onChange={(value: boolean) => {
-                    this.props.formikProps.setFieldValue('ethnicity', value ? 'hispanic' : '');
-                  }}
-                  value={this.props.formikProps.values.ethnicity === 'hispanic'}
-                >
-                  {i18n.t('hispanic')}
-                </CheckboxItem>
-                <CheckboxItem
-                  onChange={(value: boolean) => {
-                    this.props.formikProps.setFieldValue('ethnicity', value ? 'not_hispanic' : '');
-                  }}
-                  value={this.props.formikProps.values.ethnicity === 'not_hispanic'}
-                >
-                  {i18n.t('not-hispanic')}
-                </CheckboxItem>
-                <CheckboxItem
-                  onChange={(value: boolean) => {
-                    this.props.formikProps.setFieldValue('ethnicity', value ? 'prefer_not_to_say' : '');
-                  }}
-                  value={this.props.formikProps.values.ethnicity === 'prefer_not_to_say'}
-                >
-                  {i18n.t('prefer-not-to-say')}
-                </CheckboxItem>
-              </CheckboxList>
-            </View>
-          </FieldWrapper>
+          <View style={styles.view}>
+            <CheckboxList required label={i18n.t('ethnicity-question')}>
+              <CheckboxItem
+                onChange={(value: boolean) => {
+                  this.props.formikProps.setFieldValue('ethnicity', value ? 'hispanic' : '');
+                }}
+                value={this.props.formikProps.values.ethnicity === 'hispanic'}
+              >
+                {i18n.t('hispanic')}
+              </CheckboxItem>
+              <CheckboxItem
+                onChange={(value: boolean) => {
+                  this.props.formikProps.setFieldValue('ethnicity', value ? 'not_hispanic' : '');
+                }}
+                value={this.props.formikProps.values.ethnicity === 'not_hispanic'}
+              >
+                {i18n.t('not-hispanic')}
+              </CheckboxItem>
+              <CheckboxItem
+                onChange={(value: boolean) => {
+                  this.props.formikProps.setFieldValue('ethnicity', value ? 'prefer_not_to_say' : '');
+                }}
+                value={this.props.formikProps.values.ethnicity === 'prefer_not_to_say'}
+              >
+                {i18n.t('prefer-not-to-say')}
+              </CheckboxItem>
+            </CheckboxList>
+          </View>
         ) : null}
       </View>
     );
@@ -154,7 +147,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaProRegular',
     fontSize: 16,
   },
-  textItemStyle: {
-    borderColor: 'transparent',
+  view: {
+    marginVertical: 16,
   },
 });

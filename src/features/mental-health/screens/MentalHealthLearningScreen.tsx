@@ -1,5 +1,6 @@
-import { BasicPage, CheckBoxButton, GenericSelectableList, Text } from '@covid/components';
+import { CheckBoxButton, GenericSelectableList, Text } from '@covid/components';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
+import { Screen } from '@covid/components/Screen';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import {
   addLearningCondition,
@@ -16,6 +17,7 @@ import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
 import { useTheme } from '@covid/themes';
+import { colors } from '@theme';
 import * as React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -92,31 +94,35 @@ export default function MentalHealthLearningScreen() {
   ) : null;
 
   return (
-    <BasicPage active={canSubmit} footerTitle={i18n.t('navigation.next')} onPress={saveStateAndNavigate}>
-      <View style={{ paddingHorizontal: grid.gutter }}>
-        <Text rhythm={16} textClass="h3">
-          {i18n.t('mental-health.question-learning-title')}
-        </Text>
-        <View>
-          <RadioInput
-            items={learningInitialOptions}
-            label={i18n.t('mental-health.question-learning')}
-            onValueChange={handleSetHasLearningDisability}
-            selectedValue={MentalHealthLearning.hasDisability}
-          />
-        </View>
-        {MentalHealthLearning.hasDisability === 'YES' ? (
-          <>
-            <GenericSelectableList
-              collection={learningQuestions}
-              onPress={(data) => handleAddRemoveCondition(data.value)}
-              renderRow={(data) => renderRow(data)}
-              style={{ paddingBottom: grid.s, paddingTop: grid.s }}
-            />
-            {renderOtherTextInput}
-          </>
-        ) : null}
+    <Screen
+      backgroundColor={colors.backgroundTertiary}
+      footerEnabled={canSubmit}
+      footerOnPress={saveStateAndNavigate}
+      footerTitle={i18n.t('navigation.next')}
+      testID="mental-health-learning-screen"
+    >
+      <Text rhythm={16} textClass="h3">
+        {i18n.t('mental-health.question-learning-title')}
+      </Text>
+      <View>
+        <RadioInput
+          items={learningInitialOptions}
+          label={i18n.t('mental-health.question-learning')}
+          onValueChange={handleSetHasLearningDisability}
+          selectedValue={MentalHealthLearning.hasDisability}
+        />
       </View>
-    </BasicPage>
+      {MentalHealthLearning.hasDisability === 'YES' ? (
+        <>
+          <GenericSelectableList
+            collection={learningQuestions}
+            onPress={(data) => handleAddRemoveCondition(data.value)}
+            renderRow={(data) => renderRow(data)}
+            style={{ paddingBottom: grid.s, paddingTop: grid.s }}
+          />
+          {renderOtherTextInput}
+        </>
+      ) : null}
+    </Screen>
   );
 }

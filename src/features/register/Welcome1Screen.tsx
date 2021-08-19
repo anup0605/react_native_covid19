@@ -1,5 +1,6 @@
 import { gbMap, svMap, usMap } from '@assets';
 import { BrandedButton } from '@covid/components';
+import { Screen } from '@covid/components/Screen';
 import { ClickableText, RegularText } from '@covid/components/Text';
 import { contentService } from '@covid/core/content/ContentService';
 import { isGBCountry, isSECountry, LocalisationService } from '@covid/core/localisation/LocalisationService';
@@ -9,7 +10,7 @@ import { cleanIntegerVal } from '@covid/utils/number';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { ContributionCounter } from './components/ContributionCounter';
 import { getLocaleFlagIcon } from './helpers';
@@ -18,7 +19,7 @@ type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Welcome'>;
 };
 
-const Welcome1Screen: React.FC<TProps> = ({ navigation }) => {
+export default function Welcome1Screen({ navigation }) {
   const [userCount, setUserCount] = React.useState<number>(0);
 
   React.useEffect(() => {
@@ -49,45 +50,45 @@ const Welcome1Screen: React.FC<TProps> = ({ navigation }) => {
   const onNextButtonPress = React.useCallback(() => navigation.navigate('Welcome2'), [navigation.navigate]);
 
   return (
-    <View style={styles.safeView}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <Image source={getMapImage()} style={styles.mapImage} testID="map" />
-        <View style={styles.loginContainer}>
-          <ClickableText onPress={onLoginPress} style={styles.login} testID="login-link">
-            {i18n.t('log-in')}
-          </ClickableText>
-          <View style={styles.pipe} />
-          <TouchableOpacity onPress={onSelectCountryPress} style={styles.countryFlag} testID="select-country">
-            <Image source={getFlagIcon()} style={styles.flagIcon} testID={`flag-${LocalisationService.userCountry}`} />
-          </TouchableOpacity>
-        </View>
+    <Screen hideBackButton noPadding backgroundColor={colors.brand} testID="welcome-1-screen">
+      <Image source={getMapImage()} style={styles.mapImage} testID="map" />
 
-        <View style={styles.rootContainer}>
-          <View style={styles.covidContainer}>
-            <RegularText style={styles.subtitle}>{i18n.t('welcome.take-a-minute')}</RegularText>
-          </View>
-        </View>
-        <View style={styles.contributors}>
-          <ContributionCounter count={userCount} testID="counter" variant={1} />
-        </View>
+      <View style={styles.loginContainer}>
+        <ClickableText onPress={onLoginPress} style={styles.login} testID="login-link">
+          {i18n.t('log-in')}
+        </ClickableText>
+        <View style={styles.pipe} />
+        <TouchableOpacity onPress={onSelectCountryPress} testID="select-country">
+          <Image source={getFlagIcon()} style={styles.flagIcon} testID={`flag-${LocalisationService.userCountry}`} />
+        </TouchableOpacity>
+      </View>
 
-        <View style={styles.nextButtonContainer}>
-          <BrandedButton onPress={onNextButtonPress} style={styles.nextButton} testID="create-account-1">
-            {i18n.t('welcome.tell-me-more')}
-          </BrandedButton>
-        </View>
-      </ScrollView>
-    </View>
+      <View style={styles.covidContainer}>
+        <RegularText style={styles.subtitle}>{i18n.t('welcome.take-a-minute')}</RegularText>
+      </View>
+
+      <View style={styles.contributors}>
+        <ContributionCounter count={userCount} testID="counter" variant={1} />
+      </View>
+
+      <View style={styles.nextButtonContainer}>
+        <BrandedButton onPress={onNextButtonPress} style={styles.nextButton} testID="create-account-1">
+          {i18n.t('welcome.tell-me-more')}
+        </BrandedButton>
+      </View>
+    </Screen>
   );
-};
+}
 
 const styles = StyleSheet.create({
   contributors: {
     marginBottom: 32,
     paddingHorizontal: 32,
   },
-  countryFlag: {},
   covidContainer: {
+    backgroundColor: colors.brand,
+    flex: 1,
+    marginTop: 32,
     paddingBottom: 14,
     paddingHorizontal: 14,
   },
@@ -125,15 +126,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     width: 1,
   },
-  rootContainer: {
-    backgroundColor: colors.brand,
-    flex: 1,
-    marginTop: 32,
-  },
-  safeView: {
-    backgroundColor: colors.brand,
-    flexGrow: 1,
-  },
   scrollView: {
     backgroundColor: colors.brand,
     flexGrow: 1,
@@ -149,5 +141,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default Welcome1Screen;

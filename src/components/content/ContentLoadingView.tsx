@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     padding: 20,
   },
-  one: {},
   three: {
     height: 12,
     marginTop: 12,

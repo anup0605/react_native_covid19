@@ -13,11 +13,9 @@ import { fetchSubscribedSchoolGroups } from '@covid/core/schools/Schools.slice';
 import { appActions, appSelectors } from '@covid/core/state/app/slice';
 import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
-import { selectFirstPatientId } from '@covid/core/state/user';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { getDietStudyDoctorImage, getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
-import util from '@covid/features/mental-health-playback/util';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
@@ -49,7 +47,6 @@ const headerConfig = {
 };
 
 export function DashboardScreen({ navigation, route }: IProps) {
-  const patientId = useSelector(selectFirstPatientId);
   const app = useSelector(appSelectors.selectApp);
   const dispatch = useAppDispatch();
   const schoolGroups = useSelector<TRootState, ISubscribedSchoolGroupStats[]>(
@@ -97,17 +94,10 @@ export function DashboardScreen({ navigation, route }: IProps) {
     if (!app.dashboardHasBeenViewed) {
       dispatch(appActions.setDashboardHasBeenViewed(true));
       setTimeout(() => {
-        if (isMounted) {
-          if (startupInfo?.show_research_consent) {
-            appCoordinator.goToReconsent();
-          } else if (startupInfo?.show_modal === 'mental-health-playback') {
-            const testGroupId = util.determineTestGroupId(patientId, startupInfo?.mh_insight_cohort!);
-            if (testGroupId === 'GROUP_1') {
-              dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
-            }
-          }
+        if (isMounted && startupInfo?.show_research_consent) {
+          appCoordinator.goToReconsent();
         }
-      }, 800);
+      }, 500);
     }
     return () => {
       isMounted = false;
@@ -117,10 +107,6 @@ export function DashboardScreen({ navigation, route }: IProps) {
   React.useEffect(() => {
     Linking.addEventListener('url', () => {});
   }, []);
-
-  function goToMentalHealthStudyPlayback() {
-    appCoordinator.goToMentalHealthStudyPlayback(startupInfo);
-  }
 
   return (
     <CollapsibleHeaderScrollView
@@ -153,7 +139,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
             doctorName={i18n.t('mental-health.doctor-name')}
             doctorTitle={i18n.t('mental-health.doctor-title')}
             imageNode={getMentalHealthStudyDoctorImage()}
-            onPress={goToMentalHealthStudyPlayback}
+            onPress={appCoordinator.goToMentalHealthStudyPlayback}
             style={styling.marginVerticalSmall}
             tagColor={colors.coral.main.bgColor}
             title={i18n.t('mental-health-playback.results-ready')}

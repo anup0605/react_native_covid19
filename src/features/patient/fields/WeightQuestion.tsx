@@ -1,6 +1,5 @@
 import DropdownField from '@covid/components/DropdownField';
 import { requiredFormMarker } from '@covid/components/Form';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
@@ -29,7 +28,7 @@ interface IProps {
 
 export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) => {
   return (
-    <FieldWrapper style={styles.fieldWrapper}>
+    <View style={styles.view}>
       <RegularText>
         {label}
         {requiredFormMarker}
@@ -105,7 +104,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
           </View>
         </View>
       )}
-    </FieldWrapper>
+    </View>
   );
 };
 
@@ -132,43 +131,33 @@ const styles = StyleSheet.create({
   fieldRow: {
     flexDirection: 'row',
   },
-
-  fieldWrapper: {
-    flex: 1,
-  },
-
   poundsField: {
     flex: 5,
     marginHorizontal: 4,
   },
-
   primaryField: {
     flex: 6,
     marginRight: 4,
   },
-
   primaryFieldRow: {
     flex: 6,
     flexDirection: 'row',
   },
-
   secondaryField: {
     flex: 2,
     marginLeft: 4,
     marginTop: -16,
   },
-
   stonesField: {
     flex: 5,
     marginRight: 4,
   },
-
   tertiaryField: {
     flex: 5,
     marginRight: 8,
   },
-
-  textItemStyle: {
-    borderColor: 'transparent',
+  view: {
+    flex: 1,
+    marginVertical: 16,
   },
 });

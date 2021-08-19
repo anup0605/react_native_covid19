@@ -1,4 +1,4 @@
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { SelectorButton } from '@covid/components/SelectorButton';
 import { HeaderText } from '@covid/components/Text';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -13,7 +13,7 @@ type TProps = {
 
 export default function BeforeWeStartUSScreen(props: TProps) {
   return (
-    <ScreenNew testID="before-we-start-us-screen">
+    <Screen testID="before-we-start-us-screen">
       <HeaderText style={styling.marginBottomHuge}>{i18n.t('before-we-start.title')}</HeaderText>
 
       <SelectorButton
@@ -25,6 +25,6 @@ export default function BeforeWeStartUSScreen(props: TProps) {
         onPress={() => props.navigation.navigate('Consent', { viewOnly: false })}
         text={i18n.t('before-we-start.no')}
       />
-    </ScreenNew>
+    </Screen>
   );
 }

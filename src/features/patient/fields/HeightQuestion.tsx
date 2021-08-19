@@ -1,6 +1,5 @@
 import DropdownField from '@covid/components/DropdownField';
 import { requiredFormMarker } from '@covid/components/Form';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
@@ -78,7 +77,7 @@ const HeightInCm: React.FC<IProps> = ({ formikProps }) => {
 
 export const HeightQuestion: IFCWithStatic<IProps> = ({ formikProps }) => {
   return (
-    <FieldWrapper style={styles.fieldWrapper}>
+    <View style={styles.view}>
       <RegularText>
         {i18n.t('your-height')}
         {requiredFormMarker}
@@ -115,7 +114,7 @@ export const HeightQuestion: IFCWithStatic<IProps> = ({ formikProps }) => {
       {formikProps.touched.heightUnit && formikProps.errors.heightUnit ? (
         <ValidationError error={formikProps.errors.heightUnit} />
       ) : null}
-    </FieldWrapper>
+    </View>
   );
 };
 
@@ -134,37 +133,31 @@ const styles = StyleSheet.create({
     flex: 6,
     marginRight: 4,
   },
-
   feetField: {
     flex: 5,
     marginRight: 4,
   },
-
   fieldRow: {
     flexDirection: 'row',
   },
-
-  fieldWrapper: {
-    flex: 1,
-  },
-
   inchesField: {
     flex: 5,
     marginHorizontal: 4,
   },
-
   primaryFieldRow: {
     flex: 6,
     flexDirection: 'row',
   },
-
   textItemStyle: {
     borderColor: 'transparent',
   },
-
   unitsField: {
     flex: 2,
     marginLeft: 4,
     marginTop: -16,
+  },
+  view: {
+    flex: 1,
+    marginVertical: 16,
   },
 });

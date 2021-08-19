@@ -4,7 +4,7 @@ export { PrivacyPolicyUKScreen } from './gb/PrivacyPolicyUKScreen';
 export { default as RegisterScreen } from './RegisterScreen';
 export { default as PrivacyPolicySVScreen } from './sv/PrivacyPolicySVScreen';
 export { default as BeforeWeStartUSScreen } from './us/BeforeWeStartUSScreen';
-export { NursesConsentUSScreen } from './us/NursesConsentUS';
+export { NursesConsentUSScreen } from './us/NursesConsentUSScreen';
 export { PrivacyPolicyUSScreen } from './us/PrivacyPolicyUSScreen';
 export { default as TermsOfUseUSScreen } from './us/TermsOfUseUSScreen';
 export { default as Welcome1Screen } from './Welcome1Screen';

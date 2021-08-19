@@ -1,3 +1,5 @@
+import { by, element, expect } from 'detox';
+
 export function sleep(milliseconds: number) {
   return new Promise((resolve) => {
     setTimeout(resolve, milliseconds);
@@ -38,4 +40,17 @@ export async function tapInputByElement(element: Detox.NativeElement) {
 
 export async function tapInputById(elementId: string) {
   return tapInputByElement(element(by.id(elementId)));
+}
+
+export async function submitForm(screenId: string, scrollViewId: string, buttonId: string) {
+  await expect(element(by.id(buttonId).withAncestor(by.id(screenId)))).toExist();
+  await scrollDownToId(scrollViewId, buttonId);
+  // Sometimes scrolling down causes the button to be pressed.
+  try {
+    await element(by.id(buttonId).withAncestor(by.id(screenId))).tap();
+  } catch (_) {}
+  // Double tap to lose the focus from a possible text input above.
+  try {
+    await element(by.id(buttonId).withAncestor(by.id(screenId))).tap();
+  } catch (_) {}
 }

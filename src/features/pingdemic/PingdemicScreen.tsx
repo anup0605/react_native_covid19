@@ -1,7 +1,7 @@
 import { BrandedButton, TextareaWithCharCount } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
-import Screen, { Header } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
@@ -11,7 +11,7 @@ import { RouteProp, useIsFocused } from '@react-navigation/native';
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 import { CovidTestDateQuestion, ICovidTestDateData } from '../covid-tests/fields';
@@ -167,72 +167,63 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
     ) : null;
 
   return (
-    <>
-      <Screen
-        profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
-        testID="pingdemic-screen"
+    <Screen
+      profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
+      testID="pingdemic-screen"
+    >
+      <HeaderText>{i18n.t('pingdemic.title')}</HeaderText>
+
+      <SecondaryText style={{ marginBottom: 32 }}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
+
+      <Formik
+        validateOnChange
+        validateOnMount
+        initialValues={
+          {
+            appActive: undefined,
+            askedByApp: undefined,
+            dateTakenBetweenEnd: undefined,
+            dateTakenBetweenStart: undefined,
+            dateTakenSpecific: undefined,
+            haveApp: undefined,
+            useApproximateDate: undefined,
+          } as IPingdemicData
+        }
+        onSubmit={onSubmit}
+        validationSchema={ValidationSchema()}
       >
-        <Header>
-          <HeaderText>{i18n.t('pingdemic.title')}</HeaderText>
-        </Header>
+        {(formikProps: FormikProps<IPingdemicData>) => {
+          return (
+            <Form>
+              <RadioInput
+                required
+                items={askedByAppOptions}
+                label={i18n.t('pingdemic.q1')}
+                onValueChange={formikProps.handleChange('askedByApp')}
+                selectedValue={formikProps.values.askedByApp}
+                testID="input-radio-asked-by-app"
+              />
+              {renderOtherText(formikProps)}
+              {renderDate(formikProps)}
+              {renderHaveApp(formikProps)}
+              {renderBluetooth(formikProps)}
 
-        <View style={{ paddingHorizontal: 16 }}>
-          <SecondaryText style={{ marginBottom: 32 }}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
+              <View style={styling.flex} />
 
-          <Formik
-            validateOnChange
-            validateOnMount
-            initialValues={
-              {
-                appActive: undefined,
-                askedByApp: undefined,
-                dateTakenBetweenEnd: undefined,
-                dateTakenBetweenStart: undefined,
-                dateTakenSpecific: undefined,
-                haveApp: undefined,
-                useApproximateDate: undefined,
-              } as IPingdemicData
-            }
-            onSubmit={onSubmit}
-            validationSchema={ValidationSchema()}
-          >
-            {(formikProps: FormikProps<IPingdemicData>) => {
-              return (
-                <Form>
-                  <RadioInput
-                    required
-                    items={askedByAppOptions}
-                    label={i18n.t('pingdemic.q1')}
-                    onValueChange={formikProps.handleChange('askedByApp')}
-                    selectedValue={formikProps.values.askedByApp}
-                    testID="input-radio-asked-by-app"
-                  />
-                  {renderOtherText(formikProps)}
-                  {renderDate(formikProps)}
-                  {renderHaveApp(formikProps)}
-                  {renderBluetooth(formikProps)}
-                  {errorMessage ? <ErrorText style={styles.marginTop}>{errorMessage}</ErrorText> : null}
-                  <BrandedButton
-                    enabled={formikProps.isValid}
-                    loading={isSubmitting}
-                    onPress={() => onSubmit(formikProps)}
-                    style={styles.marginTop}
-                    testID="button-submit"
-                  >
-                    {i18n.t('vaccines.dose-symptoms.next')}
-                  </BrandedButton>
-                </Form>
-              );
-            }}
-          </Formik>
-        </View>
-      </Screen>
-    </>
+              {errorMessage ? <ErrorText style={styling.marginTop}>{errorMessage}</ErrorText> : null}
+              <BrandedButton
+                enabled={formikProps.isValid}
+                loading={isSubmitting}
+                onPress={() => onSubmit(formikProps)}
+                style={styling.marginTop}
+                testID="button-submit"
+              >
+                {i18n.t('vaccines.dose-symptoms.next')}
+              </BrandedButton>
+            </Form>
+          );
+        }}
+      </Formik>
+    </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  marginTop: {
-    marginTop: 64,
-  },
-});

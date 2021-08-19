@@ -134,7 +134,7 @@
     "string-natural-compare": "3.0.1",
     "styled-components": "5.2.1",
     "typesafe-actions": "5.1.0",
-    "url-parse": "1.5.1",
+    "url-parse": "1.5.2",
     "uuid": "8.3.2",
     "weak-key": "1.0.2",
     "yup": "0.28.5"

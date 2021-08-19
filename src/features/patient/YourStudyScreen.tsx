@@ -1,8 +1,9 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { Coordinator, IUpdatePatient } from '@covid/core/Coordinator';
@@ -14,9 +15,8 @@ import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profi
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
-import { Form, Item, Label } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 type TYourStudyProps = {
@@ -47,7 +47,7 @@ type TState = {
   errorMessage: string;
 };
 
-const AllCohorts: TCohortDefinition[] = [
+const allCohorts: TCohortDefinition[] = [
   {
     country: 'GB',
     key: 'is_in_uk_guys_trust',
@@ -248,42 +248,6 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
     clinicalStudyNctId: Yup.string(),
   });
 
-  filterCohortsByCountry(allCohorts: TCohortDefinition[], country: string) {
-    return AllCohorts.filter((cohort) => {
-      return cohort.country === country;
-    });
-  }
-
-  getInitialFormValues() {
-    const countrySpecificCohorts = this.filterCohortsByCountry(AllCohorts, LocalisationService.userCountry);
-    if (this.props.route.params?.editing) {
-      const patientInfo = this.props.route.params?.patientData.patientInfo!;
-      const patientFormData = {
-        clinicalStudyContacts: patientInfo.clinical_study_contacts ?? '',
-        clinicalStudyInstitutions: patientInfo.clinical_study_institutions ?? '',
-        clinicalStudyNames: patientInfo.clinical_study_names ?? '',
-        clinicalStudyNctIds: patientInfo.clinical_study_nct_ids ?? '',
-      };
-      countrySpecificCohorts.forEach((cohort) => {
-        // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
-        patientFormData[cohort.key] = !!patientInfo[cohort.key];
-      });
-      return patientFormData;
-    }
-    return {
-      ...initialFormValues,
-      ...this.buildInitCohortsValues(countrySpecificCohorts),
-    };
-  }
-
-  buildInitCohortsValues(cohorts: TCohortDefinition[]): { [index: string]: boolean } {
-    const initialValues: { [index: string]: boolean } = {};
-    cohorts.forEach((cohort) => {
-      initialValues[cohort.key] = false;
-    });
-    return initialValues;
-  }
-
   constructor(props: TYourStudyProps) {
     super(props);
 
@@ -292,8 +256,44 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
     };
   }
 
-  handleSubmit(formData: IYourStudyData) {
-    const infos = this.createPatientInfos(formData);
+  filterCohortsByCountry = (country: string) => {
+    return allCohorts.filter((cohort) => {
+      return cohort.country === country;
+    });
+  };
+
+  getInitialFormValues = () => {
+    const countrySpecificCohorts = this.filterCohortsByCountry(LocalisationService.userCountry);
+    const patientInfo = this.props.route.params?.patientData?.patientInfo;
+    if (this.props.route.params?.editing && patientInfo) {
+      const patientFormData = {
+        clinicalStudyContacts: patientInfo?.clinical_study_contacts ?? '',
+        clinicalStudyInstitutions: patientInfo?.clinical_study_institutions ?? '',
+        clinicalStudyNames: patientInfo?.clinical_study_names ?? '',
+        clinicalStudyNctIds: patientInfo?.clinical_study_nct_ids ?? '',
+      };
+      countrySpecificCohorts.forEach((cohort) => {
+        // @ts-ignore - error due to cohort keys being in allCohorts and not explicitly in the interface
+        patientFormData[cohort.key] = !!patientInfo[cohort.key];
+      });
+      return patientFormData;
+    }
+    return {
+      ...initialFormValues,
+      ...this.buildInitCohortsValues(countrySpecificCohorts),
+    };
+  };
+
+  buildInitCohortsValues = (cohorts: TCohortDefinition[]): { [index: string]: boolean } => {
+    const initialValues: { [index: string]: boolean } = {};
+    cohorts.forEach((cohort) => {
+      initialValues[cohort.key] = false;
+    });
+    return initialValues;
+  };
+
+  handleSubmit = (values: IYourStudyData) => {
+    const infos = this.createPatientInfos(values);
 
     this.coordinator
       .updatePatientInfo(infos)
@@ -301,85 +301,80 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
         this.coordinator.gotoNextScreen(this.props.route.name);
       })
       .catch((_) => this.setState({ errorMessage: i18n.t('something-went-wrong') }));
-  }
+  };
 
   render() {
-    const countrySpecificCohorts = this.filterCohortsByCountry(AllCohorts, LocalisationService.userCountry);
+    const countrySpecificCohorts = this.filterCohortsByCountry(LocalisationService.userCountry);
 
     return (
       <Screen simpleCallout profile={this.coordinator.patientData?.patientState?.profile} testID="your-study-screen">
-        <View style={{ marginHorizontal: 16 }}>
-          <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
-        </View>
-
         <Formik
           initialValues={this.getInitialFormValues()}
-          onSubmit={(values: IYourStudyData) => this.handleSubmit(values)}
+          onSubmit={this.handleSubmit}
           validationSchema={this.registerSchema}
         >
           {(props) => {
             return (
               <Form>
-                <FieldWrapper>
-                  <Item stackedLabel style={styles.textItemStyle}>
-                    <Label style={{ marginBottom: 16 }}>{i18n.t('your-study.label-cohort')}</Label>
-                    <CheckboxList>
-                      {countrySpecificCohorts.map((cohort) => (
-                        <CheckboxItem
-                          key={cohort.key}
-                          // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
-                          onChange={(value: boolean) => {
-                            if (cohort.key === 'is_in_none_of_the_above') {
-                              // @ts-ignore - error due to cohort keys being in AllCohorts and not explicitly in the interface
-                              props.setValues(this.buildInitCohortsValues(countrySpecificCohorts));
-                            } else if (Object.keys(props.values).includes('is_in_none_of_the_above')) {
-                              props.setFieldValue('is_in_none_of_the_above', false);
-                            }
-                            props.setFieldValue(cohort.key, value);
-                          }}
-                          value={props.values[cohort.key]}
-                        >
-                          {cohort.label}
-                        </CheckboxItem>
-                      ))}
-                    </CheckboxList>
-                  </Item>
-                </FieldWrapper>
+                <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
+                <RegularText style={{ marginBottom: 16, marginTop: 32 }}>
+                  {i18n.t('your-study.label-cohort')}
+                </RegularText>
+                <CheckboxList>
+                  {countrySpecificCohorts.map((cohort) => (
+                    <CheckboxItem
+                      key={cohort.key}
+                      // @ts-ignore - error due to cohort keys being in allCohorts and not explicitly in the interface
+                      onChange={(value: boolean) => {
+                        if (cohort.key === 'is_in_none_of_the_above') {
+                          // @ts-ignore - error due to cohort keys being in allCohorts and not explicitly in the interface
+                          props.setValues(this.buildInitCohortsValues(countrySpecificCohorts));
+                        } else if (Object.keys(props.values).includes('is_in_none_of_the_above')) {
+                          props.setFieldValue('is_in_none_of_the_above', false);
+                        }
+                        props.setFieldValue(cohort.key, value);
+                      }}
+                      value={props.values[cohort.key]}
+                    >
+                      {cohort.label}
+                    </CheckboxItem>
+                  ))}
+                </CheckboxList>
 
                 {isUSCountry() ? (
                   <>
-                    <RegularText style={styles.standaloneLabel}>{i18n.t('your-study.if-not')}</RegularText>
+                    <RegularText>{i18n.t('your-study.if-not')}</RegularText>
 
-                    <View style={{ marginHorizontal: 16 }}>
-                      <GenericTextField
-                        formikProps={props}
-                        label={i18n.t('your-study.add-study-names')}
-                        name="clinicalStudyNames"
-                        placeholder={i18n.t('placeholder-optional')}
-                      />
+                    <GenericTextField
+                      formikProps={props}
+                      label={i18n.t('your-study.add-study-names')}
+                      name="clinicalStudyNames"
+                      placeholder={i18n.t('placeholder-optional')}
+                    />
 
-                      <GenericTextField
-                        formikProps={props}
-                        label={i18n.t('your-study.contact-name')}
-                        name="clinicalStudyContacts"
-                        placeholder={i18n.t('placeholder-optional')}
-                      />
-                      <GenericTextField
-                        formikProps={props}
-                        label={i18n.t('your-study.uni-hospital')}
-                        name="clinicalStudyInstitutions"
-                        placeholder={i18n.t('placeholder-optional')}
-                      />
+                    <GenericTextField
+                      formikProps={props}
+                      label={i18n.t('your-study.contact-name')}
+                      name="clinicalStudyContacts"
+                      placeholder={i18n.t('placeholder-optional')}
+                    />
+                    <GenericTextField
+                      formikProps={props}
+                      label={i18n.t('your-study.uni-hospital')}
+                      name="clinicalStudyInstitutions"
+                      placeholder={i18n.t('placeholder-optional')}
+                    />
 
-                      <GenericTextField
-                        formikProps={props}
-                        label={i18n.t('your-study.nct-number')}
-                        name="clinicalStudyNctIds"
-                        placeholder={i18n.t('placeholder-optional')}
-                      />
-                    </View>
+                    <GenericTextField
+                      formikProps={props}
+                      label={i18n.t('your-study.nct-number')}
+                      name="clinicalStudyNctIds"
+                      placeholder={i18n.t('placeholder-optional')}
+                    />
                   </>
                 ) : null}
+
+                <View style={{ flex: 1 }} />
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
                 {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
@@ -416,12 +411,3 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
     return infos;
   }
 }
-
-const styles = StyleSheet.create({
-  standaloneLabel: {
-    marginHorizontal: 16,
-  },
-  textItemStyle: {
-    borderColor: 'transparent',
-  },
-});

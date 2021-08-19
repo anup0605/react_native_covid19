@@ -1,6 +1,5 @@
 import { SolidColorBar, Text } from '@covid/components';
 import { TReportedEvent } from '@covid/features/anniversary/types';
-import { useTheme } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -12,9 +11,8 @@ interface IProps {
 }
 
 function ReportCard({ reportedEvents }: IProps) {
-  const { grid } = useTheme();
   return (
-    <View style={[styles.container, { paddingHorizontal: grid.gutter }]}>
+    <View style={styles.container}>
       <Text rhythm={24} textClass="h4">
         Thanks for reporting
       </Text>

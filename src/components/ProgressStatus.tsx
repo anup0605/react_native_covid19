@@ -1,36 +1,35 @@
+import { sizes, styling } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { LayoutChangeEvent, StyleProp, View, ViewStyle } from 'react-native';
 import * as Progress from 'react-native-progress';
-
-import { screenWidth } from './Screen';
 
 type TProps = {
   currentStep: number;
   maxSteps: number;
   color?: string;
+  style?: StyleProp<ViewStyle>;
 };
 
 const ProgressStatus: React.FC<TProps> = (props) => {
+  const [width, setWidth] = React.useState(0);
   const progress = (props.currentStep * 100) / props.maxSteps;
   const color = props.color ?? colors.predict;
+  function onLayout(event: LayoutChangeEvent) {
+    setWidth(event.nativeEvent.layout.width);
+  }
   return (
-    <View style={styles.progressBar}>
+    <View style={props.style}>
+      <View onLayout={onLayout} style={styling.measureWidth} />
       <Progress.Bar
         borderWidth={0}
         color={color}
         height={2}
         progress={progress / 100}
         unfilledColor={colors.backgroundFour}
-        width={screenWidth - 36}
+        width={Math.min(width, sizes.maxScreenWidth)}
       />
     </View>
   );
 };
 export default ProgressStatus;
-
-const styles = StyleSheet.create({
-  progressBar: {
-    width: screenWidth - 36,
-  },
-});

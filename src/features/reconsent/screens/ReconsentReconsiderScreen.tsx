@@ -9,6 +9,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { generalApiClient } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme/colors';
 import * as React from 'react';
@@ -30,7 +31,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
   const feedbackData = useSelector(selectFeedbackData);
   const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
 
-  const videoWidth = windowDimensions.width;
+  const videoWidth = Math.min(sizes.maxScreenWidth, windowDimensions.width);
   const videoHeight = videoWidth / VIDEO_RATIO;
 
   function onPressPositive() {

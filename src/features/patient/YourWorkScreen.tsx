@@ -4,8 +4,8 @@ import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen, { FieldWrapper } from '@covid/components/Screen';
-import { ErrorText } from '@covid/components/Text';
+import { Screen } from '@covid/components/Screen';
+import { ErrorText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { patientService } from '@covid/core/patient/PatientService';
@@ -21,10 +21,9 @@ import {
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
-import { Formik, FormikProps } from 'formik';
-import { Item, Label } from 'native-base';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 export interface IYourWorkData {
@@ -79,9 +78,9 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
     return true;
   };
 
-  handleUpdateWork(formData: IYourWorkData) {
+  onSubmit = (values: IYourWorkData, formikHelpers: FormikHelpers<IYourWorkData>) => {
     const currentPatient = patientCoordinator.patientData?.patientState;
-    const infos = this.createPatientInfos(formData);
+    const infos = this.createPatientInfos(values);
 
     patientService
       .updatePatientInfo(currentPatient?.patientId, infos)
@@ -89,23 +88,25 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
         currentPatient.isHealthWorker =
           infos.healthcare_professional === EHealthCareStaffOptions.DOES_INTERACT || infos.is_carer_for_community;
         patientCoordinator.gotoNextScreen(this.props.route.name);
+        formikHelpers.setSubmitting(false);
       })
-      .catch(() =>
+      .catch(() => {
         this.setState({
           errorMessage: i18n.t('something-went-wrong'),
-        }),
-      );
-  }
+        });
+        formikHelpers.setSubmitting(false);
+      });
+  };
 
-  private createPatientInfos(formData: IYourWorkData) {
+  createPatientInfos = (values: IYourWorkData) => {
     let infos = {
-      ...(formData.isHealthcareStaff && {
-        healthcare_professional: formData.isHealthcareStaff,
+      ...(values.isHealthcareStaff && {
+        healthcare_professional: values.isHealthcareStaff,
       }),
-      is_carer_for_community: formData.isCarer === 'yes',
+      is_carer_for_community: values.isCarer === 'yes',
     } as TPatientInfosRequest;
 
-    if (formData.isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT || formData.isCarer === 'yes') {
+    if (values.isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT || values.isCarer === 'yes') {
       infos = {
         ...infos,
         have_worked_in_hospital_care_facility: this.state.atCareFacility,
@@ -116,29 +117,29 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
         have_worked_in_hospital_outpatient: this.state.atHospitalOutpatient,
         have_worked_in_hospital_school_clinic: this.state.atSchoolClinic,
 
-        ...(formData.hasPatientInteraction && {
-          interacted_patients_with_covid: formData.hasPatientInteraction,
+        ...(values.hasPatientInteraction && {
+          interacted_patients_with_covid: values.hasPatientInteraction,
         }),
-        ...(formData.hasUsedPPEEquipment && {
-          have_used_PPE: formData.hasUsedPPEEquipment,
+        ...(values.hasUsedPPEEquipment && {
+          have_used_PPE: values.hasUsedPPEEquipment,
         }),
-        ...(formData.hasUsedPPEEquipment === 'always' &&
-          formData.ppeAvailabilityAlways && {
-            always_used_shortage: formData.ppeAvailabilityAlways,
+        ...(values.hasUsedPPEEquipment === 'always' &&
+          values.ppeAvailabilityAlways && {
+            always_used_shortage: values.ppeAvailabilityAlways,
           }),
-        ...(formData.hasUsedPPEEquipment === 'sometimes' &&
-          formData.ppeAvailabilitySometimes && {
-            sometimes_used_shortage: formData.ppeAvailabilitySometimes,
+        ...(values.hasUsedPPEEquipment === 'sometimes' &&
+          values.ppeAvailabilitySometimes && {
+            sometimes_used_shortage: values.ppeAvailabilitySometimes,
           }),
-        ...(formData.hasUsedPPEEquipment === 'never' &&
-          formData.ppeAvailabilityNever && {
-            never_used_shortage: formData.ppeAvailabilityNever,
+        ...(values.hasUsedPPEEquipment === 'never' &&
+          values.ppeAvailabilityNever && {
+            never_used_shortage: values.ppeAvailabilityNever,
           }),
       };
     }
 
     return infos;
-  }
+  };
 
   registerSchema = Yup.object().shape({
     hasPatientInteraction: Yup.string().when(['isHealthcareStaff', 'isCarer'], {
@@ -253,12 +254,8 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
 
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-work-screen">
-        <Formik
-          initialValues={{} as IYourWorkData}
-          onSubmit={(values: IYourWorkData) => this.handleUpdateWork(values)}
-          validationSchema={this.registerSchema}
-        >
-          {(props) => {
+        <Formik initialValues={{} as IYourWorkData} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
+          {(formikProps) => {
             const {
               isHealthcareStaff,
               isCarer,
@@ -267,188 +264,186 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
               ppeAvailabilitySometimes,
               ppeAvailabilityAlways,
               ppeAvailabilityNever,
-            } = props.values;
-            const { handleSubmit, handleChange, touched, errors } = props;
+            } = formikProps.values;
 
             const showWorkerAndCarerQuestions: boolean =
               (!!isHealthcareStaff && isHealthcareStaff === EHealthCareStaffOptions.DOES_INTERACT) ||
               (!!isCarer && isCarer === 'yes');
             return (
-              <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-                <Form>
-                  <View style={{ marginHorizontal: 16 }}>
-                    <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('title-about-work')} />
+              <Form>
+                <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('title-about-work')} />
+
+                <RadioInput
+                  required
+                  error={formikProps.touched.isHealthcareStaff ? formikProps.errors.isHealthcareStaff : ''}
+                  items={healthcareStaffOptions}
+                  label={i18n.t('are-you-healthcare-staff')}
+                  onValueChange={formikProps.handleChange('isHealthcareStaff')}
+                  selectedValue={isHealthcareStaff}
+                  testID="input-healthcare-staff"
+                />
+
+                <YesNoField
+                  required
+                  error={formikProps.touched.isCarer && formikProps.errors.isCarer}
+                  label={i18n.t('are-you-carer')}
+                  onValueChange={formikProps.handleChange('isCarer')}
+                  selectedValue={isCarer}
+                  testID="is-carer-question"
+                />
+
+                {showWorkerAndCarerQuestions ? (
+                  <>
+                    <RegularText style={{ marginTop: 16 }}>{i18n.t('label-physically-worked-in-places')}</RegularText>
+
+                    <CheckboxList>
+                      <CheckboxItem
+                        onChange={(value: boolean) =>
+                          this.setState({
+                            atHospitalInpatient: value,
+                          })
+                        }
+                        value={this.state.atHospitalInpatient}
+                      >
+                        {i18n.t('your-work.worked-hospital-inpatient')}
+                      </CheckboxItem>
+                      <CheckboxItem
+                        onChange={(value: boolean) =>
+                          this.setState({
+                            atHospitalOutpatient: value,
+                          })
+                        }
+                        value={this.state.atHospitalOutpatient}
+                      >
+                        {i18n.t('your-work.worked-hospital-outpatient')}
+                      </CheckboxItem>
+                      <CheckboxItem
+                        onChange={(value: boolean) =>
+                          this.setState({
+                            atClinicOutsideHospital: value,
+                          })
+                        }
+                        value={this.state.atClinicOutsideHospital}
+                      >
+                        {i18n.t('your-work.worked-clinic-outside-hospital')}
+                      </CheckboxItem>
+                      <CheckboxItem
+                        onChange={(value: boolean) =>
+                          this.setState({
+                            atCareFacility: value,
+                          })
+                        }
+                        value={this.state.atCareFacility}
+                      >
+                        {i18n.t('your-work.worked-nursing-home')}
+                      </CheckboxItem>
+                      <CheckboxItem
+                        onChange={(value: boolean) =>
+                          this.setState({
+                            atHomeHealth: value,
+                          })
+                        }
+                        value={this.state.atHomeHealth}
+                      >
+                        {i18n.t('your-work.worked-home-health')}
+                      </CheckboxItem>
+                      <CheckboxItem
+                        onChange={(value: boolean) =>
+                          this.setState({
+                            atSchoolClinic: value,
+                          })
+                        }
+                        value={this.state.atSchoolClinic}
+                      >
+                        {i18n.t('your-work.worked-school-clinic')}
+                      </CheckboxItem>
+                      <CheckboxItem
+                        onChange={(value: boolean) =>
+                          this.setState({
+                            atOtherFacility: value,
+                          })
+                        }
+                        value={this.state.atOtherFacility}
+                      >
+                        {i18n.t('your-work.worked-other-facility')}
+                      </CheckboxItem>
+                    </CheckboxList>
 
                     <RadioInput
                       required
-                      error={touched.isHealthcareStaff ? errors.isHealthcareStaff : ''}
-                      items={healthcareStaffOptions}
-                      label={i18n.t('are-you-healthcare-staff')}
-                      onValueChange={handleChange('isHealthcareStaff')}
-                      selectedValue={isHealthcareStaff}
-                      testID="input-healthcare-staff"
+                      error={formikProps.touched.hasPatientInteraction ? formikProps.errors.hasPatientInteraction : ''}
+                      items={patientInteractionOptions}
+                      label={i18n.t('label-interacted-with-infected-patients')}
+                      onValueChange={formikProps.handleChange('hasPatientInteraction')}
+                      selectedValue={hasPatientInteraction}
                     />
 
-                    <YesNoField
+                    <RadioInput
                       required
-                      error={touched.isCarer && errors.isCarer}
-                      label={i18n.t('are-you-carer')}
-                      onValueChange={handleChange('isCarer')}
-                      selectedValue={isCarer}
-                      testID="is-carer-question"
+                      error={formikProps.touched.hasUsedPPEEquipment ? formikProps.errors.hasUsedPPEEquipment : ''}
+                      items={equipmentUsageOptions}
+                      label={i18n.t('label-used-ppe-equipment')}
+                      onValueChange={formikProps.handleChange('hasUsedPPEEquipment')}
+                      selectedValue={hasUsedPPEEquipment}
                     />
 
-                    {/* if is healthcare worker question is yes */}
-                    {showWorkerAndCarerQuestions ? (
-                      <View>
-                        <FieldWrapper>
-                          <Item stackedLabel style={styles.textItemStyle}>
-                            <Label>{i18n.t('label-physically-worked-in-places')}</Label>
-
-                            <CheckboxList>
-                              <CheckboxItem
-                                onChange={(value: boolean) =>
-                                  this.setState({
-                                    atHospitalInpatient: value,
-                                  })
-                                }
-                                value={this.state.atHospitalInpatient}
-                              >
-                                {i18n.t('your-work.worked-hospital-inpatient')}
-                              </CheckboxItem>
-                              <CheckboxItem
-                                onChange={(value: boolean) =>
-                                  this.setState({
-                                    atHospitalOutpatient: value,
-                                  })
-                                }
-                                value={this.state.atHospitalOutpatient}
-                              >
-                                {i18n.t('your-work.worked-hospital-outpatient')}
-                              </CheckboxItem>
-                              <CheckboxItem
-                                onChange={(value: boolean) =>
-                                  this.setState({
-                                    atClinicOutsideHospital: value,
-                                  })
-                                }
-                                value={this.state.atClinicOutsideHospital}
-                              >
-                                {i18n.t('your-work.worked-clinic-outside-hospital')}
-                              </CheckboxItem>
-                              <CheckboxItem
-                                onChange={(value: boolean) =>
-                                  this.setState({
-                                    atCareFacility: value,
-                                  })
-                                }
-                                value={this.state.atCareFacility}
-                              >
-                                {i18n.t('your-work.worked-nursing-home')}
-                              </CheckboxItem>
-                              <CheckboxItem
-                                onChange={(value: boolean) =>
-                                  this.setState({
-                                    atHomeHealth: value,
-                                  })
-                                }
-                                value={this.state.atHomeHealth}
-                              >
-                                {i18n.t('your-work.worked-home-health')}
-                              </CheckboxItem>
-                              <CheckboxItem
-                                onChange={(value: boolean) =>
-                                  this.setState({
-                                    atSchoolClinic: value,
-                                  })
-                                }
-                                value={this.state.atSchoolClinic}
-                              >
-                                {i18n.t('your-work.worked-school-clinic')}
-                              </CheckboxItem>
-                              <CheckboxItem
-                                onChange={(value: boolean) =>
-                                  this.setState({
-                                    atOtherFacility: value,
-                                  })
-                                }
-                                value={this.state.atOtherFacility}
-                              >
-                                {i18n.t('your-work.worked-other-facility')}
-                              </CheckboxItem>
-                            </CheckboxList>
-                          </Item>
-                        </FieldWrapper>
-
-                        <RadioInput
-                          required
-                          error={touched.hasPatientInteraction ? errors.hasPatientInteraction : ''}
-                          items={patientInteractionOptions}
-                          label={i18n.t('label-interacted-with-infected-patients')}
-                          onValueChange={handleChange('hasPatientInteraction')}
-                          selectedValue={hasPatientInteraction}
-                        />
-
-                        <RadioInput
-                          required
-                          error={touched.hasUsedPPEEquipment ? errors.hasUsedPPEEquipment : ''}
-                          items={equipmentUsageOptions}
-                          label={i18n.t('label-used-ppe-equipment')}
-                          onValueChange={handleChange('hasUsedPPEEquipment')}
-                          selectedValue={hasUsedPPEEquipment}
-                        />
-
-                        {hasUsedPPEEquipment === 'always' ? (
-                          <RadioInput
-                            required
-                            error={touched.ppeAvailabilityAlways ? errors.ppeAvailabilityAlways : ''}
-                            items={availabilityAlwaysOptions}
-                            label={i18n.t('label-chose-an-option')}
-                            onValueChange={handleChange('ppeAvailabilityAlways')}
-                            selectedValue={ppeAvailabilityAlways}
-                          />
-                        ) : null}
-
-                        {hasUsedPPEEquipment === 'sometimes' ? (
-                          <RadioInput
-                            required
-                            error={touched.ppeAvailabilitySometimes ? errors.ppeAvailabilitySometimes : ''}
-                            items={availabilitySometimesOptions}
-                            label={i18n.t('label-chose-an-option')}
-                            onValueChange={handleChange('ppeAvailabilitySometimes')}
-                            selectedValue={ppeAvailabilitySometimes}
-                          />
-                        ) : null}
-
-                        {hasUsedPPEEquipment === 'never' ? (
-                          <RadioInput
-                            required
-                            error={touched.ppeAvailabilityNever ? errors.ppeAvailabilityNever : ''}
-                            items={availabilityNeverOptions}
-                            label={i18n.t('label-chose-an-option')}
-                            onValueChange={handleChange('ppeAvailabilityNever')}
-                            selectedValue={ppeAvailabilityNever}
-                          />
-                        ) : null}
-                      </View>
+                    {hasUsedPPEEquipment === 'always' ? (
+                      <RadioInput
+                        required
+                        error={
+                          formikProps.touched.ppeAvailabilityAlways ? formikProps.errors.ppeAvailabilityAlways : ''
+                        }
+                        items={availabilityAlwaysOptions}
+                        label={i18n.t('label-chose-an-option')}
+                        onValueChange={formikProps.handleChange('ppeAvailabilityAlways')}
+                        selectedValue={ppeAvailabilityAlways}
+                      />
                     ) : null}
-                  </View>
 
-                  <ErrorText>{this.state.errorMessage}</ErrorText>
-                  {!!Object.keys(errors).length && props.submitCount > 0 ? (
-                    <ValidationError error={i18n.t('validation-error-text')} />
-                  ) : null}
+                    {hasUsedPPEEquipment === 'sometimes' ? (
+                      <RadioInput
+                        required
+                        error={
+                          formikProps.touched.ppeAvailabilitySometimes
+                            ? formikProps.errors.ppeAvailabilitySometimes
+                            : ''
+                        }
+                        items={availabilitySometimesOptions}
+                        label={i18n.t('label-chose-an-option')}
+                        onValueChange={formikProps.handleChange('ppeAvailabilitySometimes')}
+                        selectedValue={ppeAvailabilitySometimes}
+                      />
+                    ) : null}
 
-                  <BrandedButton
-                    enabled={this.checkFormFilled(props)}
-                    loading={props.isSubmitting}
-                    onPress={handleSubmit}
-                    testID="button-submit"
-                  >
-                    {i18n.t('next-question')}
-                  </BrandedButton>
-                </Form>
-              </KeyboardAvoidingView>
+                    {hasUsedPPEEquipment === 'never' ? (
+                      <RadioInput
+                        required
+                        error={formikProps.touched.ppeAvailabilityNever ? formikProps.errors.ppeAvailabilityNever : ''}
+                        items={availabilityNeverOptions}
+                        label={i18n.t('label-chose-an-option')}
+                        onValueChange={formikProps.handleChange('ppeAvailabilityNever')}
+                        selectedValue={ppeAvailabilityNever}
+                      />
+                    ) : null}
+                  </>
+                ) : null}
+
+                <View style={{ flex: 1 }} />
+
+                <ErrorText>{this.state.errorMessage}</ErrorText>
+                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
+                  <ValidationError error={i18n.t('validation-error-text')} />
+                ) : null}
+
+                <BrandedButton
+                  enabled={this.checkFormFilled(formikProps)}
+                  loading={formikProps.isSubmitting}
+                  onPress={formikProps.handleSubmit}
+                  testID="button-submit"
+                >
+                  {i18n.t('next-question')}
+                </BrandedButton>
+              </Form>
             );
           }}
         </Formik>
@@ -456,9 +451,3 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
     );
   }
 }
-
-const styles = StyleSheet.create({
-  textItemStyle: {
-    borderColor: 'transparent',
-  },
-});

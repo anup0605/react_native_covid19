@@ -1,5 +1,4 @@
 import { TextareaWithCharCount } from '@covid/components';
-import { FieldWrapper } from '@covid/components/Screen';
 import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ISymptomQuestions } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
@@ -19,16 +18,18 @@ export const OtherSymptomsQuestions: ISymptomQuestions<TProps, TOtherSymptomsDat
   const { formikProps } = props;
 
   return (
-    <FieldWrapper style={{ marginTop: 32 }}>
-      <TextareaWithCharCount
-        bordered
-        onChangeText={formikProps.handleChange('otherSymptoms')}
-        placeholder={i18n.t('placeholder-optional-question')}
-        testID="input-other-symptoms"
-        textAreaStyle={{ borderRadius: 8 }}
-        value={formikProps.values.otherSymptoms}
-      />
-    </FieldWrapper>
+    <TextareaWithCharCount
+      bordered
+      onChangeText={formikProps.handleChange('otherSymptoms')}
+      placeholder={i18n.t('placeholder-optional-question')}
+      style={{
+        marginBottom: 16,
+        marginTop: 32,
+      }}
+      testID="input-other-symptoms"
+      textAreaStyle={{ borderRadius: 8 }}
+      value={formikProps.values.otherSymptoms}
+    />
   );
 };
 

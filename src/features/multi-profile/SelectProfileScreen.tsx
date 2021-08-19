@@ -1,6 +1,5 @@
 import { NUMBER_OF_PROFILE_AVATARS } from '@assets';
-import { BackButton } from '@covid/components/PatientHeader';
-import { Header } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
 import { Coordinator, IEditableProfile, ISelectProfile } from '@covid/core/Coordinator';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
@@ -9,12 +8,10 @@ import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import { offlineService } from '@covid/services';
-import { styling } from '@covid/themes';
 import { DEFAULT_PROFILE } from '@covid/utils/avatar';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ProfileCard } from './components/ProfileCard';
 import { ProfileList } from './components/ProfileList';
@@ -77,76 +74,44 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
   }
 
   return (
-    <SafeAreaView style={styling.flex}>
-      <ScrollView contentContainerStyle={styles.scrollView} testID="scroll-view-select-profile-screen">
-        <View style={styles.rootContainer}>
-          <View style={styles.navContainer}>{navigation ? <BackButton /> : null}</View>
+    <Screen backgroundColor={colors.backgroundSecondary} testID="select-profile-screen">
+      <HeaderText>
+        {assessmentFlow ? i18n.t('select-profile-title-assessment') : i18n.t('select-profile-title-edit')}
+      </HeaderText>
+      {assessmentFlow ? <SecondaryText>{i18n.t('select-profile-text')}</SecondaryText> : null}
 
-          <Header>
-            <HeaderText style={styles.headerText}>
-              {assessmentFlow ? i18n.t('select-profile-title-assessment') : i18n.t('select-profile-title-edit')}
-            </HeaderText>
-            {assessmentFlow ? <SecondaryText>{i18n.t('select-profile-text')}</SecondaryText> : null}
-          </Header>
-
-          <ProfileList
-            addProfile={
-              config?.enableMultiplePatients
+      <ProfileList
+        addProfile={
+          config?.enableMultiplePatients
+            ? () => {
+                gotoCreateProfile();
+              }
+            : undefined
+        }
+        error={error}
+        isApiError={isApiError}
+        isLoaded={isLoaded}
+        onProfileSelected={onProfileSelected}
+        onRetry={() => retryListProfiles()}
+        profiles={profiles}
+        renderItem={(profile, i) => (
+          <ProfileCard
+            index={i}
+            onEditPressed={
+              assessmentFlow
                 ? () => {
-                    gotoCreateProfile();
+                    getPatientThen(profile, (profile) => {
+                      (coordinator as IEditableProfile).startEditProfile(profile);
+                    });
                   }
                 : undefined
             }
-            error={error}
-            isApiError={isApiError}
-            isLoaded={isLoaded}
-            onProfileSelected={onProfileSelected}
-            onRetry={() => retryListProfiles()}
-            profiles={profiles}
-            renderItem={(profile, i) => (
-              <ProfileCard
-                index={i}
-                onEditPressed={
-                  assessmentFlow
-                    ? () => {
-                        getPatientThen(profile, (profile) => {
-                          (coordinator as IEditableProfile).startEditProfile(profile);
-                        });
-                      }
-                    : undefined
-                }
-                profile={profile}
-                testID={`profile-card-${i}`}
-              />
-            )}
-            status={status}
+            profile={profile}
+            testID={`profile-card-${i}`}
           />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        )}
+        status={status}
+      />
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  headerText: {
-    marginBottom: 12,
-    paddingRight: 24,
-  },
-  menuToggle: {
-    marginTop: 20,
-    tintColor: colors.primary,
-  },
-  navContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 8,
-  },
-  rootContainer: {
-    padding: 12,
-  },
-  scrollView: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-  },
-});

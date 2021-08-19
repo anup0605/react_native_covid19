@@ -1,4 +1,4 @@
-import Analytics, { events, TUserProperties } from '@covid/core/Analytics';
+import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TConfigType } from '@covid/core/Config';
 import { ConsentService } from '@covid/core/consent/ConsentService';
@@ -25,10 +25,9 @@ import { TPatientData } from '@covid/core/patient/PatientData';
 import { patientService } from '@covid/core/patient/PatientService';
 import { TProfile } from '@covid/core/profile/ProfileService';
 import store from '@covid/core/state/store';
-import { TStartupInfo, TUserResponse } from '@covid/core/user/dto/UserAPIContracts';
+import { TUserResponse } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
 import { dietStudyPlaybackCoordinator } from '@covid/features/diet-study-playback/DietStudyPlaybackCoordinator';
-import util from '@covid/features/mental-health-playback/util';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import NavigatorService from '@covid/NavigatorService';
@@ -143,13 +142,7 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
       this.goToVersionUpdateModal();
     }
 
-    const userProperties: TUserProperties = {};
-    if (startupInfo?.mh_insight_cohort && patientId) {
-      const testGroupId = util.determineTestGroupId(patientId, startupInfo?.mh_insight_cohort!);
-      userProperties.Experiment_mhip = startupInfo?.mh_insight_cohort;
-      userProperties.Experiment_mhip_2 = testGroupId;
-    }
-    Analytics.identify(userProperties);
+    Analytics.identify();
 
     if (this.shouldShowCountryPicker) {
       Analytics.track(events.MISMATCH_COUNTRY_CODE, { current_country_code: LocalisationService.userCountry });
@@ -169,62 +162,61 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     return localisationService.getConfig();
   }
 
-  resetToProfileStartAssessment() {
+  resetToProfileStartAssessment = () => {
     NavigatorService.navigate('SelectProfile', { assessmentFlow: true });
     this.startAssessmentFlow(this.patientData);
-  }
+  };
 
-  startPatientFlow(patientData: TPatientData) {
+  startPatientFlow = (patientData: TPatientData) => {
     patientCoordinator.init(this, patientData, userService);
     patientCoordinator.startPatient();
-  }
+  };
 
-  async startAssessmentFlow(patientData: TPatientData) {
+  startAssessmentFlow = async (patientData: TPatientData) => {
     // TODO: Does not need to be async
     assessmentCoordinator.init(this, { patientData }, assessmentService);
     assessmentCoordinator.startAssessment();
-  }
+  };
 
-  async startEditProfile(profile: TProfile) {
+  startEditProfile = async (profile: TProfile) => {
     await this.setPatientByProfile(profile);
-
     editProfileCoordinator.init(this.patientData, userService);
     editProfileCoordinator.startEditProfile();
-  }
+  };
 
-  async startEditLocation(profile: TProfile, patientData?: TPatientData) {
+  startEditLocation = async (profile: TProfile, patientData?: TPatientData) => {
     if (!patientData) await this.setPatientByProfile(profile);
     editProfileCoordinator.init(patientData ?? this.patientData, userService);
     editProfileCoordinator.goToEditLocation();
-  }
+  };
 
-  async profileSelected(profile: TProfile) {
+  profileSelected = async (profile: TProfile) => {
     await this.setPatientByProfile(profile);
     this.startAssessmentFlow(this.patientData);
-  }
+  };
 
-  async setPatientById(patientId: string) {
+  setPatientById = async (patientId: string) => {
     this.patientData = await patientService.getPatientDataById(patientId);
-  }
+  };
 
-  async setPatientByProfile(profile: TProfile) {
+  setPatientByProfile = async (profile: TProfile) => {
     this.patientData = await patientService.getPatientDataByProfile(profile);
-  }
+  };
 
-  async setPatientToPrimary() {
+  setPatientToPrimary = async () => {
     const user = await userService.getUser();
     const patientId = user?.patients[0] ?? null;
 
     if (patientId) {
       await this.setPatientById(patientId);
     }
-  }
+  };
 
-  goToVersionUpdateModal() {
+  goToVersionUpdateModal = () => {
     NavigatorService.navigate('VersionUpdateModal');
-  }
+  };
 
-  async goToDietStudy() {
+  goToDietStudy = async () => {
     // Reset the current PatientData to the primary user.
     // We can get here if by viewing DietScores after reporting from a secondary profile
     if (this.patientData.patientState.isReportedByAnother) {
@@ -232,31 +224,31 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     }
     dietStudyPlaybackCoordinator.init(this, this.patientData, contentService, dietScoreApiClient);
     NavigatorService.navigate('DietStudy');
-  }
+  };
 
-  goToArchiveReason(patientId: string) {
+  goToArchiveReason = (patientId: string) => {
     NavigatorService.navigate('ArchiveReason', { patientId });
-  }
+  };
 
-  goToPreRegisterScreens() {
+  goToPreRegisterScreens = () => {
     if (isUSCountry()) {
       NavigatorService.navigate('BeforeWeStartUS');
     } else {
       NavigatorService.navigate('Consent', { viewOnly: false });
     }
-  }
+  };
 
-  goToResetPassword() {
+  goToResetPassword = () => {
     NavigatorService.navigate('ResetPassword');
-  }
+  };
 
-  goToCreateProfile(avatarName: string) {
+  goToCreateProfile = (avatarName: string) => {
     NavigatorService.navigate('CreateProfile', { avatarName });
-  }
+  };
 
-  goToTrendline(lad?: string) {
+  goToTrendline = (lad?: string) => {
     NavigatorService.navigate('Trendline', { lad });
-  }
+  };
 
   async shouldShowTrendLine(): Promise<boolean> {
     const { startupInfo } = store.getState().content;
@@ -288,25 +280,21 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     }
   }
 
-  goToMentalHealthStudy() {
+  goToMentalHealthStudy = () => {
     NavigatorService.navigate('MentalHealthChanges');
-  }
+  };
 
-  goToMentalHealthStudyPlayback(startupInfo?: TStartupInfo) {
-    const screenName =
-      startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_c'
-        ? 'MentalHealthPlaybackBlogPost'
-        : 'MentalHealthPlaybackIntroduction';
-    NavigatorService.navigate(screenName);
-  }
+  goToMentalHealthStudyPlayback = () => {
+    NavigatorService.navigate('MentalHealthPlaybackIntroduction');
+  };
 
-  goToAnniversary() {
+  goToAnniversary = () => {
     NavigatorService.navigate('Anniversary');
-  }
+  };
 
-  goToReconsent() {
+  goToReconsent = () => {
     NavigatorService.navigate('ReconsentIntroduction');
-  }
+  };
 }
 
 export const appCoordinator = new AppCoordinator();

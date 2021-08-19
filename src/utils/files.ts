@@ -17,10 +17,10 @@ export const loadHTMLAsString = async (asset: number | string): Promise<string> 
 //
 // This is required for Android. Because the following didn't work,
 // causes 'sources not defined.' on webview.
-// <Webview source{require('file.html')} />
+// <Webview source={require('file.html')} />
 //
 // With this we can use html in Webview, like the following example
-// <Webview source{{ html: loadEstimatedCasesCartoMap() }} />
+// <Webview source={{ html: loadEstimatedCasesCartoMap() }} />
 // (Not the best example as this method is async).
 
 export const loadEstimatedCasesCartoMap = async (): Promise<string> => loadHTMLAsString(EstimatedCasesCartoMap);

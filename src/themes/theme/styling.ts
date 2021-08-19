@@ -100,12 +100,20 @@ export default StyleSheet.create({
   marginVerticalSmall: {
     marginVertical: sizes.spacingSmall,
   },
+  measureHeight: {
+    height: '100%',
+    position: 'absolute',
+    width: 0,
+  },
   measureWidth: {
     height: 0,
     width: '100%',
   },
   padding: {
     padding: sizes.spacing,
+  },
+  paddingBig: {
+    padding: sizes.spacingBig,
   },
   paddingVertical: {
     paddingVertical: sizes.spacing,
@@ -140,8 +148,5 @@ export default StyleSheet.create({
   textarea: {
     backgroundColor: '#EEEEEF',
     borderRadius: 16,
-  },
-  zIndex10: {
-    zIndex: 10,
   },
 });

@@ -44,9 +44,10 @@ export const CovidTestMechanismInfoModal: React.FC<IProps> = (props) => {
 
   return (
     <Modal
-      showVerticalScrollIndicator
+      showsVerticalScrollIndicator
       footerChildren={footerChildren}
       onRequestClose={props.onRequestClose}
+      testID="covid-test-mechanism-info-modal"
       visible={props.visible}
     >
       <HeaderText style={styles.modalTitle}>{i18n.t('covid-test.mechanism-modal.title')}</HeaderText>

@@ -1,5 +1,7 @@
 import { gbPartners, svPartners, usPartners } from '@assets';
 import { BrandedButton } from '@covid/components';
+import { NavHeader } from '@covid/components/NavHeader';
+import { Screen } from '@covid/components/Screen';
 import { ClickableText, RegularBoldText, RegularText } from '@covid/components/Text';
 import {
   isGBCountry,
@@ -16,7 +18,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import CountryIpModal from './CountryIpModal';
 import { getLocaleFlagIcon } from './helpers';
@@ -43,8 +45,6 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
     }
   }, [localisationService.shouldAskCountryConfirmation, setIpModalVisible, isUSCountry, navigation.navigate]);
 
-  const getFlagIcon = React.useCallback(getLocaleFlagIcon, [getLocaleFlagIcon]);
-
   const helpUrl = React.useCallback(() => {
     if (isGBCountry()) {
       openWebLink('https://www.nhs.uk/conditions/coronavirus-covid-19/');
@@ -53,7 +53,7 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
     }
   }, [isGBCountry, isSECountry]);
 
-  const partnersLogos = React.useCallback(() => {
+  const partnersLogos = React.useMemo(() => {
     if (isGBCountry()) {
       return gbPartners;
     }
@@ -61,69 +61,78 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
       return svPartners;
     }
     return usPartners;
-  }, [isGBCountry, isSECountry, gbPartners, svPartners, usPartners]);
+  }, [isGBCountry(), isSECountry(), gbPartners, svPartners, usPartners]);
+
+  const flagIcon = getLocaleFlagIcon();
+  const renderHeader = React.useCallback(
+    () => (
+      <NavHeader
+        rightElement={
+          <>
+            <ClickableText onPress={onLoginPress} style={styles.login} testID="login">
+              {i18n.t('log-in')}
+            </ClickableText>
+            <TouchableOpacity onPress={() => navigation.navigate('CountrySelect')} testID="select-country">
+              <Image source={flagIcon} style={styles.flagIcon} testID={`flag-${LocalisationService.userCountry}`} />
+            </TouchableOpacity>
+          </>
+        }
+      />
+    ),
+    [flagIcon, LocalisationService.userCountry],
+  );
 
   return (
-    <SafeAreaView style={styles.safeView}>
-      <View style={styles.rootContainer}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.covidContainer}>
-            <View style={styles.headerRow}>
-              <ClickableText onPress={onLoginPress} style={styles.login} testID="login">
-                {i18n.t('log-in')}
+    <>
+      <Screen backgroundColor={colors.backgroundSecondary} renderHeader={renderHeader} testID="welcome-2-screen">
+        <View style={styles.covidContainer}>
+          <RegularText style={styles.subtitle}>{i18n.t('welcome.how-you-can-help.title')}</RegularText>
+          <RegularText style={styles.subheader}>{i18n.t('welcome.how-you-can-help.text1')}</RegularText>
+
+          {isUSCountry() ? (
+            <RegularText style={styles.subheader2}>{i18n.t('welcome.how-you-can-help.text2')}</RegularText>
+          ) : null}
+
+          {isSECountry() || isGBCountry() ? (
+            <RegularText style={styles.subheader2}>
+              {'\n'}
+              {i18n.t('welcome.disclaimer')}{' '}
+              <ClickableText onPress={helpUrl} style={[styles.subheader2, styles.nhsWebsite]} testID="disclaimer">
+                {i18n.t('welcome.disclaimer-link')}
               </ClickableText>
-              <TouchableOpacity onPress={() => navigation.navigate('CountrySelect')} testID="select-country">
-                <Image
-                  source={getFlagIcon()}
-                  style={styles.flagIcon}
-                  testID={`flag-${LocalisationService.userCountry}`}
-                />
-              </TouchableOpacity>
+              .
+            </RegularText>
+          ) : null}
+
+          <Image source={partnersLogos} style={styles.partnersLogo} />
+
+          {isUSCountry() ? (
+            <View style={styles.partnerContainer}>
+              <RegularText style={styles.partnerHeader}>{i18n.t('welcome.from-researchers')}</RegularText>
+
+              <View style={styles.divider} />
+
+              <RegularText style={styles.partnerList}>
+                {i18n.t('names.harvard-th-chan-school-of-public-health')}
+                <Slash />
+                {i18n.t('names.mass-general-hospital')}
+                <Slash />
+                {i18n.t('names.kings-college-london')}
+                <Slash />
+                {i18n.t('names.stanford-university-school-of-medicine')}
+                <Slash />
+                {i18n.t('names.zoe')}
+              </RegularText>
             </View>
-            <View>
-              <RegularText style={styles.subtitle}>{i18n.t('welcome.how-you-can-help.title')}</RegularText>
-              <RegularText style={styles.subheader}>{i18n.t('welcome.how-you-can-help.text1')}</RegularText>
+          ) : null}
+        </View>
 
-              {isUSCountry() ? (
-                <RegularText style={styles.subheader2}>{i18n.t('welcome.how-you-can-help.text2')}</RegularText>
-              ) : null}
+        <View style={{ flex: 1 }} />
 
-              {isSECountry() || isGBCountry() ? (
-                <RegularText style={styles.subheader2}>
-                  {'\n'}
-                  {i18n.t('welcome.disclaimer')}{' '}
-                  <ClickableText onPress={helpUrl} style={[styles.subheader2, styles.nhsWebsite]} testID="disclaimer">
-                    {i18n.t('welcome.disclaimer-link')}
-                  </ClickableText>
-                  .
-                </RegularText>
-              ) : null}
-
-              <Image source={partnersLogos()} style={styles.partnersLogo} />
-            </View>
-
-            {isUSCountry() ? (
-              <View style={styles.partnerContainer}>
-                <RegularText style={styles.partnerHeader}>{i18n.t('welcome.from-researchers')}</RegularText>
-
-                <View style={styles.divider} />
-
-                <RegularText style={styles.partnerList}>
-                  {i18n.t('names.harvard-th-chan-school-of-public-health')}
-                  <Slash />
-                  {i18n.t('names.mass-general-hospital')}
-                  <Slash />
-                  {i18n.t('names.kings-college-london')}
-                  <Slash />
-                  {i18n.t('names.stanford-university-school-of-medicine')}
-                  <Slash />
-                  {i18n.t('names.zoe')}
-                </RegularText>
-              </View>
-            ) : null}
-          </View>
-        </ScrollView>
-      </View>
+        <BrandedButton onPress={onCreateAccountPress} testID="create-account-2">
+          {i18n.t('welcome.create-account')}
+        </BrandedButton>
+      </Screen>
 
       <CountryIpModal
         closeModal={onCloseModal}
@@ -131,43 +140,26 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
         navigation={navigation}
         testID="country-ip-modal"
       />
-
-      <View style={styles.buttonContainer}>
-        <BrandedButton onPress={onCreateAccountPress} testID="create-account-2">
-          {i18n.t('welcome.create-account')}
-        </BrandedButton>
-      </View>
-    </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    padding: 20,
-  },
   covidContainer: {
     paddingBottom: 24,
-    paddingHorizontal: 24,
-    paddingTop: 24,
   },
   divider: {
     backgroundColor: colors.backgroundFour,
     height: 1,
-    marginVertical: 5,
+    marginVertical: 4,
   },
   flagIcon: {
     height: 32,
     width: 32,
   },
-  headerRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingVertical: 8,
-  },
   login: {
     color: colors.primary,
-    marginHorizontal: 16,
+    marginRight: 16,
   },
   nhsWebsite: {
     textDecorationLine: 'underline',
@@ -176,7 +168,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 10,
     marginVertical: 16,
-    paddingHorizontal: 30,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
   },
   partnerHeader: {
     fontSize: 14,
@@ -186,7 +179,6 @@ const styles = StyleSheet.create({
   partnerList: {
     fontSize: 16,
     lineHeight: 24,
-    marginTop: 0,
     textAlign: 'center',
   },
   partnersLogo: {
@@ -195,17 +187,6 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     resizeMode: 'contain',
     width: '100%',
-  },
-  rootContainer: {
-    backgroundColor: colors.backgroundSecondary,
-    flex: 1,
-  },
-  safeView: {
-    flexGrow: 1,
-  },
-  scrollView: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
   },
   slash: {
     color: colors.lightBlueBrand,
@@ -231,7 +212,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 24,
     lineHeight: 32,
-    marginTop: 25,
+    marginTop: 16,
     paddingVertical: 8,
     textAlign: 'center',
   },

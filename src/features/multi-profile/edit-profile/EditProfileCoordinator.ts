@@ -29,54 +29,54 @@ export class EditProfileCoordinator extends Coordinator implements IUpdatePatien
     this.userService = userService;
   };
 
-  updatePatientInfo(patientInfo: Partial<TPatientInfosRequest>) {
+  updatePatientInfo = (patientInfo: Partial<TPatientInfosRequest>) => {
     return patientService.updatePatientInfo(this.patientData.patientId, patientInfo).then((info) => {
       Object.assign(this.patientData.patientInfo, patientInfo);
       return info;
     });
-  }
+  };
 
-  goToEditLocation() {
+  goToEditLocation = () => {
     NavigatorService.navigate('EditLocation', { patientData: this.patientData });
-  }
+  };
 
-  startEditProfile() {
+  startEditProfile = () => {
     NavigatorService.navigate('EditProfile', { patientData: this.patientData });
-  }
+  };
 
-  goToEditAboutYou() {
+  goToEditAboutYou = () => {
     NavigatorService.navigate('AboutYou', { editing: true, patientData: this.patientData });
-  }
+  };
 
-  goToEditYourStudy() {
+  goToEditYourStudy = () => {
     NavigatorService.navigate('YourStudy', { editing: true, patientData: this.patientData });
-  }
+  };
 
-  goToSchoolNetwork() {
+  goToSchoolNetwork = () => {
     schoolNetworkCoordinator.init(this.patientData, false);
     schoolNetworkCoordinator.startFlow();
-  }
+  };
 
-  goToUniversityNetwork() {
+  goToUniversityNetwork = () => {
     schoolNetworkCoordinator.init(this.patientData, true);
     NavigatorService.navigate('JoinHigherEducation', { patientData: this.patientData });
-  }
+  };
 
-  shouldShowEditStudy() {
+  shouldShowEditStudy = () => {
     const config = localisationService.getConfig();
 
     return config?.enableCohorts && this.patientData?.patientState?.shouldAskStudy;
-  }
+  };
 
-  shouldShowSchoolNetwork() {
+  shouldShowSchoolNetwork = () => {
     return (
       isGBCountry() && this.patientData?.patientState?.isReportedByAnother && this.patientData?.patientState?.isMinor
     );
-  }
+  };
 
-  shouldShowUniNetwork() {
+  shouldShowUniNetwork = () => {
     return isGBCountry();
-  }
+  };
 }
 
 export const editProfileCoordinator = new EditProfileCoordinator();

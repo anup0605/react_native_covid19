@@ -1,5 +1,5 @@
 import mockDb from './mockDb';
-import { IAssessment, IDietStudy,IPatient } from './types';
+import { IAssessment, IDietStudy, IPatient } from './types';
 import bodyParser = require('body-parser');
 import express = require('express');
 import moment = require('moment');
@@ -85,6 +85,10 @@ app.post('/auth/signup/', (_, res) => {
 
 app.delete('/users/delete/', (_, res) => {
   return res.send();
+});
+
+app.patch('/users/country_code/', (_, res) => {
+  return res.status(200).send();
 });
 
 /**
@@ -231,7 +235,7 @@ app.patch('/diet_study/:studyId', (req, res) => {
   return res.send(
     db.dietStudies.save(studyId, {
       ...db.dietStudies.get(studyId),
-      ...req.body,
+      ...req.body.study,
     }),
   );
 });

@@ -9,20 +9,22 @@ import {
   RegularText,
   TextareaWithCharCount,
 } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
+import { Screen } from '@covid/components/Screen';
 import { homeScreenName, thankYouScreenName } from '@covid/core/localisation/LocalisationService';
 import { ILongCovid } from '@covid/features/long-covid/types';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { longCovidApiClient } from '@covid/services';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Formik, FormikProps } from 'formik';
-import { Form } from 'native-base';
 import * as React from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import {
   checkboxIndexOffset,
@@ -271,45 +273,40 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
     ) : null;
 
   return (
-    <View style={{ flex: 1 }} testID="long-covid-question-screen">
+    <Screen backgroundColor={colors.backgroundSecondary} testID="long-covid-question-screen">
       <Formik
         initialValues={{
           ...LongCovidQuestionScreen.initialFormValues(),
         }}
         onSubmit={(values: ILongCovid) => handleSubmit(values)}
-        style={{ padding: 16 }}
         validationSchema={LongCovidQuestionScreen.schema}
       >
         {(props: FormikProps<ILongCovid>) => {
           return (
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.rootContainer}>
-              <ScrollView>
-                <Form style={{ flexGrow: 1 }}>
-                  <HeaderText>{i18n.t('long-covid.q1')}</HeaderText>
-                  <RadioInput
-                    error={props.touched.had_covid && props.errors.had_covid}
-                    items={dropdownItemsQ1}
-                    onValueChange={props.handleChange('had_covid')}
-                    selectedValue={props.values.had_covid}
-                    testID="input-had-covid"
-                  />
-                  {renderExtendedForm(props)}
-                  <View style={{ marginVertical: 64 }}>
-                    <BrandedButton
-                      enabled={props.values.had_covid !== null && Object.keys(props.errors).length < 1}
-                      onPress={() => handleSubmit(props.values)}
-                      testID="button-submit"
-                    >
-                      <RegularText style={{ color: colors.white }}>{i18n.t('long-covid.finish')}</RegularText>
-                    </BrandedButton>
-                  </View>
-                </Form>
-              </ScrollView>
-            </KeyboardAvoidingView>
+            <Form>
+              <HeaderText>{i18n.t('long-covid.q1')}</HeaderText>
+              <RadioInput
+                error={props.touched.had_covid && props.errors.had_covid}
+                items={dropdownItemsQ1}
+                onValueChange={props.handleChange('had_covid')}
+                selectedValue={props.values.had_covid}
+                testID="input-had-covid"
+              />
+              {renderExtendedForm(props)}
+              <View style={styling.flex} />
+              <BrandedButton
+                enabled={props.values.had_covid !== null && Object.keys(props.errors).length < 1}
+                onPress={() => handleSubmit(props.values)}
+                style={styles.marginTop}
+                testID="button-submit"
+              >
+                <RegularText style={{ color: colors.white }}>{i18n.t('long-covid.finish')}</RegularText>
+              </BrandedButton>
+            </Form>
           );
         }}
       </Formik>
-    </View>
+    </Screen>
   );
 }
 
@@ -335,13 +332,8 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     textAlign: 'left',
   },
-  rootContainer: {
-    backgroundColor: colors.backgroundSecondary,
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingBottom: 32,
-    paddingHorizontal: 24,
-    paddingTop: 56,
+  marginTop: {
+    marginTop: 32,
   },
   textarea: {
     backgroundColor: colors.backgroundTertiary,

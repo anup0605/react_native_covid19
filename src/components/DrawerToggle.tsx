@@ -1,6 +1,7 @@
 import { menuIcon } from '@assets';
 import { TScreenName } from '@covid/core/Coordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
+import { sizes } from '@covid/themes';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -33,10 +34,9 @@ const styles = StyleSheet.create({
   },
   menuIcon: {
     alignSelf: 'flex-end',
-    height: 20,
-    marginRight: 15,
-    marginTop: 10,
+    height: sizes.drawerToggle,
+    marginRight: 16,
     tintColor: colors.primary,
-    width: 20,
+    width: sizes.drawerToggle,
   },
 });

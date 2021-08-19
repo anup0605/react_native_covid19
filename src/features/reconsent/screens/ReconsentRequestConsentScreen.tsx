@@ -7,11 +7,13 @@ import { consentService } from '@covid/core/consent/ConsentService';
 import { patientService } from '@covid/core/patient/PatientService';
 import { selectDiseasePreferences } from '@covid/core/state/reconsent';
 import { TRootState } from '@covid/core/state/root';
+import { Card } from '@covid/features/reconsent/components/Card';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { grid } from '@covid/themes';
+import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -27,19 +29,6 @@ const hitSlop = {
   top: 20,
 };
 
-const Callout = (props: { title: string; description: string }) => {
-  return (
-    <View style={styles.card}>
-      <Text rhythm={8} style={styles.cardTitle} textClass="h4Medium">
-        {props.title}
-      </Text>
-      <Text style={styles.cardDescription} textClass="pLight">
-        {props.description}
-      </Text>
-    </View>
-  );
-};
-
 export default function ReconsentRequestConsentScreen(props: IProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
@@ -52,10 +41,16 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
     NavigatorService.navigate('PrivacyPolicyUK');
   };
 
+  const onInformationSheetPress = () => {
+    Analytics.track(events.RECONSENT_INFORMATION_SHEET_CLICKED);
+    openWebLink('https://covid.joinzoe.com/wider-health-studies-factsheet');
+  };
+
   const renderCallouts = () => {
     return [1, 2, 3].map((i) => (
-      <Callout
+      <Card
         description={i18n.t(`reconsent.request-consent.use-${i}-description`)}
+        index={i - 1}
         key={i}
         title={i18n.t(`reconsent.request-consent.use-${i}-title`)}
       />
@@ -97,11 +92,21 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
       <TouchableOpacity
         hitSlop={hitSlop}
         onPress={onPrivacyPolicyPress}
-        style={styles.touchable}
+        style={styles.marginTop}
         testID="button-privacy-notice"
       >
-        <Text style={styles.privacyLink} textClass="pSmallLight">
-          {i18n.t('reconsent.request-consent.learn-more')}{' '}
+        <Text style={styles.externalLink} textClass="pSmallLight">
+          {i18n.t('reconsent.request-consent.privacy-notice')}{' '}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        hitSlop={hitSlop}
+        onPress={onInformationSheetPress}
+        style={styles.marginTop}
+        testID="button-information-sheet"
+      >
+        <Text style={styles.externalLink} textClass="pSmallLight">
+          {i18n.t('reconsent.request-consent.information-sheet')}{' '}
         </Text>
       </TouchableOpacity>
       <View style={styles.hr} />
@@ -141,19 +146,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.purple,
     marginTop: 'auto',
   },
-  card: {
-    backgroundColor: colors.transparentDarkBlue,
-    borderRadius: grid.l,
-    marginBottom: grid.l,
-    paddingHorizontal: grid.xxl,
-    paddingVertical: grid.xxl,
-  },
-  cardDescription: {
-    color: colors.darkblue,
-  },
-  cardTitle: {
-    color: colors.darkblue,
-  },
   center: {
     textAlign: 'center',
   },
@@ -161,25 +153,25 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     textAlign: 'center',
   },
-  hr: {
-    backgroundColor: colors.backgroundFour,
-    height: 1,
-    marginBottom: grid.xxl,
-    width: '100%',
-  },
-  page: {
-    backgroundColor: colors.backgroundPrimary,
-  },
-  privacyLink: {
+  externalLink: {
     color: colors.darkblue,
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
+  hr: {
+    backgroundColor: colors.backgroundFour,
+    height: 1,
+    marginBottom: grid.xxl,
+    marginTop: 32,
+    width: '100%',
+  },
+  marginTop: {
+    marginTop: 32,
+  },
+  page: {
+    backgroundColor: colors.backgroundPrimary,
+  },
   subtitle: {
     color: colors.secondary,
-  },
-  touchable: {
-    marginBottom: 30,
-    marginTop: grid.s,
   },
 });

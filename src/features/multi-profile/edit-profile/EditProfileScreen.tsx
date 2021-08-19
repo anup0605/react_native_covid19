@@ -1,5 +1,5 @@
 import { chevronRight } from '@assets';
-import Screen, { Header } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { Header3Text, HeaderText, SecondaryText } from '@covid/components/Text';
 import { ArchiveProfile } from '@covid/features/multi-profile/ArchiveProfile';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
@@ -8,74 +8,70 @@ import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+
+type TLinkItemProps = {
+  onPress: VoidFunction;
+  title: string;
+};
+
+function LinkItem(props: TLinkItemProps) {
+  return (
+    <TouchableOpacity onPress={props.onPress} style={styles.profileLabel}>
+      <Header3Text>{props.title}</Header3Text>
+      <Image source={chevronRight} style={styles.chevron} />
+    </TouchableOpacity>
+  );
+}
 
 type TProps = {
   route: RouteProp<TScreenParamList, 'EditProfile'>;
 };
 
 export const EditProfileScreen: React.FC<TProps> = (props) => {
-  const LinkItem: React.FC<{ title: string; action: VoidFunction }> = ({ title, action }) => {
-    return (
-      <TouchableOpacity onPress={action} style={styles.profileLabel}>
-        <Header3Text>{title}</Header3Text>
-        <Image source={chevronRight} style={styles.chevron} />
-      </TouchableOpacity>
-    );
-  };
-
+  function renderFooter() {
+    return <ArchiveProfile patientId={props.route.params?.patientData?.patientId} style={styles.margin} />;
+  }
   return (
-    <>
-      <Screen simpleCallout profile={props.route.params?.patientData?.profile} testID="edit-profile-screen">
-        <Header>
-          <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.title')}</HeaderText>
-          <SecondaryText>{i18n.t('edit-profile.text')}</SecondaryText>
-        </Header>
+    <Screen
+      simpleCallout
+      profile={props.route.params?.patientData?.profile}
+      renderFooter={props.route.params?.patientData?.profile?.reported_by_another ? renderFooter : undefined}
+      testID="edit-profile-screen"
+    >
+      <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.title')}</HeaderText>
+      <SecondaryText>{i18n.t('edit-profile.text')}</SecondaryText>
 
-        <LinkItem
-          action={() => editProfileCoordinator.goToEditLocation()}
-          title={i18n.t('edit-profile.your-location')}
-        />
+      <LinkItem onPress={editProfileCoordinator.goToEditLocation} title={i18n.t('edit-profile.your-location')} />
 
-        {editProfileCoordinator.shouldShowEditStudy() ? (
-          <LinkItem action={() => editProfileCoordinator.goToEditYourStudy()} title={i18n.t('your-study.title')} />
-        ) : null}
+      {editProfileCoordinator.shouldShowEditStudy() ? (
+        <LinkItem onPress={editProfileCoordinator.goToEditYourStudy} title={i18n.t('your-study.title')} />
+      ) : null}
 
-        {editProfileCoordinator.shouldShowSchoolNetwork() ? (
-          <LinkItem action={() => editProfileCoordinator.goToSchoolNetwork()} title="School network" />
-        ) : null}
+      {editProfileCoordinator.shouldShowSchoolNetwork() ? (
+        <LinkItem onPress={editProfileCoordinator.goToSchoolNetwork} title="School network" />
+      ) : null}
 
-        {editProfileCoordinator.shouldShowUniNetwork() ? (
-          <LinkItem action={() => editProfileCoordinator.goToUniversityNetwork()} title="University network" />
-        ) : null}
-      </Screen>
-
-      <View>
-        {props.route.params?.patientData?.profile?.reported_by_another ? (
-          <View style={styles.archiveProfileContainer}>
-            <ArchiveProfile patientId={props.route.params?.patientData?.patientId} />
-          </View>
-        ) : null}
-      </View>
-    </>
+      {editProfileCoordinator.shouldShowUniNetwork() ? (
+        <LinkItem onPress={editProfileCoordinator.goToUniversityNetwork} title="University network" />
+      ) : null}
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  archiveProfileContainer: {
-    backgroundColor: colors.white,
-    justifyContent: 'flex-end',
-    paddingBottom: 60,
-  },
   chevron: {
     height: 16,
     width: 16,
+  },
+  margin: {
+    margin: 32,
   },
   profileLabel: {
     alignItems: 'center',
     backgroundColor: colors.white,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    paddingVertical: 16,
   },
 });

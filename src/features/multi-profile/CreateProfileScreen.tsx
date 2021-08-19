@@ -1,7 +1,7 @@
 import { BrandedButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
@@ -39,7 +39,7 @@ export default class CreateProfileScreen extends React.Component<TProps> {
 
   render() {
     return (
-      <ScreenNew testID="create-profile-screen">
+      <Screen testID="create-profile-screen">
         <HeaderText style={styling.marginBottom}>{i18n.t('create-profile-title')}</HeaderText>
 
         <SecondaryText style={styling.marginBottomHuge}>{i18n.t('create-profile-text')}</SecondaryText>
@@ -78,7 +78,7 @@ export default class CreateProfileScreen extends React.Component<TProps> {
             );
           }}
         </Formik>
-      </ScreenNew>
+      </Screen>
     );
   }
 }

@@ -1,4 +1,4 @@
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { SelectorButton } from '@covid/components/SelectorButton';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
 import { patientService } from '@covid/core/patient/PatientService';
@@ -53,7 +53,7 @@ export const ArchiveReasonScreen: React.FC<TProps> = (props) => {
   }
 
   return (
-    <ScreenNew testID="archive-reason-screen">
+    <Screen testID="archive-reason-screen">
       <HeaderText>{i18n.t('archive-reason.title')}</HeaderText>
       <SecondaryText style={styling.marginVertical}>{i18n.t('archive-reason.text')}</SecondaryText>
 
@@ -68,6 +68,6 @@ export const ArchiveReasonScreen: React.FC<TProps> = (props) => {
           />
         );
       })}
-    </ScreenNew>
+    </Screen>
   );
 };

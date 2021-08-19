@@ -1,6 +1,7 @@
 export interface IDbConfig {
   [x: string]: { path: string; defaultData?: unknown };
 }
+
 export interface IPatient {
   id: string;
   last_reported_at: string;

@@ -6,7 +6,7 @@ import { ITest } from './types';
 
 interface IClickableTextProps extends ITest {
   children: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
   onPress: () => void;
   enabled?: boolean;
   hideLoading?: boolean;
@@ -14,7 +14,7 @@ interface IClickableTextProps extends ITest {
 
 interface IProps {
   children: React.ReactNode;
-  style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
+  style?: StyleProp<TextStyle>;
   passProps?: any;
   testID?: string;
   highlightColor?: any;

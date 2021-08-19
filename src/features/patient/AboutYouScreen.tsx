@@ -4,7 +4,7 @@ import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { Coordinator, IUpdatePatient } from '@covid/core/Coordinator';
@@ -325,7 +325,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
     };
 
     return (
-      <ScreenNew profile={this.coordinator.patientData?.patientState?.profile} testID="about-you-screen">
+      <Screen profile={this.coordinator.patientData?.patientState?.profile} testID="about-you-screen">
         <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('title-about-you')} />
 
         <Formik
@@ -459,7 +459,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
             );
           }}
         </Formik>
-      </ScreenNew>
+      </Screen>
     );
   }
 }

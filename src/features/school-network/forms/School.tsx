@@ -1,21 +1,22 @@
-import { Button } from '@covid/components/buttons/Button';
+import { BrandedButton } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { ValidationError } from '@covid/components/ValidationError';
 import { TPatientData } from '@covid/core/patient/PatientData';
 import { schoolService } from '@covid/core/schools/SchoolService';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { styling } from '@covid/themes';
 import { Formik } from 'formik';
-import { Form } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 interface IProps {
   patientData: TPatientData;
 }
 
-function SchoolForm({ patientData }: IProps) {
+export default function SchoolForm({ patientData }: IProps) {
   const validationSchema = Yup.object().shape({
     schoolCode: Yup.string()
       .required('Please enter your school code.')
@@ -39,34 +40,21 @@ function SchoolForm({ patientData }: IProps) {
       validationSchema={validationSchema}
     >
       {(formikProps) => (
-        <Form style={styles.formContainer}>
-          <View style={{ margin: 16 }}>
-            <GenericTextField
-              showError
-              formikProps={formikProps}
-              maxLength={7}
-              name="schoolCode"
-              placeholder={i18n.t('school-networks.join-school.school-code-placeholder')}
-            />
-            {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
-              <ValidationError error={i18n.t('validation-error-text')} />
-            ) : null}
-          </View>
-
-          <Button branded onPress={formikProps.handleSubmit}>
-            {i18n.t('school-networks.join-school.cta')}
-          </Button>
+        <Form>
+          <GenericTextField
+            showError
+            formikProps={formikProps}
+            maxLength={7}
+            name="schoolCode"
+            placeholder={i18n.t('school-networks.join-school.school-code-placeholder')}
+          />
+          <View style={styling.flex} />
+          {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
+            <ValidationError error={i18n.t('validation-error-text')} />
+          ) : null}
+          <BrandedButton onPress={formikProps.handleSubmit}>{i18n.t('school-networks.join-school.cta')}</BrandedButton>
         </Form>
       )}
     </Formik>
   );
 }
-
-const styles = StyleSheet.create({
-  formContainer: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-  },
-});
-
-export default SchoolForm;

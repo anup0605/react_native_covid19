@@ -3,7 +3,7 @@ import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
@@ -137,7 +137,10 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
     ];
 
     return (
-      <Screen profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}>
+      <Screen
+        profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
+        testID="health-worker-exposure-screen"
+      >
         <ProgressHeader
           currentStep={1}
           maxSteps={5}
@@ -160,7 +163,7 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
                 />
 
                 {!!props.values.interactedAnyPatients && props.values.interactedAnyPatients === 'yes' ? (
-                  <View style={{ marginHorizontal: 16 }}>
+                  <>
                     <RadioInput
                       required
                       items={patientInteractionOptions}
@@ -206,7 +209,7 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
                         selectedValue={props.values.ppeAvailabilityNever}
                       />
                     ) : null}
-                  </View>
+                  </>
                 ) : null}
 
                 <View style={styling.flex} />

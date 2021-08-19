@@ -44,14 +44,14 @@ export default function ReconsentDiseasePreferencesScreen() {
   const renderItem = ({ item }: { item: TDiseasePreference }) => {
     return (
       <DiseaseCard
-        description={i18n.t(`disease-cards.${item.name}.description`)}
+        description={i18n.t(`disease-cards.${item.name}.description`, { defaultValue: '' })}
         IconComponent={item.IconComponent}
         key={item.name}
         onPress={() => onPressCard(item.name)}
-        selected={diseasePreferences[item.name] || false}
+        selected={!!diseasePreferences[item.name]}
         style={{ marginBottom: grid.xxl }}
         testID={`disease-card-${item.name}`}
-        title={i18n.t(`disease-cards.${item.name}.name`)}
+        title={i18n.t(`disease-cards.${item.name}.name`, { defaultValue: '' })}
       />
     );
   };

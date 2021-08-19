@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     borderRadius: 10,
-    marginHorizontal: 10,
   },
   primaryText: {
     fontSize: 20,

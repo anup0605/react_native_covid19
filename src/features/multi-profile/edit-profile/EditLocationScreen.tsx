@@ -3,7 +3,7 @@ import DropdownField from '@covid/components/DropdownField';
 import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
-import Screen, { Header } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
 import { fetchStartUpInfo } from '@covid/core/content/state/contentSlice';
 import { useAppDispatch } from '@covid/core/state/store';
@@ -112,9 +112,7 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
 
   return (
     <Screen simpleCallout profile={props.route.params?.patientData?.profile} testID="edit-location-screen">
-      <Header>
-        <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.location.title')}</HeaderText>
-      </Header>
+      <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.location.title')}</HeaderText>
 
       <Formik
         initialValues={initialFormValues}
@@ -126,60 +124,58 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
         {(props) => {
           return (
             <Form>
-              <View style={{ marginHorizontal: 16 }}>
+              <GenericTextField
+                required
+                showError
+                formikProps={props}
+                inputProps={{ autoCompleteType: 'postal-code' }}
+                label={i18n.t('edit-profile.location.label')}
+                name="postcode"
+                placeholder={i18n.t('placeholder-postcode')}
+              />
+              <YesNoField
+                required
+                label={i18n.t('edit-profile.location.not-current-address')}
+                onValueChange={props.handleChange('differentAddress')}
+                selectedValue={props.values.differentAddress}
+              />
+              {props.values.differentAddress === 'yes' ? (
+                <YesNoField
+                  required
+                  label={i18n.t('edit-profile.location.still-in-country')}
+                  onValueChange={props.handleChange('stillInUK')}
+                  selectedValue={props.values.stillInUK}
+                />
+              ) : null}
+              {props.values.stillInUK === 'yes' && props.values.differentAddress === 'yes' ? (
                 <GenericTextField
                   required
                   showError
                   formikProps={props}
                   inputProps={{ autoCompleteType: 'postal-code' }}
-                  label={i18n.t('edit-profile.location.label')}
-                  name="postcode"
+                  label={i18n.t('edit-profile.location.other-postcode')}
+                  name="currentPostcode"
                   placeholder={i18n.t('placeholder-postcode')}
                 />
-                <YesNoField
+              ) : null}
+              {props.values.stillInUK === 'no' && props.values.differentAddress === 'yes' ? (
+                <DropdownField
                   required
-                  label={i18n.t('edit-profile.location.not-current-address')}
-                  onValueChange={props.handleChange('differentAddress')}
-                  selectedValue={props.values.differentAddress}
+                  error={props.touched.currentCountry ? props.errors.currentCountry : ''}
+                  items={countryList}
+                  label={i18n.t('edit-profile.location.select-country')}
+                  onValueChange={props.handleChange('currentCountry')}
+                  selectedValue={props.values.currentCountry}
                 />
-                {props.values.differentAddress === 'yes' ? (
-                  <YesNoField
-                    required
-                    label={i18n.t('edit-profile.location.still-in-country')}
-                    onValueChange={props.handleChange('stillInUK')}
-                    selectedValue={props.values.stillInUK}
-                  />
-                ) : null}
-                {props.values.stillInUK === 'yes' && props.values.differentAddress === 'yes' ? (
-                  <GenericTextField
-                    required
-                    showError
-                    formikProps={props}
-                    inputProps={{ autoCompleteType: 'postal-code' }}
-                    label={i18n.t('edit-profile.location.other-postcode')}
-                    name="currentPostcode"
-                    placeholder={i18n.t('placeholder-postcode')}
-                  />
-                ) : null}
-                {props.values.stillInUK === 'no' && props.values.differentAddress === 'yes' ? (
-                  <DropdownField
-                    required
-                    error={props.touched.currentCountry ? props.errors.currentCountry : ''}
-                    items={countryList}
-                    label={i18n.t('edit-profile.location.select-country')}
-                    onValueChange={props.handleChange('currentCountry')}
-                    selectedValue={props.values.currentCountry}
-                  />
-                ) : null}
-                <View style={{ height: 100 }} />
-                <SecondaryText style={{ paddingHorizontal: 8, textAlign: 'center' }}>
-                  {i18n.t('edit-profile.location.disclaimer')}
-                </SecondaryText>
-                <ErrorText>{errorMessage}</ErrorText>
-                <BrandedButton enabled={props.isValid} loading={props.isSubmitting} onPress={props.handleSubmit}>
-                  {i18n.t('edit-profile.done')}
-                </BrandedButton>
-              </View>
+              ) : null}
+              <View style={{ flex: 1 }} />
+              <SecondaryText style={{ textAlign: 'center' }}>
+                {i18n.t('edit-profile.location.disclaimer')}
+              </SecondaryText>
+              <ErrorText>{errorMessage}</ErrorText>
+              <BrandedButton enabled={props.isValid} loading={props.isSubmitting} onPress={props.handleSubmit}>
+                {i18n.t('edit-profile.done')}
+              </BrandedButton>
             </Form>
           );
         }}

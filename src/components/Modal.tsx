@@ -1,26 +1,27 @@
-import { RegularText, SafeLayout } from '@covid/components';
 import Analytics from '@covid/core/Analytics';
-import i18n from '@covid/locale/i18n';
-import { colors } from '@theme';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
-import { Modal as RNModal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Modal as RNModal, PanResponderGestureState, ScrollView, StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
+type TSwipeFunction = (gestureState: PanResponderGestureState) => void;
+
 interface IProps {
+  animationType?: 'fade' | 'none' | 'slide';
   children?: React.ReactNode;
   footerChildren?: React.ReactNode;
+  headerChildren?: React.ReactNode;
   modalName?: string;
   onRequestClose: () => void;
+  showsVerticalScrollIndicator?: boolean;
+  swipeDown?: TSwipeFunction;
+  swipeLeft?: TSwipeFunction;
+  swipeRight?: TSwipeFunction;
+  swipeUp?: TSwipeFunction;
+  testID: string;
   visible: boolean;
-  showVerticalScrollIndicator?: boolean;
-  animationType?: 'fade' | 'none' | 'slide';
-  swipeUp?: Function;
-  swipeDown?: Function;
-  swipeLeft?: Function;
-  swipeRight?: Function;
-  testID?: string;
-  showCloseButton?: boolean;
 }
 
 const BORDER_RADIUS = 16;
@@ -37,55 +38,22 @@ const INSETS = {
 
 const COLORS = ['#ffffff00', 'white'];
 
-export default function Modal(props: IProps) {
+export default React.memo(function Modal(props: IProps) {
+  const safeAreaInsets = useSafeAreaInsets();
+
   React.useEffect(() => {
     if (props.modalName) {
       Analytics.trackModalView(props.modalName);
     }
   }, [props.modalName]);
 
-  function onSwipeUp() {
-    if (props.swipeUp) {
-      props.swipeUp();
-    }
-  }
-
-  function onSwipeDown() {
-    if (props.swipeDown) {
-      props.swipeDown();
-    }
-  }
-
-  function onSwipeLeft() {
-    if (props.swipeLeft) {
-      props.swipeLeft();
-    }
-  }
-
-  function onSwipeRight() {
-    if (props.swipeRight) {
-      props.swipeRight();
-    }
-  }
-
-  function hasSwipe(): boolean {
-    return (
-      props.swipeUp !== undefined ||
-      props.swipeDown !== undefined ||
-      props.swipeLeft !== undefined ||
-      props.swipeRight !== undefined
-    );
-  }
-
-  function renderCloseButton() {
-    return props.showCloseButton && props.onRequestClose ? (
-      <TouchableOpacity onPress={props.onRequestClose} testID={'test-modal-close-button'}>
-        <RegularText style={styles.closeButton}>{i18n.t('modal-close')}</RegularText>
-      </TouchableOpacity>
-    ) : null;
-  }
-
   function renderContent() {
+    const paddingStyle = {
+      paddingBottom: sizes.screenVerticalPadding + safeAreaInsets.bottom,
+      paddingLeft: sizes.screenHorizontalPadding + safeAreaInsets.left,
+      paddingRight: sizes.screenHorizontalPadding + safeAreaInsets.right,
+      paddingTop: sizes.screenVerticalPadding + safeAreaInsets.top,
+    };
     return (
       <RNModal
         transparent
@@ -93,57 +61,62 @@ export default function Modal(props: IProps) {
         onRequestClose={props.onRequestClose}
         visible={props.visible}
       >
-        <SafeLayout style={styles.safeLayout}>
-          <View style={styles.view} testID={props.testID ?? 'test-modal'}>
-            <View style={styles.view2}>
-              {renderCloseButton()}
+        <View style={styles.view1} testID={props.testID}>
+          <View style={[styles.view2, paddingStyle]}>
+            <View style={styles.view3}>
+              {props.headerChildren ? <View style={styles.headerWrapper}>{props.headerChildren}</View> : null}
               <ScrollView
                 alwaysBounceVertical={false}
                 contentContainerStyle={styles.contentContainer}
                 scrollIndicatorInsets={INSETS}
-                showsVerticalScrollIndicator={props.showVerticalScrollIndicator || false}
+                showsVerticalScrollIndicator={props.showsVerticalScrollIndicator || false}
                 style={styles.scrollView}
               >
                 {props.children}
               </ScrollView>
               {props.footerChildren ? (
-                <View style={styles.padding}>
+                <View style={styles.footerWrapper}>
                   <LinearGradient colors={COLORS} style={styles.linearGradient} />
                   {props.footerChildren}
                 </View>
               ) : null}
             </View>
           </View>
-        </SafeLayout>
+        </View>
       </RNModal>
     );
   }
 
-  return hasSwipe() ? (
+  const hasSwipe =
+    props.swipeUp !== undefined ||
+    props.swipeDown !== undefined ||
+    props.swipeLeft !== undefined ||
+    props.swipeRight !== undefined;
+
+  return hasSwipe ? (
     <GestureRecognizer
-      onSwipeUp={(state) => onSwipeUp()}
-      onSwipeDown={(state) => onSwipeDown()}
-      onSwipeLeft={(state) => onSwipeLeft()}
-      onSwipeRight={(state) => onSwipeRight()}
+      onSwipeDown={props.swipeDown}
+      onSwipeLeft={props.swipeLeft}
+      onSwipeRight={props.swipeRight}
+      onSwipeUp={props.swipeUp}
     >
       {renderContent()}
     </GestureRecognizer>
   ) : (
     renderContent()
   );
-}
+});
 
 const styles = StyleSheet.create({
-  closeButton: {
-    alignItems: 'flex-end',
-    textAlign: 'right',
-    padding: 16,
-    paddingBottom: 0,
-    fontWeight: '600',
-    color: colors.lightBrand,
-  },
   contentContainer: {
     padding: CONTENT_SPACING - SCROLL_INDICATOR_OFFSET,
+  },
+  footerWrapper: {
+    paddingBottom: CONTENT_SPACING,
+    paddingHorizontal: CONTENT_SPACING,
+  },
+  headerWrapper: {
+    padding: CONTENT_SPACING / 2,
   },
   linearGradient: {
     backgroundColor: '#ffffff00',
@@ -154,29 +127,28 @@ const styles = StyleSheet.create({
     top: -CONTENT_SPACING,
     zIndex: 1,
   },
-  padding: {
-    paddingBottom: CONTENT_SPACING,
-    paddingHorizontal: CONTENT_SPACING,
-  },
-  safeLayout: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
   scrollView: {
     margin: SCROLL_INDICATOR_OFFSET,
   },
-  view: {
+  view1: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    flex: 1,
+  },
+  view2: {
     flex: 0,
     flexGrow: 0,
     flexShrink: 1,
     marginBottom: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     marginTop: 'auto',
-    padding: CONTENT_SPACING,
   },
-  view2: {
+  view3: {
     backgroundColor: 'white',
     borderRadius: BORDER_RADIUS,
     flex: 0,
     flexGrow: 0,
     flexShrink: 1,
+    maxWidth: sizes.maxScreenWidth,
   },
 });

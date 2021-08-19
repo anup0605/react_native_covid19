@@ -4,10 +4,11 @@ import { ArchiveConfirmationModal } from '@covid/features/multi-profile/ArchiveC
 import i18n from '@covid/locale/i18n';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 type TProps = {
   patientId: string;
+  style?: StyleProp<ViewStyle>;
 };
 
 export const ArchiveProfile: React.FC<TProps> = (props) => {
@@ -27,15 +28,15 @@ export const ArchiveProfile: React.FC<TProps> = (props) => {
   }
 
   return (
-    <>
-      {isConfirmModalVisible && (
+    <View style={props.style}>
+      {isConfirmModalVisible ? (
         <ArchiveConfirmationModal cancelArchive={cancelArchive} confirmArchive={confirmArchive} />
-      )}
+      ) : null}
 
-      <TouchableOpacity onPress={() => clickArchive()}>
+      <TouchableOpacity onPress={clickArchive}>
         <HeaderText style={styles.archiveCta}>{i18n.t('edit-profile.archive-cta')}</HeaderText>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 

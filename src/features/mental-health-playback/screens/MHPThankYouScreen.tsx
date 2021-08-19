@@ -1,7 +1,9 @@
-import { BrandedButton, SafeLayout, Text } from '@covid/components';
+import { Text } from '@covid/components';
+import { Screen } from '@covid/components/Screen';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid, styling } from '@covid/themes';
+import { styling } from '@covid/themes';
+import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -10,35 +12,32 @@ export default function MHPThankYouScreen() {
     NavigatorService.goBack();
   }
   return (
-    <SafeLayout style={styling.backgroundWhite}>
-      <View style={[styling.padding, styling.flex]}>
-        <View style={styles.view}>
-          <Text
-            inverted
-            colorPalette="accentBlue"
-            colorShade="main"
-            style={styling.marginBottomHuge}
-            textAlign="center"
-            textClass="h2"
-          >
-            {i18n.t('mental-health-playback.thank-you.title')}
-          </Text>
-          <Text inverted colorPalette="accentBlue" colorShade="main" textAlign="center" textClass="h5Medium">
-            {i18n.t('mental-health-playback.thank-you.description')}
-          </Text>
-        </View>
-        <BrandedButton enabled onPress={onPress} style={styles.button}>
-          {i18n.t('mental-health-playback.thank-you.button')}
-        </BrandedButton>
+    <Screen
+      backgroundColor={colors.white}
+      footerOnPress={onPress}
+      footerTitle={i18n.t('mental-health-playback.thank-you.button')}
+      testID="mhp-thank-you-screen"
+    >
+      <View style={styles.view}>
+        <Text
+          inverted
+          colorPalette="accentBlue"
+          colorShade="main"
+          style={styling.marginBottomHuge}
+          textAlign="center"
+          textClass="h2"
+        >
+          {i18n.t('mental-health-playback.thank-you.title')}
+        </Text>
+        <Text inverted colorPalette="accentBlue" colorShade="main" textAlign="center" textClass="h5Medium">
+          {i18n.t('mental-health-playback.thank-you.description')}
+        </Text>
       </View>
-    </SafeLayout>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    marginBottom: grid.gutter,
-  },
   view: {
     marginBottom: 'auto',
     marginLeft: 'auto',
