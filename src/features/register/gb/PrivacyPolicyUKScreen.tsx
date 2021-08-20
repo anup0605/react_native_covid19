@@ -1,8 +1,9 @@
 import { Screen } from '@covid/components/Screen';
 import { colors } from '@covid/themes';
 import * as React from 'react';
-import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
-import WebView, { WebViewNavigation } from 'react-native-webview';
+import { ActivityIndicator, Linking, Platform, StyleSheet, View } from 'react-native';
+import WebView from 'react-native-webview';
+import { ShouldStartLoadRequest } from 'react-native-webview/lib/WebViewTypes';
 import UrlParse from 'url-parse';
 
 const js = `
@@ -17,7 +18,7 @@ const js = `
     }
 
     document.querySelectorAll('body > *').forEach((element) => {
-      if (!element.classList.contains('privacy-outer') || element.id === 'privacy-policy') {
+      if (!element.classList.contains('privacy-outer') && element.id !== 'privacy-policy') {
         element.remove();
       } else {
         element.classList.forEach((className) => {
@@ -37,38 +38,50 @@ export function PrivacyPolicyUKScreen() {
   const [loaded, setLoaded] = React.useState(false);
   const webView = React.useRef<WebView>(null);
 
-  function onLoad() {
-    webView.current?.injectJavaScript(js);
-  }
+  // eslint-disable-next-line no-console
+  const onError = React.useCallback((error) => console.warn(error), []);
 
-  function onLoadEnd() {
+  const onLoad = React.useCallback(() => webView.current?.injectJavaScript(js), [webView.current, js]);
+
+  const onLoadEnd = React.useCallback(() => {
     webView.current?.injectJavaScript(js);
     if (!loaded) {
       setTimeout(() => setLoaded(true), 250);
     }
-  }
+  }, [webView.current, js, loaded, setLoaded]);
 
-  function onNavigationStateChange(navState: WebViewNavigation) {
-    try {
-      const navUrl = new UrlParse(navState.url);
-      if (navUrl.hostname !== url.hostname || navUrl.pathname !== url.pathname) {
-        webView.current?.stopLoading();
-        Linking.openURL(navState.url);
+  const onShouldStartLoadWithRequest = React.useCallback(
+    (request: ShouldStartLoadRequest) => {
+      // The 'navigationType' property is only available on iOS.
+      // If a request is started without the user initiating it, always allow it.
+      if (Platform.OS === 'ios' && request.navigationType !== 'click') {
+        return true;
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn(error);
-    }
-  }
+      try {
+        const navUrl = new UrlParse(request.url);
+        if (navUrl.hostname !== url.hostname || navUrl.pathname !== url.pathname) {
+          Linking.openURL(request.url);
+          return false;
+        }
+        return true;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn(error);
+      }
+      return false;
+    },
+    [webView.current],
+  );
 
   return (
-    <Screen noPadding noScrollView testID="privacy-policy-uk-screen">
+    <Screen noScrollView testID="privacy-policy-uk-screen">
       <WebView
         injectedJavaScript={js}
         injectedJavaScriptBeforeContentLoaded={js}
+        onError={onError}
         onLoad={onLoad}
         onLoadEnd={onLoadEnd}
-        onNavigationStateChange={onNavigationStateChange}
+        onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         ref={webView}
         source={source}
       />
