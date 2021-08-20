@@ -38,11 +38,21 @@ export default function ReconsentIntroductionScreen() {
         inverted
         colorPalette="uiDark"
         colorShade="darker"
-        style={styles.marginVertical}
+        style={styles.marginTop}
         textAlign="center"
         textClass="h4Light"
       >
         {i18n.t('reconsent.introduction.description')}
+      </Text>
+      <Text
+        inverted
+        colorPalette="uiDark"
+        colorShade="darker"
+        style={[styles.marginTop, styles.marginBottom]}
+        textAlign="center"
+        textClass="h4Light"
+      >
+        {i18n.t('reconsent.introduction.approval')}
       </Text>
     </ReconsentScreen>
   );
@@ -56,8 +66,7 @@ const styles = StyleSheet.create({
   marginTop: {
     marginTop: 32,
   },
-  marginVertical: {
+  marginBottom: {
     marginBottom: 32,
-    marginTop: 32,
   },
 });

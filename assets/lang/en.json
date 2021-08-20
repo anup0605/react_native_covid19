@@ -1494,7 +1494,8 @@
     "introduction": {
       "button": "Next",
       "description": "Help detect early symptoms and uncover the role of nutrition and lifestyle in disease risk.",
-      "title": "Help us fight other major health issues beyond COVID-19"
+      "title": "Help us fight other major health issues beyond COVID-19",
+      "approval": "This study has ethical approval from King's College London"
     },
     "reconsider": {
       "description-1": "We'll continue to use your data to fight COVID-19 only.",
@@ -1516,7 +1517,7 @@
     },
     "request-consent": {
       "consent-no": "No, I do not consent",
-      "consent-yes": "Yes, I'm in",
+      "consent-yes": "Yes, I consent",
       "information-sheet": "Information Sheet",
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",
