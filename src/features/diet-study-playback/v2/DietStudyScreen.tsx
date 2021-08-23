@@ -66,9 +66,9 @@ export default function DietStudyScreen() {
 
       <View style={{ paddingRight: 32 }}>
         <Link
-          linkText={i18n.t('diet-study.introduction-more-link-0')}
           onPress={() => openWebLink(getDietStudyInfoUrl())}
           style={{ marginBottom: 8 }}
+          text={i18n.t('diet-study.introduction-more-link-0')}
         />
       </View>
       <DietStudyActionCard />

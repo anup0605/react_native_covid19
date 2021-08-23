@@ -8,33 +8,27 @@ interface IProps {
   color?: string;
   iconName?: TIconName;
   iconSize?: TTypeSizes;
-  iconStyle?: StyleProp<ViewStyle>;
-  linkText: string;
-  onPress: () => void;
+  onPress?: () => void;
   style?: StyleProp<ViewStyle>;
+  text: string;
 }
 
-function Link({
-  color,
-  iconName = 'big-arrow-right',
-  iconSize,
-  iconStyle = {},
-  linkText,
-  onPress,
-  style = {},
-}: IProps) {
-  const linkColor = color || 'purple';
-  const iSize = iconSize || 16;
+function Link(props: IProps) {
+  const linkColor = props.color || 'purple';
   return (
-    <TouchableOpacity accessible accessibilityRole="button" onPress={onPress} style={[{ flexDirection: 'row' }, style]}>
+    <TouchableOpacity
+      accessible
+      accessibilityRole="button"
+      onPress={props.onPress}
+      style={[{ flexDirection: 'row' }, props.style]}
+    >
       <Icon
         color={linkColor}
-        iconName={iconName}
-        iconSize={iSize}
-        iconStyle={iconStyle}
+        iconName={'big-arrow-right' || props.iconName}
+        iconSize={props.iconSize || 16}
         style={{ marginRight: 8, marginTop: 2 }}
       />
-      <Text style={{ color: linkColor, flex: 1 }}>{linkText}</Text>
+      <Text style={{ color: linkColor, flex: 1 }}>{props.text}</Text>
     </TouchableOpacity>
   );
 }

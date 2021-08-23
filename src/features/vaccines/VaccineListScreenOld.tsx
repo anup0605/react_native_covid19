@@ -31,19 +31,19 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
   const vaccines = useSelector<TRootState, TVaccineRequest[]>((state) => state.vaccines.vaccines);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [showVaccineWarning, setShowVaccineWarning] = React.useState<boolean>(false);
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
   const app = useSelector(appSelectors.selectApp);
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(vaccinesSlice.actions.reset());
+      appDispatch(vaccinesSlice.actions.reset());
       refreshVaccineList();
     }, []),
   );
 
   const refreshVaccineList = () => {
     setLoading(true);
-    dispatch(fetchVaccines(route.params?.assessmentData?.patientData?.patientId))
+    appDispatch(fetchVaccines(route.params?.assessmentData?.patientData?.patientId))
       .then(() => setLoading(false))
       .catch(() => {});
   };
@@ -159,7 +159,7 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
           {
             action: () => {
               setShowVaccineWarning(false);
-              dispatch(appActions.setLoggedVaccine(false));
+              appDispatch(appActions.setLoggedVaccine(false));
               openWebLink(
                 'https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/vaccination-mot-covid-19/information-for-dig-om-vaccinationen/efter-vaccinationen--fortsatt-folja-de-allmanna-raden/',
               );
@@ -171,7 +171,7 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
     {
       action: () => {
         setShowVaccineWarning(false);
-        dispatch(appActions.setLoggedVaccine(false));
+        appDispatch(appActions.setLoggedVaccine(false));
       },
       label: i18n.t('navigation.dismiss'),
     },

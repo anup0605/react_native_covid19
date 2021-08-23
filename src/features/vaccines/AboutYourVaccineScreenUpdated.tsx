@@ -37,7 +37,8 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
   const dispatch = useDispatch();
 
   const doseIndexBeingEdited = route.params?.editIndex;
-  const doseBeingEdited = doseIndexBeingEdited !== undefined ? assessmentData.vaccineData?.doses[doseIndexBeingEdited] : undefined;
+  const doseBeingEdited =
+    doseIndexBeingEdited !== undefined ? assessmentData.vaccineData?.doses[doseIndexBeingEdited] : undefined;
 
   const processFormDataForSubmit = (formData: IAboutYourVaccineData) => {
     if (!submitting) {
@@ -68,7 +69,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
 
   const returnToListView = () =>
     NavigatorService.navigate('VaccineListFeatureToggle', {
-      assessmentData: assessmentData,
+      assessmentData,
       viewName: 'LIST',
     });
 
@@ -121,26 +122,27 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
   const navigation = useNavigation();
 
   const renderDeleteOrBack = () => {
-    return doseBeingEdited ?
-      (
-        <TouchableOpacity onPress={promptDelete}>
-          <ClickableText onPress={promptDelete} style={styles.clickableText}>
-            {i18n.t('vaccines.your-vaccine.delete')}
-          </ClickableText>
-        </TouchableOpacity>
-      )
-      :
-      (<TouchableOpacity onPress={navigation.goBack}>
+    return doseBeingEdited ? (
+      <TouchableOpacity onPress={promptDelete}>
+        <ClickableText onPress={promptDelete} style={styles.clickableText}>
+          {i18n.t('vaccines.your-vaccine.delete')}
+        </ClickableText>
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacity onPress={navigation.goBack}>
         <ClickableText onPress={navigation.goBack} style={styles.clickableText}>
           {i18n.t('vaccines.your-vaccine.cancel')}
         </ClickableText>
-      </TouchableOpacity>);
+      </TouchableOpacity>
+    );
   };
 
   return (
     <Screen profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
       <HeaderText style={{ marginBottom: grid.s }} testID="about-your-vaccine-screen-header">
-        {i18n.t(doseIndexBeingEdited !== undefined  ? 'vaccines.your-vaccine.edit-dose' : 'vaccines.your-vaccine.add-dose')}
+        {i18n.t(
+          doseIndexBeingEdited !== undefined ? 'vaccines.your-vaccine.edit-dose' : 'vaccines.your-vaccine.add-dose',
+        )}
       </HeaderText>
       <Formik
         validateOnChange

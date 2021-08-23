@@ -221,8 +221,8 @@ const styles = StyleSheet.create({
     marginVertical: grid.xxl,
   },
   marginHorizontal: {
-    marginHorizontal: grid.l,
     marginBottom: grid.xxl,
+    marginHorizontal: grid.l,
   },
   newButton: {
     backgroundColor: colors.backgroundTertiary,

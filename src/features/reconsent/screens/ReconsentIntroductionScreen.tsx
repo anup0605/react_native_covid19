@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 12,
   },
-  marginTop: {
-    marginTop: 32,
-  },
   marginBottom: {
     marginBottom: 32,
+  },
+  marginTop: {
+    marginTop: 32,
   },
 });

@@ -1060,8 +1060,7 @@
     "title": "Estimated COVID cases in",
     "cta": "Share",
     "active-covid-cases": "Active COVID cases",
-    "active-cases-in-your-area": "Active cases in your area",
-    "trendline-change": "We updated our COVID incidence estimates on 21/07. Learn more"
+    "active-cases-in-your-area": "Active cases in your area"
   },
   "estimated-cases-card": {
     "covid-in-the-uk": "COVID in the UK",

@@ -1,6 +1,6 @@
 import appConfig from '@covid/appConfig';
 import ApiClient from '@covid/core/api/ApiClient';
-import { TDose, TDoseSymptomsRequest, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TDoseSymptomsRequest, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { TDoseSymptomsResponse, TVaccineResponse } from '@covid/core/vaccine/dto/VaccineResponse';
 
 export interface IVaccineRemoteClient {

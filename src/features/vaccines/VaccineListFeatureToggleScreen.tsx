@@ -4,6 +4,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { RouteProp } from '@react-navigation/native';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+
 import { VaccineListScreenOld } from '.';
 import { AboutYourVaccineScreenOld } from './AboutYourVaccineScreenOld';
 import { AboutYourVaccineScreenUpdated } from './AboutYourVaccineScreenUpdated';

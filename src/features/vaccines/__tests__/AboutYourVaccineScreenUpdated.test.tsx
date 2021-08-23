@@ -1,5 +1,8 @@
 /* eslint-env jest */
 
+import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { vaccineService } from '@covid/core/vaccine/VaccineService';
+import { AboutYourVaccineScreenUpdated } from '@covid/features';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import * as React from 'react';
@@ -7,12 +10,10 @@ import { Provider as ReduxProvider } from 'react-redux';
 import renderer, { act } from 'react-test-renderer';
 import createMockStore from 'redux-mock-store';
 import { ThemeProvider } from 'styled-components/native';
-import MockedNavigator from '../../../../__mocks__/MockedNavigator';
-import { AboutYourVaccineScreenUpdated } from '@covid/features';
+
 import { initialState } from '../../../../__mocks__/mockedInitialState';
-import { vaccineService } from '@covid/core/vaccine/VaccineService';
-import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
-import { vaccineApiClient } from '@covid/core/vaccine/VaccineApiClient';
+import MockedNavigator from '../../../../__mocks__/MockedNavigator';
+
 jest.useFakeTimers();
 
 const middlewares = getDefaultMiddleware();

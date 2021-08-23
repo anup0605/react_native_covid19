@@ -1,5 +1,6 @@
 /* eslint-env jest */
 
+import { VaccineListFeatureToggleScreen } from '@covid/features';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import * as React from 'react';
@@ -7,13 +8,14 @@ import { Provider as ReduxProvider } from 'react-redux';
 import renderer from 'react-test-renderer';
 import createMockStore from 'redux-mock-store';
 import { ThemeProvider } from 'styled-components/native';
-import MockedNavigator from '../../../../__mocks__/MockedNavigator';
-import { VaccineListFeatureToggleScreen } from '@covid/features';
+
 import { initialState } from '../../../../__mocks__/mockedInitialState';
-import { VaccineListScreenOld } from '../VaccineListScreenOld';
+import MockedNavigator from '../../../../__mocks__/MockedNavigator';
 import { AboutYourVaccineScreenOld } from '../AboutYourVaccineScreenOld';
 import { AboutYourVaccineScreenUpdated } from '../AboutYourVaccineScreenUpdated';
+import { VaccineListScreenOld } from '../VaccineListScreenOld';
 import { VaccineListScreenUpdated } from '../VaccineListScreenUpdated';
+
 jest.useFakeTimers();
 
 const middlewares = getDefaultMiddleware();
