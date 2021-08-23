@@ -17,7 +17,7 @@ interface IProps {
 
 const padding = {
   bottom: 26,
-  left: 44,
+  left: 48,
   right: 0,
   top: 6,
 };
