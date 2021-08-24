@@ -79,7 +79,7 @@ export function TrendlineCard(props: IProps) {
       </TouchableOpacity>
 
       {localTrendline?.delta ? (
-        <DeltaTag change={localTrendline.delta} style={props.isSharing && styles.marginBottom} />
+        <DeltaTag change={localTrendline.delta} style={!props.isSharing ? styles.alignCenter : styles.deltaTag} />
       ) : null}
 
       {!props.isSharing ? (
@@ -90,6 +90,13 @@ export function TrendlineCard(props: IProps) {
 }
 
 const styles = StyleSheet.create({
+  alignCenter: {
+    alignSelf: 'center',
+  },
+  deltaTag: {
+    alignSelf: 'center',
+    marginBottom: 24,
+  },
   flex: {
     flex: 1,
   },
@@ -109,7 +116,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   view: {
-    alignItems: 'center',
     backgroundColor: colors.white,
     borderRadius: 16,
     marginVertical: 8,
