@@ -24,14 +24,14 @@ import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 type TProps = {
-  route: RouteProp<TScreenParamList, 'AboutYourVaccine'>;
+  route: RouteProp<TScreenParamList, 'AboutYourVaccineOld'>;
 };
 
 const registerSchema = Yup.object().shape({}).concat(VaccineDoseQuestion.schema());
 
 interface IAboutYourVaccineData extends IVaccineDoseData {}
 
-export function AboutYourVaccineScreen({ route }: TProps) {
+export function AboutYourVaccineScreenOld({ route }: TProps) {
   const coordinator = assessmentCoordinator;
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const [hasSecondDose, setHasSecondDose] = React.useState<string | undefined>(undefined);
@@ -102,7 +102,7 @@ export function AboutYourVaccineScreen({ route }: TProps) {
   };
 
   const submitVaccine = async (vaccine: Partial<TVaccineRequest>) => {
-    await vaccineService.saveVaccineResponse(assessmentData?.patientData.patientId, vaccine);
+    await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccine);
     dispatch(appActions.setLoggedVaccine(true));
     coordinator.gotoNextScreen(route.name);
   };

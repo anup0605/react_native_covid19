@@ -5,7 +5,7 @@ import { GenericTextField } from '@covid/components/GenericTextField';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
-import { fetchStartUpInfo } from '@covid/core/content/state/contentSlice';
+import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
 import { useAppDispatch } from '@covid/core/state/store';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
@@ -37,7 +37,7 @@ type TEditLocationData = {
 export const EditLocationScreen: React.FC<TProps> = (props) => {
   const [errorMessage, setErrorMessage] = React.useState('');
 
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
 
   const initialFormValues: TEditLocationData = {
     currentCountry: props.route.params?.patientData?.patientInfo!.current_country_code ?? '',
@@ -92,7 +92,7 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
     editProfileCoordinator
       .updatePatientInfo(infos)
       .then(() => {
-        dispatch(fetchStartUpInfo());
+        appDispatch(fetchStartUpInfo());
         editProfileCoordinator.gotoNextScreen(props.route.name);
       })
       .catch(() => {

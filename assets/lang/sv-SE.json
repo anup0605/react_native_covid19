@@ -993,22 +993,46 @@
       "delete-vaccine-title": "Ta bort vaccin",
       "delete-vaccine-text": "All information om vaccindoser kommer att tas bort."
     },
+    "vaccine-list-updated": {
+      "title": "Dina covid-19-vacciner",
+      "description": "Berätta om du har fått minst en covid-19-vaccindos, inklusive eventuella boosterdoser.",
+      "add-button": "Lägg till vaccindos",
+      "correct-info": "Informationen är korrekt",
+      "no-vaccine": "Jag har inte vaccinerats",
+      "no-2nd": "Jag har inte fått en andra dos",
+      "delete-vaccine-title": "Ta bort vaccin",
+      "delete-vaccine-text": "All information om vaccindoser kommer att tas bort."
+    },
     "your-vaccine": {
       "title": "Berätta om din vaccination",
+      "add-dose": "Lägg till dos",
+      "edit-dose": "Redigera dos",
       "first-dose": "Om din första dos",
       "second-dose": "Om din andra dos",
       "when-injection": "När blev du vaccinerad?",
+      "when-vaccine": "När blev du vaccinerad?",
+      "when-vaccine-trial": "When was your vaccine trial test?",
       "have-had-second": "Har du redan fått din andra dos?",
       "select-date": "Välj datum",
       "label-name": "Vilket vaccin fick du?",
+      "label-name-updated": "Vilket vaccin fick du?",
+      "name-trial": "N/A",
+      "name-trial-short": "Vaccine trial",
       "name-i-dont-know": "Annat/Jag vet inte",
+      "label-placebo": "N/A",
+      "placebo-yes": "N/A",
+      "placebo-no": "N/A",
+      "placebo-not-sure": "N/A",
       "label-name-other": "Vilken typ av vaccin var det?",
       "placeholder-batch": "T.ex. EL0141",
       "label-batch": "Batch-/satsnummer (valfritt)",
+      "label-batch-updated": "Batchnummer för dos",
       "date-change-confirm": "Bekräfta datumändring?",
       "date-change-text": "Detta ändras när vi frågar dig vissa frågor.",
       "confirm": "Bekräfta",
+      "save-dose": "Spara dos",
       "delete": "Ta bort",
+      "cancel": "Avbryt",
       "details-missing-title": "Vaccinuppgifter saknas",
       "details-missing-body": "Lägg till datum och namn för de vaccindoser du fått för att gå vidare",
       "details-missing-button": "Lägg till vaccinuppgifter"
@@ -1040,8 +1064,7 @@
     "title": "",
     "cta": "",
     "active-covid-cases": "",
-    "active-cases-in-your-area": "",
-    "trendline-change": ""
+    "active-cases-in-your-area": ""
   },
   "estimated-cases-card": {
     "covid-in-the-uk": "",
@@ -1474,7 +1497,8 @@
     "introduction": {
       "button": "Next",
       "description": "Help detect early symptoms and uncover the role of nutrition and lifestyle in disease risk.",
-      "title": "Help us fight other major health issues beyond COVID-19"
+      "title": "Help us fight other major health issues beyond COVID-19",
+      "approval": "This study has ethical approval from King's College London"
     },
     "reconsider": {
       "description-1": "We'll continue to use your data to fight COVID-19 only.",
@@ -1496,7 +1520,7 @@
     },
     "request-consent": {
       "consent-no": "No, I do not consent",
-      "consent-yes": "Yes, I'm in",
+      "consent-yes": "Yes, I consent",
       "information-sheet": "Information Sheet",
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",

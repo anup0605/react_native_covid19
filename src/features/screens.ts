@@ -3,7 +3,8 @@
 
 export {
   AboutYouScreen,
-  AboutYourVaccineScreen,
+  AboutYourVaccineScreenOld,
+  AboutYourVaccineScreenUpdated,
   AdultOrChildScreen,
   AnniversaryScreen,
   ArchiveReasonScreen,
@@ -81,8 +82,10 @@ export {
   TrendlineScreen,
   VaccineDoseSymptomsScreen,
   VaccineFindInfoScreen,
-  VaccineListScreen,
+  VaccineListFeatureToggleScreen,
+  VaccineListScreenOld,
   VaccineLogSymptomsInfoScreen,
+  VaccineListScreenUpdated,
   Welcome1Screen,
   Welcome2Screen,
   WelcomeRepeatScreen,

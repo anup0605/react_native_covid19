@@ -5,7 +5,7 @@ import { ExternalCallout } from '@covid/components/ExternalCallout';
 import { PartnerLogoUSDash } from '@covid/components/logos/PartnerLogo';
 import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
 import AnalyticsService, { events } from '@covid/core/Analytics';
-import { updateTodayDate } from '@covid/core/content/state/contentSlice';
+import { updateTodayDate } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
@@ -30,7 +30,7 @@ interface IProps {
 }
 
 export function DashboardUSScreen({ route, navigation }: IProps) {
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
 
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const [showDietStudyPlayback] = React.useState<boolean | undefined>(startupInfo?.show_diet_score);
@@ -57,7 +57,7 @@ export function DashboardUSScreen({ route, navigation }: IProps) {
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
-      dispatch(updateTodayDate());
+      appDispatch(updateTodayDate());
     });
   }, [navigation]);
 

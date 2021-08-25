@@ -5,12 +5,12 @@ import { EstimatedCasesMapCard } from '@covid/components/cards/EstimatedCasesMap
 import { ShareVaccineCard } from '@covid/components/cards/ShareVaccineCard';
 import { ExternalCallout } from '@covid/components/ExternalCallout';
 import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
-import { updateTodayDate } from '@covid/core/content/state/contentSlice';
 import ExpoPushTokenEnvironment from '@covid/core/push-notifications/expo';
 import PushNotificationService, { IPushTokenEnvironment } from '@covid/core/push-notifications/PushNotificationService';
 import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { fetchSubscribedSchoolGroups } from '@covid/core/schools/Schools.slice';
 import { appActions, appSelectors } from '@covid/core/state/app/slice';
+import { fetchLocalTrendLine, updateTodayDate } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
@@ -26,7 +26,7 @@ import { RouteProp } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { CollapsibleHeaderScrollView } from './CollapsibleHeaderScrollView';
 import { CompactHeader, Header } from './Header';
@@ -48,7 +48,8 @@ const headerConfig = {
 
 export function DashboardScreen({ navigation, route }: IProps) {
   const app = useSelector(appSelectors.selectApp);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
+  const appDispatch = useAppDispatch();
   const schoolGroups = useSelector<TRootState, ISubscribedSchoolGroupStats[]>(
     (state) => state.school.joinedSchoolGroups,
   );
@@ -80,19 +81,22 @@ export function DashboardScreen({ navigation, route }: IProps) {
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
-      dispatch(updateTodayDate());
-      dispatch(fetchSubscribedSchoolGroups());
-      // Decide whether or not to show trendline feature
-      // - This will check for user's lad & do they have local trendline data & BE feature toggle
-      const flag = await appCoordinator.shouldShowTrendLine();
-      setShowTrendline(flag);
+      appDispatch(updateTodayDate());
+      appDispatch(fetchSubscribedSchoolGroups());
     });
-  }, [navigation]);
+  }, []);
+
+  React.useEffect(() => {
+    if (appCoordinator.shouldShowTrendLine()) {
+      dispatch(fetchLocalTrendLine());
+      setShowTrendline(true);
+    }
+  }, []);
 
   React.useEffect(() => {
     let isMounted = true;
     if (!app.dashboardHasBeenViewed) {
-      dispatch(appActions.setDashboardHasBeenViewed(true));
+      appDispatch(appActions.setDashboardHasBeenViewed(true));
       setTimeout(() => {
         if (isMounted && startupInfo?.show_research_consent) {
           appCoordinator.goToReconsent();
@@ -127,7 +131,8 @@ export function DashboardScreen({ navigation, route }: IProps) {
             screenName={route.name}
           />
         ) : null}
-        {showTrendline ? <TrendlineCard ctaOnPress={onExploreTrendline} /> : null}
+
+        {showTrendline ? <TrendlineCard onPress={onExploreTrendline} /> : null}
 
         <EstimatedCasesMapCard />
 

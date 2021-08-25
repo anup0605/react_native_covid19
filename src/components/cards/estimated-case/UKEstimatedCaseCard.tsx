@@ -1,4 +1,4 @@
-import { TContentState } from '@covid/core/content/state/contentSlice';
+import { TContentState } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
 import * as React from 'react';

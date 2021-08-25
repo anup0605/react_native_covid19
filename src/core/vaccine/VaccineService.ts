@@ -2,7 +2,7 @@ import { TDose, TDoseSymptomsRequest, TVaccineRequest } from '@covid/core/vaccin
 import { vaccineApiClient } from '@covid/core/vaccine/VaccineApiClient';
 
 export interface IVaccineService {
-  saveVaccineResponse(patientId: string, payload: Partial<TVaccineRequest>): Promise<boolean>;
+  saveVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<boolean>;
   saveDoseSymptoms(patientId: string, payload: Partial<TDoseSymptomsRequest>): Promise<boolean>;
   deleteVaccine(vaccineId: string): Promise<void>;
   listVaccines(): Promise<TVaccineRequest[]>;
@@ -20,12 +20,12 @@ export class VaccineService implements IVaccineService {
     ];
   }
 
-  public async saveVaccineResponse(patientId: string, payload: Partial<TVaccineRequest>): Promise<boolean> {
+  public async saveVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<boolean> {
     if (!payload.doses) payload.doses = this.initDoses();
     if (payload.id) {
-      await vaccineApiClient.updateVaccineResponse(patientId, payload);
+      await vaccineApiClient.updateVaccineAndDoses(patientId, payload);
     } else {
-      await vaccineApiClient.saveVaccineResponse(patientId, payload);
+      await vaccineApiClient.saveVaccineAndDoses(patientId, payload);
     }
     return true;
   }
@@ -39,6 +39,7 @@ export class VaccineService implements IVaccineService {
     return vaccineApiClient.listVaccines();
   }
 
+  // Deprecated as the "new" Vaccine system treats vaccine as a "Vaccination Record", and uses PATCH to "delete" doses
   deleteVaccine(vaccineId: string): Promise<void> {
     return vaccineApiClient.deleteVaccine(vaccineId);
   }

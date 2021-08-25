@@ -7,13 +7,15 @@ export const initialStateVaccine: IVaccineState = {
   vaccines: [],
 };
 
-export const fetchVaccines = createAsyncThunk('vaccines/fetchVaccines', async (patientId: string): Promise<
-  TVaccineRequest[]
-> => {
-  const response = await vaccineService.listVaccines();
-  const patientVaccines = response.filter((vaccine) => vaccine.patient === patientId);
-  return patientVaccines;
-});
+// TODO: Delete once we fully launch the updated VaccineListScreen component
+export const fetchVaccines = createAsyncThunk<unknown, string>(
+  'vaccines/fetchVaccines',
+  async (patientId: string): Promise<TVaccineRequest[]> => {
+    const response = await vaccineService.listVaccines();
+    const patientVaccines = response.filter((vaccine) => vaccine.patient === patientId);
+    return patientVaccines;
+  },
+);
 
 const vaccinesSlice = createSlice({
   extraReducers: {

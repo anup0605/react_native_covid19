@@ -1,7 +1,7 @@
 import { IAssessmentState } from '@covid/core/assessment/AssessmentState';
 import assessment from '@covid/core/assessment/state/reducers';
-import { contentSlice, TContentState } from '@covid/core/content/state/contentSlice';
 import { schoolSlice, TSchoolState } from '@covid/core/schools/Schools.slice';
+import { contentSlice, TContentState } from '@covid/core/state/contentSlice';
 import { combineReducers } from 'redux';
 
 import { appSlice } from './app/slice';

@@ -989,22 +989,46 @@
       "delete-vaccine-title": "Delete Vaccine?",
       "delete-vaccine-text": "Information about all vaccines doses will be deleted."
     },
+    "vaccine-list-updated": {
+      "title": "Your COVID-19 vaccines",
+      "description": "Tell us if you’ve had at least one dose of a COVID-19 vaccine, including boosters, through the national roll-out.\n\nWe can now record COVID-19 vaccines taken as part of a trial - please select \"I received my vaccine via a vaccine trial\" when asked for the name of your vaccine.",
+      "add-button": "Add a vaccine dose",
+      "correct-info": "This information is correct",
+      "no-vaccine": "I haven't had a vaccine",
+      "no-2nd": "I haven't had a second dose",
+      "delete-vaccine-title": "Delete Vaccine?",
+      "delete-vaccine-text": "Information about all vaccines doses will be deleted."
+    },
     "your-vaccine": {
       "title": "Tell us about your vaccine",
+      "add-dose": "Add dose",
+      "edit-dose": "Edit dose",
       "first-dose": "About your first dose",
       "second-dose": "About your second dose",
       "when-injection": "When was your injection?",
+      "when-vaccine": "When was your vaccine?",
+      "when-vaccine-trial": "When was your vaccine trial test?",
       "have-had-second": "Have you had a second dose yet?",
       "select-date": "Select date",
       "label-name": "What is the name of the vaccine you received?",
+      "label-name-updated": "Which vaccine did you receive?",
+      "name-trial": "I received my vaccine via a vaccine trial",
+      "name-trial-short": "Vaccine trial",
       "name-i-dont-know": "Other/I don't know",
+      "label-placebo": "Did you receive a placebo?",
+      "placebo-yes": "I received a placebo",
+      "placebo-no": "I didn't receive a placebo",
+      "placebo-not-sure": "I'm not sure / I don't know yet",
       "label-name-other": "Which type of vaccine was it?",
       "placeholder-batch": "E.g. ELO141",
       "label-batch": "Batch number (optional)",
+      "label-batch-updated": "Batch number of the dose",
       "date-change-confirm": "Confirm date change?",
       "date-change-text": "This will change when we ask you certain questions.",
       "confirm": "Confirm",
+      "save-dose": "Save dose",
       "delete": "Delete vaccine",
+      "cancel": "Cancel",
       "details-missing-title": "Vaccine details missing",
       "details-missing-body": "Please add the date and name of any vaccine doses that you've received in order to continue",
       "details-missing-button": "Add vaccine info"
@@ -1036,8 +1060,7 @@
     "title": "Estimated COVID cases in",
     "cta": "Share",
     "active-covid-cases": "Active COVID cases",
-    "active-cases-in-your-area": "Active cases in your area",
-    "trendline-change": "We updated our COVID incidence estimates on 21/07. Learn more"
+    "active-cases-in-your-area": "Active cases in your area"
   },
   "estimated-cases-card": {
     "covid-in-the-uk": "COVID in the UK",
@@ -1470,7 +1493,8 @@
     "introduction": {
       "button": "Next",
       "description": "Help detect early symptoms and uncover the role of nutrition and lifestyle in disease risk.",
-      "title": "Help us fight other major health issues beyond COVID-19"
+      "title": "Help us fight other major health issues beyond COVID-19",
+      "approval": "This study has ethical approval from King's College London"
     },
     "reconsider": {
       "description-1": "We'll continue to use your data to fight COVID-19 only.",
@@ -1492,7 +1516,7 @@
     },
     "request-consent": {
       "consent-no": "No, I do not consent",
-      "consent-yes": "Yes, I'm in",
+      "consent-yes": "Yes, I consent",
       "information-sheet": "Information Sheet",
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",

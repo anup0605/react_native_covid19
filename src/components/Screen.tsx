@@ -48,7 +48,7 @@ function renderHeader(props: IProps) {
 
 function renderBody(props: IProps) {
   return props.noScrollView ? (
-    props.children
+    <View style={styles.flex}>{props.children}</View>
   ) : (
     <ScrollView
       alwaysBounceVertical={false}

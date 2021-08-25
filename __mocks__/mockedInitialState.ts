@@ -1,5 +1,5 @@
 import { initialStateAssessment } from '@covid/core/assessment/state/reducers';
-import { initialStateContent } from '@covid/core/content/state/contentSlice';
+import { initialStateContent } from '@covid/core/state/contentSlice';
 import { initialStateSchools } from '@covid/core/schools/Schools.slice';
 import { appInitialState } from '@covid/core/state/app/slice';
 import { initialStateDietStudy } from '@covid/core/state/diet-study/slice';

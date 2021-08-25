@@ -1,5 +1,6 @@
 import { BrandedButton, ErrorText, Text } from '@covid/components';
 import Card from '@covid/components/cards/Card';
+import Analytics, { events } from '@covid/core/Analytics';
 import { contentService } from '@covid/core/content/ContentService';
 import { resetFeedback } from '@covid/core/state/reconsent';
 import IllustrationSignup from '@covid/features/reconsent/components/IllustrationSignup';
@@ -28,6 +29,11 @@ export default function ReconsentNewsletterSignupScreen() {
   async function toggleNewsletterSignup() {
     setLoading(true);
     try {
+      if (signedUp) {
+        Analytics.track(events.RECONSENT_NEWSLETTER_UNSUBSCRIBE);
+      } else {
+        Analytics.track(events.RECONSENT_NEWSLETTER_SUBSCRIBE);
+      }
       await contentService.signUpForDiseaseResearchNewsletter(!signedUp);
       setSignedUp((prevState) => !prevState);
     } catch {
@@ -37,6 +43,10 @@ export default function ReconsentNewsletterSignupScreen() {
   }
 
   function onPress() {
+    if (signedUp) {
+      // In Amplitude it's hard to filter people who subscribed but didn't unsubscribe.
+      Analytics.track(events.RECONSENT_NEWSLETTER_SUBSCRIBED_FINAL);
+    }
     NavigatorService.navigate('Dashboard');
     dispatch(resetFeedback());
   }

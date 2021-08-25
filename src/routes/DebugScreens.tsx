@@ -7,24 +7,29 @@ const screenEntries = Object.entries(screens);
 const timeInterval = 2000; // milliseconds
 
 export default function DebugScreens(props: any) {
+  const [runSlideshow, setRunSlideshow] = React.useState(false);
   const [index, setIndex] = React.useState(16);
   const [showInfo, setShowInfo] = React.useState(true);
 
   /* Uncomment below to let the app go through all screens like a slideshow. */
-  // React.useEffect(() => {
-  //   setShowInfo(false);
-  //   const interval = setInterval(() => {
-  //     setIndex((previousIndex) => {
-  //       if (previousIndex >= screenEntries.length - 1) {
-  //         setShowInfo(true);
-  //         clearInterval(interval);
-  //         return 0;
-  //       }
-  //       return previousIndex + 1;
-  //     });
-  //   }, timeInterval);
-  //   return () => clearInterval(interval);
-  // }, []);
+  React.useEffect(() => {
+    if (!runSlideshow) {
+      return undefined;
+    }
+    setShowInfo(false);
+    const interval = setInterval(() => {
+      setIndex((previousIndex) => {
+        if (previousIndex >= screenEntries.length - 1) {
+          setRunSlideshow(false);
+          setShowInfo(true);
+          clearInterval(interval);
+          return 0;
+        }
+        return previousIndex + 1;
+      });
+    }, timeInterval);
+    return () => clearInterval(interval);
+  }, [runSlideshow]);
 
   if (!__DEV__) {
     return null;

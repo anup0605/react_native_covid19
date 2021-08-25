@@ -1,11 +1,11 @@
 import { BrandedButton } from '@covid/components';
 import { DeltaTag } from '@covid/components/cards/estimated-case/DeltaTag';
+import { ETrendLineViewMode, TrendLineChart } from '@covid/components/charts/TrendLineChart';
 import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
 import { Screen } from '@covid/components/Screen';
-import { ETrendlineTimeFilters, ETrendLineViewMode, TrendLineChart } from '@covid/components/stats/TrendLineChart';
 import { Header3Text, RegularText } from '@covid/components/Text';
 import { ITrendLineData } from '@covid/core/content/dto/ContentAPIContracts';
-import { fetchLocalTrendLine } from '@covid/core/content/state/contentSlice';
+import { fetchLocalTrendLine } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
 import { colors, fontStyles } from '@theme';
@@ -42,13 +42,11 @@ export const TrendlineScreen: React.FC = () => {
 
         <Header3Text style={styles.metric}>{trendline?.today}</Header3Text>
 
-        {trendline?.delta ? (
-          <View style={styles.deltaTag}>
-            <DeltaTag change={trendline.delta} />
-          </View>
-        ) : null}
+        {trendline?.delta ? <DeltaTag change={trendline.delta} style={styles.deltaTag} /> : null}
 
-        <TrendLineChart filter={ETrendlineTimeFilters.all} viewMode={ETrendLineViewMode.explore} />
+        <View style={styles.chartWrapper}>
+          <TrendLineChart viewMode={ETrendLineViewMode.explore} />
+        </View>
 
         <BrandedButton onPress={share} style={styles.shareButton}>
           <Text style={[fontStyles.bodyLight, styles.shareButtonText]}>{i18n.t('explore-trend-line.cta')}</Text>
@@ -61,6 +59,11 @@ export const TrendlineScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  chartWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
   deltaTag: {
     alignSelf: 'center',
     marginTop: 16,
@@ -87,7 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: colors.purple,
     borderWidth: 1,
-    marginVertical: 16,
+    marginBottom: 16,
+    marginTop: 32,
     paddingHorizontal: 48,
   },
   shareButtonText: {

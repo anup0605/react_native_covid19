@@ -3,14 +3,6 @@ import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordina
 import { TConfigType } from '@covid/core/Config';
 import { ConsentService } from '@covid/core/consent/ConsentService';
 import { contentService } from '@covid/core/content/ContentService';
-import {
-  fetchDismissedCallouts,
-  fetchFeaturedContent,
-  fetchLocalTrendLine,
-  fetchStartUpInfo,
-  fetchUKMetrics,
-  TFetchLocalTrendlinePayload,
-} from '@covid/core/content/state/contentSlice';
 import { Coordinator, IEditableProfile, ISelectProfile, TScreenFlow } from '@covid/core/Coordinator';
 import { dietScoreApiClient } from '@covid/core/diet-score/DietScoreApiClient';
 import {
@@ -24,6 +16,12 @@ import { patientCoordinator } from '@covid/core/patient/PatientCoordinator';
 import { TPatientData } from '@covid/core/patient/PatientData';
 import { patientService } from '@covid/core/patient/PatientService';
 import { TProfile } from '@covid/core/profile/ProfileService';
+import {
+  fetchDismissedCallouts,
+  fetchFeaturedContent,
+  fetchStartUpInfo,
+  fetchUKMetrics,
+} from '@covid/core/state/contentSlice';
 import store from '@covid/core/state/store';
 import { TUserResponse } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
@@ -250,34 +248,10 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
     NavigatorService.navigate('Trendline', { lad });
   };
 
-  async shouldShowTrendLine(): Promise<boolean> {
+  shouldShowTrendLine(): boolean {
     const { startupInfo } = store.getState().content;
 
-    // Check feature flag (BE should check does user have LAD, is missing LAD will return false)
-    if (startupInfo && !startupInfo.show_trendline) {
-      return false;
-    }
-
-    if (!startupInfo?.local_data?.lad) {
-      return false;
-    }
-
-    // Check does local trendline has enough data
-    try {
-      const result = await store.dispatch(fetchLocalTrendLine());
-
-      // TODO: Warning this is not typed. Need to look into typing with async thunk
-      const { localTrendline } = result.payload as TFetchLocalTrendlinePayload;
-
-      // Double check local trendline results
-      if (!result || !localTrendline) {
-        return false;
-      }
-
-      return !!localTrendline.timeseries && localTrendline.timeseries?.length > 0;
-    } catch (error) {
-      return false;
-    }
+    return !!(startupInfo?.show_trendline && startupInfo?.local_data?.lad);
   }
 
   goToMentalHealthStudy = () => {

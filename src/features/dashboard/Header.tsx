@@ -2,7 +2,7 @@ import { covidByZoeIcon, covidIcon } from '@assets';
 import { BrandedButton } from '@covid/components';
 import { CaptionText, Header3Text, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
-import { TContentState } from '@covid/core/content/state/contentSlice';
+import { TContentState } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
 import { cleanIntegerVal } from '@covid/utils/number';

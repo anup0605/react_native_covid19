@@ -276,11 +276,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
         </View>
       </View>
 
-      {!isSharing ? (
-        <View>
-          <ShareButton label={i18n.t('covid-cases-map.share')} onPress={share} />
-        </View>
-      ) : null}
+      {!isSharing ? <ShareButton label={i18n.t('covid-cases-map.share')} onPress={share} /> : null}
     </View>
   );
 }

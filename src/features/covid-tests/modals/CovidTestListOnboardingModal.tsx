@@ -1,8 +1,8 @@
 import { BrandedButton, HeaderText, Modal, RegularText } from '@covid/components';
 import ProgressStatus from '@covid/components/ProgressStatus';
 import { events, track } from '@covid/core/Analytics';
-import { fetchStartUpInfo } from '@covid/core/content/state/contentSlice';
 import { patientService } from '@covid/core/patient/PatientService';
+import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { colors } from '@theme';

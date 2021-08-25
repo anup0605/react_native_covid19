@@ -32,6 +32,10 @@ function goBack() {
   navigation?.goBack();
 }
 
+function push<RouteName extends TScreenName>(routeName: RouteName, params?: TScreenParamList[RouteName]) {
+  navigation?.dispatch(StackActions.push(routeName, params));
+}
+
 function handleStateChange() {
   const state = navigation?.getRootState();
   if (!state) return;
@@ -61,6 +65,7 @@ export default {
   goBack,
   handleStateChange,
   navigate,
+  push,
   replace,
   reset,
   setContainer,
