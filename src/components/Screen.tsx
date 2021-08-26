@@ -55,7 +55,7 @@ function renderBody(props: IProps) {
       contentContainerStyle={props.noPadding ? styling.flexGrow : styles.contentContainer}
       testID={`scroll-view-${props.testID || 'screen'}`}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
         <View style={styles.view}>{props.children}</View>
       </TouchableWithoutFeedback>
     </ScrollView>
