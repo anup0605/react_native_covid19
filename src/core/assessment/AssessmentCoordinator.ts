@@ -186,9 +186,7 @@ export class AssessmentCoordinator extends Coordinator {
     if (vaccine) {
       this.assessmentData.vaccineData = vaccine;
     }
-    // FeatureToggle: Use push to add "another" state to nav stack so that its back returns to "itself" (defaults to LIST view)
-    NavigatorService.push('VaccineListFeatureToggle', {
-      viewName: 'ADD_EDIT_DELETE',
+    return NavigatorService.navigate('AboutYourVaccineFeatureToggle', {
       assessmentData: this.assessmentData,
       editIndex: index,
     });

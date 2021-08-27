@@ -100,23 +100,35 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
       <Tab.Screen
         children={() => <CovidListByType covidTests={lateralFlowTests} />}
         name={i18n.t('covid-test-list.tab-lateral')}
-        options={{ tabBarLabel: i18n.t('covid-test-list.tab-lateral') }}
+        options={{
+          tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-lateral'),
+          tabBarLabel: i18n.t('covid-test-list.tab-lateral'),
+        }}
       />
       <Tab.Screen
         children={() => <CovidListByType covidTests={pcrTests} />}
         name={i18n.t('covid-test-list.tab-pcr')}
-        options={{ tabBarLabel: i18n.t('covid-test-list.tab-pcr') }}
+        options={{
+          tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-pcr'),
+          tabBarLabel: i18n.t('covid-test-list.tab-pcr'),
+        }}
       />
       <Tab.Screen
         children={() => <CovidListByType covidTests={antibodyTests} />}
         name={i18n.t('covid-test-list.tab-antibody')}
-        options={{ tabBarLabel: i18n.t('covid-test-list.tab-antibody') }}
+        options={{
+          tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-antibody'),
+          tabBarLabel: i18n.t('covid-test-list.tab-antibody'),
+        }}
       />
       {otherTests.length ? (
         <Tab.Screen
           children={() => <CovidListByType covidTests={otherTests} />}
           name={i18n.t('covid-test-list.tab-other')}
-          options={{ tabBarLabel: i18n.t('covid-test-list.tab-other') }}
+          options={{
+            tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-other'),
+            tabBarLabel: i18n.t('covid-test-list.tab-other'),
+          }}
         />
       ) : null}
     </Tab.Navigator>

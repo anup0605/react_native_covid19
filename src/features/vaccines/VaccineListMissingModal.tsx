@@ -1,5 +1,6 @@
 import { BrandedButton, HeaderText, Text } from '@covid/components';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
+import { TDose } from '@covid/core/vaccine/dto/VaccineRequest';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { RouteProp } from '@react-navigation/native';
@@ -15,7 +16,12 @@ export const VaccineListMissingModal: React.FC<TProps> = ({ route }) => {
   const coordinator = assessmentCoordinator;
 
   const close = () => {
-    coordinator.goToAddEditVaccine(route.params?.vaccine);
+    // Get the edit index of the first dose that has missing data
+    const doses: TDose[] = route.params?.vaccine.doses ?? [];
+    const incompleteDoseIndex: number | undefined = doses.findIndex((dose: TDose, index: number) => {
+      return dose.date_taken_specific == null || dose.brand === null;
+    });
+    coordinator.goToAddEditVaccine(route.params?.vaccine, incompleteDoseIndex);
   };
 
   return (

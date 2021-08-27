@@ -18,6 +18,7 @@ export function Switch(props: IProps) {
   return (
     <View style={[styles.fieldWrapper, props.style]}>
       <RNSwitch
+        accessibilityLabel={props.label}
         ios_backgroundColor={colors.backgroundTertiary}
         onValueChange={props.toggleSwitch}
         thumbColor={colors.white}

@@ -1001,7 +1001,7 @@
       "no-vaccine": "Jag har inte vaccinerats",
       "no-2nd": "Jag har inte fått en andra dos",
       "delete-vaccine-title": "Ta bort vaccin",
-      "delete-vaccine-text": "All information om vaccindoser kommer att tas bort."
+      "delete-vaccine-text": "All information om detta vaccin kommer att tas bort."
     },
     "your-vaccine": {
       "title": "Berätta om din vaccination",

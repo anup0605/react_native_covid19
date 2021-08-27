@@ -75,7 +75,9 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
 
   const submitVaccine = async (vaccine: Partial<TVaccineRequest>) => {
     await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccine);
-    dispatch(appActions.setLoggedVaccine(true));
+    if (!doseIndexBeingEdited) {
+      dispatch(appActions.setLoggedVaccine(true));
+    }
     returnToListView();
   };
 
@@ -86,8 +88,8 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
       doses: assessmentData.vaccineData?.doses.filter((dose: TDose, index: number) => index !== doseIndexBeingEdited),
     };
     Alert.alert(
-      i18n.t('vaccines.vaccine-list.delete-vaccine-title'),
-      i18n.t('vaccines.vaccine-list.delete-vaccine-text'),
+      i18n.t('vaccines.vaccine-list-updated.delete-vaccine-title'),
+      i18n.t('vaccines.vaccine-list-updated.delete-vaccine-text'),
       [
         {
           style: 'cancel',

@@ -77,15 +77,12 @@ export type TScreenParamList = {
   Pingdemic: { assessmentData: TAssessmentData };
 
   // Vaccines
+  AboutYourVaccineFeatureToggle: { assessmentData: TAssessmentData; editIndex?: number };
   AboutYourVaccineOld: { assessmentData: TAssessmentData; editIndex?: number };
   AboutYourVaccineUpdated: { assessmentData: TAssessmentData; editIndex?: number };
   VaccineDoseSymptoms: { assessmentData: TAssessmentData; dose: string };
   VaccineFindInfo: { assessmentData: TAssessmentData };
-  VaccineListFeatureToggle: {
-    viewName: 'LIST' | 'ADD_EDIT_DELETE';
-    assessmentData: TAssessmentData;
-    editIndex?: number;
-  };
+  VaccineListFeatureToggle: { assessmentData: TAssessmentData };
   VaccineList: { assessmentData: TAssessmentData };
   VaccineListOld: { assessmentData: TAssessmentData };
   VaccineListUpdated: { assessmentData: TAssessmentData };
