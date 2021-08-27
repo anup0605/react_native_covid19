@@ -1,3 +1,4 @@
+export { AboutYourVaccineFeatureToggleScreen } from './AboutYourVaccineFeatureToggleScreen';
 export { AboutYourVaccineScreenOld } from './AboutYourVaccineScreenOld';
 export { AboutYourVaccineScreenUpdated } from './AboutYourVaccineScreenUpdated';
 export { VaccineDoseSymptomsScreen } from './VaccineDoseSymptomsScreen';

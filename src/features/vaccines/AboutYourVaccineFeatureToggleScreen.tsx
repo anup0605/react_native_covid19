@@ -4,20 +4,18 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { RouteProp } from '@react-navigation/native';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-
-import { VaccineListScreenOld } from '.';
-import { VaccineListScreenUpdated } from './VaccineListScreenUpdated';
+import { AboutYourVaccineScreenOld } from './AboutYourVaccineScreenOld';
+import { AboutYourVaccineScreenUpdated } from './AboutYourVaccineScreenUpdated';
 
 type TProps = {
-  route: RouteProp<TScreenParamList, 'VaccineListFeatureToggle'>;
+  route: RouteProp<TScreenParamList, 'AboutYourVaccineFeatureToggle'>;
 };
 
-export const VaccineListFeatureToggleScreen: React.FC<TProps> = ({ route }) => {
+export const AboutYourVaccineFeatureToggleScreen: React.FC<TProps> = ({ route }) => {
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
-
   return startupInfo?.show_new_vaccines_ui ? (
-    <VaccineListScreenUpdated route={route} />
+    <AboutYourVaccineScreenUpdated route={route} />
   ) : (
-    <VaccineListScreenOld route={route} />
+    <AboutYourVaccineScreenOld route={route} />
   );
 };

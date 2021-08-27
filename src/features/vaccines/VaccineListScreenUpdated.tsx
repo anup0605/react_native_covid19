@@ -48,6 +48,10 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
       const patientVaccines = response.filter((vaccine) => vaccine.patient === patientId);
       // Set the "vaccines" to be the first item returned, in order to maintain backwards compatibility with older versions that may have multiple
       const vaccines: TVaccineRequest | undefined = patientVaccines.length ? patientVaccines[0] : undefined;
+      // Also, reverse doses - they are sorted by date old-new for the old system, but new UI wants the reverse
+      if (vaccines && vaccines.doses) {
+        vaccines.doses = vaccines?.doses.reverse();
+      }
 
       setVaccines(vaccines);
     } catch (_) {
@@ -218,7 +222,7 @@ const styles = StyleSheet.create({
   },
   introduction: {
     marginHorizontal: grid.l,
-    marginVertical: grid.xxl,
+    marginBottom: grid.xxl,
   },
   marginHorizontal: {
     marginBottom: grid.xxl,

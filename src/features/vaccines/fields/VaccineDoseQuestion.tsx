@@ -114,13 +114,15 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
       minDate = new Date('2020-12-11');
     }
 
-    // NOTE: Removed maxDate setting
+    // Max date is simply "Today"
+    const maxDate = new Date();
 
     return (
       <View style={styles.calendar}>
         <CalendarPicker
           initialDate={dateField}
           minDate={minDate}
+          maxDate={maxDate}
           onDateChange={setDoseDate}
           selectedStartDate={dateField}
         />

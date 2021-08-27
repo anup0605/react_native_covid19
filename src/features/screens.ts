@@ -3,6 +3,7 @@
 
 export {
   AboutYouScreen,
+  AboutYourVaccineFeatureToggleScreen,
   AboutYourVaccineScreenOld,
   AboutYourVaccineScreenUpdated,
   AdultOrChildScreen,

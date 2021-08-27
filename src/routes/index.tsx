@@ -20,6 +20,11 @@ export default function MainNavigator() {
       <Stack.Screen component={screens.SplashScreen} name="Splash" options={options} />
       <Stack.Screen component={screens.AboutYouScreen} name="AboutYou" options={options} />
       <Stack.Screen
+        component={screens.AboutYourVaccineFeatureToggleScreen}
+        name="AboutYourVaccineFeatureToggle"
+        options={options}
+      />
+      <Stack.Screen
         component={screens.AboutYourVaccineScreenUpdated}
         name="AboutYourVaccineUpdated"
         options={options}
