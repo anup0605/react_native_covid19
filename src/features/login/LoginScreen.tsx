@@ -20,7 +20,7 @@ interface IProps {
   route: RouteProp<ScreenParamList, 'Login'>;
 }
 
-function LoginScreen({ route }: IProps) {
+export default function LoginScreen({ route }: IProps) {
   const [hasErrors, setHasErrors] = React.useState(false);
   const [isValid, setIsValidState] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -105,6 +105,7 @@ function LoginScreen({ route }: IProps) {
         <Label style={styles.label}>{i18n.t('login.password-label')}</Label>
         <Input
           secureTextEntry
+          autoCapitalize="none"
           onChangeText={onChangePassword}
           onSubmitEditing={handleLogin}
           ref={passwordInput}
@@ -154,5 +155,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default LoginScreen;

@@ -162,6 +162,7 @@ class RegisterScreen extends React.Component<TProps, TState> {
 
                 <ValidatedTextInput
                   secureTextEntry
+                  autoCapitalize="none"
                   error={props.touched.password && props.errors.password}
                   onBlur={props.handleBlur('password')}
                   onChangeText={(text) => {
