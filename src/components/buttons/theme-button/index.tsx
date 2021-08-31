@@ -23,7 +23,7 @@ function ThemeButton({
   disabled = false,
   onPress,
   outline = false,
-  rhythm,
+  rhythm = 0,
   simple = false,
   style = {},
   title,

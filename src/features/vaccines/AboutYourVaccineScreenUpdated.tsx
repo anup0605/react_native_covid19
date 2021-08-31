@@ -4,11 +4,11 @@ import { Screen } from '@covid/components/Screen';
 import { ClickableText, HeaderText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { appActions } from '@covid/core/state/app/slice';
 import { EVaccineTypes, TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/fields/VaccineDoseQuestion';
+import { showVaccineWarningAlert } from '@covid/features/vaccines/utils';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { sizes, styling } from '@covid/themes';
@@ -19,7 +19,6 @@ import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import * as React from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 type TProps = {
@@ -31,16 +30,16 @@ const registerSchema = Yup.object().shape({}).concat(VaccineDoseQuestion.schemaU
 interface IAboutYourVaccineData extends IVaccineDoseData {}
 
 export function AboutYourVaccineScreenUpdated({ route }: TProps) {
-  const coordinator = assessmentCoordinator;
   const [submitting, setSubmitting] = React.useState<boolean>(false);
+  const navigation = useNavigation();
+
   const assessmentData = route.params?.assessmentData;
-  const dispatch = useDispatch();
 
   const doseIndexBeingEdited = route.params?.editIndex;
   const doseBeingEdited =
     doseIndexBeingEdited !== undefined ? assessmentData.vaccineData?.doses[doseIndexBeingEdited] : undefined;
 
-  const processFormDataForSubmit = (formData: IAboutYourVaccineData) => {
+  const processFormDataForSubmit = async (formData: IAboutYourVaccineData) => {
     if (!submitting) {
       setSubmitting(true);
       const vaccine: Partial<TVaccineRequest> = {
@@ -52,6 +51,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
       if (!vaccine.doses) {
         vaccine.doses = [];
       }
+
       const latestDose: Partial<TDose> = {
         ...doseBeingEdited,
         batch_number: formData.batchNumber,
@@ -63,7 +63,15 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
       vaccine.doses
         .sort((a, b) => Date.parse(a.date_taken_specific) - Date.parse(b.date_taken_specific))
         .map((dose, index) => (dose.sequence = index + 1));
-      submitVaccine(vaccine);
+
+      await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccine);
+
+      returnToListView();
+
+      // Only show the alert when adding a new vaccine.
+      if (doseIndexBeingEdited === undefined) {
+        showVaccineWarningAlert();
+      }
     }
   };
 
@@ -72,14 +80,6 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
       assessmentData,
       viewName: 'LIST',
     });
-
-  const submitVaccine = async (vaccine: Partial<TVaccineRequest>) => {
-    await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccine);
-    if (!doseIndexBeingEdited) {
-      dispatch(appActions.setLoggedVaccine(true));
-    }
-    returnToListView();
-  };
 
   function promptDelete() {
     // Note that the "delete" is actually an UPDATE on the Vaccine Dose collection, and takes the entire vaccine obj as payload
@@ -100,7 +100,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
             vaccineService
               .saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccineWithoutDeletedDose)
               .then(() => {
-                coordinator.resetVaccine();
+                assessmentCoordinator.resetVaccine();
                 returnToListView();
               });
           },
@@ -120,8 +120,6 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
       placebo: doseBeingEdited?.placebo ?? undefined,
     };
   };
-
-  const navigation = useNavigation();
 
   const renderDeleteOrBack = () => {
     return doseBeingEdited ? (
@@ -150,7 +148,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
         validateOnChange
         validateOnMount
         initialValues={{ ...buildInitialValues() }}
-        onSubmit={(formData: IAboutYourVaccineData) => processFormDataForSubmit(formData)}
+        onSubmit={processFormDataForSubmit}
         validationSchema={registerSchema}
       >
         {(props: FormikProps<IAboutYourVaccineData>) => {

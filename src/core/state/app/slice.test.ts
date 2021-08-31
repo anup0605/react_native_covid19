@@ -11,18 +11,10 @@ describe('\n** redux app state **\n', () => {
   it('should initially set mental health study active to true', () => {
     expect(state.mentalHealthStudyActive).toBe(true);
   });
-  it('should initially set logged vaccine to false', () => {
-    expect(state.loggedVaccine).toBe(false);
-  });
   it('should be able to set the state of dashboardHasBeenViewed', () => {
     store.dispatch(appActions.setDashboardHasBeenViewed(true));
     state = store.getState().app;
     expect(state.dashboardHasBeenViewed).toBe(true);
-  });
-  it('should be able to set the state of setLoggedVaccine', () => {
-    store.dispatch(appActions.setLoggedVaccine(true));
-    state = store.getState().app;
-    expect(state.loggedVaccine).toBe(true);
   });
   it('should be able to set the state of setMentalHealthStudyActive', () => {
     store.dispatch(appActions.setMentalHealthStudyActive(false));

@@ -121,8 +121,8 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps)
       <View style={styles.calendar}>
         <CalendarPicker
           initialDate={dateField}
-          minDate={minDate}
           maxDate={maxDate}
+          minDate={minDate}
           onDateChange={setDoseDate}
           selectedStartDate={dateField}
         />

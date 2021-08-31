@@ -16,7 +16,7 @@ const H = ({
   colorPalette = 'uiDark',
   colorShade = 'darker',
   inverted = true,
-  rhythm,
+  rhythm = 0,
   textClass,
 }: IProps) => {
   return (
