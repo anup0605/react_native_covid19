@@ -97,7 +97,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
       return <Loading error={null} status="" />;
     }
     return (
-      <View style={styles.marginHorizontal}>
+      <View style={styles.marginBottom}>
         <BrandedButton
           onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccines)}
           style={styles.newButton}
@@ -135,22 +135,8 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
     }
   };
 
-  return (
-    <Screen profile={route.params?.assessmentData?.patientData?.patientState?.profile} testID="vaccine-list-screen">
-      <View style={styles.marginHorizontal}>
-        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list-updated.title')} />
-      </View>
-
-      <View style={styles.introduction}>
-        <RegularText testID="vaccine-list-introduction">
-          {i18n.t('vaccines.vaccine-list-updated.description')}
-        </RegularText>
-      </View>
-
-      <ListContent />
-
-      <View style={{ flex: 1 }} />
-
+  const footer = () => (
+    <View style={styles.wrapper}>
       <BrandedButton
         onPress={navigateToNextPageOrShowPopup}
         testID="button-vaccine-list-screen"
@@ -162,6 +148,24 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
             : i18n.t('vaccines.vaccine-list-updated.correct-info')}
         </Text>
       </BrandedButton>
+    </View>
+  );
+
+  return (
+    <Screen
+      profile={route.params?.assessmentData?.patientData?.patientState?.profile}
+      testID="vaccine-list-screen"
+      renderFooter={footer}
+    >
+      <View style={styles.marginHorizontal}>
+        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list-updated.title')} />
+      </View>
+      <View style={styles.introduction}>
+        <RegularText testID="vaccine-list-introduction">
+          {i18n.t('vaccines.vaccine-list-updated.description')}
+        </RegularText>
+      </View>
+      <ListContent />
     </Screen>
   );
 };
@@ -171,12 +175,11 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   introduction: {
+    marginTop: sizes.l,
     marginBottom: sizes.xxl,
-    marginHorizontal: sizes.l,
   },
-  marginHorizontal: {
+  marginBottom: {
     marginBottom: sizes.l,
-    marginHorizontal: sizes.m,
   },
   newButton: {
     backgroundColor: colors.backgroundTertiary,
@@ -188,5 +191,8 @@ const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: colors.backgroundPrimary,
     flex: 1,
+  },
+  wrapper: {
+    padding: sizes.l,
   },
 });

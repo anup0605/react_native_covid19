@@ -52,6 +52,11 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
         vaccine.doses = [];
       }
 
+      // Remove edited dose before re-adding below
+      if (doseBeingEdited) {
+        vaccine.doses = vaccine.doses.filter((dose) => dose.id !== doseBeingEdited.id);
+      }
+
       const latestDose: Partial<TDose> = {
         ...doseBeingEdited,
         batch_number: formData.batchNumber,
@@ -78,7 +83,6 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
   const returnToListView = () =>
     NavigatorService.navigate('VaccineListFeatureToggle', {
       assessmentData,
-      viewName: 'LIST',
     });
 
   function promptDelete() {

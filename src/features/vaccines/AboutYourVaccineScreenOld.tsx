@@ -12,6 +12,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/fields/VaccineDoseQuestion';
 import { showVaccineWarningAlert } from '@covid/features/vaccines/utils';
 import i18n from '@covid/locale/i18n';
+import NavigatorService from '@covid/NavigatorService';
 import { sizes, styling } from '@covid/themes';
 import { formatDateToPost } from '@covid/utils/datetime';
 import { RouteProp } from '@react-navigation/native';
@@ -97,7 +98,9 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
 
       await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, { ...vaccine, doses });
 
-      coordinator.gotoNextScreen(route.name);
+      NavigatorService.navigate('VaccineListFeatureToggle', {
+        assessmentData,
+      });
 
       // Only show the alert when adding a new vaccine.
       if (!assessmentData?.vaccineData) {
@@ -139,7 +142,9 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
           onPress: () => {
             vaccineService.deleteVaccine(assessmentData?.vaccineData.id).then(() => {
               coordinator.resetVaccine();
-              coordinator.gotoNextScreen(route.name);
+              NavigatorService.navigate('VaccineListFeatureToggle', {
+                assessmentData,
+              });
             });
           },
           style: 'destructive',
