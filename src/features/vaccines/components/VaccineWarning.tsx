@@ -2,6 +2,7 @@ import { IUIAction } from '@covid/common';
 import { Text, ThemeButton } from '@covid/components';
 import { SButtonRowView } from '@covid/components/messaging/banners/styles';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -38,10 +39,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     elevation: 5,
-    marginTop: 12,
-    paddingBottom: 12,
-    paddingHorizontal: 16,
-    paddingTop: 48,
+    marginTop: sizes.s,
+    paddingBottom: sizes.s,
+    paddingHorizontal: sizes.m,
+    paddingTop: sizes.xxl,
     position: 'absolute',
     shadowColor: '#000',
     shadowOffset: { height: 12, width: 0 },

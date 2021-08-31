@@ -7,7 +7,7 @@ import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
-import { grid, styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { colors } from '@theme';
 import lodash from 'lodash';
 import * as React from 'react';
@@ -56,7 +56,7 @@ export default function MHPRatingScreen() {
       footerTitle={i18n.t('mental-health-playback.rating.button')}
       testID="mhp-introduction-screen"
     >
-      <Card useShadow padding={grid.xxxl} style={[styling.marginTop, styling.marginBottomHuge]}>
+      <Card useShadow padding={sizes.xl} style={[styling.marginTop, styling.marginBottomHuge]}>
         <View onLayout={onLayout} style={styling.measureWidth} />
         <Text
           inverted
@@ -76,7 +76,7 @@ export default function MHPRatingScreen() {
               onPress={() => setSelectedRating(index + 1)}
               style={{
                 paddingHorizontal: spacingSize,
-                paddingVertical: grid.xl,
+                paddingVertical: sizes.l,
               }}
             >
               <Star color={selectedRating - 1 >= index ? '#0165B5' : '#E2E2E2'} height={starSize} width={starSize} />

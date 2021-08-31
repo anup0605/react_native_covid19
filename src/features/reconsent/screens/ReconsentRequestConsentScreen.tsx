@@ -9,27 +9,21 @@ import { selectDiseasePreferences } from '@covid/core/state/reconsent';
 import { TRootState } from '@covid/core/state/root';
 import { Card } from '@covid/features/reconsent/components/Card';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
-import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
-import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
-
-interface IProps {
-  route: RouteProp<TScreenParamList, 'ReconsentRequestConsent'>;
-}
 
 const hitSlop = {
   bottom: 20,
   top: 20,
 };
 
-export default function ReconsentRequestConsentScreen(props: IProps) {
+export default function ReconsentRequestConsentScreen() {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
   const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
@@ -138,9 +132,9 @@ export default function ReconsentRequestConsentScreen(props: IProps) {
 
 const styles = StyleSheet.create({
   buttonNo: {
-    marginBottom: grid.l,
-    marginTop: grid.xxxl,
-    paddingHorizontal: grid.xs,
+    marginBottom: sizes.m,
+    marginTop: sizes.xl,
+    paddingHorizontal: sizes.xxs,
   },
   buttonYes: {
     backgroundColor: colors.purple,
@@ -150,7 +144,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   errorText: {
-    marginBottom: 8,
+    marginBottom: sizes.xs,
     textAlign: 'center',
   },
   externalLink: {
@@ -161,12 +155,12 @@ const styles = StyleSheet.create({
   hr: {
     backgroundColor: colors.backgroundFour,
     height: 1,
-    marginBottom: grid.xxl,
-    marginTop: 32,
+    marginBottom: sizes.l,
+    marginTop: sizes.xl,
     width: '100%',
   },
   marginTop: {
-    marginTop: 32,
+    marginTop: sizes.xl,
   },
   page: {
     backgroundColor: colors.backgroundPrimary,

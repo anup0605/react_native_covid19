@@ -5,7 +5,7 @@ import { DietStudyActionCard } from '@covid/features/diet-study-playback/compone
 import { getDietStudyInfoUrl } from '@covid/features/diet-study-playback/v2/utils';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { useTheme } from '@covid/themes';
+import { sizes, useTheme } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -49,7 +49,7 @@ export default function DietStudyScreen() {
           </ActionCard>
         );
       })}
-      <View style={{ marginTop: 32 }}>
+      <View style={{ marginTop: sizes.xl }}>
         <Text rhythm={8} textClass="h3">
           {i18n.t('diet-study.introduction-ongoing-title')}
         </Text>
@@ -64,10 +64,10 @@ export default function DietStudyScreen() {
         </Text>
       </View>
 
-      <View style={{ paddingRight: 32 }}>
+      <View style={{ paddingRight: sizes.xl }}>
         <Link
           onPress={() => openWebLink(getDietStudyInfoUrl())}
-          style={{ marginBottom: 8 }}
+          style={{ marginBottom: sizes.xs }}
           text={i18n.t('diet-study.introduction-more-link-0')}
         />
       </View>

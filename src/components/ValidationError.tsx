@@ -1,3 +1,4 @@
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
@@ -19,7 +20,7 @@ export const ValidationError: React.FC<TProps> = ({ error, style }) => {
 const styles = StyleSheet.create({
   validationError: {
     marginBottom: 0,
-    marginHorizontal: 6,
-    marginTop: 4,
+    marginHorizontal: sizes.xs,
+    marginTop: sizes.xxs,
   },
 });

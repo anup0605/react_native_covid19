@@ -1,11 +1,11 @@
-export type TMessageTypes = 'BANNER' | 'DIALOG' | 'SNACKBAR';
+type TMessageTypes = 'BANNER' | 'DIALOG' | 'SNACKBAR';
 
 export interface IUIAction {
   action: () => void;
   label: string;
 }
 
-export interface IUIMessageContent {
+interface IUIMessageContent {
   title?: string;
   body: string;
 }

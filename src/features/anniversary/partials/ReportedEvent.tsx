@@ -1,5 +1,6 @@
 import { Icon, Text, TIconName } from '@covid/components';
 import { TReportedEvent } from '@covid/features/anniversary/types';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -40,10 +41,10 @@ function ReportedEvent({ reportedEvent }: IProps) {
       accessible
       style={{
         alignItems: 'center',
-        padding: 4,
+        padding: sizes.xxs,
       }}
     >
-      <Icon iconName={getMappedIconName()} iconSize={24} style={{ marginBottom: 10 }} />
+      <Icon iconName={getMappedIconName()} iconSize={24} style={{ marginBottom: sizes.s }} />
       <Text textAlign="center" textClass="pXSmallMedium">
         {reportedEvent.text}
       </Text>

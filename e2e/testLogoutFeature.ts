@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { by, element } from 'detox';
 
 export function testLogoutFeature() {

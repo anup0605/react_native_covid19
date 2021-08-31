@@ -1,5 +1,6 @@
 import { Icon } from '@covid/components/icons';
 import { Text } from '@covid/components/typography';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     backgroundColor: 'purple',
-    borderRadius: 24,
+    borderRadius: sizes.l,
     height: 48,
     justifyContent: 'center',
     width: 48,
@@ -84,9 +85,9 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     backgroundColor: 'white',
-    borderRadius: 8,
-    marginRight: 8,
-    padding: 4,
+    borderRadius: sizes.xs,
+    marginRight: sizes.xs,
+    padding: sizes.xxs,
   },
 });
 

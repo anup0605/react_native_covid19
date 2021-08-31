@@ -39,7 +39,7 @@ const initialFormValues = {
   yearOfBirth: '',
 };
 
-export interface IAboutYouData extends IRaceEthnicityData, IHeightData, IWeightData {
+interface IAboutYouData extends IRaceEthnicityData, IHeightData, IWeightData {
   yearOfBirth: string;
   sex: string;
   genderIdentity: string;

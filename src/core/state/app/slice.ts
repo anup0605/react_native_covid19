@@ -34,7 +34,6 @@ export const appSlice = createSlice({
 });
 
 export const appActions = appSlice.actions;
-export const appReducer = appSlice.reducer;
 export const appSelectors = {
   selectApp: (state: TRootState) => state.app,
 };

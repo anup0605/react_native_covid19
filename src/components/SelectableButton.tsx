@@ -1,4 +1,5 @@
 import { RegularText } from '@covid/components/Text';
+import { sizes } from '@covid/themes';
 import { colors, fontStyles } from '@theme';
 import { Button } from 'native-base';
 import * as React from 'react';
@@ -26,14 +27,14 @@ export function SelectableButton({ style, children, onPress, selected, testID }:
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     elevation: 0,
     height: 48,
     justifyContent: 'center',
   },
   label: {
     lineHeight: 20,
-    paddingHorizontal: 16,
+    paddingHorizontal: sizes.m,
     textAlign: 'center',
   },
 });

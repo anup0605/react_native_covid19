@@ -2,6 +2,7 @@ import { requiredFormMarker } from '@covid/components/Form';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { KeyboardTypeOptions, StyleProp, TextInputProps, View, ViewStyle } from 'react-native';
@@ -22,7 +23,7 @@ export function GenericTextField(props: IProps) {
   const { formikProps, name, label, placeholder, keyboardType, showError, style, inputProps, ...otherProps } = props;
 
   return (
-    <View style={[{ marginVertical: 16 }, style]}>
+    <View style={[{ marginVertical: sizes.m }, style]}>
       {label ? (
         <RegularText>
           {label}

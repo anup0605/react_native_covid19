@@ -6,6 +6,7 @@ import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordina
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
 import { Text } from 'native-base';
 import * as React from 'react';
@@ -83,10 +84,10 @@ function TreatmentSelectionScreen({ route }: IProps) {
 
 const styles = StyleSheet.create({
   marginTop: {
-    marginTop: 32,
+    marginTop: sizes.xl,
   },
   text: {
-    marginTop: 8,
+    marginTop: sizes.xs,
     textAlign: 'center',
   },
 });

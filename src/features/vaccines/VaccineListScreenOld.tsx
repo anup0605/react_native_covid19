@@ -14,6 +14,7 @@ import { VaccineWarning } from '@covid/features/vaccines/components';
 import { VaccineCard } from '@covid/features/vaccines/components/VaccineCard';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -123,10 +124,7 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
           return (
             <VaccineCard
               key={vaccine.id}
-              onPressEdit={(i) => {
-                coordinator.goToAddEditVaccine(vaccine);
-              }}
-              style={{ marginVertical: 8 }}
+              onPressEdit={() => coordinator.goToAddEditVaccine(vaccine)}
               vaccine={vaccine}
             />
           );
@@ -188,7 +186,7 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
       >
         <HeaderText>{i18n.t('vaccines.vaccine-list.title')}</HeaderText>
 
-        <Text style={{ marginVertical: 8 }}>{i18n.t('vaccines.vaccine-list.description')}</Text>
+        <Text style={{ marginVertical: sizes.xs }}>{i18n.t('vaccines.vaccine-list.description')}</Text>
 
         <ListContent />
 
@@ -196,8 +194,8 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
 
         <BrandedButton
           onPress={navigateToNextPageOrShowPopup}
-          style={styles.continueButton}
           testID="button-vaccine-list-screen"
+          textStyle={styles.continueButton}
         >
           <Text style={{ color: colors.white }}>
             {vaccines.length === 0
@@ -215,13 +213,12 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
 const styles = StyleSheet.create({
   continueButton: {
     color: colors.white,
-    marginHorizontal: 16,
   },
   newButton: {
     backgroundColor: colors.backgroundPrimary,
     borderColor: colors.purple,
     borderWidth: 1,
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   newText: {
     color: colors.purple,

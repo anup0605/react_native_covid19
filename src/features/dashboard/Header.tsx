@@ -5,6 +5,7 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { TContentState } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { cleanIntegerVal } from '@covid/utils/number';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -105,8 +106,8 @@ const styles = StyleSheet.create({
   covidByZoe: {
     alignSelf: 'flex-start',
     height: 56,
-    margin: 8,
-    marginLeft: 16,
+    margin: sizes.xs,
+    marginLeft: sizes.m,
     resizeMode: 'contain',
     width: 136,
   },
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
 
   logo: {
     height: 54,
-    margin: 8,
+    margin: sizes.xs,
     resizeMode: 'contain',
     width: 54,
   },
@@ -129,40 +130,40 @@ const styles = StyleSheet.create({
     backgroundColor: colors.purple,
     elevation: 0,
     height: 48,
-    marginBottom: 8,
-    marginTop: 16,
+    marginBottom: sizes.xs,
+    marginTop: sizes.m,
     textAlign: 'center',
   },
 
   reportButtonCompact: {
-    paddingHorizontal: 52,
+    paddingHorizontal: sizes.xxl,
   },
 
   reportButtonExpanded: {
-    paddingHorizontal: 32,
+    paddingHorizontal: sizes.xl,
   },
 
   reportCard: {
     alignItems: 'center',
     alignSelf: 'stretch',
     backgroundColor: 'rgba(255,255,255,0.1)',
-    borderRadius: 16,
-    marginHorizontal: 16,
-    marginVertical: 16,
-    paddingVertical: 20,
+    borderRadius: sizes.m,
+    marginHorizontal: sizes.m,
+    marginVertical: sizes.m,
+    paddingVertical: sizes.l,
   },
 
   reportedCount: {
     color: colors.backgroundFour,
-    margin: 4,
+    margin: sizes.xxs,
     textAlign: 'center',
   },
 
   root: {
     alignItems: 'center',
     backgroundColor: colors.predict,
-    paddingBottom: 24,
-    paddingTop: 16,
+    paddingBottom: sizes.l,
+    paddingTop: sizes.m,
     width: '100%',
   },
   test: {

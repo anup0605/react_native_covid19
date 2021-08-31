@@ -7,7 +7,7 @@ import { userService } from '@covid/core/user/UserService';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
-import { grid, styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    padding: grid.gutter,
+    padding: sizes.m,
   },
   flagRow: {
     alignSelf: 'stretch',
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   text: {
     color: colors.white,
     fontSize: 24,
-    paddingBottom: 32,
+    paddingBottom: sizes.xl,
     textAlign: 'center',
   },
 });

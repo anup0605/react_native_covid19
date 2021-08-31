@@ -2,6 +2,7 @@ import { chevronRight, tick } from '@assets';
 import { RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TDose, TVaccineRequest, vaccineBrandDisplayName } from '@covid/core/vaccine/dto/VaccineRequest';
+import { sizes } from '@covid/themes';
 import moment from 'moment';
 import * as React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -40,17 +41,17 @@ export const VaccineDoseRow: React.FC<TProps> = ({ dose, testID, vaccineRecord, 
 const styles = StyleSheet.create({
   chevron: {
     height: 12,
-    marginStart: 4,
+    marginLeft: sizes.xxs,
     width: 12,
   },
   itemTouchable: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: 12,
+    paddingVertical: sizes.s,
   },
   tick: {
     height: 16,
-    marginEnd: 8,
+    marginRight: sizes.xs,
     width: 16,
   },
 });

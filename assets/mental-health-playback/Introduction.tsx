@@ -2,7 +2,7 @@ import * as React from 'react';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
 
 export const defaultWidth = 375;
-export const defaultHeight = 196;
+const defaultHeight = 196;
 
 interface IProps {
   height?: number;

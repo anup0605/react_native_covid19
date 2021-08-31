@@ -24,7 +24,6 @@ import { ChangesQuestion } from '@covid/features/mental-health/partials';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
-import { useTheme } from '@covid/themes';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -34,7 +33,6 @@ export default function MentalHealthChangesScreen() {
   const [curQuestion, setCurQuestion] = React.useState(0);
   const mentalHealthChanges = useSelector(selectMentalHealthChanges);
   const dispatch = useDispatch();
-  const { grid } = useTheme();
   const questions = [
     {
       action: setSleep,

@@ -1,5 +1,5 @@
 import { Text } from '@covid/components';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
@@ -62,11 +62,11 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: colors.white,
-    borderRadius: grid.s,
+    borderRadius: sizes.xs,
   },
   description: {
-    minHeight: grid.xxxxl,
-    paddingRight: grid.l,
+    minHeight: sizes.xxl,
+    paddingRight: sizes.m,
   },
   icon: {
     maxWidth: 40,
@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
   },
   name: {
     color: colors.darkblue,
-    paddingRight: grid.l,
+    paddingRight: sizes.m,
   },
   pressable: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: grid.l,
-    paddingVertical: grid.l,
+    paddingHorizontal: sizes.m,
+    paddingVertical: sizes.m,
   },
   shadow: {
     elevation: 4,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   textSection: {
     flex: 1,
     justifyContent: 'center',
-    marginLeft: grid.l,
-    paddingRight: grid.l,
+    marginLeft: sizes.m,
+    paddingRight: sizes.m,
   },
 });

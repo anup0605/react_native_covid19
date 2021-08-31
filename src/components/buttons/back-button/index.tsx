@@ -1,6 +1,7 @@
 import { Icon } from '@covid/components/icons';
 import { Text } from '@covid/components/typography';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
@@ -16,7 +17,7 @@ function BackButton({ style }: IProps) {
       onPress={navigation.goBack}
       style={[{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }, style]}
     >
-      <Icon iconName="big-arrow-left" style={{ marginRight: 8 }} />
+      <Icon iconName="big-arrow-left" style={{ marginRight: sizes.xs }} />
       <Text>{i18n.t('navigation.back')}</Text>
     </TouchableOpacity>
   );

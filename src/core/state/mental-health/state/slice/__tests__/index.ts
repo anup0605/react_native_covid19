@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { setCompleted, setConsent, setCurrentSection } from '@covid/core/state/mental-health/state/slice';
 import store from '@covid/core/state/store';
 

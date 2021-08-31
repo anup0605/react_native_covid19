@@ -1,3 +1,4 @@
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
@@ -20,10 +21,10 @@ const styles = StyleSheet.create({
   modalView: {
     alignItems: 'center',
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: sizes.l,
     elevation: 5,
-    margin: 30,
-    paddingTop: 20,
+    margin: sizes.xl,
+    paddingTop: sizes.l,
     shadowColor: colors.black,
     shadowOffset: {
       height: 2,

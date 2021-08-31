@@ -82,9 +82,6 @@ export const shareVaccine = require('./share-vaccine.png');
 export const shareVaccineBanner = require('./share-vaccine-banner.png');
 
 export const blobs = require('./blobs.png');
-export const cardBackground1 = require('./backgrounds/cardBackground1.png');
-export const cardBackground2 = require('./backgrounds/cardBackground2.png');
-export const cardBackground3 = require('./backgrounds/cardBackground3.png');
 export const studyIntro = require('./backgrounds/study_intro.png');
 export const vaccineBg = require('./backgrounds/vaccine-bg.png');
 
@@ -104,7 +101,7 @@ export const dietStudyPlaybackReadyUS = require('./diet-playback-ready-us.png');
 export const fallingFoodBackground = require('./backgrounds/falling-food.png');
 
 // share svg
-export { default as ShareIcon } from './icons/Share';
+export { default as Share } from './icons/Share';
 
 export * from './icons/stats';
 export * from './icons/svgIcons';

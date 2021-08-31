@@ -1,6 +1,6 @@
 import { closeIcon } from '@assets';
-import { ShareIcon } from '@assets/icons/navigation';
 import EditProfilesIcon from '@assets/icons/navigation/EditProfilesIcon';
+import ShareIcon from '@assets/icons/navigation/ShareIcon';
 import { share } from '@covid/components/cards/BaseShareApp';
 import { CaptionText } from '@covid/components/Text';
 import { selectUser } from '@covid/core/state/user';
@@ -9,6 +9,7 @@ import { LinksSection } from '@covid/features/menu/LinksSection';
 import { useLogout } from '@covid/features/menu/useLogout';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import Constants from '@covid/utils/Constants';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import * as React from 'react';
@@ -59,7 +60,7 @@ export const DrawerMenu: React.FC<DrawerContentComponentProps> = (props) => {
 
         <LinksSection navigation={props.navigation} />
 
-        <View style={{ marginBottom: 24, paddingBottom: 24 }}>
+        <View style={{ marginBottom: sizes.l, paddingBottom: sizes.l }}>
           <MenuItem label={i18n.t('logout')} onPress={logout} smallLabel={user.username} testID="menu-item-logout" />
         </View>
       </ScrollView>
@@ -75,11 +76,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 24,
+    padding: sizes.l,
   },
   drawerIcon: {
     height: 24,
-    marginEnd: 16,
+    marginRight: sizes.m,
     width: 24,
   },
   drawerRoot: {
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingBottom: 20,
-    paddingLeft: 8,
+    paddingBottom: sizes.l,
+    paddingLeft: sizes.xs,
   },
 });

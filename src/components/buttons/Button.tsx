@@ -1,5 +1,6 @@
 import { BrandedButton } from '@covid/components';
 import { RegularText } from '@covid/components/Text';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TextStyle } from 'react-native';
@@ -38,13 +39,13 @@ export const Button: React.FC<IProps> = ({ children, onPress, ...props }) => {
 const styles = StyleSheet.create({
   base: {
     backgroundColor: 'transparent',
-    marginHorizontal: 16,
-    marginTop: 16,
+    marginHorizontal: sizes.m,
+    marginTop: sizes.m,
   },
   container: {
     backgroundColor: colors.brand,
-    marginHorizontal: 16,
-    marginTop: 16,
+    marginHorizontal: sizes.m,
+    marginTop: sizes.m,
   },
   darkLabel: {
     color: colors.brand,

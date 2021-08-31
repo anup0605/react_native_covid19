@@ -6,6 +6,7 @@ import { userService } from '@covid/core/user/UserService';
 import { EDrawerMenuItem, LinkItem } from '@covid/features/menu/DrawerMenuItem';
 import { useLogout } from '@covid/features/menu/useLogout';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import * as React from 'react';
 import { Alert, StyleSheet } from 'react-native';
@@ -82,6 +83,6 @@ const styles = StyleSheet.create({
   divider: {
     borderBottomWidth: 1,
     marginHorizontal: 0,
-    marginVertical: 24,
+    marginVertical: sizes.l,
   },
 });

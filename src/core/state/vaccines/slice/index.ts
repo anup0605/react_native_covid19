@@ -27,6 +27,7 @@ const vaccinesSlice = createSlice({
   name: 'Vaccine',
   reducers: {
     reset: (state) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       state = initialStateVaccine;
     },
     // Added 14.01.2021. Not currently used but should be useful for setting and saving vaccine

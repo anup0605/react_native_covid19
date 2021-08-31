@@ -120,7 +120,7 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
 
         assessmentCoordinator.gotoNextScreen(this.props.route.name);
       })
-      .catch((_) => {
+      .catch(() => {
         this.setState({ errorMessage: i18n.t('something-went-wrong') });
       });
   }

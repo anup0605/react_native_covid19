@@ -1,5 +1,5 @@
 import { Icon, TIconName } from '@covid/components/icons';
-import { TTypeSizes } from '@covid/themes';
+import { sizes, TTypeSizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
@@ -31,7 +31,7 @@ function CheckBoxButton({
       style={{
         alignItems: 'center',
         backgroundColor,
-        borderRadius: 8,
+        borderRadius: sizes.xs,
         height: backgroundSize,
         justifyContent: 'center',
         width: backgroundSize,

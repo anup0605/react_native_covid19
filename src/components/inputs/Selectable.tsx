@@ -1,4 +1,5 @@
 import { SelectableButton } from '@covid/components/SelectableButton';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 
@@ -9,11 +10,10 @@ interface ISelectableItem {
 
 interface IProps {
   items: ISelectableItem[];
-  resetAnimation?: boolean;
   onSelected?: (item: ISelectableItem) => void;
 }
 
-export function Selectable({ items, resetAnimation, onSelected }: IProps) {
+export function Selectable({ items, onSelected }: IProps) {
   const [selected, setSelected] = React.useState<ISelectableItem | null>();
   const isSelected = (item: ISelectableItem): boolean => selected?.title === item.title;
 
@@ -54,16 +54,16 @@ const styles = StyleSheet.create({
   item: {
     height: 60,
     justifyContent: 'space-around',
-    marginVertical: 8,
-    paddingVertical: 24,
+    marginVertical: sizes.xs,
+    paddingVertical: sizes.l,
   },
   itemContainer: {
     width: '50%',
   },
   itemMarginLeft: {
-    marginLeft: 8,
+    marginLeft: sizes.xs,
   },
   itemMarginRight: {
-    marginRight: 8,
+    marginRight: sizes.xs,
   },
 });

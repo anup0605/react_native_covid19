@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { appActions, appInitialState } from '@covid/core/state/app/slice';
 import store from '@covid/core/state/store';
 

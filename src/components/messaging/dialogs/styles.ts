@@ -1,7 +1,7 @@
 import { Animated, View } from 'react-native';
 import styled from 'styled-components/native';
 
-export interface IContainerViewProps {
+interface IContainerViewProps {
   height: number;
   width: number;
 }
@@ -12,7 +12,7 @@ export const SContainerView = styled(View)<IContainerViewProps>`
     height: ${props.height};
     justify-content: center;
     left: 0;
-    padding: ${props.theme.grid.xxxl}px;
+    padding: ${props.theme.sizes.xl}px;
     position: absolute;
     top: 0;
     width: ${props.width};
@@ -22,8 +22,8 @@ export const SContainerView = styled(View)<IContainerViewProps>`
 export const SMessageWindowView = styled(Animated.View)`
   ${(props) => `
     background-color: white;
-    border-radius: ${props.theme.grid.l}px;
-    padding: ${props.theme.grid.xl}px ${props.theme.grid.l}px;
+    border-radius: ${props.theme.sizes.m}px;
+    padding: ${props.theme.sizes.m}px ${props.theme.sizes.m}px;
     width: 100%;
   `}
 `;

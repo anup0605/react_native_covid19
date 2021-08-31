@@ -2,6 +2,7 @@ import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -148,6 +149,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   view: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
 });

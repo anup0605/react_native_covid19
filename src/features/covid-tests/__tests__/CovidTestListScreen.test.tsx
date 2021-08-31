@@ -1,4 +1,5 @@
 /* eslint-env jest */
+
 import { Text } from '@covid/components';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import CovidTestListScreen from '@covid/features/covid-tests/CovidTestListScreen';

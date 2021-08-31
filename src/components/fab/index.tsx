@@ -15,11 +15,6 @@ interface IProps {
 function Fab({ profiles }: IProps) {
   const [active, setActive] = React.useState(false);
 
-  const handleOnPress = (profile: TProfile) => {
-    // TODO - navigate to...
-    setActive(false);
-  };
-
   return (
     <>
       {active ? <View style={styles.backdrop} /> : null}
@@ -30,7 +25,7 @@ function Fab({ profiles }: IProps) {
           const toValue = active ? 1 : 0;
           return (
             <Option
-              handleOnPress={() => handleOnPress(option)}
+              handleOnPress={() => setActive(false)}
               key={key}
               label={option.name ?? ''}
               toValue={toValue}

@@ -1,4 +1,4 @@
-import { ShareIcon } from '@assets';
+import { Share } from '@assets';
 import { Text } from '@covid/components/typography';
 import { TColorPalette, TColorShade } from '@covid/themes';
 import * as React from 'react';
@@ -16,7 +16,7 @@ function ShareButton({ colorPalette = 'burgundy', colorShade = 'main', label, on
   return (
     <SContainerView onPress={onPress}>
       <SIconContainerView>
-        <ShareIcon />
+        <Share />
       </SIconContainerView>
       <Text inverted colorPalette={colorPalette} colorShade={colorShade} fontSize={14}>
         {label}

@@ -3,6 +3,7 @@ import { Spacer, Text } from '@covid/components';
 import { ScalableImage } from '@covid/components/ScalableImage';
 import { Screen } from '@covid/components/Screen';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -32,6 +33,6 @@ export default function DietStudyGlobalScreen() {
 
 const styles = StyleSheet.create({
   image: {
-    borderRadius: 16,
+    borderRadius: sizes.m,
   },
 });

@@ -3,6 +3,7 @@ import { ClickableText, Header3Text, HeaderText, RegularText, SecondaryText } fr
 import { ISubscribedSchoolStats } from '@covid/core/schools/Schools.dto';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
@@ -28,7 +29,7 @@ export const SchoolDashboardScreen: React.FC<TProps> = (props) => {
     return (
       <View style={styles.infoBox}>
         <RegularText style={[styles.statText, { color: statColor }]}>{statistic}</RegularText>
-        <RegularText style={{ paddingBottom: 8, textAlign: 'center' }}>
+        <RegularText style={{ paddingBottom: sizes.xs, textAlign: 'center' }}>
           {!singleLine ? (
             <RegularText>
               {i18n.t('school-networks.dashboard.students-with')}
@@ -79,7 +80,7 @@ export const SchoolDashboardScreen: React.FC<TProps> = (props) => {
 
       <View style={styles.card}>
         <Header3Text style={styles.cardTitle}>{i18n.t('school-networks.dashboard.at-the-school')}</Header3Text>
-        <SecondaryText style={{ marginBottom: 16 }}>
+        <SecondaryText style={{ marginBottom: sizes.m }}>
           {`${i18n.t('school-networks.dashboard.updated-on')} ${moment(schoolUpdatedAt).format('MMM D, LT')}`}
         </SecondaryText>
         <View style={styles.gridRow}>
@@ -113,7 +114,7 @@ export const SchoolDashboardScreen: React.FC<TProps> = (props) => {
         return (
           <View key={group.name} style={styles.card}>
             <Header3Text style={styles.cardTitle}>{group.name}</Header3Text>
-            <SecondaryText style={{ marginBottom: 16 }}>
+            <SecondaryText style={{ marginBottom: sizes.m }}>
               {`${i18n.t('school-networks.dashboard.updated-on')} ${moment(group.report_updated_at).format(
                 'MMM D, LT',
               )}`}
@@ -158,13 +159,13 @@ const styles = StyleSheet.create({
   card: {
     alignItems: 'center',
     backgroundColor: colors.backgroundPrimary,
-    borderRadius: 12,
-    marginVertical: 16,
-    paddingVertical: 16,
+    borderRadius: sizes.s,
+    marginVertical: sizes.m,
+    paddingVertical: sizes.m,
   },
   cardTitle: {
-    marginBottom: 8,
-    marginHorizontal: 16,
+    marginBottom: sizes.xs,
+    marginHorizontal: sizes.m,
     textAlign: 'center',
   },
   gridRow: {
@@ -174,12 +175,12 @@ const styles = StyleSheet.create({
   },
   infoBox: {
     alignItems: 'center',
-    padding: 8,
-    paddingVertical: 16,
+    padding: sizes.xs,
+    paddingVertical: sizes.m,
     width: '50%',
   },
   statText: {
     fontSize: 32,
-    padding: 8,
+    padding: sizes.xs,
   },
 });

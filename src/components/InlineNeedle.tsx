@@ -1,9 +1,10 @@
 import Needle from '@assets/icons/Needle';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { View } from 'react-native';
 
-export const InlineNeedle: React.FC = (props) => (
-  <View style={{ marginRight: 8, top: -2 }}>
+export const InlineNeedle: React.FC = () => (
+  <View style={{ marginRight: sizes.xs, top: -2 }}>
     <Needle />
   </View>
 );

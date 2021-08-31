@@ -6,6 +6,7 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { ITrendLineData } from '@covid/core/content/dto/ContentAPIContracts';
 import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import moment from 'moment';
@@ -101,25 +102,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   marginBottom: {
-    marginBottom: 16,
+    marginBottom: sizes.m,
   },
   marginRight: {
-    marginRight: 12,
+    marginRight: sizes.s,
   },
   touchableChart: {
-    marginTop: 16,
+    marginTop: sizes.m,
     width: '100%',
   },
   touchableText: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: 16,
+    paddingVertical: sizes.m,
   },
   view: {
     backgroundColor: colors.white,
-    borderRadius: 16,
-    marginVertical: 8,
-    paddingHorizontal: 16,
-    paddingTop: 24,
+    borderRadius: sizes.m,
+    marginVertical: sizes.xs,
+    paddingHorizontal: sizes.m,
+    paddingTop: sizes.l,
   },
 });

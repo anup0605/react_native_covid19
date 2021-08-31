@@ -22,7 +22,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
-interface IYourHealthData {
+interface IPreviousExposureData {
   unwellMonthBefore: string;
   stillHavePastSymptoms: string;
   pastSymptomsDaysAgo: string;
@@ -94,7 +94,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
     unwellMonthBefore: Yup.string().required(),
   });
 
-  handleUpdateHealth(formData: IYourHealthData) {
+  handleUpdateHealth(formData: IPreviousExposureData) {
     const infos = this.createPatientInfos(formData);
 
     patientService
@@ -105,12 +105,12 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
         patientCoordinator.patientData.patientState = await patientService.updatePatientState(currentState, info);
         patientCoordinator.gotoNextScreen(this.props.route.name);
       })
-      .catch((_) => {
+      .catch(() => {
         this.setState({ errorMessage: i18n.t('something-went-wrong') });
       });
   }
 
-  private createPatientInfos(formData: IYourHealthData) {
+  private createPatientInfos(formData: IPreviousExposureData) {
     let infos = {
       unwell_month_before: formData.unwellMonthBefore === 'yes',
     } as Partial<TPatientInfosRequest>;
@@ -157,7 +157,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
         <Formik
           validateOnChange
           initialValues={initialFormValues}
-          onSubmit={(values: IYourHealthData) => {
+          onSubmit={(values: IPreviousExposureData) => {
             return this.handleUpdateHealth(values);
           }}
           validationSchema={this.registerSchema}

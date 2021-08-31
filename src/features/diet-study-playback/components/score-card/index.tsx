@@ -1,3 +1,4 @@
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Animated } from 'react-native';
 
@@ -17,13 +18,13 @@ function ScoreCard({ backgroundColor, children, direction = 'DOWN' }: IProps) {
           alignItems: 'center',
           alignSelf: 'flex-start',
           ...backgroundColor,
-          borderRadius: 8,
+          borderRadius: sizes.xs,
           flexDirection: 'column',
           justifyContent: 'center',
-          paddingVertical: 8,
+          paddingVertical: sizes.xs,
           width: 60,
         },
-        direction === 'DOWN' ? { marginBottom: 14 } : { marginTop: 14 },
+        direction === 'DOWN' ? { marginBottom: sizes.m } : { marginTop: sizes.m },
       ]}
     >
       <Animated.View

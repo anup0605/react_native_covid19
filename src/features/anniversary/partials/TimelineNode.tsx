@@ -1,5 +1,6 @@
 import { Text } from '@covid/components';
 import { TTimelineEvent } from '@covid/features/anniversary/types';
+import { sizes } from '@covid/themes';
 import moment from 'moment';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -28,21 +29,21 @@ function TimelineNode({ timelineEvent, dateFormat = 'Do MMMM YYYY' }: IProps) {
 
 const styles = StyleSheet.create({
   body: {
-    marginBottom: 48,
-    marginLeft: 24,
-    marginTop: 8,
+    marginBottom: sizes.xxl,
+    marginLeft: sizes.l,
+    marginTop: sizes.xs,
   },
   container: {
-    marginLeft: 11,
+    marginLeft: sizes.s,
   },
   date: {
     color: '#0165B5',
   },
   node: {
     backgroundColor: '#0165B5',
-    borderRadius: 5,
+    borderRadius: sizes.xxs,
     height: 12,
-    marginRight: 12,
+    marginRight: sizes.s,
     width: 12,
   },
   row: {

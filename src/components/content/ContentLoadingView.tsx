@@ -1,4 +1,5 @@
 import { Text } from '@covid/components/typography';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -6,24 +7,24 @@ import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: 6,
+    borderRadius: sizes.xs,
     height: 20,
   },
   container: {
     backgroundColor: 'white',
-    borderRadius: 16,
+    borderRadius: sizes.m,
     height: 200,
     justifyContent: 'space-between',
-    marginVertical: 12,
-    padding: 20,
+    marginVertical: sizes.s,
+    padding: sizes.l,
   },
   three: {
     height: 12,
-    marginTop: 12,
+    marginTop: sizes.s,
     width: '35%',
   },
   two: {
-    marginTop: 12,
+    marginTop: sizes.s,
     width: '30%',
   },
 });
@@ -32,7 +33,7 @@ type TContentErrorViewProps = {
   message: string;
 };
 
-export const ContentErrorView: React.FC<TContentErrorViewProps> = ({ message }) => {
+const ContentErrorView: React.FC<TContentErrorViewProps> = ({ message }) => {
   return (
     <View
       style={[
@@ -42,7 +43,7 @@ export const ContentErrorView: React.FC<TContentErrorViewProps> = ({ message }) 
         },
       ]}
     >
-      <Text style={{ marginHorizontal: 12 }} textAlign="center" textClass="p">
+      <Text style={{ marginHorizontal: sizes.s }} textAlign="center" textClass="p">
         {message}
       </Text>
     </View>

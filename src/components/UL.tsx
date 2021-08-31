@@ -26,6 +26,6 @@ export default function UL(props: IProps) {
 const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
-    marginTop: sizes.spacing,
+    marginTop: sizes.m,
   },
 });

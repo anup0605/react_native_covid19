@@ -2,11 +2,7 @@ import { colors } from '@theme/colors';
 import * as React from 'react';
 import { G, Path, Svg } from 'react-native-svg';
 
-interface IProps {
-  color?: string;
-}
-
-function QuestionMarks({ color = colors.brand }: IProps) {
+function QuestionMarks() {
   return (
     <Svg height="179px" viewBox="0 0 160 179" width="160px">
       <G fill="none" fill-rule="evenodd" id="Page-1" opacity="0.04" stroke="none" stroke-width="1">

@@ -1,4 +1,5 @@
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { Icon } from 'native-base';
 import * as React from 'react';
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   iconButton: {
     alignItems: 'center',
     backgroundColor: colors.backgroundFour,
-    borderRadius: 16,
+    borderRadius: sizes.m,
     height: 32,
     justifyContent: 'center',
     width: 32,

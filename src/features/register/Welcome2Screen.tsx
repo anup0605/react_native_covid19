@@ -13,6 +13,7 @@ import {
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -146,12 +147,12 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   covidContainer: {
-    paddingBottom: 24,
+    paddingBottom: sizes.l,
   },
   divider: {
     backgroundColor: colors.backgroundFour,
     height: 1,
-    marginVertical: 4,
+    marginVertical: sizes.xxs,
   },
   flagIcon: {
     height: 32,
@@ -159,17 +160,17 @@ const styles = StyleSheet.create({
   },
   login: {
     color: colors.primary,
-    marginRight: 16,
+    marginRight: sizes.m,
   },
   nhsWebsite: {
     textDecorationLine: 'underline',
   },
   partnerContainer: {
     backgroundColor: colors.white,
-    borderRadius: 10,
-    marginVertical: 16,
-    paddingHorizontal: 32,
-    paddingVertical: 16,
+    borderRadius: sizes.s,
+    marginVertical: sizes.m,
+    paddingHorizontal: sizes.xl,
+    paddingVertical: sizes.m,
   },
   partnerHeader: {
     fontSize: 14,
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
   partnersLogo: {
     alignSelf: 'center',
     height: 160,
-    marginVertical: 16,
+    marginVertical: sizes.m,
     resizeMode: 'contain',
     width: '100%',
   },
@@ -195,8 +196,8 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 16,
     lineHeight: 24,
-    marginTop: 16,
-    paddingVertical: 8,
+    marginTop: sizes.m,
+    paddingVertical: sizes.xs,
     textAlign: 'center',
   },
   subheader2: {
@@ -204,16 +205,16 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Light',
     fontSize: 16,
     lineHeight: 24,
-    marginTop: 8,
-    paddingVertical: 8,
+    marginTop: sizes.xs,
+    paddingVertical: sizes.xs,
     textAlign: 'center',
   },
   subtitle: {
     color: colors.primary,
     fontSize: 24,
     lineHeight: 32,
-    marginTop: 16,
-    paddingVertical: 8,
+    marginTop: sizes.m,
+    paddingVertical: sizes.xs,
     textAlign: 'center',
   },
 });

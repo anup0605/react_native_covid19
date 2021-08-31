@@ -5,7 +5,7 @@ import { IPushTokenRemoteClient, TPushToken } from './types';
 
 const apiClient = new ApiClient();
 
-export default class PushNotificationApiClient implements IPushTokenRemoteClient {
+class PushNotificationApiClient implements IPushTokenRemoteClient {
   updatePushToken(pushToken: TPushToken): Promise<TTokenInfoResponse> {
     const tokenDoc = {
       ...pushToken,

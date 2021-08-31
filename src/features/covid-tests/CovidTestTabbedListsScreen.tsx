@@ -2,6 +2,7 @@
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -93,8 +94,8 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
           textTransform: 'none',
         },
         scrollEnabled: true,
-        style: { marginBottom: 12 },
-        tabStyle: { paddingHorizontal: 6, paddingVertical: 14, width: tabWidth },
+        style: { marginBottom: sizes.s },
+        tabStyle: { paddingHorizontal: sizes.xs, paddingVertical: sizes.s, width: tabWidth },
       }}
     >
       <Tab.Screen

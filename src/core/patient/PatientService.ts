@@ -10,7 +10,7 @@ import { EVaccineStatus, TPatientInfosRequest } from '@covid/core/user/dto/UserA
 import i18n from '@covid/locale/i18n';
 import { DEFAULT_PROFILE } from '@covid/utils/avatar';
 
-export interface IPatientService {
+interface IPatientService {
   myPatientProfile(): Promise<TProfile | null>;
   listProfiles(): Promise<TProfile[] | null>;
   createPatient(infos: Partial<TPatientInfosRequest>): Promise<TPatientInfosRequest>;
@@ -21,7 +21,7 @@ export interface IPatientService {
   updatePatientState(patientState: TPatientStateType, patient: TPatientInfosRequest): Promise<TPatientStateType>;
 }
 
-export class PatientService extends ApiClientBase implements IPatientService {
+class PatientService extends ApiClientBase implements IPatientService {
   protected client = ApiClientBase.client;
 
   public async myPatientProfile(): Promise<TProfile | null> {
@@ -39,7 +39,7 @@ export class PatientService extends ApiClientBase implements IPatientService {
 
   public async listProfiles() {
     try {
-      const response = await this.client.get<Profile[] | null>(`/patient_list/?u=${ApiClientBase.userId}`);
+      const response = await this.client.get<TProfile[] | null>(`/patient_list/?u=${ApiClientBase.userId}`);
       return response.data;
     } catch (error) {
       handleServiceError(error);

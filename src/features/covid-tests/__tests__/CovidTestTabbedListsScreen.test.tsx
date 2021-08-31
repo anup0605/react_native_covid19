@@ -1,4 +1,5 @@
 /* eslint-env jest */
+
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { CovidTestRow } from '@covid/features/covid-tests/components/CovidTestRow';
 import CovidTestTabbedListsScreen from '@covid/features/covid-tests/CovidTestTabbedListsScreen';

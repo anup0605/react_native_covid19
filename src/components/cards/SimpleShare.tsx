@@ -2,6 +2,7 @@ import { social } from '@assets';
 import { BrandedButton } from '@covid/components/buttons';
 import Analytics from '@covid/core/Analytics';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
@@ -41,8 +42,8 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: 'white',
-    borderRadius: 16,
-    padding: 24,
+    borderRadius: sizes.m,
+    padding: sizes.l,
   },
   img: {
     aspectRatio: 1.0,
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
   imgContainer: {
     height: 100,
     justifyContent: 'center',
-    marginBottom: 24,
+    marginBottom: sizes.l,
     overflow: 'hidden',
   },
 });

@@ -6,10 +6,10 @@ export const SContainerView = styled(View)`
   ${(props) => `
     background-color: white;
     border-color: ${colors.backgroundTertiary};
-    border-radius: ${props.theme.grid.l}px;
+    border-radius: ${props.theme.sizes.m}px;
     border-width: 1px;
-    margin: ${props.theme.grid.s}px 0;
-    padding: ${props.theme.grid.l}px;
+    margin: ${props.theme.sizes.xs}px 0;
+    padding: ${props.theme.sizes.m}px;
     shadow-color: #000;
     shadow-offset: 0px 2px;
     shadow-opacity: 0.1;

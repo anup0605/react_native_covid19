@@ -11,6 +11,7 @@ import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { CovidTestTabbedListsScreen } from '@covid/features/covid-tests';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
@@ -149,12 +150,12 @@ export default function CovidTestListScreen(props: IProps) {
 
 const styles = StyleSheet.create({
   marginTop: {
-    marginTop: 24,
+    marginTop: sizes.l,
   },
   newButton: {
     backgroundColor: colors.backgroundTertiary,
-    marginBottom: 16,
-    marginTop: 24,
+    marginBottom: sizes.m,
+    marginTop: sizes.l,
   },
   newText: {
     color: colors.primary,

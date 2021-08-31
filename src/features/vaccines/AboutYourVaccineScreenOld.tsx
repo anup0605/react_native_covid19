@@ -12,7 +12,7 @@ import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/fields/VaccineDoseQuestion';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { formatDateToPost } from '@covid/utils/datetime';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -263,7 +263,7 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
 
 const styles = StyleSheet.create({
   clickableText: {
-    marginVertical: 32,
+    marginVertical: sizes.xl,
     textAlign: 'center',
   },
   flex: {
@@ -272,21 +272,21 @@ const styles = StyleSheet.create({
   footerWrapper: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingTop: 32,
+    paddingTop: sizes.xl,
   },
   header: {
-    marginBottom: 32,
-    marginTop: 48,
+    marginBottom: sizes.xl,
+    marginTop: sizes.xxl,
   },
   infoText: {
     color: colors.linkBlue,
-    marginLeft: 16,
+    marginLeft: sizes.m,
   },
   infoWrapper: {
     flexDirection: 'row',
-    marginVertical: 32,
+    marginVertical: sizes.xl,
   },
   marginBottom: {
-    marginBottom: 16,
+    marginBottom: sizes.m,
   },
 });

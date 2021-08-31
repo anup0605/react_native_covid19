@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { by, element } from 'detox';
 
 import { scrollDownToId } from './helpers';

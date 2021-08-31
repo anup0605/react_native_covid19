@@ -2,6 +2,7 @@ import { facebook } from '@assets';
 import { BrandedButton } from '@covid/components';
 import { RegularBoldText, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -35,29 +36,29 @@ export const FacebookSECard: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    borderRadius: 10,
+    borderRadius: sizes.s,
   },
   primaryText: {
     fontSize: 20,
-    paddingHorizontal: 30,
+    paddingHorizontal: sizes.xl,
     textAlign: 'center',
   },
   secondaryText: {
     color: colors.secondary,
-    marginHorizontal: 32,
-    paddingVertical: 10,
+    marginHorizontal: sizes.xl,
+    paddingVertical: sizes.s,
     textAlign: 'center',
   },
   shareButton: {
     backgroundColor: colors.facebook,
     height: 42,
-    marginHorizontal: 72,
-    marginVertical: 20,
+    marginHorizontal: sizes.xxl,
+    marginVertical: sizes.l,
   },
   shareLink: {
-    marginBottom: 20,
-    marginHorizontal: 30,
-    marginTop: 5,
+    marginBottom: sizes.l,
+    marginHorizontal: sizes.xl,
+    marginTop: sizes.xxs,
     textAlign: 'center',
   },
   socialIcon: {
@@ -68,8 +69,8 @@ const styles = StyleSheet.create({
   },
   socialIconContainer: {
     alignSelf: 'center',
-    borderRadius: 10,
-    marginBottom: 24,
-    marginTop: 24,
+    borderRadius: sizes.s,
+    marginBottom: sizes.l,
+    marginTop: sizes.l,
   },
 });

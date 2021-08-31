@@ -1,10 +1,10 @@
 import {
-  IThemeVars,
+  ITheme,
   TColorPalette,
   TColorShade,
   TFontFamily,
   TFontStyle,
-  TGridSizes,
+  TGridSize,
   TTextAlign,
   TTextClass,
   TTtextDecorationLine,
@@ -27,7 +27,7 @@ export interface IProps {
   letterSpacing?: number | undefined;
   lineHeight?: number | undefined;
   onPress?: () => void | undefined;
-  rhythm?: TGridSizes;
+  rhythm?: TGridSize;
   style?: StyleProp<TextStyle>;
   textAlign?: TTextAlign | undefined;
   textDecorationLine?: TTtextDecorationLine | undefined;
@@ -53,7 +53,7 @@ export default function Text({
   textClass = 'default',
   numberOfLines = undefined,
 }: IProps) {
-  const theme: IThemeVars = useTheme();
+  const theme: ITheme = useTheme();
   const fFamily = fontFamily || theme.text[textClass].fontFamily;
   const fSize = fontSize || theme.text[textClass].fontSize;
   const fStyle = fontStyle || theme.text[textClass].fontStyle;

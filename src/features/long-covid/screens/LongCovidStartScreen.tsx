@@ -5,6 +5,7 @@ import { Screen } from '@covid/components/Screen';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -26,8 +27,10 @@ export default function LongCovidStartScreen({ route }: IProps) {
       <View style={styles.oneOff}>
         <Text style={styles.oneOffText}>{i18n.t('long-covid.one-off')}</Text>
       </View>
-      <HeaderText style={{ ...styles.text, marginTop: 8 }}>{i18n.t('long-covid.title')}</HeaderText>
-      <View style={{ alignItems: 'center', alignSelf: 'center', flexDirection: 'row', margin: 'auto', marginTop: 16 }}>
+      <HeaderText style={{ ...styles.text, marginTop: sizes.xs }}>{i18n.t('long-covid.title')}</HeaderText>
+      <View
+        style={{ alignItems: 'center', alignSelf: 'center', flexDirection: 'row', margin: 'auto', marginTop: sizes.m }}
+      >
         <View style={{ height: 20, width: 20 }}>
           <ClockIcon />
         </View>
@@ -37,8 +40,8 @@ export default function LongCovidStartScreen({ route }: IProps) {
       <RegularText style={styles.text}>{i18n.t('long-covid.body-3')}</RegularText>
       <Spacer space={24} />
       <View style={styles.infoBox}>
-        <View style={{ flexDirection: 'row', paddingRight: 24, paddingTop: 16 }}>
-          <View style={{ paddingRight: 12 }}>
+        <View style={{ flexDirection: 'row', paddingRight: sizes.l, paddingTop: sizes.m }}>
+          <View style={{ paddingRight: sizes.s }}>
             <InfoCircle color={colors.brand} />
           </View>
           <RegularText style={{ color: colors.brand }}>{i18n.t('long-covid.apology')}</RegularText>
@@ -51,20 +54,20 @@ export default function LongCovidStartScreen({ route }: IProps) {
 const styles = StyleSheet.create({
   infoBox: {
     backgroundColor: '#dee8f0', // This is the brand colour with .2 opacity
-    borderRadius: 8,
-    marginBottom: 24,
-    marginTop: 16,
-    padding: 16,
-    paddingBottom: 24,
+    borderRadius: sizes.xs,
+    marginBottom: sizes.l,
+    marginTop: sizes.m,
+    padding: sizes.m,
+    paddingBottom: sizes.l,
     textAlign: 'left',
   },
   oneOff: {
     alignSelf: 'center',
     backgroundColor: colors.brand,
-    borderRadius: 4,
+    borderRadius: sizes.xxs,
     margin: 'auto',
-    marginBottom: 16,
-    paddingHorizontal: 8,
+    marginBottom: sizes.m,
+    paddingHorizontal: sizes.xs,
   },
   oneOffText: {
     alignSelf: 'center',
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   text: {
-    padding: 16,
+    padding: sizes.m,
     textAlign: 'center',
   },
 });

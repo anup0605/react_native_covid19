@@ -3,7 +3,7 @@ import ApiClient from '@covid/core/api/ApiClient';
 import { TDoseSymptomsRequest, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { TDoseSymptomsResponse, TVaccineResponse } from '@covid/core/vaccine/dto/VaccineResponse';
 
-export interface IVaccineRemoteClient {
+interface IVaccineRemoteClient {
   saveVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse>;
   updateVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse>;
   saveDoseSymptoms(patientId: string, payload: Partial<TDoseSymptomsRequest>): Promise<TDoseSymptomsResponse>;
@@ -13,7 +13,7 @@ export interface IVaccineRemoteClient {
 
 const apiClient = new ApiClient();
 
-export class VaccineApiClient implements IVaccineRemoteClient {
+class VaccineApiClient implements IVaccineRemoteClient {
   saveVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<TVaccineResponse> {
     payload = {
       ...payload,

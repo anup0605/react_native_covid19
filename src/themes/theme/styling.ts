@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { colors } from './colors';
-import sizes from './sizes';
+import { sizes } from './sizes';
 
 export default StyleSheet.create({
   absolute: {
@@ -43,62 +43,62 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
   },
   marginBottom: {
-    marginBottom: sizes.spacing,
+    marginBottom: sizes.m,
   },
   marginBottomAuto: {
     marginBottom: 'auto',
   },
   marginBottomBig: {
-    marginBottom: sizes.spacingBig,
+    marginBottom: sizes.l,
   },
   marginBottomHuge: {
-    marginBottom: sizes.spacingHuge,
+    marginBottom: sizes.xl,
   },
   marginBottomSmall: {
-    marginBottom: sizes.spacingSmall,
+    marginBottom: sizes.xs,
   },
   marginHorizontal: {
-    marginHorizontal: sizes.spacing,
+    marginHorizontal: sizes.m,
   },
   marginHorizontalTiny: {
-    marginHorizontal: sizes.spacingTiny,
+    marginHorizontal: sizes.xxs,
   },
   marginLeft: {
-    marginLeft: sizes.spacing,
+    marginLeft: sizes.m,
   },
   marginRightSmall: {
-    marginRight: sizes.spacingSmall,
+    marginRight: sizes.xs,
   },
   marginTop: {
-    marginTop: sizes.spacing,
+    marginTop: sizes.m,
   },
   marginTopAuto: {
     marginTop: 'auto',
   },
   marginTopBig: {
-    marginTop: sizes.spacingBig,
+    marginTop: sizes.l,
   },
   marginTopHuge: {
-    marginTop: sizes.spacingHuge,
+    marginTop: sizes.xl,
   },
   marginTopSmall: {
-    marginTop: sizes.spacingSmall,
+    marginTop: sizes.xs,
   },
   marginVertical: {
-    marginVertical: sizes.spacing,
+    marginVertical: sizes.m,
   },
   marginVerticalAuto: {
     marginBottom: 'auto',
     marginTop: 'auto',
   },
   marginVerticalBig: {
-    marginVertical: sizes.spacingBig,
+    marginVertical: sizes.l,
   },
   marginVerticalHuge: {
-    marginVertical: sizes.spacingHuge,
+    marginVertical: sizes.xl,
   },
   marginVerticalSmall: {
-    marginVertical: sizes.spacingSmall,
+    marginVertical: sizes.xs,
   },
   measureHeight: {
     height: '100%',
@@ -110,13 +110,13 @@ export default StyleSheet.create({
     width: '100%',
   },
   padding: {
-    padding: sizes.spacing,
+    padding: sizes.m,
   },
   paddingBig: {
-    padding: sizes.spacingBig,
+    padding: sizes.l,
   },
   paddingVertical: {
-    paddingVertical: sizes.spacing,
+    paddingVertical: sizes.m,
   },
   relative: {
     position: 'relative',
@@ -147,6 +147,6 @@ export default StyleSheet.create({
   },
   textarea: {
     backgroundColor: '#EEEEEF',
-    borderRadius: 16,
+    borderRadius: sizes.m,
   },
 });

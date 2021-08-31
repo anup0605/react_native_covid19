@@ -1,5 +1,5 @@
 import { Text } from '@covid/components/typography';
-import { TColorPalette, TColorShade, TGridSizes } from '@covid/themes';
+import { TColorPalette, TColorShade, TGridSize } from '@covid/themes';
 import * as React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
@@ -11,7 +11,7 @@ interface IProps {
   disabled?: boolean;
   onPress: () => void;
   outline?: boolean;
-  rhythm?: TGridSizes;
+  rhythm?: TGridSize;
   simple?: boolean;
   style?: StyleProp<ViewStyle>;
   title: string;
@@ -23,7 +23,7 @@ function ThemeButton({
   disabled = false,
   onPress,
   outline = false,
-  rhythm = 0,
+  rhythm,
   simple = false,
   style = {},
   title,

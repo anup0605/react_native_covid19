@@ -1,3 +1,4 @@
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { GestureResponderEvent, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
@@ -12,11 +13,11 @@ const buttonStyles = StyleSheet.create({
   bigButton: {
     backgroundColor: colors.white,
     borderColor: colors.secondary,
-    borderRadius: 28,
+    borderRadius: sizes.l,
     borderWidth: 1,
     fontSize: 16,
-    paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingHorizontal: sizes.l,
+    paddingVertical: sizes.m,
   },
 
   buttonText: {

@@ -4,11 +4,6 @@ import * as React from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
 import { VictoryAxis, VictoryChart, VictoryLine, VictoryTheme } from 'victory-native';
 
-export enum ETrendLineViewMode {
-  explore,
-  local,
-}
-
 interface IProps {
   data: any[];
   height?: number;

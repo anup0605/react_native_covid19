@@ -13,6 +13,7 @@ import CovidTestInfoIcon from '@covid/features/covid-tests/components/CovidTestI
 import { CovidTestMechanismInfoModal } from '@covid/features/covid-tests/components/CovidTestMechanismInfoModal';
 import { isAntibodyTest, isLateralFlowTest, isPcrTest } from '@covid/features/covid-tests/helpers';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -31,7 +32,7 @@ interface IProps {
   test?: TCovidTest;
 }
 
-export interface ICovidTestMechanismQuestion<P, Data> extends React.FC<P> {
+interface ICovidTestMechanismQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
   createDTO: (data: Data) => Partial<TCovidTest>;
@@ -131,7 +132,7 @@ export const CovidTestMechanismQuestion: ICovidTestMechanismQuestion<IProps, ICo
           onChangeText={formikProps.handleChange('mechanismSpecify')}
           placeholder={i18n.t('covid-test.question-mechanism-specify')}
           rowSpan={4}
-          textAreaStyle={{ backgroundColor: colors.backgroundTertiary, borderRadius: 8 }}
+          textAreaStyle={{ backgroundColor: colors.backgroundTertiary, borderRadius: sizes.xs }}
           value={formikProps.values.mechanismSpecify}
         />
       )}

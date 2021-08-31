@@ -7,6 +7,7 @@ import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { cleanFloatVal, cleanIntegerVal } from '@covid/utils/number';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -26,7 +27,7 @@ export interface IDiabetesData extends IDiabetesTreatmentsData, IDiabetesOralMed
   diabetesUsesCGM: string;
 }
 
-export enum EDiabetesTypeValues {
+enum EDiabetesTypeValues {
   TYPE_1 = 'type_1',
   TYPE_2 = 'type_2',
   GESTATIONAL = 'gestational',
@@ -35,7 +36,7 @@ export enum EDiabetesTypeValues {
   PREFER_NOT_TO_SAY = 'pfnts',
 }
 
-export enum EHemoglobinMeasureUnits {
+enum EHemoglobinMeasureUnits {
   PERCENT = '%',
   MOL = 'mmol/mol',
 }
@@ -223,6 +224,6 @@ const styles = StyleSheet.create({
   },
   view: {
     flex: 1,
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
 });

@@ -14,7 +14,7 @@ interface IProps {
   test?: TCovidTest;
 }
 
-export interface ICovidTestResultQuestion<P, Data> extends React.FC<P> {
+interface ICovidTestResultQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
   createDTO: (data: Data) => Partial<TCovidTest>;

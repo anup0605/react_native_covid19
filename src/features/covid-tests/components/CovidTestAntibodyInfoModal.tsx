@@ -1,6 +1,6 @@
 import { BrandedButton, HeaderText, LabelSecondaryText, LightText, Modal } from '@covid/components';
 import i18n from '@covid/locale/i18n';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
   antibodyTitle: {
     flex: 1,
     flexWrap: 'wrap',
-    marginBottom: grid.s,
+    marginBottom: sizes.xs,
   },
   marginTop: {
-    marginTop: grid.xxl,
+    marginTop: sizes.l,
   },
   modalTitle: {
-    marginTop: grid.m,
+    marginTop: sizes.s,
     textAlign: 'center',
   },
 });

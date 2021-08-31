@@ -6,7 +6,7 @@ import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
@@ -173,7 +173,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
     >
       <HeaderText>{i18n.t('pingdemic.title')}</HeaderText>
 
-      <SecondaryText style={{ marginBottom: 32 }}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
+      <SecondaryText style={{ marginBottom: sizes.xl }}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
 
       <Formik
         validateOnChange

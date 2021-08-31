@@ -4,7 +4,7 @@ import { TScreenName } from '@covid/core/Coordinator';
 import i18n from '@covid/locale/i18n';
 import * as Localization from 'expo-localization';
 
-export interface ILocalisationService {
+interface ILocalisationService {
   setUserCountry(countryCode: string): void;
   initCountryConfig(countryCode: string): void;
   getUserCountry(): Promise<string | null>;

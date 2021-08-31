@@ -1,17 +1,17 @@
-import { IThemeVars } from '@covid/themes/types';
+import { ITheme } from '@covid/themes/types';
 import { IDefaultTheme } from 'styled-components';
 
 import { colors } from './colors';
-import { grid } from './grid';
+import { sizes } from './sizes';
 import { styles } from './typography';
 
 declare module 'styled-components' {
-  export interface IDefaultTheme extends IThemeVars {}
+  export interface IDefaultTheme extends ITheme {}
 }
 
 const theme: IDefaultTheme = {
   colors,
-  grid,
+  sizes,
   text: styles,
 };
 

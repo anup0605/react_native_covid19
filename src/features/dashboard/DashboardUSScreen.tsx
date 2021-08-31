@@ -15,6 +15,7 @@ import { CompactHeader, Header } from '@covid/features/dashboard/Header';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
 import * as React from 'react';
@@ -100,21 +101,21 @@ export function DashboardUSScreen({ route, navigation }: IProps) {
 
 const styles = StyleSheet.create({
   calloutContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: sizes.m,
   },
   dietStudyImage: {
     aspectRatio: 1200 / 1266,
     height: undefined,
-    marginVertical: 8,
+    marginVertical: sizes.xs,
     resizeMode: 'contain',
     width: '100%',
   },
   schoolModuleContainer: {
     height: 200,
-    marginBottom: 8,
-    marginHorizontal: 32,
+    marginBottom: sizes.xs,
+    marginHorizontal: sizes.xl,
   },
   zoe: {
-    marginBottom: 32,
+    marginBottom: sizes.xl,
   },
 });

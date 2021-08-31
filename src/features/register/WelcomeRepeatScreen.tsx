@@ -16,6 +16,7 @@ import { ContributionCounter } from '@covid/features/register/components/Contrib
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { offlineService, pushNotificationService } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { cleanIntegerVal } from '@covid/utils/number';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -155,9 +156,9 @@ const styles = StyleSheet.create({
   },
   covidIconBackground: {
     backgroundColor: colors.predict,
-    borderRadius: 8,
-    marginBottom: 24,
-    padding: 8,
+    borderRadius: sizes.xs,
+    marginBottom: sizes.l,
+    padding: sizes.xs,
   },
   reportButton: {
     alignSelf: 'center',
@@ -174,11 +175,11 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 24,
     lineHeight: 38,
-    marginTop: 16,
+    marginTop: sizes.m,
     textAlign: 'center',
   },
   wrapper: {
     backgroundColor: colors.brand,
-    padding: 20,
+    padding: sizes.l,
   },
 });

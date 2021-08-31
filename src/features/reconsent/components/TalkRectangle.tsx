@@ -1,4 +1,5 @@
 import Triangle from '@covid/components/Triangle';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
   },
   view: {
     backgroundColor: colors.transparentDarkBlue,
-    borderRadius: 16,
-    padding: 32,
+    borderRadius: sizes.m,
+    padding: sizes.xl,
   },
 });

@@ -1,7 +1,7 @@
 import { QuestionBlock, Text, useFade } from '@covid/components';
 import { TMentalHealthFrequency } from '@covid/core/state/mental-health';
 import i18n from '@covid/locale/i18n';
-import { useTheme } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Animated, View } from 'react-native';
 
@@ -22,7 +22,6 @@ type TAnswer = {
 };
 
 function FrequencyQuestion({ disabled = true, onPress, question, state }: IProps) {
-  const { grid } = useTheme();
   const fadeAnim = useFade(0.2, disabled ? 0.2 : 1, 500);
 
   const handleOnPress = (value: TMentalHealthFrequency) => {
@@ -49,11 +48,11 @@ function FrequencyQuestion({ disabled = true, onPress, question, state }: IProps
   };
 
   return (
-    <Animated.View style={{ marginBottom: grid.xxl, opacity: fadeAnim }}>
-      <Text rhythm={grid.s} textClass="pSmall">
+    <Animated.View style={{ marginBottom: sizes.l, opacity: fadeAnim }}>
+      <Text rhythm={sizes.xs} textClass="pSmall">
         {question}
       </Text>
-      <View style={{ flexDirection: 'row', marginBottom: grid.s }}>
+      <View style={{ flexDirection: 'row', marginBottom: sizes.xs }}>
         {answers.map((answer, index) => {
           const key = `answer-${index}`;
           return (

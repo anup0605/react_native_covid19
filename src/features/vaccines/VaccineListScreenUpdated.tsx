@@ -13,7 +13,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { VaccineWarning } from '@covid/features/vaccines/components';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -35,7 +35,6 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 
   const [vaccines, setVaccines] = React.useState<TVaccineRequest | undefined>();
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<string>();
   const [showVaccineWarning, setShowVaccineWarning] = React.useState<boolean>(false);
 
   const patientId = route.params?.assessmentData?.patientData?.patientId;
@@ -55,7 +54,6 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 
       setVaccines(vaccines);
     } catch (_) {
-      setError(i18n.t('something-went-wrong'));
     } finally {
       setLoading(false);
     }
@@ -63,11 +61,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      let isActive = true;
       refreshVaccineList();
-      return () => {
-        isActive = false;
-      };
     }, []),
   );
 
@@ -202,8 +196,8 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 
       <BrandedButton
         onPress={navigateToNextPageOrShowPopup}
-        style={styles.continueButton}
         testID="button-vaccine-list-screen"
+        textStyle={styles.continueButton}
       >
         <Text style={{ color: colors.white }}>
           {!vaccines?.doses.length
@@ -218,19 +212,18 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 const styles = StyleSheet.create({
   continueButton: {
     color: colors.white,
-    marginHorizontal: grid.l,
   },
   introduction: {
-    marginHorizontal: grid.l,
-    marginBottom: grid.xxl,
+    marginBottom: sizes.xxl,
+    marginHorizontal: sizes.l,
   },
   marginHorizontal: {
-    marginBottom: grid.xxl,
-    marginHorizontal: grid.l,
+    marginBottom: sizes.l,
+    marginHorizontal: sizes.m,
   },
   newButton: {
     backgroundColor: colors.backgroundTertiary,
-    marginBottom: grid.xxxl,
+    marginBottom: sizes.xl,
   },
   newText: {
     color: colors.primary,

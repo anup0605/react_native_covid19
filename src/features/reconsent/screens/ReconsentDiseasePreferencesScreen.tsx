@@ -11,7 +11,7 @@ import { extendedDiseases, initialDiseases } from '@covid/features/reconsent/dat
 import { TDiseasePreference } from '@covid/features/reconsent/types';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
@@ -49,7 +49,7 @@ export default function ReconsentDiseasePreferencesScreen() {
         key={item.name}
         onPress={() => onPressCard(item.name)}
         selected={!!diseasePreferences[item.name]}
-        style={{ marginBottom: grid.xxl }}
+        style={{ marginBottom: sizes.l }}
         testID={`disease-card-${item.name}`}
         title={i18n.t(`disease-cards.${item.name}.name`, { defaultValue: '' })}
       />
@@ -95,19 +95,19 @@ export default function ReconsentDiseasePreferencesScreen() {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.purple,
-    marginTop: 32,
+    marginTop: sizes.xl,
   },
   footer: {
-    padding: 16,
+    padding: sizes.m,
     paddingTop: 0,
   },
   padding: {
-    padding: 16,
+    padding: sizes.m,
   },
   page: {
     backgroundColor: colors.backgroundPrimary,
   },
   showMore: {
-    paddingBottom: 8,
+    paddingBottom: sizes.xs,
   },
 });

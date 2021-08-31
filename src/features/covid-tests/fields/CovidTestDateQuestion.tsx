@@ -4,7 +4,7 @@ import Switch from '@covid/components/Switch';
 import { RegularText } from '@covid/components/Text';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors, fontStyles } from '@theme';
 import { FormikProps } from 'formik';
 import moment, { Moment } from 'moment';
@@ -26,7 +26,7 @@ interface IProps {
   label?: string;
 }
 
-export interface ICovidTestDateQuestion<P, Data> extends React.FC<P> {
+interface ICovidTestDateQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
   createDTO: (data: Data) => Partial<TCovidTest>;
@@ -120,13 +120,13 @@ const styles = StyleSheet.create({
     ...fontStyles.bodyReg,
     alignSelf: 'center',
     color: colors.black,
-    paddingBottom: 10,
+    paddingBottom: sizes.s,
   },
   label: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   switch: {
-    marginBottom: grid.xxl,
+    marginBottom: sizes.l,
   },
 });
 

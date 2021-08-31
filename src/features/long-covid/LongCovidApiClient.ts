@@ -3,7 +3,7 @@ import { ILongCovid } from '@covid/features/long-covid/types';
 
 const apiClient = new ApiClient();
 
-export interface ILongCovidApiClient {
+interface ILongCovidApiClient {
   get(patientId: string): Promise<ILongCovid[]>;
   add(patientId: string, LongCovid: ILongCovid): Promise<ILongCovid>;
 }

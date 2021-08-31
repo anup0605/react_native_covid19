@@ -12,7 +12,6 @@ import { FrequencyQuestion } from '@covid/features/mental-health/partials';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
-import { useTheme } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +21,6 @@ export default function MentalHealthFrequencyScreen() {
   const [curQuestion, setCurQuestion] = React.useState(0);
   const MentalHealthFrequency = useSelector(selectMentalHealthFrequency);
   const dispatch = useDispatch();
-  const { grid } = useTheme();
   const questions = [
     {
       action: setPleasureInDoingThings,

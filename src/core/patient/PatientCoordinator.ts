@@ -7,7 +7,7 @@ import { IUserService } from '@covid/core/user/UserService';
 import { AppCoordinator } from '@covid/features/AppCoordinator';
 import NavigatorService from '@covid/NavigatorService';
 
-export class PatientCoordinator extends Coordinator implements IUpdatePatient {
+class PatientCoordinator extends Coordinator implements IUpdatePatient {
   appCoordinator: AppCoordinator;
 
   navigation: NavigationType;

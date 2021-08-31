@@ -1,6 +1,6 @@
 import InfoCircle from '@assets/icons/InfoCircle';
 import { Text } from '@covid/components';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -25,18 +25,18 @@ export default function InfoBox(props: IProps) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.lightBlueBackground,
-    borderRadius: grid.l,
+    borderRadius: sizes.m,
     flexDirection: 'row',
-    paddingHorizontal: grid.l,
-    paddingVertical: grid.m,
+    paddingHorizontal: sizes.m,
+    paddingVertical: sizes.s,
   },
   icon: {
-    marginTop: grid.xxs,
+    marginTop: sizes.xxs,
   },
   text: {
     color: colors.darkblue,
     justifyContent: 'flex-start',
-    marginLeft: grid.s,
-    paddingRight: grid.l,
+    marginLeft: sizes.xs,
+    paddingRight: sizes.m,
   },
 });

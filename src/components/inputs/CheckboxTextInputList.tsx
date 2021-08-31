@@ -1,7 +1,7 @@
 import Check from '@assets/icons/Check';
 import { Text, TextareaWithCharCount } from '@covid/components';
 import { requiredFormMarker } from '@covid/components/Form';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
@@ -69,10 +69,10 @@ export default React.memo(function CheckboxTextInputList(props: IProps) {
 const checkBoxStyle: ViewStyle = {
   alignItems: 'center',
   backgroundColor: colors.backgroundTertiary,
-  borderRadius: 8,
+  borderRadius: sizes.xs,
   height: 32,
   justifyContent: 'center',
-  marginRight: 16,
+  marginRight: sizes.m,
   width: 32,
 };
 
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderColor: '#C4C4C4',
   },
   marginBottom: {
-    marginBottom: 24,
+    marginBottom: sizes.l,
   },
   text: {
     flex: 1,
@@ -91,6 +91,6 @@ const styles = StyleSheet.create({
   },
   touchable: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: sizes.m,
   },
 });

@@ -1,14 +1,14 @@
 import { TDose, TDoseSymptomsRequest, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineApiClient } from '@covid/core/vaccine/VaccineApiClient';
 
-export interface IVaccineService {
+interface IVaccineService {
   saveVaccineAndDoses(patientId: string, payload: Partial<TVaccineRequest>): Promise<boolean>;
   saveDoseSymptoms(patientId: string, payload: Partial<TDoseSymptomsRequest>): Promise<boolean>;
   deleteVaccine(vaccineId: string): Promise<void>;
   listVaccines(): Promise<TVaccineRequest[]>;
 }
 
-export class VaccineService implements IVaccineService {
+class VaccineService implements IVaccineService {
   initDoses(): Partial<TDose>[] {
     return [
       {

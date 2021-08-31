@@ -4,7 +4,7 @@ import BarChart from '@covid/features/mental-health-playback/components/BarChart
 import InsightIllustration from '@covid/features/mental-health-playback/components/InsightIllustration';
 import { IInsight } from '@covid/features/mental-health-playback/types';
 import i18n from '@covid/locale/i18n';
-import { colors, grid, sizes, styling } from '@covid/themes';
+import { colors, sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import { LayoutChangeEvent, StyleSheet, useWindowDimensions, View } from 'react-native';
 
@@ -63,7 +63,7 @@ export default React.memo(function Insights(props: IProps) {
                   <Background height={illustrationHeights[index]} preserveAspectRatio="none" width={backgroundWidth} />
                   <View style={[styling.absoluteFill, styling.centerCenter]}>
                     <InsightIllustration
-                      height={illustrationHeights[index] - grid.xxl * 2}
+                      height={illustrationHeights[index] - sizes.l * 2}
                       type={insight.activity_name}
                     />
                   </View>
@@ -138,32 +138,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: grid.m,
+    marginTop: sizes.s,
   },
   activityWrapper: {
     alignItems: 'center',
     flex: 1,
     height: '100%',
-    paddingHorizontal: grid.m,
+    paddingHorizontal: sizes.s,
   },
   card: {
     alignSelf: 'center',
-    marginHorizontal: 14,
-    marginTop: 14,
+    marginHorizontal: sizes.m,
+    marginTop: sizes.m,
   },
   contentWrapper: {
-    marginBottom: grid.xxl,
-    marginTop: grid.m,
-    paddingLeft: grid.xl,
-    paddingRight: grid.xxxl,
+    marginBottom: sizes.l,
+    marginTop: sizes.s,
+    paddingLeft: sizes.l,
+    paddingRight: sizes.xl,
   },
   correlatedWrapper: {
     backgroundColor: '#F5F9FC',
-    padding: grid.l,
+    padding: sizes.m,
   },
   description: {
-    marginBottom: grid.xxl,
-    marginTop: grid.m,
+    marginBottom: sizes.l,
+    marginTop: sizes.s,
   },
   illustrationWrapper: {
     flex: 1,
@@ -171,6 +171,6 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   label: {
-    marginBottom: grid.m,
+    marginBottom: sizes.s,
   },
 });

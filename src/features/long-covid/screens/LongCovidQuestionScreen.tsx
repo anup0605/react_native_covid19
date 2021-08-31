@@ -19,7 +19,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { longCovidApiClient } from '@covid/services';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Formik, FormikProps } from 'formik';
@@ -38,9 +38,9 @@ interface IProps {
 }
 
 const renderBulletLine = (text: string) => (
-  <View style={{ flexDirection: 'row', paddingRight: 16, paddingTop: 16 }}>
+  <View style={{ flexDirection: 'row', paddingRight: sizes.m, paddingTop: sizes.m }}>
     <RegularText style={styles.bullet}>{'\u2B24'}</RegularText>
-    <RegularText style={{ flex: 1, paddingLeft: 16 }}>{text}</RegularText>
+    <RegularText style={{ flex: 1, paddingLeft: sizes.m }}>{text}</RegularText>
   </View>
 );
 
@@ -132,10 +132,10 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
   };
 
   const renderFormCheckboxes = (props: FormikProps<ILongCovid>) => (
-    <View style={{ marginVertical: 16 }}>
+    <View style={{ marginVertical: sizes.m }}>
       <CheckboxList>
         {checkBoxQuestions4To17.map((key: string, index: number) => (
-          <View style={{ marginBottom: 16 }}>
+          <View style={{ marginBottom: sizes.m }}>
             <CheckboxItem dark onChange={() => props.setFieldValue(key, !props.values[key])} value={props.values[key]}>
               {i18n.t(`long-covid.q${index + checkboxIndexOffset}`)}
             </CheckboxItem>
@@ -148,7 +148,7 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
 
   const renderError = (props: FormikProps<ILongCovid>, propertyKey: keyof ILongCovid) =>
     props.touched[propertyKey] && props.errors[propertyKey] ? (
-      <View style={{ marginBottom: 16 }}>
+      <View style={{ marginBottom: sizes.m }}>
         <ErrorText>{props.errors[propertyKey]}</ErrorText>
       </View>
     ) : null;
@@ -185,14 +185,14 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
 
         <View style={styles.hr} />
         <ColourHighlightHeaderTextText highlightColor={colors.purple} text={i18n.t('long-covid.q4-header')} />
-        <View style={{ ...styles.infoBox, marginBottom: 24 }}>
-          <View style={{ flexDirection: 'row', paddingRight: 24, paddingTop: 16 }}>
-            <View style={{ paddingRight: 12 }}>
+        <View style={{ ...styles.infoBox, marginBottom: sizes.l }}>
+          <View style={{ flexDirection: 'row', paddingRight: sizes.l, paddingTop: sizes.m }}>
+            <View style={{ paddingRight: sizes.s }}>
               <InfoCircle color={colors.primary} />
             </View>
             <RegularText>{i18n.t('long-covid.q4-info-1')}</RegularText>
           </View>
-          <View style={{ marginTop: 16, paddingLeft: 32 }}>
+          <View style={{ marginTop: sizes.m, paddingLeft: sizes.xl }}>
             <RegularText>{i18n.t('long-covid.q4-info-2')}</RegularText>
           </View>
         </View>
@@ -261,7 +261,7 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
         <View style={styles.hr} />
 
         {/* Do you have anything else to share regarding the evolution of your COVID-19 symptoms? */}
-        <HeaderText style={{ marginBottom: 16 }}>{i18n.t('long-covid.comments')}</HeaderText>
+        <HeaderText style={{ marginBottom: sizes.m }}>{i18n.t('long-covid.comments')}</HeaderText>
         <TextareaWithCharCount
           bordered
           onChangeText={props.handleChange('symptom_change_comments')}
@@ -321,23 +321,23 @@ const styles = StyleSheet.create({
   hr: {
     borderBottomColor: colors.hrColor,
     borderBottomWidth: 1,
-    marginBottom: 40,
-    marginTop: 16,
+    marginBottom: sizes.xxl,
+    marginTop: sizes.m,
   },
   infoBox: {
     backgroundColor: colors.white,
-    borderRadius: 8,
-    marginTop: 16,
-    padding: 16,
-    paddingBottom: 24,
+    borderRadius: sizes.xs,
+    marginTop: sizes.m,
+    padding: sizes.m,
+    paddingBottom: sizes.l,
     textAlign: 'left',
   },
   marginTop: {
-    marginTop: 32,
+    marginTop: sizes.xl,
   },
   textarea: {
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
-    paddingVertical: 40,
+    borderRadius: sizes.xs,
+    paddingVertical: sizes.xxl,
   },
 });

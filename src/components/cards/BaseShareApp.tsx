@@ -3,6 +3,7 @@ import { BrandedButton } from '@covid/components/buttons';
 import { RegularBoldText, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, Platform, Share, ShareAction, StyleSheet, View } from 'react-native';
@@ -34,13 +35,11 @@ const extractSharedOn = (shareAction: ShareAction): string | null => {
   return null;
 };
 
-export const shareUrl = (): string => i18n.t('share-this-app.url');
-
 export const shareApp = async (message: string) => {
   try {
     const shareAction = await Share.share({
       message,
-      url: shareUrl(), // IOS has separate field for URL
+      url: i18n.t('share-this-app.url'), // IOS has separate field for URL
     });
 
     const sharedOn = extractSharedOn(shareAction);
@@ -49,7 +48,7 @@ export const shareApp = async (message: string) => {
 };
 
 export const share = async (prefix: string) => {
-  const message = prefix + (Platform.OS === 'android' ? ` ${shareUrl()}` : ''); // On Android add link to end of message
+  const message = prefix + (Platform.OS === 'android' ? ` ${i18n.t('share-this-app.url')}` : ''); // On Android add link to end of message
   shareApp(message);
 };
 
@@ -71,8 +70,8 @@ export function BaseShareAppCard({ primaryText, secondaryText, ctaTitle, onShare
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    borderRadius: 10,
-    paddingHorizontal: 10,
+    borderRadius: sizes.s,
+    paddingHorizontal: sizes.s,
   },
   primaryText: {
     fontSize: 20,
@@ -80,18 +79,18 @@ const styles = StyleSheet.create({
   },
   secondaryText: {
     color: colors.secondary,
-    paddingHorizontal: 40,
-    paddingVertical: 10,
+    paddingHorizontal: sizes.xxl,
+    paddingVertical: sizes.s,
     textAlign: 'center',
   },
   shareButton: {
-    marginHorizontal: 30,
-    marginVertical: 20,
+    marginHorizontal: sizes.xl,
+    marginVertical: sizes.l,
   },
   shareLink: {
-    marginBottom: 20,
-    marginHorizontal: 30,
-    marginTop: 5,
+    marginBottom: sizes.l,
+    marginHorizontal: sizes.xl,
+    marginTop: sizes.xxs,
     textAlign: 'center',
   },
   socialIcon: {
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
   },
   socialIconContainer: {
     alignSelf: 'center',
-    borderRadius: 10,
-    margin: 30,
+    borderRadius: sizes.s,
+    margin: sizes.xl,
   },
 });

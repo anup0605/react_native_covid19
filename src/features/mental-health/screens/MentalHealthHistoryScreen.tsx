@@ -16,7 +16,7 @@ import { TMentalHealthInfosRequest } from '@covid/features/mental-health/MentalH
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
-import { useTheme } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -26,7 +26,6 @@ export default function MentalHealthHistoryScreen() {
   const MentalHealthHistory = useSelector(selectMentalHealthHistory);
   const [canSubmit, setCanSubmit] = React.useState(false);
   const dispatch = useDispatch();
-  const { grid } = useTheme();
 
   const handleSetHasHistoryDiagnosis = (value: THasDiagnosis) => {
     dispatch(setHasHistoryDiagnosis(value));
@@ -47,14 +46,14 @@ export default function MentalHealthHistoryScreen() {
   const renderRow = (data: TQuestion) => {
     return (
       <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-        <View style={{ marginRight: grid.l }}>
+        <View style={{ marginRight: sizes.m }}>
           <CheckBoxButton
             active={getHasExistingCondition(data.value)}
             onPress={() => handleAddRemoveCondition(data.value)}
           />
         </View>
 
-        <View style={{ flex: 1, paddingRight: grid.s }}>
+        <View style={{ flex: 1, paddingRight: sizes.xs }}>
           <Text>{data.key}</Text>
         </View>
       </View>
@@ -121,7 +120,7 @@ export default function MentalHealthHistoryScreen() {
             collection={questions}
             onPress={(data) => handleAddRemoveCondition(data.value)}
             renderRow={(data) => renderRow(data)}
-            style={{ paddingBottom: grid.s, paddingTop: grid.s }}
+            style={{ paddingBottom: sizes.xs, paddingTop: sizes.xs }}
           />
           {renderOtherTextInput}
         </>

@@ -19,7 +19,7 @@ import { getDietStudyDoctorImage, getMentalHealthStudyDoctorImage } from '@covid
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
-import { colors, styling } from '@covid/themes';
+import { colors, sizes, styling } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
@@ -179,16 +179,16 @@ export function DashboardScreen({ navigation, route }: IProps) {
 
 const styles = StyleSheet.create({
   calloutContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: sizes.m,
   },
   dietStudyImage: {
     aspectRatio: 1200 / 1266,
     height: undefined,
-    marginVertical: 8,
+    marginVertical: sizes.xs,
     resizeMode: 'contain',
     width: '100%',
   },
   marginVertical: {
-    marginVertical: 8,
+    marginVertical: sizes.xs,
   },
 });

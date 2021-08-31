@@ -9,7 +9,7 @@ import { schoolService } from '@covid/core/schools/SchoolService';
 import store from '@covid/core/state/store';
 import NavigatorService from '@covid/NavigatorService';
 
-export class SchoolNetworkCoordinator extends Coordinator implements ISelectProfile {
+class SchoolNetworkCoordinator extends Coordinator implements ISelectProfile {
   patientData: TPatientData;
 
   higherEducation: boolean;
@@ -80,7 +80,7 @@ export class SchoolNetworkCoordinator extends Coordinator implements ISelectProf
   };
 
   removePatientFromGroup = async (groupId: string, patientId: string) => {
-    return schoolService.leaveGroup(groupId, patientId).then(async (r) => {
+    return schoolService.leaveGroup(groupId, patientId).then(async () => {
       await store.dispatch(fetchSubscribedSchoolGroups()).then(() => {
         store.dispatch(schoolSlice.actions.removeGroup(groupId));
       });

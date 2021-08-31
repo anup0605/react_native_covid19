@@ -1,3 +1,4 @@
+import { sizes } from '@covid/themes';
 import { colors, fontStyles } from '@theme';
 import { Text } from 'native-base';
 import * as React from 'react';
@@ -30,9 +31,9 @@ const styles = StyleSheet.create({
   bigButton: {
     backgroundColor: colors.white,
     borderColor: colors.brand,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     borderWidth: 1,
-    padding: 16,
+    padding: sizes.m,
   },
 
   buttonText: {

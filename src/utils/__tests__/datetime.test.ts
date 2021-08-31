@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { calcDaysDiff } from '@covid/utils/datetime';
 
 const utcComparisons = [

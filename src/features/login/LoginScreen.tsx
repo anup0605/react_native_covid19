@@ -8,7 +8,7 @@ import { userService } from '@covid/core/user/UserService';
 import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Input, Item, Label, Toast } from 'native-base';
@@ -144,10 +144,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   marginTop: {
-    marginTop: 16,
+    marginTop: sizes.m,
   },
   marginVertical: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   textWrapper: {
     flexDirection: 'row',

@@ -8,6 +8,7 @@ import { ITrendLineData } from '@covid/core/content/dto/ContentAPIContracts';
 import { fetchLocalTrendLine } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors, fontStyles } from '@theme';
 import * as Sharing from 'expo-sharing';
 import * as React from 'react';
@@ -62,17 +63,17 @@ const styles = StyleSheet.create({
   chartWrapper: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: sizes.l,
   },
   deltaTag: {
     alignSelf: 'center',
-    marginTop: 16,
-    marginVertical: 32,
+    marginTop: sizes.m,
+    marginVertical: sizes.xl,
   },
   district: {
     fontSize: 20,
     fontWeight: '500',
-    marginTop: 8,
+    marginTop: sizes.xs,
     textAlign: 'center',
   },
   flex: {
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     color: colors.textDark,
     fontSize: 32,
     lineHeight: 48,
-    paddingTop: 8,
+    paddingTop: sizes.xs,
     textAlign: 'center',
   },
   shareButton: {
@@ -90,9 +91,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: colors.purple,
     borderWidth: 1,
-    marginBottom: 16,
-    marginTop: 32,
-    paddingHorizontal: 48,
+    marginBottom: sizes.m,
+    marginTop: sizes.xl,
+    paddingHorizontal: sizes.xxl,
   },
   shareButtonText: {
     color: colors.purple,

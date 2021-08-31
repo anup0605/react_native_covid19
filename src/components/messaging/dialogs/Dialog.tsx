@@ -74,10 +74,10 @@ function Dialog({ active, message }: IProps) {
     <SContainerView height={height} width={width}>
       <SMessageWindowView style={{ transform: [{ translateY: animateTo }] }}>
         <STitleView>
-          <Text rhythm={theme.grid.l} textClass="h4Medium">
+          <Text rhythm={theme.sizes.m} textClass="h4Medium">
             {message.message.title}
           </Text>
-          <Text rhythm={theme.grid.xxxl}>{message.message.body}</Text>
+          <Text rhythm={theme.sizes.xl}>{message.message.body}</Text>
         </STitleView>
         <View>{getActions()}</View>
         <RoundIconButton

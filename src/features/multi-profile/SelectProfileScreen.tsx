@@ -22,9 +22,7 @@ type TProps = {
   route: RouteProp<ScreenParamList, 'SelectProfile'>;
 };
 
-export type TSelectProfileCoordinator =
-  | (Coordinator & ISelectProfile)
-  | (Coordinator & ISelectProfile & IEditableProfile);
+type TSelectProfileCoordinator = (Coordinator & ISelectProfile) | (Coordinator & ISelectProfile & IEditableProfile);
 
 export default function SelectProfileScreen({ navigation, route }: TProps) {
   const { status, error, isLoaded, isApiError, setIsApiError, setError, profiles, listProfiles, retryListProfiles } =

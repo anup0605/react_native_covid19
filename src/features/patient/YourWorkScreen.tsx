@@ -20,13 +20,14 @@ import {
 } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
-export interface IYourWorkData {
+interface IYourWorkData {
   isHealthcareStaff: EHealthCareStaffOptions;
   isCarer: 'yes' | 'no';
   hasPatientInteraction: EPatientInteractions;
@@ -36,11 +37,11 @@ export interface IYourWorkData {
   ppeAvailabilityNever: EAvailabilityNeverOptions;
 }
 
-export type TYourWorkProps = {
+type TYourWorkProps = {
   route: RouteProp<ScreenParamList, 'YourWork'>;
 };
 
-export type TState = {
+type TState = {
   isDiabetesRegistry: boolean;
   atHospitalInpatient: boolean;
   atHospitalOutpatient: boolean;
@@ -294,7 +295,9 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
 
                 {showWorkerAndCarerQuestions ? (
                   <>
-                    <RegularText style={{ marginTop: 16 }}>{i18n.t('label-physically-worked-in-places')}</RegularText>
+                    <RegularText style={{ marginTop: sizes.m }}>
+                      {i18n.t('label-physically-worked-in-places')}
+                    </RegularText>
 
                     <CheckboxList>
                       <CheckboxItem

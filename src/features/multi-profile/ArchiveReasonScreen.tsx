@@ -47,7 +47,7 @@ export const ArchiveReasonScreen: React.FC<TProps> = (props) => {
       archived_reason: reason,
     };
 
-    patientService.updatePatientInfo(props.route.params?.patientId, infos).then((_) => {
+    patientService.updatePatientInfo(props.route.params?.patientId, infos).then(() => {
       appCoordinator.gotoNextScreen(props.route.name);
     });
   }

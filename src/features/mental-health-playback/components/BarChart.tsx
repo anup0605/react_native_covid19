@@ -1,7 +1,7 @@
 import Mention from '@assets/mental-health-playback/Mention';
 import { Text } from '@covid/components';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -76,7 +76,7 @@ export default React.memo(function BarChart({ items = [], ...props }: IProps) {
 const styles = StyleSheet.create({
   text: {
     marginBottom: 'auto',
-    marginLeft: 8,
+    marginLeft: sizes.xs,
     marginTop: 'auto',
   },
 });

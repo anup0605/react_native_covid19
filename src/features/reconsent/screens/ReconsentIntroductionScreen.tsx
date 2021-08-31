@@ -4,6 +4,7 @@ import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScree
 import TalkRectangle from '@covid/features/reconsent/components/TalkRectangle';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -61,12 +62,12 @@ export default function ReconsentIntroductionScreen() {
 const styles = StyleSheet.create({
   illustration: {
     alignSelf: 'center',
-    marginTop: 12,
+    marginTop: sizes.s,
   },
   marginBottom: {
-    marginBottom: 32,
+    marginBottom: sizes.xl,
   },
   marginTop: {
-    marginTop: 32,
+    marginTop: sizes.xl,
   },
 });

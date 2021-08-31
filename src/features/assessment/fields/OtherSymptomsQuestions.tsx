@@ -2,6 +2,7 @@ import { TextareaWithCharCount } from '@covid/components';
 import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import { ISymptomQuestions } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
@@ -23,11 +24,11 @@ export const OtherSymptomsQuestions: ISymptomQuestions<TProps, TOtherSymptomsDat
       onChangeText={formikProps.handleChange('otherSymptoms')}
       placeholder={i18n.t('placeholder-optional-question')}
       style={{
-        marginBottom: 16,
-        marginTop: 32,
+        marginBottom: sizes.m,
+        marginTop: sizes.xl,
       }}
       testID="input-other-symptoms"
-      textAreaStyle={{ borderRadius: 8 }}
+      textAreaStyle={{ borderRadius: sizes.xs }}
       value={formikProps.values.otherSymptoms}
     />
   );

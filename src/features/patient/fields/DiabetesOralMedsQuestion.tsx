@@ -4,6 +4,7 @@ import { RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -109,7 +110,7 @@ export const DiabetesOralMedsQuestion: IFormikDiabetesInputFC<IProps, IDiabetesO
 
   return (
     <View>
-      <View style={{ marginVertical: 16 }}>
+      <View style={{ marginVertical: sizes.m }}>
         <RegularText>{i18n.t('diabetes.which-oral-treatment')}</RegularText>
         <CheckboxList>{createDiabetesCheckboxes(diabetesOralMedsOptions, formikProps)}</CheckboxList>
       </View>

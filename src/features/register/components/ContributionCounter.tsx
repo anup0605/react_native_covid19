@@ -2,6 +2,7 @@ import { RegularBoldText, RegularText } from '@covid/components/Text';
 import { ITest } from '@covid/components/types';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import I18n from 'i18n-js';
 import * as React from 'react';
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     color: colors.lightBrand,
     fontSize: 14,
     lineHeight: 32,
-    marginTop: 16,
+    marginTop: sizes.m,
     textAlign: 'center',
   },
   contributingTextValue: {

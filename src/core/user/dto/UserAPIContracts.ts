@@ -83,7 +83,7 @@ export type TUserResponse = {
   country_code: string;
 };
 
-export enum ECountryCode {
+enum ECountryCode {
   GB = 'GB',
   US = 'US',
   SE = 'SE',
@@ -321,17 +321,6 @@ export type TConsent =
       privacy_policy_version: string;
     }
   | any;
-
-export type TAreaStatsResponse = {
-  area_name: string;
-  locked: boolean;
-  number_of_areas: number;
-  number_of_missing_contributors: number;
-  population: number;
-  predicted_cases: number;
-  rank: number;
-  rank_delta: number;
-};
 
 export type TStartupInfo = {
   app_requires_update?: boolean;

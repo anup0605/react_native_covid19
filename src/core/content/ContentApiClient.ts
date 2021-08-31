@@ -3,7 +3,7 @@ import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 
 import { TFeaturedContentResponse, TTrendLineResponse } from './dto/ContentAPIContracts';
 
-export interface IContentApiClient {
+interface IContentApiClient {
   getStartupInfo(): Promise<TStartupInfo>;
   getTrendLines(lad?: string): Promise<TTrendLineResponse>;
   getFeaturedContent(): Promise<TFeaturedContentResponse>;
@@ -13,7 +13,7 @@ export interface IContentApiClient {
 
 const apiClient = new ApiClient();
 
-export class ContentApiClient implements IContentApiClient {
+class ContentApiClient implements IContentApiClient {
   getStartupInfo(): Promise<TStartupInfo> {
     return apiClient.get<TStartupInfo>('/users/startup_info/');
   }

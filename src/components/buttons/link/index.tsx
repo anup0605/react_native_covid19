@@ -1,6 +1,6 @@
 import { Icon, TIconName } from '@covid/components/icons';
 import { Text } from '@covid/components/typography';
-import { TTypeSizes } from '@covid/themes';
+import { sizes, TTypeSizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
 
@@ -26,7 +26,7 @@ function Link(props: IProps) {
         color={linkColor}
         iconName={'big-arrow-right' || props.iconName}
         iconSize={props.iconSize || 16}
-        style={{ marginRight: 8, marginTop: 2 }}
+        style={{ marginRight: sizes.xs, marginTop: 2 }}
       />
       <Text style={{ color: linkColor, flex: 1 }}>{props.text}</Text>
     </TouchableOpacity>

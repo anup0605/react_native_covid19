@@ -1,4 +1,4 @@
-export type TBadge =
+type TBadge =
   | 'GENERAL'
   | 'DAILY_HEALTH'
   | 'TWO_PEOPLE'
@@ -17,9 +17,9 @@ export type TReportedEvent = {
 
 export type TProgress = 'NOT_STARTED' | 'DISCOVERY' | 'DATA_COLLECTION' | 'ANALYSIS' | 'COMPLETED';
 
-export type TEvent = 'HIGHLIGHT' | 'FINDING' | 'NODE' | 'SUMMARY_NODE' | 'STUDY';
+type TEvent = 'HIGHLIGHT' | 'FINDING' | 'NODE' | 'SUMMARY_NODE' | 'STUDY';
 
-export type TStudy = 'ONGOING' | 'FUTURE';
+type TStudy = 'ONGOING' | 'FUTURE';
 
 export type TTimelineEvent = {
   date: string;

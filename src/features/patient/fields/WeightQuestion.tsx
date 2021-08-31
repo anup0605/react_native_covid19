@@ -4,6 +4,7 @@ import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -133,11 +134,11 @@ const styles = StyleSheet.create({
   },
   poundsField: {
     flex: 5,
-    marginHorizontal: 4,
+    marginHorizontal: sizes.xxs,
   },
   primaryField: {
     flex: 6,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
   primaryFieldRow: {
     flex: 6,
@@ -145,19 +146,19 @@ const styles = StyleSheet.create({
   },
   secondaryField: {
     flex: 2,
-    marginLeft: 4,
+    marginLeft: sizes.xxs,
     marginTop: -16,
   },
   stonesField: {
     flex: 5,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
   tertiaryField: {
     flex: 5,
-    marginRight: 8,
+    marginRight: sizes.xs,
   },
   view: {
     flex: 1,
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
 });

@@ -5,6 +5,7 @@ import { TPatientStateType } from '@covid/core/patient/PatientState';
 import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -96,14 +97,14 @@ const styles = StyleSheet.create({
   body: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: 16,
+    marginTop: sizes.m,
   },
   formContainer: {
     flexGrow: 1,
     justifyContent: 'space-between',
   },
   spacer: {
-    marginTop: 16,
+    marginTop: sizes.m,
   },
 });
 
