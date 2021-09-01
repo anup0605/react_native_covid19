@@ -3,7 +3,6 @@ import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const appInitialState: IApp = {
-  dashboardHasBeenViewed: false,
   mentalHealthStudyActive: true,
   modalMentalHealthPlaybackVisible: false,
 };
@@ -13,10 +12,6 @@ export const appSlice = createSlice({
   name: 'App',
   reducers: {
     reset: () => appInitialState,
-    setDashboardHasBeenViewed: (state, action: PayloadAction<boolean>) => ({
-      ...state,
-      dashboardHasBeenViewed: action.payload,
-    }),
     setMentalHealthStudyActive: (state, action: PayloadAction<boolean>) => ({
       ...state,
       mentalHealthStudyActive: action.payload,

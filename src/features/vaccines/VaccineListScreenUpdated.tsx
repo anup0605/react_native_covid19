@@ -154,8 +154,8 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
   return (
     <Screen
       profile={route.params?.assessmentData?.patientData?.patientState?.profile}
-      testID="vaccine-list-screen"
       renderFooter={footer}
+      testID="vaccine-list-screen"
     >
       <View style={styles.marginHorizontal}>
         <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list-updated.title')} />
@@ -175,8 +175,8 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   introduction: {
-    marginTop: sizes.l,
     marginBottom: sizes.xxl,
+    marginTop: sizes.l,
   },
   marginBottom: {
     marginBottom: sizes.l,

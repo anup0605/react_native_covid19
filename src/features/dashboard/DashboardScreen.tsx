@@ -9,7 +9,6 @@ import ExpoPushTokenEnvironment from '@covid/core/push-notifications/expo';
 import PushNotificationService, { IPushTokenEnvironment } from '@covid/core/push-notifications/PushNotificationService';
 import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { fetchSubscribedSchoolGroups } from '@covid/core/schools/Schools.slice';
-import { appActions, appSelectors } from '@covid/core/state/app/slice';
 import { fetchLocalTrendLine, updateTodayDate } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
@@ -47,7 +46,6 @@ const headerConfig = {
 };
 
 export function DashboardScreen({ navigation, route }: IProps) {
-  const app = useSelector(appSelectors.selectApp);
   const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
   const schoolGroups = useSelector<TRootState, ISubscribedSchoolGroupStats[]>(
@@ -91,21 +89,6 @@ export function DashboardScreen({ navigation, route }: IProps) {
       dispatch(fetchLocalTrendLine());
       setShowTrendline(true);
     }
-  }, []);
-
-  React.useEffect(() => {
-    let isMounted = true;
-    if (!app.dashboardHasBeenViewed) {
-      appDispatch(appActions.setDashboardHasBeenViewed(true));
-      setTimeout(() => {
-        if (isMounted && startupInfo?.show_research_consent) {
-          appCoordinator.goToReconsent();
-        }
-      }, 500);
-    }
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   React.useEffect(() => {

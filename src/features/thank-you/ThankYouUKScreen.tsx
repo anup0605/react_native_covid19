@@ -32,6 +32,10 @@ export default function ThankYouUKScreen(props: IProps) {
 
   React.useEffect(() => {
     (async () => {
+      if (startupInfo?.show_research_consent) {
+        appCoordinator.goToReconsent();
+        return;
+      }
       if (startupInfo?.show_modal === 'mental-health-playback') {
         dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
         return;
