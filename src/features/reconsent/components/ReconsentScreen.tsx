@@ -110,8 +110,9 @@ const styles = StyleSheet.create({
   headerWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
+    paddingBottom: sizes.m,
     paddingHorizontal: sizes.screenHorizontalPadding,
-    paddingVertical: sizes.screenVerticalPadding,
+    paddingTop: sizes.screenVerticalPadding,
   },
   marginLeft: {
     marginLeft: DOT_SIZE / 2,
