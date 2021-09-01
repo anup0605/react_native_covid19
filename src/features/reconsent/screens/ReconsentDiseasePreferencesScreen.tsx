@@ -1,7 +1,7 @@
 import { Text } from '@covid/components';
 import { BrandedButton } from '@covid/components/buttons';
 import { selectDiseasePreferences } from '@covid/core/state/reconsent';
-import { updateDiseasePreference } from '@covid/core/state/reconsent/slice';
+import { resetDiseasePreferences, updateDiseasePreference } from '@covid/core/state/reconsent/slice';
 import { TDiseaseId, TDiseasePreferencesData } from '@covid/core/state/reconsent/types';
 import DiseaseCard from '@covid/features/reconsent/components/DiseaseCard';
 import InfoBox from '@covid/features/reconsent/components/InfoBox';
@@ -29,6 +29,20 @@ export default function ReconsentDiseasePreferencesScreen() {
   const [showExtendedList, setShowExtendedList] = React.useState(initialShowExtendedList);
 
   function onPressCard(diseaseId: TDiseaseId) {
+    if (diseaseId === 'prefer_not_to_say' && !diseasePreferences[diseaseId]) {
+      dispatch(resetDiseasePreferences());
+    } else if (
+      diseasePreferences.prefer_not_to_say === true &&
+      diseaseId !== 'prefer_not_to_say' &&
+      !diseasePreferences[diseaseId]
+    ) {
+      dispatch(
+        updateDiseasePreference({
+          diseaseId: 'prefer_not_to_say',
+          value: false,
+        }),
+      );
+    }
     dispatch(
       updateDiseasePreference({
         diseaseId,
