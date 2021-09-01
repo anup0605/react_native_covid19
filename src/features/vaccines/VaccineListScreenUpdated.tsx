@@ -83,8 +83,6 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
   const enableNext = () => {
     const doses = vaccines?.doses;
     // Disable button if user has dose(s) with missing date, brand & description
-    // TODO: This has changed quite dramatically from previous version. Description is no longer required. Need to do a sanity check on this
-    // to check all is working as expected.
     if (doses && doses.some((dose) => dose.date_taken_specific == null || dose.brand === null)) {
       return false;
     }
@@ -97,7 +95,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
       return <Loading error={null} status="" />;
     }
     return (
-      <View style={styles.marginBottom}>
+      <View>
         <BrandedButton
           onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccines)}
           style={styles.newButton}
@@ -113,6 +111,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
                   dose={dose}
                   index={index}
                   key={dose.id}
+                  style={index === 0 ? { paddingTop: sizes.s } : { paddingTop: sizes.l }}
                   testID={`vaccine-dose-row-${index}`}
                   vaccineRecord={vaccines}
                 />
@@ -157,7 +156,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
       renderFooter={footer}
       testID="vaccine-list-screen"
     >
-      <View style={styles.marginHorizontal}>
+      <View>
         <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list-updated.title')} />
       </View>
       <View style={styles.introduction}>
@@ -177,9 +176,6 @@ const styles = StyleSheet.create({
   introduction: {
     marginBottom: sizes.xxl,
     marginTop: sizes.l,
-  },
-  marginBottom: {
-    marginBottom: sizes.l,
   },
   newButton: {
     backgroundColor: colors.backgroundTertiary,

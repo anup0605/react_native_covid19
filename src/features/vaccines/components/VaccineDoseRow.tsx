@@ -5,16 +5,17 @@ import { TDose, TVaccineRequest, vaccineBrandDisplayName } from '@covid/core/vac
 import { sizes } from '@covid/themes';
 import moment from 'moment';
 import * as React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 type TProps = {
   dose: TDose;
+  style: StyleProp<ViewStyle>;
   testID: string;
   vaccineRecord: TVaccineRequest;
   index: number;
 };
 
-export const VaccineDoseRow: React.FC<TProps> = ({ dose, testID, vaccineRecord, index }) => {
+export const VaccineDoseRow: React.FC<TProps> = ({ dose, style, testID, vaccineRecord, index }) => {
   const formatVaccineDate = (dose: TDose) => {
     return moment(dose.date_taken_specific).format('MMM D, Y');
   };
@@ -26,7 +27,7 @@ export const VaccineDoseRow: React.FC<TProps> = ({ dose, testID, vaccineRecord, 
   return (
     <TouchableOpacity
       onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccineRecord, index)}
-      style={styles.itemTouchable}
+      style={[styles.itemTouchable, style]}
       testID={testID}
     >
       <Image source={tick} style={styles.tick} />
@@ -47,7 +48,6 @@ const styles = StyleSheet.create({
   itemTouchable: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: sizes.s,
   },
   tick: {
     height: 16,
