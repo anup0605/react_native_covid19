@@ -37,7 +37,7 @@ export default function ReconsentRequestConsentScreen() {
 
   const onInformationSheetPress = () => {
     Analytics.track(events.RECONSENT_INFORMATION_SHEET_CLICKED);
-    openWebLink('https://covid.joinzoe.com/wider-health-studies-factsheet');
+    openWebLink('https://covid.joinzoe.com/wider-health-studies-infosheet');
   };
 
   const renderCallouts = () => {
