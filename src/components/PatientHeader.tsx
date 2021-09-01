@@ -44,9 +44,9 @@ export function PatientHeader(props: TProps) {
 const styles = StyleSheet.create({
   avatar: {
     borderRadius: sizes.m,
-    height: 32,
+    height: sizes.m * 2,
     marginLeft: sizes.xxs,
-    width: 32,
+    width: sizes.m * 2,
   },
   textClipped: {
     color: colors.white,

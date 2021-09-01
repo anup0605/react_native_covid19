@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
   dot: {
     backgroundColor: colors.coral,
     borderRadius: sizes.s,
-    height: 24,
+    height: sizes.s * 2,
     justifyContent: 'center',
-    width: 24,
+    width: sizes.s * 2,
   },
   label: {
     alignSelf: 'center',

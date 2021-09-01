@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
     borderColor: '#C0D904',
     borderRadius: sizes.l,
     borderWidth: 3,
-    height: 48,
+    height: sizes.l * 2,
     justifyContent: 'center',
-    width: 48,
+    width: sizes.l * 2,
   },
   tickContainer: {
     alignItems: 'center',

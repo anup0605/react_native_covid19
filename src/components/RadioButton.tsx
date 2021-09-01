@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
   dot: {
     backgroundColor: colors.brand,
     borderRadius: sizes.xxs,
-    height: 10,
-    width: 10,
+    height: sizes.xxs * 2,
+    width: sizes.xxs * 2,
   },
   wrapper: {
     alignItems: 'center',
@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     borderColor: colors.backgroundFour,
     borderRadius: sizes.s,
     borderWidth: 1.5,
-    height: 20,
+    height: 18,
     justifyContent: 'center',
-    width: 20,
+    width: 18,
   },
 });

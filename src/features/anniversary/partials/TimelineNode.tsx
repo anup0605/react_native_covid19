@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
   node: {
     backgroundColor: '#0165B5',
     borderRadius: sizes.xxs,
-    height: 12,
+    height: sizes.xxs * 2,
     marginRight: sizes.s,
-    width: 12,
+    width: sizes.xxs * 2,
   },
   row: {
     alignItems: 'center',

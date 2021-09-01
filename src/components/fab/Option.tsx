@@ -73,9 +73,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'purple',
     borderRadius: sizes.l,
-    height: 48,
+    height: sizes.l * 2,
     justifyContent: 'center',
-    width: 48,
+    width: sizes.l * 2,
   },
   row: {
     alignItems: 'center',

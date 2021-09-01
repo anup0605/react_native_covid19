@@ -30,9 +30,9 @@ export default React.memo(function PaginationIndicator(props: IProps) {
 const dotStyle = {
   backgroundColor: colors.accentBlue.main.bgColor,
   borderRadius: sizes.xxs,
-  height: 8,
+  height: sizes.xxs * 2,
   margin: sizes.xs,
-  width: 8,
+  width: sizes.xxs * 2,
 };
 
 const styles = StyleSheet.create({

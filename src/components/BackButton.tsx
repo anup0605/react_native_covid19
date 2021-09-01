@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.backgroundFour,
     borderRadius: sizes.m,
-    height: 32,
+    height: sizes.m * 2,
     justifyContent: 'center',
-    width: 32,
+    width: sizes.m * 2,
   },
 });
