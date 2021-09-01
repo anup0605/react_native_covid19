@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     maxWidth: 40,
+    width: 40,
   },
   inactiveDescription: {
     color: colors.secondary,
