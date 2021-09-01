@@ -38,6 +38,7 @@ export type TTextStyles = {
   //
   h3: TText;
   h3Bold: TText;
+  h3Light: TText;
   h3Regular: TText;
   //
   h4: TText;

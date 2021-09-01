@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
   view: {
     backgroundColor: colors.transparentDarkBlue,
     borderRadius: sizes.m,
-    padding: sizes.xl,
+    padding: sizes.l,
   },
 });
