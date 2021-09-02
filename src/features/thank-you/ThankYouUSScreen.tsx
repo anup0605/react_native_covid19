@@ -5,7 +5,7 @@ import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordina
 import { ScreenParamList } from '@covid/features';
 import { AppRating, shouldAskForRating } from '@covid/features/thank-you/components/AppRating';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { AntDesign } from '@expo/vector-icons';
 import { RouteProp } from '@react-navigation/native';
@@ -38,7 +38,9 @@ export default function ThankYouUSScreen({ route }: IProps) {
       <Screen backgroundColor={colors.backgroundSecondary} testID="thank-you-screen">
         <AntDesign name="checkcircle" size={32} style={styles.checkIcon} />
 
-        <HeaderText style={{ marginTop: 24, textAlign: 'center' }}>{i18n.t('thank-you.report-tomorrow')}</HeaderText>
+        <HeaderText style={{ marginTop: sizes.l, textAlign: 'center' }}>
+          {i18n.t('thank-you.report-tomorrow')}
+        </HeaderText>
 
         <Text style={styles.thankYou}>{i18n.t('thank-you.numbers')}</Text>
 
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: colors.brand,
     fontSize: 24,
-    marginTop: 32,
+    marginTop: sizes.xl,
   },
   partner: {
     fontFamily: 'SofiaPro-Bold',
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   },
   partnerContainer: {
     lineHeight: 24,
-    marginTop: 32,
+    marginTop: sizes.xl,
     textAlign: 'center',
   },
   thankYou: {
@@ -95,11 +97,11 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Light',
     fontSize: 16,
     lineHeight: 24,
-    paddingVertical: 16,
+    paddingVertical: sizes.m,
     textAlign: 'center',
   },
   visitWebsite: {
-    marginTop: 24,
+    marginTop: sizes.l,
     textAlign: 'center',
   },
 });

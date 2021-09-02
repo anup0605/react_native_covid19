@@ -9,7 +9,7 @@ import { SchoolGroupRow } from '@covid/features/school-network/SchoolGroupRow';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Text } from 'native-base';
@@ -110,13 +110,13 @@ export const SchoolGroupListScreen: React.FC<TProps> = ({ route }) => {
 
 const styles = StyleSheet.create({
   marginVertical: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   newButton: {
     backgroundColor: colors.white,
     borderColor: colors.purple,
     borderWidth: 1,
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   newText: {
     color: colors.purple,

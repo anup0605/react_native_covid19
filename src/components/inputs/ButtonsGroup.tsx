@@ -1,5 +1,6 @@
 import { SelectableButton } from '@covid/components/SelectableButton';
 import { ValidationError } from '@covid/components/ValidationError';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { Label } from 'native-base';
 import * as React from 'react';
@@ -54,7 +55,7 @@ export function ButtonsGroup({
             key={item.value}
             onPress={() => onSelect(item.value)}
             selected={selected === item.value}
-            style={{ flex: 1, marginStart: index !== 0 ? 8 : 0 }}
+            style={{ flex: 1, marginLeft: index !== 0 ? 8 : 0 }}
             testID={`button-${item.value}${testID ? `-${testID}` : ''}`}
           >
             {item.label}
@@ -63,7 +64,7 @@ export function ButtonsGroup({
       </View>
 
       {error ? (
-        <View style={{ marginHorizontal: 4, marginTop: 4 }}>
+        <View style={{ marginHorizontal: sizes.xxs, marginTop: sizes.xxs }}>
           <ValidationError error={error} />
         </View>
       ) : null}
@@ -77,8 +78,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaProRegular',
     fontSize: 16,
     lineHeight: 24,
-    marginBottom: 8,
-    marginTop: 24,
+    marginBottom: sizes.xs,
+    marginTop: sizes.l,
   },
   row: {
     flexDirection: 'row',

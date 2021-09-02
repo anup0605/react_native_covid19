@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { BigButton } from '@covid/components';
 import * as React from 'react';
 import renderer from 'react-test-renderer';

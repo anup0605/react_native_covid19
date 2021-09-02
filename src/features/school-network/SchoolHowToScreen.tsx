@@ -6,7 +6,7 @@ import { Coordinator } from '@covid/core/Coordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -56,9 +56,9 @@ export const SchoolHowToScreen: React.FC<TProps> = ({ route }) => {
 
 const styles = StyleSheet.create({
   label: {
-    marginTop: 4,
+    marginTop: sizes.xxs,
   },
   marginTop: {
-    marginTop: 16,
+    marginTop: sizes.m,
   },
 });

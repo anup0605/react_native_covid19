@@ -1,5 +1,6 @@
 import ProgressStatus from '@covid/components/ProgressStatus';
 import { HeaderText, RegularText } from '@covid/components/Text';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
@@ -25,6 +26,6 @@ export function ProgressHeader(props: IProps) {
 
 const styles = StyleSheet.create({
   marginBottom: {
-    marginBottom: 16,
+    marginBottom: sizes.m,
   },
 });

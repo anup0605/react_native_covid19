@@ -1,3 +1,4 @@
+// @todo: Replace this
 export type TTypeSizes = 2 | 4 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | 24 | 28 | 32 | 40 | 48 | 56 | 64 | 72 | 80;
 
 export type TFontStyle = 'normal' | 'italic';
@@ -37,6 +38,7 @@ export type TTextStyles = {
   //
   h3: TText;
   h3Bold: TText;
+  h3Light: TText;
   h3Regular: TText;
   //
   h4: TText;

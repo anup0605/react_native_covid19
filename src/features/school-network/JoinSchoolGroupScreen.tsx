@@ -10,7 +10,7 @@ import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolN
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Formik } from 'formik';
@@ -104,7 +104,7 @@ export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
               />
               <View style={styles.flex} />
               {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
-                <ValidationError error={i18n.t('validation-error-text')} style={{ marginHorizontal: 16 }} />
+                <ValidationError error={i18n.t('validation-error-text')} style={{ marginHorizontal: sizes.m }} />
               ) : null}
               <BrandedButton onPress={formikProps.handleSubmit}>
                 {i18n.t('school-networks.join-group.next')}
@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     backgroundColor: colors.brand,
-    marginHorizontal: 16,
-    marginTop: 16,
+    marginHorizontal: sizes.m,
+    marginTop: sizes.m,
   },
   primaryButtonText: {
     color: colors.white,
@@ -135,6 +135,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   topText: {
-    marginTop: 16,
+    marginTop: sizes.m,
   },
 });

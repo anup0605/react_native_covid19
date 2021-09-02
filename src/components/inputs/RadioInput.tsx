@@ -2,6 +2,7 @@ import { requiredFormMarker } from '@covid/components/Form';
 import { RadioButton } from '@covid/components/RadioButton';
 import { ErrorText, LabelText, SecondaryText } from '@covid/components/Text';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import React from 'react';
 import {
   Image,
@@ -80,38 +81,38 @@ const itemStyle: ViewStyle = {
 const styles = StyleSheet.create({
   firstItem: {
     ...itemStyle,
-    paddingBottom: 12,
+    paddingBottom: sizes.s,
   },
   icon: {
     alignItems: 'center',
     flexDirection: 'row',
     paddingBottom: 2,
-    paddingLeft: 4,
+    paddingLeft: sizes.xxs,
   },
   image: {
     height: 24,
-    marginLeft: 12,
+    marginLeft: sizes.s,
     width: 24,
   },
   lastItem: {
     ...itemStyle,
-    paddingTop: 12,
+    paddingTop: sizes.s,
   },
   marginBottom: {
-    marginBottom: 12,
+    marginBottom: sizes.s,
   },
   marginLeft: {
-    marginLeft: 12,
+    marginLeft: sizes.s,
   },
   marginTop: {
-    marginTop: 12,
+    marginTop: sizes.s,
   },
   marginVertical: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   middleItem: {
     ...itemStyle,
-    paddingVertical: 12,
+    paddingVertical: sizes.s,
   },
   textWrap: {
     flex: 1,

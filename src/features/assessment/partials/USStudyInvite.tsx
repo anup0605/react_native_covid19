@@ -6,6 +6,7 @@ import { TAssessmentData } from '@covid/core/assessment/AssessmentCoordinator';
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { patientService } from '@covid/core/patient/PatientService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, ImageBackground, Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -42,7 +43,7 @@ export const USStudyInvite: React.FC<TProps> = (props: TProps) => {
     <Modal transparent animationType="fade">
       <View style={styles.outsideView}>
         <View style={styles.modalView}>
-          <ImageBackground imageStyle={[styles.backgroundImage, { borderRadius: 16 }]} source={blobs} style={{}}>
+          <ImageBackground imageStyle={[styles.backgroundImage, { borderRadius: sizes.m }]} source={blobs} style={{}}>
             <View style={styles.contentContainer}>
               <TouchableOpacity onPress={handleClose} style={{ alignSelf: 'flex-end' }}>
                 <Image source={closeIcon} style={{ height: 24, width: 24 }} />
@@ -70,26 +71,26 @@ const styles = StyleSheet.create({
   },
   body: {
     fontSize: 14,
-    marginHorizontal: 30,
-    paddingBottom: 32,
-    paddingTop: 12,
+    marginHorizontal: sizes.xl,
+    paddingBottom: sizes.xl,
+    paddingTop: sizes.s,
     textAlign: 'center',
   },
   contentContainer: {
-    padding: 24,
+    padding: sizes.l,
   },
   modalButton: {
     alignSelf: 'center',
     backgroundColor: colors.purple,
     height: 40,
-    marginBottom: 16,
+    marginBottom: sizes.m,
     width: '60%',
   },
   modalView: {
     alignItems: 'center',
     backgroundColor: colors.white,
-    borderRadius: 16,
-    margin: 24,
+    borderRadius: sizes.m,
+    margin: sizes.l,
     maxHeight: '60%',
   },
   outsideView: {
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
   title: {
     color: colors.primary,
     fontSize: 20,
-    paddingHorizontal: 32,
+    paddingHorizontal: sizes.xl,
     paddingVertical: 0,
     textAlign: 'center',
   },

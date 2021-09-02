@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { BrandedButton } from '@covid/components';
 import { fireEvent, render } from '@testing-library/react-native';
 import * as React from 'react';

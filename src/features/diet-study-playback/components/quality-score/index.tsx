@@ -1,5 +1,6 @@
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
 import MissingDataText from '@covid/features/diet-study-playback/components/missing-data-text';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 
 import Score from './Score';
@@ -23,7 +24,7 @@ function QualityScore({ beforeScore, duringScore, minValue = 5, maxValue = 15 }:
           maxValueLabel="Excellent"
           minValue={minValue}
           minValueLabel="Poor"
-          style={{ marginBottom: 48 }}
+          style={{ marginBottom: sizes.xxl }}
           subTitle="February 2020"
           title="Before the pandemic"
         />

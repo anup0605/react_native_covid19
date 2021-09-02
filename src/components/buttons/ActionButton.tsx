@@ -1,4 +1,5 @@
 import { RegularText } from '@covid/components/Text';
+import { sizes } from '@covid/themes';
 import { colors, fontStyles } from '@theme';
 import { Button } from 'native-base';
 import * as React from 'react';
@@ -33,11 +34,11 @@ export default function ActionButton({ children, error = false, icon, onPress, s
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     elevation: 0,
     height: 48,
     justifyContent: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: sizes.m,
   },
   label: {
     lineHeight: 20,

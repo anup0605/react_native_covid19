@@ -82,6 +82,5 @@ function sanitiseTranslations(translationPath: string, isDefaultLocale = false) 
 }
 
 sanitiseTranslations('../assets/lang/en-US.json');
-sanitiseTranslations('../assets/lang/es.json');
 sanitiseTranslations('../assets/lang/sv-SE.json');
 sanitiseTranslations('../assets/lang/en.json', true);

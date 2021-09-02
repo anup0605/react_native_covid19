@@ -45,7 +45,7 @@ export default function CovidApp() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    Notifications.addNotificationResponseReceivedListener((response) => {
+    Notifications.addNotificationResponseReceivedListener(() => {
       Analytics.track(events.OPEN_FROM_NOTIFICATION);
     });
   });

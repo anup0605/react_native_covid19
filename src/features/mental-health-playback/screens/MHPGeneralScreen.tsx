@@ -7,7 +7,7 @@ import Insights from '@covid/features/mental-health-playback/components/Insights
 import PaginationIndicator from '@covid/features/mental-health-playback/components/PaginationIndicator';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid, sizes, styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -105,8 +105,8 @@ export default function MHPGeneralScreen() {
 
 const styles = StyleSheet.create({
   button: {
-    marginBottom: grid.xl,
-    marginHorizontal: grid.xl,
+    marginBottom: sizes.l,
+    marginHorizontal: sizes.l,
   },
   contentWrapper: {
     flexGrow: 1,
@@ -118,6 +118,6 @@ const styles = StyleSheet.create({
   lastInsightWrapper: {
     marginBottom: 'auto',
     marginTop: 'auto',
-    paddingHorizontal: grid.xxxl,
+    paddingHorizontal: sizes.xl,
   },
 });

@@ -3,6 +3,7 @@ import { RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -127,7 +128,7 @@ export const DiabetesTreatmentsQuestion: IFormikDiabetesInputFC<IProps, IDiabete
 
   return (
     <View>
-      <View style={{ marginVertical: 16 }}>
+      <View style={{ marginVertical: sizes.m }}>
         <RegularText>{i18n.t('diabetes.which-treatment')}</RegularText>
         <CheckboxList required>{createDiabetesCheckboxes(diabetesTreatmentCheckboxes, formikProps)}</CheckboxList>
       </View>

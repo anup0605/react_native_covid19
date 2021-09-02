@@ -70,7 +70,7 @@ references:
         - develop-legacy
         - release-0.x-legacy
         - stage
-  
+
   e2e_filter: &e2e_filter
     branches:
       only:
@@ -102,8 +102,8 @@ commands:
           name: Bundle install
           command: bundle check || bundle install --path vendor/bundle --clean
           environment:
-            BUNDLE_JOBS: "4"
-            BUNDLE_RETRY: "3"
+            BUNDLE_JOBS: '4'
+            BUNDLE_RETRY: '3'
       - run: bundle update fastlane
       - save_cache:
           key: *gem_cache_key
@@ -152,10 +152,10 @@ commands:
       - prepare_code
       - install-dependencies
       - run:
-          name: "Bundle RN Android assets"
+          name: 'Bundle RN Android assets'
           command: npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
       - run:
-          name: "Clean up after bundling"
+          name: 'Clean up after bundling'
           command: rm -rf ./android/app/src/main/res/drawable-* && rm -rf ./android/app/src/main/res/raw
 
   # OTA
@@ -172,7 +172,7 @@ commands:
       - set_expo_release_channel
       - run: npx expo-cli login -u $EXPO_USERNAME -p $EXPO_PASSWORD
       - run: npx expo-cli publish --non-interactive --max-workers 1 --release-channel ${RELEASE_CHANNEL} --target bare
-  
+
   # Prepare E2E setup
   prepare_e2e:
     steps:
@@ -230,7 +230,6 @@ jobs:
       - prepare_code
       - node-install
       - run: yarn test:i18n 'sv-SE'
-      - run: yarn test:i18n 'es'
 
   # Prepare code and run tests
   test:
@@ -250,7 +249,7 @@ jobs:
           path: ./reports/junit/
       - store_artifacts:
           path: ./reports/junit
-  
+
   # Run Dtox E2E
   e2etest:
     executor: mobile-build-box
@@ -307,7 +306,7 @@ jobs:
     docker:
       - image: circleci/android:api-29-node
     environment:
-      JAVA_OPTS: "-Xms512m -Xmx2g"
+      JAVA_OPTS: '-Xms512m -Xmx2g'
       GRADLE_OPTS: '-Xmx3g -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx2g -XX:+HeapDumpOnOutOfMemoryError"'
     steps:
       - checkout:
@@ -339,7 +338,6 @@ jobs:
       - prepare_deploy_env
       - expo_ota_publish
 
-
   ### ------------------- ###
   ### Slack related jobs  ###
   ### ------------------- ###
@@ -363,7 +361,7 @@ jobs:
     steps:
       - set_expo_release_channel
       - slack/notify:
-          message: "Deployed OTA release for iOS & Android $RELEASE_CHANNEL"
+          message: 'Deployed OTA release for iOS & Android $RELEASE_CHANNEL'
           webhook: $SLACK_WEBHOOK
 
 ###
@@ -372,7 +370,6 @@ jobs:
 ###
 
 workflows:
-
   #
   # Branch (Ignoring) [master, develop, stage, release-0.x-legacy]
   # - Build app assets
@@ -427,7 +424,7 @@ workflows:
           context: slack-ci-covid-mobile
           requires:
             - Prod OTA
-  
+
   release:
     jobs:
       # Publish app for internal testing
@@ -436,7 +433,7 @@ workflows:
       # |-- Message slack message on App Center upload successful
       - slack/approval-notification:
           filters: *develop_filter
-          message: "Awaiting manual approval to deploy native apps to staging"
+          message: 'Awaiting manual approval to deploy native apps to staging'
           context: slack-ci-covid-mobile
       - adhoc-release-approval:
           name: 'Adhoc approval'
@@ -473,7 +470,7 @@ workflows:
       # # |-- Message slack message on iOS & Android upload successful
       - slack/approval-notification:
           filters: *master_filter
-          message: "Awaiting manual approval to deploy to production (Options: OTA, Store)"
+          message: 'Awaiting manual approval to deploy to production (Options: OTA, Store)'
           context: slack-ci-covid-mobile
       - store-release-approval:
           name: 'Store approval'

@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import FeaturedContentJson from '@covid/components/Content/__mock__/featured-content.json';
 import { EFeaturedContentType, FeaturedContentList } from '@covid/components/Content/FeaturedContentList';
 import ApiClient from '@covid/core/api/ApiClient';

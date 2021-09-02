@@ -12,6 +12,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { AppRating, shouldAskForRating } from '@covid/features/thank-you/components/AppRating';
 import { ShareAppCard } from '@covid/features/thank-you/components/ShareApp';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -31,6 +32,10 @@ export default function ThankYouUKScreen(props: IProps) {
 
   React.useEffect(() => {
     (async () => {
+      if (startupInfo?.show_research_consent) {
+        appCoordinator.goToReconsent();
+        return;
+      }
       if (startupInfo?.show_modal === 'mental-health-playback') {
         dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
         return;
@@ -94,19 +99,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundSecondary,
     borderColor: colors.brand,
     borderWidth: 1,
-    marginVertical: 20,
-    paddingTop: 8,
+    marginVertical: sizes.l,
+    paddingTop: sizes.xs,
   },
   ctaSingleProfileText: {
     color: colors.brand,
   },
   headerText: {
-    marginTop: 32,
+    marginTop: sizes.xl,
     textAlign: 'center',
   },
   signOff: {
-    marginBottom: 32,
-    marginTop: 16,
+    marginBottom: sizes.xl,
+    marginTop: sizes.m,
     textAlign: 'center',
   },
 });

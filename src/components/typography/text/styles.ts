@@ -3,7 +3,7 @@ import {
   TColorShade,
   TFontFamily,
   TFontStyle,
-  TGridSizes,
+  TGridSize,
   TTextAlign,
   TTtextDecorationLine,
   TTypeSizes,
@@ -20,7 +20,7 @@ interface ITextProps {
   inverted: boolean;
   letterSpacing: number;
   lineHeight: number;
-  rhythm: TGridSizes;
+  rhythm: TGridSize;
   textAlign: TTextAlign;
   textDecorationLine: TTtextDecorationLine;
 }

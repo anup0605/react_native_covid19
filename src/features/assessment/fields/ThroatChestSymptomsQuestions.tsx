@@ -7,6 +7,7 @@ import {
   TSymptomCheckBoxData,
 } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
@@ -58,8 +59,8 @@ export const ThroatChestSymptomsQuestions: ISymptomQuestions<TProps, TThroatChes
   ];
 
   return (
-    <View style={{ marginVertical: 16 }}>
-      <RegularText style={{ paddingVertical: 16 }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
+    <View style={{ marginVertical: sizes.m }}>
+      <RegularText style={{ paddingVertical: sizes.m }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
       <CheckboxList>{createSymptomCheckboxes(checkboxes, formikProps)}</CheckboxList>
     </View>
   );

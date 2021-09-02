@@ -6,6 +6,7 @@ import { AsyncStorageService } from '@covid/core/AsyncStorageService';
 import { localisationService } from '@covid/core/localisation/LocalisationService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -103,14 +104,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     flex: 1,
     justifyContent: 'center',
-    marginTop: 22,
+    marginTop: sizes.l,
   },
   modalView: {
     backgroundColor: colors.white,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     elevation: 5,
-    margin: 24,
-    padding: 24,
+    margin: sizes.l,
+    padding: sizes.l,
     shadowColor: colors.black,
     shadowOffset: {
       height: 2,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 20,
-    marginVertical: 16,
+    marginVertical: sizes.m,
     textAlign: 'center',
   },
 });

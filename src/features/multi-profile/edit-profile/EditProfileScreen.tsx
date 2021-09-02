@@ -5,6 +5,7 @@ import { ArchiveProfile } from '@covid/features/multi-profile/ArchiveProfile';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -39,7 +40,7 @@ export const EditProfileScreen: React.FC<TProps> = (props) => {
       renderFooter={props.route.params?.patientData?.profile?.reported_by_another ? renderFooter : undefined}
       testID="edit-profile-screen"
     >
-      <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.title')}</HeaderText>
+      <HeaderText style={{ marginBottom: sizes.s }}>{i18n.t('edit-profile.title')}</HeaderText>
       <SecondaryText>{i18n.t('edit-profile.text')}</SecondaryText>
 
       <LinkItem onPress={editProfileCoordinator.goToEditLocation} title={i18n.t('edit-profile.your-location')} />
@@ -65,13 +66,13 @@ const styles = StyleSheet.create({
     width: 16,
   },
   margin: {
-    margin: 32,
+    margin: sizes.xl,
   },
   profileLabel: {
     alignItems: 'center',
     backgroundColor: colors.white,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 16,
+    paddingVertical: sizes.m,
   },
 });

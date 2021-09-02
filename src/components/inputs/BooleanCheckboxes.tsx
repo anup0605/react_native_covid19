@@ -1,5 +1,6 @@
 import { CheckboxItem } from '@covid/components/Checkbox';
 import { GenericTextField } from '@covid/components/GenericTextField';
+import { sizes } from '@covid/themes';
 import { useFormikContext } from 'formik';
 import * as React from 'react';
 import { TextInputProps, View } from 'react-native';
@@ -44,7 +45,7 @@ export const BooleanCheckboxes: React.FC<TProps> = ({ data, showAdditionalInputP
       })}
 
       {showAdditionalInputProps?.show && (
-        <View style={{ marginTop: 16 }}>
+        <View style={{ marginTop: sizes.m }}>
           <GenericTextField
             formikProps={{
               ...formik,

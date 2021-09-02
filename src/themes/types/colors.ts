@@ -1,9 +1,9 @@
-export type TColorCombination = {
+type TColorCombination = {
   bgColor: string;
   fgColor: string;
 };
 
-export interface IColorShades {
+interface IColorShades {
   lighter: TColorCombination;
   light: TColorCombination;
   main: TColorCombination;

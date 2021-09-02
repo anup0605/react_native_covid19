@@ -32,7 +32,7 @@ import NavigatorService from '@covid/NavigatorService';
 import { assessmentService } from '@covid/services';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-export type TNavigationType = StackNavigationProp<TScreenParamList, keyof TScreenParamList>;
+type TNavigationType = StackNavigationProp<TScreenParamList, keyof TScreenParamList>;
 
 export class AppCoordinator extends Coordinator implements ISelectProfile, IEditableProfile {
   navigation: TNavigationType;

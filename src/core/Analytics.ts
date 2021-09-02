@@ -5,7 +5,7 @@ import * as Amplitude from 'expo-analytics-amplitude';
 
 let isInitialized = false;
 
-export type TUserProperties = {
+type TUserProperties = {
   isTester?: boolean;
   Experiment_mhip?: string;
   Experiment_mhip_2?: string;
@@ -135,15 +135,15 @@ export function track(eventName: string, properties?: object): void {
   }
 }
 
-export function trackScreenView(screenName: string): void {
+function trackScreenView(screenName: string): void {
   track(events.VIEW_SCREEN, { screenName });
 }
 
-export function trackModalView(modalName: string): void {
+function trackModalView(modalName: string): void {
   track(events.VIEW_MODAL, { modalName });
 }
 
-export function identify(additionalUserProperties?: TUserProperties): void {
+function identify(additionalUserProperties?: TUserProperties): void {
   initialize();
 
   // WARNING: Do not send any PII or Health Data here!

@@ -1,4 +1,7 @@
-// eslint-disable-next-line max-classes-per-file
+/* eslint-env jest */
+
+/* eslint-disable max-classes-per-file */
+
 import { IStorageService } from '@covid/core/LocalStorageService';
 import moment from 'moment';
 
@@ -17,7 +20,7 @@ class MockApiClient implements IPushTokenRemoteClient {
 class MockStorageClient implements IStorageService {
   storage: { [key: string]: any } = {};
 
-  getObject<T>(name: string) {
+  getObject(name: string) {
     return Promise.resolve(this.storage[name]);
   }
 

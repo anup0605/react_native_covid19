@@ -1,5 +1,5 @@
 import { Text } from '@covid/components';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleProp, StyleSheet, Switch as RNSwitch, View, ViewStyle } from 'react-native';
@@ -14,7 +14,7 @@ interface IProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export function Switch(props: IProps) {
+function Switch(props: IProps) {
   return (
     <View style={[styles.fieldWrapper, props.style]}>
       <RNSwitch
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: colors.black,
-    marginLeft: grid.m,
+    marginLeft: sizes.s,
   },
 });
 

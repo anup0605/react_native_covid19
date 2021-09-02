@@ -4,7 +4,7 @@ import { TScreenName } from '@covid/core/Coordinator';
 import i18n from '@covid/locale/i18n';
 import * as Localization from 'expo-localization';
 
-export interface ILocalisationService {
+interface ILocalisationService {
   setUserCountry(countryCode: string): void;
   initCountryConfig(countryCode: string): void;
   getUserCountry(): Promise<string | null>;
@@ -46,15 +46,10 @@ export class LocalisationService implements ILocalisationService {
   }
 
   setLocaleFromCountry(countryCode: string) {
-    let USLocale = 'en';
-    if (Localization.locale === 'es-US') {
-      USLocale = 'es';
-    }
-
     const localeMap: { [key: string]: string } = {
       GB: 'en',
       SE: 'sv',
-      US: USLocale,
+      US: 'en',
     };
 
     i18n.locale = `${localeMap[countryCode]}-${LocalisationService.userCountry}`;

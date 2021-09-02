@@ -13,14 +13,12 @@ import { TMentalHealthInfosRequest } from '@covid/features/mental-health/MentalH
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
-import { useTheme } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function MentalHealthSupportScreen() {
   const [canSubmit, setCanSubmit] = React.useState(false);
-  const { grid } = useTheme();
   const MentalHealthSupport: IMentalHealthSupport = useSelector(selectMentalHealthSupport);
   const dispatch = useDispatch();
 

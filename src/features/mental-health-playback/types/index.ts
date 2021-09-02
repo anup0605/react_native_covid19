@@ -1,6 +1,6 @@
-export type TTitle = 'NO_CHANGE' | 'LESS' | 'MORE' | '';
+type TTitle = 'NO_CHANGE' | 'LESS' | 'MORE' | '';
 
-export interface IAnswer {
+interface IAnswer {
   label: string;
   title: TTitle;
   value: number;
@@ -20,5 +20,3 @@ export interface IMHInsights {
   completed_feedback: boolean;
   insights: IInsight[];
 }
-
-export type TTestGroupId = 'GROUP_1' | 'GROUP_2' | 'GROUP_3' | 'GROUP_4';

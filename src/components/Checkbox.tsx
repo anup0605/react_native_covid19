@@ -1,5 +1,6 @@
 import Check from '@assets/icons/Check';
 import { requiredFormMarker } from '@covid/components/Form';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import { Item } from 'native-base';
 import * as React from 'react';
@@ -63,7 +64,7 @@ const checkBoxStyle: ViewStyle = {
   alignItems: 'center',
   backgroundColor: colors.backgroundTertiary,
   borderColor: 'transparent',
-  borderRadius: 8,
+  borderRadius: sizes.xs,
   borderWidth: 1,
   display: 'flex',
   height: 32,
@@ -81,9 +82,9 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   checkboxLabel: {
-    marginLeft: 16,
-    marginRight: 32,
-    paddingTop: 4,
+    marginLeft: sizes.m,
+    marginRight: sizes.xl,
+    paddingTop: sizes.xxs,
   },
   checkboxList: {
     width: '100%',
@@ -92,6 +93,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     borderColor: 'transparent',
     flexDirection: 'row',
-    paddingVertical: 6,
+    paddingVertical: sizes.xs,
   },
 });

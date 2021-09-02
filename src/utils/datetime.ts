@@ -17,10 +17,6 @@ export const now = () => {
   return moment().format();
 };
 
-export const aWeekAgo = () => {
-  return moment().subtract(7, 'days');
-};
-
 export const yesterday = () => {
   return moment().subtract(1, 'days');
 };

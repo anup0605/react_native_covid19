@@ -5,6 +5,7 @@ import { patientService } from '@covid/core/patient/PatientService';
 import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -128,8 +129,8 @@ export default function CovidTestListOnboardingModal(props: IProps) {
 
 const styles = StyleSheet.create({
   button: {
-    marginTop: 32,
-    paddingHorizontal: 16,
+    marginTop: sizes.xl,
+    paddingHorizontal: sizes.m,
   },
   closeText: {
     color: colors.lightBrand,
@@ -146,11 +147,11 @@ const styles = StyleSheet.create({
   newDesign: {
     alignSelf: 'center',
     backgroundColor: colors.lightBlueBrand,
-    borderRadius: 6,
-    marginBottom: 24,
-    marginTop: 32,
-    paddingHorizontal: 12,
-    paddingVertical: 3,
+    borderRadius: sizes.xs,
+    marginBottom: sizes.l,
+    marginTop: sizes.xl,
+    paddingHorizontal: sizes.s,
+    paddingVertical: sizes.xxs,
     textAlign: 'center',
   },
   newDesignText: {
@@ -159,15 +160,15 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   text: {
-    marginBottom: 24,
+    marginBottom: sizes.l,
     textAlign: 'center',
   },
   title: {
-    marginBottom: 16,
-    marginTop: 16,
+    marginBottom: sizes.m,
+    marginTop: sizes.m,
   },
   wrapper: {
     alignItems: 'center',
-    padding: 8,
+    padding: sizes.xs,
   },
 });

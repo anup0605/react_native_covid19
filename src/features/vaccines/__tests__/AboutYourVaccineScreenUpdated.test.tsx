@@ -1,6 +1,5 @@
 /* eslint-env jest */
 
-import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { AboutYourVaccineScreenUpdated } from '@covid/features';
 import { theme } from '@covid/themes';
@@ -19,39 +18,10 @@ jest.useFakeTimers();
 const middlewares = getDefaultMiddleware();
 const mockStore = createMockStore(middlewares);
 const store = mockStore(initialState);
-const flushPromises = () => new Promise(setImmediate);
 
 const ROUTE_PARAM_EDIT_INDEX: Object = { editIndex: 1 };
 const DUMMY_PATIENT_ID_CURRENT = 'current_paitent_abc123';
 const ROUTE_PARAM_PATIENT_ID: Object = { assessmentData: { patientData: { patientId: DUMMY_PATIENT_ID_CURRENT } } };
-
-const DUMMY_VACCINE_WITH_TWO_DOSES: TVaccineRequest = {
-  brand: null,
-  doses: [
-    {
-      batch_number: 'Seq1',
-      brand: 'pfizer',
-      date_taken_specific: '2021-08-02',
-      description: null,
-      id: 'xyz123',
-      location: null,
-      sequence: 1,
-    },
-    {
-      batch_number: 'Modena 1111111',
-      brand: 'moderna',
-      date_taken_specific: '2021-08-11',
-      description: null,
-      id: '123xyz',
-      location: null,
-      sequence: 2,
-    },
-  ],
-  id: 'abc123',
-  patient: DUMMY_PATIENT_ID_CURRENT,
-  placebo: null,
-  vaccine_type: 'covid_vaccine',
-};
 
 describe('AboutYourVaccineScreenUpdated tests', () => {
   it('renders AboutYourVaccineScreenUpdated', async () => {

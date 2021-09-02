@@ -1,6 +1,7 @@
 import { Text } from '@covid/components';
 import DietScoreHeader from '@covid/features/diet-study-playback/components/diet-score-header';
 import ScoreCard from '@covid/features/diet-study-playback/components/score-card';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Animated, Dimensions, Easing, StyleProp, View, ViewStyle } from 'react-native';
 
@@ -80,7 +81,7 @@ function Score({ currentValue, minValue, maxValue, style = {}, subTitle, title }
       <DietScoreHeader subTitle={subTitle} title={title} />
       <View>
         <ScoreRange />
-        <Animated.View style={{ marginBottom: 8, transform: [{ translateX }] }}>
+        <Animated.View style={{ marginBottom: sizes.xs, transform: [{ translateX }] }}>
           <View style={{ transform: [{ translateX: -30 }] }}>
             <ScoreCard backgroundColor={animatedBackgroundColor} direction="UP">
               <Text textClass="pSmall">You</Text>

@@ -13,6 +13,7 @@ import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { ScreenParamList } from '@covid/features';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as React from 'react';
@@ -297,10 +298,10 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
 
     this.coordinator
       .updatePatientInfo(infos)
-      .then((_) => {
+      .then(() => {
         this.coordinator.gotoNextScreen(this.props.route.name);
       })
-      .catch((_) => this.setState({ errorMessage: i18n.t('something-went-wrong') }));
+      .catch(() => this.setState({ errorMessage: i18n.t('something-went-wrong') }));
   };
 
   render() {
@@ -317,7 +318,7 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
             return (
               <Form>
                 <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
-                <RegularText style={{ marginBottom: 16, marginTop: 32 }}>
+                <RegularText style={{ marginBottom: sizes.m, marginTop: sizes.xl }}>
                   {i18n.t('your-study.label-cohort')}
                 </RegularText>
                 <CheckboxList>

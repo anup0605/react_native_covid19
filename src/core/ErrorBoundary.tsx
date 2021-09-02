@@ -1,14 +1,16 @@
 import { errors } from '@assets';
 import { Header3Text, RegularBoldText, RegularText } from '@covid/components/Text';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import * as Sentry from 'sentry-expo';
 
-const myErrorHandler = (error: Error, componentStack: string, eventId: string) => {
+const myErrorHandler = (error: Error) => {
   Sentry.Native.captureException(error);
 };
+
 function ErrorFallback(errorData: {
   error: Error;
   componentStack: string | null;
@@ -27,21 +29,23 @@ function ErrorFallback(errorData: {
     </View>
   );
 }
+
 export const ErrorBoundary = ({ children }: { children: React.ReactNode }) => (
   <Sentry.Native.ErrorBoundary fallback={ErrorFallback} onError={myErrorHandler}>
     {children}
   </Sentry.Native.ErrorBoundary>
 );
+
 const styles = StyleSheet.create({
   innerContainer: {
     alignContent: 'center',
     backgroundColor: colors.backgroundPrimary,
     justifyContent: 'center',
-    margin: 16,
-    padding: 12,
+    margin: sizes.m,
+    padding: sizes.s,
   },
   logo: {
-    marginBottom: 32,
+    marginBottom: sizes.xl,
     resizeMode: 'contain',
   },
   outerContainer: {

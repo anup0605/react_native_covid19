@@ -1,4 +1,5 @@
 import { Text } from '@covid/components';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -31,11 +32,11 @@ const styles = StyleSheet.create({
     color: '#888B8C',
   },
   view: {
-    marginLeft: 16,
+    marginLeft: sizes.m,
   },
   wrapper: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: sizes.m,
   },
 });

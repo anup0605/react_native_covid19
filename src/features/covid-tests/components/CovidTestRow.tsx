@@ -3,6 +3,7 @@ import { RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
@@ -67,20 +68,20 @@ export const CovidTestRow: React.FC<TProps> = ({ item, testID }) => {
 const styles = StyleSheet.create({
   chevron: {
     height: 12,
-    marginStart: 4,
+    marginLeft: sizes.xxs,
     width: 12,
   },
   itemTouchable: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: 12,
+    paddingVertical: sizes.s,
   },
   pendingText: {
     color: colors.secondary,
   },
   tick: {
     height: 16,
-    marginEnd: 8,
+    marginRight: sizes.xs,
     width: 16,
   },
 });

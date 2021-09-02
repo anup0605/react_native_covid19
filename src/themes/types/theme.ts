@@ -1,12 +1,9 @@
+import { sizes } from '../theme/sizes';
 import { IColorPalettes } from './colors';
-import { IGrid } from './grid';
 import { TTextStyles } from './typography';
 
-export interface IThemeVars {
-  // colors
+export interface ITheme {
   colors: IColorPalettes;
-  // layout
-  grid: IGrid;
-  // typography
+  sizes: typeof sizes;
   text: TTextStyles;
 }

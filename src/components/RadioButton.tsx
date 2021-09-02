@@ -1,3 +1,4 @@
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -13,18 +14,18 @@ export function RadioButton(props: IProps) {
 const styles = StyleSheet.create({
   dot: {
     backgroundColor: colors.brand,
-    borderRadius: 5,
-    height: 10,
-    width: 10,
+    borderRadius: sizes.xxs,
+    height: sizes.xxs * 2,
+    width: sizes.xxs * 2,
   },
   wrapper: {
     alignItems: 'center',
     backgroundColor: 'white',
     borderColor: colors.backgroundFour,
-    borderRadius: 10,
+    borderRadius: sizes.s,
     borderWidth: 1.5,
-    height: 20,
+    height: 18,
     justifyContent: 'center',
-    width: 20,
+    width: 18,
   },
 });

@@ -5,7 +5,7 @@ import { RegularText } from '@covid/components/Text';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
   box: {
     alignContent: 'center',
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     justifyContent: 'center',
-    marginVertical: 32,
-    padding: 16,
+    marginVertical: sizes.xl,
+    padding: sizes.m,
   },
   flex: {
     flex: 1,

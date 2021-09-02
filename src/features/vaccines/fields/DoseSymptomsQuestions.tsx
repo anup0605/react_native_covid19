@@ -9,6 +9,7 @@ import {
   TSymptomCheckBoxData,
 } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@covid/themes/theme/colors';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -53,14 +54,16 @@ export const DoseSymptomsQuestions: IDoseSymptomQuestions<TProps, TDoseSymptomsD
   ];
 
   return (
-    <View style={{ marginVertical: 8 }}>
-      <RegularText style={{ paddingBottom: 8 }}>{i18n.t('vaccines.dose-symptoms.check-all-that-apply')}</RegularText>
+    <View style={{ marginVertical: sizes.xs }}>
+      <RegularText style={{ paddingBottom: sizes.xs }}>
+        {i18n.t('vaccines.dose-symptoms.check-all-that-apply')}
+      </RegularText>
       <CheckboxList>{createSymptomCheckboxes(checkboxes, formikProps)}</CheckboxList>
 
       {formikProps.values.other ? (
         <>
-          <View style={{ flexDirection: 'row', marginVertical: 16, paddingRight: 32 }}>
-            <View style={{ paddingRight: 8 }}>
+          <View style={{ flexDirection: 'row', marginVertical: sizes.m, paddingRight: sizes.xl }}>
+            <View style={{ paddingRight: sizes.xs }}>
               <InfoCircle color={colors.burgundy.main.bgColor} />
             </View>
             <View>
@@ -76,7 +79,7 @@ export const DoseSymptomsQuestions: IDoseSymptomQuestions<TProps, TDoseSymptomsD
             onChangeText={formikProps.handleChange('otherSymptoms')}
             placeholder={i18n.t('vaccines.dose-symptoms.other-placeholder')}
             rowSpan={5}
-            textAreaStyle={{ borderRadius: 8 }}
+            textAreaStyle={{ borderRadius: sizes.xs }}
             value={formikProps.values.otherSymptoms}
           />
         </>

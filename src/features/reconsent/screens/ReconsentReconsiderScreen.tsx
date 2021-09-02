@@ -110,13 +110,13 @@ const styles = StyleSheet.create({
   },
   buttonPositive: {
     backgroundColor: colors.brand,
-    marginBottom: 12,
+    marginBottom: sizes.s,
   },
   marginTop: {
-    marginTop: 16,
+    marginTop: sizes.m,
   },
   padding: {
-    padding: 16,
+    padding: sizes.m,
   },
   videoWrapper: {
     flex: 1,

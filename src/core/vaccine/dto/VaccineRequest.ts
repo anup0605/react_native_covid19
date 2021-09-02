@@ -13,6 +13,16 @@ export type TVaccineRequest = {
   placebo?: EPlaceboStatus | null;
 };
 
+enum EVaccineLocations {
+  GP = 'gp',
+  CARE_HOME = 'care_home',
+  HOME = 'home',
+  VAC_CENTRE = 'vac_centre',
+  PHARMACY = 'pharmacy',
+  HOSPITAL = 'hospital',
+  OTHER = 'other',
+}
+
 export type TDose = {
   id: string;
   vaccine: string;
@@ -69,14 +79,4 @@ export enum EPlaceboStatus {
   YES = 'yes',
   NO = 'no',
   UNSURE = 'unsure',
-}
-
-export enum EVaccineLocations {
-  GP = 'gp',
-  CARE_HOME = 'care_home',
-  HOME = 'home',
-  VAC_CENTRE = 'vac_centre',
-  PHARMACY = 'pharmacy',
-  HOSPITAL = 'hospital',
-  OTHER = 'other',
 }

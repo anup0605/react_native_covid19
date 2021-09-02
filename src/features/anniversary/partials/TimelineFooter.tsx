@@ -1,5 +1,6 @@
 import { Text } from '@covid/components';
 import Analytics, { events } from '@covid/core/Analytics';
+import { sizes } from '@covid/themes';
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -33,11 +34,11 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     backgroundColor: '#0165B5',
-    borderRadius: 28,
+    borderRadius: sizes.l,
     height: 56,
     justifyContent: 'center',
   },
   paddingHorizontal: {
-    paddingHorizontal: 32,
+    paddingHorizontal: sizes.xl,
   },
 });

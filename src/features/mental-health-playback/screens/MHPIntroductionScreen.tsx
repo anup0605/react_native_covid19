@@ -5,15 +5,13 @@ import Card from '@covid/components/cards/Card';
 import { Screen } from '@covid/components/Screen';
 import UL from '@covid/components/UL';
 import { requestInsights } from '@covid/core/state/mental-health-playback/slice';
-import { TRootState } from '@covid/core/state/root';
-import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { sizes, styling } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { useWindowDimensions, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const personalItems = [
   i18n.t('mental-health-playback.introduction.point-personal-1'),
@@ -23,7 +21,6 @@ const personalItems = [
 
 export default function MHPIntroductionScreen() {
   const dispatch = useDispatch();
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const windowWidth = Math.min(sizes.maxScreenWidth, useWindowDimensions().width);
 
   React.useEffect(() => {

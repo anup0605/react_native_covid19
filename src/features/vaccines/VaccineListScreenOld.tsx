@@ -1,20 +1,16 @@
-import { IUIAction } from '@covid/common';
 import { BrandedButton, HeaderText, Text } from '@covid/components';
 import { Loading } from '@covid/components/Loading';
 import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { isSECountry } from '@covid/core/localisation/LocalisationService';
-import { appActions, appSelectors } from '@covid/core/state/app/slice';
 import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import vaccinesSlice, { fetchVaccines } from '@covid/core/state/vaccines/slice';
 import { TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
-import { VaccineWarning } from '@covid/features/vaccines/components';
 import { VaccineCard } from '@covid/features/vaccines/components/VaccineCard';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { openWebLink } from '@covid/utils/links';
+import { sizes } from '@covid/themes';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { colors } from '@theme';
 import moment from 'moment';
@@ -30,9 +26,7 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
   const coordinator = assessmentCoordinator;
   const vaccines = useSelector<TRootState, TVaccineRequest[]>((state) => state.vaccines.vaccines);
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [showVaccineWarning, setShowVaccineWarning] = React.useState<boolean>(false);
   const appDispatch = useAppDispatch();
-  const app = useSelector(appSelectors.selectApp);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -123,10 +117,7 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
           return (
             <VaccineCard
               key={vaccine.id}
-              onPressEdit={(i) => {
-                coordinator.goToAddEditVaccine(vaccine);
-              }}
-              style={{ marginVertical: 8 }}
+              onPressEdit={() => coordinator.goToAddEditVaccine(vaccine)}
               vaccine={vaccine}
             />
           );
@@ -147,81 +138,46 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
     }
   };
 
-  React.useEffect(() => {
-    if (app.loggedVaccine) {
-      setShowVaccineWarning(true);
-    }
-  }, [app.loggedVaccine]);
-
-  const actions: IUIAction[] = [
-    ...(isSECountry()
-      ? [
-          {
-            action: () => {
-              setShowVaccineWarning(false);
-              appDispatch(appActions.setLoggedVaccine(false));
-              openWebLink(
-                'https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/vaccination-mot-covid-19/information-for-dig-om-vaccinationen/efter-vaccinationen--fortsatt-folja-de-allmanna-raden/',
-              );
-            },
-            label: i18n.t('navigation.learn-more'),
-          },
-        ]
-      : []),
-    {
-      action: () => {
-        setShowVaccineWarning(false);
-        appDispatch(appActions.setLoggedVaccine(false));
-      },
-      label: i18n.t('navigation.dismiss'),
-    },
-  ];
-
   return (
-    <>
-      {showVaccineWarning ? <VaccineWarning actions={actions} /> : null}
+    <Screen
+      backgroundColor={colors.backgroundPrimary}
+      profile={route.params?.assessmentData?.patientData?.patientState?.profile}
+      testID="vaccine-list-screen"
+    >
+      <HeaderText>{i18n.t('vaccines.vaccine-list.title')}</HeaderText>
 
-      <Screen
-        backgroundColor={colors.backgroundPrimary}
-        profile={route.params?.assessmentData?.patientData?.patientState?.profile}
-        testID="vaccine-list-screen"
+      <Text style={{ marginVertical: sizes.xs }}>{i18n.t('vaccines.vaccine-list.description')}</Text>
+
+      <ListContent />
+
+      <View style={{ flex: 1 }} />
+
+      <BrandedButton
+        onPress={navigateToNextPageOrShowPopup}
+        testID="button-vaccine-list-screen"
+        textStyle={styles.continueButton}
       >
-        <HeaderText>{i18n.t('vaccines.vaccine-list.title')}</HeaderText>
-
-        <Text style={{ marginVertical: 8 }}>{i18n.t('vaccines.vaccine-list.description')}</Text>
-
-        <ListContent />
-
-        <View style={{ flex: 1 }} />
-
-        <BrandedButton
-          onPress={navigateToNextPageOrShowPopup}
-          style={styles.continueButton}
-          testID="button-vaccine-list-screen"
-        >
-          <Text style={{ color: colors.white }}>
-            {vaccines.length === 0
-              ? i18n.t('vaccines.vaccine-list.no-vaccine')
-              : vaccines[0]?.doses[1]?.date_taken_specific === undefined
-              ? i18n.t('vaccines.vaccine-list.no-2nd')
-              : i18n.t('vaccines.vaccine-list.correct-info')}
-          </Text>
-        </BrandedButton>
-      </Screen>
-    </>
+        <Text style={{ color: colors.white }}>
+          {vaccines.length === 0
+            ? i18n.t('vaccines.vaccine-list.no-vaccine')
+            : vaccines[0]?.doses[1]?.date_taken_specific === undefined
+            ? i18n.t('vaccines.vaccine-list.no-2nd')
+            : i18n.t('vaccines.vaccine-list.correct-info')}
+        </Text>
+      </BrandedButton>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   continueButton: {
     color: colors.white,
-    marginHorizontal: 16,
   },
   newButton: {
     backgroundColor: colors.backgroundPrimary,
     borderColor: colors.purple,
     borderWidth: 1,
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   newText: {
     color: colors.purple,

@@ -7,7 +7,7 @@ import { ValidationError } from '@covid/components/ValidationError';
 import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { EPlaceboStatus, EVaccineBrands } from '@covid/core/vaccine/dto/VaccineRequest';
 import i18n from '@covid/locale/i18n';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { FormikProps } from 'formik';
 import moment, { Moment } from 'moment';
@@ -40,12 +40,12 @@ interface IProps {
   showUpdatedVersion?: boolean;
 }
 
-interface IVaccineDoseQuestion<P, Data> extends React.FC<P> {
+interface IVaccineDoseQuestion<P> extends React.FC<P> {
   schema: () => Yup.ObjectSchema;
   schemaUpdated: () => Yup.ObjectSchema;
 }
 
-export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData> = (props: IProps) => {
+export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps) => {
   const { formikProps } = props;
   const [showPicker, setShowPicker] = React.useState(false);
 
@@ -121,8 +121,8 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
       <View style={styles.calendar}>
         <CalendarPicker
           initialDate={dateField}
-          minDate={minDate}
           maxDate={maxDate}
+          minDate={minDate}
           onDateChange={setDoseDate}
           selectedStartDate={dateField}
         />
@@ -146,9 +146,9 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
         <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.dateBox} testID="button-calendar-picker">
           <CalendarIcon />
           {dateField ? (
-            <RegularText style={{ marginStart: 8 }}>{moment(dateField).format('MMMM D, YYYY')}</RegularText>
+            <RegularText style={{ marginLeft: sizes.xs }}>{moment(dateField).format('MMMM D, YYYY')}</RegularText>
           ) : (
-            <RegularText style={{ marginStart: 8 }}>{i18n.t('vaccines.your-vaccine.select-date')}</RegularText>
+            <RegularText style={{ marginLeft: sizes.xs }}>{i18n.t('vaccines.your-vaccine.select-date')}</RegularText>
           )}
         </TouchableOpacity>
         <ErrorText>{errorField && touched ? i18n.t('validation-error-text-required') : ''}</ErrorText>
@@ -213,8 +213,8 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
 
   return (
     <View testID={props.testID}>
-      <View style={{ marginBottom: 16 }}>
-        <View style={{ marginBottom: 16 }}>
+      <View style={{ marginBottom: sizes.m }}>
+        <View style={{ marginBottom: sizes.m }}>
           <VaccineNameQuestion
             firstDose={props.firstDose}
             formikProps={formikProps as FormikProps<IVaccineDoseData>}
@@ -247,17 +247,17 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
 
 const styles = StyleSheet.create({
   calendar: {
-    marginBottom: grid.l,
+    marginBottom: sizes.m,
   },
   dateBox: {
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     flexDirection: 'row',
-    marginVertical: 8,
-    padding: 16,
+    marginVertical: sizes.xs,
+    padding: sizes.m,
   },
   label: {
-    marginBottom: grid.l,
+    marginBottom: sizes.m,
   },
 });
 

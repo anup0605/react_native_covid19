@@ -1,5 +1,5 @@
 import { QuoteMarks } from '@assets';
-import { useTheme } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -8,13 +8,12 @@ interface IProps {
 }
 
 export default function SpeechCard({ children }: IProps) {
-  const { grid } = useTheme();
   return (
     <View style={styles.wrapper}>
       <View style={[styles.arrow, styles.shadow]} />
-      <View style={[styles.container, styles.shadow, { paddingHorizontal: grid.gutter, paddingVertical: grid.xxl }]}>
-        <View style={{ marginBottom: grid.l }}>
-          <View style={{ marginBottom: grid.l }}>
+      <View style={[styles.container, styles.shadow, { paddingHorizontal: sizes.m, paddingVertical: sizes.l }]}>
+        <View style={{ marginBottom: sizes.m }}>
+          <View style={{ marginBottom: sizes.m }}>
             <QuoteMarks />
           </View>
           <View>{children}</View>
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: 'white',
-    borderRadius: 16,
+    borderRadius: sizes.m,
     width: '100%',
   },
   shadow: {
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    paddingTop: 16,
+    paddingTop: sizes.m,
     width: '100%',
   },
 });

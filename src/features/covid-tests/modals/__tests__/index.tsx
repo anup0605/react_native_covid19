@@ -1,4 +1,5 @@
-import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
+/* eslint-env jest */
+
 import CovidTestListOnboardingModal from '@covid/features/covid-tests/modals/CovidTestListOnboardingModal';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import { fireEvent, render } from '@testing-library/react-native';
@@ -22,7 +23,7 @@ const initialMetrics = {
 
 jest.mock('@covid/core/patient/PatientService', () => ({
   patientService: {
-    updatePatientInfo: jest.fn().mockImplementation((patientId: string, infos: Partial<TPatientInfosRequest>) => {
+    updatePatientInfo: jest.fn().mockImplementation(() => {
       return Promise.resolve(true);
     }),
   },

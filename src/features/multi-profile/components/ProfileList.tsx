@@ -1,6 +1,7 @@
 import { Loading, LoadingModal } from '@covid/components/Loading';
 import { TApiErrorState } from '@covid/core/api/ApiServiceErrors';
 import { TProfile } from '@covid/core/profile/ProfileService';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -62,13 +63,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   wrapperEven: {
-    paddingRight: 8,
-    paddingTop: 16,
+    paddingRight: sizes.xs,
+    paddingTop: sizes.m,
     width: '50%',
   },
   wrapperOdd: {
-    paddingLeft: 8,
-    paddingTop: 16,
+    paddingLeft: sizes.xs,
+    paddingTop: sizes.m,
     width: '50%',
   },
 });

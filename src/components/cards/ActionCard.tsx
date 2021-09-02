@@ -1,5 +1,5 @@
 import { Text } from '@covid/components/typography';
-import { useTheme } from '@covid/themes';
+import { sizes, useTheme } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default function ActionCard({ actionTitle, buttonColor, children, onPress, outline, textColor }: IProps) {
-  const { colors, grid } = useTheme();
+  const { colors } = useTheme();
   const bColor = buttonColor || colors.blue.main.bgColor;
   const tColor = textColor || 'white';
   return (
@@ -22,9 +22,9 @@ export default function ActionCard({ actionTitle, buttonColor, children, onPress
         accessible
         accessibilityRole="button"
         onPress={onPress}
-        style={[styles.container, styles.shadow, { paddingHorizontal: grid.gutter, paddingVertical: grid.xxl }]}
+        style={[styles.container, styles.shadow, { paddingHorizontal: sizes.m, paddingVertical: sizes.l }]}
       >
-        <View style={{ marginBottom: grid.l }}>
+        <View style={{ marginBottom: sizes.m }}>
           <View>{children}</View>
         </View>
         <View
@@ -32,10 +32,10 @@ export default function ActionCard({ actionTitle, buttonColor, children, onPress
             alignItems: 'center',
             backgroundColor: outline ? 'transparent' : bColor,
             borderColor: bColor,
-            borderRadius: grid.xxl,
+            borderRadius: sizes.l,
             borderWidth: 1,
             justifyContent: 'center',
-            padding: 12,
+            padding: sizes.s,
           }}
         >
           <Text style={{ color: outline ? bColor : tColor }}>{actionTitle}</Text>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: 'white',
-    borderRadius: 16,
+    borderRadius: sizes.m,
     height: '100%',
     width: '100%',
   },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    paddingVertical: 16,
+    paddingVertical: sizes.m,
     width: '100%',
   },
 });

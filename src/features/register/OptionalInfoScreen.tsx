@@ -11,7 +11,7 @@ import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import { offlineService, pushNotificationService } from '@covid/services';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import { Formik } from 'formik';
@@ -113,7 +113,7 @@ export class OptionalInfoScreen extends React.Component<TProps, TState> {
             {(props) => {
               return (
                 <Form>
-                  <HeaderText style={{ marginBottom: 24 }}>{i18n.t('optional-info.title')}</HeaderText>
+                  <HeaderText style={{ marginBottom: sizes.l }}>{i18n.t('optional-info.title')}</HeaderText>
 
                   <RegularText>{i18n.t('optional-info.description')}</RegularText>
                   <ValidatedTextInput

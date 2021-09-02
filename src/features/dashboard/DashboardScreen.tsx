@@ -9,7 +9,6 @@ import ExpoPushTokenEnvironment from '@covid/core/push-notifications/expo';
 import PushNotificationService, { IPushTokenEnvironment } from '@covid/core/push-notifications/PushNotificationService';
 import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { fetchSubscribedSchoolGroups } from '@covid/core/schools/Schools.slice';
-import { appActions, appSelectors } from '@covid/core/state/app/slice';
 import { fetchLocalTrendLine, updateTodayDate } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
@@ -19,7 +18,7 @@ import { getDietStudyDoctorImage, getMentalHealthStudyDoctorImage } from '@covid
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
-import { colors, styling } from '@covid/themes';
+import { colors, sizes, styling } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
@@ -47,7 +46,6 @@ const headerConfig = {
 };
 
 export function DashboardScreen({ navigation, route }: IProps) {
-  const app = useSelector(appSelectors.selectApp);
   const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
   const schoolGroups = useSelector<TRootState, ISubscribedSchoolGroupStats[]>(
@@ -91,21 +89,6 @@ export function DashboardScreen({ navigation, route }: IProps) {
       dispatch(fetchLocalTrendLine());
       setShowTrendline(true);
     }
-  }, []);
-
-  React.useEffect(() => {
-    let isMounted = true;
-    if (!app.dashboardHasBeenViewed) {
-      appDispatch(appActions.setDashboardHasBeenViewed(true));
-      setTimeout(() => {
-        if (isMounted && startupInfo?.show_research_consent) {
-          appCoordinator.goToReconsent();
-        }
-      }, 500);
-    }
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   React.useEffect(() => {
@@ -179,16 +162,16 @@ export function DashboardScreen({ navigation, route }: IProps) {
 
 const styles = StyleSheet.create({
   calloutContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: sizes.m,
   },
   dietStudyImage: {
     aspectRatio: 1200 / 1266,
     height: undefined,
-    marginVertical: 8,
+    marginVertical: sizes.xs,
     resizeMode: 'contain',
     width: '100%',
   },
   marginVertical: {
-    marginVertical: 8,
+    marginVertical: sizes.xs,
   },
 });

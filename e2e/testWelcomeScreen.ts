@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { by, element, expect } from 'detox';
 
 export function testWelcomeScreen() {

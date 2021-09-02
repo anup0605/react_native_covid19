@@ -1,5 +1,5 @@
 import { Text } from '@covid/components';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
@@ -25,15 +25,15 @@ export function Card(props: TProps) {
 
 const cardStyle: ViewStyle = {
   backgroundColor: colors.transparentDarkBlue,
-  borderRadius: grid.l,
-  paddingHorizontal: grid.xxl,
-  paddingVertical: grid.xxl,
+  borderRadius: sizes.m,
+  paddingHorizontal: sizes.l,
+  paddingVertical: sizes.l,
 };
 
 const styles = StyleSheet.create({
   card: {
     ...cardStyle,
-    marginTop: grid.l,
+    marginTop: sizes.m,
   },
   darkBlue: {
     color: colors.darkblue,

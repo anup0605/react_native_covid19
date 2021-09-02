@@ -21,8 +21,8 @@ export default function Tag(props: IProps) {
 
 const styles = StyleSheet.create({
   view: {
-    borderRadius: sizes.borderRadius,
-    paddingHorizontal: sizes.spacingSmall,
-    paddingVertical: sizes.spacingTiny,
+    borderRadius: sizes.xxs,
+    paddingHorizontal: sizes.xs,
+    paddingVertical: sizes.xxs,
   },
 });

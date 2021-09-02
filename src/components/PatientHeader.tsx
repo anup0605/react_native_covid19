@@ -3,6 +3,7 @@ import { ClippedText, RegularText } from '@covid/components/Text';
 import Triangle from '@covid/components/Triangle';
 import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { getAvatarByName, TAvatarName } from '@covid/utils/avatar';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -42,10 +43,10 @@ export function PatientHeader(props: TProps) {
 
 const styles = StyleSheet.create({
   avatar: {
-    borderRadius: 16,
-    height: 32,
-    marginLeft: 4,
-    width: 32,
+    borderRadius: sizes.m,
+    height: sizes.m * 2,
+    marginLeft: sizes.xxs,
+    width: sizes.m * 2,
   },
   textClipped: {
     color: colors.white,
@@ -55,10 +56,10 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     backgroundColor: colors.coral,
-    borderRadius: 12,
+    borderRadius: sizes.s,
     justifyContent: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    paddingHorizontal: sizes.s,
+    paddingVertical: sizes.xxs,
   },
   triangle: {
     marginLeft: -2,

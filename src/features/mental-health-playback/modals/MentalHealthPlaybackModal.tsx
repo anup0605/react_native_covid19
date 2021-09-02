@@ -1,16 +1,13 @@
 import { QuoteMarks } from '@assets';
 import { BrandedButton, DoctorProfile, Modal, Tag, Text } from '@covid/components';
 import Analytics from '@covid/core/Analytics';
-import { TRootState } from '@covid/core/state/root';
-import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
 import i18n from '@covid/locale/i18n';
 import { generalApiClient } from '@covid/services';
-import { colors, styling } from '@covid/themes';
+import { colors, sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
 
 interface IProps {
   onRequestClose: () => void;
@@ -18,8 +15,6 @@ interface IProps {
 }
 
 export default function MentalHealthPlaybackModal(props: IProps) {
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
-
   function onRequestClose(positive?: boolean) {
     if (!positive) {
       Analytics.track(Analytics.events.MENTAL_HEALTH_PLAYBACK_CLOSE_MODAL);
@@ -88,12 +83,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#0165B5',
   },
   description: {
-    paddingBottom: 24,
-    paddingHorizontal: 16,
-    paddingTop: 8,
+    paddingBottom: sizes.l,
+    paddingHorizontal: sizes.m,
+    paddingTop: sizes.xs,
   },
   title: {
-    marginBottom: 16,
-    marginTop: 16,
+    marginBottom: sizes.m,
+    marginTop: sizes.m,
   },
 });

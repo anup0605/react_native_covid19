@@ -1,7 +1,7 @@
 import { Text } from '@covid/components';
 import { BrandedButton } from '@covid/components/buttons';
 import { selectDiseasePreferences } from '@covid/core/state/reconsent';
-import { updateDiseasePreference } from '@covid/core/state/reconsent/slice';
+import { resetDiseasePreferences, updateDiseasePreference } from '@covid/core/state/reconsent/slice';
 import { TDiseaseId, TDiseasePreferencesData } from '@covid/core/state/reconsent/types';
 import DiseaseCard from '@covid/features/reconsent/components/DiseaseCard';
 import InfoBox from '@covid/features/reconsent/components/InfoBox';
@@ -11,7 +11,7 @@ import { extendedDiseases, initialDiseases } from '@covid/features/reconsent/dat
 import { TDiseasePreference } from '@covid/features/reconsent/types';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
@@ -29,6 +29,20 @@ export default function ReconsentDiseasePreferencesScreen() {
   const [showExtendedList, setShowExtendedList] = React.useState(initialShowExtendedList);
 
   function onPressCard(diseaseId: TDiseaseId) {
+    if (diseaseId === 'prefer_not_to_say' && !diseasePreferences[diseaseId]) {
+      dispatch(resetDiseasePreferences());
+    } else if (
+      diseasePreferences.prefer_not_to_say === true &&
+      diseaseId !== 'prefer_not_to_say' &&
+      !diseasePreferences[diseaseId]
+    ) {
+      dispatch(
+        updateDiseasePreference({
+          diseaseId: 'prefer_not_to_say',
+          value: false,
+        }),
+      );
+    }
     dispatch(
       updateDiseasePreference({
         diseaseId,
@@ -49,7 +63,7 @@ export default function ReconsentDiseasePreferencesScreen() {
         key={item.name}
         onPress={() => onPressCard(item.name)}
         selected={!!diseasePreferences[item.name]}
-        style={{ marginBottom: grid.xxl }}
+        style={{ marginBottom: sizes.l }}
         testID={`disease-card-${item.name}`}
         title={i18n.t(`disease-cards.${item.name}.name`, { defaultValue: '' })}
       />
@@ -95,19 +109,19 @@ export default function ReconsentDiseasePreferencesScreen() {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.purple,
-    marginTop: 32,
+    marginTop: sizes.xl,
   },
   footer: {
-    padding: 16,
+    padding: sizes.m,
     paddingTop: 0,
   },
   padding: {
-    padding: 16,
+    padding: sizes.m,
   },
   page: {
     backgroundColor: colors.backgroundPrimary,
   },
   showMore: {
-    paddingBottom: 8,
+    paddingBottom: sizes.xs,
   },
 });

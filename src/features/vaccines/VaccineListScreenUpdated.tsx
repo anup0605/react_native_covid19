@@ -1,26 +1,19 @@
-import { IUIAction } from '@covid/common';
 import { BrandedButton, RegularText, Text } from '@covid/components';
 import { Loading } from '@covid/components/Loading';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
 import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { isSECountry } from '@covid/core/localisation/LocalisationService';
-import { appActions, appSelectors } from '@covid/core/state/app/slice';
-import { useAppDispatch } from '@covid/core/state/store';
 import { TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
-import { VaccineWarning } from '@covid/features/vaccines/components';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid } from '@covid/themes';
-import { openWebLink } from '@covid/utils/links';
+import { sizes } from '@covid/themes';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useSelector } from 'react-redux';
 
 import { VaccineDoseRow } from './components/VaccineDoseRow';
 
@@ -29,14 +22,8 @@ type TProps = {
 };
 
 export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
-  const coordinator = assessmentCoordinator;
-  const dispatch = useAppDispatch();
-  const app = useSelector(appSelectors.selectApp);
-
   const [vaccines, setVaccines] = React.useState<TVaccineRequest | undefined>();
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<string>();
-  const [showVaccineWarning, setShowVaccineWarning] = React.useState<boolean>(false);
 
   const patientId = route.params?.assessmentData?.patientData?.patientId;
 
@@ -55,7 +42,6 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 
       setVaccines(vaccines);
     } catch (_) {
-      setError(i18n.t('something-went-wrong'));
     } finally {
       setLoading(false);
     }
@@ -63,11 +49,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      let isActive = true;
       refreshVaccineList();
-      return () => {
-        isActive = false;
-      };
     }, []),
   );
 
@@ -92,17 +74,15 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
     if (vaccines) {
       const dose = getFirstActiveDose(vaccines);
       const shouldAskDoseSymptoms = !!dose;
-      coordinator.gotoNextScreen(route.name, { dose, shouldAskDoseSymptoms });
+      assessmentCoordinator.gotoNextScreen(route.name, { dose, shouldAskDoseSymptoms });
     } else {
-      coordinator.gotoNextScreen(route.name, {});
+      assessmentCoordinator.gotoNextScreen(route.name, {});
     }
   };
 
   const enableNext = () => {
     const doses = vaccines?.doses;
     // Disable button if user has dose(s) with missing date, brand & description
-    // TODO: This has changed quite dramatically from previous version. Description is no longer required. Need to do a sanity check on this
-    // to check all is working as expected.
     if (doses && doses.some((dose) => dose.date_taken_specific == null || dose.brand === null)) {
       return false;
     }
@@ -115,9 +95,9 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
       return <Loading error={null} status="" />;
     }
     return (
-      <View style={styles.marginHorizontal}>
+      <View>
         <BrandedButton
-          onPress={() => coordinator.goToAddEditVaccine(vaccines)}
+          onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccines)}
           style={styles.newButton}
           testID="button-add-vaccine"
         >
@@ -131,6 +111,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
                   dose={dose}
                   index={index}
                   key={dose.id}
+                  style={index === 0 ? { paddingTop: sizes.s } : { paddingTop: sizes.l }}
                   testID={`vaccine-dose-row-${index}`}
                   vaccineRecord={vaccines}
                 />
@@ -153,57 +134,12 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
     }
   };
 
-  React.useEffect(() => {
-    if (app.loggedVaccine) {
-      setShowVaccineWarning(true);
-    }
-  }, [app.loggedVaccine]);
-
-  const actions: IUIAction[] = [
-    ...(isSECountry()
-      ? [
-          {
-            action: () => {
-              setShowVaccineWarning(false);
-              dispatch(appActions.setLoggedVaccine(false));
-              openWebLink(
-                'https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/vaccination-mot-covid-19/information-for-dig-om-vaccinationen/efter-vaccinationen--fortsatt-folja-de-allmanna-raden/',
-              );
-            },
-            label: i18n.t('navigation.learn-more'),
-          },
-        ]
-      : []),
-    {
-      action: () => {
-        setShowVaccineWarning(false);
-        dispatch(appActions.setLoggedVaccine(false));
-      },
-      label: i18n.t('navigation.dismiss'),
-    },
-  ];
-
-  return (
-    <Screen profile={route.params?.assessmentData?.patientData?.patientState?.profile} testID="vaccine-list-screen">
-      {showVaccineWarning ? <VaccineWarning actions={actions} /> : null}
-      <View style={styles.marginHorizontal}>
-        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list-updated.title')} />
-      </View>
-
-      <View style={styles.introduction}>
-        <RegularText testID="vaccine-list-introduction">
-          {i18n.t('vaccines.vaccine-list-updated.description')}
-        </RegularText>
-      </View>
-
-      <ListContent />
-
-      <View style={{ flex: 1 }} />
-
+  const footer = () => (
+    <View style={styles.wrapper}>
       <BrandedButton
         onPress={navigateToNextPageOrShowPopup}
-        style={styles.continueButton}
         testID="button-vaccine-list-screen"
+        textStyle={styles.continueButton}
       >
         <Text style={{ color: colors.white }}>
           {!vaccines?.doses.length
@@ -211,6 +147,24 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
             : i18n.t('vaccines.vaccine-list-updated.correct-info')}
         </Text>
       </BrandedButton>
+    </View>
+  );
+
+  return (
+    <Screen
+      profile={route.params?.assessmentData?.patientData?.patientState?.profile}
+      renderFooter={footer}
+      testID="vaccine-list-screen"
+    >
+      <View>
+        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list-updated.title')} />
+      </View>
+      <View style={styles.introduction}>
+        <RegularText testID="vaccine-list-introduction">
+          {i18n.t('vaccines.vaccine-list-updated.description')}
+        </RegularText>
+      </View>
+      <ListContent />
     </Screen>
   );
 };
@@ -218,19 +172,14 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 const styles = StyleSheet.create({
   continueButton: {
     color: colors.white,
-    marginHorizontal: grid.l,
   },
   introduction: {
-    marginHorizontal: grid.l,
-    marginBottom: grid.xxl,
-  },
-  marginHorizontal: {
-    marginBottom: grid.xxl,
-    marginHorizontal: grid.l,
+    marginBottom: sizes.xxl,
+    marginTop: sizes.l,
   },
   newButton: {
     backgroundColor: colors.backgroundTertiary,
-    marginBottom: grid.xxxl,
+    marginBottom: sizes.xl,
   },
   newText: {
     color: colors.primary,
@@ -238,5 +187,8 @@ const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: colors.backgroundPrimary,
     flex: 1,
+  },
+  wrapper: {
+    padding: sizes.l,
   },
 });

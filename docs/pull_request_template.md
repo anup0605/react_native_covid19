@@ -11,6 +11,10 @@
 - [ ] iOS - Emulator
 - [ ] iOS - Physical device
 
+## Out of scope and potential follow-up
+
+[comment]: <> (Are there any related changes that you plan to do in a follow-up PR or voluntarily excluded from the scope?)
+
 ## Screenshots
 
 [comment]: <> (Please attach screenshots showing the change, if relevant)
@@ -25,6 +29,6 @@
 - [ ] Checked against Figma designs (if relevant)
 - [ ] Checked that data has been successfully saved to the backend (if relevant)
 
-## Out of scope and potential follow-up
+## Checklist (for merger)
 
-[comment]: <> (Are there any related changes that you plan to do in a follow-up PR or voluntarily excluded from the scope?)
+- [ ] Make sure the right merge strategy is chosen, commit merge into master and squash merge into develop.

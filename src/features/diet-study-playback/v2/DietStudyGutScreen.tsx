@@ -5,6 +5,7 @@ import { GutScore } from '@covid/features/diet-study-playback/components';
 import { dietStudyPlaybackCoordinator } from '@covid/features/diet-study-playback/DietStudyPlaybackCoordinator';
 import { getDietStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Image, StyleSheet } from 'react-native';
 
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   diagram: {
     aspectRatio: 1200 / 1270,
     height: undefined,
-    marginBottom: 48,
+    marginBottom: sizes.xxl,
     resizeMode: 'contain',
     width: '100%',
   },

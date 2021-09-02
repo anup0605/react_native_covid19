@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   menuIcon: {
     alignSelf: 'flex-end',
     height: sizes.drawerToggle,
-    marginRight: 16,
+    marginRight: sizes.m,
     tintColor: colors.primary,
     width: sizes.drawerToggle,
   },

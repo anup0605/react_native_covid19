@@ -31,8 +31,8 @@ const CalendarPicker = (props: CalendarPickerProps) => {
 const styles = StyleSheet.create({
   calendarView: {
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
-    padding: 8,
+    borderRadius: sizes.xs,
+    padding: sizes.xs,
   },
   selectedDay: {
     backgroundColor: colors.lightBlueBrand,

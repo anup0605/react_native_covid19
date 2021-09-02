@@ -4,14 +4,14 @@ import { Screen } from '@covid/components/Screen';
 import { ClickableText, HeaderText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { appActions } from '@covid/core/state/app/slice';
 import { EVaccineTypes, TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/fields/VaccineDoseQuestion';
+import { showVaccineWarningAlert } from '@covid/features/vaccines/utils';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid, styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { formatDateToPost } from '@covid/utils/datetime';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -19,7 +19,6 @@ import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import * as React from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 type TProps = {
@@ -31,16 +30,16 @@ const registerSchema = Yup.object().shape({}).concat(VaccineDoseQuestion.schemaU
 interface IAboutYourVaccineData extends IVaccineDoseData {}
 
 export function AboutYourVaccineScreenUpdated({ route }: TProps) {
-  const coordinator = assessmentCoordinator;
   const [submitting, setSubmitting] = React.useState<boolean>(false);
+  const navigation = useNavigation();
+
   const assessmentData = route.params?.assessmentData;
-  const dispatch = useDispatch();
 
   const doseIndexBeingEdited = route.params?.editIndex;
   const doseBeingEdited =
     doseIndexBeingEdited !== undefined ? assessmentData.vaccineData?.doses[doseIndexBeingEdited] : undefined;
 
-  const processFormDataForSubmit = (formData: IAboutYourVaccineData) => {
+  const processFormDataForSubmit = async (formData: IAboutYourVaccineData) => {
     if (!submitting) {
       setSubmitting(true);
       const vaccine: Partial<TVaccineRequest> = {
@@ -52,6 +51,12 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
       if (!vaccine.doses) {
         vaccine.doses = [];
       }
+
+      // Remove edited dose before re-adding below
+      if (doseBeingEdited) {
+        vaccine.doses = vaccine.doses.filter((dose) => dose.id !== doseBeingEdited.id);
+      }
+
       const latestDose: Partial<TDose> = {
         ...doseBeingEdited,
         batch_number: formData.batchNumber,
@@ -63,23 +68,22 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
       vaccine.doses
         .sort((a, b) => Date.parse(a.date_taken_specific) - Date.parse(b.date_taken_specific))
         .map((dose, index) => (dose.sequence = index + 1));
-      submitVaccine(vaccine);
+
+      await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccine);
+
+      returnToListView();
+
+      // Only show the alert when adding a new vaccine.
+      if (doseIndexBeingEdited === undefined) {
+        showVaccineWarningAlert();
+      }
     }
   };
 
   const returnToListView = () =>
     NavigatorService.navigate('VaccineListFeatureToggle', {
       assessmentData,
-      viewName: 'LIST',
     });
-
-  const submitVaccine = async (vaccine: Partial<TVaccineRequest>) => {
-    await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccine);
-    if (!doseIndexBeingEdited) {
-      dispatch(appActions.setLoggedVaccine(true));
-    }
-    returnToListView();
-  };
 
   function promptDelete() {
     // Note that the "delete" is actually an UPDATE on the Vaccine Dose collection, and takes the entire vaccine obj as payload
@@ -100,7 +104,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
             vaccineService
               .saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccineWithoutDeletedDose)
               .then(() => {
-                coordinator.resetVaccine();
+                assessmentCoordinator.resetVaccine();
                 returnToListView();
               });
           },
@@ -121,8 +125,6 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
     };
   };
 
-  const navigation = useNavigation();
-
   const renderDeleteOrBack = () => {
     return doseBeingEdited ? (
       <TouchableOpacity onPress={promptDelete}>
@@ -141,7 +143,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
 
   return (
     <Screen profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
-      <HeaderText style={{ marginBottom: grid.s }} testID="about-your-vaccine-screen-header">
+      <HeaderText style={{ marginBottom: sizes.xs }} testID="about-your-vaccine-screen-header">
         {i18n.t(
           doseIndexBeingEdited !== undefined ? 'vaccines.your-vaccine.edit-dose' : 'vaccines.your-vaccine.add-dose',
         )}
@@ -150,7 +152,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
         validateOnChange
         validateOnMount
         initialValues={{ ...buildInitialValues() }}
-        onSubmit={(formData: IAboutYourVaccineData) => processFormDataForSubmit(formData)}
+        onSubmit={processFormDataForSubmit}
         validationSchema={registerSchema}
       >
         {(props: FormikProps<IAboutYourVaccineData>) => {
@@ -183,7 +185,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
 
 const styles = StyleSheet.create({
   clickableText: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
     textAlign: 'center',
   },
   flex: {
@@ -192,21 +194,21 @@ const styles = StyleSheet.create({
   footerWrapper: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingTop: 40,
+    paddingTop: sizes.xxl,
   },
   header: {
-    marginBottom: 32,
-    marginTop: 48,
+    marginBottom: sizes.xl,
+    marginTop: sizes.xxl,
   },
   infoText: {
     color: colors.linkBlue,
-    marginLeft: 16,
+    marginLeft: sizes.m,
   },
   infoWrapper: {
     flexDirection: 'row',
-    marginVertical: 32,
+    marginVertical: sizes.xl,
   },
   marginBottom: {
-    marginBottom: 16,
+    marginBottom: sizes.m,
   },
 });

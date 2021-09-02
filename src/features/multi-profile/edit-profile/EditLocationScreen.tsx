@@ -11,6 +11,7 @@ import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as React from 'react';
@@ -112,7 +113,7 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
 
   return (
     <Screen simpleCallout profile={props.route.params?.patientData?.profile} testID="edit-location-screen">
-      <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.location.title')}</HeaderText>
+      <HeaderText style={{ marginBottom: sizes.s }}>{i18n.t('edit-profile.location.title')}</HeaderText>
 
       <Formik
         initialValues={initialFormValues}

@@ -1,6 +1,6 @@
 import { Icon, TIconName } from '@covid/components/icons';
 import { Text } from '@covid/components/typography';
-import { useTheme } from '@covid/themes';
+import { sizes, useTheme } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
@@ -47,10 +47,10 @@ function QuestionBlock({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     flex: 1,
     justifyContent: 'center',
-    padding: 8,
+    padding: sizes.xs,
   },
 });
 

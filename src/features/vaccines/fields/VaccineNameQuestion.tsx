@@ -19,7 +19,7 @@ interface IProps {
   showUpdatedVersion?: boolean;
 }
 
-export interface IVaccineNameQuestion<P, Data> extends React.FC<P> {
+interface IVaccineNameQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (vaccine?: TVaccineRequest) => Partial<Data>;
 }
 

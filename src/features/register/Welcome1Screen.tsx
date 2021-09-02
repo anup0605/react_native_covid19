@@ -6,6 +6,7 @@ import { contentService } from '@covid/core/content/ContentService';
 import { isGBCountry, isSECountry, LocalisationService } from '@covid/core/localisation/LocalisationService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { cleanIntegerVal } from '@covid/utils/number';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
@@ -19,7 +20,7 @@ type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Welcome'>;
 };
 
-export default function Welcome1Screen({ navigation }) {
+export default function Welcome1Screen({ navigation }: TProps) {
   const [userCount, setUserCount] = React.useState<number>(0);
 
   React.useEffect(() => {
@@ -82,15 +83,15 @@ export default function Welcome1Screen({ navigation }) {
 
 const styles = StyleSheet.create({
   contributors: {
-    marginBottom: 32,
-    paddingHorizontal: 32,
+    marginBottom: sizes.xl,
+    paddingHorizontal: sizes.xl,
   },
   covidContainer: {
     backgroundColor: colors.brand,
     flex: 1,
-    marginTop: 32,
-    paddingBottom: 14,
-    paddingHorizontal: 14,
+    marginTop: sizes.xl,
+    paddingBottom: sizes.m,
+    paddingHorizontal: sizes.m,
   },
   flagIcon: {
     height: 32,
@@ -117,13 +118,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   nextButtonContainer: {
-    padding: 20,
-    paddingBottom: 30,
+    padding: sizes.l,
+    paddingBottom: sizes.xl,
   },
   pipe: {
     backgroundColor: colors.white,
     height: 32,
-    marginHorizontal: 16,
+    marginHorizontal: sizes.m,
     width: 1,
   },
   scrollView: {
@@ -136,8 +137,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Light',
     fontSize: 32,
     lineHeight: 48,
-    paddingHorizontal: 24,
-    paddingVertical: 24,
+    paddingHorizontal: sizes.l,
+    paddingVertical: sizes.l,
     textAlign: 'center',
   },
 });

@@ -1,4 +1,5 @@
 import Error from '@assets/icons/Error';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle } from 'react-native';
@@ -46,21 +47,21 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'SofiaProRegular',
     fontSize: 16,
-    paddingLeft: 12,
-    paddingRight: 16,
+    paddingLeft: sizes.s,
+    paddingRight: sizes.m,
   },
   inputWrapper: {
     alignItems: 'center',
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingRight: 8,
+    paddingRight: sizes.xs,
   },
   multipleLines: {
     height: 96,
-    marginVertical: 8,
+    marginVertical: sizes.xs,
   },
   singleLine: {
     height: 48,

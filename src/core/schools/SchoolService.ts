@@ -6,9 +6,9 @@ import {
   ISchoolModel,
   ISubscribedSchoolGroupStats,
 } from '@covid/core/schools/Schools.dto';
-import { naturalCompare } from '@covid/utils/array';
+import naturalCompare from 'string-natural-compare';
 
-export interface ISchoolService {
+interface ISchoolService {
   getSubscribedSchoolGroups(): Promise<ISubscribedSchoolGroupStats[]>;
   getSchools(): Promise<ISchoolModel[]>;
   getSchoolById(id: string, higherEducation?: boolean): Promise<ISchoolModel[]>;
@@ -19,7 +19,7 @@ export interface ISchoolService {
 
 const apiClient = new ApiClient();
 
-export class SchoolService implements ISchoolService {
+class SchoolService implements ISchoolService {
   getSchools(): Promise<ISchoolModel[]> {
     return apiClient.get<ISchoolModel[]>('/schools/');
   }

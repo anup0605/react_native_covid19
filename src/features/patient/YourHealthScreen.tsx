@@ -25,7 +25,7 @@ import * as Yup from 'yup';
 import { BloodPressureMedicationQuestion, IBloodPressureData } from './fields/BloodPressureMedicationQuestion';
 import { DiabetesQuestions, IDiabetesData } from './fields/DiabetesQuestions';
 
-export interface IYourHealthData extends IBloodPressureData, IAtopyData, IDiabetesData, IBloodGroupData {
+interface IYourHealthData extends IBloodPressureData, IAtopyData, IDiabetesData, IBloodGroupData {
   isPregnant: string;
   hasHeartDisease: string;
   hasDiabetes: string;
@@ -133,7 +133,7 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
 
     patientService
       .updatePatientInfo(currentPatient.patientId, infos)
-      .then((_) => {
+      .then(() => {
         currentPatient.hasCompletedPatientDetails = true;
         currentPatient.hasBloodPressureAnswer = true;
         currentPatient.hasAtopyAnswers = true;
@@ -149,7 +149,7 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
         }
         patientCoordinator.gotoNextScreen(this.props.route.name);
       })
-      .catch((_) => {
+      .catch(() => {
         this.setState({ errorMessage: 'Something went wrong, please try again later' });
       });
   }

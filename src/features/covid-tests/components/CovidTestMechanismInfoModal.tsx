@@ -1,7 +1,7 @@
 import { fingerPrickX3, noseSwabX3, syringeX3 } from '@assets';
 import { BrandedButton, HeaderText, LabelSecondaryText, LightText, Modal } from '@covid/components';
 import i18n from '@covid/locale/i18n';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, View } from 'react-native';
 
@@ -62,12 +62,12 @@ export const CovidTestMechanismInfoModal: React.FC<IProps> = (props) => {
 const styles = StyleSheet.create({
   image: {
     height: 20,
-    marginRight: grid.s,
+    marginRight: sizes.xs,
     marginTop: 2,
     width: 20,
   },
   marginTop: {
-    marginTop: grid.xxl,
+    marginTop: sizes.l,
   },
   mechanismHeading: {
     flexDirection: 'row',
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
   mechanismTitle: {
     flex: 1,
     flexWrap: 'wrap',
-    marginBottom: grid.s,
+    marginBottom: sizes.xs,
   },
   modalTitle: {
-    marginTop: grid.m,
+    marginTop: sizes.s,
     textAlign: 'center',
   },
 });

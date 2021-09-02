@@ -4,6 +4,7 @@ import { events } from '@covid/core/Analytics';
 import { selectMentalHealthState, setCompleted } from '@covid/core/state';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -51,14 +52,14 @@ const styles = StyleSheet.create({
   tick: {
     alignItems: 'center',
     borderColor: '#C0D904',
-    borderRadius: 24,
+    borderRadius: sizes.l,
     borderWidth: 3,
-    height: 48,
+    height: sizes.l * 2,
     justifyContent: 'center',
-    width: 48,
+    width: sizes.l * 2,
   },
   tickContainer: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: sizes.l,
   },
 });

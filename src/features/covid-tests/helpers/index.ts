@@ -18,16 +18,6 @@ const ALL_MECHANISMS_EXCEPT_OTHER = PCR_LATERAL_FLOW_MECHANISMS.concat(ANTIBODY_
 
 const ZOE_INVITE_MECHANISMS = [ECovidTestMechanismOptions.BLOOD_FINGER_PRICK, ECovidTestMechanismOptions.PCR];
 
-const ALL_MECHANISMS = ALL_MECHANISMS_EXCEPT_OTHER.concat(ZOE_INVITE_MECHANISMS);
-
-export {
-  ALL_MECHANISMS,
-  ALL_MECHANISMS_EXCEPT_OTHER,
-  ANTIBODY_MECHANISMS,
-  PCR_LATERAL_FLOW_MECHANISMS,
-  ZOE_INVITE_MECHANISMS,
-};
-
 export function isPcrTest(mechanism: ECovidTestMechanismOptions, isRapidTest: boolean) {
   return PCR_LATERAL_FLOW_MECHANISMS.includes(mechanism) && !isRapidTest;
 }

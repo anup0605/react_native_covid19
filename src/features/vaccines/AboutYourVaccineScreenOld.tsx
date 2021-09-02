@@ -6,13 +6,14 @@ import { Screen } from '@covid/components/Screen';
 import { ClickableText, Header3Text, HeaderText, RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { appActions } from '@covid/core/state/app/slice';
 import { EVaccineBrands, EVaccineTypes, TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/fields/VaccineDoseQuestion';
+import { showVaccineWarningAlert } from '@covid/features/vaccines/utils';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import NavigatorService from '@covid/NavigatorService';
+import { sizes, styling } from '@covid/themes';
 import { formatDateToPost } from '@covid/utils/datetime';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -20,7 +21,6 @@ import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import * as React from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 type TProps = {
@@ -36,7 +36,6 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const [hasSecondDose, setHasSecondDose] = React.useState<string | undefined>(undefined);
   const assessmentData = route.params?.assessmentData;
-  const dispatch = useDispatch();
 
   function isJohnsonVaccine() {
     return (
@@ -57,7 +56,7 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
     return assessmentData?.vaccineData && assessmentData?.vaccineData.doses[1] !== undefined;
   }
 
-  const processFormDataForSubmit = (formData: IAboutYourVaccineData) => {
+  const processFormDataForSubmit = async (formData: IAboutYourVaccineData) => {
     if (!submitting) {
       setSubmitting(true);
       const vaccine: Partial<TVaccineRequest> = {
@@ -96,15 +95,18 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
         // unlinking a "deleted" dose needs work in this ticket:
         // https://www.notion.so/joinzoe/Delete-vaccine-dose-if-user-sets-second-to-no-on-edit-2dbfcaad27e44068af02ce980e5a98da
       }
-      const updatedVaccine: Partial<TVaccineRequest> = { ...vaccine, doses };
-      submitVaccine(updatedVaccine);
-    }
-  };
 
-  const submitVaccine = async (vaccine: Partial<TVaccineRequest>) => {
-    await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccine);
-    dispatch(appActions.setLoggedVaccine(true));
-    coordinator.gotoNextScreen(route.name);
+      await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, { ...vaccine, doses });
+
+      NavigatorService.navigate('VaccineListFeatureToggle', {
+        assessmentData,
+      });
+
+      // Only show the alert when adding a new vaccine.
+      if (!assessmentData?.vaccineData) {
+        showVaccineWarningAlert();
+      }
+    }
   };
 
   const checkDateChangePrompt = (formData: IAboutYourVaccineData) => {
@@ -140,7 +142,9 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
           onPress: () => {
             vaccineService.deleteVaccine(assessmentData?.vaccineData.id).then(() => {
               coordinator.resetVaccine();
-              coordinator.gotoNextScreen(route.name);
+              NavigatorService.navigate('VaccineListFeatureToggle', {
+                assessmentData,
+              });
             });
           },
           style: 'destructive',
@@ -263,7 +267,7 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
 
 const styles = StyleSheet.create({
   clickableText: {
-    marginVertical: 32,
+    marginVertical: sizes.xl,
     textAlign: 'center',
   },
   flex: {
@@ -272,21 +276,21 @@ const styles = StyleSheet.create({
   footerWrapper: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingTop: 32,
+    paddingTop: sizes.xl,
   },
   header: {
-    marginBottom: 32,
-    marginTop: 48,
+    marginBottom: sizes.xl,
+    marginTop: sizes.xxl,
   },
   infoText: {
     color: colors.linkBlue,
-    marginLeft: 16,
+    marginLeft: sizes.m,
   },
   infoWrapper: {
     flexDirection: 'row',
-    marginVertical: 32,
+    marginVertical: sizes.xl,
   },
   marginBottom: {
-    marginBottom: 16,
+    marginBottom: sizes.m,
   },
 });

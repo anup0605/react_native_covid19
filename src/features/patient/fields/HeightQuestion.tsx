@@ -5,6 +5,7 @@ import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -131,18 +132,18 @@ HeightQuestion.initialFormValues = () => {
 const styles = StyleSheet.create({
   cmField: {
     flex: 6,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
   feetField: {
     flex: 5,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
   fieldRow: {
     flexDirection: 'row',
   },
   inchesField: {
     flex: 5,
-    marginHorizontal: 4,
+    marginHorizontal: sizes.xxs,
   },
   primaryFieldRow: {
     flex: 6,
@@ -153,11 +154,11 @@ const styles = StyleSheet.create({
   },
   unitsField: {
     flex: 2,
-    marginLeft: 4,
+    marginLeft: sizes.xxs,
     marginTop: -16,
   },
   view: {
     flex: 1,
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
 });

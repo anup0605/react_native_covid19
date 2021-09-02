@@ -5,6 +5,7 @@ import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordina
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
@@ -87,10 +88,10 @@ function WhereAreYouScreen({ route }: IProps) {
 
 const styles = StyleSheet.create({
   marginTop: {
-    marginTop: 32,
+    marginTop: sizes.xl,
   },
   marginVertical: {
-    marginVertical: 32,
+    marginVertical: sizes.xl,
   },
 });
 

@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { cleanFloatVal, cleanIntegerVal } from '@covid/utils/number';
 
 describe('cleanIntegerVal', () => {

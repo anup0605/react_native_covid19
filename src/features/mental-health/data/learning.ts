@@ -6,7 +6,7 @@ export type TLearningQuestion = {
   value: TMentalHealthLearning;
 };
 
-export type TLearningOptions = {
+type TLearningOptions = {
   label: string;
   value: THasDisability;
 };

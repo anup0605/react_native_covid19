@@ -2,6 +2,7 @@ import { covidIcon } from '@assets';
 import { RegularBoldText } from '@covid/components';
 import { BrandedButton } from '@covid/components/buttons';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   textBox: {
-    marginVertical: 32,
+    marginVertical: sizes.xl,
   },
 });
 

@@ -25,7 +25,7 @@ import {
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid, styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik, FormikProps } from 'formik';
@@ -176,7 +176,7 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
       profile={assessmentCoordinator.assessmentData?.patientData?.patientState?.profile}
       testID="covid-test-detail-screen"
     >
-      <HeaderText style={{ marginBottom: grid.s }}>
+      <HeaderText style={{ marginBottom: sizes.xs }}>
         {testId ? i18n.t('covid-test.page-title-detail-update') : i18n.t('covid-test.page-title-detail-add')}
       </HeaderText>
 

@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUp } from '@assets';
 import { Text } from '@covid/components/typography';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
@@ -40,8 +41,8 @@ const styles = StyleSheet.create({
     color: colors.green,
   },
   icon: {
-    marginRight: 6,
-    marginTop: 4,
+    marginRight: sizes.xs,
+    marginTop: sizes.xxs,
   },
   muted: {
     fontSize: 14,
@@ -52,11 +53,11 @@ const styles = StyleSheet.create({
     color: colors.tertiary,
   },
   tag: {
-    borderRadius: 6,
+    borderRadius: sizes.xs,
     borderWidth: 1,
     flexDirection: 'row',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingHorizontal: sizes.xs,
+    paddingVertical: sizes.xxs,
   },
   up: {
     borderColor: colors.red,

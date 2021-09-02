@@ -32,7 +32,7 @@ export const VaccineFindInfoScreen: React.FC<TProps> = ({ route }) => {
     <Screen profile={route.params?.assessmentData?.patientData?.profile} testID="vaccine-find-info-screen">
       <HeaderText>{i18n.t('vaccines.find-info.title')}</HeaderText>
 
-      <RegularText style={{ paddingBottom: 24 }}>{i18n.t('vaccines.find-info.body-1')}</RegularText>
+      <RegularText style={{ paddingBottom: sizes.l }}>{i18n.t('vaccines.find-info.body-1')}</RegularText>
 
       {exampleSVG}
     </Screen>

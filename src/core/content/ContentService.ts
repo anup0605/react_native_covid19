@@ -24,7 +24,7 @@ export interface IContentService {
   signUpForDiseaseResearchNewsletter(signup: boolean): Promise<void>;
 }
 
-export default class ContentService implements IContentService {
+class ContentService implements IContentService {
   localData: TPersonalisedLocalData;
 
   static getWebsiteUrl = () => {

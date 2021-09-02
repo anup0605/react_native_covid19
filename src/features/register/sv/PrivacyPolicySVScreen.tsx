@@ -3,6 +3,7 @@ import { ClickableText, RegularBoldText, RegularText } from '@covid/components/T
 import { ScreenParamList } from '@covid/features';
 import { BulletedTextBlock, HeaderText, SimpleTextBlock } from '@covid/features/register/components/LegalComponents';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -84,7 +85,7 @@ export default class PrivacyPolicySVScreen extends React.Component<TProps, objec
           ]}
         />
 
-        <RegularText style={{ marginBottom: 20 }}>
+        <RegularText style={{ marginBottom: sizes.l }}>
           På grund av typen av forskning som vi genomför under en pågående epidemi kan vi inte ange en specifik
           tidsgräns för lagringen av känsliga personuppgifter, men vi granskar detta regelbundet och säkerställer att de
           inte sparas längre än nödvändigt. Om du vill att vi ska sluta behandla dina känsliga personuppgifter kan du

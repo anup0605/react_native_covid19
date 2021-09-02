@@ -1,5 +1,6 @@
 import { ClickableText, RegularText } from '@covid/components';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -23,8 +24,8 @@ export default class VisitWebsite extends React.Component {
 const styles = StyleSheet.create({
   container: {
     color: colors.primary,
-    paddingHorizontal: 40,
-    paddingVertical: 30,
+    paddingHorizontal: sizes.xxl,
+    paddingVertical: sizes.xl,
     textAlign: 'center',
   },
   linkText: {

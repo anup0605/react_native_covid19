@@ -12,13 +12,13 @@ import { TMentalHealthInfosRequest } from './MentalHealthInfosRequest';
 
 const PATH = '/mental_health/';
 
-export interface IMentalHealthApiClient {
+interface IMentalHealthApiClient {
   get(id: any): Promise<TMentalHealthInfosRequest[]>;
   add(patientId: string, mentalHealth: TMentalHealthInfosRequest): Promise<TMentalHealthInfosRequest>;
   update(mentalHealth: TMentalHealthInfosRequest): Promise<TMentalHealthInfosRequest>;
 }
 
-export interface IMentalHealthApiClientBuildRequest {
+interface IMentalHealthApiClientBuildRequest {
   mentalHealthChanges?: IMentalHealthChanges;
   mentalHealthFrequency?: IMentalHealthFrequency;
   mentalHealthHistory?: IMentalHealthHistory;

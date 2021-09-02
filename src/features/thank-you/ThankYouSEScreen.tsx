@@ -11,6 +11,7 @@ import { AppRating, shouldAskForRating } from '@covid/features/thank-you/compone
 import { FacebookSECard } from '@covid/features/thank-you/components/FacebookSE';
 import { ShareAppCard } from '@covid/features/thank-you/components/ShareApp';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors, fontStyles } from '@theme';
 import * as React from 'react';
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundSecondary,
     borderColor: colors.tertiary,
     borderWidth: 1,
-    marginTop: 24,
+    marginTop: sizes.l,
   },
   headerText: {
     textAlign: 'center',
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   subTitle: {
-    marginBottom: 16,
+    marginBottom: sizes.m,
     textAlign: 'center',
   },
 });

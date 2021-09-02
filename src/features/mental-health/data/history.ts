@@ -6,7 +6,7 @@ export type TQuestion = {
   value: TMentalHealthCondition;
 };
 
-export type TOptions = {
+type TOptions = {
   label: string;
   value: THasDiagnosis;
 };

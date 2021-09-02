@@ -5,6 +5,7 @@ import { addDismissCallout } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import * as React from 'react';
 import {
@@ -136,6 +137,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     flexDirection: 'row',
-    marginVertical: 8,
+    marginVertical: sizes.xs,
   },
 });

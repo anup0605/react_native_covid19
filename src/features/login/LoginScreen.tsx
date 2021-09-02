@@ -8,7 +8,7 @@ import { userService } from '@covid/core/user/UserService';
 import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Input, Item, Label, Toast } from 'native-base';
@@ -20,7 +20,7 @@ interface IProps {
   route: RouteProp<ScreenParamList, 'Login'>;
 }
 
-function LoginScreen({ route }: IProps) {
+export default function LoginScreen({ route }: IProps) {
   const [hasErrors, setHasErrors] = React.useState(false);
   const [isValid, setIsValidState] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -105,6 +105,7 @@ function LoginScreen({ route }: IProps) {
         <Label style={styles.label}>{i18n.t('login.password-label')}</Label>
         <Input
           secureTextEntry
+          autoCapitalize="none"
           onChangeText={onChangePassword}
           onSubmitEditing={handleLogin}
           ref={passwordInput}
@@ -144,15 +145,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   marginTop: {
-    marginTop: 16,
+    marginTop: sizes.m,
   },
   marginVertical: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   textWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
 });
-
-export default LoginScreen;

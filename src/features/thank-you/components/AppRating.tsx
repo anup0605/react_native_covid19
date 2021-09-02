@@ -4,6 +4,7 @@ import { contentService } from '@covid/core/content/ContentService';
 import { isSECountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { userService } from '@covid/core/user/UserService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import Constants from '@covid/utils/Constants';
 import { colors } from '@theme';
 import { Toast } from 'native-base';
@@ -61,9 +62,7 @@ export class AppRating extends React.Component<TPropsType, TState> {
     this.setState({ isModalOpen: false });
   };
 
-  askToRate = (_: any) => {
-    this.setState({ showTakeToStore: true });
-  };
+  askToRate = () => this.setState({ showTakeToStore: true });
 
   renderHeader = (headerText: string, subText: string) => (
     <>
@@ -145,13 +144,13 @@ const styles = StyleSheet.create({
   },
   ratingHeader: {
     fontSize: 18,
-    paddingBottom: 10,
+    paddingBottom: sizes.s,
     textAlign: 'center',
   },
   ratingText: {
     fontSize: 14,
-    marginHorizontal: 60,
-    paddingBottom: 30,
+    marginHorizontal: sizes.xxl,
+    paddingBottom: sizes.xl,
     textAlign: 'center',
   },
   verticalDivider: {

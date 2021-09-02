@@ -1,10 +1,10 @@
 import { Text } from '@covid/components';
-import { TGridSizes } from '@covid/themes';
+import { TGridSize } from '@covid/themes';
 import * as React from 'react';
 
 interface IProps {
   subTitle: string;
-  rhythm?: TGridSizes;
+  rhythm?: TGridSize;
   title: string;
 }
 

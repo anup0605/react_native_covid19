@@ -1,4 +1,5 @@
 import { svPartnersReturn, usPartnersDash, usPartnersReturn } from '@assets';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { Image, StyleSheet } from 'react-native';
 
@@ -26,6 +27,6 @@ const styles = StyleSheet.create({
 
   usLogo: {
     height: 100,
-    marginVertical: 40,
+    marginVertical: sizes.xxl,
   },
 });
