@@ -27,6 +27,22 @@ const js = `
         element.id = 'privacy-policy';
       }
     });
+
+    if (window.thisvariableexists) {
+      const styles = "div { outline: none; }";
+
+      const styleElement = document.createElement('style');
+
+      styleElement.type = 'text/css';
+
+      if (styleElement.styleSheet) {
+        styleElement.styleSheet.cssText = styles;
+      } else {
+        styleElement.appendChild(document.createTextNode(styles));
+      }
+
+      document.getElementsByTagName('head')[0].appendChild(styleElement);
+    }
   }
 `;
 
