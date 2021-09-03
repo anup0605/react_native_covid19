@@ -1525,6 +1525,7 @@
       "consent-no": "No, I do not consent",
       "consent-yes": "Yes, I consent",
       "information-sheet": "Information Sheet",
+      "primary-profile-only": "You are only providing consent for your profile, and not others you report for.",
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",
       "title": "Are you in?",

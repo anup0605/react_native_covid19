@@ -86,7 +86,7 @@ export default function ReconsentRequestConsentScreen() {
       <Text rhythm={16} style={styles.center} textClass="h2Light">
         {i18n.t('reconsent.request-consent.title')}
       </Text>
-      <Text rhythm={24} style={[styles.center, styles.subtitle]} textClass="pLight">
+      <Text rhythm={24} style={[styles.center, styles.secondaryColour]} textClass="pLight">
         {i18n.t('reconsent.request-consent.subtitle')}
       </Text>
       {renderCallouts()}
@@ -106,10 +106,13 @@ export default function ReconsentRequestConsentScreen() {
         style={styles.marginTop}
         testID="button-information-sheet"
       >
-        <Text style={styles.externalLink} textClass="pSmallLight">
+        <Text rhythm={24} style={styles.externalLink} textClass="pSmallLight">
           {i18n.t('reconsent.request-consent.information-sheet')}{' '}
         </Text>
       </TouchableOpacity>
+      <Text style={[styles.center, styles.secondaryColour]} textClass="pLight">
+        {i18n.t('reconsent.request-consent.primary-profile-only')}
+      </Text>
       <View style={styles.hr} />
       {error ? <ErrorText style={styles.errorText}>{error}</ErrorText> : null}
       <BrandedButton
@@ -162,8 +165,8 @@ const styles = StyleSheet.create({
   hr: {
     backgroundColor: colors.backgroundFour,
     height: 1,
-    marginBottom: sizes.l,
-    marginTop: sizes.xl,
+    marginBottom: sizes.xl,
+    marginTop: sizes.l,
     width: '100%',
   },
   marginTop: {
@@ -172,7 +175,7 @@ const styles = StyleSheet.create({
   page: {
     backgroundColor: colors.backgroundPrimary,
   },
-  subtitle: {
+  secondaryColour: {
     color: colors.secondary,
   },
 });
