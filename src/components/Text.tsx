@@ -66,6 +66,31 @@ export const RegularText = ({ style, children, testID }: IProps) => (
   </Text>
 );
 
+interface IRegularTextWithBoldInsertsProps {
+  text: string;
+  style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
+}
+
+export const RegularTextWithBoldInserts = ({ text, style }: IRegularTextWithBoldInsertsProps) => {
+  const textParts: string[] = text.split('*');
+  let boldText: boolean = !!text.startsWith('*');
+  return (
+    <Text style={style}>
+      {textParts
+        .filter((text: string) => text)
+        .map((text: string) => {
+          const node: React.ReactNode = boldText ? (
+            <Text style={{ fontWeight: '600' }}>{text}</Text>
+          ) : (
+            <Text>{text}</Text>
+          );
+          boldText = !boldText;
+          return node;
+        })}
+    </Text>
+  );
+};
+
 export const FieldLabel = ({ style, children }: IProps) => (
   <Text style={[fontStyles.bodyReg, styles.fieldLabel, style]}>{children}</Text>
 );

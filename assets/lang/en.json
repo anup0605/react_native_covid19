@@ -991,7 +991,10 @@
     },
     "vaccine-list-updated": {
       "title": "Your COVID-19 vaccines",
-      "description": "Tell us if you’ve had at least one dose of a COVID-19 vaccine, including boosters, through the national roll-out.\n\nWe can now record COVID-19 vaccines taken as part of a trial - please select \"I received my vaccine via a vaccine trial\" when asked for the name of your vaccine.",
+      "description": "Tell us if you've had a COVID-19 vaccine. This now also includes *boosters and vaccines taken as part of a trial*.",
+      "modal-title": "Logging your vaccines",
+      "modal-body": "We can now record COVID-19 vaccines taken as part of a trial. Please select \"I received my vaccine via a vaccine trial\" when asked for the name of your vaccine.",
+      "modal-button": "OK",
       "add-button": "Add a vaccine dose",
       "correct-info": "This information is correct",
       "no-vaccine": "I haven't had a vaccine",
