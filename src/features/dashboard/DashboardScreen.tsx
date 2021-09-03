@@ -95,6 +95,12 @@ export function DashboardScreen({ navigation, route }: IProps) {
     Linking.addEventListener('url', () => {});
   }, []);
 
+  React.useEffect(() => {
+    if (startupInfo?.show_research_consent) {
+      appCoordinator.goToReconsent();
+    }
+  }, []);
+
   return (
     <CollapsibleHeaderScrollView
       compactHeader={<CompactHeader reportOnPress={onReport} />}
