@@ -97,7 +97,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
 
   React.useEffect(() => {
     if (startupInfo?.show_research_consent) {
-      appCoordinator.goToReconsent();
+      setTimeout(() => appCoordinator.goToReconsent(), 500);
     }
   }, []);
 
