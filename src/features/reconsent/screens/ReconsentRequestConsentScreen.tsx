@@ -69,9 +69,16 @@ export default function ReconsentRequestConsentScreen() {
     setLoading(false);
   }
 
-  function onPressNo() {
+  async function onPressNo() {
     Analytics.track(events.RECONSENT_FIRST_NO_CLICKED);
-    NavigatorService.navigate('ReconsentFeedback');
+    try {
+      setLoading(true);
+      await patientService.updatePatientInfo(patientId, diseasePreferences);
+      NavigatorService.navigate('ReconsentFeedback');
+    } catch {
+      setError(i18n.t('something-went-wrong'));
+    }
+    setLoading(false);
   }
 
   return (
