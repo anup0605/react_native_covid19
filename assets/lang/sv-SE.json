@@ -996,6 +996,9 @@
     "vaccine-list-updated": {
       "title": "Dina covid-19-vacciner",
       "description": "Berätta om du har fått minst en covid-19-vaccindos, inklusive eventuella boosterdoser.",
+      "modal-title": "Logging your vaccines",
+      "modal-body": "We can now record COVID-19 vaccines taken as part of a trial. Please select \"I received my vaccine via a vaccine trial\" when asked for the name of your vaccine.",
+      "modal-button": "OK",
       "add-button": "Lägg till vaccindos",
       "correct-info": "Informationen är korrekt",
       "no-vaccine": "Jag har inte vaccinerats",
@@ -1522,6 +1525,7 @@
       "consent-no": "No, I do not consent",
       "consent-yes": "Yes, I consent",
       "information-sheet": "Information Sheet",
+      "primary-profile-only": "You are only providing consent for your profile, and not others you report for.",
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",
       "title": "Are you in?",

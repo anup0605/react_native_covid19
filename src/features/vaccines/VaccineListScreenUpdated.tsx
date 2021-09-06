@@ -1,8 +1,10 @@
-import { BrandedButton, RegularText, Text } from '@covid/components';
+import InfoCircle from '@assets/icons/InfoCircle';
+import { BrandedButton, HeaderText, LightText, Modal, RegularTextWithBoldInserts, Text } from '@covid/components';
 import { Loading } from '@covid/components/Loading';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
 import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
+import { isSECountry } from '@covid/core/localisation/LocalisationService';
 import { TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -13,7 +15,7 @@ import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { VaccineDoseRow } from './components/VaccineDoseRow';
 
@@ -24,6 +26,7 @@ type TProps = {
 export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
   const [vaccines, setVaccines] = React.useState<TVaccineRequest | undefined>();
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
 
   const patientId = route.params?.assessmentData?.patientData?.patientId;
 
@@ -150,19 +153,39 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
     </View>
   );
 
+  const renderMoreInfoModal = () => (
+    <Modal onRequestClose={() => setModalVisible(false)} testID="vaccine-list-updated-modal" visible={modalVisible}>
+      <View style={styles.modalWrapper}>
+        <HeaderText style={styles.modalTitle}>{i18n.t('vaccines.vaccine-list-updated.modal-title')}</HeaderText>
+        <LightText style={styles.modalBody}>{i18n.t('vaccines.vaccine-list-updated.modal-body')}</LightText>
+        <BrandedButton onPress={() => setModalVisible(false)}>
+          {i18n.t('vaccines.vaccine-list-updated.modal-button')}
+        </BrandedButton>
+      </View>
+    </Modal>
+  );
+
   return (
     <Screen
       profile={route.params?.assessmentData?.patientData?.patientState?.profile}
       renderFooter={footer}
       testID="vaccine-list-screen"
     >
+      {renderMoreInfoModal()}
       <View>
         <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list-updated.title')} />
       </View>
-      <View style={styles.introduction}>
-        <RegularText testID="vaccine-list-introduction">
-          {i18n.t('vaccines.vaccine-list-updated.description')}
-        </RegularText>
+      <View style={styles.introduction} testID="vaccine-list-introduction">
+        <Text>
+          <RegularTextWithBoldInserts text={i18n.t('vaccines.vaccine-list-updated.description')} />
+          {isSECountry() ? null : (
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <View style={styles.paddingLeft}>
+                <InfoCircle color={colors.primary} />
+              </View>
+            </TouchableOpacity>
+          )}
+        </Text>
       </View>
       <ListContent />
     </Screen>
@@ -177,12 +200,26 @@ const styles = StyleSheet.create({
     marginBottom: sizes.xxl,
     marginTop: sizes.l,
   },
+  modalBody: {
+    marginBottom: sizes.xl,
+  },
+  modalTitle: {
+    marginBottom: sizes.l,
+    textAlign: 'center',
+  },
+  modalWrapper: {
+    padding: sizes.xxs,
+    paddingBottom: sizes.xs,
+  },
   newButton: {
     backgroundColor: colors.backgroundTertiary,
     marginBottom: sizes.xl,
   },
   newText: {
     color: colors.primary,
+  },
+  paddingLeft: {
+    paddingLeft: sizes.xs,
   },
   rootContainer: {
     backgroundColor: colors.backgroundPrimary,
