@@ -38,13 +38,16 @@ export function isZoeInviteOfferTest(mechanism: ECovidTestMechanismOptions) {
   return ZOE_INVITE_MECHANISMS.includes(mechanism);
 }
 
-export function getTestType(mechanism: ECovidTestMechanismOptions, isRapidTest: boolean) {
-  if (isPcrTest(mechanism, isRapidTest)) {
-    return 'PCR';
+export function getTestType(mechanism: ECovidTestMechanismOptions, isRapidTest: boolean | undefined) {
+  if (isRapidTest) {
+    if (isPcrTest(mechanism, isRapidTest)) {
+      return 'PCR';
+    }
+    if (isLateralFlowTest(mechanism, isRapidTest)) {
+      return 'Lateral';
+    }
   }
-  if (isLateralFlowTest(mechanism, isRapidTest)) {
-    return 'Lateral';
-  }
+
   if (isAntibodyTest(mechanism)) {
     return 'Antibody';
   }

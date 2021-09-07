@@ -13,7 +13,7 @@ import { StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 
 export interface ICovidTestDateData {
-  useApproximateDate: boolean | undefined; // only for ux logic
+  useApproximateDate: boolean; // only for ux logic
   dateTakenBetweenStart: Date | undefined;
   dateTakenBetweenEnd: Date | undefined;
   dateTakenSpecific: Date | undefined;

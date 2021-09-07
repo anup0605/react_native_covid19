@@ -57,8 +57,8 @@ export type TScreenParamList = {
   CovidTestList: {
     assessmentData: TAssessmentData;
     tests?: TCovidTest[];
-    mechanism: ECovidTestMechanismOptions;
-    is_rapid_test: boolean;
+    mechanism?: ECovidTestMechanismOptions;
+    is_rapid_test?: boolean;
   };
   CovidTestDetail: { assessmentData: TAssessmentData; test?: TCovidTest };
   CovidTestConfirm: { assessmentData: TAssessmentData; test: TCovidTest };
