@@ -86,7 +86,7 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
           <View style={styles.flex4}>
             {formikProps.values.hemoglobinMeasureUnit === '%' ? (
               <ValidatedTextInput
-                error={formikProps.touched.a1cMeasurementPercent && formikProps.errors.a1cMeasurementPercent}
+                error={formikProps.touched.a1cMeasurementPercent && !!formikProps.errors.a1cMeasurementPercent}
                 keyboardType="numeric"
                 onBlur={formikProps.handleBlur('a1cMeasurementPercent')}
                 onChangeText={formikProps.handleChange('a1cMeasurementPercent')}
@@ -98,7 +98,7 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
             ) : null}
             {formikProps.values.hemoglobinMeasureUnit === 'mmol/mol' ? (
               <ValidatedTextInput
-                error={formikProps.touched.a1cMeasurementMol && formikProps.errors.a1cMeasurementMol}
+                error={formikProps.touched.a1cMeasurementMol && !!formikProps.errors.a1cMeasurementMol}
                 keyboardType="numeric"
                 onBlur={formikProps.handleBlur('a1cMeasurementMol')}
                 onChangeText={formikProps.handleChange('a1cMeasurementMol')}
@@ -115,6 +115,7 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
               items={hemoglobinUnitsOptions}
               onValueChange={formikProps.handleChange('hemoglobinMeasureUnit')}
               selectedValue={formikProps.values.hemoglobinMeasureUnit}
+              style={{ marginVertical: 0 }}
             />
           </View>
         </View>
@@ -129,10 +130,10 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
         placeholder={i18n.t('placeholder-optional')}
       />
 
-      <DiabetesTreatmentsQuestion formikProps={formikProps as FormikProps<IDiabetesTreatmentsData>} />
+      <DiabetesTreatmentsQuestion formikProps={formikProps as unknown as FormikProps<IDiabetesTreatmentsData>} />
 
       {formikProps.values.diabetesTreatmentOtherOral ? (
-        <DiabetesOralMedsQuestion formikProps={formikProps as FormikProps<IDiabetesOralMedsData>} />
+        <DiabetesOralMedsQuestion formikProps={formikProps as unknown as FormikProps<IDiabetesOralMedsData>} />
       ) : null}
 
       <YesNoField

@@ -382,25 +382,28 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
                 ) : null}
 
                 <RaceEthnicityQuestion
-                  formikProps={props as FormikProps<IRaceEthnicityData>}
+                  formikProps={props as unknown as FormikProps<IRaceEthnicityData>}
                   showEthnicityQuestion={this.state.showEthnicityQuestion}
                   showRaceQuestion={this.state.showRaceQuestion}
                 />
 
-                <HeightQuestion formikProps={props as FormikProps<IHeightData>} />
+                <HeightQuestion formikProps={props as unknown as FormikProps<IHeightData>} />
 
-                <WeightQuestion formikProps={props as FormikProps<IWeightData>} label={i18n.t('your-weight')} />
+                <WeightQuestion
+                  formikProps={props as unknown as FormikProps<IWeightData>}
+                  label={i18n.t('your-weight')}
+                />
 
                 {!this.props.route.params?.editing ? (
                   <GenericTextField
                     required
                     showError
                     formikProps={props}
+                    inputProps={{ autoCompleteType: 'postal-code' }}
                     label={i18n.t('your-postcode')}
                     name="postcode"
                     placeholder={i18n.t('placeholder-postcode')}
                     testID="input-postal-code"
-                    textInputProps={{ autoCompleteType: 'postal-code' }}
                   />
                 ) : null}
 

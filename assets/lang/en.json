@@ -913,7 +913,7 @@
     "hemoglobin-measurement-unit-percent": "%",
     "hemoglobin-measurement-unit-mol": "mmol/mol",
     "when-was-diagnosed": "What year were you diagnosed with diabetes?",
-    "which-treatment": "Which diabetes treatments do you use? Select all that apply:",
+    "which-treatment": "Which diabetes treatments do you use? Select all that apply: *",
     "answer-none": "None",
     "answer-lifestyle-mod": "Lifestyle modification (e.g. exercise, diet, weight management)",
     "answer-daily-injections": "Once or twice daily injections of long acting insulin or \"basal\" insulin (e.g. glargine, detemir, degludec or NPH in premixed insulin)",
