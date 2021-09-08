@@ -17,7 +17,9 @@ const padding = {
   top: 6,
 };
 
-const scale = { x: 'time', y: 'linear' };
+type TScale = 'linear' | 'time' | 'log' | 'sqrt';
+
+const scale: { x: TScale; y: TScale } = { x: 'time', y: 'linear' };
 
 const style = {
   data: { stroke: colors.darkblue },

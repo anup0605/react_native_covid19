@@ -655,7 +655,7 @@
     "hemoglobin-measurement-unit-percent": "%",
     "hemoglobin-measurement-unit-mol": "mmol/mol",
     "when-was-diagnosed": "Vilket år blev du diagnosticerad?",
-    "which-treatment": "Vilken diabetesbehandling har du? Markera alla som stämmer för dig:",
+    "which-treatment": "Vilken diabetesbehandling har du? Markera alla som stämmer för dig: *",
     "answer-none": "Ingen",
     "answer-lifestyle-mod": "Enbart livsstilsförändring (t.ex. fysisk aktivitet, kostomläggning eller viktnedgång)",
     "answer-daily-injections": "Långverkande insulin/basinsulin eller mixinsulin (t.ex. Lantus®, Toujeo®, Levemir®, Tresiba®, Insulatard® eller Novomix®)",

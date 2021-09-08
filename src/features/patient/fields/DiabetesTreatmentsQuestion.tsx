@@ -130,7 +130,7 @@ export const DiabetesTreatmentsQuestion: IFormikDiabetesInputFC<IProps, IDiabete
     <View>
       <View style={{ marginVertical: sizes.m }}>
         <RegularText>{i18n.t('diabetes.which-treatment')}</RegularText>
-        <CheckboxList required>{createDiabetesCheckboxes(diabetesTreatmentCheckboxes, formikProps)}</CheckboxList>
+        <CheckboxList>{createDiabetesCheckboxes(diabetesTreatmentCheckboxes, formikProps)}</CheckboxList>
       </View>
 
       {!!formikProps.errors.diabetesTreatments && formikProps.submitCount > 0 ? (

@@ -293,10 +293,10 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
                 />
 
                 {this.state.showDiabetesQuestion ? (
-                  <DiabetesQuestions formikProps={props as FormikProps<IDiabetesData>} />
+                  <DiabetesQuestions formikProps={props as unknown as FormikProps<IDiabetesData>} />
                 ) : null}
 
-                <AtopyQuestions formikProps={props as FormikProps<IAtopyData>} />
+                <AtopyQuestions formikProps={props as unknown as FormikProps<IAtopyData>} />
 
                 <RadioInput
                   required
@@ -370,9 +370,9 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
                   selectedValue={props.values.takesCorticosteroids}
                 />
 
-                <BloodPressureMedicationQuestion formikProps={props as FormikProps<IBloodPressureData>} />
+                <BloodPressureMedicationQuestion formikProps={props as unknown as FormikProps<IBloodPressureData>} />
 
-                <BloodGroupQuestion formikProps={props as FormikProps<IBloodGroupData>} />
+                <BloodGroupQuestion formikProps={props as unknown as FormikProps<IBloodGroupData>} />
 
                 <View style={{ flex: 1 }} />
 

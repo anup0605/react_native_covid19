@@ -35,7 +35,7 @@ type TProps = {
 type TState = {
   errorMessage: string;
   needBloodPressureAnswer: boolean;
-  needRaceEthnicityAnswer: boolean;
+  needRaceEthnicityAnswer: boolean | undefined;
   needAtopyAnswers: boolean;
   needDiabetesAnswers: boolean;
   needBloodGroupAnswer: boolean;
@@ -229,25 +229,27 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
             return (
               <Form>
                 {this.state.needBloodPressureAnswer ? (
-                  <BloodPressureMedicationQuestion formikProps={props as FormikProps<IBloodPressureData>} />
+                  <BloodPressureMedicationQuestion formikProps={props as unknown as FormikProps<IBloodPressureData>} />
                 ) : null}
 
                 {this.state.needRaceEthnicityAnswer ? (
                   <RaceEthnicityQuestion
-                    formikProps={props as FormikProps<IRaceEthnicityData>}
+                    formikProps={props as unknown as FormikProps<IRaceEthnicityData>}
                     showEthnicityQuestion={this.features?.showEthnicityQuestion}
                     showRaceQuestion={this.features?.showRaceQuestion}
                   />
                 ) : null}
 
-                {this.state.needAtopyAnswers ? <AtopyQuestions formikProps={props as FormikProps<IAtopyData>} /> : null}
+                {this.state.needAtopyAnswers ? (
+                  <AtopyQuestions formikProps={props as unknown as FormikProps<IAtopyData>} />
+                ) : null}
 
                 {this.state.needDiabetesAnswers ? (
-                  <DiabetesQuestions formikProps={props as FormikProps<IDiabetesData>} />
+                  <DiabetesQuestions formikProps={props as unknown as FormikProps<IDiabetesData>} />
                 ) : null}
 
                 {this.state.needBloodGroupAnswer ? (
-                  <BloodGroupQuestion formikProps={props as FormikProps<IBloodGroupData>} />
+                  <BloodGroupQuestion formikProps={props as unknown as FormikProps<IBloodGroupData>} />
                 ) : null}
 
                 <View style={styling.flex} />

@@ -20,7 +20,7 @@ import * as React from 'react';
 import * as Yup from 'yup';
 
 export interface ICovidTestMechanismData {
-  mechanism: string;
+  mechanism: ECovidTestMechanismOptions;
   mechanismSpecify: string;
   trainedWorker: string;
   antibody: string;
@@ -181,7 +181,7 @@ export const CovidTestMechanismQuestion: ICovidTestMechanismQuestion<IProps, ICo
 };
 
 CovidTestMechanismQuestion.initialFormValues = (test?: TCovidTest): ICovidTestMechanismData => {
-  let mechanism = '';
+  let mechanism = '' as ECovidTestMechanismOptions;
   let mechanismSpecify = '';
 
   if (test?.id) {
@@ -194,7 +194,7 @@ CovidTestMechanismQuestion.initialFormValues = (test?: TCovidTest): ICovidTestMe
     } else if (Object.values(ECovidTestMechanismOptions).includes(test.mechanism as ECovidTestMechanismOptions)) {
       mechanism = test.mechanism;
     } else {
-      mechanism = 'other';
+      mechanism = 'other' as ECovidTestMechanismOptions;
       mechanismSpecify = test.mechanism;
     }
   }
@@ -234,7 +234,7 @@ CovidTestMechanismQuestion.schema = () => {
 
 CovidTestMechanismQuestion.createDTO = (formData: ICovidTestMechanismData): Partial<TCovidTest> => {
   return {
-    ...(formData.mechanism === 'other' && { mechanism: formData.mechanismSpecify }),
+    ...(formData.mechanism === 'other' && { mechanism: formData.mechanismSpecify as ECovidTestMechanismOptions }),
     ...(formData.mechanism !== 'other' && { mechanism: formData.mechanism }),
     ...(formData.mechanism === 'lateral_flow' && {
       is_rapid_test: true,

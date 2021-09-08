@@ -67,9 +67,10 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
         covidTestService
           .updateTest(testId, infos)
           .then(() => {
-            NavigatorService.navigate({
-              name: 'CovidTestList',
-              params: { is_rapid_test: infos.is_rapid_test, mechanism: infos.mechanism },
+            NavigatorService.navigate('CovidTestList', {
+              assessmentData: props.route.params?.assessmentData,
+              is_rapid_test: infos.is_rapid_test,
+              mechanism: infos.mechanism,
             });
           })
           .catch(() => {
@@ -87,9 +88,10 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
       covidTestService
         .addTest(infos)
         .then(() => {
-          NavigatorService.navigate({
-            name: 'CovidTestList',
-            params: { is_rapid_test: infos.is_rapid_test, mechanism: infos.mechanism },
+          NavigatorService.navigate('CovidTestList', {
+            assessmentData: props.route.params?.assessmentData,
+            is_rapid_test: infos.is_rapid_test,
+            mechanism: infos.mechanism,
           });
         })
         .catch(() => {

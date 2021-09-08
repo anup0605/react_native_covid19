@@ -130,7 +130,7 @@ class RegisterScreen extends React.Component<TProps, TState> {
 
                 <RegularText style={styling.marginVerticalBig}>
                   {i18n.t('create-account.if-you-have-an-account')}{' '}
-                  <ClickableText onPress={() => this.props.navigation.navigate('Login')}>
+                  <ClickableText onPress={() => this.props.navigation.navigate('Login', { terms: '' })}>
                     {i18n.t('log-in')}
                   </ClickableText>
                 </RegularText>
@@ -163,7 +163,7 @@ class RegisterScreen extends React.Component<TProps, TState> {
                 <ValidatedTextInput
                   secureTextEntry
                   autoCapitalize="none"
-                  error={props.touched.password && props.errors.password}
+                  error={props.touched.password && !!props.errors.password}
                   onBlur={props.handleBlur('password')}
                   onChangeText={(text) => {
                     props.handleChange('password')(text);

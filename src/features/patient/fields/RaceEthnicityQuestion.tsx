@@ -15,8 +15,8 @@ export interface IRaceEthnicityData {
 }
 
 interface IRaceEthnicityQuestionProps {
-  showRaceQuestion: boolean;
-  showEthnicityQuestion: boolean;
+  showRaceQuestion: boolean | undefined;
+  showEthnicityQuestion: boolean | undefined;
   formikProps: FormikProps<IRaceEthnicityData>;
 }
 
@@ -101,6 +101,7 @@ export class RaceEthnicityQuestion extends React.Component<IRaceEthnicityQuestio
 
         {this.props.formikProps.values.race.includes('other') ? (
           <GenericTextField
+            required
             formikProps={this.props.formikProps}
             label={i18n.t('race-other-question')}
             name="raceOther"

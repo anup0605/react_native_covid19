@@ -32,7 +32,7 @@ export class AssessmentCoordinator extends Coordinator {
   appCoordinator: AppCoordinator;
 
   screenFlow: Partial<TScreenFlow> = {
-    AboutYourVaccine: () => {
+    AboutYourVaccineOld: () => {
       NavigatorService.goBack();
     },
     AboutYourVaccineUpdated: () => {
@@ -47,7 +47,6 @@ export class AssessmentCoordinator extends Coordinator {
         // Note that VaccineList is currently a "feature toggle placeholder" that uses startupInfo to use old/new UI
         NavigatorService.navigate('VaccineListFeatureToggle', {
           assessmentData: this.assessmentData,
-          viewName: 'LIST',
         });
       } else {
         NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });

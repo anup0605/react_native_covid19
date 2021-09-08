@@ -15,6 +15,7 @@ web-report/
 google-services.json
 .private-assets/
 .locales/
+.git-hash.json
 
 # Xcode
 !**/*.xcodeproj

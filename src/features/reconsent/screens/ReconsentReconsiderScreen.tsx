@@ -1,6 +1,7 @@
 import { BrandedButton, Text } from '@covid/components';
 import Analytics, { events } from '@covid/core/Analytics';
 import { patientService } from '@covid/core/patient/PatientService';
+import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
 import { resetFeedback, selectFeedbackData } from '@covid/core/state/reconsent';
 import { TRootState } from '@covid/core/state/root';
 import VimeoVideo from '@covid/features/reconsent//components/VimeoVideo';
@@ -47,6 +48,9 @@ export default function ReconsentReconsiderScreen(props: IProps) {
     try {
       await generalApiClient.postUserEvent('feedback_reconsent', feedbackData);
       await patientService.updatePatientInfo(patientId, { research_consent_asked: true });
+      // Update the startup info (as research consent has changed and app needs to be aware)
+      // This requires async await to make sure!
+      await dispatch(fetchStartUpInfo());
     } catch (_) {}
     setLoading(false);
     dispatch(resetFeedback());

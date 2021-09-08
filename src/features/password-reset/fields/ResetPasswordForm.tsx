@@ -44,7 +44,7 @@ function ResetPasswordForm({
       <ValidatedTextInput
         autoCapitalize="none"
         autoCompleteType="email"
-        error={touched.email && errors.email}
+        error={touched.email && !!errors.email}
         keyboardType="email-address"
         onBlur={handleBlur('email')}
         onChangeText={handleChange('email')}
@@ -53,10 +53,8 @@ function ResetPasswordForm({
         value={values.email}
       />
 
-      <View style={styling.flex} />
-
       {touched.email && errors.email ? <ErrorText> {i18n.t('reset-password.email-error')}</ErrorText> : null}
-
+      <View style={styling.flex} />
       {errorMessage ? <ErrorText>{errorMessage}</ErrorText> : null}
 
       <BrandedButton enabled={values.email.length > 0 && isValid && !errors.email} onPress={handleSubmit}>

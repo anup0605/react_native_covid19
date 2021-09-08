@@ -5,7 +5,16 @@ import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { Label } from 'native-base';
 import * as React from 'react';
-import { Image, ImageSourcePropType, PickerItemProps, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  PickerItemProps,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 import { ValidationError } from './ValidationError';
@@ -20,6 +29,7 @@ interface IProps {
   placeholder?: string;
   required?: boolean;
   selectedValue?: any;
+  style?: StyleProp<ViewStyle>;
 }
 
 interface ISelectedItem {
@@ -39,6 +49,7 @@ function DropdownField({
   onValueChange,
   itemIcons,
   required,
+  style,
 }: IProps) {
   // Returns with [No, Yes] if props.item is blank (no dropdown list items provided.)
   const prepareItems = (array?: PickerItemProps[]): PickerItemProps[] => {
@@ -124,7 +135,7 @@ function DropdownField({
   };
 
   return (
-    <View style={styles.view}>
+    <View style={[styles.view, style]}>
       {hideLabel ? null : (
         <Label style={styles.label}>
           {label}

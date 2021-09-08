@@ -3,7 +3,7 @@ import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
 import { sizes } from '@covid/themes';
-import { FormikProps } from 'formik';
+import { FormikErrors, FormikProps } from 'formik';
 import * as React from 'react';
 import { KeyboardTypeOptions, StyleProp, TextInputProps, View, ViewStyle } from 'react-native';
 
@@ -31,7 +31,7 @@ export function GenericTextField(props: IProps) {
         </RegularText>
       ) : null}
       <ValidatedTextInput
-        error={formikProps.touched[name] && formikProps.errors[name]}
+        error={formikProps.touched[name] && !!formikProps.errors[name]}
         keyboardType={keyboardType}
         onBlur={formikProps.handleBlur(name)}
         onChangeText={formikProps.handleChange(name)}
@@ -45,7 +45,7 @@ export function GenericTextField(props: IProps) {
       />
 
       {showError && !!formikProps.touched[name] && !!formikProps.errors[name] ? (
-        <ValidationError error={formikProps.errors[name]} />
+        <ValidationError error={formikProps.errors[name] as FormikErrors<string>} />
       ) : null}
     </View>
   );

@@ -37,12 +37,12 @@ describe('branded-button tests', () => {
 
   it('Handles style props being passed', () => {
     const onPress = jest.fn();
-    const style = { background: 'red' };
+    const style = { backgroundColor: 'red' };
     const { getByTestId } = render(
       <BrandedButton enabled={false} onPress={onPress} style={style}>
         This is a branded button
       </BrandedButton>,
     );
-    expect(getByTestId('button-test-ID').props.style.background).toBe('red');
+    expect(getByTestId('button-test-ID').props.style.backgroundColor).toBe('red');
   });
 });
