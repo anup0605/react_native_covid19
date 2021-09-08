@@ -48,14 +48,14 @@ storiesOf('Text input', module).add('multi-line', () => (
           <View style={{ marginVertical: sizes.m }}>
             <GenericTextField
               formikProps={props}
+              inputProps={{
+                multiline: true,
+                numberOfLines: 3,
+              }}
               keyboardType="numeric"
               label="Some label"
               name="input"
               placeholder="Some placeholder"
-              textInputProps={{
-                multiline: true,
-                numberOfLines: 3,
-              }}
             />
           </View>
           <BrandedButton onPress={props.handleSubmit}>

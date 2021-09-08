@@ -117,7 +117,7 @@ export class OptionalInfoScreen extends React.Component<TProps, TState> {
 
                   <RegularText>{i18n.t('optional-info.description')}</RegularText>
                   <ValidatedTextInput
-                    error={props.touched.name && props.errors.name}
+                    error={props.touched.name && !!props.errors.name}
                     onBlur={props.handleBlur('name')}
                     onChangeText={props.handleChange('name')}
                     onSubmitEditing={() => {
@@ -131,7 +131,7 @@ export class OptionalInfoScreen extends React.Component<TProps, TState> {
                   />
 
                   <ValidatedTextInput
-                    error={props.touched.phone && props.errors.phone}
+                    error={props.touched.phone && !!props.errors.phone}
                     onBlur={props.handleBlur('phone')}
                     onChangeText={props.handleChange('phone')}
                     placeholder={i18n.t('optional-info.phone-placeholder')}

@@ -30,7 +30,7 @@ const HeightInInches: React.FC<IProps> = ({ formikProps }) => {
     <View style={styles.primaryFieldRow}>
       <View style={styles.feetField}>
         <ValidatedTextInput
-          error={formikProps.touched.feet && formikProps.errors.feet}
+          error={formikProps.touched.feet && !!formikProps.errors.feet}
           keyboardType="numeric"
           onBlur={formikProps.handleBlur('feet')}
           onChangeText={formikProps.handleChange('feet')}
@@ -43,7 +43,7 @@ const HeightInInches: React.FC<IProps> = ({ formikProps }) => {
       </View>
       <View style={styles.inchesField}>
         <ValidatedTextInput
-          error={formikProps.touched.inches && formikProps.errors.inches}
+          error={formikProps.touched.inches && !!formikProps.errors.inches}
           keyboardType="numeric"
           onBlur={formikProps.handleBlur('inches')}
           onChangeText={formikProps.handleChange('inches')}
@@ -62,7 +62,7 @@ const HeightInCm: React.FC<IProps> = ({ formikProps }) => {
   return (
     <View style={styles.cmField}>
       <ValidatedTextInput
-        error={formikProps.touched.height && formikProps.errors.height}
+        error={formikProps.touched.height && !!formikProps.errors.height}
         keyboardType="numeric"
         onBlur={formikProps.handleBlur('height')}
         onChangeText={formikProps.handleChange('height')}

@@ -36,7 +36,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
       </RegularText>
       {isUSCountry() ? (
         <ValidatedTextInput
-          error={formikProps.touched.pounds && formikProps.errors.pounds}
+          error={formikProps.touched.pounds && !!formikProps.errors.pounds}
           keyboardType="numeric"
           onBlur={formikProps.handleBlur('pounds')}
           onChangeText={formikProps.handleChange('pounds')}
@@ -51,7 +51,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
           {formikProps.values.weightUnit === 'kg' ? (
             <View style={styles.primaryField}>
               <ValidatedTextInput
-                error={formikProps.touched.weight && formikProps.errors.weight}
+                error={formikProps.touched.weight && !!formikProps.errors.weight}
                 keyboardType="numeric"
                 onBlur={formikProps.handleBlur('weight')}
                 onChangeText={formikProps.handleChange('weight')}
@@ -66,7 +66,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
             <View style={styles.primaryFieldRow}>
               <View style={styles.stonesField}>
                 <ValidatedTextInput
-                  error={formikProps.touched.stones && formikProps.errors.stones}
+                  error={formikProps.touched.stones && !!formikProps.errors.stones}
                   keyboardType="numeric"
                   onBlur={formikProps.handleBlur('stones')}
                   onChangeText={formikProps.handleChange('stones')}
@@ -79,7 +79,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
               </View>
               <View style={styles.poundsField}>
                 <ValidatedTextInput
-                  error={formikProps.touched.pounds && formikProps.errors.pounds}
+                  error={formikProps.touched.pounds && !!formikProps.errors.pounds}
                   keyboardType="numeric"
                   onBlur={formikProps.handleBlur('pounds')}
                   onChangeText={formikProps.handleChange('pounds')}

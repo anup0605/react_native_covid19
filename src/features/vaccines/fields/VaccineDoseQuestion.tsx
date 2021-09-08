@@ -159,7 +159,7 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps)
   const renderBatchNumber = () =>
     props.firstDose ? (
       <ValidatedTextInput
-        error={formikProps.touched.firstBatchNumber && formikProps.errors.firstBatchNumber}
+        error={formikProps.touched.firstBatchNumber && !!formikProps.errors.firstBatchNumber}
         onBlur={props.formikProps.handleBlur('firstBatchNumber')}
         onChangeText={props.formikProps.handleChange('firstBatchNumber')}
         onSubmitEditing={() => {}}
@@ -169,7 +169,7 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps)
       />
     ) : (
       <ValidatedTextInput
-        error={formikProps.touched.secondBatchNumber && formikProps.errors.secondBatchNumber}
+        error={formikProps.touched.secondBatchNumber && !!formikProps.errors.secondBatchNumber}
         onBlur={props.formikProps.handleBlur('secondBatchNumber')}
         onChangeText={props.formikProps.handleChange('secondBatchNumber')}
         onSubmitEditing={() => {}}
@@ -181,7 +181,7 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps)
 
   const renderBatchNumberUpdated = () => (
     <ValidatedTextInput
-      error={formikProps.touched.batchNumber && formikProps.errors.batchNumber}
+      error={formikProps.touched.batchNumber && !!formikProps.errors.batchNumber}
       onBlur={props.formikProps.handleBlur('batchNumber')}
       onChangeText={props.formikProps.handleChange('batchNumber')}
       onSubmitEditing={() => {}}
