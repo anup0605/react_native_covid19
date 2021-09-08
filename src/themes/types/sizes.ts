@@ -1,4 +1,4 @@
-export type TGridSize = 4 | 8 | 12 | 16 | 24 | 32 | 48;
+export type TGridSize = 0 | 4 | 8 | 12 | 16 | 24 | 32 | 48;
 
 export type TGrid = {
   xxs: 4;

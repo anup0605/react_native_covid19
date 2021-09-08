@@ -10,7 +10,7 @@ interface IProps {
   disabled?: boolean;
   iconName: TIconName;
   iconSize?: TTypeSizes;
-  iconStyle?: StyleProp<ViewStyle>;
+  iconStyle?: StyleProp<ViewStyle> | { color?: string };
   inverted?: boolean;
   style?: StyleProp<ViewStyle>;
 }
