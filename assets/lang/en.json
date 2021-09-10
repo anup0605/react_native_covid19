@@ -575,6 +575,7 @@
   "delete-data-alert-title": "Are you sure?",
   "delete-data-alert-text": "Deleting your account and data cannot be undone.",
   "push-notifications": "Turn on reminders",
+  "testing-mode": "Testing mode",
   "cancel": "Cancel",
   "confirm": "Confirm",
   "delete": "Delete",

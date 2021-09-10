@@ -76,10 +76,10 @@ export const fetchDismissedCallouts = createAsyncThunk('content/dismissed_callou
 export const fetchStartUpInfo = createAsyncThunk('content/startup_info', async (): Promise<Partial<TContentState>> => {
   // TODO: refactor the ContentService - localData is a property set async on the class within getStartupInfo() (line 107)
   // TICKET: https://www.notion.so/joinzoe/Refactor-ContentService-7ea01969fff54f8299d53f95f05dcb6d
-  const serviceData = await contentService.getStartupInfo();
+  const startupInfo = await contentService.getStartupInfo();
   return {
     personalizedLocalData: contentService.localData,
-    startupInfo: serviceData,
+    startupInfo,
   };
 });
 
@@ -145,8 +145,6 @@ export const searchTrendLine = createAsyncThunk('content/search_trend_line', asy
 export const updateTodayDate = createAction('context/update_today_date');
 export const addDismissCallout = createAction<string>('content/dismissed_callout');
 
-// Slice (Store, Reducer, Actions etc...)
-
 export const contentSlice = createSlice({
   extraReducers: {
     [updateTodayDate.type]: (current) => {
@@ -167,9 +165,8 @@ export const contentSlice = createSlice({
     },
     [fetchStartUpInfo.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
       current.infoApiState = !action.payload ? 'error' : 'finished';
-      const { startupInfo, personalizedLocalData } = action.payload;
-      current.startupInfo = startupInfo;
-      current.personalizedLocalData = personalizedLocalData;
+      current.startupInfo = action.payload.startupInfo;
+      current.personalizedLocalData = action.payload.personalizedLocalData;
     },
 
     // DismissedCallouts reducer

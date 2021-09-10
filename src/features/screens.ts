@@ -74,6 +74,7 @@ export {
   SelectProfileScreen,
   SplashScreen,
   TermsOfUseUSScreen,
+  TestingModeScreen,
   ThankYouSEScreen,
   ThankYouUKScreen,
   ThankYouUSScreen,

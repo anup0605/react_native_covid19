@@ -1,4 +1,5 @@
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { RouteProp } from '@react-navigation/native';
@@ -13,7 +14,7 @@ type TProps = {
 };
 
 export const VaccineListFeatureToggleScreen: React.FC<TProps> = ({ route }) => {
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   return startupInfo?.show_new_vaccines_ui ? (
     <VaccineListScreenUpdated route={route} />

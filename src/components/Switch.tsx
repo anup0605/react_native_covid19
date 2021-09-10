@@ -8,11 +8,13 @@ import { requiredFormMarker } from './Form';
 
 interface IProps {
   label: string;
-  selectedValue: boolean;
+  onValueChange: (value: boolean) => void;
   required?: boolean;
-  toggleSwitch: () => void;
+  selectedValue: boolean;
   style?: StyleProp<ViewStyle>;
 }
+
+const trackColor = { false: colors.backgroundTertiary, true: colors.brand };
 
 function Switch(props: IProps) {
   return (
@@ -20,9 +22,9 @@ function Switch(props: IProps) {
       <RNSwitch
         accessibilityLabel={props.label}
         ios_backgroundColor={colors.backgroundTertiary}
-        onValueChange={props.toggleSwitch}
+        onValueChange={props.onValueChange}
         thumbColor={colors.white}
-        trackColor={{ false: colors.backgroundTertiary, true: colors.brand }}
+        trackColor={trackColor}
         value={props.selectedValue}
       />
       <Text style={styles.label} textClass="h6Light">

@@ -20,3 +20,4 @@ export { CountrySelectScreen } from './CountrySelectScreen';
 export { EstimatedCasesScreen } from './EstimatedCasesScreen';
 export { TScreenParamList as ScreenParamList } from './ScreenParamList';
 export { default as LoginScreen } from './login/LoginScreen';
+export { default as TestingModeScreen } from './testing-mode/TestingModeScreen';

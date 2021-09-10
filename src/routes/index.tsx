@@ -79,6 +79,7 @@ export default function MainNavigator() {
       <Stack.Screen component={screens.SchoolIntroScreen} name="SchoolIntro" options={options} />
       <Stack.Screen component={screens.SelectProfileScreen} name="SelectProfile" options={options} />
       <Stack.Screen component={screens.TermsOfUseUSScreen} name="TermsOfUseUS" options={options} />
+      <Stack.Screen component={screens.TestingModeScreen} name="TestingMode" options={options} />
       <Stack.Screen component={screens.ThankYouSEScreen} name="ThankYouSE" options={options} />
       <Stack.Screen component={screens.ThankYouUKScreen} name="ThankYouUK" options={options} />
       <Stack.Screen component={screens.ThankYouUSScreen} name="ThankYouUS" options={options} />

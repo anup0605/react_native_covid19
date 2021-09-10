@@ -5,6 +5,7 @@ import { Screen } from '@covid/components/Screen';
 import { ErrorText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { covidTestService } from '@covid/core/user/CovidTestService';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
@@ -35,7 +36,7 @@ export default function CovidTestListScreen(props: IProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
   const [showOnboardingModal, setShowOnboardingModal] = React.useState<boolean>(false);
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   const windowDimensions = useWindowDimensions();
   const minTabViewHeight = SINGLE_TEST_ROW_HEIGHT * 5;

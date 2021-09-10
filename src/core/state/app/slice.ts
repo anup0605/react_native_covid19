@@ -2,16 +2,16 @@ import { IApp } from '@covid/core/state/app/types';
 import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const appInitialState: IApp = {
+export const initialStateApp: IApp = {
   mentalHealthStudyActive: true,
   modalMentalHealthPlaybackVisible: false,
 };
 
 export const appSlice = createSlice({
-  initialState: appInitialState,
+  initialState: initialStateApp,
   name: 'App',
   reducers: {
-    reset: () => appInitialState,
+    reset: () => initialStateApp,
     setMentalHealthStudyActive: (state, action: PayloadAction<boolean>) => ({
       ...state,
       mentalHealthStudyActive: action.payload,
