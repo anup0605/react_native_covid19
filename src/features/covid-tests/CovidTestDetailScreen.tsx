@@ -101,18 +101,18 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
     }
   }
 
-  function handleAction(formData: ICovidTestData) {
+  function onSubmit(values: ICovidTestData) {
     if (!submitting) {
       setSubmitting(true);
-      if (!formData.useApproximateDate && !formData.dateTakenSpecific) {
+      if (!values.useApproximateDate && !values.dateTakenSpecific) {
         setErrorMessage(i18n.t('covid-test.required-date'));
         setSubmitting(false);
         return;
       }
 
       if (
-        formData.useApproximateDate &&
-        (formData.dateTakenBetweenStart === undefined || formData.dateTakenBetweenEnd === undefined)
+        values.useApproximateDate &&
+        (values.dateTakenBetweenStart === undefined || values.dateTakenBetweenEnd === undefined)
       ) {
         setErrorMessage(i18n.t('covid-test.required-dates'));
         setSubmitting(false);
@@ -122,12 +122,12 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
       const infos = {
         patient: assessmentCoordinator.assessmentData?.patientData?.patientId,
         type: ECovidTestType.Generic,
-        ...CovidTestDateQuestion.createDTO(formData),
-        ...CovidTestIsRapidQuestion.createDTO(formData),
-        ...CovidTestMechanismQuestion.createDTO(formData),
-        ...CovidTestResultQuestion.createDTO(formData),
-        ...CovidTestInvitedQuestion.createDTO(formData),
-        ...CovidTestLocationQuestion.createDTO(formData),
+        ...CovidTestDateQuestion.createDTO(values),
+        ...CovidTestIsRapidQuestion.createDTO(values),
+        ...CovidTestMechanismQuestion.createDTO(values),
+        ...CovidTestResultQuestion.createDTO(values),
+        ...CovidTestInvitedQuestion.createDTO(values),
+        ...CovidTestLocationQuestion.createDTO(values),
       } as Partial<TCovidTest>;
 
       submitCovidTest(infos);
@@ -192,54 +192,43 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
           ...CovidTestLocationQuestion.initialFormValues(test),
           ...CovidTestIsRapidQuestion.initialFormValues(test),
         }}
-        onSubmit={(values: ICovidTestData) => {
-          return handleAction(values);
-        }}
+        onSubmit={onSubmit}
         validationSchema={registerSchema}
       >
-        {(props) => {
+        {(formikProps) => {
           return (
             <Form hasRequiredFields>
               <CovidTestMechanismQuestion
-                formikProps={props as unknown as FormikProps<ICovidTestMechanismData>}
+                formikProps={formikProps as FormikProps<ICovidTestMechanismData>}
                 test={test}
               />
-              <CovidTestDateQuestion formikProps={props as unknown as FormikProps<ICovidTestDateData>} test={test} />
+              <CovidTestDateQuestion formikProps={formikProps as FormikProps<ICovidTestDateData>} test={test} />
               {test !== undefined && test?.location ? (
                 <CovidTestLocationQuestion
-                  formikProps={props as unknown as FormikProps<ICovidTestLocationData>}
+                  formikProps={formikProps as FormikProps<ICovidTestLocationData>}
                   test={test}
                 />
               ) : null}
-              <CovidTestResultQuestion
-                formikProps={props as unknown as FormikProps<ICovidTestResultData>}
-                test={test}
-              />
+              <CovidTestResultQuestion formikProps={formikProps as FormikProps<ICovidTestResultData>} test={test} />
               {test !== undefined && test?.is_rapid_test !== null && isV1Test ? (
-                <CovidTestIsRapidQuestion
-                  formikProps={props as unknown as FormikProps<ICovidTestIsRapidData>}
-                  test={test}
-                />
+                <CovidTestIsRapidQuestion formikProps={formikProps as FormikProps<ICovidTestIsRapidData>} test={test} />
               ) : null}
               {(test !== undefined && test?.invited_to_test !== null) ||
-              isZoeInviteOfferTest(props.values.mechanism as ECovidTestMechanismOptions) ? (
-                <CovidTestInvitedQuestion
-                  formikProps={props as unknown as FormikProps<ICovidTestInvitedData>}
-                  test={test}
-                />
+              isZoeInviteOfferTest(formikProps.values.mechanism as ECovidTestMechanismOptions) ? (
+                <CovidTestInvitedQuestion formikProps={formikProps as FormikProps<ICovidTestInvitedData>} test={test} />
               ) : null}
 
               <ErrorText>{errorMessage}</ErrorText>
 
-              {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+              {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
                 <ValidationError error={i18n.t('validation-error-text')} />
               ) : null}
 
               {testId ? <DeleteButton onPress={promptDeleteTest} /> : null}
 
               <BrandedButton
-                enabled={!submitting && props.isValid}
-                onPress={props.handleSubmit}
+                enabled={!submitting && formikProps.isValid}
+                onPress={formikProps.handleSubmit}
                 style={styling.marginTop}
                 testID="button-submit"
               >

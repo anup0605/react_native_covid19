@@ -293,7 +293,7 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
     return initialValues;
   };
 
-  handleSubmit = (values: IYourStudyData) => {
+  onSubmit = (values: IYourStudyData) => {
     const infos = this.createPatientInfos(values);
 
     this.coordinator
@@ -311,10 +311,10 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
       <Screen simpleCallout profile={this.coordinator.patientData?.patientState?.profile} testID="your-study-screen">
         <Formik
           initialValues={this.getInitialFormValues()}
-          onSubmit={this.handleSubmit}
+          onSubmit={this.onSubmit}
           validationSchema={this.registerSchema}
         >
-          {(props) => {
+          {(formikProps) => {
             return (
               <Form>
                 <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('your-study.title')} />
@@ -329,13 +329,13 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
                       onChange={(value: boolean) => {
                         if (cohort.key === 'is_in_none_of_the_above') {
                           // @ts-ignore - error due to cohort keys being in allCohorts and not explicitly in the interface
-                          props.setValues(this.buildInitCohortsValues(countrySpecificCohorts));
-                        } else if (Object.keys(props.values).includes('is_in_none_of_the_above')) {
-                          props.setFieldValue('is_in_none_of_the_above', false);
+                          formikProps.setValues(this.buildInitCohortsValues(countrySpecificCohorts));
+                        } else if (Object.keys(formikProps.values).includes('is_in_none_of_the_above')) {
+                          formikProps.setFieldValue('is_in_none_of_the_above', false);
                         }
-                        props.setFieldValue(cohort.key, value);
+                        formikProps.setFieldValue(cohort.key, value);
                       }}
-                      value={props.values[cohort.key]}
+                      value={formikProps.values[cohort.key]}
                     >
                       {cohort.label}
                     </CheckboxItem>
@@ -347,27 +347,27 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
                     <RegularText>{i18n.t('your-study.if-not')}</RegularText>
 
                     <GenericTextField
-                      formikProps={props}
+                      formikProps={formikProps}
                       label={i18n.t('your-study.add-study-names')}
                       name="clinicalStudyNames"
                       placeholder={i18n.t('placeholder-optional')}
                     />
 
                     <GenericTextField
-                      formikProps={props}
+                      formikProps={formikProps}
                       label={i18n.t('your-study.contact-name')}
                       name="clinicalStudyContacts"
                       placeholder={i18n.t('placeholder-optional')}
                     />
                     <GenericTextField
-                      formikProps={props}
+                      formikProps={formikProps}
                       label={i18n.t('your-study.uni-hospital')}
                       name="clinicalStudyInstitutions"
                       placeholder={i18n.t('placeholder-optional')}
                     />
 
                     <GenericTextField
-                      formikProps={props}
+                      formikProps={formikProps}
                       label={i18n.t('your-study.nct-number')}
                       name="clinicalStudyNctIds"
                       placeholder={i18n.t('placeholder-optional')}
@@ -378,11 +378,11 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
                 <View style={{ flex: 1 }} />
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
-                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
                   <ValidationError error={i18n.t('validation-error-text')} />
                 ) : null}
 
-                <BrandedButton onPress={props.handleSubmit}>
+                <BrandedButton onPress={formikProps.handleSubmit}>
                   {this.props.route.params?.editing ? i18n.t('edit-profile.done') : i18n.t('next-question')}
                 </BrandedButton>
               </Form>

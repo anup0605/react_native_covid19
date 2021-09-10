@@ -36,6 +36,16 @@ type TProps = {
   route: RouteProp<ScreenParamList, 'Pingdemic'>;
 };
 
+const initialFormValues = {
+  appActive: undefined,
+  askedByApp: undefined,
+  dateTakenBetweenEnd: undefined,
+  dateTakenBetweenStart: undefined,
+  dateTakenSpecific: undefined,
+  haveApp: undefined,
+  useApproximateDate: undefined,
+} as IPingdemicData;
+
 const ValidationSchema = () => {
   return Yup.object().shape({
     appActiveWithBluetooth: Yup.string().when('haveApp', {
@@ -92,18 +102,18 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
     { label: i18n.t('pingdemic.active-not-sure'), value: 'not_sure' },
   ];
 
-  const onSubmit = async (pingdemicData: FormikProps<IPingdemicData>) => {
+  const onSubmit = async (values: IPingdemicData) => {
     setIsSubmitting(true);
     const patientId = assessmentCoordinator.assessmentData?.patientData.patientId;
     const formatDateToPost = (date: Date | undefined) => (date ? moment(date).format('YYYY-MM-DD') : null);
     const pingdemicRequestData = {
-      app_bluetooth: pingdemicData.values.appActiveWithBluetooth,
-      app_installed: pingdemicData.values.haveApp,
-      asked_to_isolate: pingdemicData.values.askedByApp,
-      isolate_date_between_end: formatDateToPost(pingdemicData.values.dateTakenBetweenEnd),
-      isolate_date_between_start: formatDateToPost(pingdemicData.values.dateTakenBetweenStart),
-      isolate_date_specific: formatDateToPost(pingdemicData.values.dateTakenSpecific),
-      other_text: pingdemicData.values.otherText,
+      app_bluetooth: values.appActiveWithBluetooth,
+      app_installed: values.haveApp,
+      asked_to_isolate: values.askedByApp,
+      isolate_date_between_end: formatDateToPost(values.dateTakenBetweenEnd),
+      isolate_date_between_start: formatDateToPost(values.dateTakenBetweenStart),
+      isolate_date_specific: formatDateToPost(values.dateTakenSpecific),
+      other_text: values.otherText,
       patient: patientId,
     } as TPingdemicRequest;
 
@@ -178,17 +188,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
       <Formik
         validateOnChange
         validateOnMount
-        initialValues={
-          {
-            appActive: undefined,
-            askedByApp: undefined,
-            dateTakenBetweenEnd: undefined,
-            dateTakenBetweenStart: undefined,
-            dateTakenSpecific: undefined,
-            haveApp: undefined,
-            useApproximateDate: undefined,
-          } as IPingdemicData
-        }
+        initialValues={initialFormValues}
         onSubmit={onSubmit}
         validationSchema={ValidationSchema()}
       >
@@ -214,7 +214,7 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
               <BrandedButton
                 enabled={formikProps.isValid}
                 loading={isSubmitting}
-                onPress={() => onSubmit(formikProps)}
+                onPress={formikProps.handleSubmit}
                 style={styling.marginTop}
                 testID="button-submit"
               >

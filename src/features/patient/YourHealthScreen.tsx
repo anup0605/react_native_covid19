@@ -127,9 +127,9 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
     takesImmunosuppressants: Yup.string().required(),
   });
 
-  handleUpdateHealth(formData: IYourHealthData) {
+  onSubmit(values: IYourHealthData) {
     const currentPatient = patientCoordinator.patientData?.patientState;
-    const infos = this.createPatientInfos(formData);
+    const infos = this.createPatientInfos(values);
 
     patientService
       .updatePatientInfo(currentPatient.patientId, infos)
@@ -137,14 +137,14 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
         currentPatient.hasCompletedPatientDetails = true;
         currentPatient.hasBloodPressureAnswer = true;
         currentPatient.hasAtopyAnswers = true;
-        if (formData.diabetesType) {
+        if (values.diabetesType) {
           currentPatient.hasDiabetesAnswers = true;
           currentPatient.shouldAskExtendedDiabetes = false;
         }
-        if (formData.hasHayfever === 'yes') {
+        if (values.hasHayfever === 'yes') {
           currentPatient.hasHayfever = true;
         }
-        if (formData.bloodGroup) {
+        if (values.bloodGroup) {
           currentPatient.hasBloodGroupAnswer = true;
         }
         patientCoordinator.gotoNextScreen(this.props.route.name);
@@ -242,9 +242,7 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
             ...DiabetesQuestions.initialFormValues(),
             ...BloodGroupQuestion.initialFormValues(),
           }}
-          onSubmit={(values: IYourHealthData) => {
-            return this.handleUpdateHealth(values);
-          }}
+          onSubmit={this.onSubmit}
           validationSchema={() => {
             let schema = this.registerSchema;
             schema = schema.concat(BloodGroupQuestion.schema());
@@ -254,7 +252,7 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
             return schema;
           }}
         >
-          {(props) => {
+          {(formikProps) => {
             return (
               <Form>
                 <ProgressHeader currentStep={3} maxSteps={6} title={i18n.t('your-health.page-title')} />
@@ -262,55 +260,55 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
                 <YesNoField
                   required
                   label={i18n.t('your-health.health-problems-that-limit-activity')}
-                  onValueChange={props.handleChange('limitedActivity')}
-                  selectedValue={props.values.limitedActivity}
+                  onValueChange={formikProps.handleChange('limitedActivity')}
+                  selectedValue={formikProps.values.limitedActivity}
                 />
 
                 {this.state.showPregnancyQuestion ? (
                   <YesNoField
                     required
                     label={i18n.t('your-health.are-you-pregnant')}
-                    onValueChange={props.handleChange('isPregnant')}
-                    selectedValue={props.values.isPregnant}
+                    onValueChange={formikProps.handleChange('isPregnant')}
+                    selectedValue={formikProps.values.isPregnant}
                   />
                 ) : null}
 
                 <YesNoField
                   required
                   label={i18n.t('your-health.have-heart-disease')}
-                  onValueChange={props.handleChange('hasHeartDisease')}
-                  selectedValue={props.values.hasHeartDisease}
+                  onValueChange={formikProps.handleChange('hasHeartDisease')}
+                  selectedValue={formikProps.values.hasHeartDisease}
                 />
 
                 <YesNoField
                   required
                   label={i18n.t('your-health.have-diabetes')}
                   onValueChange={(value: string) => {
-                    props.handleChange('hasDiabetes');
+                    formikProps.handleChange('hasDiabetes');
                     this.setState({ showDiabetesQuestion: value === 'yes' });
                   }}
-                  selectedValue={props.values.hasDiabetes}
+                  selectedValue={formikProps.values.hasDiabetes}
                 />
 
                 {this.state.showDiabetesQuestion ? (
-                  <DiabetesQuestions formikProps={props as unknown as FormikProps<IDiabetesData>} />
+                  <DiabetesQuestions formikProps={formikProps as unknown as FormikProps<IDiabetesData>} />
                 ) : null}
 
-                <AtopyQuestions formikProps={props as unknown as FormikProps<IAtopyData>} />
+                <AtopyQuestions formikProps={formikProps as unknown as FormikProps<IAtopyData>} />
 
                 <RadioInput
                   required
-                  error={props.touched.smokerStatus ? props.errors.smokerStatus : ''}
+                  error={formikProps.touched.smokerStatus ? formikProps.errors.smokerStatus : ''}
                   items={smokerStatusItems}
                   label={i18n.t('your-health.is-smoker')}
-                  onValueChange={props.handleChange('smokerStatus')}
-                  selectedValue={props.values.smokerStatus}
+                  onValueChange={formikProps.handleChange('smokerStatus')}
+                  selectedValue={formikProps.values.smokerStatus}
                 />
 
-                {props.values.smokerStatus === 'not_currently' ? (
+                {formikProps.values.smokerStatus === 'not_currently' ? (
                   <GenericTextField
                     required
-                    formikProps={props}
+                    formikProps={formikProps}
                     keyboardType="numeric"
                     label={i18n.t('your-health.years-since-last-smoked')}
                     name="smokedYearsAgo"
@@ -320,22 +318,22 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
                 <YesNoField
                   required
                   label={i18n.t('your-health.has-kidney-disease')}
-                  onValueChange={props.handleChange('hasKidneyDisease')}
-                  selectedValue={props.values.hasKidneyDisease}
+                  onValueChange={formikProps.handleChange('hasKidneyDisease')}
+                  selectedValue={formikProps.values.hasKidneyDisease}
                 />
 
                 <YesNoField
                   required
                   label={i18n.t('your-health.has-cancer')}
-                  onValueChange={props.handleChange('hasCancer')}
-                  selectedValue={props.values.hasCancer}
+                  onValueChange={formikProps.handleChange('hasCancer')}
+                  selectedValue={formikProps.values.hasCancer}
                 />
 
-                {props.values.hasCancer === 'yes' ? (
+                {formikProps.values.hasCancer === 'yes' ? (
                   <>
                     {isUSCountry() && (
                       <GenericTextField
-                        formikProps={props}
+                        formikProps={formikProps}
                         label={i18n.t('your-health.what-cancer-type')}
                         name="cancerType"
                       />
@@ -343,8 +341,8 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
                     <YesNoField
                       required
                       label={i18n.t('your-health.is-on-chemotherapy')}
-                      onValueChange={props.handleChange('doesChemiotherapy')}
-                      selectedValue={props.values.doesChemiotherapy}
+                      onValueChange={formikProps.handleChange('doesChemiotherapy')}
+                      selectedValue={formikProps.values.doesChemiotherapy}
                     />
                   </>
                 ) : null}
@@ -352,37 +350,39 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
                 <YesNoField
                   required
                   label={i18n.t('your-health.takes-immunosuppressant')}
-                  onValueChange={props.handleChange('takesImmunosuppressants')}
-                  selectedValue={props.values.takesImmunosuppressants}
+                  onValueChange={formikProps.handleChange('takesImmunosuppressants')}
+                  selectedValue={formikProps.values.takesImmunosuppressants}
                 />
 
                 <YesNoField
                   required
                   label={i18n.t('your-health.takes-asprin')}
-                  onValueChange={props.handleChange('takesAspirin')}
-                  selectedValue={props.values.takesAspirin}
+                  onValueChange={formikProps.handleChange('takesAspirin')}
+                  selectedValue={formikProps.values.takesAspirin}
                 />
 
                 <YesNoField
                   required
                   label={i18n.t('your-health.takes-nsaids')}
-                  onValueChange={props.handleChange('takesCorticosteroids')}
-                  selectedValue={props.values.takesCorticosteroids}
+                  onValueChange={formikProps.handleChange('takesCorticosteroids')}
+                  selectedValue={formikProps.values.takesCorticosteroids}
                 />
 
-                <BloodPressureMedicationQuestion formikProps={props as unknown as FormikProps<IBloodPressureData>} />
+                <BloodPressureMedicationQuestion
+                  formikProps={formikProps as unknown as FormikProps<IBloodPressureData>}
+                />
 
-                <BloodGroupQuestion formikProps={props as unknown as FormikProps<IBloodGroupData>} />
+                <BloodGroupQuestion formikProps={formikProps as unknown as FormikProps<IBloodGroupData>} />
 
                 <View style={{ flex: 1 }} />
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
-                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
                   <ValidationError error={i18n.t('validation-error-text')} />
                 ) : null}
                 <BrandedButton
-                  enabled={props.isValid && props.dirty}
-                  onPress={props.handleSubmit}
+                  enabled={formikProps.isValid && formikProps.dirty}
+                  onPress={formikProps.handleSubmit}
                   testID="button-submit"
                 >
                   {i18n.t('next-question')}

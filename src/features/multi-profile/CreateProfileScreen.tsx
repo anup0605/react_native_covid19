@@ -30,10 +30,10 @@ export default class CreateProfileScreen extends React.Component<TProps> {
     name: Yup.string().required().max(32, i18n.t('profile-name-too-long')),
   });
 
-  handleClick = (formData: IFormData) => {
+  onSubmit = (values: IFormData) => {
     this.props.navigation.navigate('AdultOrChild', {
       avatarName: this.props.route.params?.avatarName,
-      profileName: formData.name,
+      profileName: values.name,
     });
   };
 
@@ -49,17 +49,15 @@ export default class CreateProfileScreen extends React.Component<TProps> {
           validateOnChange
           validateOnMount
           initialValues={initialFormValues}
-          onSubmit={(values: IFormData) => {
-            return this.handleClick(values);
-          }}
+          onSubmit={this.onSubmit}
           validationSchema={this.registerSchema}
         >
-          {(props) => {
+          {(formikProps) => {
             return (
               <Form>
                 <GenericTextField
                   required
-                  formikProps={props}
+                  formikProps={formikProps}
                   label={i18n.t('create-profile-label')}
                   name="name"
                   placeholder={i18n.t('create-profile-placeholder')}
@@ -67,8 +65,8 @@ export default class CreateProfileScreen extends React.Component<TProps> {
                   testID="input-profile-name"
                 />
                 <BrandedButton
-                  enabled={props.isValid}
-                  onPress={props.handleSubmit}
+                  enabled={formikProps.isValid}
+                  onPress={formikProps.handleSubmit}
                   style={styling.marginTopAuto}
                   testID="button-submit"
                 >

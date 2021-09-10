@@ -73,21 +73,21 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
     }),
   });
 
-  const handleLocationUpdate = (formData: TEditLocationData) => {
+  const onSubmit = (values: TEditLocationData) => {
     const infos: Partial<TPatientInfosRequest> = {};
 
-    if (formData.differentAddress === 'no') {
-      infos.postcode = formData.postcode;
+    if (values.differentAddress === 'no') {
+      infos.postcode = values.postcode;
       infos.current_postcode = null;
       infos.current_country_code = null;
-    } else if (formData.stillInUK === 'yes') {
-      infos.postcode = formData.postcode;
-      infos.current_postcode = formData.currentPostcode;
+    } else if (values.stillInUK === 'yes') {
+      infos.postcode = values.postcode;
+      infos.current_postcode = values.currentPostcode;
       infos.current_country_code = null;
     } else {
-      infos.postcode = formData.postcode;
+      infos.postcode = values.postcode;
       infos.current_postcode = null;
-      infos.current_country_code = formData.currentCountry;
+      infos.current_country_code = values.currentCountry;
     }
 
     editProfileCoordinator
@@ -115,20 +115,14 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
     <Screen simpleCallout profile={props.route.params?.patientData?.profile} testID="edit-location-screen">
       <HeaderText style={{ marginBottom: sizes.s }}>{i18n.t('edit-profile.location.title')}</HeaderText>
 
-      <Formik
-        initialValues={initialFormValues}
-        onSubmit={(formData: TEditLocationData) => {
-          return handleLocationUpdate(formData);
-        }}
-        validationSchema={validation}
-      >
-        {(props) => {
+      <Formik initialValues={initialFormValues} onSubmit={onSubmit} validationSchema={validation}>
+        {(formikProps) => {
           return (
             <Form>
               <GenericTextField
                 required
                 showError
-                formikProps={props}
+                formikProps={formikProps}
                 inputProps={{ autoCompleteType: 'postal-code' }}
                 label={i18n.t('edit-profile.location.label')}
                 name="postcode"
@@ -137,36 +131,36 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
               <YesNoField
                 required
                 label={i18n.t('edit-profile.location.not-current-address')}
-                onValueChange={props.handleChange('differentAddress')}
-                selectedValue={props.values.differentAddress}
+                onValueChange={formikProps.handleChange('differentAddress')}
+                selectedValue={formikProps.values.differentAddress}
               />
-              {props.values.differentAddress === 'yes' ? (
+              {formikProps.values.differentAddress === 'yes' ? (
                 <YesNoField
                   required
                   label={i18n.t('edit-profile.location.still-in-country')}
-                  onValueChange={props.handleChange('stillInUK')}
-                  selectedValue={props.values.stillInUK}
+                  onValueChange={formikProps.handleChange('stillInUK')}
+                  selectedValue={formikProps.values.stillInUK}
                 />
               ) : null}
-              {props.values.stillInUK === 'yes' && props.values.differentAddress === 'yes' ? (
+              {formikProps.values.stillInUK === 'yes' && formikProps.values.differentAddress === 'yes' ? (
                 <GenericTextField
                   required
                   showError
-                  formikProps={props}
+                  formikProps={formikProps}
                   inputProps={{ autoCompleteType: 'postal-code' }}
                   label={i18n.t('edit-profile.location.other-postcode')}
                   name="currentPostcode"
                   placeholder={i18n.t('placeholder-postcode')}
                 />
               ) : null}
-              {props.values.stillInUK === 'no' && props.values.differentAddress === 'yes' ? (
+              {formikProps.values.stillInUK === 'no' && formikProps.values.differentAddress === 'yes' ? (
                 <DropdownField
                   required
-                  error={props.touched.currentCountry ? props.errors.currentCountry : ''}
+                  error={formikProps.touched.currentCountry ? formikProps.errors.currentCountry : ''}
                   items={countryList}
                   label={i18n.t('edit-profile.location.select-country')}
-                  onValueChange={props.handleChange('currentCountry')}
-                  selectedValue={props.values.currentCountry}
+                  onValueChange={formikProps.handleChange('currentCountry')}
+                  selectedValue={formikProps.values.currentCountry}
                 />
               ) : null}
               <View style={{ flex: 1 }} />
@@ -174,7 +168,11 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
                 {i18n.t('edit-profile.location.disclaimer')}
               </SecondaryText>
               <ErrorText>{errorMessage}</ErrorText>
-              <BrandedButton enabled={props.isValid} loading={props.isSubmitting} onPress={props.handleSubmit}>
+              <BrandedButton
+                enabled={formikProps.isValid}
+                loading={formikProps.isSubmitting}
+                onPress={formikProps.handleSubmit}
+              >
                 {i18n.t('edit-profile.done')}
               </BrandedButton>
             </Form>

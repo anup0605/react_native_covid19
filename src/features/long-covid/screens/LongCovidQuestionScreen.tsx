@@ -120,13 +120,14 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
   ];
 
   const [isSubmitting, setSubmitting] = React.useState<boolean>(false);
-  const handleSubmit = async (formData: ILongCovid) => {
+
+  const onSubmit = async (values: ILongCovid) => {
     if (isSubmitting) {
       return;
     }
-    delete formData.other_checkbox;
+    delete values.other_checkbox;
     setSubmitting(true);
-    longCovidApiClient.add(route.params?.patientData?.patientId, formData).then(() => {
+    longCovidApiClient.add(route.params?.patientData?.patientId, values).then(() => {
       NavigatorService.reset([{ name: homeScreenName() }, { name: thankYouScreenName() }], 1);
     });
   };
@@ -278,7 +279,7 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
         initialValues={{
           ...LongCovidQuestionScreen.initialFormValues(),
         }}
-        onSubmit={(values: ILongCovid) => handleSubmit(values)}
+        onSubmit={onSubmit}
         validationSchema={LongCovidQuestionScreen.schema}
       >
         {(props: FormikProps<ILongCovid>) => {
@@ -296,7 +297,7 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
               <View style={styling.flex} />
               <BrandedButton
                 enabled={props.values.had_covid !== null && Object.keys(props.errors).length < 1}
-                onPress={() => handleSubmit(props.values)}
+                onPress={props.handleSubmit}
                 style={styles.marginTop}
                 testID="button-submit"
               >

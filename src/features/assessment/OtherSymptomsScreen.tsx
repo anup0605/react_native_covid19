@@ -37,18 +37,18 @@ export const OtherSymptomsScreen: React.FC<TProps> = ({ route }) => {
         onSubmit={onSubmit}
         validationSchema={registerSchema}
       >
-        {(props) => {
+        {(formikProps) => {
           return (
             <Form>
               <ProgressHeader currentStep={5} maxSteps={6} title={i18n.t('describe-symptoms.other-symptoms')} />
-              <OtherSymptomsQuestions formikProps={props} />
+              <OtherSymptomsQuestions formikProps={formikProps} />
 
               <View style={{ flex: 1 }} />
 
               <BrandedButton
-                enabled={!props.isSubmitting}
-                loading={props.isSubmitting}
-                onPress={props.handleSubmit}
+                enabled={!formikProps.isSubmitting}
+                loading={formikProps.isSubmitting}
+                onPress={formikProps.handleSubmit}
                 testID="button-submit"
               >
                 {i18n.t('describe-symptoms.next')}
