@@ -350,4 +350,5 @@ export type TStartupInfo = {
     };
   };
   show_new_vaccines_ui?: boolean;
+  is_tester?: boolean;
 };

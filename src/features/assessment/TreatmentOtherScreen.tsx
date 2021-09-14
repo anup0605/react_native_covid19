@@ -31,12 +31,12 @@ export default class TreatmentOtherScreen extends React.Component<TTreatmentOthe
     description: Yup.string(),
   });
 
-  handleUpdateTreatment = async (formData: ITreatmentData) => {
+  onSubmit = async (values: ITreatmentData) => {
     let assessment: Partial<TAssessmentInfosRequest> = {};
 
-    if (formData.description) {
+    if (values.description) {
       assessment = {
-        treatment: formData.description,
+        treatment: values.description,
       };
     }
 
@@ -64,25 +64,19 @@ export default class TreatmentOtherScreen extends React.Component<TTreatmentOthe
       >
         <ProgressHeader currentStep={5} maxSteps={5} title={title} />
 
-        <Formik
-          initialValues={initialFormValues}
-          onSubmit={(values: ITreatmentData) => {
-            return this.handleUpdateTreatment(values);
-          }}
-          validationSchema={this.registerSchema}
-        >
-          {(props) => {
+        <Formik initialValues={initialFormValues} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
+          {(formikProps) => {
             return (
               <Form>
                 <RegularText style={styling.marginVertical}>{question}</RegularText>
                 <TextareaWithCharCount
                   bordered
-                  onChangeText={props.handleChange('description')}
+                  onChangeText={formikProps.handleChange('description')}
                   placeholder={i18n.t('placeholder-optional-question')}
-                  value={props.values.description}
+                  value={formikProps.values.description}
                 />
                 <View style={styling.flex} />
-                <BrandedButton onPress={props.handleSubmit}>{i18n.t('completed')}</BrandedButton>
+                <BrandedButton onPress={formikProps.handleSubmit}>{i18n.t('completed')}</BrandedButton>
               </Form>
             );
           }}

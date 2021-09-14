@@ -39,7 +39,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
   const doseBeingEdited =
     doseIndexBeingEdited !== undefined ? assessmentData.vaccineData?.doses[doseIndexBeingEdited] : undefined;
 
-  const processFormDataForSubmit = async (formData: IAboutYourVaccineData) => {
+  const onSubmit = async (values: IAboutYourVaccineData) => {
     if (!submitting) {
       setSubmitting(true);
       const vaccine: Partial<TVaccineRequest> = {
@@ -59,10 +59,10 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
 
       const latestDose: Partial<TDose> = {
         ...doseBeingEdited,
-        batch_number: formData.batchNumber,
-        brand: formData.brand,
-        date_taken_specific: formatDateToPost(formData.doseDate),
-        placebo: formData.placebo,
+        batch_number: values.batchNumber,
+        brand: values.brand,
+        date_taken_specific: formatDateToPost(values.doseDate),
+        placebo: values.placebo,
       };
       vaccine.doses.push(latestDose);
       vaccine.doses
@@ -152,7 +152,7 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
         validateOnChange
         validateOnMount
         initialValues={{ ...buildInitialValues() }}
-        onSubmit={processFormDataForSubmit}
+        onSubmit={onSubmit}
         validationSchema={registerSchema}
       >
         {(props: FormikProps<IAboutYourVaccineData>) => {

@@ -11,6 +11,7 @@ import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { fetchSubscribedSchoolGroups } from '@covid/core/schools/Schools.slice';
 import { fetchLocalTrendLine, updateTodayDate } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { useAppDispatch } from '@covid/core/state/store';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
@@ -51,7 +52,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
   const schoolGroups = useSelector<TRootState, ISubscribedSchoolGroupStats[]>(
     (state) => state.school.joinedSchoolGroups,
   );
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   const [showTrendline, setShowTrendline] = React.useState<boolean>(false);
 

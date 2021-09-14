@@ -23,11 +23,11 @@ type TProps = {
 export const VaccineDoseSymptomsScreen: React.FC<TProps> = ({ route }) => {
   const [isSubmitting, setSubmitting] = React.useState(false);
 
-  const handleSubmit = async (formData: TDoseSymptomsData) => {
+  const onSubmit = async (values: TDoseSymptomsData) => {
     if (!isSubmitting) {
       setSubmitting(true);
       try {
-        const dosePayload = DoseSymptomsQuestions.createDoseSymptoms(formData);
+        const dosePayload = DoseSymptomsQuestions.createDoseSymptoms(values);
         dosePayload.dose = route.params?.dose;
         await vaccineService.saveDoseSymptoms(route.params?.assessmentData?.patientData?.patientId, dosePayload);
       } catch (e) {}
@@ -57,20 +57,20 @@ export const VaccineDoseSymptomsScreen: React.FC<TProps> = ({ route }) => {
         initialValues={{
           ...DoseSymptomsQuestions.initialFormValues(),
         }}
-        onSubmit={(values: TDoseSymptomsData) => handleSubmit(values)}
+        onSubmit={onSubmit}
         validationSchema={registerSchema}
       >
-        {(props) => {
+        {(formikProps) => {
           return (
             <Form>
-              <DoseSymptomsQuestions formikProps={props} />
+              <DoseSymptomsQuestions formikProps={formikProps} />
 
               <View style={{ flex: 1 }} />
 
               <BrandedButton
                 enabled={!isSubmitting}
                 loading={isSubmitting}
-                onPress={props.handleSubmit}
+                onPress={formikProps.handleSubmit}
                 style={styles.marginTop}
               >
                 {i18n.t('vaccines.dose-symptoms.next')}

@@ -7,6 +7,7 @@ import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
 import AnalyticsService, { events } from '@covid/core/Analytics';
 import { updateTodayDate } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { useAppDispatch } from '@covid/core/state/store';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
@@ -33,7 +34,7 @@ interface IProps {
 export function DashboardUSScreen({ route, navigation }: IProps) {
   const appDispatch = useAppDispatch();
 
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
   const [showDietStudyPlayback] = React.useState<boolean | undefined>(startupInfo?.show_diet_score);
 
   const headerConfig = {

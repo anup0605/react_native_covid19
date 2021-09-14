@@ -189,6 +189,15 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
     };
   };
 
+  function onSubmit(values: IAboutYourVaccineData) {
+    // Show an alert if any date value has changed. The prompt confirm will call processFormDataForSubmit thereafter.
+    if (dateHasBeenEdited(values)) {
+      checkDateChangePrompt(values);
+    } else {
+      processFormDataForSubmit(values);
+    }
+  }
+
   return (
     <Screen profile={assessmentData?.patientData.profile} testID="about-your-vaccine-screen">
       <HeaderText>{i18n.t('vaccines.your-vaccine.title')}</HeaderText>
@@ -200,10 +209,7 @@ export function AboutYourVaccineScreenOld({ route }: TProps) {
         validateOnChange
         validateOnMount
         initialValues={{ ...buildInitialValues(assessmentData?.vaccineData) }}
-        onSubmit={(formData: IAboutYourVaccineData) =>
-          // Show an alert if any date value has changed. The prompt confirm will call processFormDataForSubmit thereafter.
-          dateHasBeenEdited(formData) ? checkDateChangePrompt(formData) : processFormDataForSubmit(formData)
-        }
+        onSubmit={onSubmit}
         validationSchema={registerSchema}
       >
         {(props: FormikProps<IAboutYourVaccineData>) => {

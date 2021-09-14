@@ -1,5 +1,6 @@
-import { gbPartners, svPartners, usPartners } from '@assets';
-import { BrandedButton } from '@covid/components';
+import { svPartners, usPartners } from '@assets';
+import { PartnerLogosGB } from '@assets/logos/PartnerLogosGB';
+import { BrandedButton, Text } from '@covid/components';
 import { NavHeader } from '@covid/components/NavHeader';
 import { Screen } from '@covid/components/Screen';
 import { ClickableText, RegularBoldText, RegularText } from '@covid/components/Text';
@@ -55,14 +56,11 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
   }, [isGBCountry, isSECountry]);
 
   const partnersLogos = React.useMemo(() => {
-    if (isGBCountry()) {
-      return gbPartners;
-    }
     if (isSECountry()) {
       return svPartners;
     }
     return usPartners;
-  }, [isGBCountry(), isSECountry(), gbPartners, svPartners, usPartners]);
+  }, [isSECountry(), svPartners, usPartners]);
 
   const flagIcon = getLocaleFlagIcon();
   const renderHeader = React.useCallback(
@@ -87,25 +85,36 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
     <>
       <Screen backgroundColor={colors.backgroundSecondary} renderHeader={renderHeader} testID="welcome-2-screen">
         <View style={styles.covidContainer}>
-          <RegularText style={styles.subtitle}>{i18n.t('welcome.how-you-can-help.title')}</RegularText>
-          <RegularText style={styles.subheader}>{i18n.t('welcome.how-you-can-help.text1')}</RegularText>
+          <Text rhythm={24} style={styles.center} textClass="h3Light">
+            {isGBCountry() ? i18n.t('welcome.how-you-can-help.title-uk') : i18n.t('welcome.how-you-can-help.title')}
+          </Text>
+
+          <RegularText style={styles.subheader}>
+            {isGBCountry() ? i18n.t('welcome.how-you-can-help.text1-uk') : i18n.t('welcome.how-you-can-help.text1')}
+          </RegularText>
+
+          {isGBCountry() ? (
+            <RegularText style={styles.subheader2}>{i18n.t('welcome.how-you-can-help.text2-uk')}</RegularText>
+          ) : null}
 
           {isUSCountry() ? (
             <RegularText style={styles.subheader2}>{i18n.t('welcome.how-you-can-help.text2')}</RegularText>
           ) : null}
 
-          {isSECountry() || isGBCountry() ? (
+          {isSECountry() ? (
             <RegularText style={styles.subheader2}>
-              {'\n'}
               {i18n.t('welcome.disclaimer')}{' '}
               <ClickableText onPress={helpUrl} style={[styles.subheader2, styles.nhsWebsite]} testID="disclaimer">
                 {i18n.t('welcome.disclaimer-link')}
               </ClickableText>
-              .
             </RegularText>
           ) : null}
 
-          <Image source={partnersLogos} style={styles.partnersLogo} />
+          {isGBCountry() ? (
+            <PartnerLogosGB style={styles.partnerLogosGB} />
+          ) : (
+            <Image source={partnersLogos} style={styles.partnersLogo} />
+          )}
 
           {isUSCountry() ? (
             <View style={styles.partnerContainer}>
@@ -146,6 +155,9 @@ const Welcome2Screen: React.FC<TProps> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  center: {
+    textAlign: 'center',
+  },
   covidContainer: {
     paddingBottom: sizes.l,
   },
@@ -182,6 +194,10 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'center',
   },
+  partnerLogosGB: {
+    alignSelf: 'center',
+    marginVertical: sizes.xl,
+  },
   partnersLogo: {
     alignSelf: 'center',
     height: 160,
@@ -196,7 +212,6 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 16,
     lineHeight: 24,
-    marginTop: sizes.m,
     paddingVertical: sizes.xs,
     textAlign: 'center',
   },
@@ -206,14 +221,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     marginTop: sizes.xs,
-    paddingVertical: sizes.xs,
-    textAlign: 'center',
-  },
-  subtitle: {
-    color: colors.primary,
-    fontSize: 24,
-    lineHeight: 32,
-    marginTop: sizes.m,
     paddingVertical: sizes.xs,
     textAlign: 'center',
   },

@@ -54,9 +54,9 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
     this.state = initialState;
   }
 
-  handleUpdate = (formData: IHealthWorkerExposureData) => {
+  onSubmit = (values: IHealthWorkerExposureData) => {
     try {
-      const assessment = this.createAssessment(formData);
+      const assessment = this.createAssessment(values);
       assessmentService.saveAssessment(assessment);
       assessmentCoordinator.gotoNextScreen(this.props.route.name);
     } catch (error) {
@@ -148,65 +148,61 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
           title={i18n.t('title-health-worker-exposure')}
         />
 
-        <Formik
-          initialValues={initialFormValues}
-          onSubmit={(values: IHealthWorkerExposureData) => this.handleUpdate(values)}
-          validationSchema={this.registerSchema}
-        >
-          {(props) => {
+        <Formik initialValues={initialFormValues} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
+          {(formikProps) => {
             return (
               <Form hasRequiredFields>
                 <YesNoField
                   label={i18n.t('health-worker-exposure-question-interacted-any-patients')}
-                  onValueChange={props.handleChange('interactedAnyPatients')}
-                  selectedValue={props.values.interactedAnyPatients}
+                  onValueChange={formikProps.handleChange('interactedAnyPatients')}
+                  selectedValue={formikProps.values.interactedAnyPatients}
                 />
 
-                {!!props.values.interactedAnyPatients && props.values.interactedAnyPatients === 'yes' ? (
+                {!!formikProps.values.interactedAnyPatients && formikProps.values.interactedAnyPatients === 'yes' ? (
                   <>
                     <RadioInput
                       required
                       items={patientInteractionOptions}
                       label={i18n.t('health-worker-exposure-question-treated-patients-with-covid')}
-                      onValueChange={props.handleChange('treatedPatientsWithCovid')}
-                      selectedValue={props.values.treatedPatientsWithCovid}
+                      onValueChange={formikProps.handleChange('treatedPatientsWithCovid')}
+                      selectedValue={formikProps.values.treatedPatientsWithCovid}
                     />
 
                     <RadioInput
                       required
                       items={equipmentUsageOptions}
                       label={i18n.t('health-worker-exposure-question-has-used-ppe-equipment')}
-                      onValueChange={props.handleChange('hasUsedPPEEquipment')}
-                      selectedValue={props.values.hasUsedPPEEquipment}
+                      onValueChange={formikProps.handleChange('hasUsedPPEEquipment')}
+                      selectedValue={formikProps.values.hasUsedPPEEquipment}
                     />
 
-                    {props.values.hasUsedPPEEquipment === 'always' ? (
+                    {formikProps.values.hasUsedPPEEquipment === 'always' ? (
                       <RadioInput
                         required
                         items={availabilityAlwaysOptions}
                         label={i18n.t('label-chose-an-option')}
-                        onValueChange={props.handleChange('ppeAvailabilityAlways')}
-                        selectedValue={props.values.ppeAvailabilityAlways}
+                        onValueChange={formikProps.handleChange('ppeAvailabilityAlways')}
+                        selectedValue={formikProps.values.ppeAvailabilityAlways}
                       />
                     ) : null}
 
-                    {props.values.hasUsedPPEEquipment === 'sometimes' ? (
+                    {formikProps.values.hasUsedPPEEquipment === 'sometimes' ? (
                       <RadioInput
                         required
                         items={availabilitySometimesOptions}
                         label={i18n.t('label-chose-an-option')}
-                        onValueChange={props.handleChange('ppeAvailabilitySometimes')}
-                        selectedValue={props.values.ppeAvailabilitySometimes}
+                        onValueChange={formikProps.handleChange('ppeAvailabilitySometimes')}
+                        selectedValue={formikProps.values.ppeAvailabilitySometimes}
                       />
                     ) : null}
 
-                    {props.values.hasUsedPPEEquipment === 'never' ? (
+                    {formikProps.values.hasUsedPPEEquipment === 'never' ? (
                       <RadioInput
                         required
                         items={availabilityNeverOptions}
                         label={i18n.t('label-chose-an-option')}
-                        onValueChange={props.handleChange('ppeAvailabilityNever')}
-                        selectedValue={props.values.ppeAvailabilityNever}
+                        onValueChange={formikProps.handleChange('ppeAvailabilityNever')}
+                        selectedValue={formikProps.values.ppeAvailabilityNever}
                       />
                     ) : null}
                   </>
@@ -214,13 +210,13 @@ export default class HealthWorkerExposureScreen extends React.Component<TProps, 
 
                 <View style={styling.flex} />
 
-                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
                   <ValidationError error={i18n.t('validation-error-text')} />
                 ) : null}
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
 
-                <BrandedButton enabled={props.isValid} onPress={props.handleSubmit}>
+                <BrandedButton enabled={formikProps.isValid} onPress={formikProps.handleSubmit}>
                   {i18n.t('next-question')}
                 </BrandedButton>
               </Form>

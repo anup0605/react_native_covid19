@@ -4,6 +4,8 @@ import { CaptionText, Header3Text, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import { TContentState } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { cleanIntegerVal } from '@covid/utils/number';
@@ -24,6 +26,7 @@ enum EHeaderType {
 
 export function Header({ reportedCount, reportOnPress }: IProps) {
   const content = useSelector<TRootState, TContentState>((state) => state.content);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
   const [contributors, setContributors] = React.useState<string | null>(null);
 
   const prettyContributorsValue = i18n.toNumber(contributors ? cleanIntegerVal(contributors) : 0, {
@@ -32,8 +35,8 @@ export function Header({ reportedCount, reportOnPress }: IProps) {
   });
 
   React.useEffect(() => {
-    setContributors(content.startupInfo?.users_count.toString() ?? null);
-  }, [content.startupInfo]);
+    setContributors(startupInfo?.users_count.toString() ?? null);
+  }, [startupInfo]);
 
   const onReport = () => {
     Analytics.track(events.REPORT_NOW_CLICKED, { headerType: EHeaderType.Expanded });

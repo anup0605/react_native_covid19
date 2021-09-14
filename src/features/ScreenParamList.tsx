@@ -139,6 +139,9 @@ export type TScreenParamList = {
   ReconsentReconsider: undefined;
   ReconsentNewsletterSignup: undefined;
 
+  // Internal testing mode
+  TestingMode: undefined;
+
   // Others
   Modal: undefined;
   Main: undefined;

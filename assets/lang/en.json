@@ -66,8 +66,11 @@
     "report-button": "Report today, even if you're well",
     "how-you-can-help": {
       "title": "How you can help",
+      "title-uk": "Your contribution matters",
       "text1": "Take 1 minute a day to report how you feel, even if well. Then see how your area is affected.",
-      "text2": "No information you share will be used for commercial purposes. You do not need to give us your name. This app does not give health advice."
+      "text1-uk": "Reporting how you feel, even when you’re well, helps to build a detailed picture of COVID-19 near you.",
+      "text2": "No information you share will be used for commercial purposes. You do not need to give us your name. This app does not give health advice.",
+      "text2-uk": "Together, we generate data about COVID-19 to help scientists, health practitioners, and the public. We do not provide health advice.\n\nYour contributions can also help scientists to understand other major health issues, including those related to COVID-19."
     },
     "from-researchers": "From Physicians and Researchers at",
     "create-account": "Create account",
@@ -87,6 +90,7 @@
   },
   "legal": {
     "i-agree": "I agree",
+    "i-agree-uk": "Yes, I consent",
     "back": "Back",
     "confirm": "Confirm"
   },
@@ -575,6 +579,7 @@
   "delete-data-alert-title": "Are you sure?",
   "delete-data-alert-text": "Deleting your account and data cannot be undone.",
   "push-notifications": "Turn on reminders",
+  "testing-mode": "Testing mode",
   "cancel": "Cancel",
   "confirm": "Confirm",
   "delete": "Delete",
@@ -706,6 +711,18 @@
     "i-consent": "I consent to the processing of my personal data (including without limitation data I provide relating to my health) as set forth in this consent and in the",
     "terms": "Terms of Use",
     "read-accepted": "I have read and accept Zoe Global’s"
+  },
+  "consent-normal-uk": {
+    "card-1-description": "We will use your data to better understand Coronavirus (COVID-19) and follow its spread. We work with scientists at King's College London (KCL) who will have access to your data, which we may also share with the NHS and other medical researchers as outlined in our privacy notice.",
+    "card-1-title": "1. Fight COVID-19",
+    "card-2-description": "ZOE and KCL will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
+    "card-2-title": "2. Advance human health science",
+    "card-3-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
+    "card-3-title": "3. Help others improve human health",
+    "card-4-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
+    "card-4-title": "4. Build health products",
+    "subtitle": "Your reports help ZOE to:",
+    "title": "How we use your data"
   },
   "consent-nurses-us": {
     "header-1": "RESEARCH STUDY/HEALTHCARE WORKER INFORMED CONSENT",
@@ -1525,12 +1542,12 @@
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",
       "title": "Are you in?",
-      "use-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
-      "use-1-title": "1. Advance human health science",
-      "use-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
-      "use-2-title": "2. Help others improve human health ",
-      "use-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
-      "use-3-title": "3. Build health products"
+      "card-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
+      "card-1-title": "1. Advance human health science",
+      "card-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
+      "card-2-title": "2. Help others improve human health ",
+      "card-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
+      "card-3-title": "3. Build health products"
     }
   },
   "disease-cards": {

@@ -94,8 +94,8 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
     unwellMonthBefore: Yup.string().required(),
   });
 
-  handleUpdateHealth(formData: IPreviousExposureData) {
-    const infos = this.createPatientInfos(formData);
+  onSubmit(values: IPreviousExposureData) {
+    const infos = this.createPatientInfos(values);
 
     patientService
       .updatePatientInfo(patientCoordinator.patientData?.patientState?.patientId, infos)
@@ -157,12 +157,10 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
         <Formik
           validateOnChange
           initialValues={initialFormValues}
-          onSubmit={(values: IPreviousExposureData) => {
-            return this.handleUpdateHealth(values);
-          }}
+          onSubmit={this.onSubmit}
           validationSchema={this.registerSchema}
         >
-          {(props) => {
+          {(formikProps) => {
             return (
               <Form>
                 <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('previous-exposure-title')} />
@@ -170,11 +168,11 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
                 <YesNoField
                   required
                   label={i18n.t('label-unwell-month-before')}
-                  onValueChange={props.handleChange('unwellMonthBefore')}
-                  selectedValue={props.values.unwellMonthBefore}
+                  onValueChange={formikProps.handleChange('unwellMonthBefore')}
+                  selectedValue={formikProps.values.unwellMonthBefore}
                 />
 
-                {props.values.unwellMonthBefore === 'yes' ? (
+                {formikProps.values.unwellMonthBefore === 'yes' ? (
                   <>
                     <Item stackedLabel style={styles.textItemStyle}>
                       <Label>{i18n.t('label-past-symptoms')}</Label>
@@ -250,7 +248,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
 
                     <GenericTextField
                       required
-                      formikProps={props}
+                      formikProps={formikProps}
                       keyboardType="numeric"
                       label={i18n.t('label-past-symptoms-days-ago')}
                       name="pastSymptomsDaysAgo"
@@ -259,30 +257,30 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
                     <YesNoField
                       required
                       label={i18n.t('label-past-symptoms-still-have')}
-                      onValueChange={props.handleChange('stillHavePastSymptoms')}
-                      selectedValue={props.values.stillHavePastSymptoms}
+                      onValueChange={formikProps.handleChange('stillHavePastSymptoms')}
+                      selectedValue={formikProps.values.stillHavePastSymptoms}
                     />
                   </>
                 ) : null}
 
-                {props.values.stillHavePastSymptoms === 'yes' ? (
+                {formikProps.values.stillHavePastSymptoms === 'yes' ? (
                   <RadioInput
                     required
                     items={symptomChangeChoices}
                     label={i18n.t('label-past-symptoms-changed')}
-                    onValueChange={props.handleChange('pastSymptomsChanged')}
-                    selectedValue={props.values.pastSymptomsChanged}
+                    onValueChange={formikProps.handleChange('pastSymptomsChanged')}
+                    selectedValue={formikProps.values.pastSymptomsChanged}
                   />
                 ) : null}
 
                 <View style={styling.flex} />
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
-                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
                   <ValidationError error={i18n.t('validation-error-text')} />
                 ) : null}
 
-                <BrandedButton enabled={props.isValid} onPress={props.handleSubmit} testID="button-submit">
+                <BrandedButton enabled={formikProps.isValid} onPress={formikProps.handleSubmit} testID="button-submit">
                   {i18n.t('next-question')}
                 </BrandedButton>
               </Form>

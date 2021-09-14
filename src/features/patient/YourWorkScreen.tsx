@@ -67,6 +67,8 @@ const initialState: TState = {
   isDiabetesRegistry: false,
 };
 
+const initialFormValues = {} as IYourWorkData;
+
 export default class YourWorkScreen extends React.Component<TYourWorkProps, TState> {
   constructor(props: TYourWorkProps) {
     super(props);
@@ -255,7 +257,7 @@ export default class YourWorkScreen extends React.Component<TYourWorkProps, TSta
 
     return (
       <Screen profile={patientCoordinator.patientData?.patientState?.profile} testID="your-work-screen">
-        <Formik initialValues={{} as IYourWorkData} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
+        <Formik initialValues={initialFormValues} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
           {(formikProps) => {
             const {
               isHealthcareStaff,

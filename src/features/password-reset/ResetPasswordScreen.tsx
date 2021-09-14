@@ -28,17 +28,19 @@ interface IResetPasswordData {
   email: string;
 }
 
+const initialFormValues = { email: '' };
+
 export class ResetPasswordScreen extends React.Component<TProps, TState> {
   constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
 
-  handleClick = (formData: IResetPasswordData) => {
+  onSubmit = (values: IResetPasswordData) => {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false });
       userService
-        .resetPassword(formData.email)
+        .resetPassword(values.email)
         .then(() => this.props.navigation.navigate('ResetPasswordConfirm'))
         .catch((err: AxiosError) => {
           this.setState({ errorMessage: i18n.t('reset-password.error', { msg: err.message }) });
@@ -54,7 +56,7 @@ export class ResetPasswordScreen extends React.Component<TProps, TState> {
   render() {
     return (
       <Screen backgroundColor={colors.backgroundPrimary} testID="reset-password-screen">
-        <Formik initialValues={{ email: '' }} onSubmit={this.handleClick} validationSchema={this.registerSchema}>
+        <Formik initialValues={initialFormValues} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
           {(props: IResetPasswordForm) => <ResetPasswordForm {...props} errorMessage={this.state.errorMessage} />}
         </Formik>
       </Screen>

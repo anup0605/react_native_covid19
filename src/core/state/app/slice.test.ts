@@ -1,6 +1,5 @@
 /* eslint-env jest */
-
-import { appActions, appInitialState } from '@covid/core/state/app/slice';
+import { appActions, initialStateApp } from '@covid/core/state/app/slice';
 import store from '@covid/core/state/store';
 
 describe('\n** redux app state **\n', () => {
@@ -16,6 +15,6 @@ describe('\n** redux app state **\n', () => {
   it('should be able to reset all app values back to initial state', () => {
     store.dispatch(appActions.reset());
     state = store.getState().app;
-    expect(state).toEqual(appInitialState);
+    expect(state).toEqual(initialStateApp);
   });
 });

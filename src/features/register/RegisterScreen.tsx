@@ -1,7 +1,7 @@
-import { BrandedButton } from '@covid/components';
+import { BrandedButton, Text } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { Screen } from '@covid/components/Screen';
-import { ClickableText, ErrorText, HeaderLightText, RegularText } from '@covid/components/Text';
+import { ClickableText, ErrorText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import Analytics, { events } from '@covid/core/Analytics';
 import { setUsername } from '@covid/core/state/user';
@@ -16,7 +16,7 @@ import { colors } from '@theme';
 import { AxiosError } from 'axios';
 import { Formik } from 'formik';
 import * as React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
@@ -43,24 +43,24 @@ interface IRegistrationData {
   password: string;
 }
 
-const initialRegistrationValues = {
+const initialFormValues = {
   email: '',
   password: '',
 };
 
 class RegisterScreen extends React.Component<TProps, TState> {
-  private passwordComponent: any;
+  passwordComponent: any;
 
   constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
 
-  private handleCreateAccount(formData: IRegistrationData) {
+  onSubmit = (values: IRegistrationData) => {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false });
       userService
-        .register(formData.email, formData.password)
+        .register(values.email, values.password)
         .then(async (response) => {
           const isTester = response.user.is_tester;
           Analytics.identify({ isTester });
@@ -97,7 +97,7 @@ class RegisterScreen extends React.Component<TProps, TState> {
           this.setState({ errorMessage: i18n.t('create-account.error', { msg: err.message }) });
         });
     }
-  }
+  };
 
   gotoLogin = () => {
     this.props.navigation.replace('Login', { terms: '' });
@@ -110,40 +110,45 @@ class RegisterScreen extends React.Component<TProps, TState> {
       .min(8, i18n.t('create-account.password-too-simple')),
   });
 
-  setIsEnabled(user: string, pass: string) {
+  setIsEnabled = (user: string, pass: string) => {
     const enableSubmit = user.length > 0 && pass.length > 7;
     this.setState({ enableSubmit });
-  }
+  };
+
+  onPressLogin = () => this.props.navigation.navigate('Login', { terms: '' });
 
   render() {
     return (
       <Screen backgroundColor={colors.backgroundPrimary} testID="register-screen">
-        <Formik
-          initialValues={initialRegistrationValues}
-          onSubmit={(values: IRegistrationData) => this.handleCreateAccount(values)}
-          validationSchema={this.registerSchema}
-        >
-          {(props) => {
+        <Formik initialValues={initialFormValues} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
+          {(formikProps) => {
             return (
               <Form>
-                <HeaderLightText>{i18n.t('create-account.title')}</HeaderLightText>
-
-                <RegularText style={styling.marginVerticalBig}>
+                <Text rhythm={24} style={styles.center} textClass="h3Light">
+                  {i18n.t('create-account.title')}
+                </Text>
+                <Text rhythm={24} style={[styles.center, styles.secondaryColour]} textClass="pLight">
                   {i18n.t('create-account.if-you-have-an-account')}{' '}
-                  <ClickableText onPress={() => this.props.navigation.navigate('Login', { terms: '' })}>
+                  <Text
+                    inverted
+                    colorPalette="actionSecondary"
+                    colorShade="main"
+                    onPress={this.onPressLogin}
+                    textClass="pLight"
+                  >
                     {i18n.t('log-in')}
-                  </ClickableText>
-                </RegularText>
+                  </Text>
+                </Text>
 
                 <ValidatedTextInput
                   autoCapitalize="none"
                   autoCompleteType="email"
-                  error={(props.touched.email && !!props.errors.email) || this.state.accountExists}
+                  error={(formikProps.touched.email && !!formikProps.errors.email) || this.state.accountExists}
                   keyboardType="email-address"
-                  onBlur={props.handleBlur('email')}
+                  onBlur={formikProps.handleBlur('email')}
                   onChangeText={(text) => {
-                    props.handleChange('email')(text);
-                    this.setIsEnabled(text, props.values.password);
+                    formikProps.handleChange('email')(text);
+                    this.setIsEnabled(text, formikProps.values.password);
                   }}
                   onSubmitEditing={() => {
                     this.passwordComponent.focus();
@@ -151,10 +156,12 @@ class RegisterScreen extends React.Component<TProps, TState> {
                   placeholder={i18n.t('create-account.email')}
                   returnKeyType="next"
                   testID="input-email-address"
-                  value={props.values.email}
+                  value={formikProps.values.email}
                 />
 
-                {!!props.touched.email && !!props.errors.email ? <ErrorText>{props.errors.email}</ErrorText> : null}
+                {!!formikProps.touched.email && !!formikProps.errors.email ? (
+                  <ErrorText>{formikProps.errors.email}</ErrorText>
+                ) : null}
 
                 {this.state.accountExists ? <ErrorText>{i18n.t('create-account.already-registered')}</ErrorText> : null}
 
@@ -163,22 +170,21 @@ class RegisterScreen extends React.Component<TProps, TState> {
                 <ValidatedTextInput
                   secureTextEntry
                   autoCapitalize="none"
-                  error={props.touched.password && !!props.errors.password}
-                  onBlur={props.handleBlur('password')}
+                  error={formikProps.touched.password && !!formikProps.errors.password}
+                  onBlur={formikProps.handleBlur('password')}
                   onChangeText={(text) => {
-                    props.handleChange('password')(text);
-                    this.setIsEnabled(props.values.email, text);
+                    formikProps.handleChange('password')(text);
+                    this.setIsEnabled(formikProps.values.email, text);
                   }}
-                  onSubmitEditing={() => props.handleSubmit()}
                   placeholder={i18n.t('create-account.password')}
                   ref={(input) => (this.passwordComponent = input)}
                   returnKeyType="go"
                   testID="input-password"
-                  value={props.values.password}
+                  value={formikProps.values.password}
                 />
 
-                {!!props.touched.password && !!props.errors.password ? (
-                  <ErrorText>{props.errors.password}</ErrorText>
+                {!!formikProps.touched.password && !!formikProps.errors.password ? (
+                  <ErrorText>{formikProps.errors.password}</ErrorText>
                 ) : null}
 
                 {this.state.accountExists ? (
@@ -196,8 +202,8 @@ class RegisterScreen extends React.Component<TProps, TState> {
 
                 <BrandedButton
                   enabled={this.state.enableSubmit}
-                  loading={props.isSubmitting}
-                  onPress={props.handleSubmit}
+                  loading={formikProps.isSubmitting}
+                  onPress={formikProps.handleSubmit}
                   testID="button-submit"
                 >
                   {i18n.t('create-account.btn')}
@@ -210,6 +216,15 @@ class RegisterScreen extends React.Component<TProps, TState> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  center: {
+    textAlign: 'center',
+  },
+  secondaryColour: {
+    color: colors.secondary,
+  },
+});
 
 const mapDispatchToProps = {
   setUsername,

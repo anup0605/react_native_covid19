@@ -1,6 +1,6 @@
 import { handleServiceError } from '@covid/core/api/ApiServiceErrors';
 import { camelizeKeys } from '@covid/core/api/utils';
-import { AsyncStorageService, PERSONALISED_LOCAL_DATA, TPersonalisedLocalData } from '@covid/core/AsyncStorageService';
+import { AsyncStorageService, TPersonalisedLocalData } from '@covid/core/AsyncStorageService';
 import { contentApiClient } from '@covid/core/content/ContentApiClient';
 import { TScreenContent } from '@covid/core/content/ScreenContentContracts';
 import { isSECountry, isUSCountry, LocalisationService } from '@covid/core/localisation/LocalisationService';
@@ -17,7 +17,7 @@ export interface IContentService {
   getAskedToRateStatus(): Promise<string | null>;
   setAskedToRateStatus(status: string): void;
   getUserCount(): Promise<string | null>;
-  getStartupInfo(): Promise<TStartupInfo | null>;
+  getStartupInfo(): Promise<TStartupInfo | undefined>;
   getTrendLines(lad?: string): Promise<TTrendLineResponse>;
   getFeaturedContent(): Promise<TFeaturedContentResponse>;
   signUpForDietNewsletter(signup: boolean): Promise<void>;
@@ -91,22 +91,20 @@ class ContentService implements IContentService {
 
   async getStartupInfo() {
     try {
-      const info = await contentApiClient.getStartupInfo();
-      info.app_requires_update = await this.checkVersionOfAPIAndApp(info.min_supported_app_version);
+      const startupInfo = await contentApiClient.getStartupInfo();
+      startupInfo.app_requires_update = await this.checkVersionOfAPIAndApp(startupInfo.min_supported_app_version);
 
-      LocalisationService.ipCountry = info.ip_country;
-      await AsyncStorageService.setUserCount(info.users_count.toString());
-      if (info.local_data) {
-        const data = camelizeKeys(info.local_data);
-        await AsyncStorageService.setItem(JSON.stringify(camelizeKeys(data)), PERSONALISED_LOCAL_DATA);
-        this.localData = data;
+      LocalisationService.ipCountry = startupInfo.ip_country;
+      await AsyncStorageService.setUserCount(startupInfo.users_count.toString());
+      if (startupInfo.local_data) {
+        this.localData = camelizeKeys(startupInfo.local_data);
       }
-      return info;
+      return startupInfo;
     } catch (error) {
       handleServiceError(error);
     }
 
-    return null;
+    return undefined;
   }
 
   public async getAskedToRateStatus() {

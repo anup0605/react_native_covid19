@@ -10,7 +10,7 @@ type TProps = {
   title: string;
 };
 
-export function Card(props: TProps) {
+export function LegalCard(props: TProps) {
   return (
     <View style={props.index === 0 ? styles.firstCard : styles.card}>
       <Text rhythm={8} style={styles.darkBlue} textClass="h4Medium">

@@ -6,6 +6,7 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { TCoordinates, TPersonalisedLocalData } from '@covid/core/AsyncStorageService';
 import { patientService } from '@covid/core/patient/PatientService';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
@@ -40,7 +41,7 @@ enum EMapType {
 function EmptyView({ onPress, ...props }: IEmptyViewProps) {
   const [html, setHtml] = React.useState<string>('');
 
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   const primaryLabel = props.primaryLabel ?? i18n.t('covid-cases-map.covid-in-x', { location: 'your area' });
   const secondaryLabel = props.secondaryLabel ?? i18n.t('covid-cases-map.update-postcode');

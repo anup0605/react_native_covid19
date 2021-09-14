@@ -32,6 +32,10 @@ const ValidationSchema = () => {
   });
 };
 
+const initialFormValues = {
+  groupId: '',
+} as TJoinGroupData;
+
 export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
   const [groupList, setGroupList] = React.useState<PickerItemProps[]>([]);
 
@@ -52,9 +56,9 @@ export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
     schoolNetworkCoordinator.gotoNextScreen(route.name);
   };
 
-  const onSubmit = async (schoolData: TJoinGroupData) => {
+  const onSubmit = async (values: TJoinGroupData) => {
     try {
-      await schoolNetworkCoordinator.addPatientToGroup(schoolData.groupId, route.params?.patientData?.patientId);
+      await schoolNetworkCoordinator.addPatientToGroup(values.groupId, route.params?.patientData?.patientId);
       next();
     } catch {
       Alert.alert(
@@ -83,15 +87,7 @@ export const JoinSchoolGroupScreen: React.FC<TProps> = ({ route }) => {
 
       <ProgressStatus color={colors.brand} currentStep={3} maxSteps={4} style={styling.marginVertical} />
 
-      <Formik
-        initialValues={
-          {
-            groupId: '',
-          } as TJoinGroupData
-        }
-        onSubmit={onSubmit}
-        validationSchema={ValidationSchema()}
-      >
+      <Formik initialValues={initialFormValues} onSubmit={onSubmit} validationSchema={ValidationSchema()}>
         {(formikProps) => {
           return (
             <Form>

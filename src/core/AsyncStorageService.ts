@@ -13,7 +13,6 @@ const PUSH_TOKEN = 'pushToken';
 const DIET_STUDY_CONSENT = 'dietStudyConsent';
 const ASKED_COUNTRY = 'askedCountry';
 
-export const PERSONALISED_LOCAL_DATA = 'personalisedLocalData';
 export const DISMISSED_CALLOUTS = 'dismissedCallouts';
 
 export type TPersonalisedLocalData = {

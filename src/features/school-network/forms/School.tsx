@@ -7,7 +7,7 @@ import { schoolService } from '@covid/core/schools/SchoolService';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { styling } from '@covid/themes';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
@@ -16,6 +16,8 @@ interface IProps {
   patientData: TPatientData;
 }
 
+const initialFormValues = { schoolCode: '' };
+
 export default function SchoolForm({ patientData }: IProps) {
   const validationSchema = Yup.object().shape({
     schoolCode: Yup.string()
@@ -23,22 +25,20 @@ export default function SchoolForm({ patientData }: IProps) {
       .matches(/^[a-zA-Z0-9_-]{7}$/, 'Code contains seven characters'),
   });
 
+  async function onSubmit(values: typeof initialFormValues, formikHelpers: FormikHelpers<typeof initialFormValues>) {
+    try {
+      const response = await schoolService.getSchoolById(values.schoolCode);
+      NavigatorService.navigate('ConfirmSchool', {
+        patientData,
+        school: response[0],
+      });
+    } catch (error) {
+      formikHelpers.setFieldError('schoolId', 'Incorrect code');
+    }
+  }
+
   return (
-    <Formik
-      initialValues={{ schoolCode: '' }}
-      onSubmit={async ({ schoolCode }, FormikProps) => {
-        try {
-          const response = await schoolService.getSchoolById(schoolCode);
-          NavigatorService.navigate('ConfirmSchool', {
-            patientData,
-            school: response[0],
-          });
-        } catch (error) {
-          FormikProps.setFieldError('schoolId', 'Incorrect code');
-        }
-      }}
-      validationSchema={validationSchema}
-    >
+    <Formik initialValues={initialFormValues} onSubmit={onSubmit} validationSchema={validationSchema}>
       {(formikProps) => (
         <Form>
           <GenericTextField

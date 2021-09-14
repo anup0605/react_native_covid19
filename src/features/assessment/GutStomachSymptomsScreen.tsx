@@ -40,16 +40,16 @@ export const GutStomachSymptomsScreen: React.FC<TProps> = ({ route }) => {
         onSubmit={onSubmit}
         validationSchema={registerSchema}
       >
-        {(props) => {
+        {(formikProps) => {
           return (
             <Form>
               <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('describe-symptoms.gut-stomach-symptoms')} />
-              <GutStomachSymptomsQuestions formikProps={props} />
+              <GutStomachSymptomsQuestions formikProps={formikProps} />
               <View style={{ flex: 1 }} />
               <BrandedButton
-                enabled={!props.isSubmitting}
-                loading={props.isSubmitting}
-                onPress={props.handleSubmit}
+                enabled={!formikProps.isSubmitting}
+                loading={formikProps.isSubmitting}
+                onPress={formikProps.handleSubmit}
                 testID="button-submit"
               >
                 {i18n.t('describe-symptoms.next')}

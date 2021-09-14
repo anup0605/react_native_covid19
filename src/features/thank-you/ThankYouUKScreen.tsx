@@ -5,6 +5,7 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { appActions } from '@covid/core/state/app/slice';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { ImpactTimelineCard } from '@covid/features/anniversary';
 import { appCoordinator } from '@covid/features/AppCoordinator';
@@ -27,7 +28,7 @@ interface IProps {
 
 export default function ThankYouUKScreen(props: IProps) {
   const dispatch = useDispatch();
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
   const [askForRating, setAskForRating] = React.useState<boolean>(false);
 
   React.useEffect(() => {

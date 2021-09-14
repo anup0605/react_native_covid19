@@ -35,7 +35,6 @@ export function GenericTextField(props: IProps) {
         keyboardType={keyboardType}
         onBlur={formikProps.handleBlur(name)}
         onChangeText={formikProps.handleChange(name)}
-        onSubmitEditing={() => {}}
         placeholder={props.placeholder}
         required={props.required}
         returnKeyType="next"

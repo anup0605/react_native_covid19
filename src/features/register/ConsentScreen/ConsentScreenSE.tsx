@@ -11,11 +11,11 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
   route: RouteProp<TScreenParamList, 'Consent'>;
-  setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
+  setAgreed: (agreed: boolean) => void;
   style?: StyleProp<ViewStyle>;
 };
 
-const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed, style }) => {
+export const ConsentScreenSE: React.FC<TProps> = React.memo((props: TProps) => {
   const [participateChecked, setParticipateChecked] = React.useState(false);
   const [processingChecked, setProcessingChecked] = React.useState(false);
   const [agreeChecked, setAgreeChecked] = React.useState(false);
@@ -23,8 +23,8 @@ const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed, style
   const onInfoLinkPress = React.useCallback(() => openWebLink('https://Covid19app.lu.se'), []);
 
   const onPrivacyPolicyPress = React.useCallback(
-    () => navigation.navigate('PrivacyPolicySV', { viewOnly: route.params?.viewOnly }),
-    [navigation.navigate, route.params?.viewOnly],
+    () => props.navigation.navigate('PrivacyPolicySV', { viewOnly: props.route.params?.viewOnly }),
+    [props.navigation.navigate, props.route.params?.viewOnly],
   );
 
   const toggleParticipateChecked = React.useCallback(() => {
@@ -40,15 +40,15 @@ const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed, style
   }, [setAgreeChecked, agreeChecked]);
 
   React.useEffect(() => {
-    navigation.setOptions({ title: 'Information till studiedeltagare' });
+    props.navigation.setOptions({ title: 'Information till studiedeltagare' });
   }, []);
 
   React.useEffect(() => {
-    setAgreed(participateChecked && processingChecked && agreeChecked);
+    props.setAgreed(participateChecked && processingChecked && agreeChecked);
   }, [participateChecked, processingChecked, agreeChecked]);
 
   return (
-    <View style={style}>
+    <View style={props.style}>
       <RegularText>
         Vi vill fråga dig om du vill delta i ett forskningsprojekt som handlar om covid-19. I det här dokumentet får du
         information om projektet och om vad det innebär att delta.
@@ -179,7 +179,7 @@ const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed, style
         .
       </RegularText>
 
-      {!route.params?.viewOnly ? (
+      {!props.route.params?.viewOnly ? (
         <CheckboxList>
           <CheckboxItem onChange={toggleParticipateChecked} testID="partecipate-check" value={participateChecked}>
             Jag är 18 år eller äldre och jag samtycker till att delta i studien ”Nationellt initiativ för att via en app
@@ -201,6 +201,4 @@ const ConsentScreenSE: React.FC<TProps> = ({ navigation, route, setAgreed, style
       ) : null}
     </View>
   );
-};
-
-export default React.memo(ConsentScreenSE);
+});

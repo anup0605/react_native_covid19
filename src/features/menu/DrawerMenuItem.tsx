@@ -14,6 +14,7 @@ export enum EDrawerMenuItem {
   PRIVACY_POLICY = 'PRIVACY_POLICY',
   DELETE_MY_DATA = 'DELETE_MY_DATA',
   LOGOUT = 'LOGOUT',
+  TESTING_MODE = 'TESTING_MODE',
 }
 
 interface IMenuItemProps {
@@ -66,6 +67,8 @@ export function LinkItem({
         return i18n.t('delete-my-data');
       case EDrawerMenuItem.TURN_ON_REMINDERS:
         return i18n.t('push-notifications');
+      case EDrawerMenuItem.TESTING_MODE:
+        return i18n.t('testing-mode');
       default:
         return '';
     }

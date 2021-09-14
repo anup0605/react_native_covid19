@@ -73,9 +73,7 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
 
       <Switch
         label={i18n.t('covid-test.question-date-approximate')}
-        selectedValue={formikProps.values.useApproximateDate}
-        style={styles.switch}
-        toggleSwitch={() => {
+        onValueChange={() => {
           const newValue = !formikProps.values.useApproximateDate;
           if (newValue) {
             formikProps.values.dateTakenSpecific = undefined;
@@ -90,6 +88,8 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
             props.dateChangeCallback();
           }
         }}
+        selectedValue={formikProps.values.useApproximateDate}
+        style={styles.switch}
       />
 
       {!formikProps.values.useApproximateDate && (

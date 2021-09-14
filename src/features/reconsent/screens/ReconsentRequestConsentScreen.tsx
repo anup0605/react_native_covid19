@@ -1,13 +1,13 @@
 import appConfig from '@covid/appConfig';
 import { Text } from '@covid/components';
 import { BrandedButton } from '@covid/components/buttons';
+import { LegalCard } from '@covid/components/cards/LegalCard';
 import { ErrorText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import { consentService } from '@covid/core/consent/ConsentService';
 import { patientService } from '@covid/core/patient/PatientService';
 import { selectDiseasePreferences } from '@covid/core/state/reconsent';
 import { TRootState } from '@covid/core/state/root';
-import { Card } from '@covid/features/reconsent/components/Card';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -40,13 +40,13 @@ export default function ReconsentRequestConsentScreen() {
     openWebLink('https://covid.joinzoe.com/wider-health-studies-infosheet');
   };
 
-  const renderCallouts = () => {
+  const renderCards = () => {
     return [1, 2, 3].map((i) => (
-      <Card
-        description={i18n.t(`reconsent.request-consent.use-${i}-description`)}
+      <LegalCard
+        description={i18n.t(`reconsent.request-consent.card-${i}-description`)}
         index={i - 1}
-        key={i}
-        title={i18n.t(`reconsent.request-consent.use-${i}-title`)}
+        key={`legal-card-${i}`}
+        title={i18n.t(`reconsent.request-consent.card-${i}-title`)}
       />
     ));
   };
@@ -89,7 +89,7 @@ export default function ReconsentRequestConsentScreen() {
       <Text rhythm={24} style={[styles.center, styles.secondaryColour]} textClass="pLight">
         {i18n.t('reconsent.request-consent.subtitle')}
       </Text>
-      {renderCallouts()}
+      {renderCards()}
       <TouchableOpacity
         hitSlop={hitSlop}
         onPress={onPrivacyPolicyPress}
