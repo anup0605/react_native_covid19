@@ -17,6 +17,21 @@ import * as Yup from 'yup';
 
 import { VaccineNameQuestion } from './VaccineNameQuestion';
 
+const MIN_DATE_TRIAL = new Date('2020-01-01');
+const MIN_DATE_NOT_TRIAL_US = new Date('2020-12-11');
+const MIN_DATE_NOT_TRIAL = new Date('2020-12-08');
+
+const setMinDateFromConsts = (formikProps: FormikProps<IVaccineDoseData>) => {
+  let minNotTrialDate;
+  if (isGBCountry()) {
+    minNotTrialDate = MIN_DATE_NOT_TRIAL;
+  }
+  if (isUSCountry()) {
+    minNotTrialDate = MIN_DATE_NOT_TRIAL_US;
+  }
+  return formikProps.values.brand === EVaccineBrands.TRIAL ? MIN_DATE_TRIAL : minNotTrialDate;
+};
+
 export interface IVaccineDoseData {
   firstDoseDate: Date | undefined;
   firstBatchNumber: string | undefined;
@@ -71,14 +86,7 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps)
       ? formikProps.values.firstDoseDate
       : formikProps.values.secondDoseDate;
     let maxDate: Date | undefined;
-    let minDate: Date | undefined;
-
-    if (isGBCountry()) {
-      minDate = new Date('2020-12-08');
-    }
-    if (isUSCountry()) {
-      minDate = new Date('2020-12-11');
-    }
+    let minDate = setMinDateFromConsts(formikProps);
 
     // Validate dates for overlap - easier to to do here than in the Yup validation schema
     // set the max date of first dose to the same date as the second dose
@@ -105,20 +113,12 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps)
 
   const renderPickerUpdated = () => {
     const dateField: Date | undefined = formikProps.values.doseDate;
-    let minDate: Date | undefined;
-
-    if (isGBCountry()) {
-      minDate = new Date('2020-12-08');
-    }
-    if (isUSCountry()) {
-      minDate = new Date('2020-12-11');
-    }
-
-    // Max date is simply "Today"
+    const minDate = setMinDateFromConsts(formikProps);
     const maxDate = new Date();
+    const keyWithDateStringToForceReRender = `date-picker-${minDate?.toDateString()}`;
 
     return (
-      <View style={styles.calendar}>
+      <View key={keyWithDateStringToForceReRender} style={styles.calendar}>
         <CalendarPicker
           initialDate={dateField}
           maxDate={maxDate}
