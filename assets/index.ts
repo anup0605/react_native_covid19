@@ -43,7 +43,6 @@ export const covidByZoeIcon = require('./logos/covid_app_by_zoe.png');
 export const covidByZoeIconDark = require('./logos/covid_app_by_zoe_dark.png');
 export const createdByZoe = require('./logos/created-by-zoe.png');
 export const facebook = require('./logos/facebook.png');
-export const gbPartners = require('./logos/gb_partners.png');
 export const poweredByZoeSmall = require('./logos/powered_by_zoe_small.png');
 export const svPartners = require('./logos/sv_partners.png');
 export const svPartnersReturn = require('./logos/sv_partners_return.png');

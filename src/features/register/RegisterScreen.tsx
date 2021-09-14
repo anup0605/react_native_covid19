@@ -1,7 +1,7 @@
-import { BrandedButton } from '@covid/components';
+import { BrandedButton, Text } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { Screen } from '@covid/components/Screen';
-import { ClickableText, ErrorText, HeaderLightText, RegularText } from '@covid/components/Text';
+import { ClickableText, ErrorText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import Analytics, { events } from '@covid/core/Analytics';
 import { setUsername } from '@covid/core/state/user';
@@ -16,7 +16,7 @@ import { colors } from '@theme';
 import { AxiosError } from 'axios';
 import { Formik } from 'formik';
 import * as React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
@@ -115,6 +115,8 @@ class RegisterScreen extends React.Component<TProps, TState> {
     this.setState({ enableSubmit });
   };
 
+  onPressLogin = () => this.props.navigation.navigate('Login', { terms: '' });
+
   render() {
     return (
       <Screen backgroundColor={colors.backgroundPrimary} testID="register-screen">
@@ -122,14 +124,21 @@ class RegisterScreen extends React.Component<TProps, TState> {
           {(formikProps) => {
             return (
               <Form>
-                <HeaderLightText>{i18n.t('create-account.title')}</HeaderLightText>
-
-                <RegularText style={styling.marginVerticalBig}>
+                <Text rhythm={24} style={styles.center} textClass="h3Light">
+                  {i18n.t('create-account.title')}
+                </Text>
+                <Text rhythm={24} style={[styles.center, styles.secondaryColour]} textClass="pLight">
                   {i18n.t('create-account.if-you-have-an-account')}{' '}
-                  <ClickableText onPress={() => this.props.navigation.navigate('Login', { terms: '' })}>
+                  <Text
+                    inverted
+                    colorPalette="actionSecondary"
+                    colorShade="main"
+                    onPress={this.onPressLogin}
+                    textClass="pLight"
+                  >
                     {i18n.t('log-in')}
-                  </ClickableText>
-                </RegularText>
+                  </Text>
+                </Text>
 
                 <ValidatedTextInput
                   autoCapitalize="none"
@@ -207,6 +216,15 @@ class RegisterScreen extends React.Component<TProps, TState> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  center: {
+    textAlign: 'center',
+  },
+  secondaryColour: {
+    color: colors.secondary,
+  },
+});
 
 const mapDispatchToProps = {
   setUsername,

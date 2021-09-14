@@ -28,6 +28,7 @@
   },
   "legal": {
     "i-agree": "Jag godkänner",
+    "i-agree-uk": "",
     "back": "Tillbaka",
     "confirm": ""
   },
@@ -486,8 +487,11 @@
     "report-button": "Rapportera i dag, även om du är frisk",
     "how-you-can-help": {
       "title": "Så här kan du hjälpa till",
+      "title-uk": "",
       "text1": "Lägg 1 minut om dagen på att rapportera hur du mår, även om du känner dig frisk. Se sedan hur smittspridningen ser ut i ditt område.",
-      "text2": "Ingen information som du delar kommer att användas för kommersiella syften. Du uppger inte ditt namn eller ditt personnummer. Den här appen erbjuder ingen hälsorådgivning."
+      "text1-uk": "",
+      "text2": "Ingen information som du delar kommer att användas för kommersiella syften. Du uppger inte ditt namn eller ditt personnummer. Den här appen erbjuder ingen hälsorådgivning.",
+      "text2-uk": ""
     },
     "from-researchers": "Från läkare och forskare vid",
     "create-account": "Skapa konto",
@@ -769,6 +773,18 @@
       "i-consent": false,
       "terms": false,
       "read-accepted": false
+    },
+    "consent-normal-uk": {
+      "card-1-description": false,
+      "card-1-title": false,
+      "card-2-description": false,
+      "card-2-title": false,
+      "card-3-description": false,
+      "card-3-title": false,
+      "card-4-description": false,
+      "card-4-title": false,
+      "subtitle": false,
+      "title": false
     },
     "consent-nurses-us": {
       "header-1": false,
@@ -1530,12 +1546,12 @@
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",
       "title": "Are you in?",
-      "use-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
-      "use-1-title": "1. Advance human health science",
-      "use-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
-      "use-2-title": "2. Help others improve human health ",
-      "use-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
-      "use-3-title": "3. Build health products"
+      "card-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
+      "card-1-title": "1. Advance human health science",
+      "card-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
+      "card-2-title": "2. Help others improve human health ",
+      "card-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
+      "card-3-title": "3. Build health products"
     }
   },
   "disease-cards": {
