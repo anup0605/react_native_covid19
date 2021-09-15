@@ -157,7 +157,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
         <Formik
           validateOnChange
           initialValues={initialFormValues}
-          onSubmit={this.onSubmit}
+          onSubmit={(values) => this.onSubmit(values)}
           validationSchema={this.registerSchema}
         >
           {(formikProps) => {

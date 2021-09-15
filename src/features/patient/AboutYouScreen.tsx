@@ -331,7 +331,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
         <Formik
           validateOnChange
           initialValues={this.props.route.params?.editing ? this.getPatientFormValues() : getInitialFormValues()}
-          onSubmit={this.onSubmit}
+          onSubmit={(values) => this.onSubmit(values)}
           validationSchema={this.registerSchema}
         >
           {(formikProps) => {

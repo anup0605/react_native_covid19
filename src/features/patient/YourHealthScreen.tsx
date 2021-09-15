@@ -242,7 +242,7 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
             ...DiabetesQuestions.initialFormValues(),
             ...BloodGroupQuestion.initialFormValues(),
           }}
-          onSubmit={this.onSubmit}
+          onSubmit={(values) => this.onSubmit(values)}
           validationSchema={() => {
             let schema = this.registerSchema;
             schema = schema.concat(BloodGroupQuestion.schema());
