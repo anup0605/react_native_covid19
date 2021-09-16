@@ -1,5 +1,6 @@
 import { ModalContainer } from '@covid/components/ModalContainer';
 import { RegularBoldText, RegularText } from '@covid/components/Text';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -62,13 +63,13 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 18,
-    paddingBottom: 10,
+    paddingBottom: sizes.s,
     textAlign: 'center',
   },
   text: {
     fontSize: 14,
-    marginHorizontal: 20,
-    paddingBottom: 20,
+    marginHorizontal: sizes.l,
+    paddingBottom: sizes.l,
     textAlign: 'center',
   },
   verticalDivider: {

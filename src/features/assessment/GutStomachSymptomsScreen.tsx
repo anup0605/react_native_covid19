@@ -1,6 +1,7 @@
 import { BrandedButton } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
 import {
@@ -11,7 +12,6 @@ import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
 import { RouteProp } from '@react-navigation/native';
 import { Formik, FormikHelpers } from 'formik';
-import { Form } from 'native-base';
 import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
@@ -40,19 +40,16 @@ export const GutStomachSymptomsScreen: React.FC<TProps> = ({ route }) => {
         onSubmit={onSubmit}
         validationSchema={registerSchema}
       >
-        {(props) => {
+        {(formikProps) => {
           return (
-            <Form style={{ flexGrow: 1 }}>
-              <View style={{ marginHorizontal: 16 }}>
-                <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('describe-symptoms.gut-stomach-symptoms')} />
-                <GutStomachSymptomsQuestions formikProps={props} />
-              </View>
-
+            <Form>
+              <ProgressHeader currentStep={4} maxSteps={6} title={i18n.t('describe-symptoms.gut-stomach-symptoms')} />
+              <GutStomachSymptomsQuestions formikProps={formikProps} />
               <View style={{ flex: 1 }} />
               <BrandedButton
-                enabled={!props.isSubmitting}
-                loading={props.isSubmitting}
-                onPress={props.handleSubmit}
+                enabled={!formikProps.isSubmitting}
+                loading={formikProps.isSubmitting}
+                onPress={formikProps.handleSubmit}
                 testID="button-submit"
               >
                 {i18n.t('describe-symptoms.next')}

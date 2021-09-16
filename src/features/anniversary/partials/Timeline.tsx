@@ -1,6 +1,5 @@
 import { Text } from '@covid/components';
 import { TTimelineEvent } from '@covid/features/anniversary/types';
-import { useTheme } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -14,7 +13,6 @@ interface IProps {
 }
 
 function Timeline({ timelineEvents }: IProps) {
-  const { grid } = useTheme();
   const getMappedTimelineEvent = (timelineEvent: TTimelineEvent): React.ReactNode => {
     switch (timelineEvent.event_type) {
       case 'FINDING':
@@ -33,13 +31,13 @@ function Timeline({ timelineEvents }: IProps) {
   };
   return (
     <>
-      <View style={{ paddingHorizontal: grid.gutter }}>
+      <View>
         <Text rhythm={24} textClass="h4">
           You are making a major impact!
         </Text>
       </View>
 
-      <View style={[styles.container, { paddingHorizontal: grid.gutter }]}>
+      <View style={styles.container}>
         <View style={styles.line} />
         {timelineEvents.map((timelineEvent, index) => {
           const key = `timeline-event-${index}`;

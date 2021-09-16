@@ -9,20 +9,22 @@ import {
   RegularText,
   TextareaWithCharCount,
 } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
+import { Screen } from '@covid/components/Screen';
 import { homeScreenName, thankYouScreenName } from '@covid/core/localisation/LocalisationService';
 import { ILongCovid } from '@covid/features/long-covid/types';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { longCovidApiClient } from '@covid/services';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Formik, FormikProps } from 'formik';
-import { Form } from 'native-base';
 import * as React from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import {
   checkboxIndexOffset,
@@ -36,9 +38,9 @@ interface IProps {
 }
 
 const renderBulletLine = (text: string) => (
-  <View style={{ flexDirection: 'row', paddingRight: 16, paddingTop: 16 }}>
+  <View style={{ flexDirection: 'row', paddingRight: sizes.m, paddingTop: sizes.m }}>
     <RegularText style={styles.bullet}>{'\u2B24'}</RegularText>
-    <RegularText style={{ flex: 1, paddingLeft: 16 }}>{text}</RegularText>
+    <RegularText style={{ flex: 1, paddingLeft: sizes.m }}>{text}</RegularText>
   </View>
 );
 
@@ -118,22 +120,23 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
   ];
 
   const [isSubmitting, setSubmitting] = React.useState<boolean>(false);
-  const handleSubmit = async (formData: ILongCovid) => {
+
+  const onSubmit = async (values: ILongCovid) => {
     if (isSubmitting) {
       return;
     }
-    delete formData.other_checkbox;
+    delete values.other_checkbox;
     setSubmitting(true);
-    longCovidApiClient.add(route.params?.patientData?.patientId, formData).then(() => {
+    longCovidApiClient.add(route.params?.patientData?.patientId, values).then(() => {
       NavigatorService.reset([{ name: homeScreenName() }, { name: thankYouScreenName() }], 1);
     });
   };
 
   const renderFormCheckboxes = (props: FormikProps<ILongCovid>) => (
-    <View style={{ marginVertical: 16 }}>
+    <View style={{ marginVertical: sizes.m }}>
       <CheckboxList>
         {checkBoxQuestions4To17.map((key: string, index: number) => (
-          <View style={{ marginBottom: 16 }}>
+          <View style={{ marginBottom: sizes.m }}>
             <CheckboxItem dark onChange={() => props.setFieldValue(key, !props.values[key])} value={props.values[key]}>
               {i18n.t(`long-covid.q${index + checkboxIndexOffset}`)}
             </CheckboxItem>
@@ -146,7 +149,7 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
 
   const renderError = (props: FormikProps<ILongCovid>, propertyKey: keyof ILongCovid) =>
     props.touched[propertyKey] && props.errors[propertyKey] ? (
-      <View style={{ marginBottom: 16 }}>
+      <View style={{ marginBottom: sizes.m }}>
         <ErrorText>{props.errors[propertyKey]}</ErrorText>
       </View>
     ) : null;
@@ -183,14 +186,14 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
 
         <View style={styles.hr} />
         <ColourHighlightHeaderTextText highlightColor={colors.purple} text={i18n.t('long-covid.q4-header')} />
-        <View style={{ ...styles.infoBox, marginBottom: 24 }}>
-          <View style={{ flexDirection: 'row', paddingRight: 24, paddingTop: 16 }}>
-            <View style={{ paddingRight: 12 }}>
+        <View style={{ ...styles.infoBox, marginBottom: sizes.l }}>
+          <View style={{ flexDirection: 'row', paddingRight: sizes.l, paddingTop: sizes.m }}>
+            <View style={{ paddingRight: sizes.s }}>
               <InfoCircle color={colors.primary} />
             </View>
             <RegularText>{i18n.t('long-covid.q4-info-1')}</RegularText>
           </View>
-          <View style={{ marginTop: 16, paddingLeft: 32 }}>
+          <View style={{ marginTop: sizes.m, paddingLeft: sizes.xl }}>
             <RegularText>{i18n.t('long-covid.q4-info-2')}</RegularText>
           </View>
         </View>
@@ -259,7 +262,7 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
         <View style={styles.hr} />
 
         {/* Do you have anything else to share regarding the evolution of your COVID-19 symptoms? */}
-        <HeaderText style={{ marginBottom: 16 }}>{i18n.t('long-covid.comments')}</HeaderText>
+        <HeaderText style={{ marginBottom: sizes.m }}>{i18n.t('long-covid.comments')}</HeaderText>
         <TextareaWithCharCount
           bordered
           onChangeText={props.handleChange('symptom_change_comments')}
@@ -271,45 +274,40 @@ export default function LongCovidQuestionScreen({ route }: IProps) {
     ) : null;
 
   return (
-    <View style={{ flex: 1 }} testID="long-covid-question-screen">
+    <Screen backgroundColor={colors.backgroundSecondary} testID="long-covid-question-screen">
       <Formik
         initialValues={{
           ...LongCovidQuestionScreen.initialFormValues(),
         }}
-        onSubmit={(values: ILongCovid) => handleSubmit(values)}
-        style={{ padding: 16 }}
+        onSubmit={onSubmit}
         validationSchema={LongCovidQuestionScreen.schema}
       >
         {(props: FormikProps<ILongCovid>) => {
           return (
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.rootContainer}>
-              <ScrollView>
-                <Form style={{ flexGrow: 1 }}>
-                  <HeaderText>{i18n.t('long-covid.q1')}</HeaderText>
-                  <RadioInput
-                    error={props.touched.had_covid && props.errors.had_covid}
-                    items={dropdownItemsQ1}
-                    onValueChange={props.handleChange('had_covid')}
-                    selectedValue={props.values.had_covid}
-                    testID="input-had-covid"
-                  />
-                  {renderExtendedForm(props)}
-                  <View style={{ marginVertical: 64 }}>
-                    <BrandedButton
-                      enabled={props.values.had_covid !== null && Object.keys(props.errors).length < 1}
-                      onPress={() => handleSubmit(props.values)}
-                      testID="button-submit"
-                    >
-                      <RegularText style={{ color: colors.white }}>{i18n.t('long-covid.finish')}</RegularText>
-                    </BrandedButton>
-                  </View>
-                </Form>
-              </ScrollView>
-            </KeyboardAvoidingView>
+            <Form>
+              <HeaderText>{i18n.t('long-covid.q1')}</HeaderText>
+              <RadioInput
+                error={props.touched.had_covid && props.errors.had_covid}
+                items={dropdownItemsQ1}
+                onValueChange={props.handleChange('had_covid')}
+                selectedValue={props.values.had_covid}
+                testID="input-had-covid"
+              />
+              {renderExtendedForm(props)}
+              <View style={styling.flex} />
+              <BrandedButton
+                enabled={props.values.had_covid !== null && Object.keys(props.errors).length < 1}
+                onPress={props.handleSubmit}
+                style={styles.marginTop}
+                testID="button-submit"
+              >
+                <RegularText style={{ color: colors.white }}>{i18n.t('long-covid.finish')}</RegularText>
+              </BrandedButton>
+            </Form>
           );
         }}
       </Formik>
-    </View>
+    </Screen>
   );
 }
 
@@ -324,28 +322,23 @@ const styles = StyleSheet.create({
   hr: {
     borderBottomColor: colors.hrColor,
     borderBottomWidth: 1,
-    marginBottom: 40,
-    marginTop: 16,
+    marginBottom: sizes.xxl,
+    marginTop: sizes.m,
   },
   infoBox: {
     backgroundColor: colors.white,
-    borderRadius: 8,
-    marginTop: 16,
-    padding: 16,
-    paddingBottom: 24,
+    borderRadius: sizes.xs,
+    marginTop: sizes.m,
+    padding: sizes.m,
+    paddingBottom: sizes.l,
     textAlign: 'left',
   },
-  rootContainer: {
-    backgroundColor: colors.backgroundSecondary,
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingBottom: 32,
-    paddingHorizontal: 24,
-    paddingTop: 56,
+  marginTop: {
+    marginTop: sizes.xl,
   },
   textarea: {
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
-    paddingVertical: 40,
+    borderRadius: sizes.xs,
+    paddingVertical: sizes.xxl,
   },
 });

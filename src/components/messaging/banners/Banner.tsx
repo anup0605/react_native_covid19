@@ -1,4 +1,4 @@
-import { IUIMessage, useMessage } from '@covid/common';
+import { IUIMessage } from '@covid/common';
 import { ThemeButton } from '@covid/components/buttons';
 import { Text } from '@covid/components/typography';
 import * as React from 'react';
@@ -20,11 +20,6 @@ function Banner({ active = true, message }: IProps) {
   const [animValue] = React.useState(new Animated.Value(0));
   const { width } = Dimensions.get('window');
   const { top } = useSafeAreaInsets();
-  const { removeMessage } = useMessage();
-
-  const handleClose = () => {
-    removeMessage();
-  };
 
   const animate = (active: boolean) => {
     Animated.timing(animValue, {

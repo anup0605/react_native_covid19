@@ -5,8 +5,9 @@ import { ExternalCallout } from '@covid/components/ExternalCallout';
 import { PartnerLogoUSDash } from '@covid/components/logos/PartnerLogo';
 import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
 import AnalyticsService, { events } from '@covid/core/Analytics';
-import { updateTodayDate } from '@covid/core/content/state/contentSlice';
+import { updateTodayDate } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { useAppDispatch } from '@covid/core/state/store';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
@@ -15,6 +16,7 @@ import { CompactHeader, Header } from '@covid/features/dashboard/Header';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
 import * as React from 'react';
@@ -30,9 +32,9 @@ interface IProps {
 }
 
 export function DashboardUSScreen({ route, navigation }: IProps) {
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
 
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
   const [showDietStudyPlayback] = React.useState<boolean | undefined>(startupInfo?.show_diet_score);
 
   const headerConfig = {
@@ -57,7 +59,7 @@ export function DashboardUSScreen({ route, navigation }: IProps) {
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
-      dispatch(updateTodayDate());
+      appDispatch(updateTodayDate());
     });
   }, [navigation]);
 
@@ -100,21 +102,21 @@ export function DashboardUSScreen({ route, navigation }: IProps) {
 
 const styles = StyleSheet.create({
   calloutContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: sizes.m,
   },
   dietStudyImage: {
     aspectRatio: 1200 / 1266,
     height: undefined,
-    marginVertical: 8,
+    marginVertical: sizes.xs,
     resizeMode: 'contain',
     width: '100%',
   },
   schoolModuleContainer: {
     height: 200,
-    marginBottom: 8,
-    marginHorizontal: 32,
+    marginBottom: sizes.xs,
+    marginHorizontal: sizes.xl,
   },
   zoe: {
-    marginBottom: 32,
+    marginBottom: sizes.xl,
   },
 });

@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { setDietStudyConsent } from '@covid/core/state/diet-study/slice';
 import store from '@covid/core/state/store';
 

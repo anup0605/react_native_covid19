@@ -1,12 +1,13 @@
 import { CalendarIcon } from '@assets';
 import CalendarPicker from '@covid/components/CalendarPicker';
 import { requiredFormMarker } from '@covid/components/Form';
-import { ErrorText, RegularText, SecondaryText } from '@covid/components/Text';
+import { ErrorText, LabelText, RegularText, SecondaryText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
 import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
-import { EVaccineBrands } from '@covid/core/vaccine/dto/VaccineRequest';
+import { EPlaceboStatus, EVaccineBrands } from '@covid/core/vaccine/dto/VaccineRequest';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { FormikProps } from 'formik';
 import moment, { Moment } from 'moment';
@@ -15,6 +16,21 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as Yup from 'yup';
 
 import { VaccineNameQuestion } from './VaccineNameQuestion';
+
+const MIN_DATE_TRIAL = new Date('2020-01-01');
+const MIN_DATE_NOT_TRIAL_US = new Date('2020-12-11');
+const MIN_DATE_NOT_TRIAL = new Date('2020-12-08');
+
+const setMinDateFromConsts = (formikProps: FormikProps<IVaccineDoseData>) => {
+  let minNotTrialDate;
+  if (isGBCountry()) {
+    minNotTrialDate = MIN_DATE_NOT_TRIAL;
+  }
+  if (isUSCountry()) {
+    minNotTrialDate = MIN_DATE_NOT_TRIAL_US;
+  }
+  return formikProps.values.brand === EVaccineBrands.TRIAL ? MIN_DATE_TRIAL : minNotTrialDate;
+};
 
 export interface IVaccineDoseData {
   firstDoseDate: Date | undefined;
@@ -26,19 +42,25 @@ export interface IVaccineDoseData {
   secondBrand: EVaccineBrands | undefined | null;
   secondDescription: string | undefined;
   hasSecondDose: boolean;
+  doseDate: Date | undefined;
+  batchNumber: string | undefined;
+  brand: EVaccineBrands | undefined | null;
+  placebo: EPlaceboStatus | undefined;
 }
 
 interface IProps {
-  firstDose: boolean;
+  firstDose?: boolean;
   formikProps: FormikProps<IVaccineDoseData>;
   testID?: string;
+  showUpdatedVersion?: boolean;
 }
 
-interface IVaccineDoseQuestion<P, Data> extends React.FC<P> {
+interface IVaccineDoseQuestion<P> extends React.FC<P> {
   schema: () => Yup.ObjectSchema;
+  schemaUpdated: () => Yup.ObjectSchema;
 }
 
-export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData> = (props: IProps) => {
+export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps) => {
   const { formikProps } = props;
   const [showPicker, setShowPicker] = React.useState(false);
 
@@ -49,7 +71,9 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
   }
 
   function setDoseDate(selectedDate: Moment): void {
-    if (props.firstDose) {
+    if (props.showUpdatedVersion) {
+      formikProps.setFieldValue('doseDate', convertToDate(selectedDate));
+    } else if (props.firstDose) {
       formikProps.setFieldValue('firstDoseDate', convertToDate(selectedDate));
     } else {
       formikProps.setFieldValue('secondDoseDate', convertToDate(selectedDate));
@@ -62,14 +86,7 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
       ? formikProps.values.firstDoseDate
       : formikProps.values.secondDoseDate;
     let maxDate: Date | undefined;
-    let minDate: Date | undefined;
-
-    if (isGBCountry()) {
-      minDate = new Date('2020-12-08');
-    }
-    if (isUSCountry()) {
-      minDate = new Date('2020-12-11');
-    }
+    let minDate = setMinDateFromConsts(formikProps);
 
     // Validate dates for overlap - easier to to do here than in the Yup validation schema
     // set the max date of first dose to the same date as the second dose
@@ -82,13 +99,34 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
     }
 
     return (
-      <CalendarPicker
-        initialDate={dateField}
-        maxDate={maxDate}
-        minDate={minDate}
-        onDateChange={setDoseDate}
-        selectedStartDate={dateField}
-      />
+      <View style={styles.calendar}>
+        <CalendarPicker
+          initialDate={dateField}
+          maxDate={maxDate}
+          minDate={minDate}
+          onDateChange={setDoseDate}
+          selectedStartDate={dateField}
+        />
+      </View>
+    );
+  };
+
+  const renderPickerUpdated = () => {
+    const dateField: Date | undefined = formikProps.values.doseDate;
+    const minDate = setMinDateFromConsts(formikProps);
+    const maxDate = new Date();
+    const keyWithDateStringToForceReRender = `date-picker-${minDate?.toDateString()}`;
+
+    return (
+      <View key={keyWithDateStringToForceReRender} style={styles.calendar}>
+        <CalendarPicker
+          initialDate={dateField}
+          maxDate={maxDate}
+          minDate={minDate}
+          onDateChange={setDoseDate}
+          selectedStartDate={dateField}
+        />
+      </View>
     );
   };
 
@@ -108,9 +146,9 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
         <TouchableOpacity onPress={() => setShowPicker(true)} style={styles.dateBox} testID="button-calendar-picker">
           <CalendarIcon />
           {dateField ? (
-            <RegularText style={{ marginStart: 8 }}>{moment(dateField).format('MMMM D, YYYY')}</RegularText>
+            <RegularText style={{ marginLeft: sizes.xs }}>{moment(dateField).format('MMMM D, YYYY')}</RegularText>
           ) : (
-            <RegularText style={{ marginStart: 8 }}>{i18n.t('vaccines.your-vaccine.select-date')}</RegularText>
+            <RegularText style={{ marginLeft: sizes.xs }}>{i18n.t('vaccines.your-vaccine.select-date')}</RegularText>
           )}
         </TouchableOpacity>
         <ErrorText>{errorField && touched ? i18n.t('validation-error-text-required') : ''}</ErrorText>
@@ -121,7 +159,7 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
   const renderBatchNumber = () =>
     props.firstDose ? (
       <ValidatedTextInput
-        error={formikProps.touched.firstBatchNumber && formikProps.errors.firstBatchNumber}
+        error={formikProps.touched.firstBatchNumber && !!formikProps.errors.firstBatchNumber}
         onBlur={props.formikProps.handleBlur('firstBatchNumber')}
         onChangeText={props.formikProps.handleChange('firstBatchNumber')}
         onSubmitEditing={() => {}}
@@ -131,7 +169,7 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
       />
     ) : (
       <ValidatedTextInput
-        error={formikProps.touched.secondBatchNumber && formikProps.errors.secondBatchNumber}
+        error={formikProps.touched.secondBatchNumber && !!formikProps.errors.secondBatchNumber}
         onBlur={props.formikProps.handleBlur('secondBatchNumber')}
         onChangeText={props.formikProps.handleChange('secondBatchNumber')}
         onSubmitEditing={() => {}}
@@ -140,6 +178,18 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
         value={props.formikProps.values.secondBatchNumber}
       />
     );
+
+  const renderBatchNumberUpdated = () => (
+    <ValidatedTextInput
+      error={formikProps.touched.batchNumber && !!formikProps.errors.batchNumber}
+      onBlur={props.formikProps.handleBlur('batchNumber')}
+      onChangeText={props.formikProps.handleChange('batchNumber')}
+      onSubmitEditing={() => {}}
+      placeholder={i18n.t('vaccines.your-vaccine.placeholder-batch')}
+      returnKeyType="next"
+      value={props.formikProps.values.batchNumber}
+    />
+  );
 
   const renderNameError = () => {
     if (formikProps.submitCount === 0 || !!Object.keys(formikProps.errors).length) {
@@ -154,32 +204,60 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps, IVaccineDoseData>
     return null;
   };
 
+  const renderDateQuestion = () => {
+    if (formikProps.values.brand === EVaccineBrands.TRIAL) {
+      return i18n.t('vaccines.your-vaccine.when-vaccine-trial');
+    }
+    return i18n.t('vaccines.your-vaccine.when-vaccine');
+  };
+
   return (
     <View testID={props.testID}>
-      <View style={{ marginBottom: 16 }}>
-        <View style={{ marginBottom: 16 }}>
-          <VaccineNameQuestion firstDose={props.firstDose} formikProps={formikProps as FormikProps<IVaccineDoseData>} />
+      <View style={{ marginBottom: sizes.m }}>
+        <View style={{ marginBottom: sizes.m }}>
+          <VaccineNameQuestion
+            firstDose={props.firstDose}
+            formikProps={formikProps as FormikProps<IVaccineDoseData>}
+            showUpdatedVersion={props.showUpdatedVersion}
+          />
           {renderNameError()}
         </View>
-        <SecondaryText>
-          {i18n.t('vaccines.your-vaccine.when-injection')}
-          {requiredFormMarker}
-        </SecondaryText>
-        {showPicker ? renderPicker() : renderCalenderButton()}
+        {props.showUpdatedVersion ? (
+          <LabelText style={styles.label}>
+            {renderDateQuestion()}
+            {requiredFormMarker}
+          </LabelText>
+        ) : (
+          <SecondaryText>
+            {i18n.t('vaccines.your-vaccine.when-injection')}
+            {requiredFormMarker}
+          </SecondaryText>
+        )}
+        {props.showUpdatedVersion ? renderPickerUpdated() : showPicker ? renderPicker() : renderCalenderButton()}
       </View>
-      <RegularText>{i18n.t('vaccines.your-vaccine.label-batch')}</RegularText>
-      {renderBatchNumber()}
+      {props.showUpdatedVersion ? (
+        <LabelText style={styles.label}>{i18n.t('vaccines.your-vaccine.label-batch-updated')}</LabelText>
+      ) : (
+        <RegularText>{i18n.t('vaccines.your-vaccine.label-batch')}</RegularText>
+      )}
+      {props.showUpdatedVersion ? renderBatchNumberUpdated() : renderBatchNumber()}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  calendar: {
+    marginBottom: sizes.m,
+  },
   dateBox: {
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     flexDirection: 'row',
-    marginVertical: 8,
-    padding: 16,
+    marginVertical: sizes.xs,
+    padding: sizes.m,
+  },
+  label: {
+    marginBottom: sizes.m,
   },
 });
 
@@ -221,7 +299,7 @@ VaccineDoseQuestion.schema = () => {
       // Dose 2
       secondDoseDate: Yup.date().when('hasSecondDose', {
         is: true,
-        then: Yup.date().required(i18n.t('validation-error-daterequired')),
+        then: Yup.date().required(i18n.t('validation-error-date-required')),
       }),
     },
     // These are to flag against circular dependency errors:
@@ -230,4 +308,16 @@ VaccineDoseQuestion.schema = () => {
       ['secondBrand', 'secondDescription'],
     ],
   );
+};
+
+VaccineDoseQuestion.schemaUpdated = () => {
+  return Yup.object().shape({
+    batchNumber: Yup.string().nullable(),
+    brand: Yup.string().required(),
+    doseDate: Yup.date().required(),
+    placebo: Yup.string().when('brand', {
+      is: 'vaccine_trial',
+      then: Yup.string().required(i18n.t('validation-error-please-select-option')),
+    }),
+  });
 };

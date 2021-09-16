@@ -1,7 +1,5 @@
 /* eslint-env jest */
 
-import 'react-native-gesture-handler/jestSetup';
-
 import * as screens from '@covid/features/screens';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
@@ -30,21 +28,6 @@ type TConfig = {
 const middlewares = getDefaultMiddleware();
 const mockStore = createMockStore(middlewares);
 const store = mockStore(initialState);
-
-jest.mock('react-native-reanimated', () => {
-  const Reanimated = require('react-native-reanimated/mock');
-
-  // The mock for `call` immediately calls the callback which is incorrect
-  // So we override it with a no-op
-  Reanimated.default.call = () => {};
-
-  return Reanimated;
-});
-
-// Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
-jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
-
-jest.useFakeTimers();
 
 function testComponent(name: string, Component: React.ComponentType, config: TConfig = {}) {
   if (Component) {

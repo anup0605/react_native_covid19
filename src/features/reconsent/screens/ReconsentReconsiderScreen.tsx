@@ -1,6 +1,7 @@
 import { BrandedButton, Text } from '@covid/components';
 import Analytics, { events } from '@covid/core/Analytics';
 import { patientService } from '@covid/core/patient/PatientService';
+import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
 import { resetFeedback, selectFeedbackData } from '@covid/core/state/reconsent';
 import { TRootState } from '@covid/core/state/root';
 import VimeoVideo from '@covid/features/reconsent//components/VimeoVideo';
@@ -9,6 +10,7 @@ import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { generalApiClient } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme/colors';
 import * as React from 'react';
@@ -30,7 +32,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
   const feedbackData = useSelector(selectFeedbackData);
   const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
 
-  const videoWidth = windowDimensions.width;
+  const videoWidth = Math.min(sizes.maxScreenWidth, windowDimensions.width);
   const videoHeight = videoWidth / VIDEO_RATIO;
 
   function onPressPositive() {
@@ -46,6 +48,9 @@ export default function ReconsentReconsiderScreen(props: IProps) {
     try {
       await generalApiClient.postUserEvent('feedback_reconsent', feedbackData);
       await patientService.updatePatientInfo(patientId, { research_consent_asked: true });
+      // Update the startup info (as research consent has changed and app needs to be aware)
+      // This requires async await to make sure!
+      await dispatch(fetchStartUpInfo());
     } catch (_) {}
     setLoading(false);
     dispatch(resetFeedback());
@@ -109,13 +114,13 @@ const styles = StyleSheet.create({
   },
   buttonPositive: {
     backgroundColor: colors.brand,
-    marginBottom: 12,
+    marginBottom: sizes.s,
   },
   marginTop: {
-    marginTop: 16,
+    marginTop: sizes.m,
   },
   padding: {
-    padding: 16,
+    padding: sizes.m,
   },
   videoWrapper: {
     flex: 1,

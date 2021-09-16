@@ -13,18 +13,9 @@ const noHeader = {
   headerShown: false,
 };
 
-export type TScreenNameMHP =
-  | 'MentalHealthPlaybackBlogPost'
-  | 'MentalHealthPlaybackGeneral'
-  | 'MentalHealthPlaybackIntroduction'
-  | 'MentalHealthPlaybackRating'
-  | 'MentalHealthPlaybackThankYou'
-  | 'MentalHealthPlaybackModal';
-
 export default function MentalHealthPlaybackNavigator({ Stack }: IProps) {
   return (
     <>
-      <Stack.Screen component={screens.MHPBlogPostScreen} name="MentalHealthPlaybackBlogPost" options={noHeader} />
       <Stack.Screen component={screens.MHPGeneralScreen} name="MentalHealthPlaybackGeneral" options={noHeader} />
       <Stack.Screen
         component={screens.MHPIntroductionScreen}

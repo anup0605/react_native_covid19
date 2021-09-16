@@ -4,7 +4,7 @@ import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { Coordinator, IUpdatePatient } from '@covid/core/Coordinator';
@@ -39,7 +39,7 @@ const initialFormValues = {
   yearOfBirth: '',
 };
 
-export interface IAboutYouData extends IRaceEthnicityData, IHeightData, IWeightData {
+interface IAboutYouData extends IRaceEthnicityData, IHeightData, IWeightData {
   yearOfBirth: string;
   sex: string;
   genderIdentity: string;
@@ -90,21 +90,21 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
     });
   }
 
-  handleUpdateHealth(formData: IAboutYouData) {
+  onSubmit(values: IAboutYouData) {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false }); // Stop resubmissions
 
       const currentPatient = this.coordinator.patientData?.patientState;
-      const infos = this.createPatientInfos(formData);
+      const infos = this.createPatientInfos(values);
 
       this.coordinator
         .updatePatientInfo(infos)
         .then(() => {
-          currentPatient.hasRaceEthnicityAnswer = formData.race.length > 0;
-          currentPatient.isFemale = formData.sex !== 'male';
+          currentPatient.hasRaceEthnicityAnswer = values.race.length > 0;
+          currentPatient.isFemale = values.sex !== 'male';
           currentPatient.isPeriodCapable =
-            !['', 'male', 'pfnts'].includes(formData.sex) || !['', 'male', 'pfnts'].includes(formData.genderIdentity);
-          currentPatient.isMinor = isMinorAge(cleanIntegerVal(formData.yearOfBirth));
+            !['', 'male', 'pfnts'].includes(values.sex) || !['', 'male', 'pfnts'].includes(values.genderIdentity);
+          currentPatient.isMinor = isMinorAge(cleanIntegerVal(values.yearOfBirth));
           this.coordinator.gotoNextScreen(this.props.route.name);
         })
         .catch(() => {
@@ -325,26 +325,24 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
     };
 
     return (
-      <ScreenNew profile={this.coordinator.patientData?.patientState?.profile} testID="about-you-screen">
+      <Screen profile={this.coordinator.patientData?.patientState?.profile} testID="about-you-screen">
         <ProgressHeader currentStep={2} maxSteps={6} title={i18n.t('title-about-you')} />
 
         <Formik
           validateOnChange
           initialValues={this.props.route.params?.editing ? this.getPatientFormValues() : getInitialFormValues()}
-          onSubmit={(values: IAboutYouData) => {
-            return this.handleUpdateHealth(values);
-          }}
+          onSubmit={(values) => this.onSubmit(values)}
           validationSchema={this.registerSchema}
         >
-          {(props) => {
-            const isMinor = isMinorAge(cleanIntegerVal(props.values.yearOfBirth));
+          {(formikProps) => {
+            const isMinor = isMinorAge(cleanIntegerVal(formikProps.values.yearOfBirth));
 
             return (
               <Form hasRequiredFields style={styling.marginTopHuge}>
                 <GenericTextField
                   required
                   showError
-                  formikProps={props}
+                  formikProps={formikProps}
                   keyboardType="numeric"
                   label={i18n.t('what-year-were-you-born')}
                   name="yearOfBirth"
@@ -354,27 +352,27 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
 
                 <RadioInput
                   required
-                  error={props.touched.sex ? props.errors.sex : ''}
+                  error={formikProps.touched.sex ? formikProps.errors.sex : ''}
                   items={sexAtBirthItems}
                   label={i18n.t('your-sex-at-birth')}
-                  onValueChange={props.handleChange('sex')}
-                  selectedValue={props.values.sex}
+                  onValueChange={formikProps.handleChange('sex')}
+                  selectedValue={formikProps.values.sex}
                   testID="input-sex-at-birth"
                 />
 
                 <RadioInput
                   required
-                  error={props.touched.genderIdentity ? props.errors.genderIdentity : ''}
+                  error={formikProps.touched.genderIdentity ? formikProps.errors.genderIdentity : ''}
                   items={genderIdentityItems}
                   label={i18n.t('label-gender-identity')}
-                  onValueChange={props.handleChange('genderIdentity')}
-                  selectedValue={props.values.genderIdentity}
+                  onValueChange={formikProps.handleChange('genderIdentity')}
+                  selectedValue={formikProps.values.genderIdentity}
                   testID="input-gender-identity"
                 />
 
-                {props.values.genderIdentity === 'other' ? (
+                {formikProps.values.genderIdentity === 'other' ? (
                   <GenericTextField
-                    formikProps={props}
+                    formikProps={formikProps}
                     label={i18n.t('label-gender-identity-other')}
                     name="genderIdentityDescription"
                     placeholder={i18n.t('placeholder-optional')}
@@ -382,35 +380,38 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
                 ) : null}
 
                 <RaceEthnicityQuestion
-                  formikProps={props as FormikProps<IRaceEthnicityData>}
+                  formikProps={formikProps as unknown as FormikProps<IRaceEthnicityData>}
                   showEthnicityQuestion={this.state.showEthnicityQuestion}
                   showRaceQuestion={this.state.showRaceQuestion}
                 />
 
-                <HeightQuestion formikProps={props as FormikProps<IHeightData>} />
+                <HeightQuestion formikProps={formikProps as unknown as FormikProps<IHeightData>} />
 
-                <WeightQuestion formikProps={props as FormikProps<IWeightData>} label={i18n.t('your-weight')} />
+                <WeightQuestion
+                  formikProps={formikProps as unknown as FormikProps<IWeightData>}
+                  label={i18n.t('your-weight')}
+                />
 
                 {!this.props.route.params?.editing ? (
                   <GenericTextField
                     required
                     showError
-                    formikProps={props}
+                    formikProps={formikProps}
+                    inputProps={{ autoCompleteType: 'postal-code' }}
                     label={i18n.t('your-postcode')}
                     name="postcode"
                     placeholder={i18n.t('placeholder-postcode')}
                     testID="input-postal-code"
-                    textInputProps={{ autoCompleteType: 'postal-code' }}
                   />
                 ) : null}
 
                 <RadioInput
                   required
-                  error={props.touched.everExposed ? props.errors.everExposed : ''}
+                  error={formikProps.touched.everExposed ? formikProps.errors.everExposed : ''}
                   items={everExposedItems}
                   label={i18n.t('have-you-been-exposed')}
-                  onValueChange={props.handleChange('everExposed')}
-                  selectedValue={props.values.everExposed}
+                  onValueChange={formikProps.handleChange('everExposed')}
+                  selectedValue={formikProps.values.everExposed}
                   testID="input-ever-exposed"
                 />
 
@@ -418,38 +419,38 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
                   <>
                     <YesNoField
                       label={i18n.t('housebound-problems')}
-                      onValueChange={props.handleChange('houseboundProblems')}
-                      selectedValue={props.values.houseboundProblems}
+                      onValueChange={formikProps.handleChange('houseboundProblems')}
+                      selectedValue={formikProps.values.houseboundProblems}
                     />
 
                     <YesNoField
                       label={i18n.t('needs-help')}
-                      onValueChange={props.handleChange('needsHelp')}
-                      selectedValue={props.values.needsHelp}
+                      onValueChange={formikProps.handleChange('needsHelp')}
+                      selectedValue={formikProps.values.needsHelp}
                     />
 
                     <YesNoField
                       label={i18n.t('help-available')}
-                      onValueChange={props.handleChange('helpAvailable')}
-                      selectedValue={props.values.helpAvailable}
+                      onValueChange={formikProps.handleChange('helpAvailable')}
+                      selectedValue={formikProps.values.helpAvailable}
                     />
 
                     <YesNoField
                       label={i18n.t('mobility-aid')}
-                      onValueChange={props.handleChange('mobilityAid')}
-                      selectedValue={props.values.mobilityAid}
+                      onValueChange={formikProps.handleChange('mobilityAid')}
+                      selectedValue={formikProps.values.mobilityAid}
                     />
                   </>
                 ) : null}
 
                 <ErrorText>{this.state.errorMessage}</ErrorText>
-                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
                   <ValidationError error={i18n.t('validation-error-text')} />
                 ) : null}
 
                 <BrandedButton
-                  enabled={props.isValid && props.dirty}
-                  onPress={props.handleSubmit}
+                  enabled={formikProps.isValid && formikProps.dirty}
+                  onPress={formikProps.handleSubmit}
                   style={styling.marginTop}
                   testID="button-submit"
                 >
@@ -459,7 +460,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
             );
           }}
         </Formik>
-      </ScreenNew>
+      </Screen>
     );
   }
 }

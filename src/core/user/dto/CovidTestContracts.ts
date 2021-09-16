@@ -1,3 +1,5 @@
+import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
+
 export type TCovidTest = {
   id: string;
   version: string;
@@ -5,9 +7,12 @@ export type TCovidTest = {
   type: ECovidTestType;
 
   result: string;
-  mechanism: string;
+  mechanism: ECovidTestMechanismOptions;
+
   invited_to_test: boolean;
   trained_worker: string;
+  test_performed_by: string;
+  antibody_type_check: string;
   location: string;
   location_other: string;
   date_taken_specific: string;

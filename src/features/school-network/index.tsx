@@ -1,4 +1,4 @@
-export { default as ConfirmSchoolScreen } from './ConfimSchoolScreen';
+export { default as ConfirmSchoolScreen } from './ConfirmSchoolScreen';
 export { default as JoinHigherEducationScreen } from './JoinHigherEducationScreen';
 export { JoinSchoolGroupScreen } from './JoinSchoolGroupScreen';
 export { default as JoinSchoolScreen } from './JoinSchoolScreen';

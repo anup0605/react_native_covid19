@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { by, element } from 'detox';
 
 import { scrollDownToId } from './helpers';
@@ -9,6 +11,7 @@ import {
   testPingdemicForm,
   testPreviousExposureForm,
 } from './testForms';
+import { testMentalHealthPlaybackModal } from './testModals';
 
 type TRegisterConfig = {
   emailAddress: string;
@@ -26,10 +29,13 @@ export function testRegisterFeature(config: TRegisterConfig) {
         await element(by.id('create-account-1')).tap();
       } catch (_) {}
       await element(by.id('create-account-2')).tap();
-      // Somtimes this input is not shown.
+
+      // Sometimes this input is not shown.
       try {
         await element(by.id('input-select-country-item-GB')).tap();
       } catch (_) {}
+
+      await scrollDownToId('scroll-view-consent-screen', 'button-agree');
       await element(by.id('button-agree')).tap();
     });
 
@@ -37,6 +43,7 @@ export function testRegisterFeature(config: TRegisterConfig) {
       await element(by.id('input-email-address')).typeText(config.emailAddress);
       await element(by.id('input-password')).typeText(config.password);
 
+      await element(by.id('button-submit').withAncestor(by.id('register-screen'))).tap();
       await element(by.id('button-submit').withAncestor(by.id('register-screen'))).tap();
     });
 
@@ -48,6 +55,7 @@ export function testRegisterFeature(config: TRegisterConfig) {
         await element(by.id('input-phone')).typeText(config.phoneNumber);
       }
 
+      await element(by.id('button-submit').withAncestor(by.id('optional-info-screen'))).tap();
       await element(by.id('button-submit').withAncestor(by.id('optional-info-screen'))).tap();
     });
 
@@ -71,14 +79,13 @@ export function testRegisterFeature(config: TRegisterConfig) {
     testLongCovidForm();
     testPingdemicForm();
 
-    // TODO: Annoyingly, we have the reconsent flow popping up for joinzoe users, immediately upon registation. Hacking it for now.
-    it('should go to the dashboard screen', async () => {
+    testMentalHealthPlaybackModal();
+
+    it('should finish the thank you screen (if present)', async () => {
       try {
         await scrollDownToId('scroll-view-thank-you-screen', 'button-complete');
         await element(by.id('button-complete')).tap();
-      } catch (_) {
-        await device.launchApp({ newInstance: true, permissions: { notifications: 'YES' } });
-      }
+      } catch (_) {}
     });
   });
 }

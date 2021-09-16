@@ -1,4 +1,4 @@
-import { BasicPage } from '@covid/components';
+import { Screen } from '@covid/components/Screen';
 import { userService } from '@covid/core/user/UserService';
 import { ScreenParamList } from '@covid/features';
 import ResetPasswordForm, { IResetPasswordForm } from '@covid/features/password-reset/fields/ResetPasswordForm';
@@ -8,7 +8,6 @@ import { colors } from '@theme';
 import { AxiosError } from 'axios';
 import { Formik } from 'formik';
 import * as React from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import * as Yup from 'yup';
 
 type TProps = {
@@ -29,17 +28,19 @@ interface IResetPasswordData {
   email: string;
 }
 
+const initialFormValues = { email: '' };
+
 export class ResetPasswordScreen extends React.Component<TProps, TState> {
   constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
 
-  handleClick = (formData: IResetPasswordData) => {
+  onSubmit = (values: IResetPasswordData) => {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false });
       userService
-        .resetPassword(formData.email)
+        .resetPassword(values.email)
         .then(() => this.props.navigation.navigate('ResetPasswordConfirm'))
         .catch((err: AxiosError) => {
           this.setState({ errorMessage: i18n.t('reset-password.error', { msg: err.message }) });
@@ -54,25 +55,11 @@ export class ResetPasswordScreen extends React.Component<TProps, TState> {
 
   render() {
     return (
-      <BasicPage style={{ backgroundColor: colors.white }} withFooter={false}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.rootContainer}>
-            <Formik initialValues={{ email: '' }} onSubmit={this.handleClick} validationSchema={this.registerSchema}>
-              {(props: IResetPasswordForm) => <ResetPasswordForm {...props} errorMessage={this.state.errorMessage} />}
-            </Formik>
-          </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
-      </BasicPage>
+      <Screen backgroundColor={colors.backgroundPrimary} testID="reset-password-screen">
+        <Formik initialValues={initialFormValues} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
+          {(props: IResetPasswordForm) => <ResetPasswordForm {...props} errorMessage={this.state.errorMessage} />}
+        </Formik>
+      </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  rootContainer: {
-    backgroundColor: colors.backgroundPrimary,
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingTop: 56,
-  },
-});

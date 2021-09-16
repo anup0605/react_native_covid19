@@ -1,9 +1,3 @@
-export type TAppScreenContent = {
-  ThankYou: TScreenContent;
-  Welcome: TScreenContent;
-  WelcomeRepeat: TScreenContent;
-};
-
 export type TScreenContent = {
   title_text: string;
   body_text: string;

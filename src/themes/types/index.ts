@@ -1,6 +1,5 @@
-export { IThemeVars } from './theme';
+export { ITheme } from './theme';
 export type { TColorPalette, TColorShade } from './colors';
-export type { TGridSizes, IGrid } from './grid';
 export type {
   TFontFamily,
   TFontStyle,
@@ -11,3 +10,4 @@ export type {
   TTtextDecorationLine,
   TTypeSizes,
 } from './typography';
+export * from './sizes';

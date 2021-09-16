@@ -1,164 +1,71 @@
+import { NavHeader } from '@covid/components/NavHeader';
+import { ClippedText, RegularText } from '@covid/components/Text';
+import Triangle from '@covid/components/Triangle';
 import { TProfile } from '@covid/core/profile/ProfileService';
 import i18n from '@covid/locale/i18n';
-import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import { getAvatarByName, TAvatarName } from '@covid/utils/avatar';
-import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
-import { Icon } from 'native-base';
 import * as React from 'react';
-import { Image, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
-import { ClippedText, RegularText } from './Text';
-
-type TBackButtonProps = {
-  showCloseButton?: boolean;
-  style?: StyleProp<ViewStyle>;
-};
-
-export enum ECallOutType {
-  Simple,
-  Tag,
-}
-
-export const BackButton: React.FC<TBackButtonProps> = ({ style, showCloseButton }) => {
-  return showCloseButton ? (
-    <TouchableOpacity onPress={NavigatorService.goBack} style={style} testID="button-back-navigation">
-      <View style={styles.iconButton}>
-        <Icon name="cross" style={styles.icon} type="Entypo" />
-      </View>
-    </TouchableOpacity>
-  ) : (
-    <TouchableOpacity onPress={NavigatorService.goBack} style={style} testID="button-back-navigation">
-      <View style={styles.iconButton}>
-        <Icon name="chevron-thin-left" style={styles.icon} type="Entypo" />
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-type TPatientHeaderProps = {
+type TProps = {
   profile: TProfile;
   simpleCallout?: boolean;
-  type?: ECallOutType;
   calloutTitle?: string;
-  showCloseButton?: boolean;
 };
 
-type TNavHeaderProps = {
-  rightComponent?: React.ReactNode;
-  showCloseButton?: boolean;
-};
+export function PatientHeader(props: TProps) {
+  const text = !props.profile.reported_by_another
+    ? props.profile.name
+    : i18n.t('answer-for', { name: props.profile.name });
 
-export const NavHeader: React.FC<TNavHeaderProps> = ({ rightComponent, showCloseButton }) => {
-  const navigation = useNavigation();
-  const showBackButton = navigation.canGoBack() || showCloseButton;
-  if (!showBackButton && !rightComponent) {
-    return null;
-  }
-  return (
-    <View style={styles.headerBar}>
-      <View style={styles.left}>{showBackButton ? <BackButton showCloseButton={showCloseButton} /> : null}</View>
-      <View style={styles.center} />
-      <View style={styles.right}>{rightComponent}</View>
-    </View>
-  );
-};
+  const avatarImage = getAvatarByName(props.profile.avatar_name as TAvatarName);
 
-export function PatientHeader({
-  profile,
-  simpleCallout = false,
-  type = !profile.reported_by_another ? ECallOutType.Simple : ECallOutType.Tag,
-  calloutTitle = !profile.reported_by_another ? profile.name : i18n.t('answer-for', { name: profile.name }),
-  showCloseButton = false,
-}: TPatientHeaderProps) {
-  const avatarImage = getAvatarByName(profile.avatar_name as TAvatarName);
   const avatarComponent = (
-    <>
-      {type === ECallOutType.Simple || simpleCallout ? (
-        <View style={styles.regularTextBox}>
-          <RegularText>{calloutTitle}</RegularText>
-        </View>
+    <View style={styles.view}>
+      {!props.profile.reported_by_another || props.simpleCallout ? (
+        <RegularText style={styles.textRegular}>{text}</RegularText>
       ) : (
         <>
-          <View style={styles.altTextBox}>
-            <ClippedText style={styles.altText}>{calloutTitle}</ClippedText>
-            <View style={styles.rightTriangle} />
+          <View style={styles.textWrapper}>
+            <ClippedText style={styles.textClipped}>{text}</ClippedText>
           </View>
+          <Triangle color={colors.coral} direction="right" height={14} style={styles.triangle} width={8} />
         </>
       )}
-      {!!avatarImage && <Image source={avatarImage} style={styles.avatar} />}
-    </>
+      {avatarImage ? <Image source={avatarImage} style={styles.avatar} /> : null}
+    </View>
   );
 
-  return <NavHeader rightComponent={avatarComponent} showCloseButton={showCloseButton} />;
+  return <NavHeader rightElement={avatarComponent} />;
 }
 
 const styles = StyleSheet.create({
-  altText: {
-    color: colors.white,
-    overflow: 'hidden',
-    paddingHorizontal: 10,
-  },
-  altTextBox: {
-    backgroundColor: colors.coral,
-    borderRadius: 12,
-    height: 40,
-    justifyContent: 'center',
-    marginRight: 5,
-    marginTop: 10,
-    maxWidth: 200,
-  },
   avatar: {
-    borderRadius: 16,
-    height: 32,
-    marginHorizontal: 8,
-    marginVertical: 16,
-    width: 32,
+    borderRadius: sizes.m,
+    height: sizes.m * 2,
+    marginLeft: sizes.xxs,
+    width: sizes.m * 2,
   },
-  center: {
-    flex: 1,
+  textClipped: {
+    color: colors.white,
   },
-  headerBar: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    overflow: 'visible',
-    paddingHorizontal: 16,
+  textRegular: {
+    alignSelf: 'center',
   },
-  icon: {
-    color: colors.secondary,
-    fontSize: 16,
+  textWrapper: {
+    backgroundColor: colors.coral,
+    borderRadius: sizes.s,
+    justifyContent: 'center',
+    paddingHorizontal: sizes.s,
+    paddingVertical: sizes.xxs,
   },
-  iconButton: {
+  triangle: {
+    marginLeft: -2,
+  },
+  view: {
     alignItems: 'center',
-    backgroundColor: colors.backgroundFour,
-    borderRadius: 16,
-    height: 32,
-    justifyContent: 'center',
-    marginHorizontal: 8,
-    marginVertical: 16,
-    width: 32,
-  },
-  left: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  regularTextBox: {
-    justifyContent: 'center',
-  },
-  right: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  rightTriangle: {
-    borderBottomColor: 'transparent',
-    borderBottomWidth: 8,
-    borderLeftColor: colors.coral,
-    borderLeftWidth: 8,
-    borderRightColor: 'transparent',
-    borderRightWidth: 0,
-    borderTopColor: 'transparent',
-    borderTopWidth: 8,
-    position: 'absolute',
-    right: -8,
   },
 });

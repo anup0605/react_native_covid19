@@ -1,5 +1,5 @@
 import { BrandedButton } from '@covid/components';
-import { BasicPage } from '@covid/components/layouts/pages';
+import { Screen } from '@covid/components/Screen';
 import { ClickableText, HeaderLightText, RegularText } from '@covid/components/Text';
 import Analytics from '@covid/core/Analytics';
 import { UserNotFoundException } from '@covid/core/Exception';
@@ -8,7 +8,7 @@ import { userService } from '@covid/core/user/UserService';
 import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
-import { grid, styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Input, Item, Label, Toast } from 'native-base';
@@ -20,7 +20,7 @@ interface IProps {
   route: RouteProp<ScreenParamList, 'Login'>;
 }
 
-function LoginScreen({ route }: IProps) {
+export default function LoginScreen({ route }: IProps) {
   const [hasErrors, setHasErrors] = React.useState(false);
   const [isValid, setIsValidState] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -74,87 +74,84 @@ function LoginScreen({ route }: IProps) {
     setHasErrors(false);
   }
 
+  function onChangeUsername(username: string) {
+    setUser(username);
+    setIsValid(username, pass);
+  }
+
+  function onChangePassword(password: string) {
+    setPass(password);
+    setIsValid(user, password);
+  }
+
   return (
-    <BasicPage style={styling.backgroundWhite} withFooter={false}>
-      <View style={styles.contentWrapper}>
-        <HeaderLightText>{i18n.t('login.title')}</HeaderLightText>
-        <Item floatingLabel error={hasErrors} style={styles.item}>
-          <Label style={styles.label}>{i18n.t('login.email-label')}</Label>
-          <Input
-            autoCapitalize="none"
-            autoCompleteType="email"
-            blurOnSubmit={false}
-            keyboardType="email-address"
-            onChangeText={(username) => {
-              setUser(username);
-              setIsValid(username, pass);
-            }}
-            returnKeyType="next"
-            testID="login-input-email"
-          />
-        </Item>
-        <Item floatingLabel error={hasErrors} style={styles.item}>
-          <Label style={styles.label}>{i18n.t('login.password-label')}</Label>
-          <Input
-            secureTextEntry
-            onChangeText={(password) => {
-              setPass(password);
-              setIsValid(user, password);
-            }}
-            onSubmitEditing={handleLogin}
-            ref={passwordInput}
-            returnKeyType="go"
-            testID="login-input-password"
-          />
-        </Item>
+    <Screen testID="login-screen">
+      <HeaderLightText>{i18n.t('login.title')}</HeaderLightText>
 
-        <BrandedButton
-          enabled={isValid && !loading}
-          loading={loading}
-          onPress={handleLogin}
-          style={styles.button}
-          testID="login-button"
-        >
-          <Text>{i18n.t('log-in')}</Text>
-        </BrandedButton>
+      <Item floatingLabel error={hasErrors} style={styles.marginTop}>
+        <Label style={styles.label}>{i18n.t('login.email-label')}</Label>
+        <Input
+          autoCapitalize="none"
+          autoCompleteType="email"
+          blurOnSubmit={false}
+          keyboardType="email-address"
+          onChangeText={onChangeUsername}
+          returnKeyType="next"
+          testID="login-input-email"
+        />
+      </Item>
 
-        <View style={styles.textWrapper}>
-          <RegularText>{i18n.t('login.dont-have-account')}</RegularText>
-          <RegularText> </RegularText>
-          <ClickableText onPress={() => appCoordinator.goToPreRegisterScreens()}>
-            {i18n.t('login.create-account')}
-          </ClickableText>
-        </View>
+      <Item floatingLabel error={hasErrors} style={styles.marginTop}>
+        <Label style={styles.label}>{i18n.t('login.password-label')}</Label>
+        <Input
+          secureTextEntry
+          autoCapitalize="none"
+          onChangeText={onChangePassword}
+          onSubmitEditing={handleLogin}
+          ref={passwordInput}
+          returnKeyType="go"
+          testID="login-input-password"
+        />
+      </Item>
 
-        <ClickableText onPress={() => appCoordinator.goToResetPassword()} style={styling.textCenter}>
-          {i18n.t('login.forgot-your-password')}
-        </ClickableText>
+      <View style={styling.flex} />
+
+      <BrandedButton
+        enabled={isValid && !loading}
+        loading={loading}
+        onPress={handleLogin}
+        style={styles.marginVertical}
+        testID="login-button"
+      >
+        <Text>{i18n.t('log-in')}</Text>
+      </BrandedButton>
+
+      <View style={styles.textWrapper}>
+        <RegularText>{i18n.t('login.dont-have-account')}</RegularText>
+        <RegularText> </RegularText>
+        <ClickableText onPress={appCoordinator.goToPreRegisterScreens}>{i18n.t('login.create-account')}</ClickableText>
       </View>
-    </BasicPage>
+
+      <ClickableText onPress={appCoordinator.goToResetPassword} style={styling.textCenter}>
+        {i18n.t('login.forgot-your-password')}
+      </ClickableText>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    marginBottom: 16,
-    marginTop: 'auto',
-  },
-  contentWrapper: {
-    flex: 1,
-    paddingHorizontal: grid.xxxl,
-    paddingVertical: grid.xl,
-  },
-  item: {
-    marginTop: 12,
-  },
   label: {
     color: colors.tertiary,
     fontSize: 16,
+  },
+  marginTop: {
+    marginTop: sizes.m,
+  },
+  marginVertical: {
+    marginVertical: sizes.m,
   },
   textWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
 });
-
-export default LoginScreen;

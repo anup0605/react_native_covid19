@@ -1,7 +1,7 @@
 import { initialStateAssessment } from '@covid/core/assessment/state/reducers';
-import { initialStateContent } from '@covid/core/content/state/contentSlice';
 import { initialStateSchools } from '@covid/core/schools/Schools.slice';
-import { appInitialState } from '@covid/core/state/app/slice';
+import { initialStateApp } from '@covid/core/state/app/slice';
+import { initialStateContent } from '@covid/core/state/contentSlice';
 import { initialStateDietStudy } from '@covid/core/state/diet-study/slice';
 import { initialStateMentalHealthChanges } from '@covid/core/state/mental-health/changes/slice';
 import { initialStateMentalHealthFrequency } from '@covid/core/state/mental-health/frequency/slice';
@@ -11,12 +11,14 @@ import { initialStateMentalHealth } from '@covid/core/state/mental-health/state/
 import { initialStateMentalHealthSupport } from '@covid/core/state/mental-health/support/slice';
 import { initialStateMentalHealthPlayback } from '@covid/core/state/mental-health-playback/slice';
 import { initialStateReconsent } from '@covid/core/state/reconsent';
+import { TRootState } from '@covid/core/state/root';
 import { initialStateSettings } from '@covid/core/state/settings/slice';
+import { initialStateTestingMode } from '@covid/core/state/testingMode';
 import { initialStateUser } from '@covid/core/state/user/slice';
 import { initialStateVaccine } from '@covid/core/state/vaccines/slice';
 
-export const initialState = {
-  app: appInitialState,
+export const initialState: TRootState = {
+  app: initialStateApp,
   assessment: initialStateAssessment,
   content: initialStateContent,
   dietStudy: initialStateDietStudy,
@@ -30,6 +32,7 @@ export const initialState = {
   reconsent: initialStateReconsent,
   school: initialStateSchools,
   settings: initialStateSettings,
+  testingMode: initialStateTestingMode,
   user: initialStateUser,
   vaccines: initialStateVaccine,
 };

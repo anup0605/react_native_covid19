@@ -1,7 +1,7 @@
 import { BrandedButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { LoadingModal } from '@covid/components/Loading';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
@@ -11,7 +11,7 @@ import { ScreenParamList } from '@covid/features';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import { offlineService, pushNotificationService } from '@covid/services';
-import { styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import { Formik } from 'formik';
@@ -37,21 +37,23 @@ interface IOptionalInfoData {
   phone: string;
 }
 
+const initialFormValues = { name: '', phone: '' };
+
 export class OptionalInfoScreen extends React.Component<TProps, TState> {
-  private phoneComponent: any;
+  phoneComponent: any;
 
   constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }
 
-  private async subscribeForPushNotifications() {
+  subscribeForPushNotifications = async () => {
     if (Constants.appOwnership !== 'expo') {
       await pushNotificationService.subscribeForPushNotifications();
     }
-  }
+  };
 
-  private async savePiiData(formData: IOptionalInfoData) {
+  savePiiData = async (formData: IOptionalInfoData) => {
     const hasFormData = formData.phone?.trim() || formData.name?.trim();
 
     if (hasFormData) {
@@ -61,12 +63,12 @@ export class OptionalInfoScreen extends React.Component<TProps, TState> {
       } as Partial<TPiiRequest>;
       await userService.updatePii(piiDoc);
     }
-  }
+  };
 
-  private async handleSaveOptionalInfos(formData: IOptionalInfoData) {
+  onSubmit = async (values: IOptionalInfoData) => {
     try {
       await this.subscribeForPushNotifications();
-      await this.savePiiData(formData);
+      await this.savePiiData(values);
       this.setState({ isApiError: false });
       appCoordinator.gotoNextScreen(this.props.route.name);
     } catch (error) {
@@ -80,12 +82,12 @@ export class OptionalInfoScreen extends React.Component<TProps, TState> {
           });
           setTimeout(() => {
             this.setState({ status: i18n.t('errors.status-loading') });
-            this.handleSaveOptionalInfos(formData);
+            this.onSubmit(values);
           }, offlineService.getRetryDelay());
         },
       });
     }
-  }
+  };
 
   // see http://regexlib.com/(X(1)A(TahywDmnNCw0iyuu7jNEB2AWTPaTyZQd-r8XZECVzmio5oP08fV7JoAWrNnIoyH3vysaiCJYtQO_FfuRAXJRSwB8zqAr_L9ddGD5V0eCJcVBJ65SiOnOt1tLVw4pd_Q3Q0FoUOPG5fXsbR6DHK6jqtBaIxnP0NL5oevVH6y0uSXhYgbCrrRx1DeE-59F0s5i0))/UserPatterns.aspx?authorid=d95177b0-6014-4e73-a959-73f1663ae814&AspxAutoDetectCookieSupport=1
   registerSchema = Yup.object().shape({
@@ -104,55 +106,51 @@ export class OptionalInfoScreen extends React.Component<TProps, TState> {
             status={this.state.status}
           />
         )}
-        <ScreenNew testID="optional-info-screen">
-          <Formik
-            initialValues={{ name: '', phone: '' }}
-            onSubmit={(values: IOptionalInfoData) => this.handleSaveOptionalInfos(values)}
-            validationSchema={this.registerSchema}
-          >
-            {(props) => {
+        <Screen testID="optional-info-screen">
+          <Formik initialValues={initialFormValues} onSubmit={this.onSubmit} validationSchema={this.registerSchema}>
+            {(formikProps) => {
               return (
                 <Form>
-                  <HeaderText style={{ marginBottom: 24 }}>{i18n.t('optional-info.title')}</HeaderText>
+                  <HeaderText style={{ marginBottom: sizes.l }}>{i18n.t('optional-info.title')}</HeaderText>
 
                   <RegularText>{i18n.t('optional-info.description')}</RegularText>
                   <ValidatedTextInput
-                    error={props.touched.name && props.errors.name}
-                    onBlur={props.handleBlur('name')}
-                    onChangeText={props.handleChange('name')}
+                    error={formikProps.touched.name && !!formikProps.errors.name}
+                    onBlur={formikProps.handleBlur('name')}
+                    onChangeText={formikProps.handleChange('name')}
                     onSubmitEditing={() => {
                       this.phoneComponent.focus();
                     }}
                     placeholder={i18n.t('optional-info.name-placeholder')}
                     returnKeyType="next"
                     testID="input-name"
-                    value={props.values.name}
+                    value={formikProps.values.name}
                     viewStyle={styling.marginVertical}
                   />
 
                   <ValidatedTextInput
-                    error={props.touched.phone && props.errors.phone}
-                    onBlur={props.handleBlur('phone')}
-                    onChangeText={props.handleChange('phone')}
+                    error={formikProps.touched.phone && !!formikProps.errors.phone}
+                    onBlur={formikProps.handleBlur('phone')}
+                    onChangeText={formikProps.handleChange('phone')}
                     placeholder={i18n.t('optional-info.phone-placeholder')}
                     ref={(input) => (this.phoneComponent = input)}
                     testID="input-phone"
-                    value={props.values.phone}
+                    value={formikProps.values.phone}
                     viewStyle={styling.marginBottom}
                   />
-                  {props.errors.phone ? <ErrorText>{props.errors.phone}</ErrorText> : null}
+                  {formikProps.errors.phone ? <ErrorText>{formikProps.errors.phone}</ErrorText> : null}
 
                   <View style={styling.flex} />
                   {this.state.errorMessage ? <ErrorText>{this.state.errorMessage}</ErrorText> : null}
 
-                  <BrandedButton onPress={props.handleSubmit} testID="button-submit">
+                  <BrandedButton onPress={formikProps.handleSubmit} testID="button-submit">
                     {i18n.t('optional-info.button')}
                   </BrandedButton>
                 </Form>
               );
             }}
           </Formik>
-        </ScreenNew>
+        </Screen>
       </>
     );
   }

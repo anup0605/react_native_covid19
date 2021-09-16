@@ -1,10 +1,11 @@
 import { closeIcon } from '@assets';
 import { ContentLoadingView } from '@covid/components/content/ContentLoadingView';
 import Analytics, { events } from '@covid/core/Analytics';
-import { addDismissCallout } from '@covid/core/content/state/contentSlice';
+import { addDismissCallout } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import { useAppDispatch } from '@covid/core/state/store';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import * as React from 'react';
 import {
@@ -39,7 +40,7 @@ export const ExternalCallout: React.FC<TProps> = (props) => {
   const [dismissed, setDismissed] = React.useState<boolean>(false);
   const [imageLoading, setImageLoading] = React.useState<boolean>(false);
   const [imageLoadError, setImageLoadError] = React.useState<string | undefined>(undefined);
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
 
   const imageProps = {
     onError: () => {
@@ -86,7 +87,7 @@ export const ExternalCallout: React.FC<TProps> = (props) => {
       orderIndex: props.orderIndex,
       screenName: props.screenName,
     });
-    dispatch(addDismissCallout(props.calloutID));
+    appDispatch(addDismissCallout(props.calloutID));
   }
 
   return (
@@ -136,6 +137,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     flexDirection: 'row',
-    marginVertical: 8,
+    marginVertical: sizes.xs,
   },
 });

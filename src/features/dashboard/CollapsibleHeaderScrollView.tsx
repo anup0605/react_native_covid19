@@ -1,5 +1,6 @@
 import { DrawerToggle } from '@covid/components/DrawerToggle';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
+import { sizes } from '@covid/themes';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -23,7 +24,7 @@ interface Iprops {
 export const CollapsibleHeaderScrollView: React.FC<Iprops> = (props) => {
   const safeAreaInsets = useSafeAreaInsets();
 
-  const [scrollY, _] = React.useState<Animated.Value>(new Animated.Value(0));
+  const [scrollY] = React.useState<Animated.Value>(new Animated.Value(0));
 
   const headerHeight = scrollY.interpolate({
     extrapolate: 'clamp',
@@ -125,8 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   drawerToggleContainer: {
-    marginRight: 16,
-    marginTop: 32,
+    marginRight: sizes.m,
+    marginTop: sizes.xl + sizes.drawerToggle / 2,
     position: 'absolute',
     right: 0,
     zIndex: 999,
@@ -149,6 +150,6 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     flex: 1,
-    paddingTop: 16,
+    paddingTop: sizes.m,
   },
 });

@@ -5,7 +5,7 @@ import * as Amplitude from 'expo-analytics-amplitude';
 
 let isInitialized = false;
 
-export type TUserProperties = {
+type TUserProperties = {
   isTester?: boolean;
   Experiment_mhip?: string;
   Experiment_mhip_2?: string;
@@ -51,6 +51,10 @@ const mentalHealthStudyEvents = {
 const reconsentEvents = {
   RECONSENT_CONFIRMED_NO_CLICKED: 'RECONSENT_CONFIRMED_NO_CLICKED',
   RECONSENT_FIRST_NO_CLICKED: 'RECONSENT_FIRST_NO_CLICKED',
+  RECONSENT_INFORMATION_SHEET_CLICKED: 'RECONSENT_INFORMATION_SHEET_CLICKED',
+  RECONSENT_NEWSLETTER_SUBSCRIBE: 'RECONSENT_NEWSLETTER_SUBSCRIBE',
+  RECONSENT_NEWSLETTER_SUBSCRIBED_FINAL: 'RECONSENT_NEWSLETTER_SUBSCRIBED_FINAL',
+  RECONSENT_NEWSLETTER_UNSUBSCRIBE: 'RECONSENT_NEWSLETTER_UNSUBSCRIBE',
   RECONSENT_PRIVACY_POLICY_CLICKED: 'RECONSENT_PRIVACY_POLICY_CLICKED',
   RECONSENT_RECONSIDER_CLICKED: 'RECONSENT_RECONSIDER_CLICKED',
   RECONSENT_YES_CLICKED: 'RECONSENT_YES_CLICKED',
@@ -74,6 +78,7 @@ export const events = {
   CLICK_CALLOUT_DISMISS: 'CLICK_CALLOUT_DISMISS',
   CLICK_DRAWER_MENU_ITEM: 'CLICK_DRAWER_MENU_ITEM',
   CLICK_STUDY_AD_CALLOUT: 'CLICK_STUDY_AD_CALLOUT',
+  COVID_TEST_ONBOARDING_MODAL: 'COVID_TEST_ONBOARDING_MODAL',
   DECLINE_STUDY: 'DECLINE_STUDY',
   DECLINE_STUDY_CONTACT: 'DECLINE_STUDY_CONTACT',
   DECLINE_VACCINE_REGISTER: 'DECLINE_VACCINE_REGISTER',
@@ -130,15 +135,15 @@ export function track(eventName: string, properties?: object): void {
   }
 }
 
-export function trackScreenView(screenName: string): void {
+function trackScreenView(screenName: string): void {
   track(events.VIEW_SCREEN, { screenName });
 }
 
-export function trackModalView(modalName: string): void {
+function trackModalView(modalName: string): void {
   track(events.VIEW_MODAL, { modalName });
 }
 
-export function identify(additionalUserProperties?: TUserProperties): void {
+function identify(additionalUserProperties?: TUserProperties): void {
   initialize();
 
   // WARNING: Do not send any PII or Health Data here!

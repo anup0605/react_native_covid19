@@ -4,7 +4,7 @@ import Switch from '@covid/components/Switch';
 import { RegularText } from '@covid/components/Text';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import i18n from '@covid/locale/i18n';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors, fontStyles } from '@theme';
 import { FormikProps } from 'formik';
 import moment, { Moment } from 'moment';
@@ -13,7 +13,7 @@ import { StyleSheet } from 'react-native';
 import * as Yup from 'yup';
 
 export interface ICovidTestDateData {
-  useApproximateDate: boolean | undefined; // only for ux logic
+  useApproximateDate: boolean; // only for ux logic
   dateTakenBetweenStart: Date | undefined;
   dateTakenBetweenEnd: Date | undefined;
   dateTakenSpecific: Date | undefined;
@@ -26,7 +26,7 @@ interface IProps {
   label?: string;
 }
 
-export interface ICovidTestDateQuestion<P, Data> extends React.FC<P> {
+interface ICovidTestDateQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
   createDTO: (data: Data) => Partial<TCovidTest>;
@@ -44,6 +44,7 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
 
   function setTestDate(selectedDate: Moment): void {
     formikProps.values.dateTakenSpecific = convertToDate(selectedDate);
+
     if (props.dateChangeCallback) {
       props.dateChangeCallback();
     }
@@ -72,9 +73,7 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
 
       <Switch
         label={i18n.t('covid-test.question-date-approximate')}
-        selectedValue={formikProps.values.useApproximateDate}
-        style={styles.switch}
-        toggleSwitch={() => {
+        onValueChange={() => {
           const newValue = !formikProps.values.useApproximateDate;
           if (newValue) {
             formikProps.values.dateTakenSpecific = undefined;
@@ -84,10 +83,13 @@ export const CovidTestDateQuestion: ICovidTestDateQuestion<IProps, ICovidTestDat
             formikProps.values.dateTakenSpecific = undefined;
           }
           formikProps.setFieldValue('useApproximateDate', newValue);
+
           if (props.dateChangeCallback) {
             props.dateChangeCallback();
           }
         }}
+        selectedValue={formikProps.values.useApproximateDate}
+        style={styles.switch}
       />
 
       {!formikProps.values.useApproximateDate && (
@@ -118,13 +120,13 @@ const styles = StyleSheet.create({
     ...fontStyles.bodyReg,
     alignSelf: 'center',
     color: colors.black,
-    paddingBottom: 10,
+    paddingBottom: sizes.s,
   },
   label: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   switch: {
-    marginBottom: grid.xxl,
+    marginBottom: sizes.l,
   },
 });
 

@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import { TCovidTest, TCovidTestResponse } from './dto/CovidTestContracts';
 import UserService, { IUserService } from './UserService';
 
-export interface ICovidTestService extends IUserService {
+interface ICovidTestService extends IUserService {
   listTests(): Promise<AxiosResponse<TCovidTest[]>>;
   addTest(test: Partial<TCovidTest>): Promise<AxiosResponse<TCovidTestResponse>>;
   getTest(testId: string): Promise<TCovidTest>;
@@ -12,7 +12,7 @@ export interface ICovidTestService extends IUserService {
   deleteTest(testId: string): Promise<AxiosResponse<TCovidTestResponse>>;
 }
 
-export default class CovidTestService extends UserService implements ICovidTestService {
+class CovidTestService extends UserService implements ICovidTestService {
   public async listTests() {
     return this.client.get<TCovidTest[]>(`/covid_tests/`);
   }

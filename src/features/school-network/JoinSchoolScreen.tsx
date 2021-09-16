@@ -1,5 +1,5 @@
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { selectPatientsJoinedGroups } from '@covid/core/schools/Schools.slice';
 import { TRootState } from '@covid/core/state/root';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -27,14 +27,14 @@ function JoinSchoolScreen({ route }: IProps) {
       {currentJoinedGroup ? (
         <SelectedSchool
           hasBubbles
-          body="school-networks.join-school.more-information"
+          body={i18n.t('school-networks.join-school.more-information')}
           currentJoinedGroup={currentJoinedGroup}
           currentPatient={currentPatient}
-          link="school-networks.join-school.school-url"
-          linkLabel="school-networks.join-school.school-url-label"
+          link={i18n.t('school-networks.join-school.school-url')}
+          linkLabel={i18n.t('school-networks.join-school.school-url-label')}
           organisation="School"
-          removeText="school-networks.join-school.remove"
-          title="school-networks.join-school.school-network-header"
+          removeText={i18n.t('school-networks.join-school.remove')}
+          title={i18n.t('school-networks.join-school.school-network-header')}
         />
       ) : (
         <>

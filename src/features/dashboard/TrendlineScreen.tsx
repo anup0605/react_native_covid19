@@ -1,14 +1,14 @@
 import { BrandedButton } from '@covid/components';
 import { DeltaTag } from '@covid/components/cards/estimated-case/DeltaTag';
+import { ETrendLineViewMode, TrendLineChart } from '@covid/components/charts/TrendLineChart';
 import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
-import { BackButton } from '@covid/components/PatientHeader';
-import { Header } from '@covid/components/Screen';
-import { ETrendlineTimeFilters, ETrendLineViewMode, TrendLineChart } from '@covid/components/stats/TrendLineChart';
+import { Screen } from '@covid/components/Screen';
 import { Header3Text, RegularText } from '@covid/components/Text';
 import { ITrendLineData } from '@covid/core/content/dto/ContentAPIContracts';
-import { fetchLocalTrendLine } from '@covid/core/content/state/contentSlice';
+import { fetchLocalTrendLine } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors, fontStyles } from '@theme';
 import * as Sharing from 'expo-sharing';
 import * as React from 'react';
@@ -35,125 +35,69 @@ export const TrendlineScreen: React.FC = () => {
   }, []);
 
   return (
-    <View style={styles.root}>
-      <View style={styles.nav}>
-        <BackButton />
-      </View>
-      <View collapsable={false} ref={viewRef} style={styles.container}>
-        <Header>
-          <RegularText style={{ textAlign: 'center' }}>{i18n.t('explore-trend-line.title')}</RegularText>
-          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <RegularText style={styles.district}>{trendline?.name}</RegularText>
-          </View>
-        </Header>
+    <Screen noScrollView backgroundColor="white" testID="trendline-screen">
+      <View collapsable={false} ref={viewRef} style={styles.flex}>
+        <RegularText style={{ textAlign: 'center' }}>{i18n.t('explore-trend-line.title')}</RegularText>
+
+        <RegularText style={styles.district}>{trendline?.name}</RegularText>
 
         <Header3Text style={styles.metric}>{trendline?.today}</Header3Text>
 
-        {trendline?.delta ? (
-          <View style={styles.deltaTag}>
-            <DeltaTag change={trendline.delta} />
-          </View>
-        ) : null}
+        {trendline?.delta ? <DeltaTag change={trendline.delta} style={styles.deltaTag} /> : null}
 
-        <View style={styles.chartContainer}>
-          <TrendLineChart filter={ETrendlineTimeFilters.all} viewMode={ETrendLineViewMode.explore} />
+        <View style={styles.chartWrapper}>
+          <TrendLineChart viewMode={ETrendLineViewMode.explore} />
         </View>
 
-        <View style={styles.buttonsContainer}>
-          <BrandedButton onPress={share} style={styles.detailsButton}>
-            <Text style={[fontStyles.bodyLight, styles.detailsButtonLabel]}>{i18n.t('explore-trend-line.cta')}</Text>
-          </BrandedButton>
-        </View>
-        <View style={styles.zoe}>
-          <PoweredByZoeSmall />
-        </View>
+        <BrandedButton onPress={share} style={styles.shareButton}>
+          <Text style={[fontStyles.bodyLight, styles.shareButtonText]}>{i18n.t('explore-trend-line.cta')}</Text>
+        </BrandedButton>
+
+        <PoweredByZoeSmall />
       </View>
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  arrow: {
-    alignSelf: 'center',
+  chartWrapper: {
+    flex: 1,
     justifyContent: 'center',
-    marginLeft: 6,
-    marginTop: 9,
-    transform: [{ rotate: '-90deg' }],
+    paddingHorizontal: sizes.l,
   },
-
-  button: {
-    marginBottom: 32,
-    marginHorizontal: 24,
-    marginVertical: 16,
-  },
-
-  buttonsContainer: {
-    alignSelf: 'center',
-    marginTop: 12,
-    maxWidth: '80%',
-  },
-
-  chartContainer: {
-    flex: 1,
-    marginLeft: 12,
-    marginRight: 20,
-  },
-
-  container: {
-    backgroundColor: 'white',
-    flex: 1,
-    paddingTop: 64,
-  },
-
   deltaTag: {
     alignSelf: 'center',
-    marginTop: 16,
-    marginVertical: 32,
+    marginTop: sizes.m,
+    marginVertical: sizes.xl,
   },
-
-  detailsButton: {
-    backgroundColor: 'transparent',
-    borderColor: colors.purple,
-    borderWidth: 1,
-    marginBottom: 24,
-    paddingHorizontal: 52,
-  },
-
-  detailsButtonLabel: {
-    color: colors.purple,
-    fontSize: 14,
-    fontWeight: '300',
-  },
-
   district: {
     fontSize: 20,
     fontWeight: '500',
-    marginTop: 8,
+    marginTop: sizes.xs,
     textAlign: 'center',
   },
-
+  flex: {
+    flex: 1,
+  },
   metric: {
     color: colors.textDark,
     fontSize: 32,
     lineHeight: 48,
-    paddingTop: 8,
+    paddingTop: sizes.xs,
     textAlign: 'center',
   },
-
-  nav: {
-    left: 16,
-    position: 'absolute',
-    top: 48,
-    zIndex: 100,
+  shareButton: {
+    alignSelf: 'center',
+    backgroundColor: 'transparent',
+    borderColor: colors.purple,
+    borderWidth: 1,
+    marginBottom: sizes.m,
+    marginTop: sizes.xl,
+    paddingHorizontal: sizes.xxl,
   },
-
-  root: {
-    backgroundColor: colors.white,
-    flex: 1,
-  },
-
-  zoe: {
-    marginBottom: 32,
-    marginTop: 16,
+  shareButtonText: {
+    color: colors.purple,
+    fontSize: 14,
+    fontWeight: '300',
   },
 });

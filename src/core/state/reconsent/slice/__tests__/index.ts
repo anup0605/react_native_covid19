@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { updateDiseasePreference } from '@covid/core/state/reconsent/slice';
 import store from '@covid/core/state/store';
 

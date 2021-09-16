@@ -11,17 +11,17 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
   route: RouteProp<TScreenParamList, 'Consent'>;
-  setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
+  setAgreed: (agreed: boolean) => void;
   style?: StyleProp<ViewStyle>;
 };
 
-const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed, style }) => {
+export const ConsentScreenUS: React.FC<TProps> = React.memo((props: TProps) => {
   const [processingChecked, setProcessingChecked] = React.useState(false);
   const [termsOfUseChecked, setTermsOfUseChecked] = React.useState(false);
 
   const onNurseConsentPress = React.useCallback(
-    () => navigation.replace('NursesConsentUS', { viewOnly: route.params?.viewOnly }),
-    [navigation.replace, route.params?.viewOnly],
+    () => props.navigation.replace('NursesConsentUS', { viewOnly: props.route.params?.viewOnly }),
+    [props.navigation.replace, props.route.params?.viewOnly],
   );
 
   const onInfoLinkPress = React.useCallback(
@@ -30,13 +30,13 @@ const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed, style
   );
 
   const onPrivacyPolicyPress = React.useCallback(
-    () => navigation.navigate('PrivacyPolicyUS', { viewOnly: route.params?.viewOnly }),
-    [navigation.navigate, route.params?.viewOnly],
+    () => props.navigation.navigate('PrivacyPolicyUS', { viewOnly: props.route.params?.viewOnly }),
+    [props.navigation.navigate, props.route.params?.viewOnly],
   );
 
   const onTermsOfUsePress = React.useCallback(
-    () => navigation.navigate('TermsOfUseUS', { viewOnly: route.params?.viewOnly }),
-    [navigation.navigate, route.params?.viewOnly],
+    () => props.navigation.navigate('TermsOfUseUS', { viewOnly: props.route.params?.viewOnly }),
+    [props.navigation.navigate, props.route.params?.viewOnly],
   );
 
   const toggleProcessingChecked = React.useCallback(() => {
@@ -48,11 +48,11 @@ const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed, style
   }, [termsOfUseChecked, setTermsOfUseChecked]);
 
   React.useEffect(() => {
-    setAgreed(processingChecked && termsOfUseChecked);
+    props.setAgreed(processingChecked && termsOfUseChecked);
   }, [processingChecked, termsOfUseChecked]);
 
   return (
-    <View style={style}>
+    <View style={props.style}>
       <RegularText>
         {i18n.t('consent-normal-us.existing-study')}{' '}
         <ClickableText onPress={onNurseConsentPress} testID="nurse-consent">
@@ -97,7 +97,7 @@ const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed, style
         <RegularBoldText>covidtrackingquestions-us@joinzoe.com</RegularBoldText>
       </RegularText>
 
-      {!route.params?.viewOnly ? (
+      {!props.route.params?.viewOnly ? (
         <CheckboxList>
           <CheckboxItem onChange={toggleProcessingChecked} testID="processing-check" value={processingChecked}>
             {i18n.t('consent-normal-us.i-consent')}{' '}
@@ -121,6 +121,4 @@ const ConsentScreenUS: React.FC<TProps> = ({ navigation, route, setAgreed, style
       ) : null}
     </View>
   );
-};
-
-export default React.memo(ConsentScreenUS);
+});

@@ -5,30 +5,28 @@ import { EstimatedCasesMapCard } from '@covid/components/cards/EstimatedCasesMap
 import { ShareVaccineCard } from '@covid/components/cards/ShareVaccineCard';
 import { ExternalCallout } from '@covid/components/ExternalCallout';
 import { PoweredByZoeSmall } from '@covid/components/logos/PoweredByZoe';
-import { updateTodayDate } from '@covid/core/content/state/contentSlice';
 import ExpoPushTokenEnvironment from '@covid/core/push-notifications/expo';
 import PushNotificationService, { IPushTokenEnvironment } from '@covid/core/push-notifications/PushNotificationService';
 import { ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { fetchSubscribedSchoolGroups } from '@covid/core/schools/Schools.slice';
-import { appActions, appSelectors } from '@covid/core/state/app/slice';
+import { fetchLocalTrendLine, updateTodayDate } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { useAppDispatch } from '@covid/core/state/store';
-import { selectFirstPatientId } from '@covid/core/state/user';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { getDietStudyDoctorImage, getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
-import util from '@covid/features/mental-health-playback/util';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
-import { colors, styling } from '@covid/themes';
+import { colors, sizes, styling } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { CollapsibleHeaderScrollView } from './CollapsibleHeaderScrollView';
 import { CompactHeader, Header } from './Header';
@@ -49,13 +47,12 @@ const headerConfig = {
 };
 
 export function DashboardScreen({ navigation, route }: IProps) {
-  const patientId = useSelector(selectFirstPatientId);
-  const app = useSelector(appSelectors.selectApp);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
+  const appDispatch = useAppDispatch();
   const schoolGroups = useSelector<TRootState, ISubscribedSchoolGroupStats[]>(
     (state) => state.school.joinedSchoolGroups,
   );
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   const [showTrendline, setShowTrendline] = React.useState<boolean>(false);
 
@@ -83,44 +80,27 @@ export function DashboardScreen({ navigation, route }: IProps) {
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
-      dispatch(updateTodayDate());
-      dispatch(fetchSubscribedSchoolGroups());
-      // Decide whether or not to show trendline feature
-      // - This will check for user's lad & do they have local trendline data & BE feature toggle
-      const flag = await appCoordinator.shouldShowTrendLine();
-      setShowTrendline(flag);
+      appDispatch(updateTodayDate());
+      appDispatch(fetchSubscribedSchoolGroups());
     });
-  }, [navigation]);
+  }, []);
 
   React.useEffect(() => {
-    let isMounted = true;
-    if (!app.dashboardHasBeenViewed) {
-      dispatch(appActions.setDashboardHasBeenViewed(true));
-      setTimeout(() => {
-        if (isMounted) {
-          if (startupInfo?.show_research_consent) {
-            appCoordinator.goToReconsent();
-          } else if (startupInfo?.show_modal === 'mental-health-playback') {
-            const testGroupId = util.determineTestGroupId(patientId, startupInfo?.mh_insight_cohort!);
-            if (testGroupId === 'GROUP_1') {
-              dispatch(appActions.setModalMentalHealthPlaybackVisible(true));
-            }
-          }
-        }
-      }, 800);
+    if (appCoordinator.shouldShowTrendLine()) {
+      dispatch(fetchLocalTrendLine());
+      setShowTrendline(true);
     }
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   React.useEffect(() => {
     Linking.addEventListener('url', () => {});
   }, []);
 
-  function goToMentalHealthStudyPlayback() {
-    appCoordinator.goToMentalHealthStudyPlayback(startupInfo);
-  }
+  React.useEffect(() => {
+    if (startupInfo?.show_research_consent) {
+      setTimeout(() => appCoordinator.goToReconsent(), 500);
+    }
+  }, []);
 
   return (
     <CollapsibleHeaderScrollView
@@ -141,7 +121,8 @@ export function DashboardScreen({ navigation, route }: IProps) {
             screenName={route.name}
           />
         ) : null}
-        {showTrendline ? <TrendlineCard ctaOnPress={onExploreTrendline} /> : null}
+
+        {showTrendline ? <TrendlineCard onPress={onExploreTrendline} /> : null}
 
         <EstimatedCasesMapCard />
 
@@ -153,7 +134,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
             doctorName={i18n.t('mental-health.doctor-name')}
             doctorTitle={i18n.t('mental-health.doctor-title')}
             imageNode={getMentalHealthStudyDoctorImage()}
-            onPress={goToMentalHealthStudyPlayback}
+            onPress={appCoordinator.goToMentalHealthStudyPlayback}
             style={styling.marginVerticalSmall}
             tagColor={colors.coral.main.bgColor}
             title={i18n.t('mental-health-playback.results-ready')}
@@ -188,16 +169,16 @@ export function DashboardScreen({ navigation, route }: IProps) {
 
 const styles = StyleSheet.create({
   calloutContainer: {
-    marginHorizontal: 16,
+    marginHorizontal: sizes.m,
   },
   dietStudyImage: {
     aspectRatio: 1200 / 1266,
     height: undefined,
-    marginVertical: 8,
+    marginVertical: sizes.xs,
     resizeMode: 'contain',
     width: '100%',
   },
   marginVertical: {
-    marginVertical: 8,
+    marginVertical: sizes.xs,
   },
 });

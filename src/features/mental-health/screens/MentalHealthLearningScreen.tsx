@@ -1,5 +1,6 @@
-import { BasicPage, CheckBoxButton, GenericSelectableList, Text } from '@covid/components';
+import { CheckBoxButton, GenericSelectableList, Text } from '@covid/components';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
+import { Screen } from '@covid/components/Screen';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import {
   addLearningCondition,
@@ -15,7 +16,8 @@ import { TMentalHealthInfosRequest } from '@covid/features/mental-health/MentalH
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
-import { useTheme } from '@covid/themes';
+import { sizes } from '@covid/themes';
+import { colors } from '@theme';
 import * as React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +26,6 @@ export default function MentalHealthLearningScreen() {
   const MentalHealthLearning = useSelector(selectMentalHealthLearning);
   const [canSubmit, setCanSubmit] = React.useState(false);
   const dispatch = useDispatch();
-  const { grid } = useTheme();
 
   const handleSetHasLearningDisability = (value: THasDisability) => {
     dispatch(setHasLearningDisability(value));
@@ -45,13 +46,13 @@ export default function MentalHealthLearningScreen() {
   const renderRow = (data: TLearningQuestion) => {
     return (
       <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-        <View style={{ marginRight: grid.l }}>
+        <View style={{ marginRight: sizes.m }}>
           <CheckBoxButton
             active={getHasExistingCondition(data.value)}
             onPress={() => handleAddRemoveCondition(data.value)}
           />
         </View>
-        <View style={{ flex: 1, paddingRight: grid.s }}>
+        <View style={{ flex: 1, paddingRight: sizes.xs }}>
           <Text>{data.key}</Text>
         </View>
       </View>
@@ -92,31 +93,35 @@ export default function MentalHealthLearningScreen() {
   ) : null;
 
   return (
-    <BasicPage active={canSubmit} footerTitle={i18n.t('navigation.next')} onPress={saveStateAndNavigate}>
-      <View style={{ paddingHorizontal: grid.gutter }}>
-        <Text rhythm={16} textClass="h3">
-          {i18n.t('mental-health.question-learning-title')}
-        </Text>
-        <View>
-          <RadioInput
-            items={learningInitialOptions}
-            label={i18n.t('mental-health.question-learning')}
-            onValueChange={handleSetHasLearningDisability}
-            selectedValue={MentalHealthLearning.hasDisability}
-          />
-        </View>
-        {MentalHealthLearning.hasDisability === 'YES' ? (
-          <>
-            <GenericSelectableList
-              collection={learningQuestions}
-              onPress={(data) => handleAddRemoveCondition(data.value)}
-              renderRow={(data) => renderRow(data)}
-              style={{ paddingBottom: grid.s, paddingTop: grid.s }}
-            />
-            {renderOtherTextInput}
-          </>
-        ) : null}
+    <Screen
+      backgroundColor={colors.backgroundTertiary}
+      footerEnabled={canSubmit}
+      footerOnPress={saveStateAndNavigate}
+      footerTitle={i18n.t('navigation.next')}
+      testID="mental-health-learning-screen"
+    >
+      <Text rhythm={16} textClass="h3">
+        {i18n.t('mental-health.question-learning-title')}
+      </Text>
+      <View>
+        <RadioInput
+          items={learningInitialOptions}
+          label={i18n.t('mental-health.question-learning')}
+          onValueChange={handleSetHasLearningDisability}
+          selectedValue={MentalHealthLearning.hasDisability}
+        />
       </View>
-    </BasicPage>
+      {MentalHealthLearning.hasDisability === 'YES' ? (
+        <>
+          <GenericSelectableList
+            collection={learningQuestions}
+            onPress={(data) => handleAddRemoveCondition(data.value)}
+            renderRow={(data) => renderRow(data)}
+            style={{ paddingBottom: sizes.xs, paddingTop: sizes.xs }}
+          />
+          {renderOtherTextInput}
+        </>
+      ) : null}
+    </Screen>
   );
 }

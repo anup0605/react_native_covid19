@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 const naturalCompare = require('string-natural-compare');
 
 const unsorted = [{ name: 'Y10' }, { name: 'Y11' }, { name: 'Y8' }, { name: 'Y6' }];

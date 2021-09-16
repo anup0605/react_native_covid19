@@ -6,7 +6,7 @@ import { ITest } from './types';
 
 interface IClickableTextProps extends ITest {
   children: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
   onPress: () => void;
   enabled?: boolean;
   hideLoading?: boolean;
@@ -14,7 +14,7 @@ interface IClickableTextProps extends ITest {
 
 interface IProps {
   children: React.ReactNode;
-  style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
+  style?: StyleProp<TextStyle>;
   passProps?: any;
   testID?: string;
   highlightColor?: any;
@@ -54,11 +54,42 @@ export const ColourHighlightHeaderTextText = ({ text, style, highlightColor }: I
   );
 };
 
-export const RegularText = ({ style, children, passProps }: IProps) => (
-  <Text style={[fontStyles.bodyReg, style]} {...passProps}>
+export const LightText = ({ style, children, passProps }: IProps) => (
+  <Text style={[fontStyles.bodyLight, style]} {...passProps}>
     {children}
   </Text>
 );
+
+export const RegularText = ({ style, children, testID }: IProps) => (
+  <Text style={[fontStyles.bodyReg, style]} testID={testID}>
+    {children}
+  </Text>
+);
+
+interface IRegularTextWithBoldInsertsProps {
+  text: string;
+  style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
+}
+
+export const RegularTextWithBoldInserts = ({ text, style }: IRegularTextWithBoldInsertsProps) => {
+  const textParts: string[] = text.split('*');
+  let boldText: boolean = !!text.startsWith('*');
+  return (
+    <Text style={style}>
+      {textParts
+        .filter((text: string) => text)
+        .map((text: string) => {
+          const node: React.ReactNode = boldText ? (
+            <Text style={{ fontWeight: '600' }}>{text}</Text>
+          ) : (
+            <Text>{text}</Text>
+          );
+          boldText = !boldText;
+          return node;
+        })}
+    </Text>
+  );
+};
 
 export const FieldLabel = ({ style, children }: IProps) => (
   <Text style={[fontStyles.bodyReg, styles.fieldLabel, style]}>{children}</Text>
@@ -102,6 +133,9 @@ export const Divider: React.FC<{ styles?: StyleProp<ViewStyle> }> = ({ styles: p
 );
 
 export const LabelText = ({ style, children }: IProps) => <Text style={[fontStyles.label, style]}>{children}</Text>;
+export const LabelSecondaryText = ({ style, children }: IProps) => (
+  <Text style={[fontStyles.labelSecondary, style]}>{children}</Text>
+);
 
 const styles = StyleSheet.create({
   clickableText: {

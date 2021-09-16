@@ -1,13 +1,11 @@
 import { BrandedButton } from '@covid/components';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import i18n from '@covid/locale/i18n';
-import { action, HandlerFunction } from '@storybook/addon-actions';
+import { sizes } from '@covid/themes';
 import { storiesOf } from '@storybook/react-native';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-
-const ValueChangeHandler = (): HandlerFunction => action('submit');
 
 storiesOf('Text input', module).add('default', () => (
   <ScrollView>
@@ -15,11 +13,11 @@ storiesOf('Text input', module).add('default', () => (
       initialValues={{
         input: '',
       }}
-      onSubmit={(values: any) => {}}
+      onSubmit={() => {}}
     >
       {(props) => (
-        <View style={{ marginHorizontal: 16 }}>
-          <View style={{ marginVertical: 16 }}>
+        <View style={{ marginHorizontal: sizes.m }}>
+          <View style={{ marginVertical: sizes.m }}>
             <GenericTextField
               formikProps={props}
               keyboardType="numeric"
@@ -43,21 +41,21 @@ storiesOf('Text input', module).add('multi-line', () => (
       initialValues={{
         input: '',
       }}
-      onSubmit={(values: any) => {}}
+      onSubmit={() => {}}
     >
       {(props) => (
-        <View style={{ marginHorizontal: 16 }}>
-          <View style={{ marginVertical: 16 }}>
+        <View style={{ marginHorizontal: sizes.m }}>
+          <View style={{ marginVertical: sizes.m }}>
             <GenericTextField
               formikProps={props}
+              inputProps={{
+                multiline: true,
+                numberOfLines: 3,
+              }}
               keyboardType="numeric"
               label="Some label"
               name="input"
               placeholder="Some placeholder"
-              textInputProps={{
-                multiline: true,
-                numberOfLines: 3,
-              }}
             />
           </View>
           <BrandedButton onPress={props.handleSubmit}>

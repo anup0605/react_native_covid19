@@ -56,11 +56,11 @@ const styles = StyleSheet.create({
   },
   containerTitle: {
     flex: 1,
-    paddingRight: sizes.spacingSmall,
+    paddingRight: sizes.xs,
   },
   containerUpper: {
     flexDirection: 'row',
-    marginBottom: sizes.spacing,
+    marginBottom: sizes.m,
   },
   grayText: {
     color: colors.gray.main.bgColor,
@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
   touchable: {
     backgroundColor: 'white',
     borderColor: colors.gray.light.bgColor,
-    borderRadius: sizes.borderRadiusBig,
+    borderRadius: sizes.m,
     borderWidth: sizes.border,
-    paddingHorizontal: sizes.spacing,
-    paddingVertical: sizes.spacingBig,
+    paddingHorizontal: sizes.m,
+    paddingVertical: sizes.l,
   },
 });

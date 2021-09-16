@@ -6,6 +6,8 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 
+import { isZoeInviteOfferTest } from '../helpers';
+
 export interface ICovidTestInvitedData {
   invitedToTest: string;
 }
@@ -15,7 +17,7 @@ interface IProps {
   test?: TCovidTest;
 }
 
-export interface ICovidTestInvitedQuestion<P, Data> extends React.FC<P> {
+interface ICovidTestInvitedQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
   createDTO: (data: Data) => Partial<TCovidTest>;
@@ -56,7 +58,12 @@ CovidTestInvitedQuestion.initialFormValues = (test?: TCovidTest): ICovidTestInvi
 CovidTestInvitedQuestion.schema = () => {
   return isGBCountry()
     ? Yup.object().shape({
-        invitedToTest: Yup.string().required(i18n.t('please-select-option')),
+        invitedToTest: Yup.string().when('mechanism', {
+          is: (mechanism) => {
+            return isZoeInviteOfferTest(mechanism);
+          },
+          then: Yup.string().required(i18n.t('please-select-option')),
+        }),
       })
     : Yup.object().shape({});
 };

@@ -1,3 +1,4 @@
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
@@ -14,10 +15,10 @@ export function NumberIndicator({ number, style }: IProps) {
 const styles = StyleSheet.create({
   dot: {
     backgroundColor: colors.coral,
-    borderRadius: 12,
-    height: 24,
+    borderRadius: sizes.s,
+    height: sizes.s * 2,
     justifyContent: 'center',
-    width: 24,
+    width: sizes.s * 2,
   },
   label: {
     alignSelf: 'center',

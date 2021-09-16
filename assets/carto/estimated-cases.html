@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Easy example | CartoDB.js</title>
+  <title>Estimated cases map</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="shortcut icon" href="https://carto.com/favicon.ico" />
@@ -83,30 +83,10 @@
     <div class="map-legend-mobile">
       <div class="legend-list">
         <div class="legend-list__item">
-
           <div class="legend_icon"></div>
           <div class="legend_label">Not enough data</div>
         </div>
-        <div class="legend-list__item">
-          <div class="legend_icon _1"></div>
-          <div class="legend_label">0 - 1000 cases pm</div>
-        </div>
-        <div class="legend-list__item">
-          <div class="legend_icon _2"></div>
-          <div class="legend_label">1000 - 2000 cases pm</div>
-        </div>
-        <div class="legend-list__item">
-          <div class="legend_icon _3"></div>
-          <div class="legend_label">2000 - 3000 cases pm</div>
-        </div>
-        <div class="legend-list__item">
-          <div class="legend_icon _4"></div>
-          <div class="legend_label">3000 - 5000 cases pm</div>
-        </div>
-        <div class="legend-list__item">
-          <div class="legend_icon _5"></div>
-          <div class="legend_label">5000 + cases pm</div>
-        </div>
+        <!-- The content is dynamically loaded -->
       </div>
     </div>
 
@@ -151,8 +131,13 @@
       }
     };
 
+    let loaded = false;
+
     window.onload = function main() {
-      //Create map
+      if (loaded) {
+        return;
+      }
+      loaded = true;
 
       const mapConfig = {
         shareable: false,
@@ -190,6 +175,19 @@
         })
         .error(function (err) {
           console.log(err);
+        });
+
+      fetch('https://covid-assets.joinzoe.com/latest/map_legend.json')
+        .then((response) => response.json())
+        .then((json) => {
+          const viewElement = document.getElementsByClassName('legend-list')[0];
+          for (let i = 0; i < json.legend.length; i += 1) {
+            viewElement.innerHTML += `
+              <div class="legend-list__item">
+                <div class="legend_icon _${i + 1}"></div>
+                <div class="legend_label">${json.legend[i]}</div>
+              </div>`;
+          }
         });
     };
   </script>

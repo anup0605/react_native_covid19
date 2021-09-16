@@ -43,10 +43,9 @@ testReconsentFeature({
   consent: false,
   fillInAllFeedback: false,
   fillInFeedback: ['im_only_interested_in_fighting_covid_19_right_now', 'other'],
-  privacyPolicyScrollDown: false,
   privacyPolicyView: true,
-  reconsider: true,
-  selectAllDiseases: true,
+  reconsider: false,
+  selectAllDiseases: false,
   selectDiseases: [
     'research_consent_dementia',
     'research_consent_nutrition_and_gut_health',
@@ -66,10 +65,12 @@ testReportTodayFeature({
   addTest: false,
   addVaccine: false,
   healthy: false,
+  updateTest: false,
 });
 testReportTodayFeature({
   addTest: true,
-  addVaccine: true,
+  addVaccine: false, // Change to true once new vaccine flow implemented
   healthy: true,
+  updateTest: true,
 });
 testLogoutFeature();

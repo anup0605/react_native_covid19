@@ -1,4 +1,5 @@
 import { Text } from '@covid/components';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
@@ -17,13 +18,13 @@ function LoadingIndicator() {
 
 const styles = StyleSheet.create({
   activityIcon: {
-    marginBottom: 8,
+    marginBottom: sizes.xs,
   },
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 32,
-    paddingVertical: 32,
+    paddingHorizontal: sizes.xl,
+    paddingVertical: sizes.xl,
   },
 });
 

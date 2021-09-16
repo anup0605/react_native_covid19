@@ -1,14 +1,6 @@
-export function sleep(milliseconds: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, milliseconds);
-  });
-}
+import { by, element, expect } from 'detox';
 
-export async function scrollToElement(
-  scrollElementId: string,
-  element: Detox.NativeElement,
-  direction: Detox.Direction,
-) {
+async function scrollToElement(scrollElementId: string, element: Detox.NativeElement, direction: Detox.Direction) {
   try {
     await waitFor(element).toBeVisible().whileElement(by.id(scrollElementId)).scroll(500, direction);
   } catch (_) {}
@@ -16,10 +8,6 @@ export async function scrollToElement(
 
 export async function scrollUpToElement(scrollElementId: string, element: Detox.NativeElement) {
   await scrollToElement(scrollElementId, element, 'up');
-}
-
-export async function scrollUpToId(scrollElementId: string, elementId: string) {
-  return scrollUpToElement(scrollElementId, element(by.id(elementId)));
 }
 
 export async function scrollDownToElement(scrollElementId: string, element: Detox.NativeElement) {
@@ -30,7 +18,7 @@ export async function scrollDownToId(scrollElementId: string, elementId: string)
   return scrollDownToElement(scrollElementId, element(by.id(elementId)));
 }
 
-export async function tapInputByElement(element: Detox.NativeElement) {
+async function tapInputByElement(element: Detox.NativeElement) {
   // Tap twice to lose the focus from the previous input (if it was a text input).
   await element.tap();
   await element.tap();
@@ -38,4 +26,17 @@ export async function tapInputByElement(element: Detox.NativeElement) {
 
 export async function tapInputById(elementId: string) {
   return tapInputByElement(element(by.id(elementId)));
+}
+
+export async function submitForm(screenId: string, scrollViewId: string, buttonId: string) {
+  await expect(element(by.id(buttonId).withAncestor(by.id(screenId)))).toExist();
+  await scrollDownToId(scrollViewId, buttonId);
+  // Sometimes scrolling down causes the button to be pressed.
+  try {
+    await element(by.id(buttonId).withAncestor(by.id(screenId))).tap();
+  } catch (_) {}
+  // Double tap to lose the focus from a possible text input above.
+  try {
+    await element(by.id(buttonId).withAncestor(by.id(screenId))).tap();
+  } catch (_) {}
 }

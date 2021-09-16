@@ -4,8 +4,9 @@ import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScree
 import TalkRectangle from '@covid/features/reconsent/components/TalkRectangle';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export default function ReconsentIntroductionScreen() {
   return (
@@ -15,14 +16,7 @@ export default function ReconsentIntroductionScreen() {
       buttonTitle={i18n.t('reconsent.introduction.button')}
       testID="reconsent-introduction-screen"
     >
-      <Text
-        inverted
-        colorPalette="actionPrimary"
-        colorShade="main"
-        style={styles.marginTop}
-        textAlign="center"
-        textClass="h5Medium"
-      >
+      <Text inverted colorPalette="actionPrimary" colorShade="main" textAlign="center" textClass="h5Medium">
         {i18n.t('company-name')}{' '}
         <Text inverted colorPalette="actionPrimary" colorShade="main" textClass="h5Light">
           {i18n.t('app-name')}
@@ -30,20 +24,19 @@ export default function ReconsentIntroductionScreen() {
       </Text>
       <IllustrationTim style={styles.illustration} />
       <TalkRectangle>
-        <Text inverted colorPalette="accentBlue" colorShade="main" textAlign="center" textClass="h2Light">
+        <Text inverted colorPalette="accentBlue" colorShade="main" textAlign="center" textClass="h3Light">
           {i18n.t('reconsent.introduction.title')}
         </Text>
       </TalkRectangle>
-      <Text
-        inverted
-        colorPalette="uiDark"
-        colorShade="darker"
-        style={styles.marginVertical}
-        textAlign="center"
-        textClass="h4Light"
-      >
-        {i18n.t('reconsent.introduction.description')}
-      </Text>
+      <View style={styles.textWrapper}>
+        <Text inverted colorPalette="uiDark" colorShade="darker" textAlign="center" textClass="h5Light">
+          {i18n.t('reconsent.introduction.description')}
+        </Text>
+        <View style={styles.marginVertical} />
+        <Text inverted colorPalette="uiDark" colorShade="darker" textAlign="center" textClass="h5Light">
+          {i18n.t('reconsent.introduction.approval')}
+        </Text>
+      </View>
     </ReconsentScreen>
   );
 }
@@ -51,13 +44,14 @@ export default function ReconsentIntroductionScreen() {
 const styles = StyleSheet.create({
   illustration: {
     alignSelf: 'center',
-    marginTop: 12,
-  },
-  marginTop: {
-    marginTop: 32,
+    marginTop: sizes.s,
   },
   marginVertical: {
-    marginBottom: 32,
-    marginTop: 32,
+    marginVertical: sizes.s,
+  },
+  textWrapper: {
+    marginBottom: 'auto',
+    marginTop: 'auto',
+    paddingVertical: sizes.xl,
   },
 });

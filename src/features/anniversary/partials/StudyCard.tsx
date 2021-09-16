@@ -1,5 +1,6 @@
 import { Icon, Text } from '@covid/components';
 import { TProgress, TTimelineEvent } from '@covid/features/anniversary/types';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -37,9 +38,9 @@ function StudyCard({ timelineEvent }: IProps) {
         <Icon
           iconName={ongoing === 'ONGOING' ? 'search' : 'placeholder-2'}
           iconSize={18}
-          style={{ marginTop: 4, opacity }}
+          style={{ marginTop: sizes.xxs, opacity }}
         />
-        <Text style={{ color: colors.textDark, marginLeft: 12, opacity }} textClass="pLight">
+        <Text style={{ color: colors.textDark, marginLeft: sizes.s, opacity }} textClass="pLight">
           {title}
         </Text>
       </View>
@@ -50,7 +51,7 @@ function StudyCard({ timelineEvent }: IProps) {
       ) : null}
       <ProgressBars progress={p} />
       {summary ? (
-        <Text style={{ color: colors.brand, marginTop: 12 }} textClass="pLight">
+        <Text style={{ color: colors.brand, marginTop: sizes.s }} textClass="pLight">
           {summary}
         </Text>
       ) : null}
@@ -60,14 +61,14 @@ function StudyCard({ timelineEvent }: IProps) {
 
 const styles = StyleSheet.create({
   body: {
-    marginBottom: 24,
-    marginTop: 12,
+    marginBottom: sizes.l,
+    marginTop: sizes.s,
   },
   container: {
     backgroundColor: 'white',
-    borderRadius: 16,
-    marginBottom: 48,
-    padding: 16,
+    borderRadius: sizes.m,
+    marginBottom: sizes.xxl,
+    padding: sizes.m,
   },
   row: {
     alignItems: 'center',

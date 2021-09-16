@@ -1,7 +1,9 @@
 import { BrandedButton, HeaderText, Text } from '@covid/components';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
+import { TDose } from '@covid/core/vaccine/dto/VaccineRequest';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -15,7 +17,12 @@ export const VaccineListMissingModal: React.FC<TProps> = ({ route }) => {
   const coordinator = assessmentCoordinator;
 
   const close = () => {
-    coordinator.goToAddEditVaccine(route.params?.vaccine);
+    // Get the edit index of the first dose that has missing data
+    const doses: TDose[] = route.params?.vaccine.doses ?? [];
+    const incompleteDoseIndex: number | undefined = doses.findIndex((dose: TDose) => {
+      return dose.date_taken_specific == null || dose.brand === null;
+    });
+    coordinator.goToAddEditVaccine(route.params?.vaccine, incompleteDoseIndex);
   };
 
   return (
@@ -34,23 +41,23 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.darkblue,
-    padding: 16,
-    paddingHorizontal: 64,
+    padding: sizes.m,
+    paddingHorizontal: sizes.xxl,
     textAlign: 'center',
   },
   modal: {
     alignItems: 'center',
     backgroundColor: colors.white,
-    borderRadius: 16,
-    marginHorizontal: 16,
+    borderRadius: sizes.m,
+    marginHorizontal: sizes.m,
     marginTop: 160,
     minHeight: 224,
-    padding: 32,
+    padding: sizes.xl,
     shadowRadius: 0,
     textAlign: 'center',
   },
   text: {
-    marginBottom: 24,
+    marginBottom: sizes.l,
     textAlign: 'center',
   },
 });

@@ -1,18 +1,11 @@
-import { SafeLayout } from '@covid/components';
 import { BrandedButton } from '@covid/components/buttons';
+import { Screen } from '@covid/components/Screen';
 import ChevronLeft from '@covid/features/reconsent/components/ChevronLeft';
+import { sizes } from '@covid/themes';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface IProps {
   activeDot?: number;
@@ -21,7 +14,7 @@ interface IProps {
   children?: React.ReactNode;
   hideBackButton?: boolean;
   noPadding?: boolean;
-  testID?: string;
+  testID: string;
 }
 
 const DOT_SIZE = 8;
@@ -41,51 +34,51 @@ const hitSlop = {
 export default function ReconsentScreen(props: IProps) {
   const navigation = useNavigation();
 
-  return (
-    <SafeLayout style={styles.safeLayout} testID={props.testID}>
-      {!props.hideBackButton || props.activeDot ? (
-        <View style={styles.headerWrapper}>
-          {props.hideBackButton ? null : (
-            <TouchableOpacity hitSlop={hitSlop} onPress={navigation.goBack} testID="button-back-navigation">
-              <ChevronLeft />
-            </TouchableOpacity>
-          )}
-          {props.activeDot ? (
-            <View pointerEvents="none" style={styles.dotsWrapper}>
-              {dots.map((_, index) => (
-                <View
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={`dot-${index}`}
-                  style={[
-                    index > 0 && styles.marginLeft,
-                    index + 1 === props.activeDot ? styles.dotActive : styles.dotInactive,
-                  ]}
-                />
-              ))}
-            </View>
-          ) : null}
-        </View>
-      ) : null}
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.flex}>
-        <ScrollView
-          alwaysBounceVertical={false}
-          contentContainerStyle={props.noPadding ? styles.contentContainer : styles.contentContainerPadding}
-          testID={`scroll-view-${props.testID || 'screen'}`}
-        >
-          {props.children}
+  function renderHeader() {
+    return !props.hideBackButton || props.activeDot ? (
+      <View style={styles.headerWrapper}>
+        {props.hideBackButton ? null : (
+          <TouchableOpacity hitSlop={hitSlop} onPress={navigation.goBack} testID="button-back-navigation">
+            <ChevronLeft />
+          </TouchableOpacity>
+        )}
+        {props.activeDot ? (
+          <View pointerEvents="none" style={styles.dotsWrapper}>
+            {dots.map((_, index) => (
+              <View
+                // eslint-disable-next-line react/no-array-index-key
+                key={`dot-${index}`}
+                style={[
+                  index > 0 && styles.marginLeft,
+                  index + 1 === props.activeDot ? styles.dotActive : styles.dotInactive,
+                ]}
+              />
+            ))}
+          </View>
+        ) : null}
+      </View>
+    ) : null;
+  }
 
-          {props.buttonOnPress && props.buttonTitle ? (
-            <BrandedButton
-              onPress={props.buttonOnPress}
-              style={styles.button}
-              testID={`button-cta-${props.testID || 'screen'}`}
-            >
-              {props.buttonTitle}
-            </BrandedButton>
-          ) : null}
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeLayout>
+  return (
+    <Screen
+      backgroundColor={colors.backgroundPrimary}
+      noPadding={props.noPadding}
+      renderHeader={renderHeader}
+      testID={props.testID}
+    >
+      {props.children}
+
+      {props.buttonOnPress && props.buttonTitle ? (
+        <BrandedButton
+          onPress={props.buttonOnPress}
+          style={styles.button}
+          testID={`button-cta-${props.testID || 'screen'}`}
+        >
+          {props.buttonTitle}
+        </BrandedButton>
+      ) : null}
+    </Screen>
   );
 }
 
@@ -99,13 +92,6 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.purple,
     marginTop: 'auto',
-  },
-  contentContainer: {
-    flexGrow: 1,
-  },
-  contentContainerPadding: {
-    flexGrow: 1,
-    padding: 16,
   },
   dotActive: {
     ...dotStyle,
@@ -121,21 +107,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  flex: {
-    flex: 1,
-  },
   headerWrapper: {
     alignItems: 'center',
     flexDirection: 'row',
-    padding: 16,
+    paddingBottom: sizes.m,
+    paddingHorizontal: sizes.screenHorizontalPadding,
+    paddingTop: sizes.screenVerticalPadding,
   },
   marginLeft: {
     marginLeft: DOT_SIZE / 2,
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  safeLayout: {
-    backgroundColor: colors.backgroundPrimary,
   },
 });

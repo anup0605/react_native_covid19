@@ -1,6 +1,6 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem } from '@covid/components/Checkbox';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { HeaderText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { covidTestService } from '@covid/core/user/CovidTestService';
@@ -41,7 +41,7 @@ export default function CovidTestConfirmScreen({ route }: IProps) {
   };
 
   return (
-    <ScreenNew backgroundColor={colors.backgroundSecondary} testID="covid-test-confirm-screen">
+    <Screen backgroundColor={colors.backgroundSecondary} testID="covid-test-confirm-screen">
       <HeaderText style={styling.marginBottomHuge}>{i18n.t('covid-test.confirm-test.title')}</HeaderText>
 
       <RegularText style={styling.marginBottom}>{i18n.t('covid-test.confirm-test.body')}</RegularText>
@@ -53,6 +53,6 @@ export default function CovidTestConfirmScreen({ route }: IProps) {
       <BrandedButton enabled={agreed} onPress={handleAgreeClicked} style={styling.marginTopHuge} testID="confirm">
         {i18n.t('legal.confirm')}
       </BrandedButton>
-    </ScreenNew>
+    </Screen>
   );
 }

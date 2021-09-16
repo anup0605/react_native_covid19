@@ -1,6 +1,7 @@
 import { BrandedButton, HeaderText, Modal, Text } from '@covid/components';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
@@ -27,7 +28,7 @@ export default function VersionUpdateModal({ navigation }: IProps) {
   }, [navigation]);
 
   return (
-    <Modal visible modalName="VersionUpdate" onRequestClose={goToStore}>
+    <Modal visible modalName="VersionUpdate" onRequestClose={goToStore} testID="version-update-modal">
       <HeaderText style={styles.text}>{i18n.t('version-update.title')}</HeaderText>
       <Text style={styles.text}>{i18n.t('version-update.body')}</Text>
       <BrandedButton onPress={goToStore} style={styles.button}>
@@ -39,10 +40,10 @@ export default function VersionUpdateModal({ navigation }: IProps) {
 
 const styles = StyleSheet.create({
   button: {
-    paddingHorizontal: 16,
+    paddingHorizontal: sizes.m,
   },
   text: {
-    marginBottom: 24,
+    marginBottom: sizes.l,
     textAlign: 'center',
   },
 });

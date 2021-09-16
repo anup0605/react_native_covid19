@@ -1,7 +1,9 @@
+import { TSharable } from '@covid/components/screens/share/Container';
 import { TAssessmentData } from '@covid/core/assessment/AssessmentCoordinator';
 import { TPatientData } from '@covid/core/patient/PatientData';
 import { ISchoolModel, ISubscribedSchoolStats } from '@covid/core/schools/Schools.dto';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
+import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
 import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 
 export enum EConsentType {
@@ -53,7 +55,12 @@ export type TScreenParamList = {
 
   // Assessment screens
   HealthWorkerExposure: { assessmentData: TAssessmentData };
-  CovidTestList: { assessmentData: TAssessmentData; tests?: TCovidTest[] };
+  CovidTestList: {
+    assessmentData: TAssessmentData;
+    tests?: TCovidTest[];
+    mechanism?: ECovidTestMechanismOptions;
+    is_rapid_test?: boolean;
+  };
   CovidTestDetail: { assessmentData: TAssessmentData; test?: TCovidTest };
   CovidTestConfirm: { assessmentData: TAssessmentData; test: TCovidTest };
   HowYouFeel: { assessmentData: TAssessmentData };
@@ -71,11 +78,16 @@ export type TScreenParamList = {
   Pingdemic: { assessmentData: TAssessmentData };
 
   // Vaccines
+  AboutYourVaccineFeatureToggle: { assessmentData: TAssessmentData; editIndex?: number };
+  AboutYourVaccineOld: { assessmentData: TAssessmentData; editIndex?: number };
+  AboutYourVaccineUpdated: { assessmentData: TAssessmentData; editIndex?: number };
   VaccineDoseSymptoms: { assessmentData: TAssessmentData; dose: string };
-  VaccineList: { assessmentData: TAssessmentData };
-  AboutYourVaccine: { assessmentData: TAssessmentData; editIndex?: number };
-  VaccineLogSymptomsInfo: { assessmentData: TAssessmentData };
   VaccineFindInfo: { assessmentData: TAssessmentData };
+  VaccineListFeatureToggle: { assessmentData: TAssessmentData };
+  VaccineList: { assessmentData: TAssessmentData };
+  VaccineListOld: { assessmentData: TAssessmentData };
+  VaccineListUpdated: { assessmentData: TAssessmentData };
+  VaccineLogSymptomsInfo: { assessmentData: TAssessmentData };
 
   // Completion screens
   ThankYouSE: undefined;
@@ -105,7 +117,6 @@ export type TScreenParamList = {
   DietStudyTraditional: undefined;
 
   // Mental health playback
-  MentalHealthPlaybackBlogPost: undefined;
   MentalHealthPlaybackGeneral: undefined;
   MentalHealthPlaybackIntroduction: undefined;
   MentalHealthPlaybackRating: undefined;
@@ -128,10 +139,13 @@ export type TScreenParamList = {
   ReconsentReconsider: undefined;
   ReconsentNewsletterSignup: undefined;
 
+  // Internal testing mode
+  TestingMode: undefined;
+
   // Others
   Modal: undefined;
   Main: undefined;
-  Share: undefined;
+  Share: { sharable: TSharable | undefined; hideLabel: boolean; label: string };
   VaccineListMissingModal: { vaccine: TVaccineRequest };
   VersionUpdateModal: undefined;
 

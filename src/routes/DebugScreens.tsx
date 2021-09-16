@@ -4,31 +4,67 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const screenEntries = Object.entries(screens);
 
+const timeInterval = 2000; // milliseconds
+
 export default function DebugScreens(props: any) {
-  const [index, setIndex] = React.useState(14);
+  const [runSlideshow, setRunSlideshow] = React.useState(false);
+  const [index, setIndex] = React.useState(16);
   const [showInfo, setShowInfo] = React.useState(true);
+
+  /* Uncomment below to let the app go through all screens like a slideshow. */
+  React.useEffect(() => {
+    if (!runSlideshow) {
+      return undefined;
+    }
+    setShowInfo(false);
+    const interval = setInterval(() => {
+      setIndex((previousIndex) => {
+        if (previousIndex >= screenEntries.length - 1) {
+          setRunSlideshow(false);
+          setShowInfo(true);
+          clearInterval(interval);
+          return 0;
+        }
+        return previousIndex + 1;
+      });
+    }, timeInterval);
+    return () => clearInterval(interval);
+  }, [runSlideshow]);
+
   if (!__DEV__) {
     return null;
   }
+
   function onLongPress() {
     setShowInfo((previousShowInfo) => !previousShowInfo);
   }
-  function onPress() {
+  function onPressPrevious() {
+    setIndex((previousIndex) => (previousIndex === 0 ? screenEntries.length - 1 : previousIndex - 1));
+  }
+  function onPressNext() {
     setIndex((previousIndex) => (previousIndex === screenEntries.length - 1 ? 0 : previousIndex + 1));
   }
+
   const Screen = screenEntries[index][1];
+
+  const textStyle = showInfo ? styles.text : styles.textHidden;
+
   return (
     <>
       {/* @ts-expect-error */}
       <Screen {...props} />
       <View pointerEvents="box-none" style={styles.view}>
-        <TouchableOpacity onLongPress={onLongPress} onPress={onPress} style={styles.touchableOpacity}>
-          {showInfo ? (
-            <>
-              <Text style={styles.text}>{index}</Text>
-              <Text style={styles.text}>{screenEntries[index][0]}</Text>
-            </>
-          ) : null}
+        <TouchableOpacity onLongPress={onLongPress} style={styles.touchableOpacity}>
+          <TouchableOpacity onPress={onPressPrevious} style={styles.textWrapper}>
+            <Text style={textStyle}>{'<'}</Text>
+          </TouchableOpacity>
+          <View style={styles.textWrapper}>
+            <Text style={textStyle}>{index}</Text>
+            <Text style={textStyle}>{screenEntries[index][0]}</Text>
+          </View>
+          <TouchableOpacity onPress={onPressNext} style={styles.textWrapper}>
+            <Text style={textStyle}>{'>'}</Text>
+          </TouchableOpacity>
         </TouchableOpacity>
       </View>
     </>
@@ -38,13 +74,24 @@ export default function DebugScreens(props: any) {
 const styles = StyleSheet.create({
   text: {
     color: 'red',
+    textAlign: 'center',
   },
-  touchableOpacity: {
+  textHidden: {
+    color: 'red',
+    display: 'none',
+    textAlign: 'center',
+  },
+  textWrapper: {
     alignItems: 'center',
     aspectRatio: 1,
+    flex: 1,
     justifyContent: 'center',
-    minWidth: 250,
-    width: '33%',
+    zIndex: 1000,
+  },
+  touchableOpacity: {
+    flexDirection: 'row',
+    marginBottom: 'auto',
+    marginTop: 'auto',
   },
   view: {
     alignItems: 'center',

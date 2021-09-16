@@ -1,3 +1,5 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
+
 import { IAssessmentService } from '@covid/core/assessment/AssessmentService';
 import { TConfigType } from '@covid/core/Config';
 import { Coordinator, TScreenFlow, TScreenName } from '@covid/core/Coordinator';
@@ -30,7 +32,10 @@ export class AssessmentCoordinator extends Coordinator {
   appCoordinator: AppCoordinator;
 
   screenFlow: Partial<TScreenFlow> = {
-    AboutYourVaccine: () => {
+    AboutYourVaccineOld: () => {
+      NavigatorService.goBack();
+    },
+    AboutYourVaccineUpdated: () => {
       NavigatorService.goBack();
     },
     CovidTestConfirm: () => {
@@ -38,12 +43,17 @@ export class AssessmentCoordinator extends Coordinator {
     },
     CovidTestList: () => {
       // After finishing with COVID Tests, we check to ask about Vaccines.
-      // UK & US users above 16 years, will be eligible (shouldShowVaccineList = True)
       if (this.patientData.patientState.shouldShowVaccineList) {
-        NavigatorService.navigate('VaccineList', { assessmentData: this.assessmentData });
+        // Note that VaccineList is currently a "feature toggle placeholder" that uses startupInfo to use old/new UI
+        NavigatorService.navigate('VaccineListFeatureToggle', {
+          assessmentData: this.assessmentData,
+        });
       } else {
         NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });
       }
+    },
+    VaccineListFeatureToggle: () => {
+      NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });
     },
     GeneralSymptoms: () => {
       NavigatorService.navigate('HeadSymptoms', { assessmentData: this.assessmentData });
@@ -171,12 +181,13 @@ export class AssessmentCoordinator extends Coordinator {
     });
   };
 
-  goToAddEditVaccine = (vaccine?: TVaccineRequest) => {
+  goToAddEditVaccine = (vaccine?: TVaccineRequest, index?: number) => {
     if (vaccine) {
       this.assessmentData.vaccineData = vaccine;
     }
-    NavigatorService.navigate('AboutYourVaccine', {
+    return NavigatorService.navigate('AboutYourVaccineFeatureToggle', {
       assessmentData: this.assessmentData,
+      editIndex: index,
     });
   };
 
@@ -190,11 +201,11 @@ export class AssessmentCoordinator extends Coordinator {
     );
   }
 
-  editLocation() {
+  editLocation = () => {
     this.appCoordinator.startEditLocation(this.patientData.patientState.profile, this.patientData);
-  }
+  };
 
-  gotoSelectProfile() {
+  gotoSelectProfile = () => {
     NavigatorService.reset(
       [
         { name: 'Dashboard' },
@@ -205,19 +216,19 @@ export class AssessmentCoordinator extends Coordinator {
       ],
       1,
     );
-  }
+  };
 
-  goToTestConfirm(test: TCovidTest) {
+  goToTestConfirm = (test: TCovidTest) => {
     NavigatorService.navigate('CovidTestConfirm', { assessmentData: this.assessmentData, test });
-  }
+  };
 
-  goToThankYouScreen() {
+  goToThankYouScreen = () => {
     const homeScreen: TScreenName = homeScreenName();
     const thankYouScreen: TScreenName = isUSCountry() ? 'ThankYouUS' : isSECountry() ? 'ThankYouSE' : 'ThankYouUK';
     NavigatorService.reset([{ name: homeScreen }, { name: thankYouScreen }], 1);
-  }
+  };
 
-  resetToCreateProfile() {
+  resetToCreateProfile = () => {
     const homeScreen: TScreenName = homeScreenName();
     NavigatorService.reset(
       [
@@ -230,18 +241,22 @@ export class AssessmentCoordinator extends Coordinator {
       ],
       2,
     );
-  }
+  };
 
-  setVaccine(vaccine: Partial<TVaccineRequest>) {
+  setVaccine = (vaccine: Partial<TVaccineRequest>) => {
     this.assessmentData.vaccineData = {
       ...this.assessmentData.vaccineData!,
       ...vaccine,
     };
-  }
+  };
 
-  resetVaccine() {
+  resetVaccine = () => {
     this.assessmentData.vaccineData = undefined;
-  }
+  };
+
+  isReportedByOther = () => {
+    return this.assessmentData?.patientData?.patientInfo?.reported_by_another;
+  };
 }
 
 export const assessmentCoordinator = new AssessmentCoordinator();

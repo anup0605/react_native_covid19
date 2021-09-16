@@ -17,7 +17,7 @@ const checkApiStatus = () => axios.get(API_URL, REQUEST_OPTS);
 
 const RETRY_DELAY = 5000; // in microseconds
 
-export interface IOfflineService {
+interface IOfflineService {
   isOnline: boolean;
   isApiOnline: boolean;
   lastUpdated: string;

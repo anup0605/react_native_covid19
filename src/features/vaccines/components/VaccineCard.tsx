@@ -8,24 +8,24 @@ import {
   vaccineBrandDisplayName,
 } from '@covid/core/vaccine/dto/VaccineRequest';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import moment from 'moment';
 import { Text } from 'native-base';
 import * as React from 'react';
-import { Image, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
+import { Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 
-export const displayDescriptionNameMap = {
+const displayDescriptionNameMap = {
   mrna: 'mRNA',
   not_sure: i18n.t('vaccines.your-vaccine.name-i-dont-know'),
 };
 
 type TProps = {
   vaccine: TVaccineRequest;
-  style?: ViewStyle;
   onPressEdit: (index: number) => void;
 };
 
-export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) => {
+export const VaccineCard: React.FC<TProps> = ({ vaccine, onPressEdit }) => {
   const formatDateString = (dateString: string): string => {
     return moment(dateString).format('MMM D YYYY');
   };
@@ -38,15 +38,15 @@ export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) =
     return dose.date_taken_specific ? formatDateString(dose.date_taken_specific) : '';
   };
 
-  const warningIconAndText = (textKey: string) => (
+  const warningIconAndText = (text: string) => (
     <View style={styles.row}>
       <QuestionCircle colorBg={colors.feedbackBad} colorIcon={colors.white} />
-      <RegularText style={{ ...styles.warningText, marginLeft: 4 }}>{i18n.t(textKey)}</RegularText>
+      <RegularText style={{ ...styles.warningText, marginLeft: sizes.xxs }}>{text}</RegularText>
     </View>
   );
 
-  const dateRequired = warningIconAndText('vaccines.vaccine-card.date-missing');
-  const notYetLogged = warningIconAndText('vaccines.vaccine-card.not-logged');
+  const dateRequired = warningIconAndText(i18n.t('vaccines.vaccine-card.date-missing'));
+  const notYetLogged = warningIconAndText(i18n.t('vaccines.vaccine-card.not-logged'));
 
   const dose1: Partial<TDose> | undefined = vaccine.doses[0];
   const dose2: Partial<TDose> | undefined = vaccine.doses[1];
@@ -72,13 +72,13 @@ export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) =
               ? hasFirstDoseBrand
                 ? vaccineBrandDisplayName[dose1.brand]
                 : displayDescriptionNameMap[dose1.description]
-              : warningIconAndText('vaccines.vaccine-card.name-missing')}
+              : warningIconAndText(i18n.t('vaccines.vaccine-card.name-missing'))}
           </RegularText>
 
           {!hasFirstDoseDate ? dateRequired : null}
 
           {hasFirstDoseDate ? (
-            <View style={{ marginBottom: 0, marginTop: 8 }}>
+            <View style={{ marginBottom: 0, marginTop: sizes.xs }}>
               <RegularText style={[!hasFirstDoseDate && styles.pendingText]}>
                 {hasFirstDoseDate ? formatVaccineDate(dose1 as TDose) : null}
               </RegularText>
@@ -96,13 +96,13 @@ export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) =
             </View>
 
             {hasSecondDoseDate ? (
-              <View style={{ marginBottom: 8, marginTop: 0 }}>
+              <View style={{ marginBottom: sizes.xs, marginTop: 0 }}>
                 <RegularText style={[!hasSecondDoseName && styles.pendingText]}>
                   {hasSecondDoseName
                     ? hasSecondDoseBrand
                       ? vaccineBrandDisplayName[dose2.brand]
                       : displayDescriptionNameMap[dose2.description]
-                    : warningIconAndText('vaccines.vaccine-card.name-missing')}
+                    : warningIconAndText(i18n.t('vaccines.vaccine-card.name-missing'))}
                 </RegularText>
               </View>
             ) : null}
@@ -113,7 +113,7 @@ export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) =
           </View>
         )}
 
-        <Text style={{ marginBottom: 8, marginTop: 8, textAlign: 'center' }}>
+        <Text style={{ marginBottom: sizes.xs, marginTop: sizes.xs, textAlign: 'center' }}>
           <Text style={styles.clickableText}>{i18n.t('vaccines.vaccine-card.edit-vaccine')}</Text>
         </Text>
       </View>
@@ -124,19 +124,19 @@ export const VaccineCard: React.FC<TProps> = ({ vaccine, style, onPressEdit }) =
 const styles = StyleSheet.create({
   clickableText: {
     color: colors.purple,
-    marginBottom: 8,
-    marginTop: 24,
+    marginBottom: sizes.xs,
+    marginTop: sizes.l,
     textAlign: 'center',
   },
   container: {
     borderColor: colors.tertiary,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     borderWidth: 1,
-    margin: 16,
-    padding: 16,
+    margin: sizes.m,
+    padding: sizes.m,
   },
   dose: {
-    marginBottom: 16,
+    marginBottom: sizes.m,
   },
   pendingIconAndText: {
     marginLeft: 1,
@@ -148,11 +148,11 @@ const styles = StyleSheet.create({
   row: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: 8,
+    marginVertical: sizes.xs,
   },
   tick: {
     height: 16,
-    marginEnd: 8,
+    marginRight: sizes.xs,
     width: 16,
   },
   warningText: {

@@ -1,4 +1,4 @@
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { SelectorButton } from '@covid/components/SelectorButton';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
 import { EConsentType, TScreenParamList } from '@covid/features/ScreenParamList';
@@ -25,7 +25,7 @@ export default class AdultOrChildScreen extends React.Component<TProps> {
 
   render() {
     return (
-      <ScreenNew testID="adult-child-screen">
+      <Screen testID="adult-child-screen">
         <HeaderText style={styling.marginBottomSmall}>{i18n.t('adult-or-child-title')}</HeaderText>
         <SecondaryText>{i18n.t('adult-or-child-text')}</SecondaryText>
 
@@ -43,7 +43,7 @@ export default class AdultOrChildScreen extends React.Component<TProps> {
             text={i18n.t('person-under-18')}
           />
         </View>
-      </ScreenNew>
+      </Screen>
     );
   }
 }

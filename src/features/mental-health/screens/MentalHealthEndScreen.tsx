@@ -1,8 +1,11 @@
-import { BasicPage, Done, SimpleShare, Spacer, Text } from '@covid/components';
+import { Done, SimpleShare, Text } from '@covid/components';
+import { Screen } from '@covid/components/Screen';
 import { events } from '@covid/core/Analytics';
 import { selectMentalHealthState, setCompleted } from '@covid/core/state';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
+import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +21,12 @@ export default function MentalHealthEndScreen() {
   });
 
   return (
-    <BasicPage withGutter footerTitle="Back to home" onPress={() => NavigatorService.navigate('Dashboard', undefined)}>
+    <Screen
+      backgroundColor={colors.backgroundTertiary}
+      footerOnPress={() => NavigatorService.navigate('Dashboard', undefined)}
+      footerTitle="Back to home"
+      testID="mental-health-end-screen"
+    >
       <View style={styles.tickContainer}>
         <Done />
       </View>
@@ -36,8 +44,7 @@ export default function MentalHealthEndScreen() {
         title={i18n.t('mental-health.share')}
         trackEvent={events.MENTAL_HEALTH_SHARED}
       />
-      <Spacer space={24} />
-    </BasicPage>
+    </Screen>
   );
 }
 
@@ -45,14 +52,14 @@ const styles = StyleSheet.create({
   tick: {
     alignItems: 'center',
     borderColor: '#C0D904',
-    borderRadius: 24,
+    borderRadius: sizes.l,
     borderWidth: 3,
-    height: 48,
+    height: sizes.l * 2,
     justifyContent: 'center',
-    width: 48,
+    width: sizes.l * 2,
   },
   tickContainer: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: sizes.l,
   },
 });

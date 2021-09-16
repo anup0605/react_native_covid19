@@ -1,4 +1,5 @@
 import { Icon, Text } from '@covid/components';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -14,8 +15,8 @@ function TimelineError() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingHorizontal: 32,
-    paddingVertical: 32,
+    paddingHorizontal: sizes.xl,
+    paddingVertical: sizes.xl,
   },
 });
 

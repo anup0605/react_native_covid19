@@ -1,4 +1,5 @@
-import { BasicPage, Text } from '@covid/components';
+import { Text } from '@covid/components';
+import { Screen } from '@covid/components/Screen';
 import {
   selectMentalHealthChanges,
   setDevicesWithScreen,
@@ -23,9 +24,7 @@ import { ChangesQuestion } from '@covid/features/mental-health/partials';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { mentalHealthApiClient } from '@covid/services';
-import { useTheme } from '@covid/themes';
 import * as React from 'react';
-import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function MentalHealthChangesScreen() {
@@ -34,7 +33,6 @@ export default function MentalHealthChangesScreen() {
   const [curQuestion, setCurQuestion] = React.useState(0);
   const mentalHealthChanges = useSelector(selectMentalHealthChanges);
   const dispatch = useDispatch();
-  const { grid } = useTheme();
   const questions = [
     {
       action: setSleep,
@@ -142,27 +140,30 @@ export default function MentalHealthChangesScreen() {
   };
 
   return (
-    <BasicPage active={canSubmit} footerTitle={i18n.t('navigation.next')} onPress={saveStateAndNavigate}>
-      <View style={{ paddingHorizontal: grid.gutter }}>
-        <Text rhythm={32} textClass="h3">
-          {i18n.t('mental-health.question-changes')}
-        </Text>
-        {questions.map((item, index) => {
-          const key = `changes-${index}`;
-          const disabled = index > curQuestion;
-          return (
-            <ChangesQuestion
-              disabled={disabled}
-              key={key}
-              onPress={(changeType) => {
-                dispatch(item.action(changeType));
-              }}
-              question={item.question}
-              state={item.state}
-            />
-          );
-        })}
-      </View>
-    </BasicPage>
+    <Screen
+      footerEnabled={canSubmit}
+      footerOnPress={saveStateAndNavigate}
+      footerTitle={i18n.t('navigation.next')}
+      testID="mental-health-changes-screen"
+    >
+      <Text rhythm={32} textClass="h3">
+        {i18n.t('mental-health.question-changes')}
+      </Text>
+      {questions.map((item, index) => {
+        const key = `changes-${index}`;
+        const disabled = index > curQuestion;
+        return (
+          <ChangesQuestion
+            disabled={disabled}
+            key={key}
+            onPress={(changeType) => {
+              dispatch(item.action(changeType));
+            }}
+            question={item.question}
+            state={item.state}
+          />
+        );
+      })}
+    </Screen>
   );
 }

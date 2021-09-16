@@ -1,11 +1,11 @@
 import DropdownField from '@covid/components/DropdownField';
 import { requiredFormMarker } from '@covid/components/Form';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -30,7 +30,7 @@ const HeightInInches: React.FC<IProps> = ({ formikProps }) => {
     <View style={styles.primaryFieldRow}>
       <View style={styles.feetField}>
         <ValidatedTextInput
-          error={formikProps.touched.feet && formikProps.errors.feet}
+          error={formikProps.touched.feet && !!formikProps.errors.feet}
           keyboardType="numeric"
           onBlur={formikProps.handleBlur('feet')}
           onChangeText={formikProps.handleChange('feet')}
@@ -43,7 +43,7 @@ const HeightInInches: React.FC<IProps> = ({ formikProps }) => {
       </View>
       <View style={styles.inchesField}>
         <ValidatedTextInput
-          error={formikProps.touched.inches && formikProps.errors.inches}
+          error={formikProps.touched.inches && !!formikProps.errors.inches}
           keyboardType="numeric"
           onBlur={formikProps.handleBlur('inches')}
           onChangeText={formikProps.handleChange('inches')}
@@ -62,7 +62,7 @@ const HeightInCm: React.FC<IProps> = ({ formikProps }) => {
   return (
     <View style={styles.cmField}>
       <ValidatedTextInput
-        error={formikProps.touched.height && formikProps.errors.height}
+        error={formikProps.touched.height && !!formikProps.errors.height}
         keyboardType="numeric"
         onBlur={formikProps.handleBlur('height')}
         onChangeText={formikProps.handleChange('height')}
@@ -78,7 +78,7 @@ const HeightInCm: React.FC<IProps> = ({ formikProps }) => {
 
 export const HeightQuestion: IFCWithStatic<IProps> = ({ formikProps }) => {
   return (
-    <FieldWrapper style={styles.fieldWrapper}>
+    <View style={styles.view}>
       <RegularText>
         {i18n.t('your-height')}
         {requiredFormMarker}
@@ -115,7 +115,7 @@ export const HeightQuestion: IFCWithStatic<IProps> = ({ formikProps }) => {
       {formikProps.touched.heightUnit && formikProps.errors.heightUnit ? (
         <ValidationError error={formikProps.errors.heightUnit} />
       ) : null}
-    </FieldWrapper>
+    </View>
   );
 };
 
@@ -132,39 +132,33 @@ HeightQuestion.initialFormValues = () => {
 const styles = StyleSheet.create({
   cmField: {
     flex: 6,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
-
   feetField: {
     flex: 5,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
-
   fieldRow: {
     flexDirection: 'row',
   },
-
-  fieldWrapper: {
-    flex: 1,
-  },
-
   inchesField: {
     flex: 5,
-    marginHorizontal: 4,
+    marginHorizontal: sizes.xxs,
   },
-
   primaryFieldRow: {
     flex: 6,
     flexDirection: 'row',
   },
-
   textItemStyle: {
     borderColor: 'transparent',
   },
-
   unitsField: {
     flex: 2,
-    marginLeft: 4,
+    marginLeft: sizes.xxs,
     marginTop: -16,
+  },
+  view: {
+    flex: 1,
+    marginVertical: sizes.m,
   },
 });

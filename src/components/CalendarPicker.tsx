@@ -1,32 +1,38 @@
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
+import { sizes, styling } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-import CalendarPicker, { CalendarPickerProps } from 'react-native-calendar-picker';
+import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
+import RNCalendarPicker, { CalendarPickerProps } from 'react-native-calendar-picker';
 
-import { screenWidth } from './Screen';
+const CalendarPicker = (props: CalendarPickerProps) => {
+  const [width, setWidth] = React.useState(0);
 
-const ZoeCalendarPicker = (props: CalendarPickerProps) => (
-  <View style={styles.calendarView}>
-    <CalendarPicker
-      {...props}
-      selectedDayStyle={styles.selectedDay}
-      selectedDayTextColor={colors.white}
-      selectedRangeStyle={styles.selectedRange}
-      startFromMonday={!isUSCountry()}
-      todayBackgroundColor="transparent"
-      todayTextStyle={styles.today}
-      width={screenWidth - 16}
-    />
-  </View>
-);
+  function onLayout(event: LayoutChangeEvent) {
+    setWidth(event.nativeEvent.layout.width);
+  }
+  return (
+    <View style={styles.calendarView}>
+      <View onLayout={onLayout} style={styling.measureWidth} />
+      <RNCalendarPicker
+        {...props}
+        selectedDayStyle={styles.selectedDay}
+        selectedDayTextColor={colors.white}
+        selectedRangeStyle={styles.selectedRange}
+        startFromMonday={!isUSCountry()}
+        todayBackgroundColor="transparent"
+        todayTextStyle={styles.today}
+        width={Math.min(width, sizes.maxScreenWidth)}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   calendarView: {
-    alignItems: 'center',
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
-    padding: 12,
+    borderRadius: sizes.xs,
+    padding: sizes.xs,
   },
   selectedDay: {
     backgroundColor: colors.lightBlueBrand,
@@ -40,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ZoeCalendarPicker;
+export default CalendarPicker;

@@ -1,7 +1,7 @@
 import { BrandedButton } from '@covid/components';
 import { CheckboxItem } from '@covid/components/Checkbox';
 import { LoadingModal } from '@covid/components/Loading';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { ClickableText, ErrorText, HeaderText, RegularText } from '@covid/components/Text';
 import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
 import { patientService } from '@covid/core/patient/PatientService';
@@ -87,7 +87,7 @@ export default class ConsentForOtherScreen extends React.Component<TProps, TStat
 
   render() {
     return (
-      <ScreenNew testID="consent-for-other-screen">
+      <Screen testID="consent-for-other-screen">
         {this.state.isApiError ? (
           <LoadingModal
             error={this.state.error}
@@ -138,7 +138,7 @@ export default class ConsentForOtherScreen extends React.Component<TProps, TStat
             {i18n.t('consent-create-profile')}
           </BrandedButton>
         </View>
-      </ScreenNew>
+      </Screen>
     );
   }
 }

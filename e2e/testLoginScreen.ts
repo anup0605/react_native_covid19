@@ -1,4 +1,8 @@
+/* eslint-env jest */
+
 import { by, element, expect } from 'detox';
+
+import { testMentalHealthPlaybackModal } from './testModals';
 
 type TLoginConfig = {
   emailAddress: string;
@@ -23,6 +27,8 @@ export function testLoginScreen(config: TLoginConfig) {
       await element(by.id('login-button')).tap();
       await expect(element(by.id('login-button'))).not.toBeVisible();
     });
+
+    testMentalHealthPlaybackModal();
 
     // It would be better if the user directly goes to the dashboard screen.
     it('should complete the select country screen (if present)', async () => {

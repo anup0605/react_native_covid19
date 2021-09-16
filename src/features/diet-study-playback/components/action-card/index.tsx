@@ -2,7 +2,7 @@ import { ActionCard, Icon, Text } from '@covid/components';
 import Analytics from '@covid/core/Analytics';
 import { selectSettings, setEmailSubscription } from '@covid/core/state';
 import i18n from '@covid/locale/i18n';
-import { useTheme } from '@covid/themes';
+import { sizes, useTheme } from '@covid/themes';
 import * as React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,8 +42,8 @@ function DietStudyActionCard() {
         {i18n.t('diet-study.email-action-body')}
       </Text>
       {settings.hasEmailSubscription ? (
-        <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', marginTop: 24 }}>
-          <Icon iconName="tick" style={{ marginRight: 8 }} />
+        <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center', marginTop: sizes.l }}>
+          <Icon iconName="tick" style={{ marginRight: sizes.xs }} />
           <Text>{i18n.t('navigation.cta-email-success')}</Text>
         </View>
       ) : null}

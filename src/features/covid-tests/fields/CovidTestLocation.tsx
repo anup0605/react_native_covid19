@@ -17,7 +17,7 @@ interface IProps {
   test?: TCovidTest;
 }
 
-export interface ICovidTestLocationQuestion<P, Data> extends React.FC<P> {
+interface ICovidTestLocationQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
   createDTO: (data: Data) => Partial<TCovidTest>;
@@ -94,7 +94,7 @@ CovidTestLocationQuestion.initialFormValues = (test?: TCovidTest): ICovidTestLoc
 
 CovidTestLocationQuestion.schema = () => {
   return Yup.object().shape({
-    location: Yup.string().required(i18n.t('please-select-option')),
+    location: Yup.string(),
   });
 };
 

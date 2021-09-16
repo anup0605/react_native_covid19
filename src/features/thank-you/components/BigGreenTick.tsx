@@ -2,7 +2,7 @@ import { tick } from '@assets';
 import * as React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-export const BigGreenTickFilled: React.FC = (props) => (
+export const BigGreenTickFilled: React.FC = () => (
   <View style={styles.circle}>
     <Image source={tick} style={styles.tick} />
   </View>

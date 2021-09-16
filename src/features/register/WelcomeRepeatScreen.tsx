@@ -5,15 +5,18 @@ import { DrawerToggle } from '@covid/components/DrawerToggle';
 import { LoadingModal } from '@covid/components/Loading';
 import { PartnerLogoSE, PartnerLogoUS } from '@covid/components/logos/PartnerLogo';
 import { PoweredByZoe } from '@covid/components/logos/PoweredByZoe';
+import { Screen } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { initialErrorState, TApiErrorState } from '@covid/core/api/ApiServiceErrors';
 import { contentService } from '@covid/core/content/ContentService';
 import { TScreenContent } from '@covid/core/content/ScreenContentContracts';
 import { isSECountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { appCoordinator } from '@covid/features/AppCoordinator';
+import { ContributionCounter } from '@covid/features/register/components/ContributionCounter';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { offlineService, pushNotificationService } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { cleanIntegerVal } from '@covid/utils/number';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -21,9 +24,7 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { colors } from '@theme';
 import * as React from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-
-import { ContributionCounter } from './components/ContributionCounter';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 type TProps = {
   navigation: CompositeNavigationProp<
@@ -81,13 +82,30 @@ export class WelcomeRepeatScreen extends React.Component<TProps, TState> {
     }
   };
 
-  displayPartnerLogo = () => {
+  renderHeader = () => (
+    <View style={styles.wrapper}>
+      <DrawerToggle
+        navigation={this.props.navigation as DrawerNavigationProp<TScreenParamList>}
+        style={{ tintColor: colors.white }}
+      />
+    </View>
+  );
+
+  renderPartnerLogo = () => {
     return isUSCountry() ? <PartnerLogoUS /> : isSECountry() ? <PartnerLogoSE /> : <PoweredByZoe />;
   };
 
+  renderFooter = () => (
+    <View style={styles.wrapper}>
+      <BrandedButton onPress={this.gotoNextScreen} style={styles.reportButton}>
+        {i18n.t('welcome.report-button')}
+      </BrandedButton>
+    </View>
+  );
+
   render() {
     return (
-      <SafeAreaView style={styles.safeView}>
+      <>
         {this.state.isApiError ? (
           <LoadingModal
             error={this.state.error}
@@ -96,13 +114,13 @@ export class WelcomeRepeatScreen extends React.Component<TProps, TState> {
             status={this.state.status}
           />
         ) : null}
-        <ScrollView>
-          <View style={styles.headerContainer}>
-            <DrawerToggle
-              navigation={this.props.navigation as DrawerNavigationProp<TScreenParamList>}
-              style={{ tintColor: colors.white }}
-            />
-          </View>
+        <Screen
+          hideBackButton
+          backgroundColor={colors.brand}
+          renderFooter={this.renderFooter}
+          renderHeader={this.renderHeader}
+          testID="welcome-repeat-screen"
+        >
           <View style={styles.rootContainer}>
             <View style={styles.covidIconBackground}>
               <Image resizeMode="contain" source={covidIcon} style={styles.covidIcon} />
@@ -114,20 +132,15 @@ export class WelcomeRepeatScreen extends React.Component<TProps, TState> {
 
             <ContributionCounter count={this.state.userCount} variant={2} />
 
-            {this.displayPartnerLogo()}
+            {this.renderPartnerLogo()}
 
             <CalloutBox
               content={this.state.calloutBoxContent}
               onPress={() => openWebLink(this.state.calloutBoxContent.body_link)}
             />
           </View>
-        </ScrollView>
-        <View style={styles.reportContainer}>
-          <BrandedButton onPress={this.gotoNextScreen} style={styles.reportButton}>
-            {i18n.t('welcome.report-button')}
-          </BrandedButton>
-        </View>
-      </SafeAreaView>
+        </Screen>
+      </>
     );
   }
 }
@@ -143,13 +156,9 @@ const styles = StyleSheet.create({
   },
   covidIconBackground: {
     backgroundColor: colors.predict,
-    borderRadius: 8,
-    marginVertical: 24,
-    padding: 8,
-  },
-  headerContainer: {
-    paddingHorizontal: 10,
-    paddingTop: 10,
+    borderRadius: sizes.xs,
+    marginBottom: sizes.l,
+    padding: sizes.xs,
   },
   reportButton: {
     alignSelf: 'center',
@@ -158,24 +167,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '100%',
   },
-  reportContainer: {
-    padding: 20,
-  },
   rootContainer: {
     alignItems: 'center',
-    flex: 1,
-    paddingHorizontal: 24,
-  },
-
-  safeView: {
-    backgroundColor: colors.brand,
     flex: 1,
   },
   subtitle: {
     color: colors.white,
     fontSize: 24,
     lineHeight: 38,
-    marginTop: 16,
+    marginTop: sizes.m,
     textAlign: 'center',
+  },
+  wrapper: {
+    backgroundColor: colors.brand,
+    padding: sizes.l,
   },
 });

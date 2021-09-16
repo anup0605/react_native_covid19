@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { AssessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { getConfig, setConfigCountry } from '@covid/core/Config';
 import { getInitialPatientState } from '@covid/core/patient/PatientState';

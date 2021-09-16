@@ -1,6 +1,6 @@
 import { by, element } from 'detox';
 
-import { scrollDownToId, tapInputById } from './helpers';
+import { scrollDownToId, submitForm, tapInputById } from './helpers';
 
 export function testAboutYouForm() {
   it('should be able to fill in the form about you', async () => {
@@ -27,8 +27,7 @@ export function testAboutYouForm() {
     await scrollDownToId('scroll-view-about-you-screen', 'input-ever-exposed-item-no');
     await tapInputById('input-ever-exposed-item-no');
 
-    await scrollDownToId('scroll-view-about-you-screen', 'button-submit');
-    await element(by.id('button-submit').withAncestor(by.id('about-you-screen'))).tap();
+    await submitForm('about-you-screen', 'scroll-view-about-you-screen', 'button-submit');
   });
 }
 
@@ -38,8 +37,7 @@ export function testAboutYourWorkForm() {
 
     await element(by.id('button-no-is-carer-question')).tap();
 
-    await scrollDownToId('scroll-view-your-work-screen', 'button-submit');
-    await element(by.id('button-submit').withAncestor(by.id('your-work-screen'))).tap();
+    await submitForm('your-work-screen', 'scroll-view-your-work-screen', 'button-submit');
   });
 }
 
@@ -48,15 +46,13 @@ export function testAboutYourHealthForm() {
     await scrollDownToId('scroll-view-your-health-screen', 'input-blood-group-item-unsure');
     await element(by.id('input-blood-group-item-unsure')).tap();
 
-    await scrollDownToId('scroll-view-your-health-screen', 'button-submit');
-    await element(by.id('button-submit').withAncestor(by.id('your-health-screen'))).tap();
+    await submitForm('your-health-screen', 'scroll-view-your-health-screen', 'button-submit');
   });
 }
 
 export function testPreviousExposureForm() {
   it('should be able to fill in the form previous exposure', async () => {
-    await scrollDownToId('scroll-view-previous-exposure-screen', 'button-submit');
-    await element(by.id('button-submit').withAncestor(by.id('previous-exposure-screen'))).tap();
+    await submitForm('previous-exposure-screen', 'scroll-view-previous-exposure-screen', 'button-submit');
   });
 }
 
@@ -66,7 +62,8 @@ export function testLongCovidForm() {
       await element(by.id('button-footer').withAncestor(by.id('long-covid-start-screen'))).tap();
 
       await element(by.id('input-had-covid-item-NO')).tap();
-      await element(by.id('button-submit').withAncestor(by.id('long-covid-question-screen'))).tap();
+
+      await submitForm('long-covid-question-screen', 'scroll-view-long-covid-question-screen', 'button-submit');
     } catch (_) {}
   });
 }
@@ -77,8 +74,7 @@ export function testPingdemicForm() {
       await scrollDownToId('scroll-view-pingdemic-screen', 'input-radio-asked-by-app-item-pfnts');
       await element(by.id('input-radio-asked-by-app-item-pfnts')).tap();
 
-      await scrollDownToId('scroll-view-pingdemic-screen', 'button-submit');
-      await element(by.id('button-submit').withAncestor(by.id('pingdemic-screen'))).tap();
+      await submitForm('pingdemic-screen', 'scroll-view-pingdemic-screen', 'button-submit');
     } catch (_) {}
   });
 }

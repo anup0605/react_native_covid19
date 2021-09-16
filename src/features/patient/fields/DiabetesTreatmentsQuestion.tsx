@@ -1,12 +1,12 @@
 import { CheckboxItem, CheckboxList } from '@covid/components/Checkbox';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 import { IFormikDiabetesInputFC } from './DiabetesQuestions';
@@ -128,18 +128,14 @@ export const DiabetesTreatmentsQuestion: IFormikDiabetesInputFC<IProps, IDiabete
 
   return (
     <View>
-      <FieldWrapper>
-        <View style={styles.textItemStyle}>
-          <RegularText>{i18n.t('diabetes.which-treatment')}</RegularText>
-          <CheckboxList required>{createDiabetesCheckboxes(diabetesTreatmentCheckboxes, formikProps)}</CheckboxList>
-        </View>
-      </FieldWrapper>
-
-      <View style={{ marginHorizontal: 16 }}>
-        {!!formikProps.errors.diabetesTreatments && formikProps.submitCount > 0 ? (
-          <ValidationError error={formikProps.errors.diabetesTreatments as string} />
-        ) : null}
+      <View style={{ marginVertical: sizes.m }}>
+        <RegularText>{i18n.t('diabetes.which-treatment')}</RegularText>
+        <CheckboxList>{createDiabetesCheckboxes(diabetesTreatmentCheckboxes, formikProps)}</CheckboxList>
       </View>
+
+      {!!formikProps.errors.diabetesTreatments && formikProps.submitCount > 0 ? (
+        <ValidationError error={formikProps.errors.diabetesTreatments as string} />
+      ) : null}
     </View>
   );
 };
@@ -173,9 +169,3 @@ DiabetesTreatmentsQuestion.createDTO = (data): Partial<TPatientInfosRequest> => 
   });
   return dto;
 };
-
-const styles = StyleSheet.create({
-  textItemStyle: {
-    borderColor: 'transparent',
-  },
-});

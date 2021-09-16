@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { setHasNeededSupport, setHasReceivedSupport } from '@covid/core/state/mental-health/support/slice';
 import store from '@covid/core/state/store';
 

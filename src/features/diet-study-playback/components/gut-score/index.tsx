@@ -1,5 +1,6 @@
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
 import MissingDataText from '@covid/features/diet-study-playback/components/missing-data-text';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 
 import Score from './Score';
@@ -21,7 +22,7 @@ function GutScore({ beforeScore, duringScore, minValue = 0, maxValue = 10 }: IPr
           currentValue={beforeScore}
           maxValue={maxValue}
           minValue={minValue}
-          style={{ marginBottom: 48 }}
+          style={{ marginBottom: sizes.xxl }}
           subTitle="February 2020"
           title="Before the pandemic"
         />

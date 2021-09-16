@@ -1,5 +1,5 @@
 import { Text } from '@covid/components';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleProp, StyleSheet, Switch as RNSwitch, View, ViewStyle } from 'react-native';
@@ -8,20 +8,23 @@ import { requiredFormMarker } from './Form';
 
 interface IProps {
   label: string;
-  selectedValue: boolean;
+  onValueChange: (value: boolean) => void;
   required?: boolean;
-  toggleSwitch: () => void;
+  selectedValue: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
-export function Switch(props: IProps) {
+const trackColor = { false: colors.backgroundTertiary, true: colors.brand };
+
+function Switch(props: IProps) {
   return (
     <View style={[styles.fieldWrapper, props.style]}>
       <RNSwitch
+        accessibilityLabel={props.label}
         ios_backgroundColor={colors.backgroundTertiary}
-        onValueChange={props.toggleSwitch}
+        onValueChange={props.onValueChange}
         thumbColor={colors.white}
-        trackColor={{ false: colors.backgroundTertiary, true: colors.brand }}
+        trackColor={trackColor}
         value={props.selectedValue}
       />
       <Text style={styles.label} textClass="h6Light">
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: colors.black,
-    marginLeft: grid.m,
+    marginLeft: sizes.s,
   },
 });
 

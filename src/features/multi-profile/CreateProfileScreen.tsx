@@ -1,7 +1,7 @@
 import { BrandedButton } from '@covid/components';
 import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
-import { ScreenNew } from '@covid/components/ScreenNew';
+import { Screen } from '@covid/components/Screen';
 import { HeaderText, SecondaryText } from '@covid/components/Text';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
@@ -30,16 +30,16 @@ export default class CreateProfileScreen extends React.Component<TProps> {
     name: Yup.string().required().max(32, i18n.t('profile-name-too-long')),
   });
 
-  handleClick = (formData: IFormData) => {
+  onSubmit = (values: IFormData) => {
     this.props.navigation.navigate('AdultOrChild', {
       avatarName: this.props.route.params?.avatarName,
-      profileName: formData.name,
+      profileName: values.name,
     });
   };
 
   render() {
     return (
-      <ScreenNew testID="create-profile-screen">
+      <Screen testID="create-profile-screen">
         <HeaderText style={styling.marginBottom}>{i18n.t('create-profile-title')}</HeaderText>
 
         <SecondaryText style={styling.marginBottomHuge}>{i18n.t('create-profile-text')}</SecondaryText>
@@ -49,17 +49,15 @@ export default class CreateProfileScreen extends React.Component<TProps> {
           validateOnChange
           validateOnMount
           initialValues={initialFormValues}
-          onSubmit={(values: IFormData) => {
-            return this.handleClick(values);
-          }}
+          onSubmit={this.onSubmit}
           validationSchema={this.registerSchema}
         >
-          {(props) => {
+          {(formikProps) => {
             return (
               <Form>
                 <GenericTextField
                   required
-                  formikProps={props}
+                  formikProps={formikProps}
                   label={i18n.t('create-profile-label')}
                   name="name"
                   placeholder={i18n.t('create-profile-placeholder')}
@@ -67,8 +65,8 @@ export default class CreateProfileScreen extends React.Component<TProps> {
                   testID="input-profile-name"
                 />
                 <BrandedButton
-                  enabled={props.isValid}
-                  onPress={props.handleSubmit}
+                  enabled={formikProps.isValid}
+                  onPress={formikProps.handleSubmit}
                   style={styling.marginTopAuto}
                   testID="button-submit"
                 >
@@ -78,7 +76,7 @@ export default class CreateProfileScreen extends React.Component<TProps> {
             );
           }}
         </Formik>
-      </ScreenNew>
+      </Screen>
     );
   }
 }

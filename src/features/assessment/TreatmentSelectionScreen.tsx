@@ -1,15 +1,16 @@
 import { BigButton } from '@covid/components';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen, { FieldWrapper } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { CaptionText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
 import i18n from '@covid/locale/i18n';
 import { assessmentService } from '@covid/services';
+import { sizes } from '@covid/themes';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
 import { Text } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 interface IProps {
   route: RouteProp<ScreenParamList, 'TreatmentSelection'>;
@@ -52,60 +53,41 @@ function TreatmentSelectionScreen({ route }: IProps) {
     >
       <ProgressHeader currentStep={4} maxSteps={5} title={title} />
 
-      <View style={styles.content}>
-        <FieldWrapper style={styles.fieldWrapper}>
-          <BigButton onPress={() => handleTreatment('none')}>
-            <Text>{i18n.t('treatment-selection-picker-none')}</Text>
-          </BigButton>
-        </FieldWrapper>
+      <BigButton onPress={() => handleTreatment('none')} style={styles.marginTop}>
+        <Text>{i18n.t('treatment-selection-picker-none')}</Text>
+      </BigButton>
 
-        <FieldWrapper style={styles.fieldWrapper}>
-          <BigButton onPress={() => handleTreatment('oxygen')}>
-            <Text>{i18n.t('treatment-selection-picker-oxygen')}</Text>
-          </BigButton>
-          <CaptionText style={styles.indentedText}>{i18n.t('treatment-selection-picker-subtext-oxygen')}</CaptionText>
-        </FieldWrapper>
+      <BigButton onPress={() => handleTreatment('oxygen')} style={styles.marginTop}>
+        <Text>{i18n.t('treatment-selection-picker-oxygen')}</Text>
+      </BigButton>
+      <CaptionText style={styles.text}>{i18n.t('treatment-selection-picker-subtext-oxygen')}</CaptionText>
 
-        <FieldWrapper style={styles.fieldWrapper}>
-          <BigButton onPress={() => handleTreatment('nonInvasiveVentilation')}>
-            <Text>{i18n.t('treatment-selection-picker-non-invasive-ventilation')}</Text>
-          </BigButton>
-          <CaptionText style={styles.indentedText}>
-            {i18n.t('treatment-selection-picker-subtext-non-invasive-ventilation')}
-          </CaptionText>
-        </FieldWrapper>
+      <BigButton onPress={() => handleTreatment('nonInvasiveVentilation')} style={styles.marginTop}>
+        <Text>{i18n.t('treatment-selection-picker-non-invasive-ventilation')}</Text>
+      </BigButton>
+      <CaptionText style={styles.text}>
+        {i18n.t('treatment-selection-picker-subtext-non-invasive-ventilation')}
+      </CaptionText>
 
-        <FieldWrapper style={styles.fieldWrapper}>
-          <BigButton onPress={() => handleTreatment('invasiveVentilation')}>
-            <Text>{i18n.t('treatment-selection-picker-invasive-ventilation')}</Text>
-          </BigButton>
-          <CaptionText style={styles.indentedText}>
-            {i18n.t('treatment-selection-picker-subtext-invasive-ventilation')}
-          </CaptionText>
-        </FieldWrapper>
+      <BigButton onPress={() => handleTreatment('invasiveVentilation')} style={styles.marginTop}>
+        <Text>{i18n.t('treatment-selection-picker-invasive-ventilation')}</Text>
+      </BigButton>
 
-        <FieldWrapper style={styles.fieldWrapper}>
-          <BigButton onPress={() => handleTreatment('other')}>
-            <Text>{i18n.t('treatment-selection-picker-other')}</Text>
-          </BigButton>
-        </FieldWrapper>
-      </View>
+      <CaptionText style={styles.text}>{i18n.t('treatment-selection-picker-subtext-invasive-ventilation')}</CaptionText>
+
+      <BigButton onPress={() => handleTreatment('other')} style={styles.marginTop}>
+        <Text>{i18n.t('treatment-selection-picker-other')}</Text>
+      </BigButton>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    marginVertical: 36,
+  marginTop: {
+    marginTop: sizes.xl,
   },
-
-  fieldWrapper: {
-    marginVertical: 8,
-  },
-
-  indentedText: {
-    marginHorizontal: 16,
-    marginTop: 8,
+  text: {
+    marginTop: sizes.xs,
     textAlign: 'center',
   },
 });

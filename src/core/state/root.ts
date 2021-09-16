@@ -1,7 +1,7 @@
 import { IAssessmentState } from '@covid/core/assessment/AssessmentState';
 import assessment from '@covid/core/assessment/state/reducers';
-import { contentSlice, TContentState } from '@covid/core/content/state/contentSlice';
 import { schoolSlice, TSchoolState } from '@covid/core/schools/Schools.slice';
+import { contentSlice, TContentState } from '@covid/core/state/contentSlice';
 import { combineReducers } from 'redux';
 
 import { appSlice } from './app/slice';
@@ -24,6 +24,7 @@ import {
 import { IMentalHealthPlayback, mentalHealthPlaybackSlice } from './mental-health-playback';
 import { reconsentSlice, TReconsentState } from './reconsent';
 import { ISettings, settingsSlice } from './settings';
+import { ITestingModeState, testingModeSlice } from './testingMode';
 import { IUser, userSlice } from './user';
 import { IVaccineState, vaccinesSlice } from './vaccines';
 
@@ -42,6 +43,7 @@ export type TRootState = {
   reconsent: TReconsentState;
   school: TSchoolState;
   settings: ISettings;
+  testingMode: ITestingModeState;
   user: IUser;
   vaccines: IVaccineState;
 };
@@ -61,6 +63,7 @@ export default combineReducers({
   reconsent: reconsentSlice,
   school: schoolSlice.reducer,
   settings: settingsSlice,
+  testingMode: testingModeSlice.reducer,
   user: userSlice,
   vaccines: vaccinesSlice.reducer,
 });

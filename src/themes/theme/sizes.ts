@@ -1,11 +1,23 @@
-export default {
+import { TGrid } from '@covid/themes/types/sizes';
+
+/* eslint-disable sort-keys-fix/sort-keys-fix */
+const grid: TGrid = {
+  xxs: 4,
+  xs: 8,
+  s: 12,
+  m: 16,
+  l: 24,
+  xl: 32,
+  xxl: 48,
+};
+/* eslint-enable sort-keys-fix/sort-keys-fix */
+
+export const sizes = {
+  ...grid,
   border: 1,
-  borderRadius: 4,
-  borderRadiusBig: 16,
   buttonHeight: 56,
-  spacing: 16,
-  spacingBig: 24,
-  spacingHuge: 32,
-  spacingSmall: 8,
-  spacingTiny: 4,
+  drawerToggle: 20,
+  maxScreenWidth: 600,
+  screenHorizontalPadding: grid.l,
+  screenVerticalPadding: grid.l,
 };

@@ -1,12 +1,15 @@
 import { BrandedButton, ErrorText, Text } from '@covid/components';
 import Card from '@covid/components/cards/Card';
+import Analytics, { events } from '@covid/core/Analytics';
 import { contentService } from '@covid/core/content/ContentService';
+import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
 import { resetFeedback } from '@covid/core/state/reconsent';
 import IllustrationSignup from '@covid/features/reconsent/components/IllustrationSignup';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import Tick from '@covid/features/reconsent/components/Tick';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -28,6 +31,11 @@ export default function ReconsentNewsletterSignupScreen() {
   async function toggleNewsletterSignup() {
     setLoading(true);
     try {
+      if (signedUp) {
+        Analytics.track(events.RECONSENT_NEWSLETTER_UNSUBSCRIBE);
+      } else {
+        Analytics.track(events.RECONSENT_NEWSLETTER_SUBSCRIBE);
+      }
       await contentService.signUpForDiseaseResearchNewsletter(!signedUp);
       setSignedUp((prevState) => !prevState);
     } catch {
@@ -36,7 +44,14 @@ export default function ReconsentNewsletterSignupScreen() {
     setLoading(false);
   }
 
-  function onPress() {
+  async function onPress() {
+    if (signedUp) {
+      // In Amplitude it's hard to filter people who subscribed but didn't unsubscribe.
+      Analytics.track(events.RECONSENT_NEWSLETTER_SUBSCRIBED_FINAL);
+    }
+    // Update the startup info (as research consent has changed and app needs to be aware)
+    // This requires async await to make sure!
+    await dispatch(fetchStartUpInfo());
     NavigatorService.navigate('Dashboard');
     dispatch(resetFeedback());
   }
@@ -65,7 +80,7 @@ export default function ReconsentNewsletterSignupScreen() {
         <Text rhythm={24} textClass="pLight">
           {i18n.t('reconsent.newsletter-signup.card-description')}
         </Text>
-        {error ? <ErrorText style={{ marginBottom: 8, textAlign: 'center' }}>{error}</ErrorText> : null}
+        {error ? <ErrorText style={{ marginBottom: sizes.xs, textAlign: 'center' }}>{error}</ErrorText> : null}
         {signedUp ? (
           <>
             <View style={styles.messageWrapper}>
@@ -105,7 +120,7 @@ export default function ReconsentNewsletterSignupScreen() {
 const styles = StyleSheet.create({
   buttonNo: {
     alignSelf: 'center',
-    marginTop: 24,
+    marginTop: sizes.l,
   },
   buttonNoText: {
     color: colors.purple,
@@ -114,18 +129,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkblue,
   },
   card: {
-    marginBottom: 16,
-    marginTop: 40,
+    marginBottom: sizes.m,
+    marginTop: sizes.xxl,
   },
   illustration: {
     alignSelf: 'center',
-    marginBottom: 8,
+    marginBottom: sizes.xs,
   },
   marginLeft: {
-    marginLeft: 8,
+    marginLeft: sizes.xs,
   },
   marginTop: {
-    marginTop: 16,
+    marginTop: sizes.m,
   },
   messageWrapper: {
     alignItems: 'center',

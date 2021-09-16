@@ -3,14 +3,15 @@ import DropdownField from '@covid/components/DropdownField';
 import { Form } from '@covid/components/Form';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
-import Screen, { Header } from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
-import { fetchStartUpInfo } from '@covid/core/content/state/contentSlice';
+import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
 import { useAppDispatch } from '@covid/core/state/store';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as React from 'react';
@@ -37,7 +38,7 @@ type TEditLocationData = {
 export const EditLocationScreen: React.FC<TProps> = (props) => {
   const [errorMessage, setErrorMessage] = React.useState('');
 
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
 
   const initialFormValues: TEditLocationData = {
     currentCountry: props.route.params?.patientData?.patientInfo!.current_country_code ?? '',
@@ -72,27 +73,27 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
     }),
   });
 
-  const handleLocationUpdate = (formData: TEditLocationData) => {
+  const onSubmit = (values: TEditLocationData) => {
     const infos: Partial<TPatientInfosRequest> = {};
 
-    if (formData.differentAddress === 'no') {
-      infos.postcode = formData.postcode;
+    if (values.differentAddress === 'no') {
+      infos.postcode = values.postcode;
       infos.current_postcode = null;
       infos.current_country_code = null;
-    } else if (formData.stillInUK === 'yes') {
-      infos.postcode = formData.postcode;
-      infos.current_postcode = formData.currentPostcode;
+    } else if (values.stillInUK === 'yes') {
+      infos.postcode = values.postcode;
+      infos.current_postcode = values.currentPostcode;
       infos.current_country_code = null;
     } else {
-      infos.postcode = formData.postcode;
+      infos.postcode = values.postcode;
       infos.current_postcode = null;
-      infos.current_country_code = formData.currentCountry;
+      infos.current_country_code = values.currentCountry;
     }
 
     editProfileCoordinator
       .updatePatientInfo(infos)
       .then(() => {
-        dispatch(fetchStartUpInfo());
+        appDispatch(fetchStartUpInfo());
         editProfileCoordinator.gotoNextScreen(props.route.name);
       })
       .catch(() => {
@@ -112,74 +113,68 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
 
   return (
     <Screen simpleCallout profile={props.route.params?.patientData?.profile} testID="edit-location-screen">
-      <Header>
-        <HeaderText style={{ marginBottom: 12 }}>{i18n.t('edit-profile.location.title')}</HeaderText>
-      </Header>
+      <HeaderText style={{ marginBottom: sizes.s }}>{i18n.t('edit-profile.location.title')}</HeaderText>
 
-      <Formik
-        initialValues={initialFormValues}
-        onSubmit={(formData: TEditLocationData) => {
-          return handleLocationUpdate(formData);
-        }}
-        validationSchema={validation}
-      >
-        {(props) => {
+      <Formik initialValues={initialFormValues} onSubmit={onSubmit} validationSchema={validation}>
+        {(formikProps) => {
           return (
             <Form>
-              <View style={{ marginHorizontal: 16 }}>
+              <GenericTextField
+                required
+                showError
+                formikProps={formikProps}
+                inputProps={{ autoCompleteType: 'postal-code' }}
+                label={i18n.t('edit-profile.location.label')}
+                name="postcode"
+                placeholder={i18n.t('placeholder-postcode')}
+              />
+              <YesNoField
+                required
+                label={i18n.t('edit-profile.location.not-current-address')}
+                onValueChange={formikProps.handleChange('differentAddress')}
+                selectedValue={formikProps.values.differentAddress}
+              />
+              {formikProps.values.differentAddress === 'yes' ? (
+                <YesNoField
+                  required
+                  label={i18n.t('edit-profile.location.still-in-country')}
+                  onValueChange={formikProps.handleChange('stillInUK')}
+                  selectedValue={formikProps.values.stillInUK}
+                />
+              ) : null}
+              {formikProps.values.stillInUK === 'yes' && formikProps.values.differentAddress === 'yes' ? (
                 <GenericTextField
                   required
                   showError
-                  formikProps={props}
+                  formikProps={formikProps}
                   inputProps={{ autoCompleteType: 'postal-code' }}
-                  label={i18n.t('edit-profile.location.label')}
-                  name="postcode"
+                  label={i18n.t('edit-profile.location.other-postcode')}
+                  name="currentPostcode"
                   placeholder={i18n.t('placeholder-postcode')}
                 />
-                <YesNoField
+              ) : null}
+              {formikProps.values.stillInUK === 'no' && formikProps.values.differentAddress === 'yes' ? (
+                <DropdownField
                   required
-                  label={i18n.t('edit-profile.location.not-current-address')}
-                  onValueChange={props.handleChange('differentAddress')}
-                  selectedValue={props.values.differentAddress}
+                  error={formikProps.touched.currentCountry ? formikProps.errors.currentCountry : ''}
+                  items={countryList}
+                  label={i18n.t('edit-profile.location.select-country')}
+                  onValueChange={formikProps.handleChange('currentCountry')}
+                  selectedValue={formikProps.values.currentCountry}
                 />
-                {props.values.differentAddress === 'yes' ? (
-                  <YesNoField
-                    required
-                    label={i18n.t('edit-profile.location.still-in-country')}
-                    onValueChange={props.handleChange('stillInUK')}
-                    selectedValue={props.values.stillInUK}
-                  />
-                ) : null}
-                {props.values.stillInUK === 'yes' && props.values.differentAddress === 'yes' ? (
-                  <GenericTextField
-                    required
-                    showError
-                    formikProps={props}
-                    inputProps={{ autoCompleteType: 'postal-code' }}
-                    label={i18n.t('edit-profile.location.other-postcode')}
-                    name="currentPostcode"
-                    placeholder={i18n.t('placeholder-postcode')}
-                  />
-                ) : null}
-                {props.values.stillInUK === 'no' && props.values.differentAddress === 'yes' ? (
-                  <DropdownField
-                    required
-                    error={props.touched.currentCountry ? props.errors.currentCountry : ''}
-                    items={countryList}
-                    label={i18n.t('edit-profile.location.select-country')}
-                    onValueChange={props.handleChange('currentCountry')}
-                    selectedValue={props.values.currentCountry}
-                  />
-                ) : null}
-                <View style={{ height: 100 }} />
-                <SecondaryText style={{ paddingHorizontal: 8, textAlign: 'center' }}>
-                  {i18n.t('edit-profile.location.disclaimer')}
-                </SecondaryText>
-                <ErrorText>{errorMessage}</ErrorText>
-                <BrandedButton enabled={props.isValid} loading={props.isSubmitting} onPress={props.handleSubmit}>
-                  {i18n.t('edit-profile.done')}
-                </BrandedButton>
-              </View>
+              ) : null}
+              <View style={{ flex: 1 }} />
+              <SecondaryText style={{ textAlign: 'center' }}>
+                {i18n.t('edit-profile.location.disclaimer')}
+              </SecondaryText>
+              <ErrorText>{errorMessage}</ErrorText>
+              <BrandedButton
+                enabled={formikProps.isValid}
+                loading={formikProps.isSubmitting}
+                onPress={formikProps.handleSubmit}
+              >
+                {i18n.t('edit-profile.done')}
+              </BrandedButton>
             </Form>
           );
         }}

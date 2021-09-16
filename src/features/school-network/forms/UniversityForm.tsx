@@ -1,13 +1,14 @@
-import { Button } from '@covid/components/buttons/Button';
+import { BrandedButton } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { ISchoolModel, ISubscribedSchoolGroupStats } from '@covid/core/schools/Schools.dto';
 import { schoolNetworkCoordinator } from '@covid/features/school-network/SchoolNetworkCoordinator';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { Formik } from 'formik';
-import { Form } from 'native-base';
+import { styling } from '@covid/themes';
+import { Formik, FormikHelpers } from 'formik';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 interface IProps {
@@ -16,7 +17,7 @@ interface IProps {
 }
 
 export default function UniversityForm({ currentJoinedGroup, schools }: IProps) {
-  const initialValues = {
+  const initialFormValues = {
     schoolId: currentJoinedGroup ? currentJoinedGroup.school.id : '',
   };
 
@@ -24,22 +25,20 @@ export default function UniversityForm({ currentJoinedGroup, schools }: IProps) 
     schoolId: Yup.string().required(i18n.t('validation-error-text-required')),
   });
 
+  async function onSubmit(values: typeof initialFormValues, formikHelpers: FormikHelpers<typeof initialFormValues>) {
+    try {
+      const selectedSchool = schools.find((school) => school.id === values.schoolId)!;
+      await schoolNetworkCoordinator.setSelectedSchool(selectedSchool);
+      NavigatorService.goBack();
+    } catch (error) {
+      formikHelpers.setFieldError('schoolId', 'Update error');
+    }
+  }
+
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={async ({ schoolId }, FormikProps) => {
-        try {
-          const selectedSchool = schools.find((school) => school.id === schoolId)!;
-          await schoolNetworkCoordinator.setSelectedSchool(selectedSchool);
-          NavigatorService.goBack();
-        } catch (error) {
-          FormikProps.setFieldError('schoolId', 'Update error');
-        }
-      }}
-      validationSchema={validationSchema}
-    >
+    <Formik initialValues={initialFormValues} onSubmit={onSubmit} validationSchema={validationSchema}>
       {(formikProps) => (
-        <Form style={styles.formContainer}>
+        <Form>
           <RadioInput
             error={formikProps.touched.schoolId ? formikProps.errors.schoolId : ''}
             items={schools.map((item) => ({ label: item.name, value: item.id }))}
@@ -47,19 +46,10 @@ export default function UniversityForm({ currentJoinedGroup, schools }: IProps) 
             onValueChange={formikProps.handleChange('schoolId')}
             selectedValue={formikProps.values.schoolId}
           />
-          <Button branded onPress={formikProps.handleSubmit}>
-            {i18n.t('school-networks.join-school.cta')}
-          </Button>
+          <View style={styling.flex} />
+          <BrandedButton onPress={formikProps.handleSubmit}>{i18n.t('school-networks.join-school.cta')}</BrandedButton>
         </Form>
       )}
     </Formik>
   );
 }
-
-const styles = StyleSheet.create({
-  formContainer: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
-  },
-});

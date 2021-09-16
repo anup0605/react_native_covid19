@@ -43,7 +43,6 @@ export const covidByZoeIcon = require('./logos/covid_app_by_zoe.png');
 export const covidByZoeIconDark = require('./logos/covid_app_by_zoe_dark.png');
 export const createdByZoe = require('./logos/created-by-zoe.png');
 export const facebook = require('./logos/facebook.png');
-export const gbPartners = require('./logos/gb_partners.png');
 export const poweredByZoeSmall = require('./logos/powered_by_zoe_small.png');
 export const svPartners = require('./logos/sv_partners.png');
 export const svPartnersReturn = require('./logos/sv_partners_return.png');
@@ -82,14 +81,10 @@ export const shareVaccine = require('./share-vaccine.png');
 export const shareVaccineBanner = require('./share-vaccine-banner.png');
 
 export const blobs = require('./blobs.png');
-export const cardBackground1 = require('./backgrounds/cardBackground1.png');
-export const cardBackground2 = require('./backgrounds/cardBackground2.png');
-export const cardBackground3 = require('./backgrounds/cardBackground3.png');
 export const studyIntro = require('./backgrounds/study_intro.png');
 export const vaccineBg = require('./backgrounds/vaccine-bg.png');
 
 // Avatar
-export const cartoMapHtml = require('./carto/estimated-cases.html');
 export const doctorsAvatars = require('./doctors-avatars.png');
 export const sarahAvatar = require('./sarah-avatar.png');
 export const timSpectorAvatar = require('./reconsent/tim-spector.png');
@@ -105,7 +100,7 @@ export const dietStudyPlaybackReadyUS = require('./diet-playback-ready-us.png');
 export const fallingFoodBackground = require('./backgrounds/falling-food.png');
 
 // share svg
-export { default as ShareIcon } from './icons/Share';
+export { default as Share } from './icons/Share';
 
 export * from './icons/stats';
 export * from './icons/svgIcons';

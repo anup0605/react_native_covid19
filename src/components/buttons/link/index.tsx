@@ -1,6 +1,6 @@
 import { Icon, TIconName } from '@covid/components/icons';
 import { Text } from '@covid/components/typography';
-import { TTypeSizes } from '@covid/themes';
+import { sizes, TTypeSizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
 
@@ -8,33 +8,27 @@ interface IProps {
   color?: string;
   iconName?: TIconName;
   iconSize?: TTypeSizes;
-  iconStyle?: StyleProp<ViewStyle>;
-  linkText: string;
-  onPress: () => void;
+  onPress?: () => void;
   style?: StyleProp<ViewStyle>;
+  text: string;
 }
 
-function Link({
-  color,
-  iconName = 'big-arrow-right',
-  iconSize,
-  iconStyle = {},
-  linkText,
-  onPress,
-  style = {},
-}: IProps) {
-  const linkColor = color || 'purple';
-  const iSize = iconSize || 16;
+function Link(props: IProps) {
+  const linkColor = props.color || 'purple';
   return (
-    <TouchableOpacity accessible accessibilityRole="button" onPress={onPress} style={[{ flexDirection: 'row' }, style]}>
+    <TouchableOpacity
+      accessible
+      accessibilityRole="button"
+      onPress={props.onPress}
+      style={[{ flexDirection: 'row' }, props.style]}
+    >
       <Icon
         color={linkColor}
-        iconName={iconName}
-        iconSize={iSize}
-        iconStyle={iconStyle}
-        style={{ marginRight: 8, marginTop: 2 }}
+        iconName={'big-arrow-right' || props.iconName}
+        iconSize={props.iconSize || 16}
+        style={{ marginRight: sizes.xs, marginTop: 2 }}
       />
-      <Text style={{ color: linkColor, flex: 1 }}>{linkText}</Text>
+      <Text style={{ color: linkColor, flex: 1 }}>{props.text}</Text>
     </TouchableOpacity>
   );
 }

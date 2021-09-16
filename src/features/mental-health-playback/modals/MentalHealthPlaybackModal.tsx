@@ -1,16 +1,13 @@
 import { QuoteMarks } from '@assets';
 import { BrandedButton, DoctorProfile, Modal, Tag, Text } from '@covid/components';
 import Analytics from '@covid/core/Analytics';
-import { TRootState } from '@covid/core/state/root';
-import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
 import i18n from '@covid/locale/i18n';
 import { generalApiClient } from '@covid/services';
-import { colors, styling } from '@covid/themes';
+import { colors, sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
 
 interface IProps {
   onRequestClose: () => void;
@@ -18,8 +15,6 @@ interface IProps {
 }
 
 export default function MentalHealthPlaybackModal(props: IProps) {
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
-
   function onRequestClose(positive?: boolean) {
     if (!positive) {
       Analytics.track(Analytics.events.MENTAL_HEALTH_PLAYBACK_CLOSE_MODAL);
@@ -30,7 +25,7 @@ export default function MentalHealthPlaybackModal(props: IProps) {
   function handlePositive() {
     generalApiClient.postUserEvent('view-mental-health-insights');
     onRequestClose(true);
-    appCoordinator.goToMentalHealthStudyPlayback(startupInfo);
+    appCoordinator.goToMentalHealthStudyPlayback();
   }
 
   function handleNegative() {
@@ -38,15 +33,13 @@ export default function MentalHealthPlaybackModal(props: IProps) {
     onRequestClose();
   }
 
-  const description = i18n.t('mental-health-playback.modal.description-new');
-
-  const title =
-    startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_a'
-      ? i18n.t('mental-health-playback.modal.title-new-personal')
-      : i18n.t('mental-health-playback.modal.title-new');
-
   return (
-    <Modal modalName="MentalHealthPlayback" onRequestClose={onRequestClose} visible={props.visible}>
+    <Modal
+      modalName="MentalHealthPlayback"
+      onRequestClose={onRequestClose}
+      testID="mental-health-playback-modal"
+      visible={props.visible}
+    >
       <Tag
         color={colors.coral.main.bgColor}
         style={styling.selfCenter}
@@ -60,7 +53,7 @@ export default function MentalHealthPlaybackModal(props: IProps) {
         textAlign="center"
         textClass="h3Regular"
       >
-        {title}
+        {i18n.t('mental-health-playback.modal.title-new-personal')}
       </Text>
       <DoctorProfile
         image={getMentalHealthStudyDoctorImage()}
@@ -70,12 +63,12 @@ export default function MentalHealthPlaybackModal(props: IProps) {
       />
       <QuoteMarks />
       <Text inverted colorPalette="uiDark" colorShade="dark" style={styles.description} textClass="pLight">
-        {description}
+        {i18n.t('mental-health-playback.modal.description-new')}
       </Text>
-      <BrandedButton onPress={handlePositive} style={styles.buttonPositive}>
+      <BrandedButton onPress={handlePositive} style={styles.buttonPositive} testID="button-positive">
         {i18n.t('mental-health-playback.modal.button-positive-new')}
       </BrandedButton>
-      <BrandedButton onPress={handleNegative} style={styles.buttonNegative}>
+      <BrandedButton onPress={handleNegative} style={styles.buttonNegative} testID="button-negative">
         <Text textClass="pSmallLight">{i18n.t('mental-health-playback.modal.button-negative')}</Text>
       </BrandedButton>
     </Modal>
@@ -90,12 +83,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#0165B5',
   },
   description: {
-    paddingBottom: 24,
-    paddingHorizontal: 16,
-    paddingTop: 8,
+    paddingBottom: sizes.l,
+    paddingHorizontal: sizes.m,
+    paddingTop: sizes.xs,
   },
   title: {
-    marginBottom: 16,
-    marginTop: 16,
+    marginBottom: sizes.m,
+    marginTop: sizes.m,
   },
 });

@@ -2,16 +2,22 @@ import { Divider } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import { isGBCountry, isSECountry } from '@covid/core/localisation/LocalisationService';
 import PushNotificationService from '@covid/core/push-notifications/PushNotificationService';
+import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
 import { EDrawerMenuItem, LinkItem } from '@covid/features/menu/DrawerMenuItem';
 import { useLogout } from '@covid/features/menu/useLogout';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import * as React from 'react';
 import { Alert, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = ({ navigation }) => {
   const logout = useLogout(navigation);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   function goToPrivacy() {
     Analytics.track(events.CLICK_DRAWER_MENU_ITEM, {
@@ -24,6 +30,10 @@ export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = (
     } else {
       navigation.navigate('PrivacyPolicyUS', { viewOnly: true });
     }
+  }
+
+  function goToTesting() {
+    navigation.navigate('TestingMode');
   }
 
   function showDeleteAlert() {
@@ -73,6 +83,8 @@ export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = (
 
       <LinkItem onPress={showDeleteAlert} type={EDrawerMenuItem.DELETE_MY_DATA} />
 
+      {startupInfo?.is_tester ? <LinkItem onPress={goToTesting} type={EDrawerMenuItem.TESTING_MODE} /> : null}
+
       <Divider styles={styles.divider} />
     </>
   );
@@ -82,6 +94,6 @@ const styles = StyleSheet.create({
   divider: {
     borderBottomWidth: 1,
     marginHorizontal: 0,
-    marginVertical: 24,
+    marginVertical: sizes.l,
   },
 });

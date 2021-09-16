@@ -2,9 +2,12 @@ import { covidByZoeIcon, covidIcon } from '@assets';
 import { BrandedButton } from '@covid/components';
 import { CaptionText, Header3Text, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
-import { TContentState } from '@covid/core/content/state/contentSlice';
+import { TContentState } from '@covid/core/state/contentSlice';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { cleanIntegerVal } from '@covid/utils/number';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -23,6 +26,7 @@ enum EHeaderType {
 
 export function Header({ reportedCount, reportOnPress }: IProps) {
   const content = useSelector<TRootState, TContentState>((state) => state.content);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
   const [contributors, setContributors] = React.useState<string | null>(null);
 
   const prettyContributorsValue = i18n.toNumber(contributors ? cleanIntegerVal(contributors) : 0, {
@@ -31,8 +35,8 @@ export function Header({ reportedCount, reportOnPress }: IProps) {
   });
 
   React.useEffect(() => {
-    setContributors(content.startupInfo?.users_count.toString() ?? null);
-  }, [content.startupInfo]);
+    setContributors(startupInfo?.users_count.toString() ?? null);
+  }, [startupInfo]);
 
   const onReport = () => {
     Analytics.track(events.REPORT_NOW_CLICKED, { headerType: EHeaderType.Expanded });
@@ -105,8 +109,8 @@ const styles = StyleSheet.create({
   covidByZoe: {
     alignSelf: 'flex-start',
     height: 56,
-    margin: 8,
-    marginLeft: 16,
+    margin: sizes.xs,
+    marginLeft: sizes.m,
     resizeMode: 'contain',
     width: 136,
   },
@@ -119,7 +123,7 @@ const styles = StyleSheet.create({
 
   logo: {
     height: 54,
-    margin: 8,
+    margin: sizes.xs,
     resizeMode: 'contain',
     width: 54,
   },
@@ -129,40 +133,40 @@ const styles = StyleSheet.create({
     backgroundColor: colors.purple,
     elevation: 0,
     height: 48,
-    marginBottom: 8,
-    marginTop: 16,
+    marginBottom: sizes.xs,
+    marginTop: sizes.m,
     textAlign: 'center',
   },
 
   reportButtonCompact: {
-    paddingHorizontal: 52,
+    paddingHorizontal: sizes.xxl,
   },
 
   reportButtonExpanded: {
-    paddingHorizontal: 32,
+    paddingHorizontal: sizes.xl,
   },
 
   reportCard: {
     alignItems: 'center',
     alignSelf: 'stretch',
     backgroundColor: 'rgba(255,255,255,0.1)',
-    borderRadius: 16,
-    marginHorizontal: 16,
-    marginVertical: 16,
-    paddingVertical: 20,
+    borderRadius: sizes.m,
+    marginHorizontal: sizes.m,
+    marginVertical: sizes.m,
+    paddingVertical: sizes.l,
   },
 
   reportedCount: {
     color: colors.backgroundFour,
-    margin: 4,
+    margin: sizes.xxs,
     textAlign: 'center',
   },
 
   root: {
     alignItems: 'center',
     backgroundColor: colors.predict,
-    paddingBottom: 24,
-    paddingTop: 16,
+    paddingBottom: sizes.l,
+    paddingTop: sizes.m,
     width: '100%',
   },
   test: {

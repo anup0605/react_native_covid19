@@ -1,5 +1,5 @@
 import Text from '@covid/components/typography/text';
-import { TColorPalette, TColorShade, TGridSizes, TTextClass } from '@covid/themes';
+import { TColorPalette, TColorShade, TGridSize, TTextClass } from '@covid/themes';
 import * as React from 'react';
 
 interface IProps {
@@ -7,7 +7,7 @@ interface IProps {
   colorPalette?: TColorPalette;
   colorShade?: TColorShade;
   inverted?: boolean;
-  rhythm?: TGridSizes;
+  rhythm?: TGridSize;
   textClass: TTextClass;
 }
 

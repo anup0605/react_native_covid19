@@ -1,11 +1,11 @@
 import { Text } from '@covid/components';
-import { grid } from '@covid/themes';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { Pressable, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 interface IProps {
-  IconComponent: React.ComponentType<any>;
+  IconComponent?: React.ComponentType<any>;
   description: string;
   onPress: () => void;
   selected: boolean;
@@ -25,19 +25,25 @@ export default function DiseaseCard(props: IProps) {
         style={styles.pressable}
         testID={props.testID}
       >
-        <View style={styles.icon}>
-          <props.IconComponent color={props.selected ? colors.white : colors.darkblue} />
-        </View>
+        {props.IconComponent ? (
+          <View style={styles.icon}>
+            <props.IconComponent color={props.selected ? colors.white : colors.darkblue} />
+          </View>
+        ) : null}
         <View style={styles.textSection}>
-          <Text rhythm={2} style={[styles.name, props.selected ? styles.activeName : null]} textClass="pSmallMedium">
-            {props.title}
-          </Text>
-          <Text
-            style={[styles.description, props.selected ? styles.activeDescription : styles.inactiveDescription]}
-            textClass="pLight"
-          >
-            {props.description}
-          </Text>
+          {props.title ? (
+            <Text rhythm={2} style={[styles.name, props.selected ? styles.activeName : null]} textClass="pSmallMedium">
+              {props.title}
+            </Text>
+          ) : null}
+          {props.description ? (
+            <Text
+              style={[styles.description, props.selected ? styles.activeDescription : styles.inactiveDescription]}
+              textClass="pLight"
+            >
+              {props.description}
+            </Text>
+          ) : null}
         </View>
       </Pressable>
     </View>
@@ -56,11 +62,11 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: colors.white,
-    borderRadius: grid.s,
+    borderRadius: sizes.xs,
   },
   description: {
-    minHeight: grid.xxxxl,
-    paddingRight: grid.l,
+    minHeight: sizes.xxl,
+    paddingRight: sizes.m,
   },
   icon: {
     maxWidth: 40,
@@ -71,13 +77,13 @@ const styles = StyleSheet.create({
   },
   name: {
     color: colors.darkblue,
-    paddingRight: grid.l,
+    paddingRight: sizes.m,
   },
   pressable: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: grid.l,
-    paddingVertical: grid.l,
+    paddingHorizontal: sizes.m,
+    paddingVertical: sizes.m,
   },
   shadow: {
     elevation: 4,
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
   textSection: {
     flex: 1,
     justifyContent: 'center',
-    marginLeft: grid.l,
-    paddingRight: grid.l,
+    marginLeft: sizes.m,
+    paddingRight: sizes.m,
   },
 });

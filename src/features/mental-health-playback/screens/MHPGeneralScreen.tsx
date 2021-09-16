@@ -1,35 +1,24 @@
-import { BasicNavHeader, BrandedButton, SafeLayout, Text } from '@covid/components';
+import { BrandedButton, Text } from '@covid/components';
 import EmptyState from '@covid/components/EmptyState';
+import { Screen } from '@covid/components/Screen';
 import { homeScreenName } from '@covid/core/localisation/LocalisationService';
 import { isLoading, selectInsights } from '@covid/core/state/mental-health-playback/slice';
-import { TRootState } from '@covid/core/state/root';
-import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import Insights from '@covid/features/mental-health-playback/components/Insights';
 import PaginationIndicator from '@covid/features/mental-health-playback/components/PaginationIndicator';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { grid, styling } from '@covid/themes';
+import { sizes, styling } from '@covid/themes';
 import * as React from 'react';
-import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 export default function MHPGeneralScreen() {
+  const [height, setHeight] = React.useState(0);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const mhInsights = useSelector(selectInsights);
   const loading = useSelector(isLoading);
 
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
   const scrollViewRef = React.useRef<ScrollView>(null);
-
-  const isGeneral = startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_b';
 
   function onPress() {
     if (mhInsights.completed_feedback) {
@@ -40,10 +29,8 @@ export default function MHPGeneralScreen() {
   }
 
   function onScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
-    if (scrollViewHeight > 0) {
-      const index = Math.floor(
-        Math.max(0, event?.nativeEvent?.contentOffset.y + scrollViewHeight / 2) / scrollViewHeight,
-      );
+    if (height > 0) {
+      const index = Math.floor(Math.max(0, event?.nativeEvent?.contentOffset.y + height / 2) / height);
       if (index !== selectedIndex) {
         setSelectedIndex(index);
       }
@@ -54,19 +41,19 @@ export default function MHPGeneralScreen() {
     scrollViewRef?.current?.scrollTo({
       animated: true,
       x: 0,
-      y: index * scrollViewHeight,
+      y: index * height,
     });
   }
 
-  const windowDimensions = useWindowDimensions();
-  const safeAreaInsets = useSafeAreaInsets();
-
-  const scrollViewHeight = windowDimensions.height - safeAreaInsets.top - safeAreaInsets.bottom;
+  function onLayout(event: LayoutChangeEvent) {
+    setHeight(event.nativeEvent.layout.height);
+  }
 
   return (
-    <SafeLayout style={styling.backgroundWhite}>
+    <Screen noScrollView backgroundColor="white" testID="mhp-general-screen">
       <View style={[styling.flex, styling.relative]}>
-        <BasicNavHeader backgroundColor="transparent" style={styles.basicNavHeader} />
+        <View onLayout={onLayout} style={styling.measureHeight} />
+
         {!mhInsights.insights.length && loading ? (
           <EmptyState />
         ) : (
@@ -76,33 +63,31 @@ export default function MHPGeneralScreen() {
               onScroll={onScroll}
               ref={scrollViewRef}
               scrollEventThrottle={80}
-              snapToInterval={scrollViewHeight}
+              snapToInterval={height}
             >
-              <Insights insights={mhInsights.insights} itemHeight={scrollViewHeight} />
+              <View style={styles.contentWrapper}>
+                <Insights insights={mhInsights.insights} itemHeight={height} />
 
-              <View style={{ height: scrollViewHeight }}>
-                <View style={styles.view}>
-                  <Text textAlign="center" textClass="h3Regular">
-                    {i18n.t(
-                      isGeneral
-                        ? 'mental-health-playback.general.end-title-general'
-                        : 'mental-health-playback.general.end-title-personal',
-                    )}
-                  </Text>
-                  <Text
-                    inverted
-                    colorPalette="uiDark"
-                    colorShade="dark"
-                    style={styling.marginTopBig}
-                    textAlign="center"
-                    textClass="p"
-                  >
-                    {i18n.t('mental-health-playback.general.end-description')}
-                  </Text>
+                <View style={{ height }}>
+                  <View style={styles.lastInsightWrapper}>
+                    <Text textAlign="center" textClass="h3Regular">
+                      {i18n.t('mental-health-playback.general.end-title-personal')}
+                    </Text>
+                    <Text
+                      inverted
+                      colorPalette="uiDark"
+                      colorShade="dark"
+                      style={styling.marginTopBig}
+                      textAlign="center"
+                      textClass="p"
+                    >
+                      {i18n.t('mental-health-playback.general.end-description')}
+                    </Text>
+                  </View>
+                  <BrandedButton onPress={onPress} style={styles.button}>
+                    {i18n.t('mental-health-playback.general.end-button')}
+                  </BrandedButton>
                 </View>
-                <BrandedButton onPress={onPress} style={styles.button}>
-                  {i18n.t('mental-health-playback.general.end-button')}
-                </BrandedButton>
               </View>
             </ScrollView>
 
@@ -114,22 +99,25 @@ export default function MHPGeneralScreen() {
           </>
         )}
       </View>
-    </SafeLayout>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  basicNavHeader: {
-    position: 'absolute',
-    zIndex: 1,
-  },
   button: {
-    marginBottom: grid.xl,
-    marginHorizontal: grid.xl,
+    marginBottom: sizes.l,
+    marginHorizontal: sizes.l,
   },
-  view: {
+  contentWrapper: {
+    flexGrow: 1,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    maxWidth: sizes.maxScreenWidth,
+    width: '100%',
+  },
+  lastInsightWrapper: {
     marginBottom: 'auto',
     marginTop: 'auto',
-    paddingHorizontal: grid.xxxl,
+    paddingHorizontal: sizes.xl,
   },
 });

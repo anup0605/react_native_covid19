@@ -28,7 +28,7 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 
-export type TAppDispatch = typeof store.dispatch;
+type TAppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<TAppDispatch>();
 

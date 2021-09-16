@@ -1,10 +1,10 @@
 import DropdownField from '@covid/components/DropdownField';
 import { requiredFormMarker } from '@covid/components/Form';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { isUSCountry, localisationService } from '@covid/core/localisation/LocalisationService';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -29,14 +29,14 @@ interface IProps {
 
 export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) => {
   return (
-    <FieldWrapper style={styles.fieldWrapper}>
+    <View style={styles.view}>
       <RegularText>
         {label}
         {requiredFormMarker}
       </RegularText>
       {isUSCountry() ? (
         <ValidatedTextInput
-          error={formikProps.touched.pounds && formikProps.errors.pounds}
+          error={formikProps.touched.pounds && !!formikProps.errors.pounds}
           keyboardType="numeric"
           onBlur={formikProps.handleBlur('pounds')}
           onChangeText={formikProps.handleChange('pounds')}
@@ -51,7 +51,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
           {formikProps.values.weightUnit === 'kg' ? (
             <View style={styles.primaryField}>
               <ValidatedTextInput
-                error={formikProps.touched.weight && formikProps.errors.weight}
+                error={formikProps.touched.weight && !!formikProps.errors.weight}
                 keyboardType="numeric"
                 onBlur={formikProps.handleBlur('weight')}
                 onChangeText={formikProps.handleChange('weight')}
@@ -66,7 +66,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
             <View style={styles.primaryFieldRow}>
               <View style={styles.stonesField}>
                 <ValidatedTextInput
-                  error={formikProps.touched.stones && formikProps.errors.stones}
+                  error={formikProps.touched.stones && !!formikProps.errors.stones}
                   keyboardType="numeric"
                   onBlur={formikProps.handleBlur('stones')}
                   onChangeText={formikProps.handleChange('stones')}
@@ -79,7 +79,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
               </View>
               <View style={styles.poundsField}>
                 <ValidatedTextInput
-                  error={formikProps.touched.pounds && formikProps.errors.pounds}
+                  error={formikProps.touched.pounds && !!formikProps.errors.pounds}
                   keyboardType="numeric"
                   onBlur={formikProps.handleBlur('pounds')}
                   onChangeText={formikProps.handleChange('pounds')}
@@ -105,7 +105,7 @@ export const WeightQuestion: IFCWithStatic<IProps> = ({ formikProps, label }) =>
           </View>
         </View>
       )}
-    </FieldWrapper>
+    </View>
   );
 };
 
@@ -132,43 +132,33 @@ const styles = StyleSheet.create({
   fieldRow: {
     flexDirection: 'row',
   },
-
-  fieldWrapper: {
-    flex: 1,
-  },
-
   poundsField: {
     flex: 5,
-    marginHorizontal: 4,
+    marginHorizontal: sizes.xxs,
   },
-
   primaryField: {
     flex: 6,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
-
   primaryFieldRow: {
     flex: 6,
     flexDirection: 'row',
   },
-
   secondaryField: {
     flex: 2,
-    marginLeft: 4,
+    marginLeft: sizes.xxs,
     marginTop: -16,
   },
-
   stonesField: {
     flex: 5,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
-
   tertiaryField: {
     flex: 5,
-    marginRight: 8,
+    marginRight: sizes.xs,
   },
-
-  textItemStyle: {
-    borderColor: 'transparent',
+  view: {
+    flex: 1,
+    marginVertical: sizes.m,
   },
 });

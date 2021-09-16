@@ -38,7 +38,7 @@ export const schoolSlice = createSlice({
 });
 
 // Selectors
-export const selectAllJoinedGroups = (state: TRootState, higherEducation: boolean = false) =>
+const selectAllJoinedGroups = (state: TRootState, higherEducation: boolean = false) =>
   state.school.joinedSchoolGroups?.filter((group) => group.school.higher_education === higherEducation);
 
 export const selectPatientsJoinedGroups = (state: TRootState, patientId: string, higherEduction: boolean = false) => {

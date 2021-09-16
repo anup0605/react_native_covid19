@@ -14,7 +14,7 @@ interface IProps {
   test?: TCovidTest;
 }
 
-export interface ICovidTestResultQuestion<P, Data> extends React.FC<P> {
+interface ICovidTestResultQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (test?: TCovidTest) => Data;
   schema: () => Yup.ObjectSchema;
   createDTO: (data: Data) => Partial<TCovidTest>;
@@ -26,8 +26,8 @@ export const CovidTestResultQuestion: ICovidTestResultQuestion<IProps, ICovidTes
   const resultItems = [
     { label: i18n.t('covid-test.picker-negative'), value: 'negative' },
     { label: i18n.t('covid-test.picker-positive'), value: 'positive' },
-    { label: i18n.t('covid-test.picker-test-failed'), value: 'failed' },
     { label: i18n.t('covid-test.picker-waiting'), value: 'waiting' },
+    { label: i18n.t('covid-test.picker-test-failed'), value: 'failed' },
   ];
 
   return (

@@ -17,10 +17,7 @@ function SchoolNetworksCard({ school }: IProps) {
       await Share.share({
         message: 'https://covid.joinzoe.com/schools',
       });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
+    } catch (_) {}
   };
 
   const getSchoolTotals = () => {
@@ -55,9 +52,7 @@ function SchoolNetworksCard({ school }: IProps) {
           />
         );
       })}
-      <View>
-        <ShareButton label={i18n.t('generic.share-this-with-someone')} onPress={share} />
-      </View>
+      <ShareButton label={i18n.t('generic.share-this-with-someone')} onPress={share} />
     </View>
   );
 }

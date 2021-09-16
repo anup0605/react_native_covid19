@@ -2,12 +2,12 @@ import DropdownField from '@covid/components/DropdownField';
 import { GenericTextField } from '@covid/components/GenericTextField';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { cleanFloatVal, cleanIntegerVal } from '@covid/utils/number';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -27,7 +27,7 @@ export interface IDiabetesData extends IDiabetesTreatmentsData, IDiabetesOralMed
   diabetesUsesCGM: string;
 }
 
-export enum EDiabetesTypeValues {
+enum EDiabetesTypeValues {
   TYPE_1 = 'type_1',
   TYPE_2 = 'type_2',
   GESTATIONAL = 'gestational',
@@ -36,7 +36,7 @@ export enum EDiabetesTypeValues {
   PREFER_NOT_TO_SAY = 'pfnts',
 }
 
-export enum EHemoglobinMeasureUnits {
+enum EHemoglobinMeasureUnits {
   PERCENT = '%',
   MOL = 'mmol/mol',
 }
@@ -80,13 +80,13 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
         <GenericTextField formikProps={formikProps} name="diabetesTypeOther" />
       ) : null}
 
-      <FieldWrapper style={styles.fieldWrapper}>
+      <View style={styles.view}>
         <RegularText>{i18n.t('diabetes.most-recent-hemoglobin-measure')}</RegularText>
         <View style={styles.fieldRow}>
-          <View style={styles.primaryField}>
+          <View style={styles.flex4}>
             {formikProps.values.hemoglobinMeasureUnit === '%' ? (
               <ValidatedTextInput
-                error={formikProps.touched.a1cMeasurementPercent && formikProps.errors.a1cMeasurementPercent}
+                error={formikProps.touched.a1cMeasurementPercent && !!formikProps.errors.a1cMeasurementPercent}
                 keyboardType="numeric"
                 onBlur={formikProps.handleBlur('a1cMeasurementPercent')}
                 onChangeText={formikProps.handleChange('a1cMeasurementPercent')}
@@ -98,7 +98,7 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
             ) : null}
             {formikProps.values.hemoglobinMeasureUnit === 'mmol/mol' ? (
               <ValidatedTextInput
-                error={formikProps.touched.a1cMeasurementMol && formikProps.errors.a1cMeasurementMol}
+                error={formikProps.touched.a1cMeasurementMol && !!formikProps.errors.a1cMeasurementMol}
                 keyboardType="numeric"
                 onBlur={formikProps.handleBlur('a1cMeasurementMol')}
                 onChangeText={formikProps.handleChange('a1cMeasurementMol')}
@@ -109,16 +109,17 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
               />
             ) : null}
           </View>
-          <View style={styles.secondaryField}>
+          <View style={styles.flex4}>
             <DropdownField
               hideLabel
               items={hemoglobinUnitsOptions}
               onValueChange={formikProps.handleChange('hemoglobinMeasureUnit')}
               selectedValue={formikProps.values.hemoglobinMeasureUnit}
+              style={{ marginVertical: 0 }}
             />
           </View>
         </View>
-      </FieldWrapper>
+      </View>
 
       <GenericTextField
         showError
@@ -129,10 +130,10 @@ export const DiabetesQuestions: IFormikDiabetesInputFC<IProps, IDiabetesData> = 
         placeholder={i18n.t('placeholder-optional')}
       />
 
-      <DiabetesTreatmentsQuestion formikProps={formikProps as FormikProps<IDiabetesTreatmentsData>} />
+      <DiabetesTreatmentsQuestion formikProps={formikProps as unknown as FormikProps<IDiabetesTreatmentsData>} />
 
       {formikProps.values.diabetesTreatmentOtherOral ? (
-        <DiabetesOralMedsQuestion formikProps={formikProps as FormikProps<IDiabetesOralMedsData>} />
+        <DiabetesOralMedsQuestion formikProps={formikProps as unknown as FormikProps<IDiabetesOralMedsData>} />
       ) : null}
 
       <YesNoField
@@ -219,19 +220,11 @@ const styles = StyleSheet.create({
   fieldRow: {
     flexDirection: 'row',
   },
-  fieldWrapper: {
+  flex4: {
+    flex: 4,
+  },
+  view: {
     flex: 1,
-  },
-  primaryField: {
-    flex: 4,
-    marginRight: 4,
-  },
-  secondaryField: {
-    flex: 4,
-    margin: -8,
-    marginHorizontal: 4,
-  },
-  textItemStyle: {
-    borderColor: 'transparent',
+    marginVertical: sizes.m,
   },
 });

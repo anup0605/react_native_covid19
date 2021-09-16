@@ -2,6 +2,7 @@ import { NumberIndicator } from '@covid/components/stats/NumberIndicator';
 import { CaptionText, HeaderText, RegularText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -13,6 +14,7 @@ export enum EDrawerMenuItem {
   PRIVACY_POLICY = 'PRIVACY_POLICY',
   DELETE_MY_DATA = 'DELETE_MY_DATA',
   LOGOUT = 'LOGOUT',
+  TESTING_MODE = 'TESTING_MODE',
 }
 
 interface IMenuItemProps {
@@ -65,6 +67,8 @@ export function LinkItem({
         return i18n.t('delete-my-data');
       case EDrawerMenuItem.TURN_ON_REMINDERS:
         return i18n.t('push-notifications');
+      case EDrawerMenuItem.TESTING_MODE:
+        return i18n.t('testing-mode');
       default:
         return '';
     }
@@ -83,20 +87,20 @@ const styles = StyleSheet.create({
   icon: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 20,
+    marginRight: sizes.l,
     width: 24,
   },
   iconNameRow: {
     alignContent: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
-    marginStart: 8,
-    marginVertical: 16,
+    marginLeft: sizes.xs,
+    marginVertical: sizes.m,
   },
   labelRow: {
     justifyContent: 'space-between',
   },
   smallLabel: {
-    marginTop: 8,
+    marginTop: sizes.xs,
   },
 });

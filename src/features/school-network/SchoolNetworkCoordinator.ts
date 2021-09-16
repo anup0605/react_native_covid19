@@ -9,7 +9,7 @@ import { schoolService } from '@covid/core/schools/SchoolService';
 import store from '@covid/core/state/store';
 import NavigatorService from '@covid/NavigatorService';
 
-export class SchoolNetworkCoordinator extends Coordinator implements ISelectProfile {
+class SchoolNetworkCoordinator extends Coordinator implements ISelectProfile {
   patientData: TPatientData;
 
   higherEducation: boolean;
@@ -40,54 +40,54 @@ export class SchoolNetworkCoordinator extends Coordinator implements ISelectProf
     this.selectedSchool = undefined;
   };
 
-  startFlow() {
+  startFlow = () => {
     NavigatorService.navigate('JoinSchool', { higherEducation: this.higherEducation, patientData: this.patientData });
-  }
+  };
 
-  closeFlow() {
+  closeFlow = () => {
     NavigatorService.navigate('SelectProfile');
-  }
+  };
 
-  resetToHome() {
+  resetToHome = () => {
     NavigatorService.reset([{ name: homeScreenName() }], 0);
-  }
+  };
 
-  goToJoinGroup() {
+  goToJoinGroup = () => {
     NavigatorService.navigate('JoinSchoolGroup', {
       patientData: this.patientData,
       selectedSchool: this.selectedSchool!,
     });
-  }
+  };
 
-  goToGroupList() {
+  goToGroupList = () => {
     NavigatorService.navigate('SchoolGroupList', {
       patientData: this.patientData,
       selectedSchool: this.selectedSchool!,
     });
-  }
+  };
 
-  async setSelectedSchool(selectedSchool: ISchoolModel) {
+  setSelectedSchool = async (selectedSchool: ISchoolModel) => {
     this.selectedSchool = selectedSchool;
     if (selectedSchool.higher_education) {
       const groups: ISchoolGroupModel[] = await schoolNetworkCoordinator.searchSchoolGroups(selectedSchool.id);
       await schoolNetworkCoordinator.addPatientToGroup(groups[0].id, this.patientData.patientId);
     }
-  }
+  };
 
-  async profileSelected(profile: TProfile): Promise<void> {
+  profileSelected = async (profile: TProfile): Promise<void> => {
     this.patientData = await patientService.getPatientDataByProfile(profile);
     NavigatorService.navigate('JoinSchool');
-  }
+  };
 
-  async removePatientFromGroup(groupId: string, patientId: string) {
-    return schoolService.leaveGroup(groupId, patientId).then(async (r) => {
+  removePatientFromGroup = async (groupId: string, patientId: string) => {
+    return schoolService.leaveGroup(groupId, patientId).then(async () => {
       await store.dispatch(fetchSubscribedSchoolGroups()).then(() => {
         store.dispatch(schoolSlice.actions.removeGroup(groupId));
       });
     });
-  }
+  };
 
-  async removePatientFromSchool(schoolId: string, patientId: string) {
+  removePatientFromSchool = async (schoolId: string, patientId: string) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const group of store.getState().school.joinedSchoolGroups) {
       if (group.school.id === schoolId && group.patient_id === patientId) {
@@ -97,24 +97,24 @@ export class SchoolNetworkCoordinator extends Coordinator implements ISelectProf
         });
       }
     }
-  }
+  };
 
-  async addPatientToGroup(groupId: string, patientId: string) {
+  addPatientToGroup = async (groupId: string, patientId: string) => {
     return schoolService.joinGroup(groupId, patientId).then(async (r) => {
       await store.dispatch(fetchSubscribedSchoolGroups());
       return r;
     });
-  }
+  };
 
-  async searchSchoolGroups(id: string) {
+  searchSchoolGroups = async (id: string) => {
     return schoolService.searchSchoolGroups(id).catch(() => {
       return [];
     });
-  }
+  };
 
-  goToSchoolDashboard(school: ISubscribedSchoolStats) {
+  goToSchoolDashboard = (school: ISubscribedSchoolStats) => {
     NavigatorService.navigate('SchoolDashboard', { school });
-  }
+  };
 }
 
 export const schoolNetworkCoordinator = new SchoolNetworkCoordinator();

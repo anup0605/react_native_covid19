@@ -1,13 +1,22 @@
 import DropdownIcon from '@assets/icons/DropdownIcon';
 import { requiredFormMarker } from '@covid/components/Form';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { Label } from 'native-base';
 import * as React from 'react';
-import { Image, ImageSourcePropType, PickerItemProps, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  PickerItemProps,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-import { FieldWrapper } from './Screen';
 import { ValidationError } from './ValidationError';
 
 interface IProps {
@@ -20,6 +29,7 @@ interface IProps {
   placeholder?: string;
   required?: boolean;
   selectedValue?: any;
+  style?: StyleProp<ViewStyle>;
 }
 
 interface ISelectedItem {
@@ -29,7 +39,7 @@ interface ISelectedItem {
 
 const DROPDOWN_ROW_HEIGHT = 48.6;
 
-export function DropdownField({
+function DropdownField({
   placeholder,
   label,
   error,
@@ -39,6 +49,7 @@ export function DropdownField({
   onValueChange,
   itemIcons,
   required,
+  style,
 }: IProps) {
   // Returns with [No, Yes] if props.item is blank (no dropdown list items provided.)
   const prepareItems = (array?: PickerItemProps[]): PickerItemProps[] => {
@@ -116,7 +127,7 @@ export function DropdownField({
         ]}
       >
         {itemIcons?.length ? (
-          <Image source={itemIcons[index]} style={{ height: 24, marginRight: 5, width: 24 }} />
+          <Image source={itemIcons[index]} style={{ height: 24, marginRight: sizes.xxs, width: 24 }} />
         ) : null}
         <Text style={[styles.dropdownTextStyle]}>{option}</Text>
       </View>
@@ -124,7 +135,7 @@ export function DropdownField({
   };
 
   return (
-    <FieldWrapper style={styles.fieldWrapper}>
+    <View style={[styles.view, style]}>
       {hideLabel ? null : (
         <Label style={styles.label}>
           {label}
@@ -157,17 +168,17 @@ export function DropdownField({
           style={[styles.dropdownButtonContainer, dropdownFocusStyle, dropdownErrorStyle]}
         >
           <Label style={[styles.dropdownLabel, selectedLabel ? styles.dropdownSelectedLabel : {}]}>
-            {selectedLabel ?? (placeholder || i18n.t('choose-one-of-these-options'))}
+            {selectedLabel ?? (placeholder || i18n.t('label-chose-an-option'))}
           </Label>
           <DropdownIcon />
         </View>
       </ModalDropdown>
       {error ? (
-        <View style={{ marginHorizontal: 4, marginTop: 4 }}>
+        <View style={{ marginHorizontal: sizes.xxs, marginTop: sizes.xxs }}>
           <ValidationError error={error} />
         </View>
       ) : null}
-    </FieldWrapper>
+    </View>
   );
 }
 
@@ -178,7 +189,7 @@ const styles = StyleSheet.create({
   },
   dropdownButton: {
     backgroundColor: colors.backgroundTertiary,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     height: 'auto',
     minHeight: 48,
     minWidth: 70,
@@ -188,24 +199,24 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 12,
+    padding: sizes.s,
   },
   dropdownError: {
     borderColor: colors.feedbackBad,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     borderStyle: 'solid',
     borderWidth: 1,
   },
   dropdownLabel: { color: colors.secondary, flex: 1, lineHeight: 24 },
   dropdownNoBorder: {
     borderColor: 'transparent',
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     borderStyle: 'solid',
     borderWidth: 1,
   },
   dropdownOnFocus: {
     borderColor: colors.primary,
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     borderStyle: 'solid',
     borderWidth: 1,
   },
@@ -216,10 +227,10 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   dropdownStyle: {
-    borderRadius: 8,
+    borderRadius: sizes.xs,
     borderWidth: 0,
     elevation: 20,
-    marginTop: 8,
+    marginTop: sizes.xs,
     shadowColor: 'black',
     shadowOpacity: 0.15,
     shadowRadius: 20,
@@ -239,27 +250,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.feedbackBad,
   },
-  fieldWrapper: {
-    flex: 1,
-  },
   label: {
     color: colors.primary,
     fontFamily: 'SofiaProRegular',
     fontSize: 16,
     lineHeight: 30,
-    marginBottom: 8,
+    marginBottom: sizes.xs,
   },
   picker: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
     minHeight: 48,
-    padding: 12,
+    padding: sizes.s,
     width: '100%',
   },
   topBorderRadiusStyle: {
     borderTopEndRadius: 8,
     borderTopStartRadius: 8,
+  },
+  view: {
+    flex: 1,
+    marginVertical: sizes.m,
   },
 });
 

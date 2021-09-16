@@ -9,7 +9,7 @@ export default {
   consentVersionUK: 'v2.1',
   consentVersionUS: 'v1',
 
-  covidTestVersion: '1.2.0',
+  covidTestVersion: '2.0.0',
 
   healthStudyConsentVersionUK: 'v1.0',
   nursesConsentVersionUS: 'v2',
@@ -17,7 +17,7 @@ export default {
   patientVersion: '1.6.0',
 
   privacyPolicyVersionSE: 'v3.0',
-  privacyPolicyVersionUK: 'v3.1',
+  privacyPolicyVersionUK: 'v4.0',
   privacyPolicyVersionUS: 'v1.3',
 
   ukValidationStudyAdVersion: 'v2',

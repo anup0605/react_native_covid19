@@ -6,10 +6,12 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { TCoordinates, TPersonalisedLocalData } from '@covid/core/AsyncStorageService';
 import { patientService } from '@covid/core/patient/PatientService';
 import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import { loadEstimatedCasesCartoMap } from '@covid/utils/files';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
@@ -39,7 +41,7 @@ enum EMapType {
 function EmptyView({ onPress, ...props }: IEmptyViewProps) {
   const [html, setHtml] = React.useState<string>('');
 
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   const primaryLabel = props.primaryLabel ?? i18n.t('covid-cases-map.covid-in-x', { location: 'your area' });
   const secondaryLabel = props.secondaryLabel ?? i18n.t('covid-cases-map.update-postcode');
@@ -79,7 +81,7 @@ function EmptyView({ onPress, ...props }: IEmptyViewProps) {
 
   return (
     <View style={[styles.root, root]}>
-      <View style={{ marginVertical: 24, paddingHorizontal: 16 }}>
+      <View style={{ marginVertical: sizes.l, paddingHorizontal: sizes.m }}>
         <Text rhythm={8} textClass="h4">
           {primaryLabel}
         </Text>
@@ -97,12 +99,12 @@ function EmptyView({ onPress, ...props }: IEmptyViewProps) {
       ) : null}
       {showUpdatePostcode ? (
         <>
-          <View style={{ paddingHorizontal: 16, paddingVertical: 16 }}>
+          <View style={{ paddingHorizontal: sizes.m, paddingVertical: sizes.m }}>
             <Text inverted colorPalette="uiDark" colorShade="dark" textClass="pSmallLight">
               {secondaryLabel}
             </Text>
           </View>
-          <View style={{ paddingHorizontal: 16 }}>
+          <View style={{ paddingHorizontal: sizes.m }}>
             <BrandedButton onPress={onPress} style={styles.detailsButton}>
               <Text colorPalette="burgundy" textClass="pLight">
                 {ctaLabel}
@@ -140,7 +142,6 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
 
   const [displayLocation, setDisplayLocation] = React.useState<string>('your area');
   const [mapUrl, setMapUrl] = React.useState<string | null>(null);
-  const [activeCases, setActiveCases] = React.useState<number | null | undefined>(localData?.cases);
   const [showEmptyState, setShowEmptyState] = React.useState<boolean>(true);
   const [useCartoMap, setUseCartoMap] = React.useState<boolean>(true);
   const [html, setHtml] = React.useState<string>('');
@@ -165,7 +166,6 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
     // Show to up date local data
     setDisplayLocation(localData!.name);
     setMapUrl(localData!.mapUrl);
-    setActiveCases(localData?.cases);
     setShowEmptyState(false);
 
     // Update carto's map center if map url isn't avaliable
@@ -208,7 +208,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
     setTMapConfig(config);
   };
 
-  const onMapEvent = (type: string, data?: object) => {
+  const onMapEvent = (type: string) => {
     switch (type) {
       case 'mapLoaded':
         syncMapCenter();
@@ -256,7 +256,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
   return (
     <View style={styles.root}>
       <View collapsable={false} ref={viewRef} style={styles.snapshotContainer}>
-        <View style={{ marginVertical: isSharing ? 4 : 24, paddingHorizontal: 16 }}>
+        <View style={{ marginVertical: isSharing ? 4 : 24, paddingHorizontal: sizes.m }}>
           <Text rhythm={8} textClass="h4">
             {i18n.t('covid-cases-map.covid-in-x', { location: displayLocation })}
           </Text>
@@ -276,24 +276,18 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
         </View>
       </View>
 
-      {!isSharing ? (
-        <View>
-          <ShareButton label={i18n.t('covid-cases-map.share')} onPress={share} />
-        </View>
-      ) : null}
+      {!isSharing ? <ShareButton label={i18n.t('covid-cases-map.share')} onPress={share} /> : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  backIcon: {},
-
   detailsButton: {
     backgroundColor: 'transparent',
     borderColor: colors.purple,
     borderWidth: 1,
-    marginBottom: 24,
-    paddingHorizontal: 52,
+    marginBottom: sizes.l,
+    paddingHorizontal: sizes.xxl,
   },
 
   detailsButtonLabel: {
@@ -325,7 +319,7 @@ const styles = StyleSheet.create({
   },
 
   postcodeButton: {
-    marginBottom: 20,
+    marginBottom: sizes.l,
   },
 
   primaryLabel: {
@@ -335,14 +329,14 @@ const styles = StyleSheet.create({
 
   root: {
     backgroundColor: colors.white,
-    borderRadius: 16,
-    marginVertical: 8,
+    borderRadius: sizes.m,
+    marginVertical: sizes.xs,
     overflow: 'hidden',
   },
 
   shareIcon: {
-    marginRight: 8,
-    marginTop: 4,
+    marginRight: sizes.xs,
+    marginTop: sizes.xxs,
   },
 
   shareLabel: {
@@ -354,8 +348,8 @@ const styles = StyleSheet.create({
   shareTouchable: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 16,
-    paddingTop: 4,
+    marginVertical: sizes.m,
+    paddingTop: sizes.xxs,
   },
 
   snapshotContainer: {
@@ -364,21 +358,21 @@ const styles = StyleSheet.create({
   },
 
   stats: {
-    marginRight: 8,
+    marginRight: sizes.xs,
   },
 
   statsContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
+    paddingHorizontal: sizes.m,
     width: '100%',
   },
 
   statsLabel: {
     fontSize: 14,
     lineHeight: 20,
-    marginBottom: 4,
+    marginBottom: sizes.xxs,
   },
 
   statsRow: {

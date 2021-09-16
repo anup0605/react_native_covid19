@@ -9,6 +9,7 @@ import {
   TSymptomCheckBoxData,
 } from '@covid/features/assessment/fields/SymptomsTypes';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { cleanFloatVal } from '@covid/utils/number';
 import { FormikProps } from 'formik';
 import * as React from 'react';
@@ -88,13 +89,13 @@ export const GeneralSymptomsQuestions: ISymptomQuestions<TProps, TGeneralSymptom
   ];
 
   return (
-    <View style={{ marginBottom: 32, marginTop: 16 }}>
-      <RegularText style={{ paddingVertical: 16 }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
+    <View style={{ marginBottom: sizes.xl, marginTop: sizes.m }}>
+      <RegularText style={{ paddingVertical: sizes.m }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
 
       <CheckboxList>{createSymptomCheckboxes(fever_checkbox, formikProps)}</CheckboxList>
 
       {formikProps.values.fever ? (
-        <View style={{ margin: 16 }}>
+        <View style={{ margin: sizes.m }}>
           <RegularText>{i18n.t('describe-symptoms.question-your-temperature')}</RegularText>
           <View style={styles.fieldRow}>
             <View style={styles.primaryField}>
@@ -203,11 +204,11 @@ const styles = StyleSheet.create({
   },
   primaryField: {
     flex: 3,
-    marginRight: 4,
+    marginRight: sizes.xxs,
   },
   secondaryField: {
     flex: 1,
-    marginLeft: 4,
+    marginLeft: sizes.xxs,
     marginTop: -16,
   },
 });

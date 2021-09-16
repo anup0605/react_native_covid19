@@ -1,11 +1,12 @@
 import { Button } from '@covid/components/buttons/Button';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { RegularBoldText, RegularText } from '@covid/components/Text';
 import { Coordinator } from '@covid/core/Coordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes, styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -27,52 +28,37 @@ export const SchoolHowToScreen: React.FC<TProps> = ({ route }) => {
   const currentPatient = route.params?.patientData?.patientState;
 
   return (
-    <View style={styles.container}>
-      <Screen simpleCallout profile={currentPatient?.profile} style={styles.container} testID="school-how-to-screen">
-        <View style={styles.container}>
-          <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('school-networks.how-to.title')} />
+    <Screen
+      simpleCallout
+      backgroundColor={colors.backgroundPrimary}
+      profile={currentPatient?.profile}
+      testID="school-how-to-screen"
+    >
+      <ProgressHeader currentStep={1} maxSteps={6} title={i18n.t('school-networks.how-to.title')} />
 
-          <View style={styles.description}>
-            <RegularBoldText>{i18n.t('school-networks.how-to.point-1.title')}</RegularBoldText>
-            <RegularText style={styles.label}>{i18n.t('school-networks.how-to.point-1.description')}</RegularText>
-            <View style={{ height: 24 }} />
-            <RegularBoldText>{i18n.t('school-networks.how-to.point-2.title')}</RegularBoldText>
-            <RegularText style={styles.label}>{i18n.t('school-networks.how-to.point-2.description')}</RegularText>
-          </View>
-        </View>
-      </Screen>
+      <RegularBoldText style={styles.marginTop}>{i18n.t('school-networks.how-to.point-1.title')}</RegularBoldText>
+      <RegularText style={styles.label}>{i18n.t('school-networks.how-to.point-1.description')}</RegularText>
 
-      <View style={styles.buttonsContainer}>
-        <Button branded onPress={goNext}>
-          {i18n.t('school-networks.how-to.cta')}
-        </Button>
-        <Button onPress={() => NavigatorService.navigate('Dashboard')}>{i18n.t('skip')}</Button>
-      </View>
-    </View>
+      <View style={{ height: 24 }} />
+
+      <RegularBoldText>{i18n.t('school-networks.how-to.point-2.title')}</RegularBoldText>
+      <RegularText style={styles.label}>{i18n.t('school-networks.how-to.point-2.description')}</RegularText>
+
+      <View style={styling.flex} />
+
+      <Button branded onPress={goNext}>
+        {i18n.t('school-networks.how-to.cta')}
+      </Button>
+      <Button onPress={() => NavigatorService.navigate('Dashboard')}>{i18n.t('skip')}</Button>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonsContainer: {
-    marginBottom: 48,
-    paddingHorizontal: 8,
-  },
-
-  container: {
-    backgroundColor: colors.backgroundPrimary,
-    flex: 1,
-  },
-
-  description: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-
-  header: {
-    marginRight: 72,
-  },
-
   label: {
-    marginTop: 4,
+    marginTop: sizes.xxs,
+  },
+  marginTop: {
+    marginTop: sizes.m,
   },
 });

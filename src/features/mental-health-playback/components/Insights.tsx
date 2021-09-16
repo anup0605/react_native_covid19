@@ -1,15 +1,12 @@
 import Background from '@assets/mental-health-playback/Background';
-import { Card, Spacer, Text, TextHighlight } from '@covid/components';
-import { TRootState } from '@covid/core/state/root';
-import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { Card, Text, TextHighlight } from '@covid/components';
 import BarChart from '@covid/features/mental-health-playback/components/BarChart';
 import InsightIllustration from '@covid/features/mental-health-playback/components/InsightIllustration';
 import { IInsight } from '@covid/features/mental-health-playback/types';
 import i18n from '@covid/locale/i18n';
-import { colors, grid, styling } from '@covid/themes';
+import { colors, sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import { LayoutChangeEvent, StyleSheet, useWindowDimensions, View } from 'react-native';
-import { useSelector } from 'react-redux';
 
 interface IProps {
   itemHeight: number;
@@ -18,12 +15,13 @@ interface IProps {
 
 type TNumberObject = { [key: number]: number };
 
+const HEIGHT_SMALL_DEVICES = 667;
+
 export default React.memo(function Insights(props: IProps) {
   const [illustrationHeights, setIllustrationHeights] = React.useState<TNumberObject>({});
-  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>((state) => state.content.startupInfo);
-  const windowWidth = useWindowDimensions().width;
+  const windowDimensions = useWindowDimensions();
 
-  const isGeneral = startupInfo?.mh_insight_cohort === 'MHIP-v1-cohort_b';
+  const backgroundWidth = Math.min(windowDimensions.width, sizes.maxScreenWidth);
 
   function onLayoutView(event: LayoutChangeEvent, index: number) {
     setIllustrationHeights({
@@ -39,20 +37,20 @@ export default React.memo(function Insights(props: IProps) {
   return (
     <>
       {(props.insights || []).map((insight: IInsight, index: number) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <View key={`insight-${index}`} style={{ height: props.itemHeight, justifyContent: 'space-between' }}>
-          {!isGeneral && index === 0 ? (
-            <View>
-              <Spacer space={60} />
-              <Card useShadow style={styles.card}>
-                <Text>
-                  {i18n.t('mental-health-playback.general.explanation-card')}{' '}
-                  {i18n.t(`mental-health-playback.segments.${insight.segment}`, {
-                    defaultValue: i18n.t('mental-health-playback.segments.general'),
-                  })}
-                </Text>
-              </Card>
-            </View>
+        <View
+          // eslint-disable-next-line react/no-array-index-key
+          key={`insight-${index}`}
+          style={{ height: props.itemHeight, justifyContent: 'space-between', overflow: 'hidden' }}
+        >
+          {index === 0 && windowDimensions.height > HEIGHT_SMALL_DEVICES ? (
+            <Card useShadow style={styles.card}>
+              <Text>
+                {i18n.t('mental-health-playback.general.explanation-card')}{' '}
+                {i18n.t(`mental-health-playback.segments.${insight.segment}`, {
+                  defaultValue: i18n.t('mental-health-playback.segments.general'),
+                })}
+              </Text>
+            </Card>
           ) : null}
 
           {illustrationHeights[index] > 0 && illustrationHeights[index] < 100 ? null : (
@@ -62,10 +60,10 @@ export default React.memo(function Insights(props: IProps) {
             >
               {illustrationHeights[index] >= 100 ? (
                 <>
-                  <Background height={illustrationHeights[index]} preserveAspectRatio="none" width={windowWidth} />
+                  <Background height={illustrationHeights[index]} preserveAspectRatio="none" width={backgroundWidth} />
                   <View style={[styling.absoluteFill, styling.centerCenter]}>
                     <InsightIllustration
-                      height={illustrationHeights[index] - grid.xxl * 2}
+                      height={illustrationHeights[index] - sizes.l * 2}
                       type={insight.activity_name}
                     />
                   </View>
@@ -93,19 +91,16 @@ export default React.memo(function Insights(props: IProps) {
               style={styles.description}
               textClass="p"
             >
-              {i18n.t(
-                isGeneral
-                  ? 'mental-health-playback.general.insight-description-general'
-                  : 'mental-health-playback.general.insight-description-personal',
-                {
-                  anxiety: insight.anxiety,
-                  level_of_association: insight.level_of_association,
-                },
-              )}
+              {i18n.t('mental-health-playback.general.insight-description-personal', {
+                anxiety: insight.anxiety,
+                level_of_association: insight.level_of_association,
+              })}
             </TextHighlight>
-            <Text inverted colorPalette="uiDark" colorShade="main" style={styles.label} textClass="pSmall">
-              {i18n.t('mental-health-playback.general.chart-label')}
-            </Text>
+            {windowDimensions.height > HEIGHT_SMALL_DEVICES ? (
+              <Text inverted colorPalette="uiDark" colorShade="main" style={styles.label} textClass="pSmall">
+                {i18n.t('mental-health-playback.general.chart-label')}
+              </Text>
+            ) : null}
             <BarChart color="#0165B5" items={insight.answer_distribution} userAnswer={insight.user_answer} />
           </View>
 
@@ -143,32 +138,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: grid.m,
+    marginTop: sizes.s,
   },
   activityWrapper: {
     alignItems: 'center',
     flex: 1,
     height: '100%',
-    paddingHorizontal: grid.m,
+    paddingHorizontal: sizes.s,
   },
   card: {
     alignSelf: 'center',
-    marginBottom: 'auto',
-    marginHorizontal: 14,
-    marginTop: 'auto',
+    marginHorizontal: sizes.m,
+    marginTop: sizes.m,
   },
   contentWrapper: {
-    marginBottom: grid.xxl,
-    marginTop: grid.m,
-    paddingLeft: grid.xl,
-    paddingRight: grid.xxxl,
+    marginBottom: sizes.l,
+    marginTop: sizes.s,
+    paddingLeft: sizes.l,
+    paddingRight: sizes.xl,
   },
   correlatedWrapper: {
     backgroundColor: '#F5F9FC',
-    padding: grid.l,
+    padding: sizes.m,
   },
   description: {
-    marginTop: grid.m,
+    marginBottom: sizes.l,
+    marginTop: sizes.s,
   },
   illustrationWrapper: {
     flex: 1,
@@ -176,7 +171,6 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   label: {
-    marginBottom: grid.m,
-    marginTop: grid.xxl,
+    marginBottom: sizes.s,
   },
 });

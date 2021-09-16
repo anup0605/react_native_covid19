@@ -1,7 +1,7 @@
 import ApiClient, { IApiClient } from '@covid/core/api/ApiClient';
 import Axios from 'axios';
 
-export interface IPredictiveMetricsClient {
+interface IPredictiveMetricsClient {
   getDailyCases(): Promise<string>;
   getActiveCases(): Promise<string>;
 }
@@ -14,7 +14,7 @@ type TPrevalenceResponse = {
   uk_prevalence: string;
 };
 
-export class PredictiveMetricsClient implements IPredictiveMetricsClient {
+class PredictiveMetricsClient implements IPredictiveMetricsClient {
   apiClient: IApiClient;
 
   constructor() {

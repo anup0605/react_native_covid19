@@ -10,7 +10,7 @@
   "no-change": "No change",
   "skip": "Skip",
   "you": "You",
-
+  "ok": "OK",
   "create-account": {
     "title": "Create new account",
     "btn": "Create account",
@@ -26,7 +26,6 @@
     "something-went-wrong": "Something went wrong: %{msg}",
     "error": "Error #01. Please report this to covid-bugs@joinzoe.com: %{msg}"
   },
-
   "login": {
     "title": "Log in to\nyour account",
     "email-label": "Email",
@@ -37,7 +36,6 @@
     "user-not-found-exception": "We couldn't identify you. Please try again.",
     "exception": "Unable to log in. Please try again."
   },
-
   "reset-password": {
     "title": "Enter your email and we’ll send you a link to reset your password",
     "email-label": "Email",
@@ -45,13 +43,11 @@
     "button": "Reset password",
     "error": "Error #02. Please report this to covid-bugs@joinzoe.com: %{msg}"
   },
-
   "reset-password-confirm": {
     "title": "Check your email",
     "text": "We've sent you a password reset link.",
     "button": "Back"
   },
-
   "optional-info": {
     "title": "Optional contact information",
     "description": "Please share your name and phone number. This is optional. If you want to share your information with another study this will help us identify you.",
@@ -59,7 +55,6 @@
     "phone-placeholder": "Phone number",
     "button": "Continue"
   },
-
   "welcome": {
     "title": "COVID Symptom Study",
     "take-a-minute": "Take 1 minute each day and help fight the outbreak.",
@@ -71,20 +66,21 @@
     "report-button": "Report today, even if you're well",
     "how-you-can-help": {
       "title": "How you can help",
+      "title-uk": "Your contribution matters",
       "text1": "Take 1 minute a day to report how you feel, even if well. Then see how your area is affected.",
-      "text2": "No information you share will be used for commercial purposes. You do not need to give us your name. This app does not give health advice."
+      "text1-uk": "Reporting how you feel, even when you’re well, helps to build a detailed picture of COVID-19 near you.",
+      "text2": "No information you share will be used for commercial purposes. You do not need to give us your name. This app does not give health advice.",
+      "text2-uk": "Together, we generate data about COVID-19 to help scientists, health practitioners, and the public. We do not provide health advice.\n\nYour contributions can also help scientists to understand other major health issues, including those related to COVID-19."
     },
     "from-researchers": "From Physicians and Researchers at",
     "create-account": "Create account",
     "research": "RESEARCH"
   },
-
   "before-we-start": {
     "title": "I am in an existing research study or trial, and I want my data to be shared with investigators on that study.",
     "yes": "Yes, I am",
     "no": "No, I am not"
   },
-
   "names": {
     "harvard-th-chan-school-of-public-health": "Harvard T.H. Chan School of Public Health",
     "mass-general-hospital": "Massachusetts General Hospital",
@@ -92,17 +88,15 @@
     "stanford-university-school-of-medicine": "Stanford University School of Medicine",
     "zoe": "ZOE"
   },
-
   "legal": {
     "i-agree": "I agree",
+    "i-agree-uk": "Yes, I consent",
     "back": "Back",
     "confirm": "Confirm"
   },
-
   "next-question": "Next question",
   "completed": "Done",
   "something-went-wrong": "Something went wrong, please try again later",
-
   "your-work": {
     "worked-hospital-inpatient": "Hospital inpatient",
     "worked-hospital-outpatient": "Hospital outpatient",
@@ -112,13 +106,9 @@
     "worked-school-clinic": "School clinic",
     "worked-other-facility": "Other health care facility"
   },
-
   "back-date-profile-title": "Some additional questions about you",
   "update-profile": "Update profile",
-  "create-profile": "Create",
-
   "title-about-work": "About your work",
-
   "your-study": {
     "title": "Study membership",
     "label-cohort": "Are you part of one of these population studies or organisations?",
@@ -128,94 +118,65 @@
     "nct-number": "What is the NCT number (if you know it)?",
     "if-not": "If not"
   },
-
   "required-is-healthcare-worker": "Please indicate if you are a healthcare worker",
   "required-is-carer": "Please indicate if you are a carer",
-
   "are-you-healthcare-staff": "Are you a healthcare worker (including hospital, elderly care, or in the community)?",
   "yes-interacting-patients": "Yes, I currently interact with patients",
   "yes-not-interacting-patients": "Yes, but I do not currently interact with patients",
   "are-you-carer": "Do you care for multiple people in the community, with direct contact with your patients?",
-
   "label-physically-worked-in-places": "Since the COVID-19 epidemic began, have you physically worked in? (check all that apply)",
   "label-interacted-with-infected-patients": "Have you EVER interacted in person with patients with documented or suspected COVID-19 infection?",
   "required-has-patient-interaction": "Please indicate whether you've had contact with infected patients",
-
   "label-used-ppe-equipment": "Since the COVID-19 epidemic began, have you used personal protective equipment (PPE) at work?",
-  "label-used-ppe-equipment-footnote": "* Depending on your specific work requirements, PPE might include gloves, masks, face shields, etc.",
-  "label-ppe-equipment-available": "Is the PPE equipment you need available?",
   "label-chose-an-option": "Choose one of the options",
-  "label-check-all-that-apply": "Check all that apply",
   "required-ppe-availability": "Please specify the availability level of PPE equipment at work.",
-
   "title-about-you": "About you",
-
   "what-year-were-you-born": "What year were you born?",
   "placeholder-year-of-birth": "Year of birth",
   "required-year-of-birth": "Please enter your year of birth",
   "correct-year-of-birth": "Please correct your year of birth",
-
   "your-sex-at-birth": "What sex were you assigned at birth?",
   "sex-at-birth-male": "Male",
   "sex-at-birth-female": "Female",
   "sex-at-birth-intersex": "Intersex",
   "sex-at-birth-pfnts": "Prefer not to say",
-  "placeholder-sex": "Assigned sex",
   "required-sex-at-birth": "Please indicate the sex you were assigned at birth",
-
   "label-gender-identity": "What gender do you most identify with?",
   "label-gender-identity-other": "Please specify as you wish:",
-
   "gender-identity-male": "Male",
   "gender-identity-female": "Female",
   "gender-identity-pfnts": "Prefer not to say",
-  "placeholder-gender-identity": "Your gender identity",
   "required-gender-identity": "Please indicate the gender you most identify with",
   "gender-identity-other": "Other, please specify",
   "error-gender-identity-length": "Maximum 30 characters",
-
   "your-height": "Your height",
   "placeholder-height": "Height",
   "placeholder-feet": "Feet",
   "placeholder-inches": "Inches",
-  "placeholder-height-unit": "Height Units",
-  "picker-feet": "ft",
-  "picker-cm": "cm",
   "required-height-in-cm": "Please enter your height in centimeters as a number",
   "required-height-in-ft-in": "Please enter your height in feet & inches",
-
   "your-weight": "Your weight",
   "placeholder-weight": "Weight",
   "placeholder-stones": "Stones",
   "placeholder-pounds": "Pounds",
   "required-weight-in-kg": "Please enter your weight in kilograms",
   "required-weight-in-lb": "Please enter your weight in pounds",
-
-  "placeholder-weight-unit": "Weight units",
-  "picker-pounds": "lbs",
-  "picker-kg": "kg",
-
   "your-postcode": "Your postcode?",
   "placeholder-postcode": "Postcode",
   "required-postcode": "Please enter your postcode",
   "postcode-too-long": "Please correct your postcode",
-
   "picker-yes": "Yes",
   "picker-no": "No",
-  "picker-do-not-know": "I do not know yet",
   "picker-unsure": "Unsure",
   "please-select-option": "Please select an option",
   "placeholder-optional-question": "*Optional",
   "placeholder-optional": "Optional",
-  "placeholder-max-500": "",
-
   "previous-exposure-title": "Previous exposure to COVID",
   "required-ever-exposed": "Please indicate if you've been exposed to someone with COVID-19 infection",
   "label-unwell-month-before": "Have you felt unwell in the month before you started reporting on this app?",
   "label-past-symptoms-days-ago": "How many days ago did your symptoms start?",
   "label-past-symptoms-still-have": "Are you still experiencing symptoms?",
   "label-past-symptoms-changed": "How have your symptoms changed over the last few days?",
-
   "label-past-symptoms": "Did you have any of the following symptoms (please select all that apply):",
   "label-past-symptom-anosmia": "Loss of smell/taste",
   "label-past-symptom-breath": "Unusual shortness of breath",
@@ -233,14 +194,10 @@
   "past-symptom-changed-same": "The same",
   "past-symptom-changed-little-worse": "A little worse",
   "past-symptom-changed-much-worse": "Much worse",
-
   "your-health": {
     "page-title": "About your health",
     "health-problems-that-limit-activity": "In general, do you have any health problems that require you to limit your activities?",
     "are-you-pregnant": "Are you pregnant?",
-    "picker-pregnant": "I'm pregnant",
-    "picker-pfnts": "Prefer not to say",
-    "picker-other": "Other",
     "have-heart-disease": "Do you have heart disease?",
     "have-diabetes": "Do you have diabetes?",
     "have-hayfever": "Do you have hayfever (seasonal allergies)?",
@@ -263,36 +220,30 @@
     "takes-pril-blood-pressure-medication": "Are you regularly taking blood pressure medications ending in \"-pril\", such as enalapril, lisinopril, captopril, ramipril?",
     "takes-sartan-blood-pressure-medication": "Are you regularly taking blood pressure medications ending in \"-sartan\", such as losarton, valsartan, irbesartan?"
   },
-
   "covid-test": {
-    "page-title": "COVID-19 status",
-    "page-title-detail-add": "Add COVID test",
+    "page-title-detail-add": "Add new test for COVID-19",
     "page-title-detail-update": "Update test",
-    "add-test": "Add new test",
+    "add-test": "Add test",
     "update-test": "Update test",
     "delete-test": "Delete test",
-
     "delete-test-alert-title": "Delete this test?",
     "delete-test-alert-text": "This information will be lost. Do you want to continue?",
-
-    "question-select-a-date-range": "Select a date range",
-    "question-select-a-date": "Select a date",
-
-    "question-mechanism": "How was this test performed?",
-    "picker-nose-swab": "Someone swabbed my nose",
-    "picker-throat-swab": "Someone swabbed my throat",
-    "picker-nose-throat-swab": "A swab of my nose or throat",
-    "picker-nose-throat-swab-and-saliva": "A swab of my nose or throat and saliva",
-    "picker-saliva-sample": "I spat in a cup/tube",
-    "picker-blood-sample": "I gave a blood sample",
-    "picker-finger-prick": "A finger-prick blood test",
-    "picker-blood-draw": "A blood test, done using a needle",
+    "question-mechanism": "What test did you have?",
+    "picker-lateral": "Lateral flow test (Antigen)",
+    "picker-pcr": "PCR test (Antigen)",
+    "picker-finger-prick": "Finger-prick blood test (Antibody)",
+    "picker-blood-draw": "Blood test, done using a needle (Antibody)",
     "picker-other": "Other, please specify",
-
-    "question-mechanism-specify": "Please indicate how the test was performed",
-
+    "question-mechanism-specify": "Other (please specify)",
     "question-trained-worker": "Did a trained worker swab you?",
-
+    "question-test-performed-by": "Who performed this test?",
+    "picker-myself-no-guidance": "Myself - without any supervision",
+    "picker-myself-guidance": "Myself - under the guidance of a trained professional",
+    "picker-trained-worker": "A trained professional",
+    "question-antibody": "Was it Anti-N or Anti-S?",
+    "picker-anti-n": "Test to detect antibodies from a previous infection only (Anti-N)",
+    "picker-anti-s": "Test to detect antibodies, either from a previous infection or vaccine (Anti-S)",
+    "picker-dont-know": "I don't know",
     "location": {
       "question": "Where was your test performed?",
       "specify": "Please specify the test location",
@@ -311,34 +262,42 @@
       }
     },
     "question-is-rapid-test": "Did you wait less than 2 hours to get the results (i.e. was it a rapid test such as lateral flow test)?",
-
     "question-invite-to-test": "Did we invite you to perform this test?",
-
-    "question-result": "What are the results of this test?",
+    "question-result": "What was the result of the test?",
     "picker-positive": "Positive",
     "picker-negative": "Negative",
     "picker-waiting": "Waiting for results",
     "picker-test-failed": "Not clear / failed",
-
-    "question-knows-date-of-test": "Do you know the date of your test?",
     "question-date-test-occurred": "When was your test?",
-    "question-time-test-taken": "What time did you take the test?",
-    "question-pick-a-time": "Pick a time",
-    "question-time-test-taken-error": "Please enter the time of your appointment",
     "question-date-approximate": "Approximate date range",
-
     "required-date": "Please indicate the date this test occurred",
     "required-dates": "Please indicate between which two dates this test occurred",
     "required-mechanism": "Please indicate how the test was performed",
     "required-result": "Please indicate the result of the test",
-
     "confirm-test": {
       "title": "Confirmation of\npositive test result",
       "body": "Your child’s positive test result will be shared anonymously with their school and the parents of the children within your child’s School Bubble.\n\nWe will only share the below details:\n\n• Date of test \n• Result of test\n• School Bubble name\n\nIf you have not already done so, please contact the school immediately to notify them of this positive result.",
       "consent": "I confirm that the information I entered is true and accurate to the extent of my knowledge and I agree to this data being shared anonymously with my school network."
+    },
+    "mechanism-modal": {
+      "title": "Types of tests",
+      "lateral-flow-title": "Lateral flow test (Antigen)",
+      "lateral-flow-description": "These are often referred to as rapid tests as they generally show results within 30 minutes.",
+      "pcr-title": "PCR test (Antigen)",
+      "pcr-description": "These are sent away to a lab and often take between 24 hours to three days to return a result. PCR tests are able to detect an infected person even before they become infectious.",
+      "finger-prick-title": "Finger-prick blood test (Antibody)",
+      "finger-prick-description": "These are quick tests for detection of protective antibodies against COVID-19. In general, antibody testing is not recommended until at least 14 days after the onset of symptoms.",
+      "blood-draw-title": "Blood test using a needle (Antibody)",
+      "blood-draw-description": "These tend to be more accurate tests for detection of antibodies. They require blood draw from a vein and analysis in a lab."
+    },
+    "antibody-modal": {
+      "title": "Anti-N and Anti-S",
+      "anti-n-title": "Anti-N antibody test",
+      "anti-n-description": "Detects the presence of antibodies targeted against the so-called (N) protein of COVID-19. Anti-N antibodies are not produced in response to any of the current vaccines on the market. They are, however, seen in most people who have recovered from COVID-19 but do drop over time.",
+      "anti-s-title": "Anti-S antibody tests",
+      "anti-s-description": "Detects the presence of antibodies targeted against the so-called spike (S) protein of the virus. Anti-S antibodies might be found in both people who have been vaccinated against COVID-19 and people who have recovered from COVID-19."
     }
   },
-
   "describe-symptoms": {
     "picker-fatigue-mild": "Mild fatigue",
     "picker-fatigue-severe": "Severe fatigue - I struggle to get out of bed",
@@ -349,9 +308,6 @@
     "picker-shortness-of-breath-mild": "Mild symptoms - slight shortness of breath during ordinary activity",
     "picker-shortness-of-breath-significant": "Significant symptoms - breathing is comfortable only at rest",
     "picker-shortness-of-breath-severe": "Severe symptoms - breathing is difficult even at rest",
-    "question-other-symptoms": "Are there other important symptoms you want to share with us?",
-    "placeholder-other-symptoms": "Other symptoms",
-
     "check-all-that-apply": "Check all that apply",
     "general-symptoms": "Are you experiencing any of the below symptoms?",
     "general-fever": "Fever or feel too hot",
@@ -362,8 +318,6 @@
     "general-chills": "Chills or shivers (feel too cold)",
     "general-fatigue": "Unusual fatigue",
     "general-fatigue-follow-up": "How severe is your fatigue?",
-    "general-fatigue-mild": "Mild fatigue",
-    "general-fatigue-severe": "Severe fatigue - I struggle to get out of bed",
     "general-rash": "Rash on your arms or torso",
     "general-foot-sores": "Red/purple sores or blisters on your feet, including your toes",
     "general-face-welts": "Raised, red, itchy welts on the skin or sudden swelling of the face or lips",
@@ -376,7 +330,6 @@
     "general-delirium": "Confusion, disorientation or drowsiness",
     "general-allergy-increase": "Increase in your usual allergy symptoms",
     "follow-up-required": "Please complete follow up question.",
-
     "head-symptoms": "Are you experiencing any symptoms in your head area?",
     "head-headache": "Headache",
     "head-headache-follow-up": "How often are you experiencing headaches?",
@@ -390,7 +343,6 @@
     "head-ear-ringing": "Ringing in your ears",
     "head-mouth-ulcers": "Mouth or tongue ulcers",
     "head-tongue-surface": "Changes to tongue surface",
-
     "throat-chest-symptoms": "Are you experiencing any symptoms in your throat or chest area?",
     "throat-chest-sore-throat": "Sore or painful throat",
     "throat-chest-swollen-glands": "Swollen neck glands",
@@ -400,17 +352,14 @@
     "throat-chest-short-breath-follow-up": "How severe is your shortness of breath?",
     "throat-chest-chest-pain": "Unusual chest pain or tightness in your chest",
     "throat-chest-heart-beat": "Unusually fast or irregular heartbeat (palpitations)",
-
     "gut-stomach-symptoms": "Are you experiencing any symptoms in your gut or stomach area?",
     "gut-stomach-abdominal-pain": "Unusual abdominal pain or stomach ache",
     "gut-stomach-nausea": "Nausea or vomiting",
     "gut-stomach-diarrhoea": "Diarrhoea",
     "gut-stomach-skipped-meals": "Skipping meals",
-
     "other-symptoms": "Any other important symptoms you want to share with us?",
     "next": "Next"
   },
-
   "health-worker-exposure-question-interacted-any-patients": "In the last day, have you interacted with any patients in person?",
   "health-worker-exposure-question-treated-patients-with-covid": "In the last day, did you treat patients in person with documented or presumed COVID-19 infection?",
   "health-worker-exposure-picker-patient-interaction-yes-documented": "Yes, documented COVID-19 cases only",
@@ -428,7 +377,6 @@
   "health-worker-exposure-picker-ppe-sometimes-reused": "I've had to reuse PPE because of shortage",
   "health-worker-exposure-picker-ppe-never-not-needed": "I haven't needed PPE",
   "health-worker-exposure-picker-ppe-never-not-available": "I needed PPE, but it was not available",
-
   "how-you-feel": {
     "question-health-status": "How do you feel physically right now?",
     "picker-health-status-healthy": "I feel physically normal",
@@ -438,7 +386,6 @@
     "vaccine-reporting-message": "Please continue to provide daily health reports following your COVID-19 vaccination and log any general symptoms you might experience.",
     "vaccine-reporting-link": "Why is that important?"
   },
-
   "pingdemic": {
     "title": "Understanding COVID risk when self-isolating",
     "body": "We're investigating the COVID risk profile of people contacted by the NHS COVID-19 App to self-isolate compared to those who have not.",
@@ -447,11 +394,7 @@
     "q1-no": "No",
     "q1-other": "Other",
     "q1-prefer-not-to-say": "Prefer not to say",
-    "yes": "Yes",
-    "no": "No",
-    "prefer-not-to-say": "Prefer not to say",
     "dates": "What date were you asked to start self-isolating?",
-    "approx": "Approximate date range",
     "no-app": "Do you have the NHS COVID-19 app, the Protect Scotland app or the StopCOVID NI app?",
     "no-app-yes": "Yes",
     "no-app-never-had": "No, I never had it",
@@ -462,13 +405,11 @@
     "active-no": "No",
     "active-not-sure": "I’m not sure"
   },
-
   "long-covid": {
     "apology": "We kindly ask anyone who already completed this to do so once more as we made a mistake in our previous version - thank you!",
     "one-off": "ONE-off questionnaire",
     "title": "Investigating COVID duration & Long COVID",
     "time": "LESS THAN 2 MIN",
-    "body-1": "Thanks for reporting!",
     "body-2": "Today, we’d like to ask you some one-off questions about Long COVID.",
     "body-3": "Your answers will help us understand long-term effects of COVID-19.",
     "q1": "Do you think you have or have had COVID-19?",
@@ -488,7 +429,6 @@
     "q2-a2": "2 - 3 weeks",
     "q2-a3": "4 - 12 weeks",
     "q2-a4": "More than 12 weeks",
-
     "q3": "For how long did these symptoms restrict your day-to-day activities?",
     "q3-a1": "I was always able to function as normal",
     "q3-a2": "1 - 3 days",
@@ -497,12 +437,10 @@
     "q3-a5": "2 - 3 weeks",
     "q3-a6": "4 - 12 weeks",
     "q3-a7": "12+ weeks",
-
     "q4-header": "12 weeks (or more) *after* first catching COVID-19, did you experience any of the following?",
     "q4-info-1": "Please only consider symptoms that are not explained by another reason.",
     "q4-info-2": "If you are unsure if you had COVID-19, please answer regarding the 12 weeks (or more) after you think you caught it.",
     "q4-info-3": "Select all that apply",
-
     "q4": "Problems thinking and communicating e.g. brain-fog, memory problems, difficulty concentrating, decreased alertness, confusion, difficulty speaking",
     "q5": "Mood changes, e.g. anxiety, feeling ‘down’, or irritable",
     "q6": "Poor or excessive sleep",
@@ -517,21 +455,16 @@
     "q15": "Heart problems, e.g. chest pain, palpitations",
     "q16": "Abdominal pain, diarrhoea or appetite loss",
     "q17": "Other",
-
     "q18": "Have you had at least one COVID-19 vaccine dose?",
     "q18-a1": "Yes",
     "q18-a2": "No",
-
     "q19": "Did you have ongoing COVID-19 symptoms in the week *before* your first COVID-19 vaccine injection?",
     "q19-a1": "Yes",
     "q19-a2": "No",
     "q19-a3": "Not sure",
-
     "q20": "Did your symptoms change 2 weeks (or more) *after* your first COVID-19 vaccine injection?",
-
     "q21": "Have your symptoms changed in the week *after* your vaccination (excluding the first 2 days)?",
     "q21-symptom_change_headache": "Headache",
-
     "q21-symptom_change_smell": "Loss of smell",
     "q21-symptom_change_voice": "Hoarse voice",
     "q21-symptom_change_cough": "Persistent cough",
@@ -543,7 +476,6 @@
     "q21-symptom_change_abdominal_pain": "Abdominal pain",
     "q21-symptom_change_diarrhoea": "Diarrhoea",
     "q21-symptom_change_fever": "Fever",
-
     "symptoms-change-a1": "Yes – all symptoms got better",
     "symptoms-change-a2": "Yes – some symptoms got better",
     "symptoms-change-a3": "Nothing changed",
@@ -552,19 +484,16 @@
     "symptoms-change-a6": "Some symptoms improved, others got worse",
     "symptoms-change-a7": "It’s not yet been 2 weeks since my first COVID 19 vaccine",
     "symptoms-change-a8": "Other",
-
     "symptoms-change-severity-a1": "Completely disappeared",
     "symptoms-change-severity-a2": "Decreased (intensity or frequency)",
     "symptoms-change-severity-a3": "Stayed the same",
     "symptoms-change-severity-a4": "Increased (intensity or frequency)",
     "symptoms-change-severity-a5": "Came back again",
     "symptoms-change-severity-a6": "Not applicable",
-
     "comments": "Do you have anything else to share regarding the evolution of your COVID-19 symptoms?",
     "button": "Next",
     "finish": "Finish"
   },
-
   "where-are-you": {
     "question-location": "Where are you right now?",
     "picker-location-home": "I'm at home. I haven't been to a hospital for suspected COVID-19 symptoms.",
@@ -572,12 +501,10 @@
     "picker-location-back-from-hospital": "I am back from the hospital, I'd like to tell you about my treatment.",
     "picker-location-back-from-hospital-already-reported": "I am back from the hospital, I've already told you about my treatment."
   },
-
   "treatment-other-title-after": "What treatment did you receive while in the hospital?",
   "treatment-other-title-during": "What treatment are you receiving in hospital?",
   "treatment-other-question-treatment-after": "What medical treatment did you receive?",
   "treatment-other-question-treatment-during": "What medical treatment are you receiving?",
-
   "treatment-selection-title-after": "What treatment did you receive while in the hospital?",
   "treatment-selection-title-during": "What treatment are you receiving right now?",
   "treatment-selection-picker-none": "None",
@@ -588,7 +515,6 @@
   "treatment-selection-picker-invasive-ventilation": "Invasive ventilation*",
   "treatment-selection-picker-subtext-invasive-ventilation": "* Breathing support through an inserted tube. People are usually asleep for this procedure.",
   "treatment-selection-picker-other": "Other",
-
   "have-you-been-exposed": "Have you EVER been exposed to someone with documented or suspected COVID-19 infection (such as co-workers, family members, or others)",
   "exposed-yes-documented": "Yes, documented COVID-19 cases only",
   "exposed-yes-undocumented": "Yes, suspected COVID-19 case only",
@@ -598,17 +524,13 @@
   "needs-help": "Do you need someone to help you on a regular basis?",
   "help-available": "If you need help, can you count on someone close to you?",
   "mobility-aid": "Do you regularly use a stick, walking frame or wheelchair to get about?",
-
   "select-country": "Select country of residence",
-  "website-home": "https://covid.joinzoe.com/",
-
   "title-health-worker-exposure": "Healthcare Worker Exposure to COVID",
   "required-treated-patients-with-covid": "Please indicate whether you've treated any patients with COVID-19 in the last day",
   "required-has-used-ppe-equipment": "Please indicate how often you've used PPE equipment",
   "required-ppe-availability-always": "Please indicate the availability of PPE equipment to you",
   "required-ppe-availability-sometimes": "Please indicate the availability of PPE equipment to you",
   "required-ppe-availability-never": "Please indicate the availability of PPE equipment to you",
-
   "thank-you": {
     "check-for-updates": "Please check our %{link} for updates.",
     "news-feed": "news feed",
@@ -624,7 +546,6 @@
     "to-see-discoveries": "to see the discoveries you made possible",
     "done": "Done"
   },
-
   "share-this-app": {
     "message": "Help slow the spread of #COVID19 and identify at risk cases sooner by self-reporting your symptoms daily, even if you feel well 🙏. Download the app",
     "url": "https://covid.joinzoe.com/",
@@ -632,15 +553,12 @@
     "secondary-text": "Your contributions are vital in the fight against COVID-19. Help us end the pandemic by sharing with others.",
     "button-text": "Share this app"
   },
-
   "thank-you-title": "Thank you for your help and vital contribution to the study of COVID-19.",
   "blog-link": "https://covid.joinzoe.com/blog",
   "thank-you-body": "Thank you for reporting. As we ease lockdown, your daily reporting is more important than ever to avoid a second wave.",
   "check-in-tomorrow": "We would appreciate it if you could check back in tomorrow if you feel up to it.",
-  "check-news-feed": "Please check our <b>news feed</b> for updates.",
   "faq-link": "https://covid.joinzoe.com/faq",
   "thank-you-completed": "Done",
-
   "rating": {
     "how-are-we-doing": "How are we doing?",
     "would-you-recommend": "Would you recommend this app to a friend or colleague?",
@@ -652,7 +570,6 @@
     "cta-later": "Not now",
     "thank-you-for-rating": "Thank you for your feedback.\nWe're working hard to improve things"
   },
-
   "research-updates": "Research updates",
   "faqs": "Frequently asked questions",
   "privacy-policy": "Privacy policy",
@@ -662,28 +579,24 @@
   "delete-data-alert-title": "Are you sure?",
   "delete-data-alert-text": "Deleting your account and data cannot be undone.",
   "push-notifications": "Turn on reminders",
+  "testing-mode": "Testing mode",
   "cancel": "Cancel",
   "confirm": "Confirm",
   "delete": "Delete",
-  "estimated-cases": "Estimated cases",
   "logout": "Log out",
-
   "your-country-title": "Your country",
   "your-country-text": "We're not certain which country you're in because of how your phone is configured.",
   "united-states": "United States",
   "united-kingdom": "United Kingdom",
   "sweden": "Sweden",
-
   "never-reported": "Not reported",
   "today": "Today",
   "yesterday": "Yesterday",
   "days-ago": "%{diffDays} days ago",
-
   "adult-or-child-title": "Who would you like to report for?",
   "adult-or-child-text": "Right now, you can only create additional profiles for UK residents.",
   "person-over-18": "Person over 18",
   "person-under-18": "Person under 18",
-
   "adult-consent-title": "Adult consent",
   "child-consent-title": "Child consent",
   "adult-consent-confirm": "I confirm the above",
@@ -695,31 +608,26 @@
   "adult-consent-text-1": "Please confirm that you have shown or read our",
   "adult-consent-text-2": "screen to the individual on whose behalf you are entering the data, that they are 18 or over, and that they have given their consent for you to share their data with us.",
   "consent-create-profile": "Create profile",
-
   "create-profile-button": "Continue",
   "create-profile-label": "Name",
   "create-profile-placeholder": "e.g. name, nickname or relation",
   "create-profile-text": "This name is just for you. Choose a name that would allow you to know which person you are reporting for.",
   "create-profile-title": "Give new profile a name",
-
   "select-profile-title-assessment": "Select profile you want to report for",
   "select-profile-title-edit": "Select profile you want to edit",
   "select-profile-text": "Or add more profiles",
   "select-profile-button": "New profile",
   "select-profile-last-report": "Last report:",
   "default-profile-name": "Me",
-
+  "validation-error-date-required": "Please provide a date",
   "validation-error-text": "Please scroll up to fill in the missing details or correct the above information",
   "validation-error-please-select-option": "Please select an option",
-
   "validation-error-text-required": "Please provide more details",
-
   "race-question": "Which of the following best describes your ethnicity?",
   "race-other-question": "Please specify your ethnicity",
   "ethnicity-question": "What is your ethnicity:",
   "prefer-not-to-say": "Prefer not to say",
   "please-select-race": "Please select an option",
-
   "uk-asian": "Asian/Asian British - Indian, Pakistani, Bangladeshi, other",
   "uk-black": "Black/Black British - Caribbean, African, other",
   "uk-mixed-white-black": "Mixed race - White and Black/Black British",
@@ -728,7 +636,6 @@
   "uk-chinese": "Chinese/Chinese British",
   "uk-middle-eastern": "Middle Eastern/Middle Eastern British - Arab, Turkish, other",
   "uk-other": "Other ethnic group",
-
   "us-indian_native": "American Indian or Alaska Native",
   "us-asian": "Asian",
   "us-black": "Black or African-American",
@@ -737,25 +644,43 @@
   "us-other": "Other, please specify",
   "hispanic": "Hispanic or Latino or Spanish origin",
   "not-hispanic": "Not Hispanic or Latino, or Spanish origin",
-
   "answer-for": "Answer for %{name}",
   "profile-name-too-long": "Enter a profile name with less that 32 characters",
   "total-people-contributing": "%{total} people contributing",
   "join-total-people-contributing": "Join %{total} people contributing worldwide",
-
   "covid-test-list": {
     "title": "Your COVID-19 tests",
     "text": "If you’ve ever had a COVID-19 test, please add below. This includes PCR, antigen and antibody tests. You can edit these at any time in the future.",
-    "add-new-test": "Add new test",
+    "add-new-test": "Add a new test",
     "positive": "Positive",
     "negative": "Negative",
     "failed": "Failed",
-    "pending": "Waiting for result",
     "update": "Update",
     "never-had-test": "I have never had a COVID test",
-    "above-list-correct": "This list is correct"
+    "above-list-correct": "This list is correct",
+    "tabs-title": "Test type",
+    "tab-lateral": "Lateral",
+    "tab-pcr": "PCR",
+    "tab-antibody": "Antibody",
+    "tab-other": "Other"
   },
-
+  "covid-test-modal": {
+    "screen-0": {
+      "title": "Tap between your various logged tests"
+    },
+    "screen-1": {
+      "title": "Your most recent tests are now placed at the top"
+    },
+    "screen-2": {
+      "title": "Easily log new tests incl. Antibody tests"
+    },
+    "screen-3": {
+      "title": "Submit and continue to log your daily symptoms"
+    },
+    "new-design": "New design",
+    "button": "Next",
+    "button-end": "OK"
+  },
   "errors": {
     "button-retry": "Retry",
     "button-okay": "Ok",
@@ -766,14 +691,11 @@
     "server-is-busy": "Server is busy. Please wait, then try again",
     "server-error": "Server couldn't respond at this time. Please wait, then try again."
   },
-
   "back": "Back",
-
   "partners": {
     "powered-by": "Powered by",
     "data-analysis": "All data analysed daily with *King’s College London* and shared with the *NHS*"
   },
-
   "consent-normal-us": {
     "existing-study": "If you are in an existing research or clinical study (e.g. Nurses’ Health Studies) and you want your data to be shared with investigators on that study,",
     "click-here": "click here",
@@ -790,7 +712,18 @@
     "terms": "Terms of Use",
     "read-accepted": "I have read and accept Zoe Global’s"
   },
-
+  "consent-normal-uk": {
+    "card-1-description": "We will use your data to better understand Coronavirus (COVID-19) and follow its spread. We work with scientists at King's College London (KCL) who will have access to your data, which we may also share with the NHS and other medical researchers as outlined in our Privacy Notice.",
+    "card-1-title": "1. Fight COVID-19",
+    "card-2-description": "ZOE and KCL will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
+    "card-2-title": "2. Advance human health science",
+    "card-3-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
+    "card-3-title": "3. Help others improve human health",
+    "card-4-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
+    "card-4-title": "4. Build health products",
+    "subtitle": "Your reports help ZOE to:",
+    "title": "How we use your data"
+  },
   "consent-nurses-us": {
     "header-1": "RESEARCH STUDY/HEALTHCARE WORKER INFORMED CONSENT",
     "para-1": "This research consent form has been approved by the Institutional Review Board at Massachusetts General Hospital (Partners Human Research Committee Protocol #2020P000909 Version Date: 3/31/2020)",
@@ -838,7 +771,6 @@
     "privacy-policy": "Privacy Policy",
     "i-agree": "I agree"
   },
-
   "terms-of-use-us": {
     "header-1": "Effective date: March 27, 2020",
     "para-1": "Welcome to the COVID-19 Symptom Study, provided by Zoe Global Limited (together with its affiliates, “Zoe, “us,” “we”). Please read on to learn the rules and restrictions that govern your use of our website(s), products, services and applications (the “Services”). By using this app and tracking if you are well or have symptoms, you will be helping medical science and healthcare providers across the country (such as Massachusetts General Hospital) to better understand Coronavirus (COVID-19). The Services are not intended for commercial purposes. If you have any questions, comments, or concerns regarding these terms or the Services, please contact us at:",
@@ -944,23 +876,18 @@
     "para-16": "Our address is: Zoe Global Limited, 164 Westminster Bridge Road, London SE1 7RW, United Kingdom\nData Protection Officer: dpo@joinzoe.com",
     "back": "Back"
   },
-
   "thank-you-uk": {
     "title": "Thank you for reporting",
-    "subtitle": "Testing alone can't get us through this second wave. Log your health today to help us predict outbreaks.",
     "sign-off": "Thank you for helping our scientists to understand COVID-19 better, and provide analysis to the NHS daily.",
     "cta-single-profile": "Back to home screen",
     "cta-multi-profile": "Report for others"
   },
-
   "edit-profile": {
     "title": "My profile",
     "your-location": "Your location",
     "text": "",
     "archive-cta": "Archive this profile",
     "done": "Done",
-    "next": "Next",
-
     "location": {
       "title": "My location",
       "label": "Your permanent home postcode (e.g. SE1 7RW)",
@@ -971,18 +898,15 @@
       "select-country": "Please select which country you are now in"
     }
   },
-
   "archive-confirmation": {
     "title": "Archive this profile?",
     "text": "You'll no longer be able to report for this individual. Do you want to proceed?",
     "confirm": "Archive",
     "cancel": "Cancel"
   },
-
   "archive-reason": {
     "title": "Profile archived",
     "text": "Help us understand why you archived this profile.",
-    "text2": "This question is optional.",
     "choice-duplicate-account": "It's a duplicate account",
     "choice-no-report": "I don't want to report for them",
     "choice-moved-away": "This person has moved away",
@@ -990,31 +914,12 @@
     "choice-pfnts": "Prefer not to say",
     "choice-passed-away": "This person has passed away"
   },
-
-  "face-mask": {
-    "worn-a-mask-question": "In the last week, did you wear a face mask when outside the house?",
-    "worn-a-mask-justification": "This information can help us understand if face masks reduce COVID infection risk. This question is completely optional.",
-    "never": "Never",
-    "sometimes": "Sometimes",
-    "most-of-the-time": "Most of the time",
-    "always": "Always",
-    "not-applicable": "Not applicable",
-    "type-of-mask-question": "What kind of face mask do you use? Check all that apply",
-    "cloth_scarf": "Cloth or scarf",
-    "surgical": "Surgical mask",
-    "respirator": "N95/FFP respirator",
-    "not-sure": "Not sure/prefer not to say",
-    "other": "Other, please specify:"
-  },
-
   "us-study-invite": {
     "title": "New COVID studies\n& how you can help",
     "body": "Are you interested in being contacted to learn about additional studies related to COVID-19 or use of this app?",
     "button": "I am interested"
   },
-
   "diabetes": {
-    "justification": "You previously indicated that you had diabetes, which is an important risk factor for COVID. Our scientists have a couple of follow up questions to understand more about this. These questions are completely optional.",
     "which-type": "What kind of diabetes do you have?",
     "answer-type-1": "Type 1 diabetes",
     "answer-type-2": "Type 2 diabetes",
@@ -1025,7 +930,7 @@
     "hemoglobin-measurement-unit-percent": "%",
     "hemoglobin-measurement-unit-mol": "mmol/mol",
     "when-was-diagnosed": "What year were you diagnosed with diabetes?",
-    "which-treatment": "Which diabetes treatments do you use? Select all that apply:",
+    "which-treatment": "Which diabetes treatments do you use? Select all that apply: *",
     "answer-none": "None",
     "answer-lifestyle-mod": "Lifestyle modification (e.g. exercise, diet, weight management)",
     "answer-daily-injections": "Once or twice daily injections of long acting insulin or \"basal\" insulin (e.g. glargine, detemir, degludec or NPH in premixed insulin)",
@@ -1046,9 +951,7 @@
     "please-select-diabetes-treatment": "Please select one or more of the above",
     "question-use-cgm": "Do you use a continuous glucose monitor (CGM)?"
   },
-
   "blood-group": {
-    "justification": "Other studies have shown that your blood group may affect both your risk and severity of COVID infection.",
     "question": "What is your blood group?",
     "answers": {
       "type-a": "A",
@@ -1059,7 +962,6 @@
       "pfnts": "Prefer not to say"
     }
   },
-
   "vaccines": {
     "banner": {
       "body": "It takes at least two weeks for vaccines to start reducing your risk of catching and spreading COVID. Stay safe and follow the guidance.\n\nHelp our research by taking a COVID test if we invite you, and keep logging!"
@@ -1083,20 +985,17 @@
       "other-placeholder": "Describe your symptoms here...",
       "next": "Next"
     },
-
     "log-symptoms": {
       "title": "Why is logging symptoms following my vaccine so important?",
       "body-1": "When COVID-19 cases exploded in March 2020, we quickly set up the ZOE COVID Symptom Study to understand the virus.",
       "body-2": "As the pandemic shifts into a new phase, we'll be monitoring the impact vaccines have on the pandemic.",
       "body-3": "Logging your vaccine and telling us how you feel following your dose helps us to keep our data accurate."
     },
-
     "find-info": {
       "title": "Find your vaccine info",
       "body-1": "You may have received a vaccination card at the time of your vaccination. It contains all the information needed to log your vaccine with us.",
       "link": "Where can I find this information?"
     },
-
     "vaccine-list": {
       "title": "Your COVID-19 vaccines",
       "description": "Tell us if you’ve had at least one dose of a COVID-19 vaccine through the national roll-out.\n\nWe can't record COVID-19 vaccines taken as part of a trial yet. If this is how you received your vaccination, please don't add it for now.",
@@ -1107,91 +1006,82 @@
       "delete-vaccine-title": "Delete Vaccine?",
       "delete-vaccine-text": "Information about all vaccines doses will be deleted."
     },
-
+    "vaccine-list-updated": {
+      "title": "Your COVID-19 vaccines",
+      "description": "Tell us if you've had a COVID-19 vaccine. This now also includes *boosters and vaccines taken as part of a trial*.",
+      "modal-title": "Logging your vaccines",
+      "modal-body": "We can now record COVID-19 vaccines taken as part of a trial. Please select \"I received my vaccine via a vaccine trial\" when asked for the name of your vaccine.",
+      "modal-button": "OK",
+      "add-button": "Add a vaccine dose",
+      "correct-info": "This information is correct",
+      "no-vaccine": "I haven't had a vaccine",
+      "no-2nd": "I haven't had a second dose",
+      "delete-vaccine-title": "Delete Vaccine?",
+      "delete-vaccine-text": "All information about this vaccine will be removed."
+    },
     "your-vaccine": {
       "title": "Tell us about your vaccine",
+      "add-dose": "Add dose",
+      "edit-dose": "Edit dose",
       "first-dose": "About your first dose",
       "second-dose": "About your second dose",
       "when-injection": "When was your injection?",
+      "when-vaccine": "When was your vaccine?",
+      "when-vaccine-trial": "When was your vaccine trial test?",
       "have-had-second": "Have you had a second dose yet?",
       "select-date": "Select date",
-      "placeholder-name": "Choose one",
       "label-name": "What is the name of the vaccine you received?",
+      "label-name-updated": "Which vaccine did you receive?",
+      "name-trial": "I received my vaccine via a vaccine trial",
+      "name-trial-short": "Vaccine trial",
       "name-i-dont-know": "Other/I don't know",
+      "label-placebo": "Did you receive a placebo?",
+      "placebo-yes": "I received a placebo",
+      "placebo-no": "I didn't receive a placebo",
+      "placebo-not-sure": "I'm not sure / I don't know yet",
       "label-name-other": "Which type of vaccine was it?",
-      "label-name-other-2": "Enter the information about the type of vaccine you have available:",
-      "placeholder-name-other-2": "Type here",
-      "placeholder-type": "Choose one",
       "placeholder-batch": "E.g. ELO141",
       "label-batch": "Batch number (optional)",
+      "label-batch-updated": "Batch number of the dose",
       "date-change-confirm": "Confirm date change?",
       "date-change-text": "This will change when we ask you certain questions.",
       "confirm": "Confirm",
+      "save-dose": "Save dose",
       "delete": "Delete vaccine",
+      "cancel": "Cancel",
       "details-missing-title": "Vaccine details missing",
       "details-missing-body": "Please add the date and name of any vaccine doses that you've received in order to continue",
       "details-missing-button": "Add vaccine info"
     },
-
     "vaccine-card": {
       "dose-1": "Dose 1",
       "dose-2": "Dose 2",
-      "add-date": "Add date",
-      "add-info": "Add dose information",
       "date-missing": "Date required. Edit to add",
       "name-missing": "Edit to add vaccine name",
       "not-logged": "Not yet logged",
       "edit-vaccine": "Edit vaccine"
     }
   },
-
-  "vaccine-registry": {
-    "covid-prevention": "COVID Prevention",
-    "can-we-contact": "Can we contact you about potential studies involving vaccines or other preventative treatments in the future?",
-    "yes": "Yes, I am interested",
-    "no": "No, thank you",
-    "next": "Next",
-    "creating-registry": "Thank you for joining our registry",
-    "not-ourselves": "Though we will not be running any vaccine studies ourselves, various teams working on vaccines and other preventive treatments are asking us if we can find recruits. Therefore we are creating a list for them which you are now on.",
-    "not-share": "We will not share your details with anyone, but will alert you when a relevant study becomes available.",
-    "prioritise": "We aim to prioritise people who have been regularly logging on the app, and who are early members of this list.",
-    "tell-friends": "Please tell your friends",
-    "share-title": "Please share this app",
-    "share-text": "Do you know anyone who would be interested in this app or vaccine trials?",
-    "callout-title": "VACCINE",
-    "callout-text": "Would you like to join our COVID-19 vaccine registry?",
-    "callout-link-text": "I am interested",
-    "menu-item": "Join the vaccine registry"
-  },
-
   "dashboard": {
     "report-today": "Report today, even if you're well",
     "report-now": "Report now",
     "you-have-reported-x-times": "You’ve reported %{count} times",
     "contributors-so-far": "Contributors so far:",
-
     "trendline-card": {
-      "cta": "Explore the graph",
       "delta": {
         "up": "Up by",
         "down": "Down by",
         "from-last-week": "from last week"
       },
       "share-cta": "Share your graph"
-    },
-    "share-cta": "Share"
+    }
   },
-
   "explore-trend-line": {
     "title": "Estimated COVID cases in",
-    "delta-week": "last week",
     "cta": "Share",
     "active-covid-cases": "Active COVID cases",
-    "evolution-of": "Evolution of estimated cases in the last 3 months",
-    "active-cases-in-your-area": "Active cases in your area",
-    "trendline-change": "We updated our COVID incidence estimates on 21/07. Learn more"
+    "active-cases-in-your-area": "Active cases in your area"
   },
-
   "estimated-cases-card": {
     "covid-in-the-uk": "COVID in the UK",
     "estimated-cases": "Estimated cases",
@@ -1199,35 +1089,14 @@
     "active": "Active cases",
     "cta": "More details"
   },
-
-  "tab-navigator": {
-    "first-tab": "Dashboard",
-    "second-tab": "Latest News"
-  },
-
-  "latest-news": {
-    "title": "Latest News"
-  },
-
   "covid-cases-map": {
     "covid-in-x": "Active COVID cases in {{location}}",
     "current-estimates": "Current estimates of cases per million people",
-    "active-cases-in-area": "Active cases\nin your area",
-    "not-enough-contributors": "Not enough contributors\nin this area",
     "share": "Share your map",
     "update-postcode": "Please provide your full postcode to see our estimated cases in your area",
     "update-postcode-cta": "Update postcode"
   },
-
   "school-networks": {
-    "title": "School status",
-    "whole-school": "Whole school",
-    "awaiting-members": "Awaiting more members",
-    "no-cases": "No confirmed cases",
-    "confirmed-cases": "confirmed cases",
-    "children-being-reported-for": "children being reported for",
-    "child-being-reported-for": "child being reported for",
-
     "intro": {
       "title": "Connect your children to their School Bubble",
       "point-1": {
@@ -1244,7 +1113,6 @@
       },
       "cta": "Connect to school network"
     },
-
     "how-to": {
       "title": "How to connect to a school network",
       "point-1": {
@@ -1257,78 +1125,37 @@
       },
       "cta": "View profiles now"
     },
-
     "join-school": {
-      "title": "Select your child’s school",
       "title-higher-education": "Select your university",
-      "description": "Select the school you would like to link this account to. More information about",
-      "description-link": "School Bubbles.",
       "description-higher-education": "We only list universities that are part of our pilot programme. Please only add your university if you have been directed to do so by a university representative.",
-      "disclaimer-1": "We only list schools that are part of our pilot programme. Encourage your school's headteacher to register interest ",
-      "disclaimer-2": "here.",
-      "disclaimer-3": "Please only add your child's profile to a School Bubble if directed to by their school.",
       "remove": "Remove this school",
       "removeHigherEducation": "Remove this university",
-      "search": {
-        "label": "Name of school",
-        "placeholder": "Search for your child's school"
-      },
       "school-code-title": "Enter your Unique School Network Code",
       "school-code-instructions": "Your child's Unique School Network Code should have been shared with you by a school representative. Please contact the school if you cannot find this code.",
       "school-code-placeholder": "Enter your code here",
       "school-code-confirm": "Confirm your child's school",
       "school-code-confirm-instructions": "Please confirm the below school name is correct. If the school below is not correct, please double check you have entered the correct UCN (Unique COVID Network) code. For further help, please contact your school leader.",
-
       "dropdown": {
-        "label": "Select your child’s school",
         "label-higher-education": "Select your university"
       },
-
       "cta": "Next",
       "modal-body": "Are you sure you want to remove",
       "button-1": "Cancel",
       "button-2": "Remove",
-
       "university-network-header": "Your University",
-      "university-network-body": "",
       "school-network-header": "School Networks",
-      "school-network-body": "More information about School Networks",
       "more-information": "More information about",
       "school-url-label": "School Networks",
-      "school-url": "https://covid.joinzoe.com/schools",
-      "university-url-label": "",
-      "university-url": ""
+      "school-url": "https://covid.joinzoe.com/schools"
     },
-
     "join-group": {
       "title": "Join your child’s bubble",
       "description": "Select your child’s bubble at %{school}",
-
       "dropdown": {
         "label": "Select bubble from below"
       },
-
-      "input": {
-        "label": "Join an existing bubble",
-        "placeholder": "Find a class or bubble"
-      },
-
-      "cta": "Create a new group",
       "next": "Next"
     },
-
-    "success": {
-      "joined-title": "You’ve successfully joined",
-      "joined-description": "Once we have enough children being reported for in this bubble on a regular basis we will alert you in about confirmed COVID cases.\n\nPlease be aware that it could take 1 to 2 weeks before this happens.",
-      "created-title": "Great! Your group has been created",
-      "school-name": "School name",
-      "group-name": "School Bubble",
-      "ref-code-is": "Your groups reference code is:",
-      "copy-code": "Copy reference",
-      "share": "Share this link",
-      "cta": "Done"
-    },
-
     "join-error": {
       "cta-okay": "Okay",
       "duplicated-membership": {
@@ -1336,17 +1163,15 @@
         "description": "Looks like you're already part of this bubble."
       }
     },
-
     "groups-list": {
       "title": "Your child's bubbles",
       "subtitle": "Your child's bubbles at",
       "text": "School bubbles your child is part of:",
-      "add-new-bubble": "\u002B Join another bubble",
+      "add-new-bubble": "+ Join another bubble",
       "modal-body": "Are you sure you want to remove",
       "button-1": "Cancel",
       "button-2": "Remove"
     },
-
     "dashboard": {
       "title": "Overview",
       "at-the-school": "At the school",
@@ -1366,26 +1191,22 @@
       "more-parents-singular": "more parent needed to sign up their children",
       "reported-unwell": "reported feeling unwell",
       "report-for-today": "children reported for today",
-      "report-for-today-singular": "child reported for today",
-      "share-log-vaccine": "Join ZOE in helping the NHS by logging your COVID vaccine. covid.joinzoe.com/vaccines #LogYourJab"
+      "report-for-today-singular": "child reported for today"
     }
   },
   "generic": {
     "share-this-with-someone": "Share this with someone",
     "content-can-not-be-loaded-atm": "This content can not be loaded at the moment."
   },
-
   "error-boundary": {
     "something-went-wrong": "Oops! Something went wrong.",
     "encountered-error": "The app has encountered an error:",
     "notified": "The development team has been notified and will look into it as soon as possible. Try to restart the app to continue."
   },
-
   "mental-health": {
     "doctor-name": "Dr Ellen Jo Thompson",
     "doctor-title": "Mental Health Researcher",
     "doctor-location": "King’s College London",
-    "introduction-condition": "This study is only available for the “Me” primary profile.",
     "question-changes": "During this pandemic, have you changed the way you have spent time doing the following:",
     "question-devices-with-screen": "Using devices with a screen",
     "question-drinking-alcohol": "Drinking alcohol",
@@ -1455,34 +1276,24 @@
     "share-message": "I'm helping scientists to investigate the impact of the pandemic on people's mental health - you can too! Download the app",
     "specify-other": "Please specify"
   },
-
   "mental-health-playback": {
     "results-ready": "Insights on COVID & Mental Health are ready",
-
     "modal": {
       "button-negative": "Skip for now",
-      "button-positive": "View insights",
       "button-positive-new": "View insights report",
-      "description-general": "We're excited to share the insights we found into how habits and lifestyle affected mental health during the pandemic\n\nThank you for your participation!",
-      "description-new": "Thanks for being part of one of the world's largest study in Mental Health during the pandemic",
-      "description-personal": "We've crunched the data and have prepared your very own personal insights into your unique habits during the pandemic for you to look at!\n\nThanks for your participation.",
+      "description-new": "Thanks for being part of one of the world's largest studies in Mental Health during the pandemic",
       "tag": "INSIGHTS AVAILABLE",
-      "title": "Mental Health during the pandemic",
       "title-new": "The Mental Health insights report is ready!",
       "title-new-personal": "Your Mental Health insights report is ready!"
     },
-
     "general": {
       "chart-label": "Reported activity level",
       "correlated-description": "Reporting more of this was linked to",
-      "default-abbreviation": "...",
       "default-title": "This insight",
       "end-button": "Close",
-      "end-description": "You can always return to these via the Home Page",
-      "end-title-general": "That's it!\n\nYou made it through all the insights",
+      "end-description": "You can always return to these via the Home Screen",
       "end-title-personal": "That's it!\n\nYou made it through all your insights",
       "explanation-card": "We have compared your answers against",
-      "insight-description-general": "Was {{level_of_association}} associated with {{anxiety}} anxiety and depression scores",
       "insight-description-personal": "Was {{level_of_association}} associated with {{anxiety}} anxiety and depression scores in your group"
     },
     "insights": {
@@ -1601,12 +1412,9 @@
     "introduction": {
       "button": "Let's go!",
       "info": "Mental health, in these insights, is measured based on self-reported scores for anxiety and depression",
-      "point-general-1": "How people spent their time differently during the pandemic",
-      "point-general-2": "What associations these habits and lifestyle changes had on mental health",
       "point-personal-1": "How you spent your time differently during the pandemic compared to before",
       "point-personal-2": "Unique insights into your habit changes compared with your peers",
       "point-personal-3": "How these habits were associated with mental health in different ways",
-      "title-general": "Discover people’s habits during the pandemic",
       "title-personal": "We worked hard to personalise these insights around your habits during the pandemic"
     },
     "rating": {
@@ -1635,7 +1443,6 @@
     "introduction-more-title": "Want more detail?",
     "introduction-more-body": "If you would like to get into the details behind what we have shared, we have a blog that explains more of the science",
     "introduction-more-link-0": "Read about the science behind these results on our blog",
-    "introduction-more-link-1": "Learn about the latest research in our nutrition newsletter",
     "card-0-title": "Traditional Diet Quality Score",
     "card-0-body": "This diet quality score is a measure of how healthy and balanced your diet is.",
     "card-0-action": "View my Traditional Diet Quality Score",
@@ -1671,30 +1478,25 @@
     "email-action-title": "Would you like to learn about the latest nutrition research?",
     "email-action-body": "We will keep you up-to-date by email with the latest nutritional science, including ZOE’s own discoveries. You can opt-out at any time, and will only receive science updates.",
     "email-action-cta": "Yes, I’d love to know more",
-    "email-action-cta-success": "Great, keep an eye on your inbox!",
     "email-action-cta-unsubscribe": "Opt-out of email updates"
   },
   "navigation": {
     "back": "Back",
     "cta-email-success": "Great, keep an eye on your inbox!",
-    "cta-unsubscribe": "Opt-out of email updates",
     "dismiss": "Dismiss",
     "learn-more": "Learn more",
     "next": "Next",
-    "insights": "Insights",
-    "start": "Start"
+    "insights": "Insights"
   },
-
   "version-update": {
     "title": "Your app version needs updating!",
     "body": "You need to update your app to continue using it. This will give you all the latest features.",
     "cta": "Update now"
   },
-
   "reconsent": {
     "disease-summary": {
       "button": "Next",
-      "title": "We’ll invite you to answer additional questions occasionally and send you insights about",
+      "title": "Beyond your daily reporting, we'll ask extra questions and present insights about",
       "various-diseases": "various diseases"
     },
     "disease-preferences": {
@@ -1711,7 +1513,8 @@
     "introduction": {
       "button": "Next",
       "description": "Help detect early symptoms and uncover the role of nutrition and lifestyle in disease risk.",
-      "title": "Help us fight other major health issues beyond COVID-19"
+      "title": "Help us fight other major health issues beyond COVID-19",
+      "approval": "This study has ethical approval from King's College London"
     },
     "reconsider": {
       "description-1": "We'll continue to use your data to fight COVID-19 only.",
@@ -1732,21 +1535,25 @@
       "title": "Thank you!"
     },
     "request-consent": {
+      "consent-no": "No, I do not consent",
+      "consent-yes": "Yes, I consent",
+      "information-sheet": "Information Sheet",
+      "primary-profile-only": "You are only providing consent for your profile, and not others you report for.",
+      "privacy-notice": "Privacy Notice",
+      "subtitle": "To fight other major health issues, we’d like your consent to:",
       "title": "Are you in?",
-      "subtitle": "To fight other diseases, we need your consent to:",
-      "use-1-title": "1. Advance human health science",
-      "use-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
-      "use-2-title": "2. Help others improve human health ",
-      "use-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
-      "use-3-title": "3. Build health products",
-      "use-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
-      "learn-more": "Learn more in our Privacy Notice",
-      "consent-yes": "Yes, I'm in",
-      "consent-no": "No, I do not consent"
+      "card-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
+      "card-1-title": "1. Advance human health science",
+      "card-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
+      "card-2-title": "2. Help others improve human health ",
+      "card-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
+      "card-3-title": "3. Build health products"
     }
   },
-
   "disease-cards": {
+    "prefer_not_to_say": {
+      "name": "Prefer not to say"
+    },
     "research_consent_dementia": {
       "name": "Dementia",
       "description": "1 in 3 people born in the UK this year will develop dementia in their lifetime"
@@ -1757,7 +1564,7 @@
     },
     "research_consent_cancer": {
       "name": "Cancer",
-      "description": "Someone in the UK is diagnosed with cancer every 2 mins"
+      "description": "Someone in the UK is diagnosed with cancer every 2 minutes"
     },
     "research_consent_joint_and_bone_diseases": {
       "name": "Joint & Bone Diseases",
@@ -1796,6 +1603,6 @@
       "description": "600,000 people are diagnosed with a brain disorder every year in the UK"
     }
   },
-
-  "required-field": "Required Field"
+  "required-field": "Required field",
+  "modal-close": "Close"
 }

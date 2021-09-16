@@ -1,6 +1,7 @@
 import { BrandedButton } from '@covid/components/buttons';
 import { AppException } from '@covid/core/api/ApiServiceErrors';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native';
@@ -15,14 +16,12 @@ type TProps = {
 };
 
 const ErrorMessaging = ({ error, status, onRetry, onPress }: TProps) => {
-  let messageKey: string | null = null;
-  let message: string | null = null;
+  let message = '';
   let shouldRetry = false;
   let shouldCancel = true;
 
   if (error) {
-    messageKey = error.friendlyI18n;
-    message = messageKey && i18n.t(messageKey);
+    message = error.message;
     shouldRetry = !!error.isRetryable && !!onRetry;
     shouldCancel = !shouldRetry && !!error;
   }
@@ -79,24 +78,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     flex: 1,
     justifyContent: 'center',
-    marginTop: 22,
+    marginTop: sizes.l,
   },
   ctaBlock: {
-    margin: 10,
+    margin: sizes.s,
   },
   loadingView: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',
-    marginVertical: 10,
+    marginVertical: sizes.s,
   },
   modalView: {
     alignItems: 'center',
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: sizes.l,
     elevation: 5,
-    margin: 20,
-    padding: 32,
+    margin: sizes.l,
+    padding: sizes.xl,
     shadowColor: '#000',
     shadowOffset: {
       height: 2,

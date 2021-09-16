@@ -4,6 +4,7 @@ import GIF from '@covid/features/reconsent/components/GIF';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -16,7 +17,7 @@ export default function ReconsentDiseaseSummaryScreen() {
   const windowDimensions = useWindowDimensions();
   const diseasesChosen = useSelector(selectDiseasesChosen);
 
-  const gifWidth = windowDimensions.width - 32;
+  const gifWidth = Math.min(sizes.maxScreenWidth, windowDimensions.width) - 32;
   const gifHeight = gifWidth / GIF_RATIO;
 
   let diseasesTitle = '';

@@ -1,6 +1,7 @@
 import { vaccineBg } from '@assets';
 import AnnouncementIcon from '@assets/icons/AnnouncementIcon';
 import { TScreenContent } from '@covid/core/content/ScreenContentContracts';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, StyleProp, StyleSheet, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
@@ -19,7 +20,7 @@ type TProps = {
 export const CalloutBox = ({ content, boxStyle, titleStyle, linkStyle, onPress, image }: TProps) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.discoveriesContainer, boxStyle]}>
-      {image ? <Image source={vaccineBg} style={[styles.backgroundImage, { borderRadius: 16 }]} /> : null}
+      {image ? <Image source={vaccineBg} style={[styles.backgroundImage, { borderRadius: sizes.m }]} /> : null}
       <View style={[styles.discoveriesTitleBackground, titleStyle]}>
         <AnnouncementIcon />
         <RegularText style={styles.discoveriesTitle}>{content.title_text}</RegularText>
@@ -41,33 +42,33 @@ const styles = StyleSheet.create({
   discoveriesContainer: {
     alignItems: 'center',
     borderColor: colors.backgroundSecondary,
-    borderRadius: 16,
+    borderRadius: sizes.m,
     borderWidth: 1,
     justifyContent: 'space-between',
-    marginBottom: 36,
-    paddingVertical: 16,
+    marginBottom: sizes.xl,
+    paddingVertical: sizes.m,
     width: '100%',
   },
   discoveriesText: {
     color: colors.white,
     fontSize: 16,
     lineHeight: 24,
-    marginHorizontal: 50,
-    marginVertical: 16,
+    marginHorizontal: sizes.xxl,
+    marginVertical: sizes.m,
     textAlign: 'center',
   },
   discoveriesTitle: {
     color: colors.white,
     fontSize: 12,
     letterSpacing: 1,
-    paddingHorizontal: 4,
+    paddingHorizontal: sizes.xxs,
   },
   discoveriesTitleBackground: {
     alignItems: 'center',
     backgroundColor: colors.lightBlueBrand,
-    borderRadius: 4,
+    borderRadius: sizes.xxs,
     flexDirection: 'row',
-    paddingHorizontal: 4,
+    paddingHorizontal: sizes.xxs,
   },
   discoveriesVisitText: {
     color: colors.lightBrand,

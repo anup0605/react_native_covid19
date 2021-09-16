@@ -1,11 +1,11 @@
 import { requiredFormMarker } from '@covid/components/Form';
-import { FieldWrapper } from '@covid/components/Screen';
 import { RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
-import { FormikProps } from 'formik';
+import { sizes } from '@covid/themes';
+import { FormikErrors, FormikProps } from 'formik';
 import * as React from 'react';
-import { KeyboardTypeOptions, StyleProp, StyleSheet, TextInputProps, ViewStyle } from 'react-native';
+import { KeyboardTypeOptions, StyleProp, TextInputProps, View, ViewStyle } from 'react-native';
 
 interface IProps extends TextInputProps {
   formikProps: FormikProps<any>;
@@ -23,7 +23,7 @@ export function GenericTextField(props: IProps) {
   const { formikProps, name, label, placeholder, keyboardType, showError, style, inputProps, ...otherProps } = props;
 
   return (
-    <FieldWrapper style={[styles.flex, style]}>
+    <View style={[{ marginVertical: sizes.m }, style]}>
       {label ? (
         <RegularText>
           {label}
@@ -31,11 +31,10 @@ export function GenericTextField(props: IProps) {
         </RegularText>
       ) : null}
       <ValidatedTextInput
-        error={formikProps.touched[name] && formikProps.errors[name]}
+        error={formikProps.touched[name] && !!formikProps.errors[name]}
         keyboardType={keyboardType}
         onBlur={formikProps.handleBlur(name)}
         onChangeText={formikProps.handleChange(name)}
-        onSubmitEditing={() => {}}
         placeholder={props.placeholder}
         required={props.required}
         returnKeyType="next"
@@ -45,14 +44,8 @@ export function GenericTextField(props: IProps) {
       />
 
       {showError && !!formikProps.touched[name] && !!formikProps.errors[name] ? (
-        <ValidationError error={formikProps.errors[name]} />
+        <ValidationError error={formikProps.errors[name] as FormikErrors<string>} />
       ) : null}
-    </FieldWrapper>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-  },
-});

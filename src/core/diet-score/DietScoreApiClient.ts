@@ -8,7 +8,7 @@ export interface IDietScoreRemoteClient {
 
 const apiClient = new ApiClient();
 
-export class DietScoreApiClient implements IDietScoreRemoteClient {
+class DietScoreApiClient implements IDietScoreRemoteClient {
   getDietScore(patientId: string): Promise<TDietScoreResponse> {
     return apiClient.get<TDietScoreResponse>(`/diet_score/?patient=${patientId}`);
   }

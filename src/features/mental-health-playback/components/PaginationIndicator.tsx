@@ -1,4 +1,4 @@
-import { colors } from '@covid/themes';
+import { colors, sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -29,10 +29,10 @@ export default React.memo(function PaginationIndicator(props: IProps) {
 
 const dotStyle = {
   backgroundColor: colors.accentBlue.main.bgColor,
-  borderRadius: 4,
-  height: 8,
-  margin: 8,
-  width: 8,
+  borderRadius: sizes.xxs,
+  height: sizes.xxs * 2,
+  margin: sizes.xs,
+  width: sizes.xxs * 2,
 };
 
 const styles = StyleSheet.create({

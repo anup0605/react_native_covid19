@@ -1,6 +1,7 @@
 import { BrandedButton } from '@covid/components';
+import { Form } from '@covid/components/Form';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
-import Screen from '@covid/components/Screen';
+import { Screen } from '@covid/components/Screen';
 import { ErrorText } from '@covid/components/Text';
 import { ValidationError } from '@covid/components/ValidationError';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
@@ -16,23 +17,25 @@ import {
 } from '@covid/features/patient/fields/BloodPressureMedicationQuestion';
 import { DiabetesQuestions, IDiabetesData } from '@covid/features/patient/fields/DiabetesQuestions';
 import { IRaceEthnicityData, RaceEthnicityQuestion } from '@covid/features/patient/fields/RaceEthnicityQuestion';
+import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
+import { styling } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';
 import { Formik, FormikProps } from 'formik';
-import { Form } from 'native-base';
 import * as React from 'react';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 interface IBackfillData extends IBloodPressureData, IRaceEthnicityData, IAtopyData, IDiabetesData, IBloodGroupData {}
 
 type TProps = {
-  route: RouteProp<ScreenParamList, 'ProfileBackDate'>;
+  route: RouteProp<TScreenParamList, 'ProfileBackDate'>;
 };
 
 type TState = {
   errorMessage: string;
   needBloodPressureAnswer: boolean;
-  needRaceEthnicityAnswer: boolean;
+  needRaceEthnicityAnswer: boolean | undefined;
   needAtopyAnswers: boolean;
   needDiabetesAnswers: boolean;
   needBloodGroupAnswer: boolean;
@@ -98,31 +101,31 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
     });
   }
 
-  handleProfileUpdate(formData: IBackfillData) {
+  onSubmit = (values: IBackfillData) => {
     const currentPatient = assessmentCoordinator.assessmentData?.patientData?.patientState;
-    const infos = this.createPatientInfos(formData);
+    const infos = this.createPatientInfos(values);
 
     patientService
       .updatePatientInfo(currentPatient?.patientId, infos)
       .then(() => {
-        if (formData.race) currentPatient.hasRaceEthnicityAnswer = true;
-        if (formData.takesAnyBloodPressureMedications) currentPatient.hasBloodPressureAnswer = true;
-        if (formData.hasHayfever) currentPatient.hasAtopyAnswers = true;
-        if (formData.hasHayfever === 'yes') currentPatient.hasHayfever = true;
-        if (formData.diabetesType) {
+        if (values.race) currentPatient.hasRaceEthnicityAnswer = true;
+        if (values.takesAnyBloodPressureMedications) currentPatient.hasBloodPressureAnswer = true;
+        if (values.hasHayfever) currentPatient.hasAtopyAnswers = true;
+        if (values.hasHayfever === 'yes') currentPatient.hasHayfever = true;
+        if (values.diabetesType) {
           currentPatient.hasDiabetesAnswers = true;
           currentPatient.shouldAskExtendedDiabetes = false;
         }
-        if (formData.bloodGroup) currentPatient.hasBloodGroupAnswer = true;
+        if (values.bloodGroup) currentPatient.hasBloodGroupAnswer = true;
 
         assessmentCoordinator.gotoNextScreen(this.props.route.name);
       })
-      .catch((_) => {
+      .catch(() => {
         this.setState({ errorMessage: i18n.t('something-went-wrong') });
       });
-  }
+  };
 
-  createPatientInfos(formData: IBackfillData) {
+  createPatientInfos = (formData: IBackfillData) => {
     let infos: Partial<TPatientInfosRequest> = {};
 
     if (this.state.needBloodPressureAnswer) {
@@ -190,7 +193,7 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
     }
 
     return infos;
-  }
+  };
 
   render() {
     return (
@@ -208,9 +211,7 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
             ...DiabetesQuestions.initialFormValues(),
             ...BloodGroupQuestion.initialFormValues(),
           }}
-          onSubmit={(values: IBackfillData) => {
-            return this.handleProfileUpdate(values);
-          }}
+          onSubmit={this.onSubmit}
           validationSchema={() => {
             let schema = this.registerSchema;
             if (this.state.needDiabetesAnswers) {
@@ -222,37 +223,43 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
             return schema;
           }}
         >
-          {(props) => {
+          {(formikProps) => {
             return (
               <Form>
                 {this.state.needBloodPressureAnswer ? (
-                  <BloodPressureMedicationQuestion formikProps={props as FormikProps<IBloodPressureData>} />
+                  <BloodPressureMedicationQuestion
+                    formikProps={formikProps as unknown as FormikProps<IBloodPressureData>}
+                  />
                 ) : null}
 
                 {this.state.needRaceEthnicityAnswer ? (
                   <RaceEthnicityQuestion
-                    formikProps={props as FormikProps<IRaceEthnicityData>}
+                    formikProps={formikProps as unknown as FormikProps<IRaceEthnicityData>}
                     showEthnicityQuestion={this.features?.showEthnicityQuestion}
                     showRaceQuestion={this.features?.showRaceQuestion}
                   />
                 ) : null}
 
-                {this.state.needAtopyAnswers ? <AtopyQuestions formikProps={props as FormikProps<IAtopyData>} /> : null}
+                {this.state.needAtopyAnswers ? (
+                  <AtopyQuestions formikProps={formikProps as unknown as FormikProps<IAtopyData>} />
+                ) : null}
 
                 {this.state.needDiabetesAnswers ? (
-                  <DiabetesQuestions formikProps={props as FormikProps<IDiabetesData>} />
+                  <DiabetesQuestions formikProps={formikProps as unknown as FormikProps<IDiabetesData>} />
                 ) : null}
 
                 {this.state.needBloodGroupAnswer ? (
-                  <BloodGroupQuestion formikProps={props as FormikProps<IBloodGroupData>} />
+                  <BloodGroupQuestion formikProps={formikProps as unknown as FormikProps<IBloodGroupData>} />
                 ) : null}
 
+                <View style={styling.flex} />
+
                 <ErrorText>{this.state.errorMessage}</ErrorText>
-                {!!Object.keys(props.errors).length && props.submitCount > 0 ? (
+                {!!Object.keys(formikProps.errors).length && formikProps.submitCount > 0 ? (
                   <ValidationError error={i18n.t('validation-error-text')} />
                 ) : null}
 
-                <BrandedButton enabled={!props.isSubmitting} onPress={props.handleSubmit}>
+                <BrandedButton enabled={!formikProps.isSubmitting} onPress={formikProps.handleSubmit}>
                   {i18n.t('update-profile')}
                 </BrandedButton>
               </Form>

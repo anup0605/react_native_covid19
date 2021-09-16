@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { compareLocale } from '@covid/locale/compare';
 
 let mockedLocaleKeys: string[] = [];

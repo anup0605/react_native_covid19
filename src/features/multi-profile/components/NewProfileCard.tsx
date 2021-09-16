@@ -1,6 +1,7 @@
 import { addProfile } from '@assets';
 import { RegularText } from '@covid/components';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { Card } from 'native-base';
 import * as React from 'react';
@@ -18,15 +19,17 @@ export const NewProfileCard: React.FC = () => {
 const styles = StyleSheet.create({
   addImage: {
     height: 130,
-    marginBottom: 16,
+    marginBottom: sizes.m,
     width: '100%',
   },
   card: {
     alignItems: 'center',
     backgroundColor: colors.white,
-    borderRadius: 16,
+    borderRadius: sizes.m,
+    marginBottom: 0,
+    marginTop: 0,
     minHeight: 224,
-    paddingVertical: 12,
+    paddingVertical: sizes.s,
     shadowRadius: 0,
     width: '100%',
   },

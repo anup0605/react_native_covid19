@@ -2,6 +2,7 @@ import { poweredByZoeSmall, zoe } from '@assets';
 import { InlineFormatting } from '@covid/components/InlineFormatting';
 import { RegularText } from '@covid/components/Text';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, ImageStyle, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
@@ -33,7 +34,7 @@ export const PoweredByZoeSmall = (props: ISmallProps) => (
 const styles = StyleSheet.create({
   block: {
     flex: 0,
-    marginVertical: 20,
+    marginVertical: sizes.l,
     width: '85%',
   },
   lightRegularText: {
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: sizes.s,
   },
   poweredBySmall: {
     alignSelf: 'center',

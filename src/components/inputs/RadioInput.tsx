@@ -2,6 +2,7 @@ import { requiredFormMarker } from '@covid/components/Form';
 import { RadioButton } from '@covid/components/RadioButton';
 import { ErrorText, LabelText, SecondaryText } from '@covid/components/Text';
 import i18n from '@covid/locale/i18n';
+import { sizes } from '@covid/themes';
 import React from 'react';
 import {
   Image,
@@ -26,6 +27,8 @@ interface IProps<V = any> {
   required?: boolean;
   selectedValue?: V;
   testID?: string;
+  IconComponent?: React.ComponentType<any>;
+  iconOnPress?: () => void;
 }
 
 const defaultItems: IItem[] = [
@@ -42,6 +45,11 @@ export function RadioInput(props: IProps) {
         <LabelText style={styles.marginBottom}>
           {props.label}
           {props.required ? requiredFormMarker : null}
+          {props.IconComponent ? (
+            <TouchableOpacity onPress={props.iconOnPress} style={styles.icon}>
+              <props.IconComponent />
+            </TouchableOpacity>
+          ) : null}
         </LabelText>
       )}
       {items.map((item, index) => (
@@ -57,7 +65,7 @@ export function RadioInput(props: IProps) {
         >
           <RadioButton selected={props.selectedValue === item.value} />
           {item.iconSource ? <Image source={item.iconSource} style={styles.image} /> : null}
-          <SecondaryText style={styles.marginLeft}>{item.label}</SecondaryText>
+          <SecondaryText style={[styles.marginLeft, styles.textWrap]}>{item.label}</SecondaryText>
         </TouchableOpacity>
       ))}
       {props.error ? <ErrorText style={styles.marginTop}>{props.error}</ErrorText> : null}
@@ -73,31 +81,41 @@ const itemStyle: ViewStyle = {
 const styles = StyleSheet.create({
   firstItem: {
     ...itemStyle,
-    paddingBottom: 12,
+    paddingBottom: sizes.s,
+  },
+  icon: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: 2,
+    paddingLeft: sizes.xxs,
   },
   image: {
     height: 24,
-    marginLeft: 12,
+    marginLeft: sizes.s,
     width: 24,
   },
   lastItem: {
     ...itemStyle,
-    paddingTop: 12,
+    paddingTop: sizes.s,
   },
   marginBottom: {
-    marginBottom: 12,
+    marginBottom: sizes.s,
   },
   marginLeft: {
-    marginLeft: 12,
+    marginLeft: sizes.s,
   },
   marginTop: {
-    marginTop: 12,
+    marginTop: sizes.s,
   },
   marginVertical: {
-    marginVertical: 16,
+    marginVertical: sizes.m,
   },
   middleItem: {
     ...itemStyle,
-    paddingVertical: 12,
+    paddingVertical: sizes.s,
+  },
+  textWrap: {
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });

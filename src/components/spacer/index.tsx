@@ -1,9 +1,9 @@
-import { TGridSizes } from '@covid/themes';
+import { TGridSize } from '@covid/themes';
 import * as React from 'react';
 import { View } from 'react-native';
 
 interface IProps {
-  space?: TGridSizes;
+  space?: TGridSize;
 }
 
 export default function Spacer({ space = 8 }: IProps) {

@@ -17,8 +17,8 @@ export default function Card(props: IProps) {
       style={[
         {
           backgroundColor: props.backgroundColor ?? '#FFF',
-          borderRadius: theme.grid.l,
-          padding: props.padding ?? theme.grid.xxl,
+          borderRadius: theme.sizes.m,
+          padding: props.padding ?? theme.sizes.l,
         },
         props.useShadow && styling.shadow,
         props.style,

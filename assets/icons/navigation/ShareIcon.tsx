@@ -5,7 +5,7 @@ import Svg, { Path } from 'react-native-svg';
 
 const color = colors.textDark;
 
-const ShareIcon: React.FC<TSvgProps> = ({ width = 20, height = 20, style = {} }) => {
+const ShareIcon: React.FC<TSvgProps> = ({ width = 24, height = 24, style }) => {
   return (
     <Svg height={height} style={style} viewBox="0 0 20 20" width={width}>
       <Path

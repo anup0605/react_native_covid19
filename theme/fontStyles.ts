@@ -63,4 +63,10 @@ export const fontStyles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
   },
+  labelSecondary: {
+    color: colors.secondary,
+    fontFamily: 'SofiaPro-Medium',
+    fontSize: 16,
+    lineHeight: 24,
+  },
 });
