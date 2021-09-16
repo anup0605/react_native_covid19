@@ -261,8 +261,8 @@ jobs:
       - prepare_e2e
       - run: yarn install
       - run: yarn build:ios
-      - run: detox build --configuration ios.sim.release
-      - run: detox test --configuration ios.sim.release --cleanup
+      - run: detox build --configuration ios.release
+      - run: detox test --configuration ios.release --cleanup
 
 
   ### ------------------- ###
