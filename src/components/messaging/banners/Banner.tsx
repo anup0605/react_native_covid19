@@ -21,11 +21,11 @@ function Banner({ active = true, message }: IProps) {
   const { width } = Dimensions.get('window');
   const { top } = useSafeAreaInsets();
 
-  const animate = (active: boolean) => {
+  const animate = (newActive: boolean) => {
     Animated.timing(animValue, {
       duration: DURATION,
       easing: Easing.linear,
-      toValue: active ? RANGE_TO : RANGE_FROM,
+      toValue: newActive ? RANGE_TO : RANGE_FROM,
       useNativeDriver: true,
     }).start();
   };

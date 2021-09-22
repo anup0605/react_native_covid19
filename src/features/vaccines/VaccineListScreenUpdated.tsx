@@ -23,27 +23,27 @@ type TProps = {
   route: RouteProp<TScreenParamList, 'VaccineListUpdated'>;
 };
 
-export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
-  const [vaccines, setVaccines] = React.useState<TVaccineRequest | undefined>();
+export const VaccineListScreenUpdated: React.FC<TProps> = (props) => {
+  const [vaccine, setVaccine] = React.useState<TVaccineRequest | undefined>();
   const [loading, setLoading] = React.useState<boolean>(true);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
 
-  const patientId = route.params?.assessmentData?.patientData?.patientId;
+  const patientId = props.route.params?.assessmentData?.patientData?.patientId;
 
   const refreshVaccineList = async () => {
     setLoading(true);
 
     try {
       const response = await vaccineService.listVaccines();
-      const patientVaccines = response.filter((vaccine) => vaccine.patient === patientId);
-      // Set the "vaccines" to be the first item returned, in order to maintain backwards compatibility with older versions that may have multiple
-      const vaccines: TVaccineRequest | undefined = patientVaccines.length ? patientVaccines[0] : undefined;
+      const patientVaccines = response.filter((patientVaccine) => patientVaccine.patient === patientId);
+      // Set the "patientVaccine" to be the first item returned, in order to maintain backwards compatibility with older versions that may have multiple
+      const patientVaccine: TVaccineRequest | undefined = patientVaccines.length ? patientVaccines[0] : undefined;
       // Also, reverse doses - they are sorted by date old-new for the old system, but new UI wants the reverse
-      if (vaccines && vaccines.doses) {
-        vaccines.doses = vaccines?.doses.reverse();
+      if (patientVaccine && patientVaccine.doses) {
+        patientVaccine.doses = patientVaccine?.doses.reverse();
       }
 
-      setVaccines(vaccines);
+      setVaccine(patientVaccine);
     } catch (_) {
     } finally {
       setLoading(false);
@@ -56,35 +56,34 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
     }, []),
   );
 
-  function getFirstActiveDose(vaccines: TVaccineRequest): string | null | undefined {
-    // Loops over all vaccines and doses and return the first dose that has a date in the last 7 days.
-    const today = moment().add(moment().utcOffset(), 'minutes').toDate();
-    const sevenDaysAgo = moment().add(moment().utcOffset(), 'minutes').subtract(7, 'days').toDate();
+  const navigateToNextPage = async () => {
+    if (vaccine) {
+      let doseId = null;
 
-    for (let j = 0; j < vaccines.doses?.length; j++) {
-      const dose = vaccines.doses[j];
-      if (dose.date_taken_specific) {
-        const doseDate = moment(dose.date_taken_specific).toDate();
-        if (sevenDaysAgo <= doseDate && doseDate <= today) {
-          return dose.id;
+      // Loops over all the doses and return the first dose that has a date in the last 7 days.
+      const today = moment().add(moment().utcOffset(), 'minutes').toDate();
+      const sevenDaysAgo = moment().add(moment().utcOffset(), 'minutes').subtract(7, 'days').toDate();
+
+      for (let j = 0; j < vaccine.doses?.length; j++) {
+        const dose = vaccine.doses[j];
+        if (dose.date_taken_specific) {
+          const doseDate = moment(dose.date_taken_specific).toDate();
+          if (sevenDaysAgo <= doseDate && doseDate <= today) {
+            doseId = dose.id;
+            break;
+          }
         }
       }
-    }
-    return null;
-  }
 
-  const navigateToNextPage = async () => {
-    if (vaccines) {
-      const dose = getFirstActiveDose(vaccines);
-      const shouldAskDoseSymptoms = !!dose;
-      assessmentCoordinator.gotoNextScreen(route.name, { dose, shouldAskDoseSymptoms });
+      const shouldAskDoseSymptoms = !!doseId;
+      assessmentCoordinator.gotoNextScreen(props.route.name, { dose: doseId, shouldAskDoseSymptoms });
     } else {
-      assessmentCoordinator.gotoNextScreen(route.name, {});
+      assessmentCoordinator.gotoNextScreen(props.route.name, {});
     }
   };
 
   const enableNext = () => {
-    const doses = vaccines?.doses;
+    const doses = vaccine?.doses;
     // Disable button if user has dose(s) with missing date, brand & description
     if (doses && doses.some((dose) => dose.date_taken_specific == null || dose.brand === null)) {
       return false;
@@ -100,15 +99,15 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
     return (
       <View>
         <BrandedButton
-          onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccines)}
+          onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccine)}
           style={styles.newButton}
           testID="button-add-vaccine"
         >
           <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list-updated.add-button')}</Text>
         </BrandedButton>
 
-        {vaccines
-          ? vaccines.doses.map((dose: TDose, index: number) => {
+        {vaccine
+          ? vaccine.doses.map((dose: TDose, index: number) => {
               return (
                 <VaccineDoseRow
                   dose={dose}
@@ -116,7 +115,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
                   key={dose.id}
                   style={index === 0 ? { paddingTop: sizes.s } : { paddingTop: sizes.l }}
                   testID={`vaccine-dose-row-${index}`}
-                  vaccineRecord={vaccines}
+                  vaccineRecord={vaccine}
                 />
               );
             })
@@ -126,7 +125,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
   };
 
   const showPopup = () => {
-    NavigatorService.navigate('VaccineListMissingModal', { vaccine: vaccines });
+    NavigatorService.navigate('VaccineListMissingModal', { vaccine });
   };
 
   const navigateToNextPageOrShowPopup = () => {
@@ -145,7 +144,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
         textStyle={styles.continueButton}
       >
         <Text style={{ color: colors.white }}>
-          {!vaccines?.doses.length
+          {!vaccine?.doses.length
             ? i18n.t('vaccines.vaccine-list-updated.no-vaccine')
             : i18n.t('vaccines.vaccine-list-updated.correct-info')}
         </Text>
@@ -167,7 +166,7 @@ export const VaccineListScreenUpdated: React.FC<TProps> = ({ route }) => {
 
   return (
     <Screen
-      profile={route.params?.assessmentData?.patientData?.patientState?.profile}
+      profile={props.route.params?.assessmentData?.patientData?.patientState?.profile}
       renderFooter={footer}
       testID="vaccine-list-screen"
     >

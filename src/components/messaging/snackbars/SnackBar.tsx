@@ -40,19 +40,15 @@ function Snackbar({
     removeMessage();
   };
 
-  const animate = (active: boolean, cb?: () => void) => {
-    Animated.timing(animValue, {
-      duration: DURATION,
-      easing: Easing.elastic(1),
-      toValue: active ? RANGE_TO : RANGE_FROM,
-      useNativeDriver: true,
-    }).start(cb);
-  };
-
   React.useEffect(() => {
     let isMouted = true;
     if (isMouted) {
-      animate(active);
+      Animated.timing(animValue, {
+        duration: DURATION,
+        easing: Easing.elastic(1),
+        toValue: active ? RANGE_TO : RANGE_FROM,
+        useNativeDriver: true,
+      }).start();
     }
     return () => {
       isMouted = false;

@@ -26,8 +26,7 @@ export default function Welcome1Screen({ navigation }: TProps) {
   React.useEffect(() => {
     contentService.getUserCount().then((response) => {
       if (response) {
-        const userCount = cleanIntegerVal(response);
-        setUserCount(userCount);
+        setUserCount(cleanIntegerVal(response));
       }
     });
   }, [contentService.getUserCount, cleanIntegerVal, setUserCount]);

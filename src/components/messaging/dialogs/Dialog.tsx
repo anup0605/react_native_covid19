@@ -46,19 +46,15 @@ function Dialog({ active, message }: IProps) {
     return null;
   };
 
-  const animate = (active: boolean) => {
-    Animated.timing(animValue, {
-      duration: DURATION,
-      easing: Easing.elastic(1),
-      toValue: active ? RANGE_TO : RANGE_FROM,
-      useNativeDriver: true,
-    }).start();
-  };
-
   React.useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      animate(active);
+      Animated.timing(animValue, {
+        duration: DURATION,
+        easing: Easing.elastic(1),
+        toValue: active ? RANGE_TO : RANGE_FROM,
+        useNativeDriver: true,
+      }).start();
     }
     return function cleanUp() {
       isMounted = false;

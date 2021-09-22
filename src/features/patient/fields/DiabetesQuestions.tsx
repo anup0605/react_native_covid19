@@ -204,13 +204,10 @@ DiabetesQuestions.createDTO = (data) => {
     delete dto.diabetes_type_other;
   }
 
-  switch (data.hemoglobinMeasureUnit) {
-    case EHemoglobinMeasureUnits.PERCENT:
-      if (data.a1cMeasurementPercent) dto.a1c_measurement_percent = cleanFloatVal(data.a1cMeasurementPercent ?? '0');
-      break;
-    case EHemoglobinMeasureUnits.MOL:
-      if (data.a1cMeasurementMol) dto.a1c_measurement_mmol = cleanFloatVal(data.a1cMeasurementMol ?? '0');
-      break;
+  if (data.hemoglobinMeasureUnit === EHemoglobinMeasureUnits.PERCENT && data.a1cMeasurementPercent) {
+    dto.a1c_measurement_percent = cleanFloatVal(data.a1cMeasurementPercent ?? '0');
+  } else if (data.hemoglobinMeasureUnit === EHemoglobinMeasureUnits.MOL && data.a1cMeasurementMol) {
+    dto.a1c_measurement_mmol = cleanFloatVal(data.a1cMeasurementMol ?? '0');
   }
 
   return dto;

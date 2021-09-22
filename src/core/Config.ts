@@ -25,8 +25,8 @@ const configs = new Map<string, TConfigType>([
   ['US', { ...DefaultConfig, ...USConfig } as TConfigType],
 ]);
 
-let countryCode = 'GB';
-let config = configs.get(countryCode);
+const defaultCountryCode = 'GB';
+let config = configs.get(defaultCountryCode);
 
 export const getCountryConfig = (countryCode: string): TConfigType => {
   return configs.get(countryCode) ?? (DefaultConfig as TConfigType);
@@ -35,7 +35,6 @@ export const getCountryConfig = (countryCode: string): TConfigType => {
 export const setConfigCountry = (country: string) => {
   if (country && configs.has(country)) {
     config = configs.get(country);
-    countryCode = country;
   }
 };
 

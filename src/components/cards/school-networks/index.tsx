@@ -12,7 +12,7 @@ type TProps = {
 
 function transformToUIData(schoolGroups: ISubscribedSchoolGroupStats[]): ISubscribedSchoolStats[] {
   return schoolGroups.reduce((initial: ISubscribedSchoolStats[], group): ISubscribedSchoolStats[] => {
-    const school = initial.find((school) => school.id === group.school.id);
+    const school = initial.find((s) => s.id === group.school.id);
 
     if (school) {
       const index = initial.indexOf(school);

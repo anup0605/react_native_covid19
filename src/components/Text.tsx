@@ -36,16 +36,16 @@ interface IColourHighlightHeaderTextTextProps {
   highlightColor?: any;
 }
 // Basic component that allows single colour highlighted text - wrap the marked text with **
-export const ColourHighlightHeaderTextText = ({ text, style, highlightColor }: IColourHighlightHeaderTextTextProps) => {
-  const textParts: string[] = text.split('*');
-  let highlightedText: boolean = !!text.startsWith('*');
+export const ColourHighlightHeaderTextText = (props: IColourHighlightHeaderTextTextProps) => {
+  const textParts: string[] = props.text.split('*');
+  let highlightedText: boolean = !!props.text.startsWith('*');
   return (
-    <Text style={[fontStyles.h2Reg, style]}>
+    <Text style={[fontStyles.h2Reg, props.style]}>
       {textParts
         .filter((text: string) => text)
         .map((text: string) => {
           const node: React.ReactNode = (
-            <Text style={{ color: highlightedText ? highlightColor : fontStyles.h2Reg.color }}>{text}</Text>
+            <Text style={{ color: highlightedText ? props.highlightColor : fontStyles.h2Reg.color }}>{text}</Text>
           );
           highlightedText = !highlightedText;
           return node;
@@ -71,11 +71,11 @@ interface IRegularTextWithBoldInsertsProps {
   style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
 }
 
-export const RegularTextWithBoldInserts = ({ text, style }: IRegularTextWithBoldInsertsProps) => {
-  const textParts: string[] = text.split('*');
-  let boldText: boolean = !!text.startsWith('*');
+export const RegularTextWithBoldInserts = (props: IRegularTextWithBoldInsertsProps) => {
+  const textParts: string[] = props.text.split('*');
+  let boldText: boolean = !!props.text.startsWith('*');
   return (
-    <Text style={style}>
+    <Text style={props.style}>
       {textParts
         .filter((text: string) => text)
         .map((text: string) => {

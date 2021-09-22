@@ -24,13 +24,13 @@ export const useProfileList = () => {
     setError(null);
 
     try {
-      const profiles = await patientService.listProfiles();
-      if (profiles) {
-        setProfiles(profiles);
+      const response = await patientService.listProfiles();
+      if (response) {
+        setProfiles(response);
         setIsLoaded(true);
       }
-    } catch (error) {
-      setError(error);
+    } catch (error2) {
+      setError(error2);
     }
   };
 

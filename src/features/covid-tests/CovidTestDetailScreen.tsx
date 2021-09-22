@@ -134,6 +134,12 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
     }
   }
 
+  async function deleteTest() {
+    await covidTestService.deleteTest(testId!);
+    props.navigation.goBack();
+    Analytics.track(events.DELETE_COVID_TEST);
+  }
+
   async function promptDeleteTest() {
     Alert.alert(
       i18n.t('covid-test.delete-test-alert-title'),
@@ -153,12 +159,6 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
       ],
       { cancelable: false },
     );
-  }
-
-  async function deleteTest() {
-    await covidTestService.deleteTest(testId!);
-    props.navigation.goBack();
-    Analytics.track(events.DELETE_COVID_TEST);
   }
 
   const test = props.route.params?.test;
@@ -199,23 +199,35 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
           return (
             <Form hasRequiredFields>
               <CovidTestMechanismQuestion
-                formikProps={formikProps as FormikProps<ICovidTestMechanismData>}
+                formikProps={formikProps as unknown as FormikProps<ICovidTestMechanismData>}
                 test={test}
               />
-              <CovidTestDateQuestion formikProps={formikProps as FormikProps<ICovidTestDateData>} test={test} />
+              <CovidTestDateQuestion
+                formikProps={formikProps as unknown as FormikProps<ICovidTestDateData>}
+                test={test}
+              />
               {test !== undefined && test?.location ? (
                 <CovidTestLocationQuestion
-                  formikProps={formikProps as FormikProps<ICovidTestLocationData>}
+                  formikProps={formikProps as unknown as FormikProps<ICovidTestLocationData>}
                   test={test}
                 />
               ) : null}
-              <CovidTestResultQuestion formikProps={formikProps as FormikProps<ICovidTestResultData>} test={test} />
+              <CovidTestResultQuestion
+                formikProps={formikProps as unknown as FormikProps<ICovidTestResultData>}
+                test={test}
+              />
               {test !== undefined && test?.is_rapid_test !== null && isV1Test ? (
-                <CovidTestIsRapidQuestion formikProps={formikProps as FormikProps<ICovidTestIsRapidData>} test={test} />
+                <CovidTestIsRapidQuestion
+                  formikProps={formikProps as unknown as FormikProps<ICovidTestIsRapidData>}
+                  test={test}
+                />
               ) : null}
               {(test !== undefined && test?.invited_to_test !== null) ||
               isZoeInviteOfferTest(formikProps.values.mechanism as ECovidTestMechanismOptions) ? (
-                <CovidTestInvitedQuestion formikProps={formikProps as FormikProps<ICovidTestInvitedData>} test={test} />
+                <CovidTestInvitedQuestion
+                  formikProps={formikProps as unknown as FormikProps<ICovidTestInvitedData>}
+                  test={test}
+                />
               ) : null}
 
               <ErrorText>{errorMessage}</ErrorText>

@@ -15,7 +15,7 @@ type TProps = {
   index: number;
 };
 
-export const VaccineDoseRow: React.FC<TProps> = ({ dose, style, testID, vaccineRecord, index }) => {
+export const VaccineDoseRow: React.FC<TProps> = (props) => {
   const formatVaccineDate = (dose: TDose) => {
     return moment(dose.date_taken_specific).format('MMM D, Y');
   };
@@ -26,14 +26,14 @@ export const VaccineDoseRow: React.FC<TProps> = ({ dose, style, testID, vaccineR
 
   return (
     <TouchableOpacity
-      onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccineRecord, index)}
-      style={[styles.itemTouchable, style]}
-      testID={testID}
+      onPress={() => assessmentCoordinator.goToAddEditVaccine(props.vaccineRecord, props.index)}
+      style={[styles.itemTouchable, props.style]}
+      testID={props.testID}
     >
       <Image source={tick} style={styles.tick} />
-      <RegularText>{brand(dose)}</RegularText>
+      <RegularText>{brand(props.dose)}</RegularText>
       <View style={{ flex: 1 }} />
-      <RegularText>{formatVaccineDate(dose)}</RegularText>
+      <RegularText>{formatVaccineDate(props.dose)}</RegularText>
       <Image source={chevronRight} style={styles.chevron} />
     </TouchableOpacity>
   );
