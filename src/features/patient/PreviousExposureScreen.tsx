@@ -94,7 +94,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
     unwellMonthBefore: Yup.string().required(),
   });
 
-  onSubmit(values: IPreviousExposureData) {
+  onSubmit = (values: IPreviousExposureData) => {
     const infos = this.createPatientInfos(values);
 
     patientService
@@ -108,9 +108,9 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
       .catch(() => {
         this.setState({ errorMessage: i18n.t('something-went-wrong') });
       });
-  }
+  };
 
-  private createPatientInfos(formData: IPreviousExposureData) {
+  createPatientInfos = (formData: IPreviousExposureData) => {
     let infos = {
       unwell_month_before: formData.unwellMonthBefore === 'yes',
     } as Partial<TPatientInfosRequest>;
@@ -142,7 +142,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
     }
 
     return infos;
-  }
+  };
 
   render() {
     const symptomChangeChoices = [
@@ -157,7 +157,7 @@ export default class PreviousExposureScreen extends React.Component<TProps, TSta
         <Formik
           validateOnChange
           initialValues={initialFormValues}
-          onSubmit={(values) => this.onSubmit(values)}
+          onSubmit={this.onSubmit}
           validationSchema={this.registerSchema}
         >
           {(formikProps) => {
