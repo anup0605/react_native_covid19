@@ -1,26 +1,56 @@
 import { requiredFormMarker } from '@covid/components/Form';
-import { RegularText } from '@covid/components/Text';
+import { CaptionText, RegularText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
 import { ValidationError } from '@covid/components/ValidationError';
 import { sizes } from '@covid/themes';
+import { colors } from '@theme';
 import { FormikErrors, FormikProps } from 'formik';
 import * as React from 'react';
-import { KeyboardTypeOptions, StyleProp, TextInputProps, View, ViewStyle } from 'react-native';
+import {
+  KeyboardTypeOptions,
+  StyleProp,
+  StyleSheet,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 interface IProps extends TextInputProps {
   formikProps: FormikProps<any>;
   name: string;
   label?: string;
+  description?: string;
   placeholder?: string;
   keyboardType?: KeyboardTypeOptions;
   showError?: boolean;
   inputProps?: TextInputProps;
   style?: StyleProp<ViewStyle>;
   required?: boolean;
+  IconComponent?: React.ComponentType<any>;
+  iconOnPress?: () => void;
 }
 
+const HIT_SLOP = {
+  bottom: 12,
+  left: 12,
+  right: 12,
+  top: 12,
+};
+
 export function GenericTextField(props: IProps) {
-  const { formikProps, name, label, placeholder, keyboardType, showError, style, inputProps, ...otherProps } = props;
+  const {
+    formikProps,
+    name,
+    label,
+    description,
+    placeholder,
+    keyboardType,
+    showError,
+    style,
+    inputProps,
+    ...otherProps
+  } = props;
 
   return (
     <View style={[{ marginVertical: sizes.m }, style]}>
@@ -28,7 +58,15 @@ export function GenericTextField(props: IProps) {
         <RegularText>
           {label}
           {props.required ? requiredFormMarker : null}
+          {props.IconComponent ? (
+            <TouchableOpacity hitSlop={HIT_SLOP} onPress={props.iconOnPress} style={styles.icon}>
+              <props.IconComponent />
+            </TouchableOpacity>
+          ) : null}
         </RegularText>
+      ) : null}
+      {description ? (
+        <CaptionText style={{ color: colors.secondary, marginBottom: sizes.m }}>{description}</CaptionText>
       ) : null}
       <ValidatedTextInput
         error={formikProps.touched[name] && !!formikProps.errors[name]}
@@ -49,3 +87,12 @@ export function GenericTextField(props: IProps) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: 2,
+    paddingLeft: sizes.xxs,
+  },
+});

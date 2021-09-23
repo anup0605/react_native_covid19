@@ -222,14 +222,23 @@
     "picker-negative": "Negativt",
     "picker-waiting": "Väntar på mina resultat",
     "picker-test-failed": "Inkonklusivt / provtagning misslyckades",
+    "picker-test-positive-infection-and-vaccine": false,
+    "picker-test-positive-infection-or-vaccine": false,
+    "picker-test-positive-infection-only": false,
     "question-date-test-occurred": "När testades du?",
     "question-date-approximate": "Ungefärligt datumintervall",
     "required-date": "Ange datum när testet utfördes",
     "required-dates": "Ange mellan vilka två datum testet utfördes",
     "required-mechanism": "Ange hur testet utfördes",
     "required-result": "Ange testresultatet",
+    "required-thr-number": false,
+    "required-thr-format": false,
+    "required-thr-length": false,
     "question-is-rapid-test": "Var det ett snabbtest för pågående infektion (s.k. lateral flow test)? Dessa test tas vanligtvis med en testpinne i näsa/svalg och svaret kommer inom minuter/timmar.",
     "question-invite-to-test": "Har vi bjudit in dig att utföra detta test?",
+    "question-thr-number": false,
+    "question-thr-number-description": false,
+    "picker-dont-know-thr": false,
     "confirm-test": {
       "title": "",
       "body": "",
@@ -252,6 +261,10 @@
       "anti-n-description": "Upptäcker förekomsten av antikroppar riktade mot det så kallade N-proteinet mot covid-19. Antikroppar mot N-proteinet produceras inte i respons till något av de vaccinen som finns på marknaden i dag. Dessa antikroppar ses dock hos de flesta personer som har genomgått en covid-19-infektion och avtar med tiden.",
       "anti-s-title": "Test för antikroppar mot S-proteinet",
       "anti-s-description": "Upptäcker förekomsten av antikroppar riktade mot det så kallade S-proteinet i viruset. Antikroppar mot S-proteinet kan återfinnas både hos personer som har vaccinerats mot covid-19 och hos personer som har genomgått en covid-19-infektion."
+    },
+    "thr-number-modal": {
+      "title": false,
+      "description": false
     }
   },
   "how-you-feel": {

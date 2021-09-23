@@ -16,7 +16,10 @@ const defaultEmailAddress = 'test@joinzoe.com';
 const profileName = `profile ${Math.round(Date.now() / 1000)}`;
 
 beforeAll(async () => {
-  await device.launchApp({ newInstance: true, permissions: { notifications: 'YES' } });
+  await device.launchApp({
+    newInstance: true,
+    permissions: { notifications: 'YES' },
+  });
 });
 
 beforeEach(async () => {
@@ -68,8 +71,9 @@ testReportTodayFeature({
   updateTest: false,
 });
 testReportTodayFeature({
+  addAndUpdateZoeInviteTest: true,
   addTest: true,
-  addVaccine: false, // Change to true once new vaccine flow implemented
+  addVaccine: true,
   healthy: true,
   updateTest: true,
 });

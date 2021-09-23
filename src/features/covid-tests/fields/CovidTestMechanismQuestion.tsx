@@ -1,6 +1,7 @@
 import { fingerPrickX3, noseSwabX3, otherTestX3, syringeX3 } from '@assets';
-import { TextareaWithCharCount } from '@covid/components';
+import { RegularTextWithBoldInserts, TextareaWithCharCount } from '@covid/components';
 import { RadioInput } from '@covid/components/inputs/RadioInput';
+import { isGBCountry } from '@covid/core/localisation/LocalisationService';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import {
   ECovidTestAntibodyOptions,
@@ -11,12 +12,20 @@ import {
 import { CovidTestAntibodyInfoModal } from '@covid/features/covid-tests/components/CovidTestAntibodyInfoModal';
 import CovidTestInfoIcon from '@covid/features/covid-tests/components/CovidTestInfoIcon';
 import { CovidTestMechanismInfoModal } from '@covid/features/covid-tests/components/CovidTestMechanismInfoModal';
-import { isAntibodyTest, isLateralFlowTest, isPcrTest } from '@covid/features/covid-tests/helpers';
+import { CovidTestInvitedQuestion, ICovidTestInvitedFormikData } from '@covid/features/covid-tests/fields/';
+import {
+  isAntibodyTest,
+  isLateralFlowTest,
+  isOldVersionAntibodyInviteTest,
+  isPcrTest,
+  showDualAntibodyTestUI,
+} from '@covid/features/covid-tests/helpers';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import { FormikProps } from 'formik';
 import * as React from 'react';
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 export interface ICovidTestMechanismData {
@@ -27,8 +36,12 @@ export interface ICovidTestMechanismData {
   testPerformedBy: string;
 }
 
+export interface ICovidTestMechanismFormikData extends ICovidTestMechanismData {
+  invitedToTest: string;
+}
+
 interface IProps {
-  formikProps: FormikProps<ICovidTestMechanismData>;
+  formikProps: FormikProps<ICovidTestMechanismFormikData>;
   test?: TCovidTest;
 }
 
@@ -95,9 +108,18 @@ export const CovidTestMechanismQuestion: ICovidTestMechanismQuestion<IProps, ICo
   ];
 
   const antibodyItems = [
-    { label: i18n.t('covid-test.picker-anti-n'), value: ECovidTestAntibodyOptions.ANTI_N },
-    { label: i18n.t('covid-test.picker-anti-s'), value: ECovidTestAntibodyOptions.ANTI_S },
-    { label: i18n.t('covid-test.picker-dont-know'), value: ECovidTestAntibodyOptions.DONT_KNOW },
+    {
+      label: <RegularTextWithBoldInserts text={i18n.t('covid-test.picker-anti-n')} />,
+      value: ECovidTestAntibodyOptions.ANTI_N,
+    },
+    {
+      label: <RegularTextWithBoldInserts text={i18n.t('covid-test.picker-anti-s')} />,
+      value: ECovidTestAntibodyOptions.ANTI_S,
+    },
+    {
+      label: <RegularTextWithBoldInserts text={i18n.t('covid-test.picker-dont-know')} />,
+      value: ECovidTestAntibodyOptions.DONT_KNOW,
+    },
   ];
 
   const [showMechanismModal, setShowMechanismModal] = React.useState(false);
@@ -163,7 +185,19 @@ export const CovidTestMechanismQuestion: ICovidTestMechanismQuestion<IProps, ICo
         />
       )}
 
-      {isAntibodyTest(formikProps.values.mechanism as ECovidTestMechanismOptions) && (
+      {formikProps.values.mechanism === ECovidTestMechanismOptions.BLOOD_FINGER_PRICK ? (
+        <View style={{ marginBottom: sizes.xs }}>
+          <CovidTestInvitedQuestion
+            formikProps={formikProps as unknown as FormikProps<ICovidTestInvitedFormikData>}
+            test={test}
+          />
+        </View>
+      ) : null}
+
+      {(formikProps.values.mechanism === ECovidTestMechanismOptions.BLOOD_FINGER_PRICK &&
+        (isGBCountry() ? formikProps.values.invitedToTest === 'no' : true)) ||
+      formikProps.values.mechanism === ECovidTestMechanismOptions.BLOOD_NEEDLE_DRAW ||
+      (props.test && isOldVersionAntibodyInviteTest(props.test)) ? (
         <RadioInput
           required
           error={formikProps.touched.antibody ? formikProps.errors.antibody : ''}
@@ -175,7 +209,7 @@ export const CovidTestMechanismQuestion: ICovidTestMechanismQuestion<IProps, ICo
           selectedValue={formikProps.values.antibody}
           testID="covid-test-antibody-question"
         />
-      )}
+      ) : null}
     </>
   );
 };
@@ -210,9 +244,12 @@ CovidTestMechanismQuestion.initialFormValues = (test?: TCovidTest): ICovidTestMe
 
 CovidTestMechanismQuestion.schema = () => {
   return Yup.object().shape({
-    antibody: Yup.string().when('mechanism', {
-      is: (mechanism) => {
-        return isAntibodyTest(mechanism);
+    antibody: Yup.string().when(['mechanism', 'dualAntibodyResult', 'invitedToTest'], {
+      is: (mechanism, dualAntibodyResult, invitedToTest) => {
+        return (
+          isAntibodyTest(mechanism) &&
+          (!showDualAntibodyTestUI(mechanism, invitedToTest) || !dualAntibodyResult || dualAntibodyResult.length === 0)
+        );
       },
       then: Yup.string().required(i18n.t('please-select-option')),
     }),
@@ -245,8 +282,6 @@ CovidTestMechanismQuestion.createDTO = (formData: ICovidTestMechanismData): Part
       mechanism: ECovidTestMechanismOptions.NOSE_OR_THROAT_SWAB,
       test_performed_by: formData.testPerformedBy,
     }),
-    ...(isAntibodyTest(formData.mechanism as ECovidTestMechanismOptions) && {
-      antibody_type_check: formData.antibody,
-    }),
+    ...(isAntibodyTest(formData.mechanism as ECovidTestMechanismOptions) && { antibody_type_check: formData.antibody }),
   };
 };

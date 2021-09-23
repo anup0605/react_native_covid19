@@ -1,12 +1,13 @@
 /* eslint-env jest */
 
-import { by, element } from 'detox';
+import { by, element, expect } from 'detox';
 
-import { scrollDownToElement, scrollDownToId, scrollUpToElement, submitForm } from './helpers';
+import { scrollDownToId, scrollUpToElement, submitForm } from './helpers';
 import { testCovidTestListOnboardingModal } from './testModals';
 
 type TReportTodayConfig = {
   addTest: boolean;
+  addAndUpdateZoeInviteTest?: boolean;
   addVaccine: boolean;
   healthy: boolean;
   updateTest: boolean;
@@ -34,7 +35,6 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-performed-by-question');
         await element(by.id('covid-test-performed-by-question-item-trained')).tap();
 
-        // TODO: need better way of selecting date in calendar
         await element(by.id('scroll-view-covid-test-detail-screen')).scroll(150, 'down');
         await element(by.text('1')).tap();
 
@@ -43,6 +43,9 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-no-covid-test-invited-question');
         await element(by.id('button-no-covid-test-invited-question')).tap();
+
+        await expect(element(by.id('covid-test-thr-number-item-dont_know'))).not.toExist();
+        await expect(element(by.id('covid-test-dual-result-question'))).not.toExist();
 
         await submitForm('covid-test-detail-screen', 'scroll-view-covid-test-detail-screen', 'button-submit');
       });
@@ -54,23 +57,23 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
     function testUpdateTest() {
       it('should be able to update a COVID-19 test', async () => {
         // TODO: Not sure why multiple instances error shows up
-        await element(by.id('covid-test-row-0')).atIndex(0).tap();
+        await element(by.id('covid-test-row-nose_throat_swab-0')).atIndex(0).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-mechanism-question');
-        await element(by.id('covid-test-mechanism-question-item-blood_sample_finger_prick')).tap();
+        await element(by.id('covid-test-mechanism-question-item-blood_sample_needle_draw')).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-antibody-question');
         await element(by.id('covid-test-antibody-question-item-anti_n')).tap();
 
-        // TODO: need better way of selecting date in calendar
+        await expect(element(by.id('covid-test-thr-number-item-dont_know'))).not.toExist();
+
         await element(by.id('scroll-view-covid-test-detail-screen')).scroll(150, 'down');
         await element(by.text('1')).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-result-question');
         await element(by.id('covid-test-result-question-item-positive')).tap();
 
-        await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-no-covid-test-invited-question');
-        await element(by.id('button-no-covid-test-invited-question')).tap();
+        await expect(element(by.id('covid-test-dual-result-question'))).not.toExist();
 
         await submitForm('covid-test-detail-screen', 'scroll-view-covid-test-detail-screen', 'button-submit');
       });
@@ -79,67 +82,79 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
       testUpdateTest();
     }
 
+    function testAddAndUpdateZoeInviteTest() {
+      it('should be able to add and update a ZOE-invited finger prick antibody test', async () => {
+        await element(by.id('button-add-test')).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-mechanism-question');
+        await element(by.id('covid-test-mechanism-question-item-blood_sample_finger_prick')).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-yes-covid-test-invited-question');
+        await element(by.id('button-yes-covid-test-invited-question')).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-thr-number-item-dont_know');
+        await element(by.id('covid-test-thr-number-item-dont_know')).tap();
+        // Need to repeat because it sometimes clicks on the input field whilst scrolling, resulting in an error
+        await element(by.id('covid-test-thr-number-item-dont_know')).tap();
+
+        await element(by.id('scroll-view-covid-test-detail-screen')).scroll(300, 'down');
+        await element(by.text('1')).tap();
+
+        await expect(element(by.id('covid-test-antibody-question'))).not.toExist();
+        await expect(element(by.id('covid-test-result-question'))).not.toExist();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-dual-result-question');
+        await element(by.id('covid-test-dual-result-question-item-negative')).tap();
+
+        await submitForm('covid-test-detail-screen', 'scroll-view-covid-test-detail-screen', 'button-submit');
+
+        await element(by.id('covid-test-row-blood_sample_finger_prick-0')).atIndex(0).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-no-covid-test-invited-question');
+        await element(by.id('button-no-covid-test-invited-question')).tap();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-antibody-question');
+        await element(by.id('covid-test-antibody-question-item-anti_s')).tap();
+
+        await expect(element(by.id('covid-test-thr-number-item-dont_know'))).not.toExist();
+
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-result-question');
+        await element(by.id('covid-test-result-question-item-negative')).tap();
+
+        await expect(element(by.id('covid-test-dual-result-question'))).not.toExist();
+
+        await submitForm('covid-test-detail-screen', 'scroll-view-covid-test-detail-screen', 'button-submit');
+      });
+    }
+    if (config.addAndUpdateZoeInviteTest) {
+      testAddAndUpdateZoeInviteTest();
+    }
+
     it('should open the vaccine list screen', async () => {
       await element(by.id('button-covid-test-list-screen')).tap();
     });
 
-    // 0: Other / I don't know
-    // 1: Johnson and Johnson, which has a single shot
-    // 2: Pfizer / Moderna / AstraZeneca, which has two shots
-    function testAddVaccine(type = 0, secondDose = false) {
-      it(`should be able to add a COVID-19 vaccine of type ${type}`, async () => {
+    function testAddVaccine() {
+      it(`should be able to add a COVID-19 vaccine`, async () => {
         await element(by.id('button-add-vaccine')).tap();
 
-        let itemName = 'not_sure';
-        if (type === 1) {
-          itemName = 'johnson';
-        } else if (type === 2) {
-          itemName = 'pfizer';
-        }
+        await element(by.id(`input-your-vaccine-item-pfizer`)).tap();
 
-        await element(
-          by.id(`input-your-vaccine-item-${itemName}`).withAncestor(by.id('vaccine-first-dose-question')),
-        ).tap();
+        await element(by.id('scroll-view-about-your-vaccine-screen')).scroll(150, 'down');
+        await element(by.text('1')).tap();
 
-        // @todo: Calendar input
-        await element(by.id('button-calendar-picker').withAncestor(by.id('vaccine-first-dose-question'))).tap();
-
-        if (secondDose && (type === 0 || type === 2)) {
-          await scrollDownToElement(
-            'scroll-view-about-your-vaccine-screen',
-            element(by.id('button-yes').withAncestor(by.id('scroll-view-about-your-vaccine-screen'))),
-          );
-          await element(by.id('button-yes').withAncestor(by.id('scroll-view-about-your-vaccine-screen'))).tap();
-
-          await scrollDownToElement(
-            'scroll-view-about-your-vaccine-screen',
-            element(by.id(`input-your-vaccine-item-${itemName}`).withAncestor(by.id('vaccine-second-dose-question'))),
-          );
-          await element(
-            by.id(`input-your-vaccine-item-${itemName}`).withAncestor(by.id('vaccine-second-dose-question')),
-          ).tap();
-
-          // @todo: Calendar input
-          await scrollDownToElement(
-            'scroll-view-about-your-vaccine-screen',
-            element(by.id('button-calendar-picker').withAncestor(by.id('vaccine-second-dose-question'))),
-          );
-          await element(by.id('button-calendar-picker').withAncestor(by.id('vaccine-second-dose-question'))).tap();
-        }
-
-        await submitForm('about-your-vaccine-screen', 'scroll-view-about-your-vaccine-scree', 'button-submit');
-
-        // The test can't be completed because the date input is not testable.
-        await element(by.id('button-back-navigation').withAncestor(by.id('about-your-vaccine-screen'))).tap();
+        await submitForm('about-your-vaccine-screen', 'scroll-view-about-your-vaccine-screen', 'button-submit');
       });
     }
     if (config.addVaccine) {
-      testAddVaccine(0, false);
-      testAddVaccine(0, true);
-      testAddVaccine(1);
-      testAddVaccine(2, false);
-      testAddVaccine(2, true);
+      testAddVaccine();
     }
+
+    it('should dismiss the vaccine efficacy modal (if present)', async () => {
+      try {
+        await element(by.text('Cancel')).tap();
+      } catch (_) {}
+    });
 
     it('should open the healthy screen', async () => {
       await element(by.id('button-vaccine-list-screen')).tap();

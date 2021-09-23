@@ -17,9 +17,11 @@ import {
   CovidTestResultQuestion,
   ICovidTestDateData,
   ICovidTestInvitedData,
+  ICovidTestInvitedFormikData,
   ICovidTestIsRapidData,
   ICovidTestLocationData,
   ICovidTestMechanismData,
+  ICovidTestMechanismFormikData,
   ICovidTestResultData,
 } from '@covid/features/covid-tests/fields/';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -32,8 +34,6 @@ import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { Alert } from 'react-native';
 import * as Yup from 'yup';
-
-import { isZoeInviteOfferTest } from './helpers';
 
 interface ICovidTestData
   extends ICovidTestDateData,
@@ -56,8 +56,8 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
   function submitCovidTest(infos: Partial<TCovidTest>) {
     if (testId) {
       if (
-        props.route.params?.test?.result !== 'positive' &&
-        infos.result === 'positive' &&
+        (props.route.params?.test?.result !== 'positive' || props.route.params?.test?.anti_n !== 'positive') &&
+        (infos.result === 'positive' || infos.anti_n === 'positive') &&
         props.route.params?.assessmentData?.patientData?.patientState?.hasSchoolGroup
       ) {
         setSubmitting(false);
@@ -79,7 +79,7 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
           });
       }
     } else if (
-      infos.result === 'positive' &&
+      (infos.result === 'positive' || infos.anti_n === 'positive') &&
       props.route.params?.assessmentData?.patientData?.patientState?.hasSchoolGroup
     ) {
       setSubmitting(false);
@@ -125,9 +125,9 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
         ...CovidTestDateQuestion.createDTO(values),
         ...CovidTestIsRapidQuestion.createDTO(values),
         ...CovidTestMechanismQuestion.createDTO(values),
-        ...CovidTestResultQuestion.createDTO(values),
         ...CovidTestInvitedQuestion.createDTO(values),
         ...CovidTestLocationQuestion.createDTO(values),
+        ...CovidTestResultQuestion.createDTO(values), // Leave as last due to conditional overwriting depending on antibody test type
       } as Partial<TCovidTest>;
 
       submitCovidTest(infos);
@@ -199,9 +199,10 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
           return (
             <Form hasRequiredFields>
               <CovidTestMechanismQuestion
-                formikProps={formikProps as unknown as FormikProps<ICovidTestMechanismData>}
+                formikProps={formikProps as unknown as FormikProps<ICovidTestMechanismFormikData>}
                 test={test}
               />
+
               <CovidTestDateQuestion
                 formikProps={formikProps as unknown as FormikProps<ICovidTestDateData>}
                 test={test}
@@ -222,10 +223,10 @@ export default function CovidTestDetailScreen(props: TCovidProps) {
                   test={test}
                 />
               ) : null}
-              {(test !== undefined && test?.invited_to_test !== null) ||
-              isZoeInviteOfferTest(formikProps.values.mechanism as ECovidTestMechanismOptions) ? (
+
+              {formikProps.values.mechanism === ECovidTestMechanismOptions.PCR ? (
                 <CovidTestInvitedQuestion
-                  formikProps={formikProps as unknown as FormikProps<ICovidTestInvitedData>}
+                  formikProps={formikProps as unknown as FormikProps<ICovidTestInvitedFormikData>}
                   test={test}
                 />
               ) : null}
