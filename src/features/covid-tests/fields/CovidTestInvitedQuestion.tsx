@@ -40,18 +40,13 @@ export const CovidTestInvitedQuestion: ICovidTestInvitedQuestion<IProps, ICovidT
 };
 
 CovidTestInvitedQuestion.initialFormValues = (test?: TCovidTest): ICovidTestInvitedData => {
-  function getInvitedToTest(test?: TCovidTest) {
-    if (test?.id) {
-      if (test.invited_to_test === null) {
-        return '';
-      }
-      return test.invited_to_test ? 'yes' : 'no';
-    }
-    return '';
+  let invitedToTest = '';
+  if (test?.id && test.invited_to_test !== null) {
+    invitedToTest = test.invited_to_test ? 'yes' : 'no';
   }
 
   return {
-    invitedToTest: getInvitedToTest(test),
+    invitedToTest,
   };
 };
 

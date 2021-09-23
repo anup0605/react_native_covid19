@@ -90,7 +90,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
     });
   }
 
-  onSubmit(values: IAboutYouData) {
+  onSubmit = (values: IAboutYouData) => {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false }); // Stop resubmissions
 
@@ -114,9 +114,9 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
           this.setState({ enableSubmit: true });
         });
     }
-  }
+  };
 
-  private createPatientInfos(formData: IAboutYouData) {
+  createPatientInfos = (formData: IAboutYouData) => {
     let infos = {
       gender: formData.sex === 'male' ? 1 : formData.sex === 'female' ? 0 : formData.sex === 'pfnts' ? 2 : 3,
       gender_identity: formData.genderIdentity,
@@ -191,9 +191,9 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
     }
 
     return infos;
-  }
+  };
 
-  private getPatientFormValues(): IAboutYouData {
+  getPatientFormValues = (): IAboutYouData => {
     const patientInfo = this.props.route.params?.patientData.patientInfo!;
 
     const patientFormData: IAboutYouData = {
@@ -232,7 +232,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
     };
 
     return patientFormData;
-  }
+  };
 
   registerSchema = Yup.object().shape({
     ethnicity: Yup.string().when([], {
@@ -331,7 +331,7 @@ export default class AboutYouScreen extends React.Component<TProps, TState> {
         <Formik
           validateOnChange
           initialValues={this.props.route.params?.editing ? this.getPatientFormValues() : getInitialFormValues()}
-          onSubmit={(values) => this.onSubmit(values)}
+          onSubmit={this.onSubmit}
           validationSchema={this.registerSchema}
         >
           {(formikProps) => {

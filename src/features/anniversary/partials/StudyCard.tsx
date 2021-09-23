@@ -27,32 +27,31 @@ function getProgressArray(progress: TProgress | null | undefined): TProgress[] {
   }
 }
 
-function StudyCard({ timelineEvent }: IProps) {
-  const { ongoing, progress, sub_title, summary, title } = timelineEvent;
-  const p: TProgress[] = getProgressArray(progress);
-  const opacity = ongoing === 'ONGOING' ? 1 : 0.4;
+export default function StudyCard({ timelineEvent }: IProps) {
+  const p: TProgress[] = getProgressArray(timelineEvent.progress);
+  const opacity = timelineEvent.ongoing === 'ONGOING' ? 1 : 0.4;
 
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <Icon
-          iconName={ongoing === 'ONGOING' ? 'search' : 'placeholder-2'}
+          iconName={timelineEvent.ongoing === 'ONGOING' ? 'search' : 'placeholder-2'}
           iconSize={18}
           style={{ marginTop: sizes.xxs, opacity }}
         />
         <Text style={{ color: colors.textDark, marginLeft: sizes.s, opacity }} textClass="pLight">
-          {title}
+          {timelineEvent.title}
         </Text>
       </View>
-      {sub_title ? (
+      {timelineEvent.sub_title ? (
         <Text style={[styles.body, { opacity }]} textClass="h5Medium">
-          {sub_title}
+          {timelineEvent.sub_title}
         </Text>
       ) : null}
       <ProgressBars progress={p} />
-      {summary ? (
+      {timelineEvent.summary ? (
         <Text style={{ color: colors.brand, marginTop: sizes.s }} textClass="pLight">
-          {summary}
+          {timelineEvent.summary}
         </Text>
       ) : null}
     </View>
@@ -75,5 +74,3 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-
-export default StudyCard;

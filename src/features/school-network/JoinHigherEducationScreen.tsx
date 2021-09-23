@@ -25,8 +25,8 @@ export default function JoinHigherEducationScreen({ route }: IProps) {
 
   React.useEffect(() => {
     (async () => {
-      const schools = await schoolService.getSchools();
-      setSchools(schools.filter((s) => s.higher_education === true));
+      const schoolsUnfiltered = await schoolService.getSchools();
+      setSchools(schoolsUnfiltered.filter((s) => s.higher_education === true));
     })();
   }, []);
 

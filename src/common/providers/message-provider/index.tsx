@@ -21,10 +21,10 @@ interface IProps {
 function MessageProvider({ children }: IProps) {
   const [message, setMessage] = React.useState<IUIMessage | null>(null);
   const removeMessage = () => setMessage(null);
-  const addMessage = (message: IUIMessage) => setMessage(message);
+  const addMessage = (newMessage: IUIMessage) => setMessage(newMessage);
 
   const contextValue: IMessageContext = {
-    addMessage: React.useCallback((message) => addMessage(message), []),
+    addMessage: React.useCallback((newMessage) => addMessage(newMessage), []),
     message,
     removeMessage: React.useCallback(() => removeMessage(), []),
   };

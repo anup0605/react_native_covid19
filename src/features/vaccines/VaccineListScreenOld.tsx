@@ -42,7 +42,7 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
       .catch(() => {});
   };
 
-  function getFirstActiveDose(vaccines: TVaccineRequest[]): string | null | undefined {
+  function getFirstActiveDose(): string | null | undefined {
     // Loops over all vaccines and doses and return the first dose that has a date in the last 7 days.
     const today = moment().add(moment().utcOffset(), 'minutes').toDate();
     const sevenDaysAgo = moment().add(moment().utcOffset(), 'minutes').subtract(7, 'days').toDate();
@@ -63,7 +63,7 @@ export const VaccineListScreenOld: React.FC<TProps> = ({ route }) => {
 
   const navigateToNextPage = async () => {
     if (vaccines.length > 0) {
-      const dose = getFirstActiveDose(vaccines);
+      const dose = getFirstActiveDose();
       const shouldAskDoseSymptoms = !!dose;
       coordinator.gotoNextScreen(route.name, { dose, shouldAskDoseSymptoms });
     } else {

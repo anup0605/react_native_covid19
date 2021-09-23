@@ -1,4 +1,4 @@
-import { IUIMessage, useMessage } from '@covid/common';
+import { useMessage } from '@covid/common';
 import { Banner } from '@covid/components/messaging/banners';
 import { Dialog } from '@covid/components/messaging/dialogs';
 import { SnackBar } from '@covid/components/messaging/snackbars';
@@ -11,7 +11,12 @@ function MessagingContainer() {
   const { height, width } = Dimensions.get('window');
   const { message } = useMessage();
 
-  const getMessage = (message: IUIMessage) => {
+  const active = !!message;
+
+  const renderMessage = () => {
+    if (!active) {
+      return null;
+    }
     switch (message.messageType) {
       case 'BANNER':
         return <Banner message={message} />;
@@ -30,8 +35,8 @@ function MessagingContainer() {
   };
 
   return (
-    <SContainerView active={!!message} height={height} width={width}>
-      {message ? getMessage(message) : null}
+    <SContainerView active={active} height={height} width={width}>
+      {renderMessage()}
     </SContainerView>
   );
 }

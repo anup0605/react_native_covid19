@@ -131,18 +131,11 @@ const styles = StyleSheet.create({
 });
 
 CovidTestDateQuestion.initialFormValues = (test?: TCovidTest): ICovidTestDateData => {
-  function getInitialUseApproximateDate(test: TCovidTest | undefined): boolean {
-    if (test === undefined) {
-      return false;
-    }
-    return !test.date_taken_specific;
-  }
-
   return {
     dateTakenBetweenEnd: test?.date_taken_between_end ? moment(test.date_taken_between_end).toDate() : undefined,
     dateTakenBetweenStart: test?.date_taken_between_start ? moment(test.date_taken_between_start).toDate() : undefined,
     dateTakenSpecific: test?.date_taken_specific ? moment(test.date_taken_specific).toDate() : undefined,
-    useApproximateDate: getInitialUseApproximateDate(test),
+    useApproximateDate: test === undefined ? false : !test.date_taken_specific,
   };
 };
 

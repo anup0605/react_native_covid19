@@ -22,7 +22,7 @@ interface IProps {
 
 export default function LoginScreen({ route }: IProps) {
   const [hasErrors, setHasErrors] = React.useState(false);
-  const [isValid, setIsValidState] = React.useState(false);
+  const [isValid, setIsValid] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [pass, setPass] = React.useState('');
   const [user, setUser] = React.useState('');
@@ -68,20 +68,19 @@ export default function LoginScreen({ route }: IProps) {
       });
   }
 
-  function setIsValid(user: string, pass: string) {
-    const isValid = user.length > 0 && pass.length > 0;
-    setIsValidState(isValid);
+  function validateCredentials(checkUsername: string, checkPassword: string) {
+    setIsValid(checkUsername.length > 0 && checkPassword.length > 0);
     setHasErrors(false);
   }
 
   function onChangeUsername(username: string) {
     setUser(username);
-    setIsValid(username, pass);
+    validateCredentials(username, pass);
   }
 
   function onChangePassword(password: string) {
     setPass(password);
-    setIsValid(user, password);
+    validateCredentials(user, password);
   }
 
   return (
