@@ -48,7 +48,10 @@ export function TrendlineCard(props: IProps) {
   return (
     <View style={styles.view}>
       <Text rhythm={8} textClass="h4">
-        {i18n.t('explore-trend-line.active-covid-cases')} {localTrendline?.name}
+        {i18n.t('explore-trend-line.active-covid-cases', { location: localTrendline?.name })}
+      </Text>
+      <Text inverted colorPalette="uiDark" colorShade="dark" textClass="pSmallLight">
+        {i18n.t('explore-trend-line.active-covid-cases-subheader')}
       </Text>
 
       <TouchableOpacity
