@@ -45,7 +45,7 @@
   },
   "reset-password-confirm": {
     "title": "Check your email",
-    "text": "We've sent you a password reset link.",
+    "text": "We've sent you a password reset link. This can take a few minutes, but if you don't receive it, please try again and ensure you've entered the email address you signed up with.",
     "button": "Back"
   },
   "optional-info": {
