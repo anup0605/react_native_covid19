@@ -1,11 +1,10 @@
+import { BackButton } from '@covid/components/BackButton';
 import { BrandedButton } from '@covid/components/buttons';
 import { Screen } from '@covid/components/Screen';
-import ChevronLeft from '@covid/features/reconsent/components/ChevronLeft';
 import { sizes } from '@covid/themes';
-import { useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 
 interface IProps {
   activeDot?: number;
@@ -24,24 +23,11 @@ const dots = Array(AMOUNT_DOTS)
   .fill(null)
   .map((_, i) => i);
 
-const hitSlop = {
-  bottom: 12,
-  left: 12,
-  right: 12,
-  top: 12,
-};
-
 export default function ReconsentScreen(props: IProps) {
-  const navigation = useNavigation();
-
   function renderHeader() {
     return !props.hideBackButton || props.activeDot ? (
       <View style={styles.headerWrapper}>
-        {props.hideBackButton ? null : (
-          <TouchableOpacity hitSlop={hitSlop} onPress={navigation.goBack} testID="button-back-navigation">
-            <ChevronLeft />
-          </TouchableOpacity>
-        )}
+        {props.hideBackButton ? null : <BackButton />}
         {props.activeDot ? (
           <View pointerEvents="none" style={styles.dotsWrapper}>
             {dots.map((_, index) => (
