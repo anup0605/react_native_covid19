@@ -27,7 +27,7 @@ type TProps = {
 
 export default class CreateProfileScreen extends React.Component<TProps> {
   registerSchema = Yup.object().shape({
-    name: Yup.string().required().max(32, i18n.t('profile-name-too-long')),
+    name: Yup.string().required().max(20, i18n.t('profile-name-too-long')),
   });
 
   onSubmit = (values: IFormData) => {
@@ -59,6 +59,7 @@ export default class CreateProfileScreen extends React.Component<TProps> {
                   required
                   formikProps={formikProps}
                   label={i18n.t('create-profile-label')}
+                  maxLength={20}
                   name="name"
                   placeholder={i18n.t('create-profile-placeholder')}
                   style={styling.marginBottomHuge}
