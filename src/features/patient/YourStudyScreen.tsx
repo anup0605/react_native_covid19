@@ -157,7 +157,7 @@ const allCohorts: TCohortDefinition[] = [
   {
     country: 'US',
     key: 'is_in_us_environmental_polymorphisms',
-    label: 'NIEHS Environmental Polymorphisms Study',
+    label: 'NIEHS Personalized Environment and Genes Study', // name changed on frontend on 23 Sep 2021. No change in backend.
   },
   {
     country: 'US',

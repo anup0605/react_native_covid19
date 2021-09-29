@@ -8,14 +8,16 @@ import {
   Image,
   ImageSourcePropType,
   PickerItemProps,
+  StyleProp,
   StyleSheet,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
 
-interface IItem extends PickerItemProps {
+interface IItem extends Omit<PickerItemProps, 'label'> {
   iconSource?: ImageSourcePropType;
+  label: string | JSX.Element;
 }
 
 interface IProps<V = any> {
@@ -29,6 +31,7 @@ interface IProps<V = any> {
   testID?: string;
   IconComponent?: React.ComponentType<any>;
   iconOnPress?: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 const defaultItems: IItem[] = [
@@ -40,7 +43,7 @@ export function RadioInput(props: IProps) {
   const items = props.items?.length ? props.items : defaultItems;
 
   return (
-    <View style={styles.marginVertical} testID={props.testID}>
+    <View style={[styles.marginVertical, props.style]} testID={props.testID}>
       {props.hideLabel || !props.label ? null : (
         <LabelText style={styles.marginBottom}>
           {props.label}

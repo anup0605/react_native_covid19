@@ -78,11 +78,14 @@ export const RegularTextWithBoldInserts = (props: IRegularTextWithBoldInsertsPro
     <Text style={props.style}>
       {textParts
         .filter((text: string) => text)
-        .map((text: string) => {
+        .map((text: string, index: number) => {
+          const key = `bold-text-${index}`;
           const node: React.ReactNode = boldText ? (
-            <Text style={{ fontWeight: '600' }}>{text}</Text>
+            <Text key={key} style={{ fontWeight: '600' }}>
+              {text}
+            </Text>
           ) : (
-            <Text>{text}</Text>
+            <Text key={key}>{text}</Text>
           );
           boldText = !boldText;
           return node;

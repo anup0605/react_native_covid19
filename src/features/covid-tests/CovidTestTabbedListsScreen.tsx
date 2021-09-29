@@ -25,7 +25,7 @@ const Tab = createMaterialTopTabNavigator();
 
 function CovidListByType(props: ICovidListByTypeProps) {
   const renderItem = ({ item, index }: { item: TCovidTest; index: number }) => {
-    return <CovidTestRow item={item} key={item.id} testID={`covid-test-row-${index}`} />;
+    return <CovidTestRow item={item} key={item.id} testID={`covid-test-row-${item.mechanism}-${index}`} />;
   };
 
   return (

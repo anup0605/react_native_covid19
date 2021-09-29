@@ -1,3 +1,4 @@
+import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
 
 const PCR_LATERAL_FLOW_MECHANISMS = [
@@ -39,7 +40,7 @@ export function isZoeInviteOfferTest(mechanism: ECovidTestMechanismOptions) {
 }
 
 export function getTestType(mechanism: ECovidTestMechanismOptions, isRapidTest: boolean | undefined) {
-  if (isRapidTest) {
+  if (isRapidTest !== undefined) {
     if (isPcrTest(mechanism, isRapidTest)) {
       return 'PCR';
     }
@@ -55,4 +56,24 @@ export function getTestType(mechanism: ECovidTestMechanismOptions, isRapidTest: 
     return 'Other';
   }
   return null;
+}
+
+export function showDualAntibodyTestUI(
+  mechanism: ECovidTestMechanismOptions | undefined,
+  invitedToTest: string | undefined,
+) {
+  if (!mechanism || !invitedToTest) {
+    return false;
+  }
+
+  return mechanism === ECovidTestMechanismOptions.BLOOD_FINGER_PRICK && invitedToTest === 'yes';
+}
+
+export function isPostDHSCRevisedVersion(version: string) {
+  // The version that incorporates new DHSC antibody dual testing is v2.1.0
+  return Number(version[0]) >= 2 && Number(version[2]) >= 1;
+}
+
+export function isOldVersionAntibodyInviteTest(test: TCovidTest) {
+  return !!test.antibody_type_check && !isPostDHSCRevisedVersion(test.version);
 }

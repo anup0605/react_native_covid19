@@ -15,6 +15,8 @@ type TProps = {
 };
 
 export const CovidTestRow: React.FC<TProps> = ({ item, testID }) => {
+  const testResult = item.result ? item.result : item.anti_n ? item.anti_n : 'waiting';
+
   const formatTestResult = (result: string) => {
     switch (result) {
       case 'positive':
@@ -54,12 +56,10 @@ export const CovidTestRow: React.FC<TProps> = ({ item, testID }) => {
       style={styles.itemTouchable}
       testID={testID}
     >
-      <Image source={getRowIcon(item.result)} style={styles.tick} />
-      <RegularText style={[item.result === 'waiting' && styles.pendingText]}>{formatTestDate(item)}</RegularText>
+      <Image source={getRowIcon(testResult)} style={styles.tick} />
+      <RegularText style={[testResult === 'waiting' && styles.pendingText]}>{formatTestDate(item)}</RegularText>
       <View style={{ flex: 1 }} />
-      <RegularText style={[item.result === 'waiting' && styles.pendingText]}>
-        {formatTestResult(item.result)}
-      </RegularText>
+      <RegularText style={[testResult === 'waiting' && styles.pendingText]}>{formatTestResult(testResult)}</RegularText>
       <Image source={chevronRight} style={styles.chevron} />
     </TouchableOpacity>
   );

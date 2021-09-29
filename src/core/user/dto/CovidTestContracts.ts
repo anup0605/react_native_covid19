@@ -6,13 +6,17 @@ export type TCovidTest = {
   patient: string;
   type: ECovidTestType;
 
-  result: string;
+  result: string | null;
+  dualAntibodyResult: string;
   mechanism: ECovidTestMechanismOptions;
 
   invited_to_test: boolean;
+  thriva_test_id: string;
   trained_worker: string;
   test_performed_by: string;
-  antibody_type_check: string;
+  antibody_type_check: string | null;
+  anti_n: string | null;
+  anti_s: string | null;
   location: string;
   location_other: string;
   date_taken_specific: string;
