@@ -30,6 +30,7 @@ function CovidListByType(props: ICovidListByTypeProps) {
 
   return (
     <FlatList
+      nestedScrollEnabled
       scrollEnabled
       contentContainerStyle={{ backgroundColor: colors.backgroundPrimary }}
       data={props.covidTests}

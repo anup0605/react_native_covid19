@@ -91,38 +91,47 @@ export default class ProfileBackDateScreen extends React.Component<TProps, TStat
   async componentDidMount() {
     const currentPatient = assessmentCoordinator.assessmentData?.patientData?.patientState;
     this.setState({
-      needAtopyAnswers: currentPatient?.hasAtopyAnswers,
-      needBloodGroupAnswer: currentPatient?.hasBloodGroupAnswer,
-      needBloodPressureAnswer: currentPatient?.hasBloodPressureAnswer,
+      needAtopyAnswers: !currentPatient?.hasAtopyAnswers,
+      needBloodGroupAnswer: !currentPatient?.hasBloodGroupAnswer,
+      needBloodPressureAnswer: !currentPatient?.hasBloodPressureAnswer,
       needDiabetesAnswers: currentPatient?.shouldAskExtendedDiabetes,
       needRaceEthnicityAnswer:
         (this.features?.showRaceQuestion || this.features?.showEthnicityQuestion) &&
-        currentPatient?.hasRaceEthnicityAnswer,
+        !currentPatient?.hasRaceEthnicityAnswer,
     });
   }
 
-  onSubmit = (values: IBackfillData) => {
-    const currentPatient = assessmentCoordinator.assessmentData?.patientData?.patientState;
-    const infos = this.createPatientInfos(values);
+  onSubmit = async (values: IBackfillData) => {
+    try {
+      const currentPatient = assessmentCoordinator.assessmentData?.patientData?.patientState;
+      const infos = this.createPatientInfos(values);
 
-    patientService
-      .updatePatientInfo(currentPatient?.patientId, infos)
-      .then(() => {
-        if (values.race) currentPatient.hasRaceEthnicityAnswer = true;
-        if (values.takesAnyBloodPressureMedications) currentPatient.hasBloodPressureAnswer = true;
-        if (values.hasHayfever) currentPatient.hasAtopyAnswers = true;
-        if (values.hasHayfever === 'yes') currentPatient.hasHayfever = true;
-        if (values.diabetesType) {
-          currentPatient.hasDiabetesAnswers = true;
-          currentPatient.shouldAskExtendedDiabetes = false;
-        }
-        if (values.bloodGroup) currentPatient.hasBloodGroupAnswer = true;
+      await patientService.updatePatientInfo(currentPatient?.patientId, infos);
 
-        assessmentCoordinator.gotoNextScreen(this.props.route.name);
-      })
-      .catch(() => {
-        this.setState({ errorMessage: i18n.t('something-went-wrong') });
-      });
+      if (values.race) {
+        currentPatient.hasRaceEthnicityAnswer = true;
+      }
+      if (values.takesAnyBloodPressureMedications) {
+        currentPatient.hasBloodPressureAnswer = true;
+      }
+      if (values.hasHayfever) {
+        currentPatient.hasAtopyAnswers = true;
+      }
+      if (values.hasHayfever === 'yes') {
+        currentPatient.hasHayfever = true;
+      }
+      if (values.diabetesType) {
+        currentPatient.hasDiabetesAnswers = true;
+        currentPatient.shouldAskExtendedDiabetes = false;
+      }
+      if (values.bloodGroup) {
+        currentPatient.hasBloodGroupAnswer = true;
+      }
+
+      assessmentCoordinator.gotoNextScreen(this.props.route.name);
+    } catch (_) {
+      this.setState({ errorMessage: i18n.t('something-went-wrong') });
+    }
   };
 
   createPatientInfos = (formData: IBackfillData) => {
