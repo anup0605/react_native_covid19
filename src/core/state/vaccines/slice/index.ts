@@ -1,28 +1,12 @@
 import { IVaccineState } from '@covid/core/state/vaccines/types';
 import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
-import { vaccineService } from '@covid/core/vaccine/VaccineService';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialStateVaccine: IVaccineState = {
   vaccines: [],
 };
 
-// TODO: Delete once we fully launch the updated VaccineListScreen component
-export const fetchVaccines = createAsyncThunk<unknown, string>(
-  'vaccines/fetchVaccines',
-  async (patientId: string): Promise<TVaccineRequest[]> => {
-    const response = await vaccineService.listVaccines();
-    const patientVaccines = response.filter((vaccine) => vaccine.patient === patientId);
-    return patientVaccines;
-  },
-);
-
 const vaccinesSlice = createSlice({
-  extraReducers: {
-    [fetchVaccines.fulfilled.type]: (state, action: { payload: TVaccineRequest[] }) => {
-      state.vaccines = action.payload;
-    },
-  },
   initialState: initialStateVaccine,
   name: 'Vaccine',
   reducers: {

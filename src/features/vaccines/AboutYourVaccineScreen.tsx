@@ -22,14 +22,14 @@ import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as Yup from 'yup';
 
 type TProps = {
-  route: RouteProp<TScreenParamList, 'AboutYourVaccineUpdated'>;
+  route: RouteProp<TScreenParamList, 'AboutYourVaccine'>;
 };
 
-const registerSchema = Yup.object().shape({}).concat(VaccineDoseQuestion.schemaUpdated());
+const registerSchema = Yup.object().shape({}).concat(VaccineDoseQuestion.schema());
 
 interface IAboutYourVaccineData extends IVaccineDoseData {}
 
-export function AboutYourVaccineScreenUpdated({ route }: TProps) {
+export function AboutYourVaccineScreen({ route }: TProps) {
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const navigation = useNavigation();
 
@@ -81,19 +81,19 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
   };
 
   const returnToListView = () =>
-    NavigatorService.navigate('VaccineListFeatureToggle', {
+    NavigatorService.navigate('VaccineList', {
       assessmentData,
     });
 
   function promptDelete() {
     // Note that the "delete" is actually an UPDATE on the Vaccine Dose collection, and takes the entire vaccine obj as payload
-    const vaccineWithoutDeletedDose: Partial<TDose> = {
+    const vaccineWithoutDeletedDose = {
       ...assessmentData.vaccineData,
-      doses: assessmentData.vaccineData?.doses.filter((dose: TDose, index: number) => index !== doseIndexBeingEdited),
+      doses: assessmentData.vaccineData?.doses.filter((_, index: number) => index !== doseIndexBeingEdited),
     };
     Alert.alert(
-      i18n.t('vaccines.vaccine-list-updated.delete-vaccine-title'),
-      i18n.t('vaccines.vaccine-list-updated.delete-vaccine-text'),
+      i18n.t('vaccines.vaccine-list.delete-vaccine-title'),
+      i18n.t('vaccines.vaccine-list.delete-vaccine-text'),
       [
         {
           style: 'cancel',
@@ -159,9 +159,8 @@ export function AboutYourVaccineScreenUpdated({ route }: TProps) {
           return (
             <Form hasRequiredFields style={styles.flex}>
               <VaccineDoseQuestion
-                showUpdatedVersion
                 formikProps={props as FormikProps<IVaccineDoseData>}
-                testID="vaccine-first-dose-question"
+                testID="vaccine-dose-question"
               />
 
               <View style={styles.footerWrapper}>

@@ -19,17 +19,7 @@ export default function MainNavigator() {
     <Stack.Navigator>
       <Stack.Screen component={screens.SplashScreen} name="Splash" options={options} />
       <Stack.Screen component={screens.AboutYouScreen} name="AboutYou" options={options} />
-      <Stack.Screen
-        component={screens.AboutYourVaccineFeatureToggleScreen}
-        name="AboutYourVaccineFeatureToggle"
-        options={options}
-      />
-      <Stack.Screen
-        component={screens.AboutYourVaccineScreenUpdated}
-        name="AboutYourVaccineUpdated"
-        options={options}
-      />
-      <Stack.Screen component={screens.AboutYourVaccineScreenOld} name="AboutYourVaccineOld" options={options} />
+      <Stack.Screen component={screens.AboutYourVaccineScreen} name="AboutYourVaccine" options={options} />
       <Stack.Screen component={screens.AdultOrChildScreen} name="AdultOrChild" options={options} />
       <Stack.Screen component={screens.ArchiveReasonScreen} name="ArchiveReason" options={options} />
       <Stack.Screen component={screens.BeforeWeStartUSScreen} name="BeforeWeStartUS" options={options} />
@@ -88,13 +78,7 @@ export default function MainNavigator() {
       <Stack.Screen component={screens.TreatmentSelectionScreen} name="TreatmentSelection" options={options} />
       <Stack.Screen component={screens.TrendlineScreen} name="Trendline" options={options} />
       <Stack.Screen component={screens.VaccineDoseSymptomsScreen} name="VaccineDoseSymptoms" options={options} />
-      <Stack.Screen
-        component={screens.VaccineListFeatureToggleScreen}
-        name="VaccineListFeatureToggle"
-        options={options}
-      />
-      <Stack.Screen component={screens.VaccineListScreenUpdated} name="VaccineListUpdated" options={options} />
-      <Stack.Screen component={screens.VaccineListScreenOld} name="VaccineListOld" options={options} />
+      <Stack.Screen component={screens.VaccineListScreen} name="VaccineList" options={options} />
 
       <Stack.Screen component={screens.VaccineFindInfoScreen} name="VaccineFindInfo" options={options} />
       <Stack.Screen component={screens.VaccineLogSymptomsInfoScreen} name="VaccineLogSymptomsInfo" options={options} />

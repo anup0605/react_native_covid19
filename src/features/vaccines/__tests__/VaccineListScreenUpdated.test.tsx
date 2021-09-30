@@ -3,7 +3,7 @@
 import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineApiClient } from '@covid/core/vaccine/VaccineApiClient';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
-import { VaccineListScreenUpdated } from '@covid/features';
+import { VaccineListScreen } from '@covid/features';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import * as React from 'react';
@@ -55,17 +55,17 @@ const DUMMY_VACCINE_WITH_TWO_DOSES: TVaccineRequest = {
 };
 
 describe('CovidTestListScreen tests', () => {
-  it('renders VaccineListScreenUpdated', async () => {
-    const elementBase = <MockedNavigator Component={VaccineListScreenUpdated} />;
+  it('renders VaccineListScreen', async () => {
+    const elementBase = <MockedNavigator Component={VaccineListScreen} />;
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
     const element = <ThemeProvider theme={theme}>{elementWithRedux}</ThemeProvider>;
     const instance = renderer.create(element).root;
-    expect(instance.findByType(VaccineListScreenUpdated)).toBeTruthy();
+    expect(instance.findByType(VaccineListScreen)).toBeTruthy();
   });
 
   it('renders 2 doses when 2 doses exist', async () => {
     jest.spyOn(vaccineApiClient, 'listVaccines').mockReturnValue(Promise.resolve([DUMMY_VACCINE_WITH_TWO_DOSES]));
-    const elementBase = <MockedNavigator Component={VaccineListScreenUpdated} initialParams={ROUTE_PARAM_PATIENT_ID} />;
+    const elementBase = <MockedNavigator Component={VaccineListScreen} initialParams={ROUTE_PARAM_PATIENT_ID} />;
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
     const element = <ThemeProvider theme={theme}>{elementWithRedux}</ThemeProvider>;
     const instance = renderer.create(element).root;
@@ -77,7 +77,7 @@ describe('CovidTestListScreen tests', () => {
 
   it('renders 0 doses when 0 doses exist', async () => {
     jest.spyOn(vaccineService, 'listVaccines').mockReturnValue(Promise.resolve([]));
-    const elementBase = <MockedNavigator Component={VaccineListScreenUpdated} />;
+    const elementBase = <MockedNavigator Component={VaccineListScreen} />;
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
     const element = <ThemeProvider theme={theme}>{elementWithRedux}</ThemeProvider>;
     const instance = renderer.create(element).root;
