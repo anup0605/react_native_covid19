@@ -4,7 +4,7 @@ export type TVaccineRequest = {
   id: string;
   version: string; // document/schema version
   patient: string; //	Patient id
-  doses: Partial<TDose>[];
+  doses: TDose[];
 
   // These are deprecated fields; this data now lives on the Dose itself
   description?: string; // eg 'mRNA'
@@ -52,7 +52,7 @@ export type TDoseSymptomsRequest = {
 };
 
 export enum EVaccineTypes {
-  COVID_TRIAL = 'covid_trial',
+  COVID_TRIAL = 'covid_trial', // TODO: Is this in use?
   COVID_VACCINE = 'covid_vaccine',
   SEASONAL_FLU = 'flu_seasonal',
 }

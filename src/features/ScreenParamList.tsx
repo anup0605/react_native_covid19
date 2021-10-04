@@ -4,7 +4,7 @@ import { TPatientData } from '@covid/core/patient/PatientData';
 import { ISchoolModel, ISubscribedSchoolStats } from '@covid/core/schools/Schools.dto';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
-import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { EVaccineTypes, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 
 export enum EConsentType {
   Adult = 'adult',
@@ -81,7 +81,7 @@ export type TScreenParamList = {
   AboutYourVaccine: { assessmentData: TAssessmentData; editIndex?: number };
   VaccineDoseSymptoms: { assessmentData: TAssessmentData; dose: string };
   VaccineFindInfo: { assessmentData: TAssessmentData };
-  VaccineList: { assessmentData: TAssessmentData };
+  VaccineList: { assessmentData: TAssessmentData; vaccineType?: EVaccineTypes };
   VaccineLogSymptomsInfo: { assessmentData: TAssessmentData };
 
   // Completion screens

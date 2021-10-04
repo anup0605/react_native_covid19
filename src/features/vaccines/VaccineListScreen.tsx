@@ -1,11 +1,19 @@
 import InfoCircle from '@assets/icons/InfoCircle';
-import { BrandedButton, HeaderText, LightText, Modal, RegularTextWithBoldInserts, Text } from '@covid/components';
+import {
+  BrandedButton,
+  ErrorText,
+  HeaderText,
+  LightText,
+  Modal,
+  RegularTextWithBoldInserts,
+  Text,
+} from '@covid/components';
 import { Loading } from '@covid/components/Loading';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
 import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
-import { TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
@@ -15,45 +23,66 @@ import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 
-import { VaccineDoseRow } from './components/VaccineDoseRow';
+import VaccineTabbedListsScreen from './VaccineTabbedListsScreen';
 
 type TProps = {
   route: RouteProp<TScreenParamList, 'VaccineList'>;
 };
 
+const SINGLE_DOSE_ROW_HEIGHT = 48;
+const HEIGHT_OF_STATIC_CONTENT = 500;
+
 export const VaccineListScreen: React.FC<TProps> = (props) => {
   const [vaccine, setVaccine] = React.useState<TVaccineRequest | undefined>();
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string>();
+
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+
+  const windowDimensions = useWindowDimensions();
+  const minTabViewHeight = SINGLE_DOSE_ROW_HEIGHT * 5;
+  const tabViewHeight = windowDimensions.height - HEIGHT_OF_STATIC_CONTENT;
 
   const patientId = props.route.params?.assessmentData?.patientData?.patientId;
 
-  const refreshVaccineList = async () => {
-    setLoading(true);
+  const showTab = props.route.params?.vaccineType ? props.route.params?.vaccineType : 'COVID';
 
-    try {
-      const response = await vaccineService.listVaccines();
-      const patientVaccines = response.filter((patientVaccine) => patientVaccine.patient === patientId);
-      // Set the "patientVaccine" to be the first item returned, in order to maintain backwards compatibility with older versions that may have multiple
-      const patientVaccine: TVaccineRequest | undefined = patientVaccines.length ? patientVaccines[0] : undefined;
-      // Also, reverse doses - they are sorted by date old-new for the old system, but new UI wants the reverse
-      if (patientVaccine && patientVaccine.doses) {
-        patientVaccine.doses = patientVaccine?.doses.reverse();
-      }
-
-      setVaccine(patientVaccine);
-    } catch (_) {
-    } finally {
-      setLoading(false);
-    }
-  };
+  let isActive = false;
 
   useFocusEffect(
     React.useCallback(() => {
-      refreshVaccineList();
-    }, []),
+      isActive = true;
+
+      const fetchVaccineList = async () => {
+        setLoading(true);
+        try {
+          const response = await vaccineService.listVaccines();
+          const patientVaccines = response.filter((patientVaccine) => patientVaccine.patient === patientId);
+          // Set the "patientVaccine" to be the first item returned, in order to maintain backwards compatibility with older versions that may have multiple
+          const patientVaccine: TVaccineRequest | undefined = patientVaccines.length ? patientVaccines[0] : undefined;
+          // Also, reverse doses - they are sorted by date old-new for the old system, but new UI wants the reverse
+          if (patientVaccine && patientVaccine.doses) {
+            patientVaccine.doses = patientVaccine?.doses.reverse();
+          }
+
+          if (isActive) {
+            setVaccine(patientVaccine);
+            setLoading(false);
+          }
+        } catch (_) {
+          setError(i18n.t('something-went-wrong'));
+          setLoading(false);
+        }
+      };
+
+      fetchVaccineList();
+      return () => {
+        isActive = false;
+        console.log('cleaned up');
+      };
+    }, [props.route.params, patientId]),
   );
 
   const navigateToNextPage = async () => {
@@ -93,9 +122,6 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
   };
 
   const ListContent = () => {
-    if (loading) {
-      return <Loading error={null} status="" />;
-    }
     return (
       <View>
         <BrandedButton
@@ -106,20 +132,25 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
           <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list.add-button')}</Text>
         </BrandedButton>
 
-        {vaccine
-          ? vaccine.doses.map((dose, index) => {
-              return (
-                <VaccineDoseRow
-                  dose={dose as TDose}
-                  index={index}
-                  key={dose.id}
-                  style={index === 0 ? { paddingTop: sizes.s } : { paddingTop: sizes.l }}
-                  testID={`vaccine-dose-row-${index}`}
-                  vaccineRecord={vaccine}
-                />
-              );
-            })
-          : null}
+        {vaccine ? (
+          <Text style={styles.tabTitle} textAlign="center" textClass="h4Medium">
+            {i18n.t('vaccines.vaccine-list.tabs-title')}
+          </Text>
+        ) : null}
+
+        {loading ? (
+          <Loading error={null} status="" />
+        ) : vaccine ? (
+          <VaccineTabbedListsScreen
+            minTabViewHeight={minTabViewHeight}
+            showTab={showTab}
+            tabViewHeight={tabViewHeight}
+            vaccineDoses={vaccine.doses}
+            vaccineRecord={vaccine}
+          />
+        ) : null}
+
+        {error ? <ErrorText style={{ textAlign: 'center' }}>{error}</ErrorText> : null}
       </View>
     );
   };
@@ -223,6 +254,9 @@ const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: colors.backgroundPrimary,
     flex: 1,
+  },
+  tabTitle: {
+    color: colors.secondary,
   },
   wrapper: {
     padding: sizes.l,

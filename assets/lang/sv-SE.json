@@ -1024,7 +1024,10 @@
       "no-vaccine": "Jag har inte vaccinerats",
       "no-2nd": "Jag har inte fått en andra dos",
       "delete-vaccine-title": "Ta bort vaccin",
-      "delete-vaccine-text": "All information om detta vaccin kommer att tas bort."
+      "delete-vaccine-text": "All information om detta vaccin kommer att tas bort.",
+      "tabs-title": "Vaccine Type",
+      "tab-covid": "COVID",
+      "tab-flu": "Flu"
     },
     "your-vaccine": {
       "title": "Berätta om din vaccination",
