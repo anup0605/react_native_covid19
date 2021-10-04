@@ -5,7 +5,7 @@ import { TConsent } from '@covid/core/user/dto/UserAPIContracts';
 type TConsentDocument = 'US' | 'UK' | 'SE' | '' | 'US Nurses' | 'Health Study Consent';
 
 interface IConsentService {
-  postConsent(document: TConsentDocument, version: string, privacy_policy_version: string): void; // TODO: define return object
+  postConsent(document: TConsentDocument, version: string, privacy_policy_version: string): void;
   getConsentSigned(): Promise<TConsent | null>;
   setConsentSigned(document: TConsentDocument, version: string, privacy_policy_version: string): void;
 }

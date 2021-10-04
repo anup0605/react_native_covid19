@@ -9,7 +9,6 @@ export { default as Fab } from './fab';
 export * from './icons';
 export * from './inputs';
 export * from './lists';
-export * from './messaging';
 export * from './profiles';
 export * from './questions';
 export * from './screens';

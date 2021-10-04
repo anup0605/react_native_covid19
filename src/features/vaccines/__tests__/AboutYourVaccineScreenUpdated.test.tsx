@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
-import { AboutYourVaccineScreenUpdated } from '@covid/features';
+import { AboutYourVaccineScreen } from '@covid/features';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import * as React from 'react';
@@ -23,19 +23,19 @@ const ROUTE_PARAM_EDIT_INDEX: Object = { editIndex: 1 };
 const DUMMY_PATIENT_ID_CURRENT = 'current_paitent_abc123';
 const ROUTE_PARAM_PATIENT_ID: Object = { assessmentData: { patientData: { patientId: DUMMY_PATIENT_ID_CURRENT } } };
 
-describe('AboutYourVaccineScreenUpdated tests', () => {
-  it('renders AboutYourVaccineScreenUpdated', async () => {
-    const elementBase = <MockedNavigator Component={AboutYourVaccineScreenUpdated} />;
+describe('AboutYourVaccineScreen tests', () => {
+  it('renders AboutYourVaccineScreen', async () => {
+    const elementBase = <MockedNavigator Component={AboutYourVaccineScreen} />;
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
     const element = <ThemeProvider theme={theme}>{elementWithRedux}</ThemeProvider>;
     const instance = renderer.create(element).root;
-    expect(instance.findByType(AboutYourVaccineScreenUpdated)).toBeTruthy();
+    expect(instance.findByType(AboutYourVaccineScreen)).toBeTruthy();
   });
 
   it('shows add mode if edit index not passed', async () => {
     jest.spyOn(vaccineService, 'listVaccines').mockReturnValue(Promise.resolve([]));
     const elementBase = (
-      <MockedNavigator Component={AboutYourVaccineScreenUpdated} initialParams={{ ...ROUTE_PARAM_PATIENT_ID }} />
+      <MockedNavigator Component={AboutYourVaccineScreen} initialParams={{ ...ROUTE_PARAM_PATIENT_ID }} />
     );
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
     const element = <ThemeProvider theme={theme}>{elementWithRedux}</ThemeProvider>;
@@ -52,7 +52,7 @@ describe('AboutYourVaccineScreenUpdated tests', () => {
     jest.spyOn(vaccineService, 'listVaccines').mockReturnValue(Promise.resolve([]));
     const elementBase = (
       <MockedNavigator
-        Component={AboutYourVaccineScreenUpdated}
+        Component={AboutYourVaccineScreen}
         initialParams={{ ...ROUTE_PARAM_EDIT_INDEX, ...ROUTE_PARAM_PATIENT_ID }}
       />
     );

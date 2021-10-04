@@ -78,15 +78,10 @@ export type TScreenParamList = {
   Pingdemic: { assessmentData: TAssessmentData };
 
   // Vaccines
-  AboutYourVaccineFeatureToggle: { assessmentData: TAssessmentData; editIndex?: number };
-  AboutYourVaccineOld: { assessmentData: TAssessmentData; editIndex?: number };
-  AboutYourVaccineUpdated: { assessmentData: TAssessmentData; editIndex?: number };
+  AboutYourVaccine: { assessmentData: TAssessmentData; editIndex?: number };
   VaccineDoseSymptoms: { assessmentData: TAssessmentData; dose: string };
   VaccineFindInfo: { assessmentData: TAssessmentData };
-  VaccineListFeatureToggle: { assessmentData: TAssessmentData };
   VaccineList: { assessmentData: TAssessmentData };
-  VaccineListOld: { assessmentData: TAssessmentData };
-  VaccineListUpdated: { assessmentData: TAssessmentData };
   VaccineLogSymptomsInfo: { assessmentData: TAssessmentData };
 
   // Completion screens
@@ -146,7 +141,7 @@ export type TScreenParamList = {
   Modal: undefined;
   Main: undefined;
   Share: { sharable: TSharable | undefined; hideLabel: boolean; label: string };
-  VaccineListMissingModal: { vaccine: TVaccineRequest };
+  VaccineListMissingModal: { vaccine: TVaccineRequest | undefined };
   VersionUpdateModal: undefined;
 
   Trendline: { lad?: string };

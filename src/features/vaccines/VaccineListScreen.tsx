@@ -20,10 +20,10 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { VaccineDoseRow } from './components/VaccineDoseRow';
 
 type TProps = {
-  route: RouteProp<TScreenParamList, 'VaccineListUpdated'>;
+  route: RouteProp<TScreenParamList, 'VaccineList'>;
 };
 
-export const VaccineListScreenUpdated: React.FC<TProps> = (props) => {
+export const VaccineListScreen: React.FC<TProps> = (props) => {
   const [vaccine, setVaccine] = React.useState<TVaccineRequest | undefined>();
   const [loading, setLoading] = React.useState<boolean>(true);
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
@@ -103,14 +103,14 @@ export const VaccineListScreenUpdated: React.FC<TProps> = (props) => {
           style={styles.newButton}
           testID="button-add-vaccine"
         >
-          <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list-updated.add-button')}</Text>
+          <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list.add-button')}</Text>
         </BrandedButton>
 
         {vaccine
-          ? vaccine.doses.map((dose: TDose, index: number) => {
+          ? vaccine.doses.map((dose, index) => {
               return (
                 <VaccineDoseRow
-                  dose={dose}
+                  dose={dose as TDose}
                   index={index}
                   key={dose.id}
                   style={index === 0 ? { paddingTop: sizes.s } : { paddingTop: sizes.l }}
@@ -145,20 +145,20 @@ export const VaccineListScreenUpdated: React.FC<TProps> = (props) => {
       >
         <Text style={{ color: colors.white }}>
           {!vaccine?.doses.length
-            ? i18n.t('vaccines.vaccine-list-updated.no-vaccine')
-            : i18n.t('vaccines.vaccine-list-updated.correct-info')}
+            ? i18n.t('vaccines.vaccine-list.no-vaccine')
+            : i18n.t('vaccines.vaccine-list.correct-info')}
         </Text>
       </BrandedButton>
     </View>
   );
 
   const renderMoreInfoModal = () => (
-    <Modal onRequestClose={() => setModalVisible(false)} testID="vaccine-list-updated-modal" visible={modalVisible}>
+    <Modal onRequestClose={() => setModalVisible(false)} testID="vaccine-list-modal" visible={modalVisible}>
       <View style={styles.modalWrapper}>
-        <HeaderText style={styles.modalTitle}>{i18n.t('vaccines.vaccine-list-updated.modal-title')}</HeaderText>
-        <LightText style={styles.modalBody}>{i18n.t('vaccines.vaccine-list-updated.modal-body')}</LightText>
+        <HeaderText style={styles.modalTitle}>{i18n.t('vaccines.vaccine-list.modal-title')}</HeaderText>
+        <LightText style={styles.modalBody}>{i18n.t('vaccines.vaccine-list.modal-body')}</LightText>
         <BrandedButton onPress={() => setModalVisible(false)}>
-          {i18n.t('vaccines.vaccine-list-updated.modal-button')}
+          {i18n.t('vaccines.vaccine-list.modal-button')}
         </BrandedButton>
       </View>
     </Modal>
@@ -172,11 +172,11 @@ export const VaccineListScreenUpdated: React.FC<TProps> = (props) => {
     >
       {renderMoreInfoModal()}
       <View>
-        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list-updated.title')} />
+        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list.title')} />
       </View>
       <View style={styles.introduction} testID="vaccine-list-introduction">
         <Text>
-          <RegularTextWithBoldInserts text={i18n.t('vaccines.vaccine-list-updated.description')} />
+          <RegularTextWithBoldInserts text={i18n.t('vaccines.vaccine-list.description')} />
           {isSECountry() ? null : (
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <View style={styles.paddingLeft}>

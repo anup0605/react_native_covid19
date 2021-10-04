@@ -15,7 +15,15 @@ type TProps = {
 };
 
 export const CovidTestRow: React.FC<TProps> = ({ item, testID }) => {
-  const testResult = item.result ? item.result : item.anti_n ? item.anti_n : 'waiting';
+  const testResult = React.useMemo(() => {
+    if (item.result) {
+      return item.result;
+    }
+    if (item.anti_n) {
+      return item.anti_n === 'positive' || item.anti_s === 'positive' ? 'positive' : item.anti_n;
+    }
+    return 'waiting';
+  }, [item.result, item.anti_n, item.anti_s]);
 
   const formatTestResult = (result: string) => {
     switch (result) {
