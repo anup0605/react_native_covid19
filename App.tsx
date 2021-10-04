@@ -1,7 +1,5 @@
 import 'reflect-metadata';
 
-import { MessageProvider } from '@covid/common';
-import { MessagingContainer } from '@covid/components';
 import { ErrorBoundary } from '@covid/core/ErrorBoundary';
 import store, { persistor } from '@covid/core/state/store';
 import CovidApp from '@covid/CovidApp';
@@ -40,18 +38,13 @@ export default function App() {
   const Root = ENABLE_STORYBOOK ? StorybookUIRoot : CovidApp;
   return (
     <ErrorBoundary>
-      <MessageProvider>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <ThemeProvider theme={theme}>
-              <SafeAreaProvider>
-                <MessagingContainer />
-                {loaded ? <Root /> : null}
-              </SafeAreaProvider>
-            </ThemeProvider>
-          </PersistGate>
-        </Provider>
-      </MessageProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider theme={theme}>
+            <SafeAreaProvider>{loaded ? <Root /> : null}</SafeAreaProvider>
+          </ThemeProvider>
+        </PersistGate>
+      </Provider>
     </ErrorBoundary>
   );
 }
