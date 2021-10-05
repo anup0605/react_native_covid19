@@ -45,47 +45,54 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
   const minTabViewHeight = SINGLE_DOSE_ROW_HEIGHT * 5;
   const tabViewHeight = windowDimensions.height - HEIGHT_OF_STATIC_CONTENT;
 
-  const patientId = props.route.params?.assessmentData?.patientData?.patientId;
+  const patientId = React.useMemo(
+    () => props.route.params?.assessmentData?.patientData?.patientId,
+    [props.route.params],
+  );
 
   const showTab = props.route.params?.vaccineType ? props.route.params?.vaccineType : 'COVID';
 
   let isActive = false;
 
+  const fetchVaccineList = async () => {
+    isActive = true;
+    setLoading(true);
+    try {
+      const response = await vaccineService.listVaccines();
+      const patientVaccines = response.filter((patientVaccine) => patientVaccine.patient === patientId);
+      // Set the "patientVaccine" to be the first item returned, in order to maintain backwards compatibility with older versions that may have multiple
+      const patientVaccine: TVaccineRequest | undefined = patientVaccines.length ? patientVaccines[0] : undefined;
+      // Also, reverse doses - they are sorted by date old-new for the old system, but new UI wants the reverse
+      if (patientVaccine && patientVaccine.doses) {
+        patientVaccine.doses = patientVaccine?.doses.reverse();
+      }
+
+      console.log('API called once only', patientVaccine?.doses);
+
+      if (isActive) {
+        console.log('in active branch');
+        setVaccine(patientVaccine);
+        setLoading(false);
+      }
+    } catch (_) {
+      setError(i18n.t('something-went-wrong'));
+      setLoading(false);
+    }
+  };
+
   useFocusEffect(
     React.useCallback(() => {
-      isActive = true;
-
-      const fetchVaccineList = async () => {
-        setLoading(true);
-        try {
-          const response = await vaccineService.listVaccines();
-          const patientVaccines = response.filter((patientVaccine) => patientVaccine.patient === patientId);
-          // Set the "patientVaccine" to be the first item returned, in order to maintain backwards compatibility with older versions that may have multiple
-          const patientVaccine: TVaccineRequest | undefined = patientVaccines.length ? patientVaccines[0] : undefined;
-          // Also, reverse doses - they are sorted by date old-new for the old system, but new UI wants the reverse
-          if (patientVaccine && patientVaccine.doses) {
-            patientVaccine.doses = patientVaccine?.doses.reverse();
-          }
-
-          if (isActive) {
-            setVaccine(patientVaccine);
-            setLoading(false);
-          }
-        } catch (_) {
-          setError(i18n.t('something-went-wrong'));
-          setLoading(false);
-        }
-      };
-
       fetchVaccineList();
+
       return () => {
         isActive = false;
-        console.log('cleaned up');
+        console.log('clean');
       };
-    }, [props.route.params, patientId]),
+    }, []),
   );
 
   const navigateToNextPage = async () => {
+    console.log('navigateToNextPage');
     if (vaccine) {
       let doseId = null;
 
@@ -112,6 +119,7 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
   };
 
   const enableNext = () => {
+    console.log('enableNext');
     const doses = vaccine?.doses;
     // Disable button if user has dose(s) with missing date, brand & description
     if (doses && doses.some((dose) => dose.date_taken_specific == null || dose.brand === null)) {
@@ -121,7 +129,8 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
     return true;
   };
 
-  const ListContent = () => {
+  const ListContent = React.memo(() => {
+    console.log('ListContent');
     return (
       <View>
         <BrandedButton
@@ -131,7 +140,6 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
         >
           <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list.add-button')}</Text>
         </BrandedButton>
-
         {vaccine ? (
           <Text style={styles.tabTitle} textAlign="center" textClass="h4Medium">
             {i18n.t('vaccines.vaccine-list.tabs-title')}
@@ -148,12 +156,13 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
             vaccineDoses={vaccine.doses}
             vaccineRecord={vaccine}
           />
-        ) : null}
+        ) : // <VaccineDoseListByType vaccineDoses={vaccine.doses} vaccineRecord={vaccine} />
+        null}
 
         {error ? <ErrorText style={{ textAlign: 'center' }}>{error}</ErrorText> : null}
       </View>
     );
-  };
+  });
 
   const showPopup = () => {
     NavigatorService.navigate('VaccineListMissingModal', { vaccine });
@@ -217,6 +226,7 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
           )}
         </Text>
       </View>
+
       <ListContent />
     </Screen>
   );
