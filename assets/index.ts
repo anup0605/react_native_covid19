@@ -113,4 +113,4 @@ export * from './avatars';
 export * from './cards';
 
 // Covid Tests
-export const thrNumberInstructions = require('./covid-tests/thr-number-instructions.png');
+export const thrNumberInstructions = require('./covid-tests/thr-number-instructions-updated.png');
