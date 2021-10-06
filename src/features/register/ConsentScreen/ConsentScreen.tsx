@@ -31,11 +31,6 @@ export default React.memo((props: TProps) => {
     }
     if (isGBCountry()) {
       await consentService.setConsentSigned('UK', appConfig.consentVersionUK, appConfig.privacyPolicyVersionUK);
-      await consentService.postConsent(
-        'Health Study Consent',
-        appConfig.healthStudyConsentVersionUK,
-        appConfig.privacyPolicyVersionUK,
-      );
     }
     if (isSECountry()) {
       await consentService.setConsentSigned('SE', appConfig.consentVersionSE, appConfig.privacyPolicyVersionSE);
