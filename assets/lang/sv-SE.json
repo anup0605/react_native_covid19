@@ -1014,8 +1014,8 @@
       "link": "Var hittar jag dessa uppgifter?"
     },
     "vaccine-list": {
-      "title": "Dina covid-19-vacciner",
-      "description": "Berätta om du har fått minst en covid-19-vaccindos, inklusive eventuella boosterdoser.",
+      "title": "Dina vaccin",
+      "description": "Berätta om du har vaccinerats mot årets säsongsinfluensa eller covid-19. Du kan nu även registrera eventuella boosterdoser av covid-19-vaccin.",
       "modal-title": "Logging your vaccines",
       "modal-body": "We can now record COVID-19 vaccines taken as part of a trial. Please select \"I received my vaccine via a vaccine trial\" when asked for the name of your vaccine.",
       "modal-button": "OK",
@@ -1024,12 +1024,24 @@
       "no-vaccine": "Jag har inte vaccinerats",
       "no-2nd": "Jag har inte fått en andra dos",
       "delete-vaccine-title": "Ta bort vaccin",
-      "delete-vaccine-text": "All information om detta vaccin kommer att tas bort."
+      "delete-vaccine-text": "All information om detta vaccin kommer att tas bort.",
+      "tabs-title": "Typ av vaccin",
+      "tab-covid": "Covid-19",
+      "tab-flu": "Influensa",
+      "flu-dose-row-name": "Influensavaccin"
     },
     "your-vaccine": {
       "title": "Berätta om din vaccination",
       "add-dose": "Lägg till dos",
       "edit-dose": "Redigera dos",
+      "vaccine-type": "Vill du registrera en dos covid-19-vaccin eller influensavaccin?",
+      "vaccine-type-description": "Om du fick influensavaccin och covid-19-vaccin samtidigt ska du logga dem som två separata doser.",
+      "vaccine-type-covid": "Covid-19",
+      "vaccine-type-flu": "Influensa",
+      "flu-mechanism": false,
+      "flu-mechanism-arm-injection": false,
+      "flu-mechanism-nasal-spray": false,
+      "flu-mechanism-dont-know": false,
       "when-injection": "När blev du vaccinerad?",
       "when-vaccine": "När blev du vaccinerad?",
       "when-vaccine-trial": "When was your vaccine trial test?",

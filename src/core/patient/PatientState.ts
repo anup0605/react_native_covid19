@@ -21,6 +21,7 @@ export type TPatientStateType = {
   hasBloodGroupAnswer: boolean;
   hasSchoolGroup: boolean;
   isMinor: boolean;
+  isChild: boolean;
   shouldShowVaccineList: boolean;
 };
 
@@ -34,6 +35,7 @@ const initPatientState: TPatientStateType = {
   hasHayfever: false,
   hasRaceEthnicityAnswer: true,
   hasSchoolGroup: false,
+  isChild: false,
   isFemale: false,
   isHealthWorker: false,
   isMinor: false,
@@ -63,4 +65,8 @@ export const getInitialPatientState = (patientId: string): TPatientStateType => 
 export const isMinorAge = (yearOfBirth: number): boolean => {
   const age = new Date().getFullYear() - yearOfBirth;
   return age >= 0 && age < 20;
+};
+
+export const isChildAge = (yearOfBirth: number): boolean => {
+  return yearOfBirth >= new Date().getFullYear() - 18;
 };

@@ -19,9 +19,11 @@ const middlewares = getDefaultMiddleware();
 const mockStore = createMockStore(middlewares);
 const store = mockStore(initialState);
 
-const ROUTE_PARAM_EDIT_INDEX: Object = { editIndex: 1 };
+const ROUTE_PARAM_EDIT_DOSE_ID: Object = { editDoseId: 'abc' };
 const DUMMY_PATIENT_ID_CURRENT = 'current_paitent_abc123';
-const ROUTE_PARAM_PATIENT_ID: Object = { assessmentData: { patientData: { patientId: DUMMY_PATIENT_ID_CURRENT } } };
+const ROUTE_PARAM_PATIENT_ID: Object = {
+  assessmentData: { patientData: { patientId: DUMMY_PATIENT_ID_CURRENT, patientState: { isChild: false } } },
+};
 
 describe('AboutYourVaccineScreen tests', () => {
   it('renders AboutYourVaccineScreen', async () => {
@@ -53,7 +55,7 @@ describe('AboutYourVaccineScreen tests', () => {
     const elementBase = (
       <MockedNavigator
         Component={AboutYourVaccineScreen}
-        initialParams={{ ...ROUTE_PARAM_EDIT_INDEX, ...ROUTE_PARAM_PATIENT_ID }}
+        initialParams={{ ...ROUTE_PARAM_EDIT_DOSE_ID, ...ROUTE_PARAM_PATIENT_ID }}
       />
     );
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
