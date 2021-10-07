@@ -27,6 +27,12 @@ type TProps = {
 
 interface IAboutYourVaccineData extends IVaccineDoseData {}
 
+const assignDoseSequence = (doses: TDose[]) => {
+  doses
+    .sort((a, b) => Date.parse(a.date_taken_specific) - Date.parse(b.date_taken_specific))
+    .map((dose, index) => (dose.sequence = index + 1));
+};
+
 export function AboutYourVaccineScreen({ route }: TProps) {
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   const navigation = useNavigation();
@@ -65,10 +71,14 @@ export function AboutYourVaccineScreen({ route }: TProps) {
     return null;
   };
 
-  const assignDoseSequence = (doses: TDose[]) => {
-    doses
-      .sort((a, b) => Date.parse(a.date_taken_specific) - Date.parse(b.date_taken_specific))
-      .map((dose, index) => (dose.sequence = index + 1));
+  const setBatch = (formValues: IAboutYourVaccineData) => {
+    if (formValues.vaccineType === EVaccineTypes.SEASONAL_FLU) {
+      return null;
+    }
+    if (formValues.vaccineType === EVaccineTypes.COVID_VACCINE) {
+      return formValues.batchNumber;
+    }
+    return null;
   };
 
   const onSubmit = async (values: IAboutYourVaccineData) => {
@@ -90,7 +100,7 @@ export function AboutYourVaccineScreen({ route }: TProps) {
 
       const latestDose: Partial<TDose> = {
         ...doseBeingEdited,
-        batch_number: values.batchNumber,
+        batch_number: setBatch(values),
         brand: setBrand(values),
         date_taken_specific: formatDateToPost(values.doseDate),
         mechanism: setMechanism(values),

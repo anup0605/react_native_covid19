@@ -33,7 +33,7 @@ export type TDose = {
   date_taken_specific: string;
   brand: EVaccineBrands | null;
   description: string; // eg 'mRNA'
-  batch_number: string;
+  batch_number: string | null;
   placebo?: EPlaceboStatus;
   mechanism?: EVaccineMechanisms | null;
 };
