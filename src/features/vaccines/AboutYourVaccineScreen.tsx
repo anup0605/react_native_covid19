@@ -65,6 +65,12 @@ export function AboutYourVaccineScreen({ route }: TProps) {
     return null;
   };
 
+  const assignDoseSequence = (doses: TDose[]) => {
+    doses
+      .sort((a, b) => Date.parse(a.date_taken_specific) - Date.parse(b.date_taken_specific))
+      .map((dose, index) => (dose.sequence = index + 1));
+  };
+
   const onSubmit = async (values: IAboutYourVaccineData) => {
     if (!submitting) {
       setSubmitting(true);
@@ -92,9 +98,12 @@ export function AboutYourVaccineScreen({ route }: TProps) {
         vaccine_type: values.vaccineType,
       };
       vaccine.doses.push(latestDose as TDose);
-      vaccine.doses
-        .sort((a, b) => Date.parse(a.date_taken_specific) - Date.parse(b.date_taken_specific))
-        .map((dose, index) => (dose.sequence = index + 1));
+
+      const fluDoses = vaccine.doses.filter((dose) => dose.vaccine_type === EVaccineTypes.SEASONAL_FLU);
+      const covidDoses = vaccine.doses.filter((dose) => dose.vaccine_type === EVaccineTypes.COVID_VACCINE);
+
+      assignDoseSequence(fluDoses);
+      assignDoseSequence(covidDoses);
 
       await vaccineService.saveVaccineAndDoses(assessmentData?.patientData.patientId, vaccine);
 
