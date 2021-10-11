@@ -2,8 +2,13 @@ import CalendarPicker from '@covid/components/CalendarPicker';
 import { requiredFormMarker } from '@covid/components/Form';
 import { LabelText } from '@covid/components/Text';
 import { ValidatedTextInput } from '@covid/components/ValidatedTextInput';
-import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
-import { EPlaceboStatus, EVaccineBrands } from '@covid/core/vaccine/dto/VaccineRequest';
+import { isGBCountry, isSECountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
+import {
+  EPlaceboStatus,
+  EVaccineBrands,
+  EVaccineMechanisms,
+  EVaccineTypes,
+} from '@covid/core/vaccine/dto/VaccineRequest';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { colors } from '@theme';
@@ -13,7 +18,9 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
+import { VaccineFluMechanismQuestion } from './VaccineFluMechanismQuestion';
 import { VaccineNameQuestion } from './VaccineNameQuestion';
+import { VaccineTypeQuestion } from './VaccineTypeQuestion';
 
 const MIN_DATE_TRIAL = new Date('2020-01-01');
 const MIN_DATE_NOT_TRIAL_US = new Date('2020-12-11');
@@ -35,15 +42,18 @@ export interface IVaccineDoseData {
   batchNumber: string | undefined;
   brand: EVaccineBrands | undefined | null;
   placebo: EPlaceboStatus | undefined;
+  vaccineType: EVaccineTypes | undefined;
+  vaccineMechanism: EVaccineMechanisms | undefined;
 }
 
 interface IProps {
   formikProps: FormikProps<IVaccineDoseData>;
   testID?: string;
+  isChild?: boolean;
 }
 
 interface IVaccineDoseQuestion<P> extends React.FC<P> {
-  schema: () => Yup.ObjectSchema;
+  schema: (isChild: boolean) => Yup.ObjectSchema;
 }
 
 export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps) => {
@@ -97,22 +107,46 @@ export const VaccineDoseQuestion: IVaccineDoseQuestion<IProps> = (props: IProps)
     return i18n.t('vaccines.your-vaccine.when-vaccine');
   };
 
-  return (
-    <View testID={props.testID}>
+  const renderCovidVaccineQuestions = () => (
+    <>
       <View style={{ marginBottom: sizes.m }}>
-        <View style={{ marginBottom: sizes.m }}>
-          <VaccineNameQuestion formikProps={formikProps as FormikProps<IVaccineDoseData>} />
-        </View>
+        <VaccineNameQuestion formikProps={formikProps as FormikProps<IVaccineDoseData>} />
+      </View>
 
-        <LabelText style={styles.label}>
+      <LabelText style={styles.label}>
+        {renderDateQuestion()}
+        {requiredFormMarker}
+      </LabelText>
+      {renderPicker()}
+      <LabelText style={styles.label}>{i18n.t('vaccines.your-vaccine.label-batch')}</LabelText>
+      {renderBatchNumber()}
+    </>
+  );
+
+  const renderFluVaccineQuestions = () => {
+    const hideMechanismQuestion = isSECountry() || !props.isChild;
+    return (
+      <>
+        {hideMechanismQuestion ? null : (
+          <View style={{ marginBottom: sizes.m }}>
+            <VaccineFluMechanismQuestion formikProps={formikProps as FormikProps<IVaccineDoseData>} />
+          </View>
+        )}
+        <LabelText style={[styles.label, hideMechanismQuestion ? styles.marginTop : null]}>
           {renderDateQuestion()}
           {requiredFormMarker}
         </LabelText>
         {renderPicker()}
-      </View>
-      <LabelText style={styles.label}>{i18n.t('vaccines.your-vaccine.label-batch')}</LabelText>
+      </>
+    );
+  };
 
-      {renderBatchNumber()}
+  return (
+    <View testID={props.testID}>
+      <VaccineTypeQuestion formikProps={formikProps as FormikProps<IVaccineDoseData>} />
+
+      {formikProps.values.vaccineType === EVaccineTypes.COVID_VACCINE ? renderCovidVaccineQuestions() : null}
+      {formikProps.values.vaccineType === EVaccineTypes.SEASONAL_FLU ? renderFluVaccineQuestions() : null}
     </View>
   );
 };
@@ -131,16 +165,29 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: sizes.m,
   },
+  marginTop: {
+    marginTop: sizes.m,
+  },
 });
 
-VaccineDoseQuestion.schema = () => {
+VaccineDoseQuestion.schema = (isChild) => {
   return Yup.object().shape({
     batchNumber: Yup.string().nullable(),
-    brand: Yup.string().required(),
+    brand: Yup.string().when('vaccineType', {
+      is: EVaccineTypes.COVID_VACCINE,
+      then: Yup.string().required(i18n.t('validation-error-please-select-option')),
+    }),
     doseDate: Yup.date().required(),
     placebo: Yup.string().when('brand', {
       is: 'vaccine_trial',
       then: Yup.string().required(i18n.t('validation-error-please-select-option')),
     }),
+    vaccineMechanism: Yup.string().when('vaccineType', {
+      is: (vaccineType) => {
+        return vaccineType === EVaccineTypes.SEASONAL_FLU && isChild;
+      },
+      then: Yup.string().required(i18n.t('validation-error-please-select-option')),
+    }),
+    vaccineType: Yup.string().required(),
   });
 };

@@ -174,13 +174,13 @@ export class AssessmentCoordinator extends Coordinator {
     });
   };
 
-  goToAddEditVaccine = (vaccine?: TVaccineRequest, index?: number) => {
+  goToAddEditVaccine = (vaccine?: TVaccineRequest, id?: string) => {
     if (vaccine) {
       this.assessmentData.vaccineData = vaccine;
     }
     return NavigatorService.navigate('AboutYourVaccine', {
       assessmentData: this.assessmentData,
-      editIndex: index,
+      editDoseId: id,
     });
   };
 

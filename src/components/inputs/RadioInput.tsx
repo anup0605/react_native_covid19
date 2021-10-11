@@ -1,8 +1,9 @@
 import { requiredFormMarker } from '@covid/components/Form';
 import { RadioButton } from '@covid/components/RadioButton';
-import { ErrorText, LabelText, SecondaryText } from '@covid/components/Text';
+import { CaptionText, ErrorText, LabelText, SecondaryText } from '@covid/components/Text';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
+import { colors } from '@theme';
 import React from 'react';
 import {
   Image,
@@ -32,6 +33,7 @@ interface IProps<V = any> {
   IconComponent?: React.ComponentType<any>;
   iconOnPress?: () => void;
   style?: StyleProp<ViewStyle>;
+  description?: string;
 }
 
 const defaultItems: IItem[] = [
@@ -45,7 +47,7 @@ export function RadioInput(props: IProps) {
   return (
     <View style={[styles.marginVertical, props.style]} testID={props.testID}>
       {props.hideLabel || !props.label ? null : (
-        <LabelText style={styles.marginBottom}>
+        <LabelText style={props.description ? null : styles.marginBottom}>
           {props.label}
           {props.required ? requiredFormMarker : null}
           {props.IconComponent ? (
@@ -55,6 +57,9 @@ export function RadioInput(props: IProps) {
           ) : null}
         </LabelText>
       )}
+      {props.description ? (
+        <CaptionText style={{ color: colors.secondary, marginBottom: sizes.m }}>{props.description}</CaptionText>
+      ) : null}
       {items.map((item, index) => (
         <TouchableOpacity
           accessible

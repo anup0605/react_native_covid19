@@ -4,16 +4,17 @@ export type TVaccineRequest = {
   id: string;
   version: string; // document/schema version
   patient: string; //	Patient id
-  doses: Partial<TDose>[];
+  doses: TDose[];
 
   // These are deprecated fields; this data now lives on the Dose itself
   description?: string; // eg 'mRNA'
   vaccine_type?: EVaccineTypes;
   brand?: EVaccineBrands | null;
   placebo?: EPlaceboStatus | null;
+  mechanism?: EVaccineMechanisms;
 };
 
-enum EVaccineLocations {
+export enum EVaccineLocations {
   GP = 'gp',
   CARE_HOME = 'care_home',
   HOME = 'home',
@@ -32,8 +33,9 @@ export type TDose = {
   date_taken_specific: string;
   brand: EVaccineBrands | null;
   description: string; // eg 'mRNA'
-  batch_number: string;
+  batch_number: string | null;
   placebo?: EPlaceboStatus;
+  mechanism?: EVaccineMechanisms | null;
 };
 
 export type TDoseSymptomsRequest = {
@@ -52,9 +54,15 @@ export type TDoseSymptomsRequest = {
 };
 
 export enum EVaccineTypes {
-  COVID_TRIAL = 'covid_trial',
+  COVID_TRIAL = 'covid_trial', // deprecated - not actively used
   COVID_VACCINE = 'covid_vaccine',
   SEASONAL_FLU = 'flu_seasonal',
+}
+
+export enum EVaccineMechanisms {
+  ARM_INJECTION = 'arm_injection',
+  NASAL_SPRAY = 'nasal_spray',
+  DONT_KNOW = 'dont_know',
 }
 
 export enum EVaccineBrands {

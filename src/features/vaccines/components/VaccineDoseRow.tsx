@@ -1,7 +1,8 @@
 import { chevronRight, tick } from '@assets';
 import { RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import { TDose, TVaccineRequest, vaccineBrandDisplayName } from '@covid/core/vaccine/dto/VaccineRequest';
+import { EVaccineTypes, TDose, TVaccineRequest, vaccineBrandDisplayName } from '@covid/core/vaccine/dto/VaccineRequest';
+import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import moment from 'moment';
 import * as React from 'react';
@@ -12,7 +13,7 @@ type TProps = {
   style: StyleProp<ViewStyle>;
   testID: string;
   vaccineRecord: TVaccineRequest;
-  index: number;
+  id: string;
 };
 
 export const VaccineDoseRow: React.FC<TProps> = (props) => {
@@ -21,12 +22,16 @@ export const VaccineDoseRow: React.FC<TProps> = (props) => {
   };
 
   const brand = (dose: TDose) => {
+    if (dose.vaccine_type === EVaccineTypes.SEASONAL_FLU) {
+      return i18n.t('vaccines.vaccine-list.flu-dose-row-name');
+    }
+
     return dose.brand ? vaccineBrandDisplayName[dose.brand] : 'Unknown';
   };
 
   return (
     <TouchableOpacity
-      onPress={() => assessmentCoordinator.goToAddEditVaccine(props.vaccineRecord, props.index)}
+      onPress={() => assessmentCoordinator.goToAddEditVaccine(props.vaccineRecord, props.id)}
       style={[styles.itemTouchable, props.style]}
       testID={props.testID}
     >

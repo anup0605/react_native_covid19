@@ -40,7 +40,7 @@ function CovidListByType(props: ICovidListByTypeProps) {
   );
 }
 
-const GUTTER = 65;
+const GUTTER = 50;
 const MIN_TAB_WIDTH = 85;
 
 export default function CovidTestTabbedListsScreen(props: IProps) {

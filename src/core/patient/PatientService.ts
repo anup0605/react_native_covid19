@@ -4,7 +4,7 @@ import { handleServiceError } from '@covid/core/api/ApiServiceErrors';
 import { consentService } from '@covid/core/consent/ConsentService';
 import { isGBCountry, isUSCountry } from '@covid/core/localisation/LocalisationService';
 import { TPatientData } from '@covid/core/patient/PatientData';
-import { getInitialPatientState, isMinorAge, TPatientStateType } from '@covid/core/patient/PatientState';
+import { getInitialPatientState, isChildAge, isMinorAge, TPatientStateType } from '@covid/core/patient/PatientState';
 import { TProfile } from '@covid/core/profile/ProfileService';
 import { EVaccineStatus, TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import i18n from '@covid/locale/i18n';
@@ -157,6 +157,7 @@ class PatientService extends ApiClientBase implements IPatientService {
     const hasSchoolGroup = patient.has_school_group;
     const shouldShowVaccineList = patient.vaccine_status !== EVaccineStatus.DO_NOT_ASK;
     const isMinor = isMinorAge(patient.year_of_birth);
+    const isChild = isChildAge(patient.year_of_birth);
 
     return {
       ...patientState,
@@ -169,6 +170,7 @@ class PatientService extends ApiClientBase implements IPatientService {
       hasHayfever,
       hasRaceEthnicityAnswer,
       hasSchoolGroup,
+      isChild,
       isFemale,
       isHealthWorker,
       isMinor,

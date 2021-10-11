@@ -40,9 +40,6 @@
   },
   "adult-or-child-text": "Right now, you can only create additional profiles for US residents.",
   "vaccines": {
-    "vaccine-list": {
-      "description": "Tell us if you've had a COVID-19 vaccine. This now also includes *boosters and vaccines taken as part of a trial*."
-    },
     "your-vaccine": {
       "label-batch": "Lot number of the dose"
     }

@@ -1,6 +1,11 @@
 /* eslint-env jest */
 
-import { TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import {
+  EVaccineBrands,
+  EVaccineLocations,
+  EVaccineTypes,
+  TVaccineRequest,
+} from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineApiClient } from '@covid/core/vaccine/VaccineApiClient';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { VaccineListScreen } from '@covid/features';
@@ -31,30 +36,35 @@ const DUMMY_VACCINE_WITH_TWO_DOSES: TVaccineRequest = {
   doses: [
     {
       batch_number: 'Seq1',
-      brand: 'pfizer',
+      brand: EVaccineBrands.PFIZER,
       date_taken_specific: '2021-08-02',
-      description: null,
+      description: '',
       id: 'xyz123',
-      location: null,
+      location: EVaccineLocations.HOME,
       sequence: 1,
+      vaccine: '',
+      vaccine_type: EVaccineTypes.COVID_VACCINE,
     },
     {
       batch_number: 'Modena 1111111',
-      brand: 'moderna',
+      brand: EVaccineBrands.MODERNA,
       date_taken_specific: '2021-08-11',
-      description: null,
+      description: '',
       id: '123xyz',
-      location: null,
+      location: EVaccineLocations.HOME,
       sequence: 2,
+      vaccine: '',
+      vaccine_type: EVaccineTypes.COVID_VACCINE,
     },
   ],
   id: 'abc123',
   patient: DUMMY_PATIENT_ID_CURRENT,
   placebo: null,
-  vaccine_type: 'covid_vaccine',
+  vaccine_type: EVaccineTypes.COVID_VACCINE,
+  version: '',
 };
 
-describe('CovidTestListScreen tests', () => {
+describe('VaccineListScreen tests', () => {
   it('renders VaccineListScreen', async () => {
     const elementBase = <MockedNavigator Component={VaccineListScreen} />;
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
@@ -63,7 +73,7 @@ describe('CovidTestListScreen tests', () => {
     expect(instance.findByType(VaccineListScreen)).toBeTruthy();
   });
 
-  it('renders 2 doses when 2 doses exist', async () => {
+  it('renders 2 doses in the COVID tab when 2 doses exist', async () => {
     jest.spyOn(vaccineApiClient, 'listVaccines').mockReturnValue(Promise.resolve([DUMMY_VACCINE_WITH_TWO_DOSES]));
     const elementBase = <MockedNavigator Component={VaccineListScreen} initialParams={ROUTE_PARAM_PATIENT_ID} />;
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;

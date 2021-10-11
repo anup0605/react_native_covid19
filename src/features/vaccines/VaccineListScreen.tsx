@@ -1,13 +1,22 @@
 import InfoCircle from '@assets/icons/InfoCircle';
-import { BrandedButton, HeaderText, LightText, Modal, RegularTextWithBoldInserts, Text } from '@covid/components';
+import {
+  BrandedButton,
+  ErrorText,
+  HeaderText,
+  LightText,
+  Modal,
+  RegularTextWithBoldInserts,
+  Text,
+} from '@covid/components';
 import { Loading } from '@covid/components/Loading';
 import { ProgressHeader } from '@covid/components/ProgressHeader';
 import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
-import { TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { EVaccineMechanisms, EVaccineTypes, TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
+import { VaccineTabbedListsScreen } from '@covid/features/vaccines/VaccineTabbedListsScreen';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { sizes } from '@covid/themes';
@@ -15,44 +24,70 @@ import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-
-import { VaccineDoseRow } from './components/VaccineDoseRow';
+import { StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 
 type TProps = {
   route: RouteProp<TScreenParamList, 'VaccineList'>;
 };
 
+const SINGLE_DOSE_ROW_HEIGHT = 48;
+const HEIGHT_OF_STATIC_CONTENT = 500;
+
+const mapTypeToTabName = {
+  covid_trial: i18n.t('vaccines.vaccine-list.tab-covid'),
+  covid_vaccine: i18n.t('vaccines.vaccine-list.tab-covid'),
+  flu_seasonal: i18n.t('vaccines.vaccine-list.tab-flu'),
+};
+
+// Local adverse effects screen should only be shown for flu vaccines via injection OR all COVID vaccines
+const isNotInjectionFluVaccine = (dose: TDose) =>
+  dose.mechanism === EVaccineMechanisms.NASAL_SPRAY || dose.mechanism === EVaccineMechanisms.DONT_KNOW;
+
 export const VaccineListScreen: React.FC<TProps> = (props) => {
   const [vaccine, setVaccine] = React.useState<TVaccineRequest | undefined>();
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [error, setError] = React.useState<string>();
+
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+
+  const windowDimensions = useWindowDimensions();
+  const minTabViewHeight = SINGLE_DOSE_ROW_HEIGHT * 5;
+  const tabViewHeight = windowDimensions.height - HEIGHT_OF_STATIC_CONTENT;
 
   const patientId = props.route.params?.assessmentData?.patientData?.patientId;
 
-  const refreshVaccineList = async () => {
-    setLoading(true);
+  const showTab = props.route.params?.vaccineType
+    ? mapTypeToTabName[props.route.params.vaccineType]
+    : i18n.t('vaccines.vaccine-list.tab-covid');
 
+  let isActive = false;
+
+  const fetchVaccineList = async () => {
+    isActive = true;
+    setLoading(true);
     try {
       const response = await vaccineService.listVaccines();
       const patientVaccines = response.filter((patientVaccine) => patientVaccine.patient === patientId);
       // Set the "patientVaccine" to be the first item returned, in order to maintain backwards compatibility with older versions that may have multiple
       const patientVaccine: TVaccineRequest | undefined = patientVaccines.length ? patientVaccines[0] : undefined;
-      // Also, reverse doses - they are sorted by date old-new for the old system, but new UI wants the reverse
-      if (patientVaccine && patientVaccine.doses) {
-        patientVaccine.doses = patientVaccine?.doses.reverse();
-      }
 
-      setVaccine(patientVaccine);
+      if (isActive) {
+        setVaccine(patientVaccine);
+        setLoading(false);
+      }
     } catch (_) {
-    } finally {
+      setError(i18n.t('something-went-wrong'));
       setLoading(false);
     }
   };
 
   useFocusEffect(
     React.useCallback(() => {
-      refreshVaccineList();
+      fetchVaccineList();
+
+      return () => {
+        isActive = false;
+      };
     }, []),
   );
 
@@ -68,7 +103,7 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
         const dose = vaccine.doses[j];
         if (dose.date_taken_specific) {
           const doseDate = moment(dose.date_taken_specific).toDate();
-          if (sevenDaysAgo <= doseDate && doseDate <= today) {
+          if (sevenDaysAgo <= doseDate && doseDate <= today && !isNotInjectionFluVaccine(dose)) {
             doseId = dose.id;
             break;
           }
@@ -84,44 +119,19 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
 
   const enableNext = () => {
     const doses = vaccine?.doses;
-    // Disable button if user has dose(s) with missing date, brand & description
-    if (doses && doses.some((dose) => dose.date_taken_specific == null || dose.brand === null)) {
+    // Disable button if user has COVID vaccine dose(s) with missing date or brand
+    if (
+      doses &&
+      doses.some(
+        (dose) =>
+          (dose.date_taken_specific == null || dose.brand === null) &&
+          dose.vaccine_type === EVaccineTypes.COVID_VACCINE,
+      )
+    ) {
       return false;
     }
 
     return true;
-  };
-
-  const ListContent = () => {
-    if (loading) {
-      return <Loading error={null} status="" />;
-    }
-    return (
-      <View>
-        <BrandedButton
-          onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccine)}
-          style={styles.newButton}
-          testID="button-add-vaccine"
-        >
-          <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list.add-button')}</Text>
-        </BrandedButton>
-
-        {vaccine
-          ? vaccine.doses.map((dose, index) => {
-              return (
-                <VaccineDoseRow
-                  dose={dose as TDose}
-                  index={index}
-                  key={dose.id}
-                  style={index === 0 ? { paddingTop: sizes.s } : { paddingTop: sizes.l }}
-                  testID={`vaccine-dose-row-${index}`}
-                  vaccineRecord={vaccine}
-                />
-              );
-            })
-          : null}
-      </View>
-    );
   };
 
   const showPopup = () => {
@@ -186,7 +196,35 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
           )}
         </Text>
       </View>
-      <ListContent />
+
+      <View>
+        <BrandedButton
+          onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccine)}
+          style={styles.newButton}
+          testID="button-add-vaccine"
+        >
+          <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list.add-button')}</Text>
+        </BrandedButton>
+        {vaccine ? (
+          <Text style={styles.tabTitle} textAlign="center" textClass="h4Medium">
+            {i18n.t('vaccines.vaccine-list.tabs-title')}
+          </Text>
+        ) : null}
+
+        {loading ? (
+          <Loading error={null} status="" />
+        ) : vaccine ? (
+          <VaccineTabbedListsScreen
+            minTabViewHeight={minTabViewHeight}
+            showTab={showTab}
+            tabViewHeight={tabViewHeight}
+            vaccineDoses={vaccine.doses}
+            vaccineRecord={vaccine}
+          />
+        ) : null}
+
+        {error ? <ErrorText style={{ textAlign: 'center' }}>{error}</ErrorText> : null}
+      </View>
     </Screen>
   );
 };
@@ -223,6 +261,9 @@ const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: colors.backgroundPrimary,
     flex: 1,
+  },
+  tabTitle: {
+    color: colors.secondary,
   },
   wrapper: {
     padding: sizes.l,
