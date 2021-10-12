@@ -3,7 +3,6 @@ import { device, init } from 'detox';
 import { testCreateNewProfileFeature } from './testCreateNewProfileFeature';
 import { testLoginScreen } from './testLoginScreen';
 import { testLogoutFeature } from './testLogoutFeature';
-import { testReconsentFeature } from './testReconsentFeature';
 import { testRegisterFeature } from './testRegisterFeature';
 import { testReportTodayFeature } from './testReportTodayFeature';
 import { testSelectCountryScreen } from './testSelectCountryScreen';
@@ -29,7 +28,7 @@ beforeEach(async () => {
 });
 
 const timestamp = Math.round(Date.now() / 1000);
-const tempEmailAddress = `test-${timestamp}@joinzoe.com`;
+const tempEmailAddress = `test-${timestamp}@test.com`;
 const tempPhoneNumber = `+44 7900 ${timestamp}`;
 
 testWelcomeScreen();
@@ -42,20 +41,22 @@ testRegisterFeature({
   password: defaultPassword,
   phoneNumber: tempPhoneNumber,
 });
-testReconsentFeature({
-  consent: false,
-  fillInAllFeedback: false,
-  fillInFeedback: ['im_only_interested_in_fighting_covid_19_right_now', 'other'],
-  privacyPolicyView: true,
-  reconsider: false,
-  selectAllDiseases: false,
-  selectDiseases: [
-    'research_consent_dementia',
-    'research_consent_nutrition_and_gut_health',
-    'research_consent_womens_health',
-    'research_consent_autoimmune_conditions',
-  ],
-});
+// This isn't needed anymore + causes an error based on the new signup consent process.
+// Should be reimplemented as part of drawer menu navigation testing.
+// testReconsentFeature({
+//   consent: false,
+//   fillInAllFeedback: false,
+//   fillInFeedback: ['im_only_interested_in_fighting_covid_19_right_now', 'other'],
+//   privacyPolicyView: true,
+//   reconsider: false,
+//   selectAllDiseases: false,
+//   selectDiseases: [
+//     'research_consent_dementia',
+//     'research_consent_nutrition_and_gut_health',
+//     'research_consent_womens_health',
+//     'research_consent_autoimmune_conditions',
+//   ],
+// });
 testLogoutFeature();
 testLoginScreen({
   emailAddress: defaultEmailAddress,
@@ -66,14 +67,14 @@ testCreateNewProfileFeature({
 });
 testReportTodayFeature({
   addTest: false,
-  addVaccine: false,
+  addVaccines: false,
   healthy: false,
   updateTest: false,
 });
 testReportTodayFeature({
   addAndUpdateZoeInviteTest: true,
   addTest: true,
-  addVaccine: true,
+  addVaccines: true,
   healthy: true,
   updateTest: true,
 });

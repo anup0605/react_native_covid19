@@ -8,7 +8,7 @@ import { testCovidTestListOnboardingModal } from './testModals';
 type TReportTodayConfig = {
   addTest: boolean;
   addAndUpdateZoeInviteTest?: boolean;
-  addVaccine: boolean;
+  addVaccines: boolean;
   healthy: boolean;
   updateTest: boolean;
 };
@@ -134,10 +134,11 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
       await element(by.id('button-covid-test-list-screen')).tap();
     });
 
-    function testAddVaccine() {
+    function testAddCovidVaccine() {
       it(`should be able to add a COVID-19 vaccine`, async () => {
         await element(by.id('button-add-vaccine')).tap();
 
+        await element(by.id(`input-your-vaccine-type-item-covid_vaccine`)).tap();
         await element(by.id(`input-your-vaccine-item-pfizer`)).tap();
 
         await element(by.id('scroll-view-about-your-vaccine-screen')).scroll(150, 'down');
@@ -146,8 +147,27 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
         await submitForm('about-your-vaccine-screen', 'scroll-view-about-your-vaccine-screen', 'button-submit');
       });
     }
-    if (config.addVaccine) {
-      testAddVaccine();
+
+    function testAddFluVaccine() {
+      it(`should be able to add a flu vaccine`, async () => {
+        // Dismiss vaccine efficacy modal if present
+        try {
+          await element(by.text('Cancel')).tap();
+        } catch (_) {}
+
+        await element(by.id('button-add-vaccine')).tap();
+
+        await element(by.id(`input-your-vaccine-type-item-flu_seasonal`)).tap();
+
+        await element(by.id('scroll-view-about-your-vaccine-screen')).scroll(150, 'down');
+        await element(by.text('1')).tap();
+
+        await submitForm('about-your-vaccine-screen', 'scroll-view-about-your-vaccine-screen', 'button-submit');
+      });
+    }
+    if (config.addVaccines) {
+      testAddCovidVaccine();
+      testAddFluVaccine();
     }
 
     it('should dismiss the vaccine efficacy modal (if present)', async () => {
