@@ -222,62 +222,68 @@ jobs:
           path: ~/reports
 
   # Prepare code and check i18n
-  i18n:
-    executor: mobile-build-box
-    working_directory: ~/covid-react
-    steps:
-      - prepare_code
-      - node-install
-      - run: yarn test:i18n 'sv-SE'
 
-  # Prepare code and run tests
-  test:
-    executor: mobile-build-box
-    working_directory: ~/covid-react
-    steps:
-      - prepare_code
-      - prepare_blank_env
-      - node-install
-      - run:
-          name: Run tests with JUnit as reporter
-          command: yarn test:coverage
-          environment:
-            JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
-      - store_test_results:
-          path: ./reports/junit/
-      - store_artifacts:
-          path: ./reports/junit
 
-  # Run Dtox E2E
-  e2etest:
-    executor: mobile-build-box
-    working_directory: ~/covid-react
+  # DISABLED FOR IOS 15 DEBUG - DO NOT MERGE THESE
+  # i18n:
+  #   executor: mobile-build-box
+  #   working_directory: ~/covid-react
+  #   steps:
+  #     - prepare_code
+  #     - node-install
+  #     - run: yarn test:i18n 'sv-SE'
 
-    steps:
-      - build
-      - prepare_e2e
-      #- run: yarn build:ios
-      - run:
-          name: Force specific nodejs version
-          command: |
-            export NODE_VERSION=$(cat .nvmrc)
-            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.1/install.sh | bash -s -- --no-use
-            echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
-            echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
-            echo 'nvm install v10.2.0' >> $BASH_ENV
-            echo 'nvm alias default v10.2.0' >> $BASH_ENV
+  # # Prepare code and run tests
+  # test:
+  #   executor: mobile-build-box
+  #   working_directory: ~/covid-react
+  #   steps:
+  #     - prepare_code
+  #     - prepare_blank_env
+  #     - node-install
+  #     - run:
+  #         name: Run tests with JUnit as reporter
+  #         command: yarn test:coverage
+  #         environment:
+  #           JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
+  #     - store_test_results:
+  #         path: ./reports/junit/
+  #     - store_artifacts:
+  #         path: ./reports/junit
 
-      - run: yarn fastlane:ios:release env:$RELEASE_TYPE
-      #- run: detox build --configuration ios.release
-      - run: detox test --configuration ios.release --cleanup
-      - persist_to_workspace:
-          root: *default_workspace
-          paths:
-            - node_modules
-            - vendor/bundle
-            - ios/Pods
-            - android/app/src/main/assets/index.android.bundle
-            - android/app/src/main/res
+  # # Run Dtox E2E
+  # e2etest:
+  #   executor: mobile-build-box
+  #   working_directory: ~/covid-react
+
+  #   steps:
+  #     - build
+  #     - prepare_e2e
+  #     #- run: yarn build:ios
+  #     - run:
+  #         name: Force specific nodejs version
+  #         command: |
+  #           export NODE_VERSION=$(cat .nvmrc)
+  #           curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.1/install.sh | bash -s -- --no-use
+  #           echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
+  #           echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
+  #           echo 'nvm install v10.2.0' >> $BASH_ENV
+  #           echo 'nvm alias default v10.2.0' >> $BASH_ENV
+
+  #     - run: yarn fastlane:ios:release env:$RELEASE_TYPE
+  #     #- run: detox build --configuration ios.release
+  #     - run: detox test --configuration ios.release --cleanup
+  #     - persist_to_workspace:
+  #         root: *default_workspace
+  #         paths:
+  #           - node_modules
+  #           - vendor/bundle
+  #           - ios/Pods
+  #           - android/app/src/main/assets/index.android.bundle
+  #           - android/app/src/main/res
+  # END DISABLED FOR IOS 15 DEBUG - DO NOT MERGE THESE
+
+
 
   ### ------------------- ###
   ### Deploy related jobs ###
@@ -379,19 +385,12 @@ workflows:
 
   tests:
     jobs:
-
-
-
-      
-      # DISABLED FOR IOS 15 DEBUG - DO NOT MERGE THESE
-      # - lint:
-      #     filters: *feature_filter
-      # - i18n:
-      #     filters: *feature_filter
-      # - test:
-      #     filters: *feature_filter
-      # END DISABLED FOR IOS 15 DEBUG
-
+      - lint:
+          filters: *feature_filter
+      - i18n:
+          filters: *feature_filter
+      - test:
+          filters: *feature_filter
 
       # DISABLED FOR MERGE TO MASTER
       # - e2etest:
@@ -405,8 +404,9 @@ workflows:
       # Staging OTA deploy
       - ota-release:
           name: 'Stage OTA'
-          # DISABLED FOR IOS 15 DEBUG
-          #filters: *develop_filter
+
+          # DISABLED FOR IOS 15 DEBUG - DO NOT MERGE THESE
+          # filters: *develop_filter
           context: react-covid-tracker-stage
       - deployed-ota:
           name: 'Stage OTA Deployed'
@@ -443,16 +443,19 @@ workflows:
           context: slack-ci-covid-mobile
       - adhoc-release-approval:
           name: 'Adhoc approval'
-          filters: *develop_filter
+          # DISABLED FOR IOS 15 DEBUG - DO NOT MERGE THESE
+          # filters: *develop_filter
           type: approval
       - build:
           name: 'Adhoc build'
-          filters: *develop_filter
+          # DISABLED FOR IOS 15 DEBUG - DO NOT MERGE THESE 
+          # filters: *develop_filter
           requires:
             - Adhoc approval
       - deploy-ios:
           name: 'Adhoc iOS'
-          filters: *develop_filter
+          # DISABLED FOR IOS 15 DEBUG - DO NOT MERGE THESE 
+          # filters: *develop_filter
           context: react-covid-tracker-stage
           requires:
             - Adhoc build
