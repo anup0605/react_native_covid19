@@ -379,12 +379,19 @@ workflows:
 
   tests:
     jobs:
-      - lint:
-          filters: *feature_filter
-      - i18n:
-          filters: *feature_filter
-      - test:
-          filters: *feature_filter
+
+
+
+      
+      # DISABLED FOR IOS 15 DEBUG - DO NOT MERGE THESE
+      # - lint:
+      #     filters: *feature_filter
+      # - i18n:
+      #     filters: *feature_filter
+      # - test:
+      #     filters: *feature_filter
+      # END DISABLED FOR IOS 15 DEBUG
+
 
       # DISABLED FOR MERGE TO MASTER
       # - e2etest:
@@ -398,7 +405,8 @@ workflows:
       # Staging OTA deploy
       - ota-release:
           name: 'Stage OTA'
-          filters: *develop_filter
+          # DISABLED FOR IOS 15 DEBUG
+          #filters: *develop_filter
           context: react-covid-tracker-stage
       - deployed-ota:
           name: 'Stage OTA Deployed'
