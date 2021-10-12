@@ -6,7 +6,6 @@ import {
   EVaccineTypes,
   TVaccineRequest,
 } from '@covid/core/vaccine/dto/VaccineRequest';
-import { vaccineApiClient } from '@covid/core/vaccine/VaccineApiClient';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { VaccineListScreen } from '@covid/features';
 import { theme } from '@covid/themes';
@@ -74,7 +73,7 @@ describe('VaccineListScreen tests', () => {
   });
 
   it('renders 2 doses in the COVID tab when 2 doses exist', async () => {
-    jest.spyOn(vaccineApiClient, 'listVaccines').mockReturnValue(Promise.resolve([DUMMY_VACCINE_WITH_TWO_DOSES]));
+    jest.spyOn(vaccineService, 'listVaccines').mockReturnValue(Promise.resolve([DUMMY_VACCINE_WITH_TWO_DOSES]));
     const elementBase = <MockedNavigator Component={VaccineListScreen} initialParams={ROUTE_PARAM_PATIENT_ID} />;
     const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
     const element = <ThemeProvider theme={theme}>{elementWithRedux}</ThemeProvider>;
