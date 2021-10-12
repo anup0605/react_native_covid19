@@ -22,8 +22,10 @@ export default function StudyCard(props: IProps) {
     <TouchableOpacity onPress={props.onPress} style={[styles.touchable, props.style]}>
       <View style={styles.containerUpper}>
         <View style={styles.containerTitle}>
-          {props.showQuotes ? <QuoteMarks style={styling.marginBottomSmall} /> : null}
-          <Text textClass="h5Regular">{props.title}</Text>
+          {props.showQuotes ? <QuoteMarks /> : null}
+          <Text style={props.showQuotes && styling.marginTopSmall} textClass="h5Regular">
+            {props.title}
+          </Text>
         </View>
         <View style={styling.itemsEnd}>
           {props.imageNode}

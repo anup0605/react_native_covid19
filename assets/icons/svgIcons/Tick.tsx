@@ -1,13 +1,15 @@
+import { IIconProps } from '@assets/icons/svgIcons/types';
+import { determineDimensions } from '@assets/utils';
 import * as React from 'react';
 import { G, Polyline, Svg } from 'react-native-svg';
 
-interface IProps {
-  color?: string;
-}
+const defaultWidth = 14;
+const defaultHeight = 10;
 
-function Tick({ color = '#565A5C' }: IProps) {
+export default function Tick({ color = '#565A5C', ...props }: IIconProps) {
+  const { width, height } = determineDimensions(props, defaultWidth, defaultHeight);
   return (
-    <Svg height="10px" viewBox="0 0 14 10" width="14px">
+    <Svg fill="none" height={height} viewBox="0 0 14 10" width={width}>
       <G
         fill="none"
         fillRule="evenodd"
@@ -24,5 +26,3 @@ function Tick({ color = '#565A5C' }: IProps) {
     </Svg>
   );
 }
-
-export default Tick;

@@ -3,7 +3,7 @@ import Card from '@covid/components/cards/Card';
 import Analytics, { events } from '@covid/core/Analytics';
 import { contentService } from '@covid/core/content/ContentService';
 import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
-import { resetFeedback } from '@covid/core/state/reconsent';
+import { resetFeedback, selectReturnScreenName } from '@covid/core/state/reconsent';
 import IllustrationSignup from '@covid/features/reconsent/components/IllustrationSignup';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
 import Tick from '@covid/features/reconsent/components/Tick';
@@ -13,7 +13,7 @@ import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const hitSlop = {
   bottom: 24,
@@ -27,6 +27,7 @@ export default function ReconsentNewsletterSignupScreen() {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [signedUp, setSignedUp] = React.useState<boolean>(false);
   const dispatch = useDispatch();
+  const returnScreenName = useSelector(selectReturnScreenName);
 
   async function toggleNewsletterSignup() {
     setLoading(true);
@@ -53,12 +54,15 @@ export default function ReconsentNewsletterSignupScreen() {
     // This requires async await to make sure!
     await dispatch(fetchStartUpInfo());
     NavigatorService.navigate('Dashboard');
+    if (returnScreenName === 'Menu') {
+      NavigatorService.openDrawer();
+    }
     dispatch(resetFeedback());
   }
 
   return (
     <ReconsentScreen
-      hideBackButton
+      noHeader
       buttonOnPress={onPress}
       buttonTitle={i18n.t('reconsent.newsletter-signup.button')}
       testID="reconsent-newsletter-signup-screen"

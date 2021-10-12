@@ -23,7 +23,7 @@ export default class PrivacyPolicySVScreen extends React.Component<TProps, objec
         backgroundColor={colors.backgroundPrimary}
         footerOnPress={this.props.navigation.goBack}
         footerTitle={this.viewOnly ? '' : i18n.t('legal.back')}
-        hideBackButton={!this.viewOnly}
+        noHeader={!this.viewOnly}
         testID="privacy-policy-sv-screen"
       >
         <HeaderText text="Integritetsmeddelande för COVID Symptom Study Sverige" />

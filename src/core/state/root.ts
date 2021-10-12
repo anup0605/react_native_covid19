@@ -60,7 +60,7 @@ export default combineReducers({
   mentalHealthPlayback: mentalHealthPlaybackSlice,
   mentalHealthState: mentalHealthStateSlice,
   mentalHealthSupport: mentalHealthSupportSlice,
-  reconsent: reconsentSlice,
+  reconsent: reconsentSlice.reducer,
   school: schoolSlice.reducer,
   settings: settingsSlice,
   testingMode: testingModeSlice.reducer,

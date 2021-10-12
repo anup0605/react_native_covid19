@@ -1,7 +1,14 @@
 import Analytics from '@covid/core/Analytics';
 import { sizes } from '@covid/themes';
 import * as React from 'react';
-import { Modal as RNModal, PanResponderGestureState, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Modal as RNModal,
+  PanResponderGestureState,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GestureRecognizer from 'react-native-swipe-gestures';
@@ -25,7 +32,7 @@ interface IProps {
 }
 
 const BORDER_RADIUS = 16;
-const CONTENT_SPACING = 20;
+const CONTENT_SPACING = 24;
 const SCROLL_INDICATOR_OFFSET = BORDER_RADIUS / 4 + 2;
 
 // These magic numbers make sure the scroll indicator aligns pixel perfect to the edge on iOS.
@@ -61,28 +68,32 @@ export default React.memo(function Modal(props: IProps) {
         onRequestClose={props.onRequestClose}
         visible={props.visible}
       >
-        <View style={styles.view1} testID={props.testID}>
-          <View style={[styles.view2, paddingStyle]}>
-            <View style={styles.view3}>
-              {props.headerChildren ? <View style={styles.headerWrapper}>{props.headerChildren}</View> : null}
-              <ScrollView
-                alwaysBounceVertical={false}
-                contentContainerStyle={styles.contentContainer}
-                scrollIndicatorInsets={INSETS}
-                showsVerticalScrollIndicator={props.showsVerticalScrollIndicator || false}
-                style={styles.scrollView}
-              >
-                {props.children}
-              </ScrollView>
-              {props.footerChildren ? (
-                <View style={styles.footerWrapper}>
-                  <LinearGradient colors={COLORS} style={styles.linearGradient} />
-                  {props.footerChildren}
+        <TouchableWithoutFeedback onPress={props.onRequestClose}>
+          <View style={styles.view1} testID={props.testID}>
+            <View style={[styles.view2, paddingStyle]}>
+              <TouchableWithoutFeedback>
+                <View style={styles.view3}>
+                  {props.headerChildren ? <View style={styles.headerWrapper}>{props.headerChildren}</View> : null}
+                  <ScrollView
+                    alwaysBounceVertical={false}
+                    contentContainerStyle={styles.contentContainer}
+                    scrollIndicatorInsets={INSETS}
+                    showsVerticalScrollIndicator={props.showsVerticalScrollIndicator || false}
+                    style={styles.scrollView}
+                  >
+                    {props.children}
+                  </ScrollView>
+                  {props.footerChildren ? (
+                    <View style={styles.footerWrapper}>
+                      <LinearGradient colors={COLORS} style={styles.linearGradient} />
+                      {props.footerChildren}
+                    </View>
+                  ) : null}
                 </View>
-              ) : null}
+              </TouchableWithoutFeedback>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </RNModal>
     );
   }

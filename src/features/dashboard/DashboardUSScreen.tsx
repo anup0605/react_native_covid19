@@ -12,7 +12,8 @@ import { useAppDispatch } from '@covid/core/state/store';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
 import { CollapsibleHeaderScrollView } from '@covid/features/dashboard/CollapsibleHeaderScrollView';
-import { CompactHeader, Header } from '@covid/features/dashboard/Header';
+import { CompactHeader } from '@covid/features/dashboard/CompactHeader';
+import { ExpandedHeader } from '@covid/features/dashboard/ExpandedHeader';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
@@ -23,8 +24,10 @@ import * as React from 'react';
 import { Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-const HEADER_EXPANDED_HEIGHT = 328;
-const HEADER_COLLAPSED_HEIGHT = 100;
+const headerConfig = {
+  compact: sizes.headerCompactHeight,
+  expanded: sizes.headerExpandedHeight,
+};
 
 interface IProps {
   navigation: DrawerNavigationProp<TScreenParamList>;
@@ -33,53 +36,38 @@ interface IProps {
 
 export function DashboardUSScreen({ route, navigation }: IProps) {
   const appDispatch = useAppDispatch();
-
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
   const [showDietStudyPlayback] = React.useState<boolean | undefined>(startupInfo?.show_diet_score);
 
-  const headerConfig = {
-    compact: HEADER_COLLAPSED_HEIGHT,
-    expanded: HEADER_EXPANDED_HEIGHT,
-  };
-
-  const onReport = async () => {
-    await appCoordinator.gotoNextScreen(route.name);
-  };
-
-  const onShare = async () => {
-    const shareMessage = i18n.t('share-this-app.message');
-    await share(shareMessage);
-  };
-
   React.useEffect(() => {
-    (async () => {
-      await pushNotificationService.subscribeForPushNotifications();
-    })();
+    pushNotificationService.subscribeForPushNotifications();
   }, []);
 
   React.useEffect(() => {
     return navigation.addListener('focus', async () => {
       appDispatch(updateTodayDate());
     });
-  }, [navigation]);
+  }, []);
+
+  const onPressReport = React.useCallback(() => appCoordinator.gotoNextScreen(route.name), []);
+
+  const onShare = React.useCallback(() => share(i18n.t('share-this-app.message')), []);
+
+  const compactHeader = React.useMemo(() => <CompactHeader onPress={onPressReport} />, []);
+  const expandedHeader = React.useMemo(() => <ExpandedHeader onPress={onPressReport} />, []);
+
+  const onPressDietStudy = React.useCallback(() => {
+    AnalyticsService.track(events.DIET_STUDY_PLAYBACK_CLICKED);
+    appCoordinator.goToDietStudy();
+  }, []);
 
   return (
-    <CollapsibleHeaderScrollView
-      compactHeader={<CompactHeader reportOnPress={onReport} />}
-      config={headerConfig}
-      expandedHeader={<Header reportOnPress={onReport} />}
-      navigation={navigation}
-    >
+    <CollapsibleHeaderScrollView compactHeader={compactHeader} config={headerConfig} expandedHeader={expandedHeader}>
       <View style={styles.calloutContainer}>
         <ShareVaccineCard screenName="DashboardUS" />
 
         {showDietStudyPlayback ? (
-          <TouchableWithoutFeedback
-            onPress={() => {
-              AnalyticsService.track(events.DIET_STUDY_PLAYBACK_CLICKED);
-              appCoordinator.goToDietStudy();
-            }}
-          >
+          <TouchableWithoutFeedback onPress={onPressDietStudy}>
             <Image source={dietStudyPlaybackReadyUS} style={styles.dietStudyImage} />
           </TouchableWithoutFeedback>
         ) : null}

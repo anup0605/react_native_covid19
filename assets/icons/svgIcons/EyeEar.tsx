@@ -1,14 +1,16 @@
+import { IIconProps } from '@assets/icons/svgIcons/types';
+import { determineDimensions } from '@assets/utils';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { ClipPath, Defs, G, Path, Rect, Svg } from 'react-native-svg';
 
-interface IProps {
-  color?: string;
-}
+const defaultWidth = 37;
+const defaultHeight = 31;
 
-export default function EyeEar({ color = colors.darkblue }: IProps) {
+export default function EyeEar({ color = colors.darkblue, ...props }: IIconProps) {
+  const { width, height } = determineDimensions(props, defaultWidth, defaultHeight);
   return (
-    <Svg fill="none" height="31" viewBox="0 0 37 31" width="37">
+    <Svg fill="none" height={height} viewBox="0 0 37 31" width={width}>
       <G clipPath="url(#clip0)">
         <Path
           clipRule="evenodd"

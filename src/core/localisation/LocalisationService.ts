@@ -15,7 +15,7 @@ interface ILocalisationService {
 }
 
 export class LocalisationService implements ILocalisationService {
-  public static userCountry = 'US';
+  public static userCountry = 'GB';
 
   public static countryConfig: TConfigType | undefined;
 

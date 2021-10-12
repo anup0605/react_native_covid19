@@ -1,13 +1,15 @@
+import { IIconProps } from '@assets/icons/svgIcons/types';
+import { determineDimensions } from '@assets/utils';
 import * as React from 'react';
 import { G, Path, Svg } from 'react-native-svg';
 
-interface IProps {
-  color?: string;
-}
+const defaultWidth = 14;
+const defaultHeight = 10;
 
-function StandardArrowRight({ color = '#A10056' }: IProps) {
+export default function StandardArrowRight({ color = '#A10056', ...props }: IIconProps) {
+  const { width, height } = determineDimensions(props, defaultWidth, defaultHeight);
   return (
-    <Svg height="10px" viewBox="0 0 14 10" width="14px">
+    <Svg fill="none" height={height} viewBox="0 0 14 10" width={width}>
       <G
         fill="none"
         fill-rule="evenodd"
@@ -27,5 +29,3 @@ function StandardArrowRight({ color = '#A10056' }: IProps) {
     </Svg>
   );
 }
-
-export default StandardArrowRight;

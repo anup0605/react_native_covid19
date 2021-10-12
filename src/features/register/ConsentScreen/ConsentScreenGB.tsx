@@ -1,5 +1,5 @@
 import { Text } from '@covid/components';
-import { LegalCard } from '@covid/components/cards/LegalCard';
+import { ELegalCardType, LegalCard } from '@covid/components/cards/LegalCard';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -23,6 +23,13 @@ const hitSlop = {
   top: 20,
 };
 
+const cards = [
+  ELegalCardType.FightCovid19,
+  ELegalCardType.AdvanceScience,
+  ELegalCardType.ImproveHealth,
+  ELegalCardType.BuildProducts,
+];
+
 export const ConsentScreenGB: React.FC<TProps> = React.memo((props: TProps) => {
   React.useEffect(() => {
     props.setAgreed(true);
@@ -32,17 +39,6 @@ export const ConsentScreenGB: React.FC<TProps> = React.memo((props: TProps) => {
 
   const onInformationSheetPress = () => openWebLink('https://covid.joinzoe.com/wider-health-studies-infosheet');
 
-  const renderCards = () => {
-    return [1, 2, 3, 4].map((i) => (
-      <LegalCard
-        description={i18n.t(`consent-normal-uk.card-${i}-description`)}
-        index={i - 1}
-        key={`legal-card-${i}`}
-        title={i18n.t(`consent-normal-uk.card-${i}-title`)}
-      />
-    ));
-  };
-
   return (
     <View style={props.style}>
       <Text rhythm={24} style={styles.center} textClass="h3Light">
@@ -51,7 +47,9 @@ export const ConsentScreenGB: React.FC<TProps> = React.memo((props: TProps) => {
       <Text rhythm={24} style={[styles.center, styles.secondaryColour]} textClass="pLight">
         {i18n.t('consent-normal-uk.subtitle')}
       </Text>
-      {renderCards()}
+      {cards.map((type, i) => (
+        <LegalCard index={i} key={`legal-card-${type}`} type={type} />
+      ))}
       <TouchableOpacity
         hitSlop={hitSlop}
         onPress={onPrivacyPolicyPress}
