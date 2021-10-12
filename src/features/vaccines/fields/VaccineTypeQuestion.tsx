@@ -13,12 +13,12 @@ interface IVaccineTypeQuestion<P, Data> extends React.FC<P> {
   initialFormValues: (vaccine?: TVaccineRequest) => Partial<Data>;
 }
 
-const vaccineTypeOptions = [
-  { label: i18n.t('vaccines.your-vaccine.vaccine-type-covid'), value: EVaccineTypes.COVID_VACCINE },
-  { label: i18n.t('vaccines.your-vaccine.vaccine-type-flu'), value: EVaccineTypes.SEASONAL_FLU },
-];
-
 export const VaccineTypeQuestion: IVaccineTypeQuestion<IProps, IVaccineDoseData> = (props: IProps) => {
+  const vaccineTypeOptions = [
+    { label: i18n.t('vaccines.your-vaccine.vaccine-type-covid'), value: EVaccineTypes.COVID_VACCINE },
+    { label: i18n.t('vaccines.your-vaccine.vaccine-type-flu'), value: EVaccineTypes.SEASONAL_FLU },
+  ];
+
   return (
     <RadioInput
       required

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import { vaccineService } from '@covid/core/vaccine/VaccineService';
+import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { AboutYourVaccineScreen } from '@covid/features';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
@@ -35,7 +35,6 @@ describe('AboutYourVaccineScreen tests', () => {
   });
 
   it('shows add mode if edit index not passed', async () => {
-    jest.spyOn(vaccineService, 'listVaccines').mockReturnValue(Promise.resolve([]));
     const elementBase = (
       <MockedNavigator Component={AboutYourVaccineScreen} initialParams={{ ...ROUTE_PARAM_PATIENT_ID }} />
     );
@@ -50,8 +49,7 @@ describe('AboutYourVaccineScreen tests', () => {
     });
   });
 
-  it('shows edit mode if edit index passed', async () => {
-    jest.spyOn(vaccineService, 'listVaccines').mockReturnValue(Promise.resolve([]));
+  it('shows edit mode if edit dose id passed', async () => {
     const elementBase = (
       <MockedNavigator
         Component={AboutYourVaccineScreen}
@@ -69,5 +67,20 @@ describe('AboutYourVaccineScreen tests', () => {
         'Add dose',
       );
     });
+  });
+
+  it('only renders vaccine type question on load', () => {
+    const elementBase = (
+      <MockedNavigator Component={AboutYourVaccineScreen} initialParams={{ ...ROUTE_PARAM_PATIENT_ID }} />
+    );
+    const elementWithRedux = <ReduxProvider store={store}>{elementBase}</ReduxProvider>;
+    const element = <ThemeProvider theme={theme}>{elementWithRedux}</ThemeProvider>;
+    const instance = renderer.create(element).root;
+
+    expect(instance.findByProps({ testID: 'input-your-vaccine-type' }).props.label).toContain(
+      'Are you logging a COVID or flu vaccine?',
+    );
+
+    expect(instance.findAllByType(RadioInput).length === 1);
   });
 });

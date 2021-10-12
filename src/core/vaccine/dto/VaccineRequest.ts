@@ -28,7 +28,7 @@ export type TDose = {
   id: string;
   vaccine: string;
   vaccine_type?: EVaccineTypes;
-  location: EVaccineLocations;
+  location: EVaccineLocations | null;
   sequence: number;
   date_taken_specific: string;
   brand: EVaccineBrands | null;
