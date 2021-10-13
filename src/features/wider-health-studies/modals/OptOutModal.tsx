@@ -1,5 +1,6 @@
 import { BrandedButton, Modal, Text } from '@covid/components';
 import { ErrorText } from '@covid/components/Text';
+import Analytics, { events } from '@covid/core/Analytics';
 import { consentService } from '@covid/core/consent/ConsentService';
 import { patientService } from '@covid/core/patient/PatientService';
 import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
@@ -27,6 +28,7 @@ export const OptOutModal = React.memo((props: TProps) => {
     setLoading(true);
     setHasError(false);
     try {
+      Analytics.track(events.WIDER_HEALTH_STUDIES_OPT_OUT);
       await consentService.revokeConsentWiderHealthStudies();
       // This hack is implemented here to keep the backend simple and prevent the user from seeing
       // the menu overlay after opting out.

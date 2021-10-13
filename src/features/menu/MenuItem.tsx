@@ -1,5 +1,6 @@
 import { Text } from '@covid/components';
 import { WithNotificationDot } from '@covid/components/WithNotificationDot';
+import Analytics, { events } from '@covid/core/Analytics';
 import { sizes } from '@covid/themes';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
@@ -10,17 +11,22 @@ type TIconProps = {
 
 interface IProps {
   IconComponent: React.ComponentType<TIconProps>;
+  analyticsName: string;
   label: string;
   onPress: () => void;
+  showDot?: boolean;
   sidenote?: string;
   sidenoteColor?: 'gray' | 'blue';
-  showDot?: boolean;
   testID?: string;
 }
 
 export function MenuItem(props: IProps) {
+  const onPress = React.useCallback(() => {
+    Analytics.track(events.CLICK_DRAWER_MENU_ITEM, { name: props.analyticsName });
+    props.onPress();
+  }, [props.analyticsName, props.onPress]);
   return (
-    <TouchableOpacity onPress={props.onPress} style={styles.touchable} testID={props.testID}>
+    <TouchableOpacity onPress={onPress} style={styles.touchable} testID={props.testID}>
       <WithNotificationDot showDot={!!props.showDot}>
         <props.IconComponent maxDimension={20} />
       </WithNotificationDot>
