@@ -142,7 +142,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
 
   const [displayLocation, setDisplayLocation] = React.useState<string>('your area');
   const [mapUrl, setMapUrl] = React.useState<string | null>(null);
-  const [showEmptyState, setShowEmptyState] = React.useState<boolean>(true);
+  const [showEmpty, setShowEmpty] = React.useState<boolean>(true);
   const [useCartoMap, setUseCartoMap] = React.useState<boolean>(true);
   const [html, setHtml] = React.useState<string>('');
 
@@ -159,14 +159,14 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
 
     // Show empty state if data is missing
     if (!localData) {
-      setShowEmptyState(true);
+      setShowEmpty(true);
       return;
     }
 
     // Show to up date local data
     setDisplayLocation(localData!.name);
     setMapUrl(localData!.mapUrl);
-    setShowEmptyState(false);
+    setShowEmpty(false);
 
     // Update carto's map center if map url isn't avaliable
     if (!hasMapUrl) {
@@ -196,23 +196,25 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
 
   const syncMapCenter = () => {
     // Set defaults center
-    const { lat, lng } = DEFAULT_MAP_CENTER;
-    let config = { coordinates: { lat, lng }, zoom: ZOOM_LEVEL_FURTHER };
+    let config = {
+      coordinates: { lat: DEFAULT_MAP_CENTER.lat, lng: DEFAULT_MAP_CENTER.lng },
+      zoom: ZOOM_LEVEL_FURTHER,
+    };
 
     // Use data from API
     if (localData?.mapConfig) {
-      const { lat, lng } = localData.mapConfig!;
-      config = { coordinates: { lat, lng }, zoom: ZOOM_LEVEL_CLOSER };
+      config = {
+        coordinates: { lat: localData.mapConfig.lat, lng: localData.mapConfig.lng },
+        zoom: ZOOM_LEVEL_CLOSER,
+      };
     }
 
     setTMapConfig(config);
   };
 
-  const onMapEvent = (type: string) => {
-    switch (type) {
-      case 'mapLoaded':
-        syncMapCenter();
-        break;
+  const onEvent = (type: string) => {
+    if (type === 'mapLoaded') {
+      syncMapCenter();
     }
   };
 
@@ -220,7 +222,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
     if (useCartoMap) {
       return (
         <WebView
-          onEvent={onMapEvent}
+          onEvent={onEvent}
           originWhitelist={['*']}
           pointerEvents="none"
           ref={webViewRef}
@@ -242,7 +244,7 @@ export function EstimatedCasesMapCard({ isSharing }: IProps) {
     NavigatorService.navigate('EstimatedCases');
   };
 
-  if (showEmptyState) {
+  if (showEmpty) {
     return (
       <EmptyView
         onPress={async () => {

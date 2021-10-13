@@ -1,7 +1,14 @@
 import Analytics from '@covid/core/Analytics';
 import { TScreenName } from '@covid/core/Coordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
-import { CommonActions, NavigationContainerRef, NavigationState, Route, StackActions } from '@react-navigation/native';
+import {
+  CommonActions,
+  DrawerActions,
+  NavigationContainerRef,
+  NavigationState,
+  Route,
+  StackActions,
+} from '@react-navigation/native';
 
 let navigation: NavigationContainerRef;
 let currentRouteName = '';
@@ -36,35 +43,49 @@ function push<RouteName extends TScreenName>(routeName: RouteName, params?: TScr
   navigation?.dispatch(StackActions.push(routeName, params));
 }
 
+function openDrawer() {
+  navigation?.dispatch(DrawerActions.openDrawer());
+}
+
+function closeDrawer() {
+  navigation?.dispatch(DrawerActions.closeDrawer());
+}
+
 function handleStateChange() {
-  const state = navigation?.getRootState();
-  if (!state) return;
+  const rootState = navigation?.getRootState();
 
-  const previousRouteName = currentRouteName;
-  const newRouteName = getCurrentRouteName(state);
+  if (rootState) {
+    const previousRouteName = currentRouteName;
+    const newRouteName = getCurrentRouteName(rootState);
 
-  if (newRouteName) {
-    if (previousRouteName !== newRouteName) {
-      Analytics.trackScreenView(newRouteName);
+    if (newRouteName) {
+      if (previousRouteName !== newRouteName) {
+        Analytics.trackScreenView(newRouteName);
+      }
+      currentRouteName = newRouteName;
     }
-    currentRouteName = newRouteName;
   }
 }
 
 const getCurrentRouteName = (navigationState: NavigationState): string | null => {
-  if (!navigationState) return null;
+  if (!navigationState) {
+    return null;
+  }
 
   const route = navigationState.routes[navigationState.index];
   if (route.state) {
+    // @ts-expect-error
     return getCurrentRouteName(route.state);
   }
   return route.name;
 };
 
 export default {
+  closeDrawer,
   goBack,
   handleStateChange,
   navigate,
+  openDrawer,
   push,
   replace,
   reset,

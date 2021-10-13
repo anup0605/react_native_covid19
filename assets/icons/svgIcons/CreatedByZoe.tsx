@@ -1,13 +1,15 @@
+import { IIconProps } from '@assets/icons/svgIcons/types';
+import { determineDimensions } from '@assets/utils';
 import * as React from 'react';
 import { G, Path, Polygon, Svg } from 'react-native-svg';
 
-interface IProps {
-  color?: string;
-}
+const defaultWidth = 94;
+const defaultHeight = 12;
 
-function CreatedByZoe({ color = '#ffffff' }: IProps) {
+export default function CreatedByZoe({ color = '#ffffff', ...props }: IIconProps) {
+  const { width, height } = determineDimensions(props, defaultWidth, defaultHeight);
   return (
-    <Svg height="12px" viewBox="0 0 94 12" width="94px">
+    <Svg fill="none" height={height} viewBox="0 0 94 12" width={width}>
       <G fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
         <G fill={color} id="Group">
           <Path
@@ -79,5 +81,3 @@ function CreatedByZoe({ color = '#ffffff' }: IProps) {
     </Svg>
   );
 }
-
-export default CreatedByZoe;

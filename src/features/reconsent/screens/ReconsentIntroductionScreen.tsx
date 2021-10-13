@@ -11,7 +11,7 @@ import { StyleSheet, View } from 'react-native';
 export default function ReconsentIntroductionScreen() {
   return (
     <ReconsentScreen
-      hideBackButton
+      noHeader
       buttonOnPress={() => NavigatorService.navigate('ReconsentDiseasePreferences')}
       buttonTitle={i18n.t('reconsent.introduction.button')}
       testID="reconsent-introduction-screen"

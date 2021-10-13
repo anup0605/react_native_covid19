@@ -37,8 +37,8 @@ export default function CovidTestListScreen(props: IProps) {
   const [error, setError] = React.useState<string>();
   const [showOnboardingModal, setShowOnboardingModal] = React.useState<boolean>(false);
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
-
   const windowDimensions = useWindowDimensions();
+
   const minTabViewHeight = SINGLE_TEST_ROW_HEIGHT * 5;
   const tabViewHeight = windowDimensions.height - HEIGHT_OF_STATIC_CONTENT;
 

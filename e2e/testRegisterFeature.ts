@@ -36,6 +36,8 @@ export function testRegisterFeature(config: TRegisterConfig) {
       } catch (_) {}
 
       await scrollDownToId('scroll-view-consent-screen', 'button-agree');
+      // The agree button sometimes appears just off screen
+      await element(by.id('scroll-view-consent-screen')).scroll(150, 'down');
       await element(by.id('button-agree')).tap();
     });
 

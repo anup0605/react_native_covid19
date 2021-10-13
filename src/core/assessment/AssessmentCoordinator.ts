@@ -32,10 +32,7 @@ export class AssessmentCoordinator extends Coordinator {
   appCoordinator: AppCoordinator;
 
   screenFlow: Partial<TScreenFlow> = {
-    AboutYourVaccineOld: () => {
-      NavigatorService.goBack();
-    },
-    AboutYourVaccineUpdated: () => {
+    AboutYourVaccine: () => {
       NavigatorService.goBack();
     },
     CovidTestConfirm: () => {
@@ -44,16 +41,12 @@ export class AssessmentCoordinator extends Coordinator {
     CovidTestList: () => {
       // After finishing with COVID Tests, we check to ask about Vaccines.
       if (this.patientData.patientState.shouldShowVaccineList) {
-        // Note that VaccineList is currently a "feature toggle placeholder" that uses startupInfo to use old/new UI
-        NavigatorService.navigate('VaccineListFeatureToggle', {
+        NavigatorService.navigate('VaccineList', {
           assessmentData: this.assessmentData,
         });
       } else {
         NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });
       }
-    },
-    VaccineListFeatureToggle: () => {
-      NavigatorService.navigate('HowYouFeel', { assessmentData: this.assessmentData });
     },
     GeneralSymptoms: () => {
       NavigatorService.navigate('HeadSymptoms', { assessmentData: this.assessmentData });
@@ -181,13 +174,13 @@ export class AssessmentCoordinator extends Coordinator {
     });
   };
 
-  goToAddEditVaccine = (vaccine?: TVaccineRequest, index?: number) => {
+  goToAddEditVaccine = (vaccine?: TVaccineRequest, id?: string) => {
     if (vaccine) {
       this.assessmentData.vaccineData = vaccine;
     }
-    return NavigatorService.navigate('AboutYourVaccineFeatureToggle', {
+    return NavigatorService.navigate('AboutYourVaccine', {
       assessmentData: this.assessmentData,
-      editIndex: index,
+      editDoseId: id,
     });
   };
 

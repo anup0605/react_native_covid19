@@ -1,89 +1,92 @@
-import { ClickableText, RegularBoldText, RegularText } from '@covid/components/Text';
+import { Text } from '@covid/components';
+import { ELegalCardType, LegalCard } from '@covid/components/cards/LegalCard';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
+import i18n from '@covid/locale/i18n';
+import NavigatorService from '@covid/NavigatorService';
+import { sizes } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { colors } from '@theme';
 import * as React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 type TProps = {
   navigation: StackNavigationProp<TScreenParamList, 'Consent'>;
   route: RouteProp<TScreenParamList, 'Consent'>;
+  setAgreed: (agreed: boolean) => void;
   style?: StyleProp<ViewStyle>;
-  setAgreed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ConsentScreenGB: React.FC<TProps> = ({ navigation, route, setAgreed, style }) => {
-  const onInfoLinkPress = React.useCallback(
-    () => openWebLink('https://www.nhs.uk/conditions/coronavirus-covid-19/'),
-    [],
-  );
+const hitSlop = {
+  bottom: 20,
+  top: 20,
+};
 
-  const onPrivacyPolicyPress = React.useCallback(
-    () => navigation.navigate('PrivacyPolicyUK', { viewOnly: route.params?.viewOnly }),
-    [navigation.navigate, route.params?.viewOnly],
-  );
+const cards = [
+  ELegalCardType.FightCovid19,
+  ELegalCardType.AdvanceScience,
+  ELegalCardType.ImproveHealth,
+  ELegalCardType.BuildProducts,
+];
 
+export const ConsentScreenGB: React.FC<TProps> = React.memo((props: TProps) => {
   React.useEffect(() => {
-    setAgreed(true);
+    props.setAgreed(true);
   }, []);
 
+  const onPrivacyPolicyPress = () => NavigatorService.navigate('PrivacyPolicyUK');
+
+  const onInformationSheetPress = () => openWebLink('https://covid.joinzoe.com/wider-health-studies-infosheet');
+
   return (
-    <View style={style}>
-      <RegularText>
-        By using this app and tracking if you are well or have symptoms, you will be helping medical science and the NHS
-        to better understand Coronavirus (COVID-19) and helping us follow the spread of the virus.
-        {'\n\n'}
-        This app allows you to help others, but does not give health advice. If you need health advice please visit the
-        NHS website:{' '}
-        <ClickableText onPress={onInfoLinkPress} testID="info-link">
-          https://www.nhs.uk/conditions/coronavirus-covid-19/
-        </ClickableText>
-        {'\n'}
-      </RegularText>
-
-      <RegularBoldText>Information sharing{'\n'}</RegularBoldText>
-      <RegularText>
-        This app is designed by doctors and scientists at Kings’ College London, Guys and St Thomas’ Hospitals and Zoe
-        Global Limited, a health technology company. They have access to the information you enter, which may also be
-        shared with the NHS and other medical researchers as outlined in our{' '}
-        <ClickableText onPress={onPrivacyPolicyPress} testID="privacy-policy1">
-          privacy notice
-        </ClickableText>
-        .{'\n\n'}
-        {'\n'}
-        No information you share will be used for commercial purposes. An anonymous code will be used to replace your
-        personal details when sharing information with other researchers.
-      </RegularText>
-
-      <RegularBoldText>
-        {'\n'}
-        Your consent
-        {'\n'}
-      </RegularBoldText>
-      <RegularText>
-        By clicking below, you consent to our using the personal information we collect through your use of this app in
-        the way we have described.
-        {'\n\n'}
-        We may share your data with medical research collaborators outside the UK (eg Harvard Medical School). Before
-        sharing any of your data with any medical researcher outside of the UK, we will remove your name, phone number
-        if provided, email address and anonymise your full postcode by removing the inward code (last three characters)
-        or mapping it to an LSOA code to protect your privacy. By clicking below, you consent to us sharing your
-        personal information on this basis.
-        {'\n\n'}
-        We adhere to the General Data Protection Regulation ‘GDPR’. For more information about how we use and share
-        personal information about you, please see our{' '}
-        <ClickableText onPress={onPrivacyPolicyPress} testID="privacy-policy2">
-          privacy notice
-        </ClickableText>
-        .{'\n\n'}
-        You may withdraw your consent at any time by emailing{' '}
-        <RegularBoldText>leavecovidtracking@joinzoe.com</RegularBoldText>
-        {'\n\n'}
-        Any questions may be sent to <RegularBoldText>covidtrackingquestions@joinzoe.com</RegularBoldText>
-      </RegularText>
+    <View style={props.style}>
+      <Text rhythm={24} style={styles.center} textClass="h3Light">
+        {i18n.t('consent-normal-uk.title')}
+      </Text>
+      <Text rhythm={24} style={[styles.center, styles.secondaryColour]} textClass="pLight">
+        {i18n.t('consent-normal-uk.subtitle')}
+      </Text>
+      {cards.map((type, i) => (
+        <LegalCard index={i} key={`legal-card-${type}`} type={type} />
+      ))}
+      <TouchableOpacity
+        hitSlop={hitSlop}
+        onPress={onPrivacyPolicyPress}
+        style={styles.marginTop}
+        testID="button-privacy-notice"
+      >
+        <Text style={styles.externalLink} textClass="pSmallLight">
+          {i18n.t('reconsent.request-consent.privacy-notice')}{' '}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        hitSlop={hitSlop}
+        onPress={onInformationSheetPress}
+        style={styles.marginTop}
+        testID="button-information-sheet"
+      >
+        <Text style={styles.externalLink} textClass="pSmallLight">
+          {i18n.t('reconsent.request-consent.information-sheet')}{' '}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
-};
+});
 
-export default React.memo(ConsentScreenGB);
+const styles = StyleSheet.create({
+  center: {
+    textAlign: 'center',
+  },
+  externalLink: {
+    color: colors.darkblue,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
+  marginTop: {
+    marginTop: sizes.xl,
+  },
+  secondaryColour: {
+    color: colors.secondary,
+  },
+});

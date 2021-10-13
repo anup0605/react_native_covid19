@@ -1,4 +1,3 @@
-import { Divider } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import { isGBCountry, isSECountry } from '@covid/core/localisation/LocalisationService';
 import PushNotificationService from '@covid/core/push-notifications/PushNotificationService';
@@ -6,37 +5,41 @@ import { TRootState } from '@covid/core/state/root';
 import { selectStartupInfo } from '@covid/core/state/selectors';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
-import { EDrawerMenuItem, LinkItem } from '@covid/features/menu/DrawerMenuItem';
+import { LinkItem } from '@covid/features/menu/LinkItem';
 import { useLogout } from '@covid/features/menu/useLogout';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
+import { colors } from '@theme';
 import * as React from 'react';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = ({ navigation }) => {
-  const logout = useLogout(navigation);
+function openPushNotificationSettings() {
+  PushNotificationService.openSettings();
+}
+
+type TProps = {
+  navigation: DrawerNavigationHelpers;
+};
+
+export const LinksSection: React.FC<TProps> = (props: TProps) => {
+  const logout = useLogout(props.navigation);
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
-  function goToPrivacy() {
-    Analytics.track(events.CLICK_DRAWER_MENU_ITEM, {
-      name: EDrawerMenuItem.PRIVACY_POLICY,
-    });
+  const goToPrivacy = React.useCallback(() => {
     if (isGBCountry()) {
-      navigation.navigate('PrivacyPolicyUK', { viewOnly: true });
+      props.navigation.navigate('PrivacyPolicyUK', { viewOnly: true });
     } else if (isSECountry()) {
-      navigation.navigate('PrivacyPolicySV', { viewOnly: true });
+      props.navigation.navigate('PrivacyPolicySV', { viewOnly: true });
     } else {
-      navigation.navigate('PrivacyPolicyUS', { viewOnly: true });
+      props.navigation.navigate('PrivacyPolicyUS', { viewOnly: true });
     }
-  }
+  }, [props.navigation]);
 
-  function goToTesting() {
-    navigation.navigate('TestingMode');
-  }
+  const goToTesting = React.useCallback(() => props.navigation.navigate('TestingMode'), [props.navigation]);
 
-  function showDeleteAlert() {
+  const showDeleteAlert = React.useCallback(() => {
     Alert.alert(
       i18n.t('delete-data-alert-title'),
       i18n.t('delete-data-alert-text'),
@@ -48,9 +51,6 @@ export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = (
         {
           onPress: async () => {
             Analytics.track(events.DELETE_ACCOUNT_DATA);
-            Analytics.track(events.CLICK_DRAWER_MENU_ITEM, {
-              name: EDrawerMenuItem.DELETE_MY_DATA,
-            });
             await userService.deleteRemoteUserData();
             logout();
           },
@@ -60,40 +60,40 @@ export const LinksSection: React.FC<{ navigation: DrawerNavigationHelpers }> = (
       ],
       { cancelable: false },
     );
-  }
-
-  async function openPushNotificationSettings() {
-    Analytics.track(events.CLICK_DRAWER_MENU_ITEM, {
-      name: EDrawerMenuItem.TURN_ON_REMINDERS,
-    });
-    await PushNotificationService.openSettings();
-  }
+  }, [logout]);
 
   return (
     <>
-      <Divider styles={styles.divider} />
+      <View style={styles.divider} />
 
-      <LinkItem onPress={openPushNotificationSettings} type={EDrawerMenuItem.TURN_ON_REMINDERS} />
+      <LinkItem
+        analyticsName="TURN_ON_REMINDERS"
+        label={i18n.t('push-notifications')}
+        onPress={openPushNotificationSettings}
+      />
 
-      <LinkItem link={i18n.t('blog-link')} type={EDrawerMenuItem.RESEARCH_UPDATE} />
+      <LinkItem analyticsName="RESEARCH_UPDATE" label={i18n.t('research-updates')} link={i18n.t('blog-link')} />
 
-      <LinkItem link={i18n.t('faq-link')} type={EDrawerMenuItem.FAQ} />
+      <LinkItem analyticsName="FAQ" label={i18n.t('faqs')} link={i18n.t('faq-link')} />
 
-      <LinkItem onPress={goToPrivacy} type={EDrawerMenuItem.PRIVACY_POLICY} />
+      <LinkItem analyticsName="PRIVACY_POLICY" label={i18n.t('privacy-policy')} onPress={goToPrivacy} />
 
-      <LinkItem onPress={showDeleteAlert} type={EDrawerMenuItem.DELETE_MY_DATA} />
+      <LinkItem analyticsName="DELETE_MY_DATA" label={i18n.t('delete-my-data')} onPress={showDeleteAlert} />
 
-      {startupInfo?.is_tester ? <LinkItem onPress={goToTesting} type={EDrawerMenuItem.TESTING_MODE} /> : null}
+      {startupInfo?.is_tester ? (
+        <LinkItem analyticsName="TESTING_MODE" label={i18n.t('testing-mode')} onPress={goToTesting} />
+      ) : null}
 
-      <Divider styles={styles.divider} />
+      <View style={styles.divider} />
     </>
   );
 };
 
 const styles = StyleSheet.create({
   divider: {
-    borderBottomWidth: 1,
-    marginHorizontal: 0,
+    backgroundColor: colors.backgroundFour,
+    height: 1,
     marginVertical: sizes.l,
+    width: '100%',
   },
 });

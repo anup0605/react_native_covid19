@@ -35,7 +35,7 @@ export function ProfileCard(props: TProps) {
       <LastReported timeAgo={props.profile.last_reported_at} />
       {props.onEditPressed ? (
         <TouchableOpacity onPress={props.onEditPressed}>
-          <SecondaryText style={styles.secondaryText}>{i18n.t('nav-edit-profile')}</SecondaryText>
+          <SecondaryText style={styles.secondaryText}>{i18n.t('menu.item-edit-profile')}</SecondaryText>
         </TouchableOpacity>
       ) : null}
     </Card>

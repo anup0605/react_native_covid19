@@ -1,6 +1,6 @@
 import { colors, fontStyles } from '@theme';
 import * as React from 'react';
-import { ImageStyle, StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { ImageStyle, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
 
 import { ITest } from './types';
 
@@ -36,16 +36,16 @@ interface IColourHighlightHeaderTextTextProps {
   highlightColor?: any;
 }
 // Basic component that allows single colour highlighted text - wrap the marked text with **
-export const ColourHighlightHeaderTextText = ({ text, style, highlightColor }: IColourHighlightHeaderTextTextProps) => {
-  const textParts: string[] = text.split('*');
-  let highlightedText: boolean = !!text.startsWith('*');
+export const ColourHighlightHeaderTextText = (props: IColourHighlightHeaderTextTextProps) => {
+  const textParts: string[] = props.text.split('*');
+  let highlightedText: boolean = !!props.text.startsWith('*');
   return (
-    <Text style={[fontStyles.h2Reg, style]}>
+    <Text style={[fontStyles.h2Reg, props.style]}>
       {textParts
         .filter((text: string) => text)
         .map((text: string) => {
           const node: React.ReactNode = (
-            <Text style={{ color: highlightedText ? highlightColor : fontStyles.h2Reg.color }}>{text}</Text>
+            <Text style={{ color: highlightedText ? props.highlightColor : fontStyles.h2Reg.color }}>{text}</Text>
           );
           highlightedText = !highlightedText;
           return node;
@@ -71,18 +71,21 @@ interface IRegularTextWithBoldInsertsProps {
   style?: StyleProp<ViewStyle | TextStyle | ImageStyle>;
 }
 
-export const RegularTextWithBoldInserts = ({ text, style }: IRegularTextWithBoldInsertsProps) => {
-  const textParts: string[] = text.split('*');
-  let boldText: boolean = !!text.startsWith('*');
+export const RegularTextWithBoldInserts = (props: IRegularTextWithBoldInsertsProps) => {
+  const textParts: string[] = props.text.split('*');
+  let boldText: boolean = !!props.text.startsWith('*');
   return (
-    <Text style={style}>
+    <Text style={props.style}>
       {textParts
         .filter((text: string) => text)
-        .map((text: string) => {
+        .map((text: string, index: number) => {
+          const key = `bold-text-${index}`;
           const node: React.ReactNode = boldText ? (
-            <Text style={{ fontWeight: '600' }}>{text}</Text>
+            <Text key={key} style={{ fontWeight: '600' }}>
+              {text}
+            </Text>
           ) : (
-            <Text>{text}</Text>
+            <Text key={key}>{text}</Text>
           );
           boldText = !boldText;
           return node;
@@ -128,10 +131,6 @@ export const ClickableText = ({ style, children, onPress, testID }: IClickableTe
   </Text>
 );
 
-export const Divider: React.FC<{ styles?: StyleProp<ViewStyle> }> = ({ styles: passed }) => (
-  <View style={[styles.divider, passed]} />
-);
-
 export const LabelText = ({ style, children }: IProps) => <Text style={[fontStyles.label, style]}>{children}</Text>;
 export const LabelSecondaryText = ({ style, children }: IProps) => (
   <Text style={[fontStyles.labelSecondary, style]}>{children}</Text>
@@ -145,10 +144,6 @@ const styles = StyleSheet.create({
   deleteText: {
     ...fontStyles.bodyReg,
     color: colors.red,
-  },
-  divider: {
-    borderBottomWidth: 2,
-    borderColor: colors.backgroundFour,
   },
   errorText: {
     ...fontStyles.bodyReg,

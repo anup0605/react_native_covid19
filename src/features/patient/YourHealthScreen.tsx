@@ -127,7 +127,7 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
     takesImmunosuppressants: Yup.string().required(),
   });
 
-  onSubmit(values: IYourHealthData) {
+  onSubmit = (values: IYourHealthData) => {
     const currentPatient = patientCoordinator.patientData?.patientState;
     const infos = this.createPatientInfos(values);
 
@@ -152,9 +152,9 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
       .catch(() => {
         this.setState({ errorMessage: 'Something went wrong, please try again later' });
       });
-  }
+  };
 
-  private createPatientInfos(formData: IYourHealthData) {
+  createPatientInfos = (formData: IYourHealthData) => {
     const smokerStatus = formData.smokerStatus === 'no' ? 'never' : formData.smokerStatus;
     let infos = {
       has_asthma: formData.hasAsthma === 'yes',
@@ -224,7 +224,7 @@ export default class YourHealthScreen extends React.Component<TProps, TState> {
     }
 
     return infos;
-  }
+  };
 
   render() {
     const smokerStatusItems = [

@@ -7,13 +7,15 @@ import { Formik } from 'formik';
 import * as React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
+const onSubmit = () => {};
+
 storiesOf('Text input', module).add('default', () => (
   <ScrollView>
     <Formik
       initialValues={{
         input: '',
       }}
-      onSubmit={() => {}}
+      onSubmit={onSubmit}
     >
       {(props) => (
         <View style={{ marginHorizontal: sizes.m }}>
@@ -41,7 +43,7 @@ storiesOf('Text input', module).add('multi-line', () => (
       initialValues={{
         input: '',
       }}
-      onSubmit={() => {}}
+      onSubmit={onSubmit}
     >
       {(props) => (
         <View style={{ marginHorizontal: sizes.m }}>

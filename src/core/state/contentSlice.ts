@@ -7,7 +7,7 @@ import {
 } from '@covid/core/content/dto/ContentAPIContracts';
 import { predictiveMetricsClient } from '@covid/core/content/PredictiveMetricsClient';
 import { TRootState } from '@covid/core/state/root';
-import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { TActiveNotifications, TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { createAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 
@@ -142,11 +142,33 @@ export const searchTrendLine = createAsyncThunk('content/search_trend_line', asy
   };
 });
 
-export const updateTodayDate = createAction('context/update_today_date');
+type TUpdateActiveNotificationAction = {
+  notification: keyof TActiveNotifications;
+  value: boolean;
+};
+
+export const updateTodayDate = createAction('content/update_today_date');
 export const addDismissCallout = createAction<string>('content/dismissed_callout');
+export const updateActiveNotification = createAction<TUpdateActiveNotificationAction>('content/active_notifications');
+export const updateMenuNotificationsOnboardingSeen = createAction<boolean>(
+  'content/menu_notifications_onboarding_seen',
+);
 
 export const contentSlice = createSlice({
   extraReducers: {
+    [updateMenuNotificationsOnboardingSeen.type]: (current, action: PayloadAction<boolean>) => {
+      if (current.startupInfo) {
+        current.startupInfo!.menu_notifications_onboarding_seen = action.payload;
+      }
+    },
+    [updateActiveNotification.type]: (current, action: PayloadAction<TUpdateActiveNotificationAction>) => {
+      if (current.startupInfo) {
+        current.startupInfo!.active_notifications = {
+          ...current.startupInfo!.active_notifications,
+          [action.payload.notification]: action.payload.value,
+        };
+      }
+    },
     [updateTodayDate.type]: (current) => {
       current.todayDate = todaysDate();
     },

@@ -15,6 +15,16 @@ type TProps = {
 };
 
 export const CovidTestRow: React.FC<TProps> = ({ item, testID }) => {
+  const testResult = React.useMemo(() => {
+    if (item.result) {
+      return item.result;
+    }
+    if (item.anti_n) {
+      return item.anti_n === 'positive' || item.anti_s === 'positive' ? 'positive' : item.anti_n;
+    }
+    return 'waiting';
+  }, [item.result, item.anti_n, item.anti_s]);
+
   const formatTestResult = (result: string) => {
     switch (result) {
       case 'positive':
@@ -54,12 +64,10 @@ export const CovidTestRow: React.FC<TProps> = ({ item, testID }) => {
       style={styles.itemTouchable}
       testID={testID}
     >
-      <Image source={getRowIcon(item.result)} style={styles.tick} />
-      <RegularText style={[item.result === 'waiting' && styles.pendingText]}>{formatTestDate(item)}</RegularText>
+      <Image source={getRowIcon(testResult)} style={styles.tick} />
+      <RegularText style={[testResult === 'waiting' && styles.pendingText]}>{formatTestDate(item)}</RegularText>
       <View style={{ flex: 1 }} />
-      <RegularText style={[item.result === 'waiting' && styles.pendingText]}>
-        {formatTestResult(item.result)}
-      </RegularText>
+      <RegularText style={[testResult === 'waiting' && styles.pendingText]}>{formatTestResult(testResult)}</RegularText>
       <Image source={chevronRight} style={styles.chevron} />
     </TouchableOpacity>
   );

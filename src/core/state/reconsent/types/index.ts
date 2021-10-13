@@ -30,9 +30,16 @@ export type TFeedbackData = {
   [key in TFeedbackId]?: string;
 };
 
+export type TReturnScreenName = 'Dashboard' | 'Menu';
+
 export type TReconsentState = {
   diseasePreferences: TDiseasePreferencesData;
   feedbackData: TFeedbackData;
+  returnScreenName?: TReturnScreenName;
+};
+
+export type TUpdateReturnScreenNameAction = {
+  returnScreenName: TReturnScreenName;
 };
 
 export type TUpdateFeedbackAction = {
@@ -43,4 +50,8 @@ export type TUpdateFeedbackAction = {
 export type TUpdateDiseasePreferenceAction = {
   diseaseId: TDiseaseId;
   value: boolean;
+};
+
+export type TSetDiseasePreferencesAction = {
+  diseasePreferences: TDiseasePreferencesData;
 };

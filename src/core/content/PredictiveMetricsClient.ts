@@ -31,13 +31,13 @@ class PredictiveMetricsClient implements IPredictiveMetricsClient {
   }
 
   async getDailyCases(): Promise<string> {
-    const { uk_incidence } = await this.apiClient.get<TIncidenceResponse>('/latest/incidence.json');
-    return uk_incidence;
+    const response = await this.apiClient.get<TIncidenceResponse>('/latest/incidence.json');
+    return response.uk_incidence;
   }
 
   async getActiveCases(): Promise<string> {
-    const { uk_prevalence } = await this.apiClient.get<TPrevalenceResponse>('/latest/prevalence.json');
-    return uk_prevalence;
+    const response = await this.apiClient.get<TPrevalenceResponse>('/latest/prevalence.json');
+    return response.uk_prevalence;
   }
 }
 

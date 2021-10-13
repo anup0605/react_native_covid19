@@ -1,14 +1,16 @@
+import { IIconProps } from '@assets/icons/svgIcons/types';
+import { determineDimensions } from '@assets/utils';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-interface IProps {
-  color?: string;
-}
+const defaultWidth = 36;
+const defaultHeight = 35;
 
-export default function Cell({ color = colors.darkblue }: IProps) {
+export default function Cell({ color = colors.darkblue, ...props }: IIconProps) {
+  const { width, height } = determineDimensions(props, defaultWidth, defaultHeight);
   return (
-    <Svg fill="none" height="35" viewBox="0 0 36 35" width="36">
+    <Svg fill="none" height={height} viewBox="0 0 36 35" width={width}>
       <Path
         d="M17.9961 35C13.3564 34.9937 8.90862 33.1473 5.6286 29.8658C2.34859 26.5843 0.504168 22.1357 0.5 17.4961C0.510418 12.8605 2.35759 8.41794 5.63694 5.14155C8.91628 1.86516 13.3605 0.0219884 17.9961 0.0157471C22.6317 0.0219884 27.0758 1.86516 30.3552 5.14155C33.6345 8.41794 35.4817 12.8605 35.4921 17.4961C35.4879 22.1357 33.6435 26.5843 30.3635 29.8658C27.0835 33.1473 22.6357 34.9937 17.9961 35ZM17.9961 1.59126C13.7777 1.59542 9.73302 3.27194 6.7487 6.25331C3.76437 9.23468 2.08385 13.2777 2.07551 17.4961C2.0776 21.7185 3.75535 25.7676 6.74036 28.7541C9.72536 31.7405 13.7736 33.4203 17.9961 33.4245C22.2185 33.4203 26.2668 31.7405 29.2518 28.7541C32.2368 25.7676 33.9145 21.7185 33.9166 17.4961C33.9083 13.2777 32.2278 9.23468 29.2434 6.25331C26.2591 3.27194 22.2144 1.59542 17.9961 1.59126Z"
         fill={color}

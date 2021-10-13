@@ -32,22 +32,21 @@ type TProps = {
 
 type TSelectProfileCoordinator = (Coordinator & ISelectProfile) | (Coordinator & ISelectProfile & IEditableProfile);
 
-export default function SelectProfileScreen({ navigation, route }: TProps) {
-  const { status, error, isLoaded, isApiError, setIsApiError, setError, profiles, listProfiles, retryListProfiles } =
-    useProfileList();
-  const assessmentFlow = route.params?.assessmentFlow;
+export default function SelectProfileScreen(props: TProps) {
+  const profileList = useProfileList();
+  const assessmentFlow = props.route.params?.assessmentFlow;
   const coordinator: TSelectProfileCoordinator = appCoordinator;
   const config = localisationService.getConfig();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   React.useEffect(() => {
-    return navigation.addListener('focus', listProfiles);
-  }, [navigation]);
+    return props.navigation.addListener('focus', profileList.listProfiles);
+  }, [props.navigation]);
 
   const getNextAvatarName = async (): Promise<string> => {
-    if (profiles) {
-      const n = (profiles.length + 1) % NUMBER_OF_PROFILE_AVATARS;
+    if (profileList.profiles) {
+      const n = (profileList.profiles.length + 1) % NUMBER_OF_PROFILE_AVATARS;
       return `profile${n.toString()}`;
     }
     return DEFAULT_PROFILE;
@@ -61,8 +60,8 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
     try {
       callback(profile);
     } catch (error) {
-      setIsApiError(true);
-      setError(error);
+      profileList.setIsApiError(true);
+      profileList.setError(error);
 
       // TODO Dont think this works properly
       setTimeout(() => {
@@ -72,11 +71,11 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
   };
 
   function onProfileSelected(profile: TProfile) {
-    getPatientThen(profile, (profile) => {
+    getPatientThen(profile, (selectedProfile) => {
       if (assessmentFlow) {
-        coordinator.profileSelected(profile);
+        coordinator.profileSelected(selectedProfile);
       } else {
-        (coordinator as IEditableProfile).startEditProfile(profile);
+        (coordinator as IEditableProfile).startEditProfile(selectedProfile);
       }
     });
   }
@@ -117,20 +116,20 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
               }
             : undefined
         }
-        error={error}
-        isApiError={isApiError}
-        isLoaded={isLoaded}
+        error={profileList.error}
+        isApiError={profileList.isApiError}
+        isLoaded={profileList.isLoaded}
         onProfileSelected={onProfileSelected}
-        onRetry={() => retryListProfiles()}
-        profiles={profiles}
+        onRetry={() => profileList.retryListProfiles()}
+        profiles={profileList.profiles}
         renderItem={(profile, i) => (
           <ProfileCard
             index={i}
             onEditPressed={
               assessmentFlow
                 ? () => {
-                    getPatientThen(profile, (profile) => {
-                      (coordinator as IEditableProfile).startEditProfile(profile);
+                    getPatientThen(profile, (pressedProfile) => {
+                      (coordinator as IEditableProfile).startEditProfile(pressedProfile);
                     });
                   }
                 : undefined
@@ -139,7 +138,7 @@ export default function SelectProfileScreen({ navigation, route }: TProps) {
             testID={`profile-card-${i}`}
           />
         )}
-        status={status}
+        status={profileList.status}
       />
 
       {startupInfo?.is_tester ? (

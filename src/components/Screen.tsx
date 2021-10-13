@@ -23,7 +23,8 @@ interface IProps {
   footerLoading?: boolean;
   footerOnPress?: () => void;
   footerTitle?: string;
-  hideBackButton?: boolean;
+  noHeader?: boolean;
+  noKeyboardDismiss?: boolean;
   noPadding?: boolean;
   noScrollView?: boolean;
   profile?: TProfile;
@@ -34,30 +35,36 @@ interface IProps {
 }
 
 function renderHeader(props: IProps) {
+  if (props.noHeader) {
+    return null;
+  }
   if (props.renderHeader) {
     return props.renderHeader(props);
   }
   if (props.profile) {
     return <PatientHeader profile={props.profile} simpleCallout={props.simpleCallout} />;
   }
-  if (!props.hideBackButton) {
-    return <NavHeader />;
-  }
-  return null;
+  return <NavHeader />;
 }
 
 function renderBody(props: IProps) {
-  return props.noScrollView ? (
-    <View style={styles.flex}>{props.children}</View>
-  ) : (
+  if (props.noScrollView) {
+    return <View style={styles.flex}>{props.children}</View>;
+  }
+  const content = <View style={styles.view}>{props.children}</View>;
+  return (
     <ScrollView
       alwaysBounceVertical={false}
       contentContainerStyle={props.noPadding ? styling.flexGrow : styles.contentContainer}
       testID={`scroll-view-${props.testID || 'screen'}`}
     >
-      <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-        <View style={styles.view}>{props.children}</View>
-      </TouchableWithoutFeedback>
+      {props.noKeyboardDismiss ? (
+        content
+      ) : (
+        <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+          {content}
+        </TouchableWithoutFeedback>
+      )}
     </ScrollView>
   );
 }

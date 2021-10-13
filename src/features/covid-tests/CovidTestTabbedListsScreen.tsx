@@ -25,11 +25,12 @@ const Tab = createMaterialTopTabNavigator();
 
 function CovidListByType(props: ICovidListByTypeProps) {
   const renderItem = ({ item, index }: { item: TCovidTest; index: number }) => {
-    return <CovidTestRow item={item} key={item.id} testID={`covid-test-row-${index}`} />;
+    return <CovidTestRow item={item} key={item.id} testID={`covid-test-row-${item.mechanism}-${index}`} />;
   };
 
   return (
     <FlatList
+      nestedScrollEnabled
       scrollEnabled
       contentContainerStyle={{ backgroundColor: colors.backgroundPrimary }}
       data={props.covidTests}
@@ -39,7 +40,7 @@ function CovidListByType(props: ICovidListByTypeProps) {
   );
 }
 
-const GUTTER = 65;
+const GUTTER = 50;
 const MIN_TAB_WIDTH = 85;
 
 export default function CovidTestTabbedListsScreen(props: IProps) {

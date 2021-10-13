@@ -15,8 +15,12 @@ import { selectStartupInfo } from '@covid/core/state/selectors';
 import { useAppDispatch } from '@covid/core/state/store';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { appCoordinator } from '@covid/features/AppCoordinator';
+import { CollapsibleHeaderScrollView } from '@covid/features/dashboard/CollapsibleHeaderScrollView';
+import { CompactHeader } from '@covid/features/dashboard/CompactHeader';
+import { ExpandedHeader } from '@covid/features/dashboard/ExpandedHeader';
 import { getDietStudyDoctorImage, getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
+import { useStartReconsent } from '@covid/features/wider-health-studies/hooks/useStartReconsent';
 import i18n from '@covid/locale/i18n';
 import { pushNotificationService } from '@covid/services';
 import { colors, sizes, styling } from '@covid/themes';
@@ -28,11 +32,10 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CollapsibleHeaderScrollView } from './CollapsibleHeaderScrollView';
-import { CompactHeader, Header } from './Header';
-
-const HEADER_EXPANDED_HEIGHT = 328;
-const HEADER_COLLAPSED_HEIGHT = 100;
+const headerConfig = {
+  compact: sizes.headerCompactHeight,
+  expanded: sizes.headerExpandedHeight,
+};
 
 interface IProps {
   navigation: DrawerNavigationProp<TScreenParamList>;
@@ -41,10 +44,7 @@ interface IProps {
 
 const pushService: IPushTokenEnvironment = new ExpoPushTokenEnvironment();
 
-const headerConfig = {
-  compact: HEADER_COLLAPSED_HEIGHT,
-  expanded: HEADER_EXPANDED_HEIGHT,
-};
+const onMoreDetails = () => openWebLink('https://covid.joinzoe.com/data');
 
 export function DashboardScreen({ navigation, route }: IProps) {
   const dispatch = useDispatch();
@@ -53,22 +53,9 @@ export function DashboardScreen({ navigation, route }: IProps) {
     (state) => state.school.joinedSchoolGroups,
   );
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
-
   const [showTrendline, setShowTrendline] = React.useState<boolean>(false);
-
-  const onReport = async () => {
-    await appCoordinator.gotoNextScreen(route.name);
-  };
-
-  const onMoreDetails = async () => {
-    openWebLink('https://covid.joinzoe.com/data');
-  };
-
-  const onExploreTrendline = async () => {
-    appCoordinator.goToTrendline();
-  };
-
   const [shouldShowReminders, setShouldShowReminders] = React.useState(false);
+  const startReconsent = useStartReconsent();
 
   // TODO: Can we move this into app initialisation?
   React.useEffect(() => {
@@ -98,31 +85,29 @@ export function DashboardScreen({ navigation, route }: IProps) {
 
   React.useEffect(() => {
     if (startupInfo?.show_research_consent) {
-      setTimeout(() => appCoordinator.goToReconsent(), 500);
+      setTimeout(() => startReconsent('Dashboard'), 500);
     }
   }, []);
 
+  const onPressReport = React.useCallback(() => appCoordinator.gotoNextScreen(route.name), []);
+
+  const compactHeader = React.useMemo(() => <CompactHeader onPress={onPressReport} />, []);
+  const expandedHeader = React.useMemo(() => <ExpandedHeader onPress={onPressReport} />, []);
+
   return (
-    <CollapsibleHeaderScrollView
-      compactHeader={<CompactHeader reportOnPress={onReport} />}
-      config={headerConfig}
-      expandedHeader={<Header reportOnPress={onReport} />}
-      navigation={navigation}
-    >
+    <CollapsibleHeaderScrollView compactHeader={compactHeader} config={headerConfig} expandedHeader={expandedHeader}>
       <View style={styles.calloutContainer}>
         {shouldShowReminders ? (
           <ExternalCallout
             aspectRatio={1244.0 / 368.0}
             calloutID="notificationReminders"
             imageSource={notificationReminders}
-            postClicked={() => {
-              PushNotificationService.openSettings();
-            }}
+            postClicked={PushNotificationService.openSettings}
             screenName={route.name}
           />
         ) : null}
 
-        {showTrendline ? <TrendlineCard onPress={onExploreTrendline} /> : null}
+        {showTrendline ? <TrendlineCard onPress={appCoordinator.goToTrendline} /> : null}
 
         <EstimatedCasesMapCard />
 
@@ -150,7 +135,7 @@ export function DashboardScreen({ navigation, route }: IProps) {
             doctorName={i18n.t('diet-study.doctor-name')}
             doctorTitle={i18n.t('diet-study.doctor-title')}
             imageNode={getDietStudyDoctorImage()}
-            onPress={() => appCoordinator.goToDietStudy()}
+            onPress={appCoordinator.goToDietStudy}
             style={styling.marginVerticalSmall}
             tagColor="blue"
             title={i18n.t('diet-study.results-ready')}

@@ -1,8 +1,10 @@
 import {
   TDiseaseId,
   TReconsentState,
+  TSetDiseasePreferencesAction,
   TUpdateDiseasePreferenceAction,
   TUpdateFeedbackAction,
+  TUpdateReturnScreenNameAction,
 } from '@covid/core/state/reconsent/types';
 import { TRootState } from '@covid/core/state/root';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -13,9 +15,10 @@ const initialFeedbackData = {};
 export const initialStateReconsent: TReconsentState = {
   diseasePreferences: initialDiseasePreferences,
   feedbackData: initialFeedbackData,
+  returnScreenName: undefined,
 };
 
-const reconsentSlice = createSlice({
+export const reconsentSlice = createSlice({
   initialState: initialStateReconsent,
   name: 'ReconsentState',
   reducers: {
@@ -26,6 +29,10 @@ const reconsentSlice = createSlice({
     resetFeedback: (state) => ({
       ...state,
       feedbackData: initialFeedbackData,
+    }),
+    setDiseasePreferences: (state, action: PayloadAction<TSetDiseasePreferencesAction>) => ({
+      ...state,
+      diseasePreferences: action.payload.diseasePreferences,
     }),
     updateDiseasePreference: (state, action: PayloadAction<TUpdateDiseasePreferenceAction>) => ({
       ...state,
@@ -41,16 +48,30 @@ const reconsentSlice = createSlice({
         [action.payload.feedbackId]: action.payload.value,
       },
     }),
+    updateReturnScreenName: (state, action: PayloadAction<TUpdateReturnScreenNameAction>) => ({
+      ...state,
+      returnScreenName: action.payload.returnScreenName,
+    }),
   },
 });
 
-export const { resetDiseasePreferences, resetFeedback, updateDiseasePreference, updateFeedback } =
-  reconsentSlice.actions;
+export const {
+  resetDiseasePreferences,
+  resetFeedback,
+  updateDiseasePreference,
+  updateFeedback,
+  updateReturnScreenName,
+  setDiseasePreferences,
+} = reconsentSlice.actions;
 export const selectFeedbackData = (state: TRootState) => state.reconsent.feedbackData || initialFeedbackData;
 export const selectDiseasePreferences = (state: TRootState) =>
   state.reconsent.diseasePreferences || initialDiseasePreferences;
-export const selectDiseasesChosen = (state: TRootState) =>
-  (Object.keys(state.reconsent.diseasePreferences) as TDiseaseId[]).filter(
-    (diseaseId) => state.reconsent.diseasePreferences[diseaseId] === true && diseaseId !== 'prefer_not_to_say',
-  );
-export default reconsentSlice.reducer;
+export const selectDiseasesActivated = (reconsentState: TReconsentState) =>
+  reconsentState.diseasePreferences
+    ? (Object.keys(reconsentState.diseasePreferences) as TDiseaseId[]).filter(
+        (diseaseId) => reconsentState.diseasePreferences[diseaseId] === true && diseaseId !== 'prefer_not_to_say',
+      )
+    : [];
+export const selectReturnScreenName = (state: TRootState) => state.reconsent.returnScreenName;
+export const selectReconsentState = (state: TRootState) => state.reconsent;
+export const reconsentReducer = reconsentSlice.reducer;

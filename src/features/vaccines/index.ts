@@ -1,9 +1,6 @@
-export { AboutYourVaccineFeatureToggleScreen } from './AboutYourVaccineFeatureToggleScreen';
-export { AboutYourVaccineScreenOld } from './AboutYourVaccineScreenOld';
-export { AboutYourVaccineScreenUpdated } from './AboutYourVaccineScreenUpdated';
+export { AboutYourVaccineScreen } from './AboutYourVaccineScreen';
 export { VaccineDoseSymptomsScreen } from './VaccineDoseSymptomsScreen';
 export { VaccineFindInfoScreen } from './VaccineFindInfoScreen';
-export { VaccineListFeatureToggleScreen } from './VaccineListFeatureToggleScreen';
-export { VaccineListScreenOld } from './VaccineListScreenOld';
-export { VaccineListScreenUpdated } from './VaccineListScreenUpdated';
+export { VaccineListScreen } from './VaccineListScreen';
 export { VaccineLogSymptomsInfoScreen } from './VaccineLogSymptomsInfoScreen';
+export { VaccineTabbedListsScreen } from './VaccineTabbedListsScreen';

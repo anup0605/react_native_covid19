@@ -55,22 +55,22 @@ export default class PushNotificationService {
   async subscribeForPushNotifications() {
     try {
       // Always look to our local storage first.
-      let notify_backend = false;
+      let notifyBackend = false;
       let pushToken = await this.getSavedPushToken();
 
       if (!pushToken) {
         // We don't even have a push token yet - fetch one!
         pushToken = await this.fetchProviderPushToken();
-        notify_backend = true;
+        notifyBackend = true;
         Analytics.track(Analytics.events.NOTIFICATION_ENABLED);
       } else if (this.tokenNeedsRefreshing(pushToken)) {
         // We need to re-fetch because it's been a while and might have changed.
         pushToken = await this.fetchProviderPushToken();
-        notify_backend = true;
+        notifyBackend = true;
         Analytics.track(Analytics.events.NOTIFICATION_REFRESHED);
       }
 
-      if (notify_backend && pushToken) {
+      if (notifyBackend && pushToken) {
         // Send to our backend first and save locally only once successful.
         await pushNotificationApiClient.updatePushToken(pushToken);
         await this.savePushToken(pushToken);

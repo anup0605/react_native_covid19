@@ -1,7 +1,5 @@
 # ZOE COVID Study
 
-[![Coverage Status](https://coveralls.io/repos/github/zoe/covid-tracker-react-native/badge.svg?branch=selvach/coverage)](https://coveralls.io/github/zoe/covid-tracker-react-native?branch=selvach/coverage)
-
 ## Table of Contents
 
 - [About The Project](#about-the-project)
@@ -26,9 +24,9 @@
   <img src="docs/images/screenshot_5.png" width="180" />
 </p>
 
-The ZOE COVID Study is an open source Android and iOS app whose goal is to stop the spread of COVID-19 disease and help identify people who are at risk sooner. 
+The ZOE COVID Study is an open source Android and iOS app whose goal is to stop the spread of COVID-19 disease and help identify people who are at risk sooner.
 
-The App is available in the UK, US and Sweden on the [Apple App Store](https://apps.apple.com/gb/app/covid-symptom-tracker/id1503529611) and [Google Play Store](https://play.google.com/store/apps/details?id=com.joinzoe.covid_zoe). It was launched in late March, 2020 and has over 4 million contributors. It's available free and works on most smartphones and tablets. To find at more, see https://covid.joinzoe.com. 
+The App is available in the UK, US and Sweden on the [Apple App Store](https://apps.apple.com/gb/app/covid-symptom-tracker/id1503529611) and [Google Play Store](https://play.google.com/store/apps/details?id=com.joinzoe.covid_zoe). It was launched in late March, 2020 and has over 4 million contributors. It's available free and works on most smartphones and tablets. To find at more, see https://covid.joinzoe.com.
 
 The ZOE COVID Study was designed by doctors and scientists at King's College London, Guys and St Thomas’ Hospitals working in partnership with ZOE Global Ltd – a health science company.
 
@@ -41,19 +39,17 @@ If you're doing research on COVID-19 and you want to contribute or believe this 
 
 ## Getting Started
 
-
 ### Prerequisites
 
 - yarn
 - cocopods
-
 
 ```sh
 # Install node.js / npm
 https://nodejs.org/en/
 
 # Install Homebrew
-https://brew.sh/ 
+https://brew.sh/
 
 # Yarn
 npm install --global yarn
@@ -90,7 +86,7 @@ echo "{}" > google-services.json
 
 ### Run the Mock Server (External Contributors)
 
-Start the mock server in a different terminal. 
+Start the mock server in a different terminal.
 
 The address of the mock-server should be added as API_URL in the .env file.
 
@@ -110,7 +106,6 @@ yarn ios
 yarn android
 ```
 
-
 ## Tests
 
 Run unit & integration tests
@@ -119,16 +114,18 @@ Run unit & integration tests
 yarn test
 ```
 
-Run the Detox E2E tests (iOS only as of April 2021) 
+Run the Detox E2E tests (iOS only as of April 2021)
 
 [Set up Detox](https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md) Pay attention to the iOS dependencies!
-   
+
 Build a binary with Detox - this will be used by the test suite to conduct your tests:
+
 ```bash
 detox build
 ```
 
 Then run the tests:
+
 ```bash
 detox test
 ```
@@ -137,7 +134,6 @@ detox test
 
 Please refer to the [contributing guidelines](CONTRIBUTING.md).
 
-
 ## Storybook
 
 We are trying to embrace Component Driven Design. To develop
@@ -145,7 +141,6 @@ We are trying to embrace Component Driven Design. To develop
 1. Set `ENABLE_STORYBOOK=true` in `App.tsx`
 
 1. Start the storybook server with `npm run storybook`. This will open a webpage where you can flip through the stories in this project, after you've connected a iOS or Android device via `expo start`.
-
 
 ## Git usage
 
@@ -172,7 +167,6 @@ Contributions are what make the open source community such an amazing place to l
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
 
 ## License
 

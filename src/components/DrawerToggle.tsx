@@ -1,42 +1,39 @@
-import { menuIcon } from '@assets';
-import { TScreenName } from '@covid/core/Coordinator';
-import { TScreenParamList } from '@covid/features/ScreenParamList';
+import { Menu } from '@assets/icons/Menu';
+import { WithNotificationDot } from '@covid/components/WithNotificationDot';
+import { selectStartupInfo } from '@covid/core/state/selectors';
 import { sizes } from '@covid/themes';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { colors } from '@theme';
 import * as React from 'react';
-import { Image, ImageStyle, StyleProp, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
+import { useSelector } from 'react-redux';
 
 type TProps = {
-  navigation: DrawerNavigationProp<TScreenParamList, TScreenName>;
-  style?: StyleProp<ImageStyle>;
+  onPress: () => void;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
 };
 
-export const DrawerToggle: React.FC<TProps> = (props) => (
-  <TouchableOpacity
-    accessible
-    accessibilityLabel="Menu"
-    accessibilityRole="button"
-    onPress={() => {
-      props.navigation.toggleDrawer();
-    }}
-    testID={props.testID}
-  >
-    <Image source={menuIcon} style={[styles.menuIcon, props.style]} />
-  </TouchableOpacity>
-);
+const hitSlop = {
+  bottom: 12,
+  left: 12,
+  right: 12,
+  top: 12,
+};
 
-const styles = StyleSheet.create({
-  indicator: {
-    position: 'absolute',
-    right: 0,
-  },
-  menuIcon: {
-    alignSelf: 'flex-end',
-    height: sizes.drawerToggle,
-    marginRight: sizes.m,
-    tintColor: colors.primary,
-    width: sizes.drawerToggle,
-  },
+export const DrawerToggle: React.FC<TProps> = React.memo((props) => {
+  const startupInfo = useSelector(selectStartupInfo);
+  return (
+    <TouchableOpacity
+      accessible
+      accessibilityLabel="Menu"
+      accessibilityRole="button"
+      hitSlop={hitSlop}
+      onPress={props.onPress}
+      style={props.style}
+      testID={props.testID}
+    >
+      <WithNotificationDot showDot={!!startupInfo?.active_notifications?.notifications_wider_health_studies}>
+        <Menu height={sizes.drawerToggle} width={sizes.drawerToggle} />
+      </WithNotificationDot>
+    </TouchableOpacity>
+  );
 });

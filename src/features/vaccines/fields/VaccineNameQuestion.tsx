@@ -14,9 +14,7 @@ import { View } from 'react-native';
 import { IVaccineDoseData } from './VaccineDoseQuestion';
 
 interface IProps {
-  firstDose?: boolean;
   formikProps: FormikProps<IVaccineDoseData>;
-  showUpdatedVersion?: boolean;
 }
 
 interface IVaccineNameQuestion<P, Data> extends React.FC<P> {
@@ -24,15 +22,7 @@ interface IVaccineNameQuestion<P, Data> extends React.FC<P> {
 }
 
 export const VaccineNameQuestion: IVaccineNameQuestion<IProps, IVaccineDoseData> = (props: IProps) => {
-  const gbVaccineOptionsBase = [
-    { label: vaccineBrandDisplayName[EVaccineBrands.PFIZER], value: EVaccineBrands.PFIZER },
-    { label: vaccineBrandDisplayName[EVaccineBrands.ASTRAZENECA], value: EVaccineBrands.ASTRAZENECA },
-    { label: vaccineBrandDisplayName[EVaccineBrands.MODERNA], value: EVaccineBrands.MODERNA },
-    { label: vaccineBrandDisplayName[EVaccineBrands.JOHNSON], value: EVaccineBrands.JOHNSON },
-    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: EVaccineBrands.NOT_SURE },
-  ];
-
-  const gbVaccineOptionsUpdated = [
+  const gbVaccineOptions = [
     { label: vaccineBrandDisplayName[EVaccineBrands.PFIZER], value: EVaccineBrands.PFIZER },
     { label: vaccineBrandDisplayName[EVaccineBrands.ASTRAZENECA], value: EVaccineBrands.ASTRAZENECA },
     { label: vaccineBrandDisplayName[EVaccineBrands.MODERNA], value: EVaccineBrands.MODERNA },
@@ -41,40 +31,22 @@ export const VaccineNameQuestion: IVaccineNameQuestion<IProps, IVaccineDoseData>
     { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: EVaccineBrands.NOT_SURE },
   ];
 
-  const gbVaccineOptions = props.showUpdatedVersion ? gbVaccineOptionsUpdated : gbVaccineOptionsBase;
-
-  const seVaccineOptionsBase = [
+  const seVaccineOptions = [
     { label: vaccineBrandDisplayName[EVaccineBrands.PFIZER], value: EVaccineBrands.PFIZER },
     { label: vaccineBrandDisplayName[EVaccineBrands.ASTRAZENECA], value: EVaccineBrands.ASTRAZENECA },
     { label: vaccineBrandDisplayName[EVaccineBrands.MODERNA], value: EVaccineBrands.MODERNA },
     { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: EVaccineBrands.NOT_SURE },
   ];
 
-  const seVaccineOptions = seVaccineOptionsBase;
-
-  const usVaccineOptionsBase = [
-    { label: vaccineBrandDisplayName[EVaccineBrands.PFIZER], value: EVaccineBrands.PFIZER },
-    { label: vaccineBrandDisplayName[EVaccineBrands.JOHNSON], value: EVaccineBrands.JOHNSON },
-    { label: vaccineBrandDisplayName[EVaccineBrands.MODERNA], value: EVaccineBrands.MODERNA },
-    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: EVaccineBrands.NOT_SURE },
-  ];
-
-  const usVaccineOptionsUpdated = [
+  const usVaccineOptions = [
     { label: vaccineBrandDisplayName[EVaccineBrands.PFIZER], value: EVaccineBrands.PFIZER },
     { label: vaccineBrandDisplayName[EVaccineBrands.JOHNSON], value: EVaccineBrands.JOHNSON },
     { label: vaccineBrandDisplayName[EVaccineBrands.MODERNA], value: EVaccineBrands.MODERNA },
     { label: i18n.t('vaccines.your-vaccine.name-trial'), value: EVaccineBrands.TRIAL },
     { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: EVaccineBrands.NOT_SURE },
   ];
-
-  const usVaccineOptions = props.showUpdatedVersion ? usVaccineOptionsUpdated : usVaccineOptionsBase;
 
   const nameOptions = isGBCountry() ? gbVaccineOptions : isSECountry() ? seVaccineOptions : usVaccineOptions;
-
-  const descriptionOptions = [
-    { label: 'mRNA', value: 'mrna' },
-    { label: i18n.t('vaccines.your-vaccine.name-i-dont-know'), value: 'not_sure' },
-  ];
 
   const placeboOptions = [
     { label: i18n.t('vaccines.your-vaccine.placebo-yes'), value: EPlaceboStatus.YES },
@@ -83,10 +55,10 @@ export const VaccineNameQuestion: IVaccineNameQuestion<IProps, IVaccineDoseData>
   ];
 
   const renderNameInput = () => {
-    const brandField = props.firstDose ? props.formikProps.values.firstBrand : props.formikProps.values.secondBrand;
-    const brandString = props.firstDose ? 'firstBrand' : 'secondBrand';
-    const brandTouched = props.firstDose ? props.formikProps.touched.firstBrand : props.formikProps.touched.secondBrand;
-    const brandError = props.firstDose ? props.formikProps.errors.firstBrand : props.formikProps.errors.secondBrand;
+    const brandField = props.formikProps.values.brand;
+    const brandString = 'brand';
+    const brandTouched = props.formikProps.touched.brand;
+    const brandError = props.formikProps.errors.brand;
 
     return (
       <RadioInput
@@ -101,57 +73,6 @@ export const VaccineNameQuestion: IVaccineNameQuestion<IProps, IVaccineDoseData>
     );
   };
 
-  const renderNameInputUpdated = () => {
-    const brandField = props.formikProps.values.brand;
-    const brandString = 'brand';
-    const brandTouched = props.formikProps.touched.brand;
-    const brandError = props.formikProps.errors.brand;
-
-    return (
-      <RadioInput
-        required
-        error={brandTouched ? brandError : ''}
-        items={nameOptions}
-        label={i18n.t('vaccines.your-vaccine.label-name-updated')}
-        onValueChange={props.formikProps.handleChange(brandString)}
-        selectedValue={brandField}
-        testID="input-your-vaccine"
-      />
-    );
-  };
-
-  // Only for old version
-  const renderDescriptionInput = () => {
-    // Use value of relevant brand to show (or not) the description field
-    const brandField = props.firstDose ? props.formikProps.values.firstBrand : props.formikProps.values.secondBrand;
-    if (brandField !== 'not_sure') {
-      return null;
-    }
-
-    const descriptionField = props.firstDose
-      ? props.formikProps.values.firstDescription
-      : props.formikProps.values.secondDescription;
-    const descriptionString = props.firstDose ? 'firstDescription' : 'secondDescription';
-    const descriptionTouched = props.firstDose
-      ? props.formikProps.touched.firstDescription
-      : props.formikProps.touched.secondDescription;
-    const descriptionError = props.firstDose
-      ? props.formikProps.errors.firstDescription
-      : props.formikProps.errors.secondDescription;
-
-    return (
-      <RadioInput
-        required
-        error={descriptionTouched ? descriptionError : ''}
-        items={descriptionOptions}
-        label={i18n.t('vaccines.your-vaccine.label-name-other')}
-        onValueChange={props.formikProps.handleChange(descriptionString)}
-        selectedValue={descriptionField}
-      />
-    );
-  };
-
-  // Only for updated version
   const renderPlaceboInput = () => {
     const brandField = props.formikProps.values.brand;
     if (brandField !== 'vaccine_trial') {
@@ -177,17 +98,14 @@ export const VaccineNameQuestion: IVaccineNameQuestion<IProps, IVaccineDoseData>
 
   return (
     <>
-      {props.showUpdatedVersion ? <View>{renderNameInputUpdated()}</View> : <View>{renderNameInput()}</View>}
-      {props.showUpdatedVersion ? <View>{renderPlaceboInput()}</View> : <View>{renderDescriptionInput()}</View>}
+      <View>{renderNameInput()}</View>
+      <View>{renderPlaceboInput()}</View>
     </>
   );
 };
 
 VaccineNameQuestion.initialFormValues = (vaccine?: TVaccineRequest): Partial<IVaccineDoseData> => {
   return {
-    firstBrand: vaccine?.doses[0]?.brand,
-    firstDescription: vaccine?.doses[0]?.description,
-    secondBrand: vaccine?.doses[1]?.brand,
-    secondDescription: vaccine?.doses[1]?.description,
+    brand: vaccine?.brand,
   };
 };

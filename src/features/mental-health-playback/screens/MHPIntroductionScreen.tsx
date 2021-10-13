@@ -1,5 +1,5 @@
 import Info from '@assets/mental-health-playback/Info';
-import Introduction, { defaultWidth as introductionWidth } from '@assets/mental-health-playback/Introduction';
+import Introduction from '@assets/mental-health-playback/Introduction';
 import { Text } from '@covid/components';
 import Card from '@covid/components/cards/Card';
 import { Screen } from '@covid/components/Screen';
@@ -39,7 +39,7 @@ export default function MHPIntroductionScreen() {
       footerTitle={i18n.t('mental-health-playback.introduction.button')}
       testID="mhp-introduction-screen"
     >
-      <Introduction scale={windowWidth / introductionWidth} />
+      <Introduction width={windowWidth} />
       <View style={[styling.padding, styling.marginVerticalAuto]}>
         <Card backgroundColor="#F5F9FC" style={styling.marginBottom}>
           <Text style={styling.marginBottom} textClass="h4">

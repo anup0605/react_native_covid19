@@ -50,16 +50,13 @@ const styles = StyleSheet.create({
   darkLabel: {
     color: colors.brand,
   },
-
   lightLabel: {
     color: colors.white,
   },
-
   outlineContainer: {
     borderColor: colors.brand,
     borderWidth: 1,
   },
-
   outlineLabel: {
     color: colors.brand,
   },

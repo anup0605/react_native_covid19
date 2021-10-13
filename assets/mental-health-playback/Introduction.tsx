@@ -1,25 +1,16 @@
+import { determineDimensions, TIconDimensionConfig } from '@assets/utils';
 import * as React from 'react';
 import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
 
-export const defaultWidth = 375;
+const defaultWidth = 375;
 const defaultHeight = 196;
 
-interface IProps {
-  height?: number;
-  scale?: number;
-  width?: number;
-}
+type TProps = TIconDimensionConfig;
 
-export default function Introduction(props: IProps) {
-  const width = props.width === undefined ? defaultWidth : props.width;
-  const height = props.height === undefined ? defaultHeight : props.height;
+export default function Introduction(props: TProps) {
+  const { width, height } = determineDimensions(props, defaultWidth, defaultHeight);
   return (
-    <Svg
-      fill="none"
-      height={props.scale ? height * props.scale : height}
-      viewBox="0 0 375 196"
-      width={props.scale ? width * props.scale : width}
-    >
+    <Svg fill="none" height={height} viewBox="0 0 375 196" width={width}>
       <Path
         d="M375 97.07s-70.08 16.337-190.49 24.442C64.1 129.617 0 196 0 196v-64.422s33.27-47.77 183.66-76.611C334.05 26.125 375 0 375 0v97.07z"
         fill="#F5F9FC"
