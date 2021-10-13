@@ -447,27 +447,27 @@ workflows:
       #     message: 'Awaiting manual approval to deploy native apps to staging'
       #     context: slack-ci-covid-mobile
       # END DISABLED FOR IOS 15 BUG
-      # - adhoc-release-approval:
-      #     name: 'Adhoc approval'
-      #     filters: *develop_filter
-      #     type: approval
+      - adhoc-release-approval:
+          name: 'Adhoc approval'
+          filters: *develop_filter
+          type: approval
       - build:
           name: 'Adhoc build'
           filters: *develop_filter
-          #requires:
-          #  - Adhoc approval
+          requires:
+            - Adhoc approval
       - deploy-ios:
           name: 'Adhoc iOS'
           filters: *develop_filter
           context: react-covid-tracker-stage
           requires:
             - Adhoc build
-      # - deploy-android:
-      #     name: 'Adhoc Android'
-      #     filters: *develop_filter
-      #     context: react-covid-tracker-stage
-      #     requires:
-      #       - Adhoc build
+      - deploy-android:
+          name: 'Adhoc Android'
+          filters: *develop_filter
+          context: react-covid-tracker-stage
+          requires:
+            - Adhoc build
       # DISABLED FOR IOS 15 BUG
       # - deployed-stage:
       #     name: 'Stage apps published'
