@@ -8,6 +8,7 @@ import { testRegisterFeature } from './testRegisterFeature';
 import { testReportTodayFeature } from './testReportTodayFeature';
 import { testSelectCountryScreen } from './testSelectCountryScreen';
 import { testWelcomeScreen } from './testWelcomeScreen';
+import { testWiderHealthStudies } from './testWiderHealthStudies';
 
 jest.setTimeout(60000);
 
@@ -37,44 +38,45 @@ testSelectCountryScreen({
   endWithCountry: 'GB',
   testAllCountries: false,
 });
-testRegisterFeature({
-  emailAddress: tempEmailAddress,
-  password: defaultPassword,
-  phoneNumber: tempPhoneNumber,
-});
-testReconsentFeature({
-  consent: false,
-  fillInAllFeedback: false,
-  fillInFeedback: ['im_only_interested_in_fighting_covid_19_right_now', 'other'],
-  privacyPolicyView: true,
-  reconsider: false,
-  selectAllDiseases: false,
-  selectDiseases: [
-    'research_consent_dementia',
-    'research_consent_nutrition_and_gut_health',
-    'research_consent_womens_health',
-    'research_consent_autoimmune_conditions',
-  ],
-});
-testLogoutFeature();
+// testRegisterFeature({
+//   emailAddress: tempEmailAddress,
+//   password: defaultPassword,
+//   phoneNumber: tempPhoneNumber,
+// });
+// testReconsentFeature({
+//   consent: false,
+//   fillInAllFeedback: false,
+//   fillInFeedback: ['im_only_interested_in_fighting_covid_19_right_now', 'other'],
+//   privacyPolicyView: true,
+//   reconsider: false,
+//   selectAllDiseases: false,
+//   selectDiseases: [
+//     'research_consent_dementia',
+//     'research_consent_nutrition_and_gut_health',
+//     'research_consent_womens_health',
+//     'research_consent_autoimmune_conditions',
+//   ],
+// });
+// testLogoutFeature();
 testLoginScreen({
   emailAddress: defaultEmailAddress,
   password: defaultPassword,
 });
-testCreateNewProfileFeature({
-  profileName,
-});
-testReportTodayFeature({
-  addTest: false,
-  addVaccine: false,
-  healthy: false,
-  updateTest: false,
-});
-testReportTodayFeature({
-  addAndUpdateZoeInviteTest: true,
-  addTest: true,
-  addVaccine: true,
-  healthy: true,
-  updateTest: true,
-});
-testLogoutFeature();
+testWiderHealthStudies();
+// testCreateNewProfileFeature({
+//   profileName,
+// });
+// testReportTodayFeature({
+//   addTest: false,
+//   addVaccine: false,
+//   healthy: false,
+//   updateTest: false,
+// });
+// testReportTodayFeature({
+//   addAndUpdateZoeInviteTest: true,
+//   addTest: true,
+//   addVaccine: true,
+//   healthy: true,
+//   updateTest: true,
+// });
+// testLogoutFeature();

@@ -4,7 +4,7 @@ import { by, element } from 'detox';
 
 export function testLogoutFeature() {
   describe('Test the logout functionality', () => {
-    it('should open the profile screen', async () => {
+    it('should open the drawer/menu', async () => {
       await element(by.id('drawer-toggle')).tap();
     });
     it('should logout the user', async () => {

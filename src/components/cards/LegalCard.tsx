@@ -14,12 +14,13 @@ export enum ELegalCardType {
 
 type TProps = {
   index: number;
+  testID?: string;
   type: ELegalCardType;
 };
 
 export function LegalCard(props: TProps) {
   return (
-    <View style={props.index === 0 ? styles.firstCard : styles.card}>
+    <View style={props.index === 0 ? styles.firstCard : styles.card} testID={props.testID}>
       <Text rhythm={8} style={styles.darkBlue} textClass="h4Medium">
         {props.index + 1}
         {'. '}

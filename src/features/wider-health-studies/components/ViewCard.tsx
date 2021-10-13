@@ -8,19 +8,24 @@ type TProps = {
   buttonText: string;
   description: string;
   onPress: () => void;
+  testID?: string;
   title: string;
 };
 
 export function ViewCard(props: TProps) {
   return (
-    <Card useShadow>
+    <Card useShadow testID={props.testID}>
       <Text inverted colorPalette="uiDark" colorShade="darker" textClass="pMedium">
         {props.title}
       </Text>
       <Text inverted colorPalette="uiDark" colorShade="dark" style={styles.description} textClass="pLight">
         {props.description}
       </Text>
-      <OutlineButton onPress={props.onPress} text={props.buttonText} />
+      <OutlineButton
+        onPress={props.onPress}
+        testID={props.testID && `button-${props.testID}`}
+        text={props.buttonText}
+      />
     </Card>
   );
 }

@@ -16,7 +16,7 @@ export default function DataConsentScreen() {
         {i18n.t('wider-health-studies.data-consent.description')}
       </Text>
       {cards.map((type, i) => (
-        <LegalCard index={i} key={`legal-card-${type}`} type={type} />
+        <LegalCard index={i} key={`${type}-legal-card`} testID={`${type}-legal-card`} type={type} />
       ))}
     </Screen>
   );

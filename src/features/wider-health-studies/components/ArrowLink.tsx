@@ -5,13 +5,14 @@ import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 type TProps = {
-  text: string;
   onPress: () => void;
+  testID?: string;
+  text: string;
 };
 
 export function ArrowLink(props: TProps) {
   return (
-    <TouchableOpacity onPress={props.onPress} style={styles.view}>
+    <TouchableOpacity onPress={props.onPress} style={styles.view} testID={props.testID}>
       <ArrowRight />
       <Text inverted colorPalette="actionSecondary" colorShade="main" style={styles.text} textClass="pMedium">
         {props.text}

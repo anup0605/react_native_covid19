@@ -418,7 +418,7 @@ workflows:
           requires:
             - Prod OTA approval
       - deployed-ota:
-          name: 'Prod OTA Deployed'
+          name: 'Prod OTA deployed'
           context: slack-ci-covid-mobile
           requires:
             - Prod OTA

@@ -7,11 +7,12 @@ import { StyleSheet } from 'react-native';
 type TProps = {
   onPress: () => void;
   text: string;
+  testID?: string;
 };
 
 export function OutlineButton(props: TProps) {
   return (
-    <BrandedButton onPress={props.onPress} style={styles.button}>
+    <BrandedButton onPress={props.onPress} style={styles.button} testID={props.testID}>
       <RegularText style={styles.text}>{props.text}</RegularText>
     </BrandedButton>
   );

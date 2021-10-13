@@ -51,6 +51,7 @@ export default function WiderHealthStudiesScreen() {
         buttonText={i18n.t('wider-health-studies.wider-health-studies.card-preferences.button')}
         description={i18n.t('wider-health-studies.wider-health-studies.card-preferences.description')}
         onPress={onPressPreferences}
+        testID="preferences-card"
         title={i18n.t('wider-health-studies.wider-health-studies.card-preferences.title')}
       />
       <View style={styles.marginTopM} />
@@ -58,10 +59,15 @@ export default function WiderHealthStudiesScreen() {
         buttonText={i18n.t('wider-health-studies.wider-health-studies.card-data.button')}
         description={i18n.t('wider-health-studies.wider-health-studies.card-data.description')}
         onPress={onPressData}
+        testID="data-card"
         title={i18n.t('wider-health-studies.wider-health-studies.card-data.title')}
       />
       <View style={styles.marginTopXL} />
-      <ArrowLink onPress={onPressPrivacyPolicy} text={i18n.t('reconsent.request-consent.privacy-notice')} />
+      <ArrowLink
+        onPress={onPressPrivacyPolicy}
+        text={i18n.t('reconsent.request-consent.privacy-notice')}
+        testID="privacy-notice-link"
+      />
       <View style={styles.marginTopL} />
       <ArrowLink onPress={onPressInformationSheet} text={i18n.t('reconsent.request-consent.information-sheet')} />
       <View style={styles.marginTopL} />
@@ -73,7 +79,11 @@ export default function WiderHealthStudiesScreen() {
           <View style={styles.marginTopL} />
           <Divider />
           <View style={styles.marginTopXL} />
-          <OutlineButton onPress={openModal} text={i18n.t('wider-health-studies.wider-health-studies.opt-out')} />
+          <OutlineButton
+            onPress={openModal}
+            text={i18n.t('wider-health-studies.wider-health-studies.opt-out')}
+            testID="opt-out-button"
+          />
         </>
       ) : null}
     </Screen>
