@@ -55,15 +55,17 @@ export const DrawerMenu: React.FC<TProps> = (props: TProps) => {
   const dispatch = useDispatch();
 
   const onPressWiderHealthStudies = React.useCallback(async () => {
-    // Don't wait on it to be finished because this user interaction should be instant.
-    patientService.updatePatientInfo(patientId, { notifications_wider_health_studies: false });
-    // But we also want the dot to be gone instantly.
-    dispatch(
-      updateActiveNotification({
-        notification: 'notifications_wider_health_studies',
-        value: false,
-      }),
-    );
+    if (startupInfo?.active_notifications?.notifications_wider_health_studies) {
+      // Don't wait on it to be finished because this user interaction should be instant.
+      patientService.updatePatientInfo(patientId, { notifications_wider_health_studies: false });
+      // But we also want the dot to be gone instantly.
+      dispatch(
+        updateActiveNotification({
+          notification: 'notifications_wider_health_studies',
+          value: false,
+        }),
+      );
+    }
     if (canOptInOfWiderHealthStudies) {
       startReconsent('Menu');
     } else {
@@ -93,6 +95,7 @@ export const DrawerMenu: React.FC<TProps> = (props: TProps) => {
         </View>
 
         <MenuItem
+          analyticsName="EDIT_PROFILE"
           IconComponent={EditProfilesIcon}
           label={i18n.t('menu.item-edit-profile')}
           onPress={onPressProfile}
@@ -100,6 +103,7 @@ export const DrawerMenu: React.FC<TProps> = (props: TProps) => {
         />
 
         <MenuItem
+          analyticsName="SHARE"
           IconComponent={ShareIcon}
           label={i18n.t('menu.item-share-this-app')}
           onPress={onPressShare}
@@ -108,6 +112,7 @@ export const DrawerMenu: React.FC<TProps> = (props: TProps) => {
 
         {isGBCountry() ? (
           <MenuItem
+            analyticsName="WIDER_HEALTH_STUDIES"
             IconComponent={HeartIcon}
             label={i18n.t('menu.item-wider-health-studies')}
             onPress={onPressWiderHealthStudies}
