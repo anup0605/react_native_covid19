@@ -1,10 +1,11 @@
 {
-  "name": "Covid",
+  "name": "covid",
   "version": "2.6.0",
   "private": true,
   "resolutions": {
     "browserslist": ">=4.16.5",
-    "react-devtools-core": "^4.13.4"
+    "react-devtools-core": "^4.13.4",
+    "@unimodules/react-native-adapter": "6.3.4"
   },
   "scripts": {
     "android": "yarn generate:git-hash && react-native run-android --variant=debug --appId=com.joinzoe.covid_zoe.qa",
@@ -100,11 +101,11 @@
     "moment": "2.29.1",
     "native-base": "2.13.14",
     "query-string": "6.11.1",
-    "react": "16.13.1",
+    "react": "17.0.2",
     "react-dom": "16.13.1",
-    "react-native": "0.63.3",
+    "react-native": "0.66.0",
     "react-native-calendar-picker": "6.1.5",
-    "react-native-config": "1.4.1",
+    "react-native-config": "1.4.4",
     "react-native-easy-markdown": "2.0.0",
     "react-native-fast-image": "8.3.4",
     "react-native-gesture-handler": "1.7.0",
@@ -120,7 +121,7 @@
     "react-native-svg": "12.1.0",
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-tab-view": "^2.16.0",
-    "react-native-unimodules": "0.11.0",
+    "react-native-unimodules": "0.14.8",
     "react-native-view-shot": "3.1.2",
     "react-native-webview": "11.0.3",
     "react-redux": "7.2.0",
@@ -141,7 +142,7 @@
     "yup": "0.28.5"
   },
   "devDependencies": {
-    "@babel/core": "7.0.0",
+    "@babel/core": "7.12.9",
     "@storybook/addon-actions": "5.3.19",
     "@storybook/addon-ondevice-actions": "5.3.19",
     "@storybook/react-native": "5.3.19",
@@ -165,7 +166,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
     "axios-mock-adapter": "^1.19.0",
-    "babel-jest": "25.2.6",
+    "babel-jest": "26.6.3",
     "babel-loader": "8.1.0",
     "babel-preset-expo": "8.3.0",
     "body-parser": "1.19.0",
@@ -196,7 +197,7 @@
     "jest-mock-axios": "^4.4.0",
     "logkitty": "0.7.1",
     "prettier": "^2.3.0",
-    "react-test-renderer": "16.13.1",
+    "react-test-renderer": "17.0.2",
     "redux-mock-store": "1.5.4",
     "ts-jest": "^26.4.4",
     "ts-node": "8.6.2",
