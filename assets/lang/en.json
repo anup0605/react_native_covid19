@@ -23,7 +23,7 @@
     "email-error": "Please correct your email address",
     "password-required": "Please enter a password",
     "password-too-simple": "Your password must be at least 8 characters long and not numbers only",
-    "something-went-wrong": "Something went wrong: %{msg}",
+    "something-went-wrong": "Something went wrong, please try again.",
     "error": "Error #01. Please report this to covid-bugs@joinzoe.com: %{msg}"
   },
   "login": {
