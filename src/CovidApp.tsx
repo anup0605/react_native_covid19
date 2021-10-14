@@ -34,7 +34,12 @@ const optionsMainScreen = { headerShown: false };
 
 function DrawerNavigator() {
   return (
-    <Drawer.Navigator drawerContent={drawerContent} drawerStyle={drawerStyle} screenOptions={screenOptions}>
+    <Drawer.Navigator
+      drawerContent={drawerContent}
+      drawerPosition="right"
+      drawerStyle={drawerStyle}
+      screenOptions={screenOptions}
+    >
       <Drawer.Screen component={MainNavigator} name="Main" options={optionsMainScreen} />
     </Drawer.Navigator>
   );
