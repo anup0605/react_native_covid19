@@ -107,8 +107,8 @@ commands:
             BUNDLE_RETRY: '3'
       # so Fastfile can set xcode to v 13 for ios 15 bug
       # - run: gem install xcode-install
-      # - run: bundle update fastlane
-      # - run: bundle exec fastlane update_plugins
+      - run: bundle update fastlane
+      - run: bundle exec fastlane update_plugins
       - save_cache:
           key: *gem_cache_key
           paths:
