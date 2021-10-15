@@ -62,6 +62,7 @@ references:
       only:
         - develop
         - bugfix/fastlane-xcode-13-attempt
+        - bugfix/fastlane-xcode-13-attempt-john
 
   feature_filter: &feature_filter
     branches:
