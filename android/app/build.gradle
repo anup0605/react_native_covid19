@@ -154,11 +154,6 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     defaultConfig {
         resValue "string", "build_config_package", "com.joinzoe.covid_zoe"
         applicationId 'com.joinzoe.covid_zoe'
@@ -214,6 +209,10 @@ android {
         }
     }
 
+    buildFeatures {
+       viewBinding true
+   }
+
     packagingOptions {
         pickFirst "lib/armeabi-v7a/libc++_shared.so"
         pickFirst "lib/arm64-v8a/libc++_shared.so"
@@ -243,12 +242,15 @@ dependencies {
 
     apply plugin: 'com.google.gms.google-services'
 
-    // For animated GIF support
-    implementation 'com.facebook.fresco:animated-gif:2.0.0'
+    // // For animated GIF support
+    // implementation 'com.facebook.fresco:animated-gif:2.0.0'
 
-    // For WebP support, including animated WebP
-    implementation 'com.facebook.fresco:animated-webp:2.1.0'
-    implementation 'com.facebook.fresco:webpsupport:2.0.0'
+    // // For WebP support, including animated WebP
+    // implementation 'com.facebook.fresco:animated-webp:2.1.0'
+    // implementation 'com.facebook.fresco:webpsupport:2.0.0'
+    
+    implementation 'com.facebook.fresco:fresco:2.6.0'
+
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
