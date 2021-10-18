@@ -109,7 +109,7 @@
     "react-native-config": "1.4.4",
     "react-native-easy-markdown": "2.0.0",
     "react-native-fast-image": "8.3.4",
-    "react-native-gesture-handler": "1.7.0",
+    "react-native-gesture-handler": "1.10.3",
     "react-native-linear-gradient": "2.5.6",
     "react-native-modal-datetime-picker": "8.9.3",
     "react-native-modal-dropdown": "git+https://github.com/riyga25/react-native-modal-dropdown.git",
