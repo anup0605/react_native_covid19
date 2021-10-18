@@ -280,7 +280,7 @@ jobs:
           device: "iPhone 11"
           project_path: "ios/Covid.xcworkspace"
           project_type: workspace
-          scheme: "example"
+          scheme: "Covid Release"
       - run:
           command: >-
             detox test -c ios.sim.release -l warn --headless --take-screenshots
