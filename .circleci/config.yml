@@ -259,8 +259,12 @@ jobs:
       - prepare_e2e
       - run: yarn install
       - run: yarn build:ios
-      - run: detox build --configuration ios.release
-      - run: detox test --configuration ios.release --cleanup
+      # - run: detox build --configuration ios.release
+      # - run: detox test --configuration ios.release --cleanup
+      - run: detox test -c ios.sim.release -l warn --headless --take-screenshots failing --artifacts-location /tmp/detox_artifacts
+        name: Detox Test
+      - store_artifacts:
+        path: /tmp/detox_artifacts
 
 
   ### ------------------- ###
