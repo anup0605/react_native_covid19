@@ -11,16 +11,13 @@ project 'Covid',
   'Beta.Release' => :release
 
 target 'Covid' do
+  use_unimodules!(exclude: ['expo-splash-screen', 'expo-location'])
   config = use_native_modules!
-  # use_react_native!(:path => config["reactNativePath"])
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => false
   )
-
-
-  use_unimodules!(exclude: ['expo-splash-screen', 'expo-location'])
 
   # use_flipper!()
   post_install do |installer|
@@ -30,5 +27,10 @@ target 'Covid' do
         config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
       end
     end
+
+    # We need to make one crude patch to RCT-Folly - set `__IPHONE_10_0` to our iOS target + 1
+    # https://github.com/facebook/flipper/issues/834 - 84 comments and still going...
+    # `sed -i -e  $'s/__IPHONE_10_0/__IPHONE_12_0/' Pods/RCT-Folly/folly/portability/Time.h`
+
   end
 end
