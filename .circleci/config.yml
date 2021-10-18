@@ -9,7 +9,8 @@ orbs:
   node: circleci/node@2.0.1
   slack: circleci/slack@3.2.0
   jq: circleci/jq@2.0.1
-  rn: react-native-community/react-native@2.0.1
+  # rn: react-native-community/react-native@2.0.1
+  rn: react-native-community/react-native@5.0.1
 
 ###
 ### Define executors:
@@ -250,23 +251,62 @@ jobs:
           path: ./reports/junit
 
   # Run Dtox E2E
-  e2etest:
-    executor: mobile-build-box
-    working_directory: ~/covid-react
 
+  # ios_e2e_test:
+
+    # Build and test the iOS app in release mode
+  ios_e2e_test:
+    executor: rn/macos
     steps:
-      - build
-      - prepare_e2e
-      - run: yarn install
-      - run: yarn build:ios
-      # - run: detox build --configuration ios.release
-      # - run: detox test --configuration ios.release --cleanup
-      - run: detox clean-framework-cache && detox build-framework-cache
+      - checkout
+      - attach_workspace:
+          at: .
+      - rn/setup_macos_executor:
+          homebrew_cache: true
+          node_version: "12"
+      - rn/ios_simulator_start:
+          device: "iPhone 11"
+      - rn/yarn_install:
+          # basically because of this https://github.com/react-native-community/react-native-circleci-orb/issues/66
+          cache: false
+      - rn/pod_install:
+          pod_install_directory: ios
+      # Yep, it doesn't really matter if you don't run detox build for ios, it works like a charm. But if you prefer, you can replace this step with a custom one.
+      - rn/ios_build:
+          build_configuration: "Release"
+          cache: false
+          derived_data_path: "ios/build"
+          device: "iPhone 11"
+          project_path: "ios/example.xcworkspace"
+          project_type: workspace
+          scheme: "example"
       - run:
+          command: >-
+            detox test -c ios.sim.release -l warn --headless --take-screenshots
+            failing --artifacts-location /tmp/detox_artifacts
           name: Detox Test
-          command: detox test -c ios.sim.release -l warn --headless --take-screenshots failing --artifacts-location /tmp/detox_artifacts
       - store_artifacts:
           path: /tmp/detox_artifacts
+        
+  # OLD E2E
+  #   executor: mobile-build-box
+  #   working_directory: ~/covid-react
+
+  #   steps:
+  #     - build
+  #     - prepare_e2e
+  #     - run: yarn install
+  #     - run: yarn build:ios
+  #     # - run: detox build --configuration ios.release
+  #     # - run: detox test --configuration ios.release --cleanup
+  #     - run: detox clean-framework-cache && detox build-framework-cache
+  #     - run:
+  #         name: Detox Test
+  #         command: detox test -c ios.sim.release -l warn --headless --take-screenshots failing --artifacts-location /tmp/detox_artifacts
+  #     - store_artifacts:
+  #         path: /tmp/detox_artifacts
+
+  # END OLD E2E
 
 
   ### ------------------- ###
@@ -375,7 +415,7 @@ workflows:
           filters: *feature_filter
       - test:
           filters: *feature_filter
-      - e2etest:
+      - ios_e2e_test:
           # This should be the e2e_filter to avoid running on every push
           # filters: *e2e_filter
           filters: *feature_filter
