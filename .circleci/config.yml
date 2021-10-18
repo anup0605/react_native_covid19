@@ -273,7 +273,8 @@ jobs:
       - rn/pod_install:
           pod_install_directory: ios
       - rn/ios_build:
-          build_configuration: "Stage"
+          # is this needed?
+          # build_configuration: "Stage"
           cache: false
           derived_data_path: "ios/build"
           device: "iPhone 11"
