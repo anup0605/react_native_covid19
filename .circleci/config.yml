@@ -261,6 +261,7 @@ jobs:
       - run: yarn build:ios
       # - run: detox build --configuration ios.release
       # - run: detox test --configuration ios.release --cleanup
+      - run: detox clean-framework-cache && detox build-framework-cache
       - run:
           name: Detox Test
           command: detox test -c ios.sim.release -l warn --headless --take-screenshots failing --artifacts-location /tmp/detox_artifacts
