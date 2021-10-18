@@ -10,7 +10,8 @@ orbs:
   slack: circleci/slack@3.2.0
   jq: circleci/jq@2.0.1
   # rn: react-native-community/react-native@2.0.1
-  rn: react-native-community/react-native@5.0.1
+  rn: react-native-community/react-native@5.1.0
+  # Latest seems to be 5.5.0
 
 ###
 ### Define executors:
