@@ -259,7 +259,7 @@ jobs:
   ios_e2e_test:
     executor: rn/macos
     steps:
-      - checkout
+      - prepare_code
       - attach_workspace:
           at: .
       - rn/setup_macos_executor:
@@ -272,15 +272,14 @@ jobs:
           cache: false
       - rn/pod_install:
           pod_install_directory: ios
-      # Yep, it doesn't really matter if you don't run detox build for ios, it works like a charm. But if you prefer, you can replace this step with a custom one.
       - rn/ios_build:
-          build_configuration: "Release"
+          build_configuration: "Stage"
           cache: false
           derived_data_path: "ios/build"
           device: "iPhone 11"
           project_path: "ios/Covid.xcworkspace"
           project_type: workspace
-          scheme: "Covid Release"
+          scheme: "Covid Stage"
       - run:
           command: >-
             detox test -c ios.sim.release -l warn --headless --take-screenshots
@@ -288,6 +287,8 @@ jobs:
           name: Detox Test
       - store_artifacts:
           path: /tmp/detox_artifacts
+
+          
         
   # OLD E2E
   #   executor: mobile-build-box

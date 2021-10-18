@@ -1,8 +1,11 @@
 {
+  "runnerConfig": "e2e/config.json",
+  "testRunner": "jest",
+
   "apps": {
     "ios.debug": {
       "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/covid-zoe Stage.app",
-      "build": "xcodebuild -workspace ios/Covid.xcworkspace -scheme 'Covid Release' -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build ONLY_ACTIVE_ARCH=YES -quiet",
+      "build": "xcodebuild -workspace ios/Covid.xcworkspace -scheme 'Covid Stage' -configuration Stage -sdk iphonesimulator -derivedDataPath ios/build ONLY_ACTIVE_ARCH=YES -quiet",
       "type": "ios.app"
     },
     "ios.release": {
@@ -53,8 +56,5 @@
       "device": "emulator",
       "app": "android.release"
     }
-  },
-
-  "runnerConfig": "e2e/config.json",
-  "testRunner": "jest"
+  }
 }
