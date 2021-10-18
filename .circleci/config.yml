@@ -278,7 +278,7 @@ jobs:
           cache: false
           derived_data_path: "ios/build"
           device: "iPhone 11"
-          project_path: "ios/example.xcworkspace"
+          project_path: "ios/Covid.xcworkspace"
           project_type: workspace
           scheme: "example"
       - run:
