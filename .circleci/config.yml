@@ -259,7 +259,7 @@ jobs:
   ios_e2e_test:
     executor: rn/macos
     steps:
-      - prepare_code
+      - build
       - attach_workspace:
           at: .
       - rn/setup_macos_executor:
