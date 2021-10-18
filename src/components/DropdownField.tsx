@@ -39,18 +39,7 @@ interface ISelectedItem {
 
 const DROPDOWN_ROW_HEIGHT = 48.6;
 
-function DropdownField({
-  placeholder,
-  label,
-  error,
-  hideLabel,
-  items: providedItems,
-  selectedValue,
-  onValueChange,
-  itemIcons,
-  required,
-  style,
-}: IProps) {
+function DropdownField(props: IProps) {
   // Returns with [No, Yes] if props.item is blank (no dropdown list items provided.)
   const prepareItems = (array?: PickerItemProps[]): PickerItemProps[] => {
     return (
@@ -75,8 +64,8 @@ function DropdownField({
   };
 
   // Get index & label from default value passed with props
-  const defaultItems = prepareItems(providedItems);
-  const { index: defaultIndex, label: defaultSelectedLabel } = getSelectedLabel(defaultItems, selectedValue);
+  const defaultItems = prepareItems(props.items);
+  const { index: defaultIndex, label: defaultSelectedLabel } = getSelectedLabel(defaultItems, props.selectedValue);
 
   const [options, setOptions] = React.useState(defaultItems);
   const [dropdownWidth, setDropdownWidth] = React.useState(0);
@@ -84,19 +73,19 @@ function DropdownField({
   const [selectedLabel, setSelectedLabel] = React.useState(defaultSelectedLabel);
 
   const dropdownFocusStyle = dropdownFocus ? styles.dropdownOnFocus : styles.dropdownNoBorder;
-  const dropdownErrorStyle = error ? styles.dropdownError : {};
+  const dropdownErrorStyle = props.error ? styles.dropdownError : {};
 
   // Update internal string items on props items change
   React.useEffect(() => {
-    setOptions(prepareItems(providedItems));
-    setSelectedLabel(getSelectedLabel(defaultItems, selectedValue).label);
-  }, [providedItems]);
+    setOptions(prepareItems(props.items));
+    setSelectedLabel(getSelectedLabel(defaultItems, props.selectedValue).label);
+  }, [props.items]);
 
   const onSelect = (id: any, label: any) => {
     setSelectedLabel(label);
     if (id !== -1) {
       const value = options?.find((item: PickerItemProps) => item.label === label)?.value;
-      onValueChange(value);
+      props.onValueChange(value);
     }
   };
 
@@ -126,8 +115,8 @@ function DropdownField({
           isSelected && styles.dropdownTextHighlightStyle,
         ]}
       >
-        {itemIcons?.length ? (
-          <Image source={itemIcons[index]} style={{ height: 24, marginRight: sizes.xxs, width: 24 }} />
+        {props.itemIcons?.length ? (
+          <Image source={props.itemIcons[index]} style={{ height: 24, marginRight: sizes.xxs, width: 24 }} />
         ) : null}
         <Text style={[styles.dropdownTextStyle]}>{option}</Text>
       </View>
@@ -135,11 +124,11 @@ function DropdownField({
   };
 
   return (
-    <View style={[styles.view, style]}>
-      {hideLabel ? null : (
+    <View style={[styles.view, props.style]}>
+      {props.hideLabel ? null : (
         <Label style={styles.label}>
-          {label}
-          {required ? requiredFormMarker : null}
+          {props.label}
+          {props.required ? requiredFormMarker : null}
         </Label>
       )}
       <ModalDropdown
@@ -168,14 +157,14 @@ function DropdownField({
           style={[styles.dropdownButtonContainer, dropdownFocusStyle, dropdownErrorStyle]}
         >
           <Label style={[styles.dropdownLabel, selectedLabel ? styles.dropdownSelectedLabel : {}]}>
-            {selectedLabel ?? (placeholder || i18n.t('label-chose-an-option'))}
+            {selectedLabel ?? (props.placeholder || i18n.t('label-chose-an-option'))}
           </Label>
           <DropdownIcon />
         </View>
       </ModalDropdown>
-      {error ? (
+      {props.error ? (
         <View style={{ marginHorizontal: sizes.xxs, marginTop: sizes.xxs }}>
-          <ValidationError error={error} />
+          <ValidationError error={props.error} />
         </View>
       ) : null}
     </View>

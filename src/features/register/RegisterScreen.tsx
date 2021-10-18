@@ -59,6 +59,7 @@ class RegisterScreen extends React.Component<TProps, TState> {
   onSubmit = (values: IRegistrationData) => {
     if (this.state.enableSubmit) {
       this.setState({ enableSubmit: false });
+      // The register api endpoint automatically sets the consent for the user on the backend.
       userService
         .register(values.email, values.password)
         .then(async (response) => {
@@ -89,7 +90,7 @@ class RegisterScreen extends React.Component<TProps, TState> {
           } else {
             this.setState({
               accountExists: false,
-              errorMessage: i18n.t('create-account.something-went-wrong', { msg: err.response?.status }),
+              errorMessage: i18n.t('create-account.something-went-wrong'),
             });
           }
         })

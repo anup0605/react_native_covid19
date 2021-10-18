@@ -19,23 +19,13 @@ export default function MainNavigator() {
     <Stack.Navigator>
       <Stack.Screen component={screens.SplashScreen} name="Splash" options={options} />
       <Stack.Screen component={screens.AboutYouScreen} name="AboutYou" options={options} />
-      <Stack.Screen
-        component={screens.AboutYourVaccineFeatureToggleScreen}
-        name="AboutYourVaccineFeatureToggle"
-        options={options}
-      />
-      <Stack.Screen
-        component={screens.AboutYourVaccineScreenUpdated}
-        name="AboutYourVaccineUpdated"
-        options={options}
-      />
-      <Stack.Screen component={screens.AboutYourVaccineScreenOld} name="AboutYourVaccineOld" options={options} />
+      <Stack.Screen component={screens.AboutYourVaccineScreen} name="AboutYourVaccine" options={options} />
       <Stack.Screen component={screens.AdultOrChildScreen} name="AdultOrChild" options={options} />
       <Stack.Screen component={screens.ArchiveReasonScreen} name="ArchiveReason" options={options} />
       <Stack.Screen component={screens.BeforeWeStartUSScreen} name="BeforeWeStartUS" options={options} />
       <Stack.Screen component={screens.ConfirmSchoolScreen} name="ConfirmSchool" options={options} />
-      <Stack.Screen component={screens.ConsentScreen} name="Consent" options={options} />
       <Stack.Screen component={screens.ConsentForOtherScreen} name="ConsentForOther" options={options} />
+      <Stack.Screen component={screens.ConsentScreen} name="Consent" options={options} />
       <Stack.Screen component={screens.CountrySelectScreen} name="CountrySelect" options={options} />
       <Stack.Screen component={screens.CovidTestConfirmScreen} name="CovidTestConfirm" options={options} />
       <Stack.Screen component={screens.CovidTestDetailScreen} name="CovidTestDetail" options={options} />
@@ -43,6 +33,8 @@ export default function MainNavigator() {
       <Stack.Screen component={screens.CreateProfileScreen} name="CreateProfile" options={options} />
       <Stack.Screen component={screens.DashboardScreen} name="Dashboard" options={options} />
       <Stack.Screen component={screens.DashboardUSScreen} name="DashboardUS" options={options} />
+      <Stack.Screen component={screens.DataConsentScreen} name="DataConsent" options={options} />
+      <Stack.Screen component={screens.DiseasePreferencesScreen} name="DiseasePreferences" options={options} />
       <Stack.Screen component={screens.EditLocationScreen} name="EditLocation" options={options} />
       <Stack.Screen component={screens.EditProfileScreen} name="EditProfile" options={options} />
       <Stack.Screen component={screens.EstimatedCasesScreen} name="EstimatedCases" options={options} />
@@ -88,20 +80,14 @@ export default function MainNavigator() {
       <Stack.Screen component={screens.TreatmentSelectionScreen} name="TreatmentSelection" options={options} />
       <Stack.Screen component={screens.TrendlineScreen} name="Trendline" options={options} />
       <Stack.Screen component={screens.VaccineDoseSymptomsScreen} name="VaccineDoseSymptoms" options={options} />
-      <Stack.Screen
-        component={screens.VaccineListFeatureToggleScreen}
-        name="VaccineListFeatureToggle"
-        options={options}
-      />
-      <Stack.Screen component={screens.VaccineListScreenUpdated} name="VaccineListUpdated" options={options} />
-      <Stack.Screen component={screens.VaccineListScreenOld} name="VaccineListOld" options={options} />
-
       <Stack.Screen component={screens.VaccineFindInfoScreen} name="VaccineFindInfo" options={options} />
+      <Stack.Screen component={screens.VaccineListScreen} name="VaccineList" options={options} />
       <Stack.Screen component={screens.VaccineLogSymptomsInfoScreen} name="VaccineLogSymptomsInfo" options={options} />
       <Stack.Screen component={screens.Welcome1Screen} name="Welcome" options={options} />
       <Stack.Screen component={screens.Welcome2Screen} name="Welcome2" options={options} />
       <Stack.Screen component={screens.WelcomeRepeatScreen} name="WelcomeRepeat" options={options} />
       <Stack.Screen component={screens.WhereAreYouScreen} name="WhereAreYou" options={options} />
+      <Stack.Screen component={screens.WiderHealthStudiesScreen} name="WiderHealthStudies" options={options} />
       <Stack.Screen component={screens.YourHealthScreen} name="YourHealth" options={options} />
       <Stack.Screen component={screens.YourStudyScreen} name="YourStudy" options={options} />
       <Stack.Screen component={screens.YourWorkScreen} name="YourWork" options={options} />

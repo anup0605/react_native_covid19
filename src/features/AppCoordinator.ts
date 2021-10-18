@@ -265,10 +265,6 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
   goToAnniversary = () => {
     NavigatorService.navigate('Anniversary');
   };
-
-  goToReconsent = () => {
-    NavigatorService.navigate('ReconsentIntroduction');
-  };
 }
 
 export const appCoordinator = new AppCoordinator();

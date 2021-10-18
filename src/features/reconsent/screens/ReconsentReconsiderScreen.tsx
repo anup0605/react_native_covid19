@@ -2,7 +2,7 @@ import { BrandedButton, Text } from '@covid/components';
 import Analytics, { events } from '@covid/core/Analytics';
 import { patientService } from '@covid/core/patient/PatientService';
 import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
-import { resetFeedback, selectFeedbackData } from '@covid/core/state/reconsent';
+import { resetFeedback, selectFeedbackData, selectReturnScreenName } from '@covid/core/state/reconsent';
 import { TRootState } from '@covid/core/state/root';
 import VimeoVideo from '@covid/features/reconsent//components/VimeoVideo';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
@@ -31,6 +31,7 @@ export default function ReconsentReconsiderScreen(props: IProps) {
   const dispatch = useDispatch();
   const feedbackData = useSelector(selectFeedbackData);
   const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
+  const returnScreenName = useSelector(selectReturnScreenName);
 
   const videoWidth = Math.min(sizes.maxScreenWidth, windowDimensions.width);
   const videoHeight = videoWidth / VIDEO_RATIO;
@@ -52,14 +53,17 @@ export default function ReconsentReconsiderScreen(props: IProps) {
       // This requires async await to make sure!
       await dispatch(fetchStartUpInfo());
     } catch (_) {}
-    setLoading(false);
     dispatch(resetFeedback());
-    NavigatorService.navigate('Dashboard');
+    setLoading(false);
     setHideVideo(true);
+    NavigatorService.navigate('Dashboard');
+    if (returnScreenName === 'Menu') {
+      NavigatorService.openDrawer();
+    }
   }
 
   return (
-    <ReconsentScreen hideBackButton noPadding testID="reconsent-reconsider-screen">
+    <ReconsentScreen noHeader noPadding testID="reconsent-reconsider-screen">
       <View style={styles.padding}>
         <Text rhythm={24} style={styles.marginTop} textAlign="center" textClass="h2Light">
           {i18n.t('reconsent.reconsider.title')}

@@ -47,9 +47,7 @@ type TProps = {
 };
 
 export const GeneralSymptomsQuestions: ISymptomQuestions<TProps, TGeneralSymptomsData> = (props: TProps) => {
-  const { formikProps } = props;
-
-  const fever_checkbox: TSymptomCheckBoxData<TGeneralSymptomsCheckBoxData, TGeneralSymptomsFollowUpData>[] = [
+  const feverCheckbox: TSymptomCheckBoxData<TGeneralSymptomsCheckBoxData, TGeneralSymptomsFollowUpData>[] = [
     { label: i18n.t('describe-symptoms.general-fever'), value: 'fever' },
   ];
 
@@ -92,38 +90,38 @@ export const GeneralSymptomsQuestions: ISymptomQuestions<TProps, TGeneralSymptom
     <View style={{ marginBottom: sizes.xl, marginTop: sizes.m }}>
       <RegularText style={{ paddingVertical: sizes.m }}>{i18n.t('describe-symptoms.check-all-that-apply')}</RegularText>
 
-      <CheckboxList>{createSymptomCheckboxes(fever_checkbox, formikProps)}</CheckboxList>
+      <CheckboxList>{createSymptomCheckboxes(feverCheckbox, props.formikProps)}</CheckboxList>
 
-      {formikProps.values.fever ? (
+      {props.formikProps.values.fever ? (
         <View style={{ margin: sizes.m }}>
           <RegularText>{i18n.t('describe-symptoms.question-your-temperature')}</RegularText>
           <View style={styles.fieldRow}>
             <View style={styles.primaryField}>
               <ValidatedTextInput
-                error={formikProps.touched.temperature && !!formikProps.errors.temperature}
+                error={props.formikProps.touched.temperature && !!props.formikProps.errors.temperature}
                 keyboardType="numeric"
-                onBlur={formikProps.handleBlur('temperature')}
-                onChangeText={formikProps.handleChange('temperature')}
+                onBlur={props.formikProps.handleBlur('temperature')}
+                onChangeText={props.formikProps.handleChange('temperature')}
                 onSubmitEditing={() => {}}
                 placeholder={i18n.t('describe-symptoms.placeholder-temperature')}
                 returnKeyType="next"
-                value={formikProps.values.temperature}
+                value={props.formikProps.values.temperature}
               />
             </View>
             <View style={styles.secondaryField}>
               <DropdownField
                 hideLabel
-                error={formikProps.touched.temperatureUnit ? formikProps.errors.temperatureUnit : ''}
+                error={props.formikProps.touched.temperatureUnit ? props.formikProps.errors.temperatureUnit : ''}
                 items={temperatureItems}
-                onValueChange={formikProps.handleChange('temperatureUnit')}
-                selectedValue={formikProps.values.temperatureUnit}
+                onValueChange={props.formikProps.handleChange('temperatureUnit')}
+                selectedValue={props.formikProps.values.temperatureUnit}
               />
             </View>
           </View>
         </View>
       ) : null}
 
-      <CheckboxList>{createSymptomCheckboxes(checkboxes, formikProps)}</CheckboxList>
+      <CheckboxList>{createSymptomCheckboxes(checkboxes, props.formikProps)}</CheckboxList>
     </View>
   );
 };

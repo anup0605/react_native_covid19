@@ -72,6 +72,14 @@ const mentalHealthPlaybackEvents = {
   MENTAL_HEALTH_PLAYBACK_RATING: 'MENTAL_HEALTH_PLAYBACK_RATING',
 };
 
+const widerHealthStudiesEvents = {
+  WIDER_HEALTH_STUDIES_OPT_OUT: 'WIDER_HEALTH_STUDIES_OPT_OUT',
+};
+
+const diseasePreferencesEvents = {
+  DISEASE_PREFERENCES_EDITED: 'DISEASE_PREFERENCES_EDITED',
+};
+
 export const events = {
   ACCEPT_STUDY_CONTACT: 'ACCEPT_STUDY_CONTACT',
   CLICK_CALLOUT: 'CLICK_CALLOUT',
@@ -90,6 +98,7 @@ export const events = {
   JOIN_STUDY: 'JOIN_STUDY',
   JOIN_VACCINE_REGISTER: 'JOIN_VACCINE_REGISTER',
   LINK_OPENED: 'LINK_OPENED',
+  LOGOUT: 'LOGOUT',
   NOTIFICATION_ENABLED: 'NOTIFICATION_ENABLED',
   NOTIFICATION_REFRESHED: 'NOTIFICATION_REFRESHED',
   OPEN_FROM_NOTIFICATION: 'OPEN_FROM_NOTIFICATION',
@@ -99,11 +108,13 @@ export const events = {
   VIEW_SCREEN: 'VIEW_SCREEN',
   ...dashboardEvents,
   ...dietStudyEvents,
+  ...diseasePreferencesEvents,
   ...insightEvents,
   ...mentalHealthPlaybackEvents,
   ...mentalHealthStudyEvents,
   ...reconsentEvents,
   ...timelineEvents,
+  ...widerHealthStudiesEvents,
 };
 
 // Disable Tracking of the User Properties (Only available in Expo SDK 37)

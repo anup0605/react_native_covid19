@@ -7,6 +7,8 @@ import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
+const onSubmit = () => {};
+
 storiesOf('DiabetesQuestions', module).add('default view', () => {
   return (
     <ScrollView>
@@ -14,7 +16,7 @@ storiesOf('DiabetesQuestions', module).add('default view', () => {
         initialValues={{
           ...DiabetesQuestions.initialFormValues(),
         }}
-        onSubmit={() => {}}
+        onSubmit={onSubmit}
         validationSchema={DiabetesQuestions.schema()}
       >
         {(props) => (

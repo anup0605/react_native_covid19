@@ -10,6 +10,7 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
 
 let hash = '';
 try {
@@ -33,24 +34,24 @@ const renderStartupInfo = (startupInfo: TStartupInfo) =>
       return <RegularText key={key}>{`${key}: ${startupInfo[key as keyof TStartupInfo]}`}</RegularText>;
     });
 
+const renderCustomisableSettings = (startupInfo: TStartupInfo, dispatch: Dispatch) =>
+  CUSTOMISABLE_SETTINGS.map((setting) => {
+    const currentValue = !!startupInfo[setting];
+
+    return (
+      <Switch
+        key={setting}
+        label={setting}
+        onValueChange={(value) => dispatch(testingModeActions.updateStartupInfo({ key: setting, value }))}
+        selectedValue={currentValue}
+        style={{ marginBottom: sizes.s }}
+      />
+    );
+  });
+
 export default function TestingModeScreen() {
   const dispatch = useDispatch();
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
-
-  const renderCustomisableSettings = (startupInfo: TStartupInfo) =>
-    CUSTOMISABLE_SETTINGS.map((setting) => {
-      const currentValue = !!startupInfo[setting];
-
-      return (
-        <Switch
-          key={setting}
-          label={setting}
-          onValueChange={(value) => dispatch(testingModeActions.updateStartupInfo({ key: setting, value }))}
-          selectedValue={currentValue}
-          style={{ marginBottom: sizes.s }}
-        />
-      );
-    });
 
   return startupInfo ? (
     <Screen backgroundColor={colors.backgroundPrimary} testID="testing-mode-screen">
@@ -63,7 +64,7 @@ export default function TestingModeScreen() {
       <Text rhythm={12} textClass="h5Medium">
         Customisable settings
       </Text>
-      <View style={{ marginBottom: sizes.xl }}>{renderCustomisableSettings(startupInfo)}</View>
+      <View style={{ marginBottom: sizes.xl }}>{renderCustomisableSettings(startupInfo, dispatch)}</View>
       <Text rhythm={12} textClass="h5Medium">
         All settings
       </Text>

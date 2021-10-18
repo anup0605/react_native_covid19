@@ -157,7 +157,7 @@ const allCohorts: TCohortDefinition[] = [
   {
     country: 'US',
     key: 'is_in_us_environmental_polymorphisms',
-    label: 'NIEHS Environmental Polymorphisms Study',
+    label: 'NIEHS Personalized Environment and Genes Study (PEGS)', // name changed on frontend on 15 Oct 2021. No change in backend.
   },
   {
     country: 'US',
@@ -304,6 +304,25 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
       .catch(() => this.setState({ errorMessage: i18n.t('something-went-wrong') }));
   };
 
+  createPatientInfos = (formData: IYourStudyData) => {
+    // This is to split up the US specific fields, from the cohorts. This is a neat way to do it without repeating the country filtering logic above
+    const { clinicalStudyNames, clinicalStudyContacts, clinicalStudyInstitutions, clinicalStudyNctIds, ...cohorts } =
+      formData;
+
+    let infos = { ...cohorts } as Partial<TPatientInfosRequest>;
+
+    if (isUSCountry()) {
+      infos = {
+        ...cohorts,
+        ...(clinicalStudyNames && { clinical_study_names: clinicalStudyNames }),
+        ...(clinicalStudyContacts && { clinical_study_contacts: clinicalStudyContacts }),
+        ...(clinicalStudyInstitutions && { clinical_study_institutions: clinicalStudyInstitutions }),
+        ...(clinicalStudyNctIds && { clinical_study_nct_ids: clinicalStudyNctIds }),
+      };
+    }
+    return infos;
+  };
+
   render() {
     const countrySpecificCohorts = this.filterCohortsByCountry(LocalisationService.userCountry);
 
@@ -391,24 +410,5 @@ export default class YourStudyScreen extends React.Component<TYourStudyProps, TS
         </Formik>
       </Screen>
     );
-  }
-
-  private createPatientInfos(formData: IYourStudyData) {
-    // This is to split up the US specific fields, from the cohorts. This is a neat way to do it without repeating the country filtering logic above
-    const { clinicalStudyNames, clinicalStudyContacts, clinicalStudyInstitutions, clinicalStudyNctIds, ...cohorts } =
-      formData;
-
-    let infos = { ...cohorts } as Partial<TPatientInfosRequest>;
-
-    if (isUSCountry()) {
-      infos = {
-        ...cohorts,
-        ...(clinicalStudyNames && { clinical_study_names: clinicalStudyNames }),
-        ...(clinicalStudyContacts && { clinical_study_contacts: clinicalStudyContacts }),
-        ...(clinicalStudyInstitutions && { clinical_study_institutions: clinicalStudyInstitutions }),
-        ...(clinicalStudyNctIds && { clinical_study_nct_ids: clinicalStudyNctIds }),
-      };
-    }
-    return infos;
   }
 }

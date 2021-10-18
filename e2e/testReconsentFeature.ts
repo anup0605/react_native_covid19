@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 
-import { extendedDiseases, initialDiseases } from '@covid/features/reconsent/data/diseases';
+import { extendedDiseases, initialDiseases } from '@covid/features/wider-health-studies/data/diseases';
 import { feedback } from '@covid/features/reconsent/data/feedback';
 import { by, element, expect } from 'detox';
 
@@ -35,7 +35,7 @@ export function testReconsentFeature(config: TReconsentConfig) {
     await submitForm(
       'reconsent-disease-preferences-screen',
       'scroll-view-reconsent-disease-preferences-screen',
-      'button-cta-reconsent-disease-preferences-screen',
+      'button-cta-disease-preferences-submit',
     );
 
     await expect(element(by.id('reconsent-disease-summary-screen'))).toBeVisible();
@@ -71,7 +71,7 @@ export function testReconsentFeature(config: TReconsentConfig) {
     await submitForm(
       'reconsent-disease-preferences-screen',
       'scroll-view-reconsent-disease-preferences-screen',
-      'button-cta-reconsent-disease-preferences-screen',
+      'button-cta-disease-preferences-submit',
     );
   });
 

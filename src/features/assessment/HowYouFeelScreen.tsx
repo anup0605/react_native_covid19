@@ -36,10 +36,11 @@ export const HowYouFeelScreen: React.FC<TProps> = ({ route, navigation }) => {
     const { getName } = require('country-list');
 
     return navigation.addListener('focus', () => {
-      const location = patientInfo?.current_country_code
-        ? getName(patientInfo?.current_country_code)
-        : patientInfo?.current_postcode ?? patientInfo?.postcode!;
-      setLocation(location);
+      setLocation(
+        patientInfo?.current_country_code
+          ? getName(patientInfo?.current_country_code)
+          : patientInfo?.current_postcode ?? patientInfo?.postcode!,
+      );
     });
   }, [navigation]);
 
@@ -47,15 +48,6 @@ export const HowYouFeelScreen: React.FC<TProps> = ({ route, navigation }) => {
     currentProfileVaccines.length &&
     currentProfileVaccines[0] &&
     assessmentCoordinator.assessmentData?.patientData?.patientId === currentProfileVaccines[0].patient;
-
-  const handlePress = async (healthy: boolean) => {
-    if (isSubmitting) return;
-    setIsSubmitting(true);
-
-    const status = healthy ? 'healthy' : 'not_healthy';
-    await updateAssessment(status, healthy);
-    assessmentCoordinator.gotoNextScreen(route.name, healthy);
-  };
 
   async function updateAssessment(status: string, isComplete: boolean) {
     try {
@@ -74,6 +66,15 @@ export const HowYouFeelScreen: React.FC<TProps> = ({ route, navigation }) => {
       setIsSubmitting(false);
     }
   }
+
+  const handlePress = async (healthy: boolean) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    const status = healthy ? 'healthy' : 'not_healthy';
+    await updateAssessment(status, healthy);
+    assessmentCoordinator.gotoNextScreen(route.name, healthy);
+  };
 
   let currentProfileVaccineEnteredText;
   if (currentProfileHasVaccine()) {

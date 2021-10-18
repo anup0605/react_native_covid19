@@ -1,14 +1,16 @@
+import { IIconProps } from '@assets/icons/svgIcons/types';
+import { determineDimensions } from '@assets/utils';
 import { colors } from '@theme/colors';
 import * as React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-interface IProps {
-  color?: string;
-}
+const defaultWidth = 27;
+const defaultHeight = 38;
 
-export default function Cancer({ color = colors.darkblue }: IProps) {
+export default function Cancer({ color = colors.darkblue, ...props }: IIconProps) {
+  const { width, height } = determineDimensions(props, defaultWidth, defaultHeight);
   return (
-    <Svg fill="none" height="38" viewBox="0 0 27 38" width="27">
+    <Svg fill="none" height={height} viewBox="0 0 27 38" width={width}>
       <Path
         d="M13.69 30.8718C6.41074 30.8718 0.5 25.5488 0.5 19C0.5 12.4512 6.37715 7.13654 13.69 7.13654C21.0029 7.13654 26.88 12.4596 26.88 19C26.88 25.5404 20.9693 30.8718 13.69 30.8718ZM13.69 8.81572C7.34269 8.81572 2.17919 13.3831 2.17919 19C2.17919 24.6169 7.34269 29.1927 13.69 29.1927C20.0373 29.1927 25.2008 24.6253 25.2008 19C25.2008 13.3747 20.0373 8.81572 13.69 8.81572Z"
         fill={color}

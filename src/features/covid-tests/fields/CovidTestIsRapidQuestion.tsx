@@ -35,18 +35,13 @@ export const CovidTestIsRapidQuestion: ICovidTestIsRapidQuestion<IProps, ICovidT
 };
 
 CovidTestIsRapidQuestion.initialFormValues = (test?: TCovidTest): ICovidTestIsRapidData => {
-  function getIsRapidTest(test?: TCovidTest) {
-    if (test?.id) {
-      if (test.is_rapid_test === null) {
-        return '';
-      }
-      return test.is_rapid_test ? 'yes' : 'no';
-    }
-    return '';
+  let isRapidTest = '';
+  if (test?.id && test.is_rapid_test !== null) {
+    isRapidTest = test.is_rapid_test ? 'yes' : 'no';
   }
 
   return {
-    isRapidTest: getIsRapidTest(test),
+    isRapidTest,
   };
 };
 

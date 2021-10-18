@@ -11,8 +11,7 @@ interface IProps {
   timelineEvent: TTimelineEvent;
 }
 
-function FindingCard({ timelineEvent }: IProps) {
-  const { title, sub_title, external_link_text, external_link, route_name, route_text } = timelineEvent;
+export default function FindingCard({ timelineEvent }: IProps) {
   const { navigate } = useNavigation();
   type TLink = {
     linkText: string;
@@ -27,27 +26,27 @@ function FindingCard({ timelineEvent }: IProps) {
       role: 'none',
     };
 
-    if (external_link_text && external_link) {
+    if (timelineEvent.external_link_text && timelineEvent.external_link) {
       link = {
-        linkText: external_link_text,
-        onPress: () => openWebLink(external_link),
+        linkText: timelineEvent.external_link_text,
+        onPress: () => openWebLink(timelineEvent.external_link!),
         role: 'button',
       };
       return link;
     }
 
-    if (route_name && route_text) {
-      if (route_name === 'DietStudy') {
+    if (timelineEvent.route_name && timelineEvent.route_text) {
+      if (timelineEvent.route_name === 'DietStudy') {
         link = {
-          linkText: route_text,
+          linkText: timelineEvent.route_text,
           onPress: () => appCoordinator.goToDietStudy(),
           role: 'button',
         };
         return link;
       }
       link = {
-        linkText: route_text,
-        onPress: () => navigate(route_name),
+        linkText: timelineEvent.route_text,
+        onPress: () => navigate(timelineEvent.route_name!),
         role: 'button',
       };
       return link;
@@ -63,11 +62,11 @@ function FindingCard({ timelineEvent }: IProps) {
         <View style={styles.row}>
           <Icon iconName="Lightbulb" iconSize={18} />
           <Text style={{ marginHorizontal: sizes.s }} textClass="pLight">
-            {title}
+            {timelineEvent.title}
           </Text>
         </View>
         <Text style={styles.body} textClass="h5Medium">
-          {sub_title}
+          {timelineEvent.sub_title}
         </Text>
         {link.role !== 'none' ? (
           <View style={{ marginBottom: sizes.xs }}>
@@ -95,5 +94,3 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-
-export default FindingCard;

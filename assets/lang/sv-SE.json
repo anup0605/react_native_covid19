@@ -28,9 +28,9 @@
   },
   "legal": {
     "i-agree": "Jag godkänner",
-    "i-agree-uk": "",
+    "i-agree-uk": false,
     "back": "Tillbaka",
-    "confirm": ""
+    "confirm": false
   },
   "title-about-work": "Om ditt arbete",
   "are-you-healthcare-staff": "Arbetar du inom hälso- och sjukvården (sjukhus, primärvård, kommunal omsorg, privat vård eller omsorg)?",
@@ -205,15 +205,15 @@
       "specify": "Ange var testet utfördes",
       "answers": {
         "at-home": "Hemma",
-        "drive-through-rtc": "",
+        "drive-through-rtc": false,
         "drop-in-facility": "Drop-in testcenter",
         "hospital": "Sjukhus",
         "gp": "Vårdcentral",
         "chemist-pharmacy": "Apotek",
         "store-pharmacy": "Tienda o farmacia clínica",
         "work": "På arbetsplatsen (undantaget sjukhus och vårdcentral)",
-        "local-health-department": "",
-        "school": "",
+        "local-health-department": false,
+        "school": false,
         "other": "Annat, ange"
       }
     },
@@ -222,18 +222,27 @@
     "picker-negative": "Negativt",
     "picker-waiting": "Väntar på mina resultat",
     "picker-test-failed": "Inkonklusivt / provtagning misslyckades",
+    "picker-test-positive-infection-and-vaccine": false,
+    "picker-test-positive-infection-or-vaccine": false,
+    "picker-test-positive-infection-only": false,
     "question-date-test-occurred": "När testades du?",
     "question-date-approximate": "Ungefärligt datumintervall",
     "required-date": "Ange datum när testet utfördes",
     "required-dates": "Ange mellan vilka två datum testet utfördes",
     "required-mechanism": "Ange hur testet utfördes",
     "required-result": "Ange testresultatet",
+    "required-thr-number": false,
+    "required-thr-format": false,
+    "required-thr-length": false,
     "question-is-rapid-test": "Var det ett snabbtest för pågående infektion (s.k. lateral flow test)? Dessa test tas vanligtvis med en testpinne i näsa/svalg och svaret kommer inom minuter/timmar.",
     "question-invite-to-test": "Har vi bjudit in dig att utföra detta test?",
+    "question-thr-number": false,
+    "question-thr-number-description": false,
+    "picker-dont-know-thr": false,
     "confirm-test": {
-      "title": "",
-      "body": "",
-      "consent": ""
+      "title": false,
+      "body": false,
+      "consent": false
     },
     "mechanism-modal": {
       "title": "Typer av test",
@@ -252,6 +261,10 @@
       "anti-n-description": "Upptäcker förekomsten av antikroppar riktade mot det så kallade N-proteinet mot covid-19. Antikroppar mot N-proteinet produceras inte i respons till något av de vaccinen som finns på marknaden i dag. Dessa antikroppar ses dock hos de flesta personer som har genomgått en covid-19-infektion och avtar med tiden.",
       "anti-s-title": "Test för antikroppar mot S-proteinet",
       "anti-s-description": "Upptäcker förekomsten av antikroppar riktade mot det så kallade S-proteinet i viruset. Antikroppar mot S-proteinet kan återfinnas både hos personer som har vaccinerats mot covid-19 och hos personer som har genomgått en covid-19-infektion."
+    },
+    "thr-number-modal": {
+      "title": false,
+      "description": false
     }
   },
   "how-you-feel": {
@@ -264,23 +277,23 @@
     "vaccine-reporting-link": "Varför är detta viktigt?"
   },
   "pingdemic": {
-    "title": "",
-    "body": "",
-    "q1": "",
-    "q1-yes": "",
-    "q1-no": "",
-    "q1-other": "",
-    "q1-prefer-not-to-say": "",
-    "dates": "",
-    "no-app": "",
-    "no-app-yes": "",
-    "no-app-never-had": "",
-    "no-app-used-to-have": "",
-    "no-app-prefer-not-to-say": "",
-    "active-bluetooth": "",
-    "active-yes": "",
-    "active-no": "",
-    "active-not-sure": ""
+    "title": false,
+    "body": false,
+    "q1": false,
+    "q1-yes": false,
+    "q1-no": false,
+    "q1-other": false,
+    "q1-prefer-not-to-say": false,
+    "dates": false,
+    "no-app": false,
+    "no-app-yes": false,
+    "no-app-never-had": false,
+    "no-app-used-to-have": false,
+    "no-app-prefer-not-to-say": false,
+    "active-bluetooth": false,
+    "active-yes": false,
+    "active-no": false,
+    "active-not-sure": false
   },
   "long-covid": {
     "apology": "Vi ber alla som redan har fyllt i detta att göra det igen eftersom vi hade ett fel i våran tidigare version -tack så mycket!",
@@ -487,11 +500,11 @@
     "report-button": "Rapportera i dag, även om du är frisk",
     "how-you-can-help": {
       "title": "Så här kan du hjälpa till",
-      "title-uk": "",
+      "title-uk": false,
       "text1": "Lägg 1 minut om dagen på att rapportera hur du mår, även om du känner dig frisk. Se sedan hur smittspridningen ser ut i ditt område.",
-      "text1-uk": "",
+      "text1-uk": false,
       "text2": "Ingen information som du delar kommer att användas för kommersiella syften. Du uppger inte ditt namn eller ditt personnummer. Den här appen erbjuder ingen hälsorådgivning.",
-      "text2-uk": ""
+      "text2-uk": false
     },
     "from-researchers": "Från läkare och forskare vid",
     "create-account": "Skapa konto",
@@ -533,11 +546,16 @@
     "cta-later": "Inte nu",
     "thank-you-for-rating": "Tack för din feedback.\nVi jobbar hela tiden på att förbättra appen"
   },
+  "menu": {
+    "item-edit-profile": "Min profil",
+    "item-share-this-app": "Dela appen",
+    "item-wider-health-studies": false,
+    "opt-in": false,
+    "opted-in": false
+  },
   "research-updates": "Aktuella forskningsnyheter",
   "faqs": "Vanliga frågor",
   "privacy-policy": "Integritetsmeddelande",
-  "nav-edit-profile": "Min profil",
-  "nav-share-this-app": "Dela appen",
   "delete-my-data": "Ta bort mina uppgifter",
   "delete-data-alert-title": "Är du säker?",
   "delete-data-alert-text": "Du kan inte ångra dig om du tar bort ditt konto och dina uppgifter.",
@@ -636,8 +654,8 @@
   "edit-profile": {
     "title": "Min profil",
     "your-location": "Din plats",
-    "text": "",
-    "archive-cta": "",
+    "text": false,
+    "archive-cta": false,
     "done": "Klar",
     "location": {
       "title": "Min plats",
@@ -775,14 +793,14 @@
       "read-accepted": false
     },
     "consent-normal-uk": {
-      "card-1-description": false,
-      "card-1-title": false,
-      "card-2-description": false,
-      "card-2-title": false,
-      "card-3-description": false,
-      "card-3-title": false,
-      "card-4-description": false,
-      "card-4-title": false,
+      "card-fight-covid19-description": false,
+      "card-fight-covid19-title": false,
+      "card-advance-science-description": false,
+      "card-advance-science-title": false,
+      "card-improve-health-description": false,
+      "card-improve-health-title": false,
+      "card-build-products-description": false,
+      "card-build-products-title": false,
       "subtitle": false,
       "title": false
     },
@@ -972,9 +990,9 @@
     },
     "dose-symptoms": {
       "label": "Om din vaccination",
-      "title-1": "",
+      "title-1": false,
       "title-2": "Upplever du några symtom i närheten av injektionsplatsen?",
-      "title-3": "",
+      "title-3": false,
       "check-all-that-apply": "Markera alla tillämpliga alternativ:",
       "pain": "Smärta",
       "redness": "Rodnad",
@@ -1001,18 +1019,8 @@
       "link": "Var hittar jag dessa uppgifter?"
     },
     "vaccine-list": {
-      "title": "Dina covid-19-vacciner",
-      "description": "Berätta om du har fått minst en dos av covid-19-vaccin under pågående vaccinationsprogram. Fråga gärna hälsopersonalen vilket vaccin du får så att du kan fylla i uppgifterna korrekt.",
-      "add-button": "Lägg till vaccin",
-      "correct-info": "Informationen är korrekt",
-      "no-vaccine": "Jag har inte vaccinerats",
-      "no-2nd": "Jag har inte fått en andra dos",
-      "delete-vaccine-title": "Ta bort vaccin",
-      "delete-vaccine-text": "All information om vaccindoser kommer att tas bort."
-    },
-    "vaccine-list-updated": {
-      "title": "Dina covid-19-vacciner",
-      "description": "Berätta om du har fått minst en covid-19-vaccindos, inklusive eventuella boosterdoser.",
+      "title": "Dina vaccin",
+      "description": "Berätta om du har vaccinerats mot årets säsongsinfluensa eller covid-19. Du kan nu även registrera eventuella boosterdoser av covid-19-vaccin.",
       "modal-title": "Logging your vaccines",
       "modal-body": "We can now record COVID-19 vaccines taken as part of a trial. Please select \"I received my vaccine via a vaccine trial\" when asked for the name of your vaccine.",
       "modal-button": "OK",
@@ -1021,21 +1029,30 @@
       "no-vaccine": "Jag har inte vaccinerats",
       "no-2nd": "Jag har inte fått en andra dos",
       "delete-vaccine-title": "Ta bort vaccin",
-      "delete-vaccine-text": "All information om detta vaccin kommer att tas bort."
+      "delete-vaccine-text": "All information om detta vaccin kommer att tas bort.",
+      "tabs-title": "Typ av vaccin",
+      "tab-covid": "Covid-19",
+      "tab-flu": "Influensa",
+      "flu-dose-row-name": "Influensavaccin"
     },
     "your-vaccine": {
       "title": "Berätta om din vaccination",
       "add-dose": "Lägg till dos",
       "edit-dose": "Redigera dos",
-      "first-dose": "Om din första dos",
-      "second-dose": "Om din andra dos",
+      "vaccine-type": "Vill du registrera en dos covid-19-vaccin eller influensavaccin?",
+      "vaccine-type-description": "Om du fick influensavaccin och covid-19-vaccin samtidigt ska du logga dem som två separata doser.",
+      "vaccine-type-covid": "Covid-19",
+      "vaccine-type-flu": "Influensa",
+      "flu-mechanism": false,
+      "flu-mechanism-arm-injection": false,
+      "flu-mechanism-nasal-spray": false,
+      "flu-mechanism-dont-know": false,
       "when-injection": "När blev du vaccinerad?",
       "when-vaccine": "När blev du vaccinerad?",
       "when-vaccine-trial": "When was your vaccine trial test?",
       "have-had-second": "Har du redan fått din andra dos?",
       "select-date": "Välj datum",
       "label-name": "Vilket vaccin fick du?",
-      "label-name-updated": "Vilket vaccin fick du?",
       "name-trial": "N/A",
       "name-trial-short": "Vaccine trial",
       "name-i-dont-know": "Annat/Jag vet inte",
@@ -1045,8 +1062,7 @@
       "placebo-not-sure": "N/A",
       "label-name-other": "Vilken typ av vaccin var det?",
       "placeholder-batch": "T.ex. EL0141",
-      "label-batch": "Batch-/satsnummer (valfritt)",
-      "label-batch-updated": "Batchnummer för dos",
+      "label-batch": "Batchnummer för dos",
       "date-change-confirm": "Bekräfta datumändring?",
       "date-change-text": "Detta ändras när vi frågar dig vissa frågor.",
       "confirm": "Bekräfta",
@@ -1073,21 +1089,22 @@
     "contributors-so-far": "Bidragsgivare hittills:",
     "trendline-card": {
       "delta": {
-        "up": "",
-        "down": "",
-        "from-last-week": ""
+        "up": false,
+        "down": false,
+        "from-last-week": false
       },
-      "share-cta": ""
+      "share-cta": false
     }
   },
   "explore-trend-line": {
-    "title": "",
-    "cta": "",
-    "active-covid-cases": "",
-    "active-cases-in-your-area": ""
+    "title": false,
+    "cta": false,
+    "active-covid-cases": false,
+    "active-covid-cases-subheader": false,
+    "active-cases-in-your-area": false
   },
   "estimated-cases-card": {
-    "covid-in-the-uk": "",
+    "covid-in-the-uk": false,
     "estimated-cases": "Casos estimados",
     "daily": "Nuevos casos diarios",
     "active": "Casos activos",
@@ -1102,100 +1119,100 @@
   },
   "school-networks": {
     "intro": {
-      "title": "",
+      "title": false,
       "point-1": {
-        "title": "",
-        "description": ""
+        "title": false,
+        "description": false
       },
       "point-2": {
-        "title": "",
-        "description": ""
+        "title": false,
+        "description": false
       },
       "point-3": {
-        "title": "",
-        "description": ""
+        "title": false,
+        "description": false
       },
-      "cta": ""
+      "cta": false
     },
     "how-to": {
-      "title": "",
+      "title": false,
       "point-1": {
-        "title": "",
-        "description": ""
+        "title": false,
+        "description": false
       },
       "point-2": {
-        "title": "",
-        "description": ""
+        "title": false,
+        "description": false
       },
-      "cta": ""
+      "cta": false
     },
     "join-school": {
-      "title-higher-education": "",
-      "description-higher-education": "",
-      "remove": "",
-      "removeHigherEducation": "",
-      "school-code-title": "",
-      "school-code-instructions": "",
-      "school-code-placeholder": "",
-      "school-code-confirm": "",
-      "school-code-confirm-instructions": "",
-      "cta": "",
-      "modal-body": "",
+      "title-higher-education": false,
+      "description-higher-education": false,
+      "remove": false,
+      "removeHigherEducation": false,
+      "school-code-title": false,
+      "school-code-instructions": false,
+      "school-code-placeholder": false,
+      "school-code-confirm": false,
+      "school-code-confirm-instructions": false,
+      "cta": false,
+      "modal-body": false,
       "button-1": "Avbryt",
-      "button-2": "",
-      "university-network-header": "",
-      "school-network-header": "",
-      "more-information": "",
-      "school-url-label": "",
-      "school-url": "",
+      "button-2": false,
+      "university-network-header": false,
+      "school-network-header": false,
+      "more-information": false,
+      "school-url-label": false,
+      "school-url": false,
       "dropdown": {
-        "label-higher-education": ""
+        "label-higher-education": false
       }
     },
     "join-group": {
-      "title": "",
-      "description": "",
+      "title": false,
+      "description": false,
       "dropdown": {
-        "label": ""
+        "label": false
       },
-      "next": ""
+      "next": false
     },
     "join-error": {
-      "cta-okay": "",
+      "cta-okay": false,
       "duplicated-membership": {
-        "title": "",
-        "description": ""
+        "title": false,
+        "description": false
       }
     },
     "groups-list": {
-      "title": "",
-      "subtitle": "",
-      "text": "",
-      "add-new-bubble": "",
-      "modal-body": "",
-      "button-1": "",
-      "button-2": ""
+      "title": false,
+      "subtitle": false,
+      "text": false,
+      "add-new-bubble": false,
+      "modal-body": false,
+      "button-1": false,
+      "button-2": false
     },
     "dashboard": {
-      "title": "",
-      "at-the-school": "",
-      "updated-on": "",
-      "students-with": "",
-      "confirmed": "",
-      "reported": "",
-      "recovered": "",
-      "total": "",
-      "more-details": "",
-      "faq": "",
-      "disclaimer": "",
-      "disclaimer2": "",
-      "children-signed-up": "",
-      "entire-school": "",
-      "more-parents": "",
-      "more-parents-singular": "",
-      "reported-unwell": "",
-      "report-for-today": "",
-      "report-for-today-singular": ""
+      "title": false,
+      "at-the-school": false,
+      "updated-on": false,
+      "students-with": false,
+      "confirmed": false,
+      "reported": false,
+      "recovered": false,
+      "total": false,
+      "more-details": false,
+      "faq": false,
+      "disclaimer": false,
+      "disclaimer2": false,
+      "children-signed-up": false,
+      "entire-school": false,
+      "more-parents": false,
+      "more-parents-singular": false,
+      "reported-unwell": false,
+      "report-for-today": false,
+      "report-for-today-singular": false
     }
   },
   "generic": {
@@ -1545,13 +1562,46 @@
       "primary-profile-only": "You are only providing consent for your profile, and not others you report for.",
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",
-      "title": "Are you in?",
-      "card-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
-      "card-1-title": "1. Advance human health science",
-      "card-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
-      "card-2-title": "2. Help others improve human health ",
-      "card-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
-      "card-3-title": "3. Build health products"
+      "title": "Are you in?"
+    }
+  },
+  "wider-health-studies": {
+    "data-consent": {
+      "description": false,
+      "title": false
+    },
+    "disease-preferences": {
+      "button": false,
+      "description": {
+        "one": false,
+        "other": false
+      },
+      "title": false
+    },
+    "wider-health-studies": {
+      "opt-out": false,
+      "description": false,
+      "title": false,
+      "note": false,
+      "card-data": {
+        "button": false,
+        "description": false,
+        "title": false
+      },
+      "card-preferences": {
+        "button": false,
+        "description": false,
+        "title": false
+      }
+    },
+    "opt-out-modal": {
+      "button-positive": false,
+      "button-negative": false,
+      "description": false,
+      "title": false
+    },
+    "menu-overlay": {
+      "description": false
     }
   },
   "disease-cards": {

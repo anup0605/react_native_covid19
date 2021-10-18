@@ -10,6 +10,7 @@ export * from './multi-profile';
 export * from './password-reset';
 export * from './patient';
 export * from './pingdemic';
+export * from './wider-health-studies';
 export * from './reconsent';
 export * from './register';
 export * from './school-network';

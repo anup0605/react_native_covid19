@@ -26,8 +26,7 @@ export default function Welcome1Screen({ navigation }: TProps) {
   React.useEffect(() => {
     contentService.getUserCount().then((response) => {
       if (response) {
-        const userCount = cleanIntegerVal(response);
-        setUserCount(userCount);
+        setUserCount(cleanIntegerVal(response));
       }
     });
   }, [contentService.getUserCount, cleanIntegerVal, setUserCount]);
@@ -51,7 +50,7 @@ export default function Welcome1Screen({ navigation }: TProps) {
   const onNextButtonPress = React.useCallback(() => navigation.navigate('Welcome2'), [navigation.navigate]);
 
   return (
-    <Screen hideBackButton noPadding backgroundColor={colors.brand} testID="welcome-1-screen">
+    <Screen noHeader noPadding backgroundColor={colors.brand} testID="welcome-1-screen">
       <Image source={getMapImage()} style={styles.mapImage} testID="map" />
 
       <View style={styles.loginContainer}>

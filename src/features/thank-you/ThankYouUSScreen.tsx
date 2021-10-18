@@ -1,3 +1,4 @@
+import Check from '@assets/icons/Check';
 import { ShareAppCardViral } from '@covid/components/cards/ShareAppViral';
 import { Screen } from '@covid/components/Screen';
 import { ClickableText, HeaderText, RegularText } from '@covid/components/Text';
@@ -7,7 +8,6 @@ import { AppRating, shouldAskForRating } from '@covid/features/thank-you/compone
 import i18n from '@covid/locale/i18n';
 import { sizes, styling } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
-import { AntDesign } from '@expo/vector-icons';
 import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
@@ -36,7 +36,9 @@ export default function ThankYouUSScreen({ route }: IProps) {
     <>
       {askForRating && <AppRating />}
       <Screen backgroundColor={colors.backgroundSecondary} testID="thank-you-screen">
-        <AntDesign name="checkcircle" size={32} style={styles.checkIcon} />
+        <View style={styles.checkWrapper}>
+          <Check color="white" />
+        </View>
 
         <HeaderText style={{ marginTop: sizes.l, textAlign: 'center' }}>
           {i18n.t('thank-you.report-tomorrow')}
@@ -73,9 +75,14 @@ export default function ThankYouUSScreen({ route }: IProps) {
 }
 
 const styles = StyleSheet.create({
-  checkIcon: {
+  checkWrapper: {
+    alignItems: 'center',
     alignSelf: 'center',
-    color: colors.feedbackExcellent,
+    backgroundColor: colors.feedbackExcellent,
+    borderRadius: 16,
+    height: 32,
+    justifyContent: 'center',
+    width: 32,
   },
   done: {
     alignSelf: 'center',
