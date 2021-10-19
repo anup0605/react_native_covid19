@@ -229,7 +229,6 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        // versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
                         defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
 
@@ -250,7 +249,6 @@ dependencies {
     // implementation 'com.facebook.fresco:webpsupport:2.0.0'
     
     implementation 'com.facebook.fresco:fresco:2.6.0'
-
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
