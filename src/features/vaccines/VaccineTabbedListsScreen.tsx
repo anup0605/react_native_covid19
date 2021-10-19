@@ -7,10 +7,12 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { colors } from '@theme';
 import * as React from 'react';
 import { FlatList, useWindowDimensions } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface IVaccineDoseByTypeProps {
   vaccineDoses: TDose[];
   vaccineRecord: TVaccineRequest;
+  width: number;
 }
 
 interface IProps extends IVaccineDoseByTypeProps {
@@ -37,14 +39,18 @@ function VaccineDoseListByType(props: IVaccineDoseByTypeProps) {
   };
 
   return (
-    <FlatList
-      nestedScrollEnabled
-      scrollEnabled
-      contentContainerStyle={contentContainerStyle}
-      data={props.vaccineDoses}
-      keyExtractor={(dose: TDose, index) => `${dose.id}-${index}`}
-      renderItem={renderItem}
-    />
+    // Needed to avoid error around nested VirtualizedViews
+    <ScrollView horizontal>
+      <FlatList
+        nestedScrollEnabled
+        scrollEnabled
+        contentContainerStyle={contentContainerStyle}
+        data={props.vaccineDoses}
+        keyExtractor={(dose: TDose, index) => `${dose.id}-${index}`}
+        renderItem={renderItem}
+        style={{ width: props.width }}
+      />
+    </ScrollView>
   );
 }
 
@@ -92,7 +98,9 @@ export function VaccineTabbedListsScreen(props: IProps) {
       }}
     >
       <Tab.Screen
-        children={() => <VaccineDoseListByType vaccineDoses={covidVaccines} vaccineRecord={props.vaccineRecord} />}
+        children={() => (
+          <VaccineDoseListByType vaccineDoses={covidVaccines} vaccineRecord={props.vaccineRecord} width={barwidth} />
+        )}
         name={i18n.t('vaccines.vaccine-list.tab-covid')}
         options={{
           tabBarAccessibilityLabel: i18n.t('vaccines.vaccine-list.tab-covid'),
@@ -100,7 +108,9 @@ export function VaccineTabbedListsScreen(props: IProps) {
         }}
       />
       <Tab.Screen
-        children={() => <VaccineDoseListByType vaccineDoses={fluVaccines} vaccineRecord={props.vaccineRecord} />}
+        children={() => (
+          <VaccineDoseListByType vaccineDoses={fluVaccines} vaccineRecord={props.vaccineRecord} width={barwidth} />
+        )}
         name={i18n.t('vaccines.vaccine-list.tab-flu')}
         options={{
           tabBarAccessibilityLabel: i18n.t('vaccines.vaccine-list.tab-flu'),

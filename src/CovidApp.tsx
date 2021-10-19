@@ -14,7 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as Notifications from 'expo-notifications';
 import { Root } from 'native-base';
 import * as React from 'react';
-import { Dimensions, LogBox } from 'react-native';
+import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Stack = createStackNavigator<TScreenParamList>();
@@ -62,13 +62,6 @@ export default function CovidApp() {
       Analytics.track(events.OPEN_FROM_NOTIFICATION);
     });
   });
-
-  // This ignores warnings that pop up wherever we nest FlatList within a ScrollView.
-  // The issue is that our custom Screen component (which wraps all our screens) contains a ScrollView.
-  // https://stackoverflow.com/questions/58243680/react-native-another-virtualizedlist-backed-container/58283632
-  React.useEffect(() => {
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-  }, []);
 
   const ref = React.useCallback((navigatorRef) => {
     if (navigatorRef) {

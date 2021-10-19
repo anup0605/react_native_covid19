@@ -6,13 +6,14 @@ import { sizes } from '@covid/themes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colors } from '@theme';
 import * as React from 'react';
-import { FlatList, useWindowDimensions } from 'react-native';
+import { FlatList, ScrollView, useWindowDimensions } from 'react-native';
 
 import { CovidTestRow } from './components/CovidTestRow';
 import { isAntibodyTest, isLateralFlowTest, isOtherTest, isPcrTest } from './helpers';
 
 interface ICovidListByTypeProps {
   covidTests: TCovidTest[];
+  width: number;
 }
 
 interface IProps extends ICovidListByTypeProps {
@@ -29,14 +30,18 @@ function CovidListByType(props: ICovidListByTypeProps) {
   };
 
   return (
-    <FlatList
-      nestedScrollEnabled
-      scrollEnabled
-      contentContainerStyle={{ backgroundColor: colors.backgroundPrimary }}
-      data={props.covidTests}
-      keyExtractor={(test: TCovidTest, index) => `${test.id}-${index}`}
-      renderItem={renderItem}
-    />
+    // Needed to avoid error around nested VirtualizedViews
+    <ScrollView horizontal>
+      <FlatList
+        nestedScrollEnabled
+        scrollEnabled
+        contentContainerStyle={{ backgroundColor: colors.backgroundPrimary }}
+        data={props.covidTests}
+        keyExtractor={(test: TCovidTest, index) => `${test.id}-${index}`}
+        renderItem={renderItem}
+        style={{ width: props.width }}
+      />
+    </ScrollView>
   );
 }
 
@@ -100,7 +105,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
       }}
     >
       <Tab.Screen
-        children={() => <CovidListByType covidTests={lateralFlowTests} />}
+        children={() => <CovidListByType covidTests={lateralFlowTests} width={barwidth} />}
         name={i18n.t('covid-test-list.tab-lateral')}
         options={{
           tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-lateral'),
@@ -108,7 +113,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
         }}
       />
       <Tab.Screen
-        children={() => <CovidListByType covidTests={pcrTests} />}
+        children={() => <CovidListByType covidTests={pcrTests} width={barwidth} />}
         name={i18n.t('covid-test-list.tab-pcr')}
         options={{
           tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-pcr'),
@@ -116,7 +121,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
         }}
       />
       <Tab.Screen
-        children={() => <CovidListByType covidTests={antibodyTests} />}
+        children={() => <CovidListByType covidTests={antibodyTests} width={barwidth} />}
         name={i18n.t('covid-test-list.tab-antibody')}
         options={{
           tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-antibody'),
@@ -125,7 +130,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
       />
       {otherTests.length ? (
         <Tab.Screen
-          children={() => <CovidListByType covidTests={otherTests} />}
+          children={() => <CovidListByType covidTests={otherTests} width={barwidth} />}
           name={i18n.t('covid-test-list.tab-other')}
           options={{
             tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-other'),
