@@ -1,13 +1,15 @@
+import { IIconProps } from '@assets/icons/svgIcons/types';
+import { determineDimensions } from '@assets/utils';
 import * as React from 'react';
 import { G, Path, Svg } from 'react-native-svg';
 
-interface IProps {
-  color?: string;
-}
+const defaultWidth = 20;
+const defaultHeight = 20;
 
-function CalendarIcon({ color = '#565A5C' }: IProps) {
+export default function CalendarIcon({ color = '#565A5C', ...props }: IIconProps) {
+  const { width, height } = determineDimensions(props, defaultWidth, defaultHeight);
   return (
-    <Svg height="20px" viewBox="0 0 20 20" width="20px">
+    <Svg fill="none" height={height} viewBox="0 0 20 20" width={width}>
       <G
         fill="none"
         fillRule="evenodd"
@@ -27,5 +29,3 @@ function CalendarIcon({ color = '#565A5C' }: IProps) {
     </Svg>
   );
 }
-
-export default CalendarIcon;

@@ -8,7 +8,7 @@ type TProps = {
   width?: number | string;
 };
 
-export default function Check({ color = colors.brand, width = 20, height = 20 }: TProps) {
+export default function Check({ color = colors.brand, width = 22, height = 20 }: TProps) {
   return (
     <Svg fill="none" height={height} viewBox="0 0 20 22" width={width}>
       <Path

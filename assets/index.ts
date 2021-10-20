@@ -20,7 +20,6 @@ export const news = require('./icons/blog.png');
 // Flags
 export const bigTick = require('./icons/bigTick.png');
 export const gbFlag = require('./icons/gb-flag.png');
-export const menuIcon = require('./icons/menu.png');
 export const pending = require('./icons/pending.png');
 export const svFlag = require('./icons/sv-flag.png');
 export const tick = require('./icons/tick.png');
@@ -39,7 +38,6 @@ export const syringe = require('./mechanism-icons/syringe.png');
 export const syringeX3 = require('./mechanism-icons/syringeX3.png');
 
 // Logos
-export const covidByZoeIcon = require('./logos/covid_app_by_zoe.png');
 export const covidByZoeIconDark = require('./logos/covid_app_by_zoe_dark.png');
 export const createdByZoe = require('./logos/created-by-zoe.png');
 export const facebook = require('./logos/facebook.png');

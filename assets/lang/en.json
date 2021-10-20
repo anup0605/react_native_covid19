@@ -23,7 +23,7 @@
     "email-error": "Please correct your email address",
     "password-required": "Please enter a password",
     "password-too-simple": "Your password must be at least 8 characters long and not numbers only",
-    "something-went-wrong": "Something went wrong: %{msg}",
+    "something-went-wrong": "Something went wrong, please try again.",
     "error": "Error #01. Please report this to covid-bugs@joinzoe.com: %{msg}"
   },
   "login": {
@@ -583,11 +583,16 @@
     "cta-later": "Not now",
     "thank-you-for-rating": "Thank you for your feedback.\nWe're working hard to improve things"
   },
+  "menu": {
+    "item-edit-profile": "Edit profile",
+    "item-share-this-app": "Share this app",
+    "item-wider-health-studies": "Wider health studies",
+    "opt-in": "Opt in",
+    "opted-in": "Opted in"
+  },
   "research-updates": "Research updates",
   "faqs": "Frequently asked questions",
   "privacy-policy": "Privacy policy",
-  "nav-edit-profile": "Edit profile",
-  "nav-share-this-app": "Share this app",
   "delete-my-data": "Delete my data",
   "delete-data-alert-title": "Are you sure?",
   "delete-data-alert-text": "Deleting your account and data cannot be undone.",
@@ -670,7 +675,7 @@
     "failed": "Failed",
     "update": "Update",
     "never-had-test": "I have never had a COVID test",
-    "above-list-correct": "This list is correct",
+    "above-list-correct": "This information is correct",
     "tabs-title": "Test type",
     "tab-lateral": "Lateral",
     "tab-pcr": "PCR",
@@ -726,14 +731,14 @@
     "read-accepted": "I have read and accept Zoe Global’s"
   },
   "consent-normal-uk": {
-    "card-1-description": "We will use your data to better understand Coronavirus (COVID-19) and follow its spread. We work with scientists at King's College London (KCL) who will have access to your data, which we may also share with the NHS and other medical researchers as outlined in our Privacy Notice.",
-    "card-1-title": "1. Fight COVID-19",
-    "card-2-description": "ZOE and KCL will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
-    "card-2-title": "2. Advance human health science",
-    "card-3-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
-    "card-3-title": "3. Help others improve human health",
-    "card-4-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
-    "card-4-title": "4. Build health products",
+    "card-fight-covid19-description": "We will use your data to better understand Coronavirus (COVID-19) and follow its spread. We work with scientists at King's College London (KCL) who will have access to your data, which we may also share with the NHS and other medical researchers as outlined in our Privacy Notice.",
+    "card-fight-covid19-title": "Fight COVID-19",
+    "card-advance-science-description": "ZOE and KCL will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
+    "card-advance-science-title": "Advance human health science",
+    "card-improve-health-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
+    "card-improve-health-title": "Help others improve human health",
+    "card-build-products-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
+    "card-build-products-title": "Build health products",
     "subtitle": "Your reports help ZOE to:",
     "title": "How we use your data"
   },
@@ -1514,7 +1519,6 @@
     "disease-preferences": {
       "title": "What matters most to you?",
       "subtitle": "Select as many as you like (optional)",
-      "show-more": "+ Show more",
       "how-data-used": "Your data will help scientists research a wide range of disorders, not just the ones you’ve selected"
     },
     "feedback": {
@@ -1553,13 +1557,46 @@
       "primary-profile-only": "You are only providing consent for your profile, and not others you report for.",
       "privacy-notice": "Privacy Notice",
       "subtitle": "To fight other major health issues, we’d like your consent to:",
-      "title": "Are you in?",
-      "card-1-description": "ZOE and King's College London will use your data to improve the world’s understanding of human health, including but not limited to COVID-19. We may invite you to join third party research studies that you are eligible for.",
-      "card-1-title": "1. Advance human health science",
-      "card-2-description": "We may share your data with other bonafide research organisations to help them carry out scientific research into human health too. The full list of organisations will be shown in our Privacy Notice. We will only share your data in an anonymised or aggregated form, unless you permit us to do otherwise.",
-      "card-2-title": "2. Help others improve human health ",
-      "card-3-description": "ZOE may build health products based on this research to be sold commercially. This is needed to sustain the technology and team that maintain this app for the long-term. We will never sell your data.",
-      "card-3-title": "3. Build health products"
+      "title": "Are you in?"
+    }
+  },
+  "wider-health-studies": {
+    "data-consent": {
+      "description": "To fight other major health issues, you’ve consented to:",
+      "title": "How we use your data"
+    },
+    "disease-preferences": {
+      "button": "Save preferences",
+      "description": {
+        "one": "health issue selected",
+        "other": "health issues selected"
+      },
+      "title": "Your preferences"
+    },
+    "wider-health-studies": {
+      "opt-out": "Opt out",
+      "description": "Your data is available to researchers fighting major health issues beyond COVID-19.",
+      "title": "Wider health studies",
+      "note": "You’ve only provided consent for your profile, not others you report for",
+      "card-data": {
+        "button": "View",
+        "description": "View how we use your data to fight other major health issues.",
+        "title": "How we use your data"
+      },
+      "card-preferences": {
+        "button": "Review",
+        "description": "Review the health issues that matter most to you. You can change them at any time.",
+        "title": "Your preferences"
+      }
+    },
+    "opt-out-modal": {
+      "button-positive": "I'd like to stay opted in",
+      "button-negative": "Continue to opt out",
+      "description": "Your data won’t be available for critical research into other major health issues and will be restricted to COVID-19 studies.",
+      "title": "Are you sure you want to opt out?"
+    },
+    "menu-overlay": {
+      "description": "You can opt in to Wider Health Studies from the menu at any time"
     }
   },
   "disease-cards": {

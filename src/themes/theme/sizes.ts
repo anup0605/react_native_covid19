@@ -17,6 +17,8 @@ export const sizes = {
   border: 1,
   buttonHeight: 56,
   drawerToggle: 20,
+  headerCompactHeight: 90,
+  headerExpandedHeight: 328,
   maxScreenWidth: 600,
   screenHorizontalPadding: grid.l,
   screenVerticalPadding: grid.l,

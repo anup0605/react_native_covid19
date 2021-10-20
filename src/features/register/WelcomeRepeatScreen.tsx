@@ -84,10 +84,7 @@ export class WelcomeRepeatScreen extends React.Component<TProps, TState> {
 
   renderHeader = () => (
     <View style={styles.wrapper}>
-      <DrawerToggle
-        navigation={this.props.navigation as DrawerNavigationProp<TScreenParamList>}
-        style={{ tintColor: colors.white }}
-      />
+      <DrawerToggle navigation={this.props.navigation as DrawerNavigationProp<TScreenParamList>} />
     </View>
   );
 
@@ -115,7 +112,7 @@ export class WelcomeRepeatScreen extends React.Component<TProps, TState> {
           />
         ) : null}
         <Screen
-          hideBackButton
+          noHeader
           backgroundColor={colors.brand}
           renderFooter={this.renderFooter}
           renderHeader={this.renderHeader}

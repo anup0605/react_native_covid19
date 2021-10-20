@@ -1,7 +1,7 @@
 import appConfig from '@covid/appConfig';
 import { Text } from '@covid/components';
 import { BrandedButton } from '@covid/components/buttons';
-import { LegalCard } from '@covid/components/cards/LegalCard';
+import { ELegalCardType, LegalCard } from '@covid/components/cards/LegalCard';
 import { ErrorText } from '@covid/components/Text';
 import Analytics, { events } from '@covid/core/Analytics';
 import { consentService } from '@covid/core/consent/ConsentService';
@@ -23,6 +23,8 @@ const hitSlop = {
   top: 20,
 };
 
+const cards = [ELegalCardType.AdvanceScience, ELegalCardType.ImproveHealth, ELegalCardType.BuildProducts];
+
 export default function ReconsentRequestConsentScreen() {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
@@ -30,25 +32,14 @@ export default function ReconsentRequestConsentScreen() {
 
   const diseasePreferences = useSelector(selectDiseasePreferences);
 
-  const onPrivacyPolicyPress = () => {
+  const onPressPrivacyPolicy = () => {
     Analytics.track(events.RECONSENT_PRIVACY_POLICY_CLICKED);
     NavigatorService.navigate('PrivacyPolicyUK');
   };
 
-  const onInformationSheetPress = () => {
+  const onPressInformationSheet = () => {
     Analytics.track(events.RECONSENT_INFORMATION_SHEET_CLICKED);
     openWebLink('https://covid.joinzoe.com/wider-health-studies-infosheet');
-  };
-
-  const renderCards = () => {
-    return [1, 2, 3].map((i) => (
-      <LegalCard
-        description={i18n.t(`reconsent.request-consent.card-${i}-description`)}
-        index={i - 1}
-        key={`legal-card-${i}`}
-        title={i18n.t(`reconsent.request-consent.card-${i}-title`)}
-      />
-    ));
   };
 
   async function onPressYes() {
@@ -89,10 +80,12 @@ export default function ReconsentRequestConsentScreen() {
       <Text rhythm={24} style={[styles.center, styles.secondaryColour]} textClass="pLight">
         {i18n.t('reconsent.request-consent.subtitle')}
       </Text>
-      {renderCards()}
+      {cards.map((type, i) => (
+        <LegalCard index={i} key={`legal-card-${type}`} type={type} />
+      ))}
       <TouchableOpacity
         hitSlop={hitSlop}
-        onPress={onPrivacyPolicyPress}
+        onPress={onPressPrivacyPolicy}
         style={styles.marginTop}
         testID="button-privacy-notice"
       >
@@ -102,7 +95,7 @@ export default function ReconsentRequestConsentScreen() {
       </TouchableOpacity>
       <TouchableOpacity
         hitSlop={hitSlop}
-        onPress={onInformationSheetPress}
+        onPress={onPressInformationSheet}
         style={styles.marginTop}
         testID="button-information-sheet"
       >

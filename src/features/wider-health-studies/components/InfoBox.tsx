@@ -3,15 +3,16 @@ import { Text } from '@covid/components';
 import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 interface IProps {
+  style?: StyleProp<ViewStyle>;
   text: string;
 }
 
 export default function InfoBox(props: IProps) {
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, props.style]}>
       <View style={styles.icon}>
         <InfoCircle color={colors.darkblue} />
       </View>

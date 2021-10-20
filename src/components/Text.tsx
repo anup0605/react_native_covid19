@@ -1,6 +1,6 @@
 import { colors, fontStyles } from '@theme';
 import * as React from 'react';
-import { ImageStyle, StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { ImageStyle, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
 
 import { ITest } from './types';
 
@@ -131,10 +131,6 @@ export const ClickableText = ({ style, children, onPress, testID }: IClickableTe
   </Text>
 );
 
-export const Divider: React.FC<{ styles?: StyleProp<ViewStyle> }> = ({ styles: passed }) => (
-  <View style={[styles.divider, passed]} />
-);
-
 export const LabelText = ({ style, children }: IProps) => <Text style={[fontStyles.label, style]}>{children}</Text>;
 export const LabelSecondaryText = ({ style, children }: IProps) => (
   <Text style={[fontStyles.labelSecondary, style]}>{children}</Text>
@@ -148,10 +144,6 @@ const styles = StyleSheet.create({
   deleteText: {
     ...fontStyles.bodyReg,
     color: colors.red,
-  },
-  divider: {
-    borderBottomWidth: 2,
-    borderColor: colors.backgroundFour,
   },
   errorText: {
     ...fontStyles.bodyReg,

@@ -11,8 +11,9 @@ interface IProps {
   buttonOnPress?: () => void;
   buttonTitle?: string;
   children?: React.ReactNode;
-  hideBackButton?: boolean;
+  noHeader?: boolean;
   noPadding?: boolean;
+  noScrollView?: boolean;
   testID: string;
 }
 
@@ -25,9 +26,9 @@ const dots = Array(AMOUNT_DOTS)
 
 export default function ReconsentScreen(props: IProps) {
   function renderHeader() {
-    return !props.hideBackButton || props.activeDot ? (
+    return !props.noHeader || props.activeDot ? (
       <View style={styles.headerWrapper}>
-        {props.hideBackButton ? null : <BackButton />}
+        {props.noHeader ? null : <BackButton />}
         {props.activeDot ? (
           <View pointerEvents="none" style={styles.dotsWrapper}>
             {dots.map((_, index) => (
@@ -50,6 +51,7 @@ export default function ReconsentScreen(props: IProps) {
     <Screen
       backgroundColor={colors.backgroundPrimary}
       noPadding={props.noPadding}
+      noScrollView={props.noScrollView}
       renderHeader={renderHeader}
       testID={props.testID}
     >

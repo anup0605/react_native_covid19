@@ -18,7 +18,7 @@ const ONBOARDING_SCREENS = [
   require('@covid/features/covid-tests/modals/gifs/screen_4.gif'),
 ];
 
-const HIT_SLOP = {
+const hitSlop = {
   bottom: 12,
   left: 12,
   right: 12,
@@ -44,7 +44,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
     }
   });
 
-  function closeAndUpateStartupInfo() {
+  const closeAndUpdateStartupInfo = React.useCallback(() => {
     const infos: Partial<TPatientInfosRequest> = {
       has_seen_covid_test_onboarding: true,
     };
@@ -52,7 +52,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
       props.onRequestClose();
       dispatch(fetchStartUpInfo());
     });
-  }
+  }, [props.patientId, props.onRequestClose]);
 
   function setIndexAndGif(selectedIndex: number) {
     setOboardingModalScreenIndex(selectedIndex);
@@ -62,7 +62,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
   function nextModalOrComplete() {
     const selectedIndex = onboardingModalScreenIndex + 1;
     if (selectedIndex >= ONBOARDING_SCREENS.length) {
-      closeAndUpateStartupInfo();
+      closeAndUpdateStartupInfo();
     } else {
       setIndexAndGif(selectedIndex);
     }
@@ -79,15 +79,15 @@ export default function CovidTestListOnboardingModal(props: IProps) {
   const headerChildren = React.useMemo(
     () => (
       <TouchableOpacity
-        hitSlop={HIT_SLOP}
-        onPress={closeAndUpateStartupInfo}
+        hitSlop={hitSlop}
+        onPress={closeAndUpdateStartupInfo}
         style={styles.closeTouchable}
         testID="button-close-modal"
       >
         <RegularText style={styles.closeText}>{i18n.t(`modal-close`)}</RegularText>
       </TouchableOpacity>
     ),
-    [closeAndUpateStartupInfo],
+    [closeAndUpdateStartupInfo],
   );
 
   const footerChildren = React.useMemo(
@@ -105,7 +105,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
     <Modal
       footerChildren={footerChildren}
       headerChildren={headerChildren}
-      onRequestClose={closeAndUpateStartupInfo}
+      onRequestClose={closeAndUpdateStartupInfo}
       swipeLeft={nextModalOrComplete}
       swipeRight={previousModal}
       testID={`covid-test-modal-${onboardingModalScreenIndex}`}
