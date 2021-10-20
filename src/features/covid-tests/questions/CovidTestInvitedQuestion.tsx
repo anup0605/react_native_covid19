@@ -5,12 +5,12 @@ import { isGBCountry } from '@covid/core/localisation/LocalisationService';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
 import CovidTestInfoIcon from '@covid/features/covid-tests/components/CovidTestInfoIcon';
-import { CovidTestThrNumberInfoModal } from '@covid/features/covid-tests/components/CovidTestThrNumberInfoModal';
 import {
   isOldVersionAntibodyInviteTest,
   isZoeInviteOfferTest,
   showDualAntibodyTestUI,
 } from '@covid/features/covid-tests/helpers';
+import { CovidTestThrNumberInfoModal } from '@covid/features/covid-tests/modals/CovidTestThrNumberInfoModal';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';

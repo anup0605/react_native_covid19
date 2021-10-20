@@ -26,7 +26,7 @@
     "generate:git-hash": "ts-node ./scripts/generate-git-hash.ts",
     "generate:icon-names": "ts-node scripts/generate-icon-names.ts",
     "i18n:sanitise": "ts-node ./scripts/i18n-sanitise.ts",
-    "ios": "yarn generate:git-hash && react-native run-ios --scheme 'Covid Debug' --configuration Debug",
+    "ios": "yarn generate:git-hash && react-native run-ios --simulator='iPhone 11 (iOS 14.5)' --scheme 'Covid Debug' --configuration Debug",
     "ios:devices": "xcrun simctl list",
     "ios:local": "ENVFILE=.env.local yarn ios",
     "ios:staging": "ENVFILE=.env.staging yarn ios",

@@ -14,7 +14,6 @@ export const VaccineLogSymptomsInfoScreen: React.FC<TProps> = ({ route }) => {
   return (
     <Screen profile={route.params?.assessmentData?.patientData?.profile} testID="vaccine-log-symptoms-info-screen">
       <HeaderText style={{ marginBottom: sizes.l }}>{i18n.t('vaccines.log-symptoms.title')}</HeaderText>
-
       <RegularText style={{ marginBottom: sizes.l }}>{i18n.t('vaccines.log-symptoms.body-1')}</RegularText>
       <RegularText style={{ marginBottom: sizes.l }}>{i18n.t('vaccines.log-symptoms.body-2')}</RegularText>
       <RegularText style={{ marginBottom: sizes.l }}>{i18n.t('vaccines.log-symptoms.body-3')}</RegularText>

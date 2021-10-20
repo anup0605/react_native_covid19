@@ -6,7 +6,7 @@ import { HeaderText, RegularText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { ScreenParamList } from '@covid/features';
-import { DoseSymptomsQuestions, TDoseSymptomsData } from '@covid/features/vaccines/fields/DoseSymptomsQuestions';
+import { DoseSymptomsQuestions, TDoseSymptomsData } from '@covid/features/vaccines/questions/DoseSymptomsQuestions';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { RouteProp } from '@react-navigation/native';

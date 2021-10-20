@@ -5,7 +5,7 @@ import VersionUpdateModal from '@covid/core/VersionUpdateModal';
 import MentalHealthPlaybackModal from '@covid/features/mental-health-playback/modals/MentalHealthPlaybackModal';
 import { DrawerMenu } from '@covid/features/menu/DrawerMenu';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
-import { VaccineListMissingModal } from '@covid/features/vaccines/VaccineListMissingModal';
+import { VaccineListMissingModal } from '@covid/features/vaccines/modals/VaccineListMissingModal';
 import NavigatorService from '@covid/NavigatorService';
 import MainNavigator from '@covid/routes';
 import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
