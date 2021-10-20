@@ -10,6 +10,8 @@ import { covidTestService } from '@covid/core/user/CovidTestService';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { CovidTestTabbedListsScreen } from '@covid/features/covid-tests';
+import { getInitialRouteName } from '@covid/features/covid-tests/helpers';
+import CovidTestListOnboardingModal from '@covid/features/covid-tests/modals/CovidTestListOnboardingModal';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
@@ -19,9 +21,6 @@ import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSelector } from 'react-redux';
-
-import { getTestType } from './helpers';
-import CovidTestListOnboardingModal from './modals/CovidTestListOnboardingModal';
 
 interface IProps {
   navigation: StackNavigationProp<TScreenParamList, 'CovidTestList'>;
@@ -85,9 +84,7 @@ export default function CovidTestListScreen(props: IProps) {
 
   const currentPatient = assessmentCoordinator.assessmentData?.patientData?.patientState;
 
-  const showTab = props.route.params?.mechanism
-    ? getTestType(props.route.params.mechanism, props.route.params.is_rapid_test) || 'Lateral'
-    : 'Lateral';
+  const initialRouteName = getInitialRouteName(props.route.params?.mechanism, props.route.params?.is_rapid_test);
 
   return (
     <Screen
@@ -128,8 +125,8 @@ export default function CovidTestListScreen(props: IProps) {
       ) : covidTests.length ? (
         <CovidTestTabbedListsScreen
           covidTests={covidTests}
+          initialRouteName={initialRouteName}
           minTabViewHeight={minTabViewHeight}
-          showTab={showTab}
           tabViewHeight={tabViewHeight}
         />
       ) : null}

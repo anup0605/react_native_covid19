@@ -20,7 +20,7 @@ interface IProps {
   children?: React.ReactNode;
   footerChildren?: React.ReactNode;
   headerChildren?: React.ReactNode;
-  modalName?: string;
+  modalName: string;
   onRequestClose: () => void;
   showsVerticalScrollIndicator?: boolean;
   swipeDown?: TSwipeFunction;
