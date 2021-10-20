@@ -13,7 +13,7 @@ import {
 import { ITimeline } from '@covid/features/anniversary/types';
 import { colors } from '@theme/colors';
 import * as React from 'react';
-import { Alert, FlatList, Image, StyleSheet } from 'react-native';
+import { Alert, FlatList, Image, ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
 
 type TRowType = 'ERROR' | 'FOOTER' | 'INTRODUCTION' | 'LOADER' | 'REPORT_CARD' | 'TIMELINE';
 
@@ -21,9 +21,13 @@ type TRowItem = {
   id: TRowType;
 };
 
+const GUTTER = 50;
+
 export default function AnniversaryScreen() {
   const [timeline, setTimeline] = React.useState<ITimeline>();
   const [hasError, setHasError] = React.useState(false);
+
+  const windowDimensions = useWindowDimensions();
 
   const getTimeline = async (): Promise<ITimeline> => {
     const client = new ApiClient();
@@ -92,12 +96,14 @@ export default function AnniversaryScreen() {
 
   return (
     <Screen backgroundColor={colors.backgroundTertiary} renderHeader={renderHeader} testID="anniversary-screen">
-      <FlatList
-        data={data}
-        keyExtractor={(item: TRowItem) => item.id}
-        renderItem={renderItem}
-        style={{ backgroundColor: colors.backgroundTertiary }}
-      />
+      <ScrollView horizontal>
+        <FlatList
+          data={data}
+          keyExtractor={(item: TRowItem) => item.id}
+          renderItem={renderItem}
+          style={{ backgroundColor: colors.backgroundTertiary, width: windowDimensions.width - GUTTER }}
+        />
+      </ScrollView>
     </Screen>
   );
 }
