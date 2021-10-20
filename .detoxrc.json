@@ -4,12 +4,12 @@
 
   "apps": {
     "ios.debug": {
-      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/covid-zoe Stage.app",
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/covid-zoe.app",
       "build": "xcodebuild -workspace ios/Covid.xcworkspace -scheme 'Covid Stage' -configuration Stage -sdk iphonesimulator -derivedDataPath ios/build ONLY_ACTIVE_ARCH=YES -quiet",
       "type": "ios.app"
     },
     "ios.release": {
-      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/covid-zoe Release.app",
+      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/covid-zoe.app",
       "build": "xcodebuild -workspace ios/Covid.xcworkspace -scheme 'Covid Release' -configuration Release -sdk iphonesimulator -derivedDataPath ios/build ONLY_ACTIVE_ARCH=YES -quiet",
       "type": "ios.app"
     },
