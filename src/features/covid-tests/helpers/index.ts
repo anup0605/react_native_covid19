@@ -1,5 +1,6 @@
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
+import { ETabScreen } from '@covid/features/covid-tests/screens/CovidTestTabbedListsScreen';
 
 const PCR_LATERAL_FLOW_MECHANISMS = [
   ECovidTestMechanismOptions.NOSE_OR_THROAT_SWAB,
@@ -39,23 +40,28 @@ export function isZoeInviteOfferTest(mechanism: ECovidTestMechanismOptions) {
   return ZOE_INVITE_MECHANISMS.includes(mechanism);
 }
 
-export function getTestType(mechanism: ECovidTestMechanismOptions, isRapidTest: boolean | undefined) {
-  if (isRapidTest !== undefined) {
-    if (isPcrTest(mechanism, isRapidTest)) {
-      return 'PCR';
+export function getInitialRouteName(
+  mechanism: ECovidTestMechanismOptions | undefined,
+  isRapidTest: boolean | undefined,
+): ETabScreen {
+  if (mechanism) {
+    if (isRapidTest !== undefined) {
+      if (isPcrTest(mechanism, isRapidTest)) {
+        return ETabScreen.PCR;
+      }
+      if (isLateralFlowTest(mechanism, isRapidTest)) {
+        return ETabScreen.LATERAL;
+      }
     }
-    if (isLateralFlowTest(mechanism, isRapidTest)) {
-      return 'Lateral';
-    }
-  }
 
-  if (isAntibodyTest(mechanism)) {
-    return 'Antibody';
+    if (isAntibodyTest(mechanism)) {
+      return ETabScreen.ANTIBODY;
+    }
+    if (isOtherTest(mechanism)) {
+      return ETabScreen.OTHER;
+    }
   }
-  if (isOtherTest(mechanism)) {
-    return 'Other';
-  }
-  return null;
+  return ETabScreen.LATERAL;
 }
 
 export function showDualAntibodyTestUI(

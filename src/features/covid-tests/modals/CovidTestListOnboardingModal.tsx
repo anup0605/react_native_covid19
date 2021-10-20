@@ -12,10 +12,10 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const ONBOARDING_SCREENS = [
-  require('@covid/features/covid-tests/modals/gifs/screen_1.gif'),
-  require('@covid/features/covid-tests/modals/gifs/screen_2.gif'),
-  require('@covid/features/covid-tests/modals/gifs/screen_3.gif'),
-  require('@covid/features/covid-tests/modals/gifs/screen_4.gif'),
+  require('@covid/features/covid-tests/assets/screen_1.gif'),
+  require('@covid/features/covid-tests/assets/screen_2.gif'),
+  require('@covid/features/covid-tests/assets/screen_3.gif'),
+  require('@covid/features/covid-tests/assets/screen_4.gif'),
 ];
 
 const hitSlop = {
@@ -105,6 +105,7 @@ export default function CovidTestListOnboardingModal(props: IProps) {
     <Modal
       footerChildren={footerChildren}
       headerChildren={headerChildren}
+      modalName="CovidTestListOnboarding"
       onRequestClose={closeAndUpdateStartupInfo}
       swipeLeft={nextModalOrComplete}
       swipeRight={previousModal}
