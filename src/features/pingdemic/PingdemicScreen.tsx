@@ -182,7 +182,9 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
     >
       <HeaderText>{i18n.t('pingdemic.title')}</HeaderText>
 
-      <SecondaryText style={{ marginBottom: sizes.xl }}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
+      <SecondaryText style={{ marginBottom: sizes.m, marginTop: sizes.xl }}>{`${i18n.t(
+        'pingdemic.body',
+      )} `}</SecondaryText>
 
       <Formik
         validateOnChange
