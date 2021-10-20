@@ -3,11 +3,12 @@ import { VaccineDoseRow } from '@covid/features/vaccines/components/VaccineDoseR
 import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, ScrollView, StyleSheet } from 'react-native';
 
 export interface IVaccineDoseByTypeProps {
   vaccineDoses: TDose[];
   vaccineRecord: TVaccineRequest;
+  width: number;
 }
 
 function keyExtractor(dose: TDose, index: number) {
@@ -29,14 +30,17 @@ export function VaccineDoseListByType(props: IVaccineDoseByTypeProps) {
   };
 
   return (
-    <FlatList
-      nestedScrollEnabled
-      scrollEnabled
-      contentContainerStyle={styles.contentContainer}
-      data={props.vaccineDoses}
-      keyExtractor={keyExtractor}
-      renderItem={renderItem}
-    />
+    <ScrollView horizontal>
+      <FlatList
+        nestedScrollEnabled
+        scrollEnabled
+        contentContainerStyle={styles.contentContainer}
+        data={props.vaccineDoses}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        style={{ width: props.width }}
+      />
+    </ScrollView>
   );
 }
 

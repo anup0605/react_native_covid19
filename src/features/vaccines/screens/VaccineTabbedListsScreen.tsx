@@ -68,7 +68,9 @@ export function VaccineTabbedListsScreen(props: IProps) {
       }}
     >
       <Tab.Screen
-        children={() => <VaccineDoseListByType vaccineDoses={covidVaccines} vaccineRecord={props.vaccineRecord} />}
+        children={() => (
+          <VaccineDoseListByType vaccineDoses={covidVaccines} vaccineRecord={props.vaccineRecord} width={barwidth} />
+        )}
         name={ETabScreen.COVID}
         options={{
           tabBarAccessibilityLabel: i18n.t('vaccines.vaccine-list.tab-covid'),
@@ -76,7 +78,9 @@ export function VaccineTabbedListsScreen(props: IProps) {
         }}
       />
       <Tab.Screen
-        children={() => <VaccineDoseListByType vaccineDoses={fluVaccines} vaccineRecord={props.vaccineRecord} />}
+        children={() => (
+          <VaccineDoseListByType vaccineDoses={fluVaccines} vaccineRecord={props.vaccineRecord} width={barwidth} />
+        )}
         name={ETabScreen.FLU}
         options={{
           tabBarAccessibilityLabel: i18n.t('vaccines.vaccine-list.tab-flu'),

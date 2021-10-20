@@ -15,7 +15,7 @@ import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
-import { FlatList, ScrollView, StyleSheet } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 function keyExtractor(disease: TDiseasePreference) {
@@ -33,6 +33,7 @@ export const DiseasePreferencesList: React.FC<TProps> = React.memo((props: TProp
   const reconsentGlobalState = useSelector(selectReconsentState);
   const [reconsentLocalState, dispatchLocal] = React.useReducer(reconsentReducer, reconsentGlobalState);
   const dispatchGlobal = useDispatch();
+  const windowDimensions = useWindowDimensions();
 
   const diseasesActivated = useSelector(() => selectDiseasesActivated(reconsentLocalState));
 
@@ -93,14 +94,17 @@ export const DiseasePreferencesList: React.FC<TProps> = React.memo((props: TProp
             </Text>
           </Text>
         ) : null}
-        <FlatList
-          contentContainerStyle={styles.contentContainer}
-          data={diseasePreferences}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          scrollEnabled={false}
-          style={styles.flex}
-        />
+        {/* Needed to prevent nested VirtualizedLists error */}
+        <ScrollView horizontal>
+          <FlatList
+            contentContainerStyle={styles.contentContainer}
+            data={diseasePreferences}
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+            scrollEnabled={false}
+            style={[styles.flex, { width: windowDimensions.width }]}
+          />
+        </ScrollView>
         <InfoBox style={styles.marginHorizontal} text={i18n.t('reconsent.disease-preferences.how-data-used')} />
       </ScrollView>
       <BrandedButton onPress={onPress} style={styles.button} testID="button-cta-disease-preferences-submit">

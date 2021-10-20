@@ -85,7 +85,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
       }}
     >
       <Tab.Screen
-        children={() => <CovidListByType covidTests={lateralFlowTests} />}
+        children={() => <CovidListByType covidTests={lateralFlowTests} width={barwidth} />}
         name={ETabScreen.LATERAL}
         options={{
           tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-lateral'),
@@ -93,7 +93,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
         }}
       />
       <Tab.Screen
-        children={() => <CovidListByType covidTests={pcrTests} />}
+        children={() => <CovidListByType covidTests={pcrTests} width={barwidth} />}
         name={ETabScreen.PCR}
         options={{
           tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-pcr'),
@@ -101,7 +101,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
         }}
       />
       <Tab.Screen
-        children={() => <CovidListByType covidTests={antibodyTests} />}
+        children={() => <CovidListByType covidTests={antibodyTests} width={barwidth} />}
         name={ETabScreen.ANTIBODY}
         options={{
           tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-antibody'),
@@ -110,7 +110,7 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
       />
       {otherTests.length ? (
         <Tab.Screen
-          children={() => <CovidListByType covidTests={otherTests} />}
+          children={() => <CovidListByType covidTests={otherTests} width={barwidth} />}
           name={ETabScreen.OTHER}
           options={{
             tabBarAccessibilityLabel: i18n.t('covid-test-list.tab-other'),
