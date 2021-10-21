@@ -16,10 +16,12 @@ type TProps = {
 export const VaccineListMissingModal: React.FC<TProps> = ({ route }) => {
   const coordinator = assessmentCoordinator;
 
+  // @julia: It looks like this is not working anymore. The params doesn't contain the vaccine
+  // attribute anymore so the findIndex function always return -1.
   const close = () => {
     // Get the edit index of the first dose that has missing data
     const doses: TDose[] = route.params?.vaccine.doses ?? [];
-    const incompleteDoseIndex: number | undefined = doses.findIndex((dose: TDose) => {
+    const incompleteDoseIndex: number = doses.findIndex((dose: TDose) => {
       return dose.date_taken_specific == null || dose.brand === null;
     });
     coordinator.goToAddEditVaccine(route.params?.vaccine, incompleteDoseIndex);

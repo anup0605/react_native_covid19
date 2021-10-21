@@ -1,5 +1,4 @@
 /* eslint-env jest */
-import { TRootState } from '@covid/core/state/root';
 import { LinkItem } from '@covid/features/menu/LinkItem';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
@@ -16,12 +15,18 @@ import { LinksSection } from '../LinksSection';
 const middlewares = getDefaultMiddleware();
 const mockStore = createMockStore(middlewares);
 
-const IS_TESTER = { content: { startupInfo: { is_tester: true } } };
-const IS_NOT_TESTER = { content: { startupInfo: { is_tester: false } } };
-
-function createTestInstance(store: TRootState) {
+function createTestInstance(isTester: boolean) {
+  const store = mockStore({
+    ...initialState,
+    content: {
+      ...initialState.content,
+      startupInfo: {
+        ...initialState.content.startupInfo,
+        is_tester: isTester,
+      },
+    },
+  });
   return renderer.create(
-    // @ts-expect-error
     <ReduxProvider store={store}>
       <ThemeProvider theme={theme}>
         {/* @ts-expect-error */}
@@ -33,9 +38,7 @@ function createTestInstance(store: TRootState) {
 
 describe('LinksSection tests', () => {
   it('shows the testing mode link when is_tester is true', async () => {
-    const store = mockStore({ ...initialState, ...IS_TESTER });
-    // @ts-expect-error
-    const instance = createTestInstance(store);
+    const instance = createTestInstance(true);
     expect(
       instance
         .findAllByType(LinkItem)
@@ -44,9 +47,7 @@ describe('LinksSection tests', () => {
   });
 
   it('does not show the testing mode link when is_tester is false', async () => {
-    const store = mockStore({ ...initialState, ...IS_NOT_TESTER });
-    // @ts-expect-error
-    const instance = createTestInstance(store);
+    const instance = createTestInstance(false);
     expect(
       instance
         .findAllByType(LinkItem)

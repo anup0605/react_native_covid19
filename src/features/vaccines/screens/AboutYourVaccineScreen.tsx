@@ -14,7 +14,7 @@ import { IVaccineDoseData, VaccineDoseQuestion } from '@covid/features/vaccines/
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { sizes, styling } from '@covid/themes';
-import { formatDateToPost } from '@covid/utils/datetime';
+import { dateToString } from '@covid/utils/datetime';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { colors } from '@theme';
 import { Formik, FormikProps } from 'formik';
@@ -104,7 +104,7 @@ export function AboutYourVaccineScreen({ route }: TProps) {
         ...doseBeingEdited,
         batch_number: setBatch(values),
         brand: setBrand(values),
-        date_taken_specific: formatDateToPost(values.doseDate),
+        date_taken_specific: values.doseDate && dateToString(values.doseDate),
         mechanism: setMechanism(values, isChild),
         placebo: values.placebo,
         vaccine_type: values.vaccineType,

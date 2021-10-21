@@ -6,7 +6,6 @@ import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
 import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
-import { useAppDispatch } from '@covid/core/state/store';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -16,6 +15,7 @@ import { RouteProp } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { PickerItemProps, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 type TProps = {
@@ -38,7 +38,7 @@ type TEditLocationData = {
 export const EditLocationScreen: React.FC<TProps> = (props) => {
   const [errorMessage, setErrorMessage] = React.useState('');
 
-  const appDispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const initialFormValues: TEditLocationData = {
     currentCountry: props.route.params?.patientData?.patientInfo!.current_country_code ?? '',
@@ -93,7 +93,7 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
     editProfileCoordinator
       .updatePatientInfo(infos)
       .then(() => {
-        appDispatch(fetchStartUpInfo());
+        dispatch(fetchStartUpInfo());
         editProfileCoordinator.gotoNextScreen(props.route.name);
       })
       .catch(() => {

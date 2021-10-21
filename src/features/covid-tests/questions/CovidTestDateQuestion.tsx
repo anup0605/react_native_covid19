@@ -145,14 +145,14 @@ CovidTestDateQuestion.schema = () => {
   });
 };
 
-function formatDateToPost(date: Date | undefined) {
+function dateToString(date: Date | undefined) {
   return date ? moment(date).format('YYYY-MM-DD') : null;
 }
 
 CovidTestDateQuestion.createDTO = (formData: ICovidTestDateData): Partial<TCovidTest> => {
   return {
-    date_taken_between_end: formatDateToPost(formData.dateTakenBetweenEnd),
-    date_taken_between_start: formatDateToPost(formData.dateTakenBetweenStart),
-    date_taken_specific: formatDateToPost(formData.dateTakenSpecific),
+    date_taken_between_end: dateToString(formData.dateTakenBetweenEnd),
+    date_taken_between_start: dateToString(formData.dateTakenBetweenStart),
+    date_taken_specific: dateToString(formData.dateTakenSpecific),
   } as Partial<TCovidTest>;
 };

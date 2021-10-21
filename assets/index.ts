@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 // Please keep these in alphabetical order ^_^
 
 export const covidIcon = require('./icon_transparent.png');
