@@ -1,4 +1,4 @@
-import { IAssessmentState } from '@covid/core/assessment/AssessmentState';
+import { TAssessmentInfosRequest } from '@covid/core/assessment/dto/AssessmentInfosRequest';
 import assessment from '@covid/core/assessment/state/reducers';
 import { schoolSlice, TSchoolState } from '@covid/core/schools/Schools.slice';
 import { contentSlice, TContentState } from '@covid/core/state/contentSlice';
@@ -30,7 +30,7 @@ import { IVaccineState, vaccinesSlice } from './vaccines';
 
 export type TRootState = {
   app: IApp;
-  assessment: IAssessmentState;
+  assessment: TAssessmentInfosRequest;
   content: TContentState;
   dietStudy: IDietStudy;
   mentalHealthChanges: IMentalHealthChanges;
