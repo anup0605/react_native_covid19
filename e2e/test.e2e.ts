@@ -65,12 +65,13 @@ testLoginScreen({
 testCreateNewProfileFeature({
   profileName,
 });
-testReportTodayFeature({
-  addTest: false,
-  addVaccines: false,
-  healthy: false,
-  updateTest: false,
-});
+// Either use this, on the case below, but not both.
+// testReportTodayFeature({
+//   addTest: false,
+//   addVaccines: false,
+//   healthy: false,
+//   updateTest: false,
+// });
 testReportTodayFeature({
   addAndUpdateZoeInviteTest: true,
   addTest: true,
