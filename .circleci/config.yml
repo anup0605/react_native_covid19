@@ -272,15 +272,14 @@ jobs:
           cache: false
       - rn/pod_install:
           pod_install_directory: ios
-      # - rn/ios_build:
-      #     # is this needed?
-      #     build_configuration: Release
-      #     cache: false
-      #     derived_data_path: "ios/build"
-      #     device: "iPhone 11"
-      #     project_path: "ios/Covid.xcworkspace"
-      #     project_type: workspace
-      #     scheme: "'Covid Release'"
+      - rn/ios_build:
+          build_configuration: Release
+          cache: false
+          derived_data_path: "ios/build"
+          device: "iPhone 11"
+          project_path: "ios/Covid.xcworkspace"
+          project_type: workspace
+          scheme: "'Covid Release'"
       # - run:
       #     command: >-
       #       detox build -c ios.sim.release
