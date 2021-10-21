@@ -64,14 +64,15 @@ const getTrendLineDelta = (timeseries: ITrendLineTimeSeriesData[], from: number)
 
 // Async Actions
 
-export const fetchDismissedCallouts = createAsyncThunk('content/dismissed_callouts', async (): Promise<
-  Partial<TContentState>
-> => {
-  const arrayString = await AsyncStorageService.getItem<string>(DISMISSED_CALLOUTS);
-  return {
-    dismissedCallouts: arrayString ? (JSON.parse(arrayString) as string[]) : [],
-  };
-});
+export const fetchDismissedCallouts = createAsyncThunk(
+  'content/dismissed_callouts',
+  async (): Promise<Partial<TContentState>> => {
+    const arrayString = await AsyncStorageService.getItem<string>(DISMISSED_CALLOUTS);
+    return {
+      dismissedCallouts: arrayString ? (JSON.parse(arrayString) as string[]) : [],
+    };
+  },
+);
 
 export const fetchStartUpInfo = createAsyncThunk('content/startup_info', async (): Promise<Partial<TContentState>> => {
   // TODO: refactor the ContentService - localData is a property set async on the class within getStartupInfo() (line 107)
@@ -108,39 +109,41 @@ export const fetchLocalTrendLine = createAsyncThunk<Promise<Partial<TContentStat
   },
 );
 
-export const fetchFeaturedContent = createAsyncThunk('content/featured_content', async (): Promise<
-  Partial<TContentState>
-> => {
-  try {
-    const content = await contentService.getFeaturedContent();
-    const sort = <T extends IFeaturedContent>(left: T, right: T): number =>
-      left.order_index > right.order_index ? 1 : -1;
-    const home = content.filter((item) => item.featured_uk_home === true).sort(sort);
-    const thankyou = content.filter((item) => item.featured_uk_thankyou === true).sort(sort);
-    return {
-      featuredHome: home,
-      featuredThankyou: thankyou,
-    };
-  } catch (_) {
-    return {
-      featuredHome: [],
-      featuredThankyou: [],
-    };
-  }
-});
+export const fetchFeaturedContent = createAsyncThunk(
+  'content/featured_content',
+  async (): Promise<Partial<TContentState>> => {
+    try {
+      const content = await contentService.getFeaturedContent();
+      const sort = <T extends IFeaturedContent>(left: T, right: T): number =>
+        left.order_index > right.order_index ? 1 : -1;
+      const home = content.filter((item) => item.featured_uk_home === true).sort(sort);
+      const thankyou = content.filter((item) => item.featured_uk_thankyou === true).sort(sort);
+      return {
+        featuredHome: home,
+        featuredThankyou: thankyou,
+      };
+    } catch (_) {
+      return {
+        featuredHome: [],
+        featuredThankyou: [],
+      };
+    }
+  },
+);
 
-export const searchTrendLine = createAsyncThunk('content/search_trend_line', async (query?: string): Promise<
-  Partial<TContentState>
-> => {
-  const { timeseries, ...trendline } = await contentService.getTrendLines(query);
-  return {
-    exploreTrendline: {
-      delta: getTrendLineDelta(timeseries, 7),
-      timeseries,
-      ...trendline,
-    },
-  };
-});
+export const searchTrendLine = createAsyncThunk(
+  'content/search_trend_line',
+  async (query?: string): Promise<Partial<TContentState>> => {
+    const { timeseries, ...trendline } = await contentService.getTrendLines(query);
+    return {
+      exploreTrendline: {
+        delta: getTrendLineDelta(timeseries, 7),
+        timeseries,
+        ...trendline,
+      },
+    };
+  },
+);
 
 type TUpdateActiveNotificationAction = {
   notification: keyof TActiveNotifications;

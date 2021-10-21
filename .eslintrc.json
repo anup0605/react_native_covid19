@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "airbnb-typescript",
-    "airbnb/hooks",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["airbnb-typescript", "airbnb/hooks", "plugin:prettier/recommended"],
   "globals": {
     "__DEV__": false
   },
@@ -16,11 +12,7 @@
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": [
-    "simple-import-sort",
-    "sort-keys-fix",
-    "unused-imports"
-  ],
+  "plugins": ["simple-import-sort", "sort-keys-fix", "unused-imports"],
   "rules": {
     "@typescript-eslint/no-use-before-define": ["error", { "variables": false }],
     "class-methods-use-this": "off",
@@ -49,14 +41,12 @@
         "selector": "JSXElement > JSXExpressionContainer > LogicalExpression[operator!='??']"
       }
     ],
-    "no-return-assign": [
-      "error",
-      "except-parens"
-    ],
+    "no-return-assign": ["error", "except-parens"],
     "prefer-destructuring": "off",
     "prefer-template": "off",
     "react-hooks/exhaustive-deps": "off",
     "react/destructuring-assignment": "off",
+    "react/jsx-no-bind": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-sort-props": [
       "error",
