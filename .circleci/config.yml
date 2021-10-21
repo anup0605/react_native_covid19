@@ -261,7 +261,7 @@ jobs:
     steps:
       - prepare_code
       - attach_workspace:
-          at: .
+          at: *default_workspace
       - rn/setup_macos_executor:
           homebrew_cache: true
           node_version: "12"
@@ -281,10 +281,10 @@ jobs:
       #     project_path: "ios/Covid.xcworkspace"
       #     project_type: workspace
       #     scheme: "'Covid Release'"
-      - run:
-          command: >-
-            detox build -c ios.sim.release
-          name: Detox Build
+      # - run:
+      #     command: >-
+      #       detox build -c ios.sim.release
+      #     name: Detox Build
       - run:
           command: >-
             detox test -c ios.sim.release -l warn --headless --take-screenshots
