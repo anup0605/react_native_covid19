@@ -1,52 +1,28 @@
 /* eslint-disable react/no-children-prop */
-import { EVaccineTypes, TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
-import { VaccineDoseRow } from '@covid/features/vaccines/components/VaccineDoseRow';
+import { EVaccineTypes, TDose } from '@covid/core/vaccine/dto/VaccineRequest';
+import {
+  IVaccineDoseByTypeProps,
+  VaccineDoseListByType,
+} from '@covid/features/vaccines/components/VaccineDoseListByType';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colors } from '@theme';
 import * as React from 'react';
-import { FlatList, useWindowDimensions } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 
-interface IVaccineDoseByTypeProps {
-  vaccineDoses: TDose[];
-  vaccineRecord: TVaccineRequest;
+export enum ETabScreen {
+  COVID = 'VaccineListCovidTab',
+  FLU = 'VaccineListFluTab',
 }
 
 interface IProps extends IVaccineDoseByTypeProps {
   tabViewHeight: number;
   minTabViewHeight: number;
-  showTab: string;
+  initialRouteName: ETabScreen;
 }
 
 const Tab = createMaterialTopTabNavigator();
-const contentContainerStyle = { backgroundColor: colors.backgroundPrimary };
-
-function VaccineDoseListByType(props: IVaccineDoseByTypeProps) {
-  const renderItem = ({ item, index }: { item: TDose; index: number }) => {
-    return (
-      <VaccineDoseRow
-        dose={item as TDose}
-        id={item.id}
-        key={item.id}
-        style={index === 0 ? { paddingTop: sizes.s } : { paddingTop: sizes.l }}
-        testID={`vaccine-dose-row-${item.vaccine_type}-${index}`}
-        vaccineRecord={props.vaccineRecord}
-      />
-    );
-  };
-
-  return (
-    <FlatList
-      nestedScrollEnabled
-      scrollEnabled
-      contentContainerStyle={contentContainerStyle}
-      data={props.vaccineDoses}
-      keyExtractor={(dose: TDose, index) => `${dose.id}-${index}`}
-      renderItem={renderItem}
-    />
-  );
-}
 
 const GUTTER = 50;
 const MIN_TAB_WIDTH = 85;
@@ -70,7 +46,7 @@ export function VaccineTabbedListsScreen(props: IProps) {
   return (
     <Tab.Navigator
       backBehavior="none"
-      initialRouteName={props.showTab}
+      initialRouteName={props.initialRouteName}
       sceneContainerStyle={{
         backgroundColor: colors.backgroundPrimary,
         height: props.tabViewHeight,
@@ -93,7 +69,7 @@ export function VaccineTabbedListsScreen(props: IProps) {
     >
       <Tab.Screen
         children={() => <VaccineDoseListByType vaccineDoses={covidVaccines} vaccineRecord={props.vaccineRecord} />}
-        name={i18n.t('vaccines.vaccine-list.tab-covid')}
+        name={ETabScreen.COVID}
         options={{
           tabBarAccessibilityLabel: i18n.t('vaccines.vaccine-list.tab-covid'),
           tabBarLabel: i18n.t('vaccines.vaccine-list.tab-covid'),
@@ -101,7 +77,7 @@ export function VaccineTabbedListsScreen(props: IProps) {
       />
       <Tab.Screen
         children={() => <VaccineDoseListByType vaccineDoses={fluVaccines} vaccineRecord={props.vaccineRecord} />}
-        name={i18n.t('vaccines.vaccine-list.tab-flu')}
+        name={ETabScreen.FLU}
         options={{
           tabBarAccessibilityLabel: i18n.t('vaccines.vaccine-list.tab-flu'),
           tabBarLabel: i18n.t('vaccines.vaccine-list.tab-flu'),

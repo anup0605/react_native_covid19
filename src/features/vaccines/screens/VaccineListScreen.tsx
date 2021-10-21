@@ -16,7 +16,8 @@ import { isSECountry } from '@covid/core/localisation/LocalisationService';
 import { EVaccineMechanisms, EVaccineTypes, TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
-import { VaccineTabbedListsScreen } from '@covid/features/vaccines/VaccineTabbedListsScreen';
+import { getInitialRouteName } from '@covid/features/vaccines/helpers';
+import { VaccineTabbedListsScreen } from '@covid/features/vaccines/screens/VaccineTabbedListsScreen';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
 import { sizes } from '@covid/themes';
@@ -30,14 +31,15 @@ type TProps = {
   route: RouteProp<TScreenParamList, 'VaccineList'>;
 };
 
+const HIT_SLOP = {
+  bottom: 12,
+  left: 12,
+  right: 12,
+  top: 12,
+};
+
 const SINGLE_DOSE_ROW_HEIGHT = 48;
 const HEIGHT_OF_STATIC_CONTENT = 500;
-
-const mapTypeToTabName = {
-  covid_trial: i18n.t('vaccines.vaccine-list.tab-covid'),
-  covid_vaccine: i18n.t('vaccines.vaccine-list.tab-covid'),
-  flu_seasonal: i18n.t('vaccines.vaccine-list.tab-flu'),
-};
 
 // Local adverse effects screen should only be shown for flu vaccines via injection OR all COVID vaccines
 const isNotInjectionFluVaccine = (dose: TDose) =>
@@ -56,9 +58,7 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
 
   const patientId = props.route.params?.assessmentData?.patientData?.patientId;
 
-  const showTab = props.route.params?.vaccineType
-    ? mapTypeToTabName[props.route.params.vaccineType]
-    : i18n.t('vaccines.vaccine-list.tab-covid');
+  const initialRouteName = getInitialRouteName(props.route.params?.vaccineType);
 
   let isActive = false;
 
@@ -163,7 +163,12 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
   );
 
   const renderMoreInfoModal = () => (
-    <Modal onRequestClose={() => setModalVisible(false)} testID="vaccine-list-modal" visible={modalVisible}>
+    <Modal
+      modalName="VaccineListInfo"
+      onRequestClose={() => setModalVisible(false)}
+      testID="vaccine-list-modal"
+      visible={modalVisible}
+    >
       <View style={styles.modalWrapper}>
         <HeaderText style={styles.modalTitle}>{i18n.t('vaccines.vaccine-list.modal-title')}</HeaderText>
         <LightText style={styles.modalBody}>{i18n.t('vaccines.vaccine-list.modal-body')}</LightText>
@@ -181,14 +186,12 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
       testID="vaccine-list-screen"
     >
       {renderMoreInfoModal()}
-      <View>
-        <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list.title')} />
-      </View>
+      <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list.title')} />
       <View style={styles.introduction} testID="vaccine-list-introduction">
         <Text>
           <RegularTextWithBoldInserts text={i18n.t('vaccines.vaccine-list.description')} />
           {isSECountry() ? null : (
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <TouchableOpacity hitSlop={HIT_SLOP} onPress={() => setModalVisible(true)}>
               <View style={styles.paddingLeft}>
                 <InfoCircle color={colors.primary} />
               </View>
@@ -215,8 +218,8 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
           <Loading error={null} status="" />
         ) : vaccine ? (
           <VaccineTabbedListsScreen
+            initialRouteName={initialRouteName}
             minTabViewHeight={minTabViewHeight}
-            showTab={showTab}
             tabViewHeight={tabViewHeight}
             vaccineDoses={vaccine.doses}
             vaccineRecord={vaccine}

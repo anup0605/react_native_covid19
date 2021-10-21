@@ -2,7 +2,8 @@
 
 import { Text } from '@covid/components';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
-import CovidTestListScreen from '@covid/features/covid-tests/CovidTestListScreen';
+import CovidTestListOnboardingModal from '@covid/features/covid-tests/modals/CovidTestListOnboardingModal';
+import CovidTestListScreen from '@covid/features/covid-tests/screens/CovidTestListScreen';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import * as React from 'react';
@@ -11,8 +12,7 @@ import renderer from 'react-test-renderer';
 import createMockStore from 'redux-mock-store';
 import { ThemeProvider } from 'styled-components/native';
 
-import MockedNavigator from '../../../../__mocks__/MockedNavigator';
-import CovidTestListOnboardingModal from '../modals/CovidTestListOnboardingModal';
+import MockedNavigator from '../../../../../__mocks__/MockedNavigator';
 
 const middlewares = getDefaultMiddleware();
 const mockStore = createMockStore(middlewares);
@@ -26,6 +26,7 @@ describe('CovidTestListScreen tests', () => {
     const instance = renderer.create(
       <ThemeProvider theme={theme}>
         <ReduxProvider store={store}>
+          {/* @ts-expect-error */}
           <MockedNavigator Component={CovidTestListScreen} />
         </ReduxProvider>
       </ThemeProvider>,
@@ -47,6 +48,7 @@ describe('CovidTestListScreen tests', () => {
     const instance = renderer.create(
       <ThemeProvider theme={theme}>
         <ReduxProvider store={store}>
+          {/* @ts-expect-error */}
           <MockedNavigator Component={CovidTestListScreen} />
         </ReduxProvider>
       </ThemeProvider>,
@@ -64,6 +66,7 @@ describe('CovidTestListScreen tests', () => {
     const instance = renderer.create(
       <ThemeProvider theme={theme}>
         <ReduxProvider store={store}>
+          {/* @ts-expect-error */}
           <MockedNavigator Component={CovidTestListScreen} />
         </ReduxProvider>
       </ThemeProvider>,
@@ -81,6 +84,7 @@ describe('CovidTestListScreen tests', () => {
     const instance = renderer.create(
       <ThemeProvider theme={theme}>
         <ReduxProvider store={store}>
+          {/* @ts-expect-error */}
           <MockedNavigator Component={CovidTestListScreen} />
         </ReduxProvider>
       </ThemeProvider>,

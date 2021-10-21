@@ -1523,7 +1523,6 @@
     "disease-preferences": {
       "title": "What matters most to you?",
       "subtitle": "Select as many as you like (optional)",
-      "show-more": "+ Show more",
       "how-data-used": "Your data will help scientists research a wide range of disorders, not just the ones you’ve selected"
     },
     "feedback": {

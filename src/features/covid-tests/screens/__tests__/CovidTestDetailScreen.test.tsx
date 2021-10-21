@@ -1,17 +1,18 @@
 /* eslint-env jest */
 
-import CovidTestDetailScreen from '@covid/features/covid-tests/CovidTestDetailScreen';
+import { CovidTestMechanismQuestion } from '@covid/features/covid-tests/questions/CovidTestMechanismQuestion';
+import CovidTestDetailScreen from '@covid/features/covid-tests/screens/CovidTestDetailScreen';
 import { theme } from '@covid/themes';
 import * as React from 'react';
 import renderer from 'react-test-renderer';
 import { ThemeProvider } from 'styled-components/native';
 
-import MockedNavigator from '../../../../__mocks__/MockedNavigator';
-import { CovidTestMechanismQuestion } from '../fields/CovidTestMechanismQuestion';
+import MockedNavigator from '../../../../../__mocks__/MockedNavigator';
 
 function createComponent() {
   const element = (
     <ThemeProvider theme={theme}>
+      {/* @ts-expect-error */}
       <MockedNavigator Component={CovidTestDetailScreen} />
     </ThemeProvider>
   );

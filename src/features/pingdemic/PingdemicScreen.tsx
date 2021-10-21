@@ -5,6 +5,9 @@ import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { ScreenParamList } from '@covid/features';
+import { CovidTestDateQuestion, ICovidTestDateData } from '@covid/features/covid-tests/questions';
+import { PingdemicApiClient } from '@covid/features/pingdemic/PingdemicApiClient';
+import { TPingdemicRequest } from '@covid/features/pingdemic/PingdemicRequest';
 import i18n from '@covid/locale/i18n';
 import { sizes, styling } from '@covid/themes';
 import { RouteProp, useIsFocused } from '@react-navigation/native';
@@ -13,10 +16,6 @@ import moment from 'moment';
 import * as React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
-
-import { CovidTestDateQuestion, ICovidTestDateData } from '../covid-tests/fields';
-import { PingdemicApiClient } from './PingdemicApiClient';
-import { TPingdemicRequest } from './PingdemicRequest';
 
 const pingdemicApiClient = new PingdemicApiClient();
 
@@ -183,7 +182,9 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
     >
       <HeaderText>{i18n.t('pingdemic.title')}</HeaderText>
 
-      <SecondaryText style={{ marginBottom: sizes.xl }}>{`${i18n.t('pingdemic.body')} `}</SecondaryText>
+      <SecondaryText style={{ marginBottom: sizes.m, marginTop: sizes.xl }}>{`${i18n.t(
+        'pingdemic.body',
+      )} `}</SecondaryText>
 
       <Formik
         validateOnChange
