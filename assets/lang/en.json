@@ -1076,6 +1076,11 @@
       "name-missing": "Edit to add vaccine name",
       "not-logged": "Not yet logged",
       "edit-vaccine": "Edit vaccine"
+    },
+    "flu-onboarding": {
+      "title": "Log your flu vaccine",
+      "description": "Log any *flu vaccine* during your health report. Tap 'Add a vaccine dose' and select 'Flu' when asked for vaccine type.",
+      "new": "New"
     }
   },
   "dashboard": {
