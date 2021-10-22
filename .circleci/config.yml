@@ -85,7 +85,7 @@ commands:
   prepare_code:
     steps:
       - checkout
-      - run: bash .circleci/pull_private_assets.sh
+      - run: bash .circleci/install_private_assets.sh
 
   install-dependencies:
     steps:
@@ -311,7 +311,7 @@ jobs:
           path: *default_workspace
       - attach_workspace:
           at: *default_workspace
-      - run: bash .circleci/pull_private_assets.sh
+      - run: bash .circleci/install_private_assets.sh
       - prepare_deploy_env
       - restore_cache:
           key: *gem_cache_key
