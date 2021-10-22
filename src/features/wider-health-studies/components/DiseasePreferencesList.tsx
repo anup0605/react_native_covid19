@@ -15,7 +15,7 @@ import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
-import { FlatList, ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 function keyExtractor(disease: TDiseasePreference) {
@@ -33,7 +33,6 @@ export const DiseasePreferencesList: React.FC<TProps> = React.memo((props: TProp
   const reconsentGlobalState = useSelector(selectReconsentState);
   const [reconsentLocalState, dispatchLocal] = React.useReducer(reconsentReducer, reconsentGlobalState);
   const dispatchGlobal = useDispatch();
-  const windowDimensions = useWindowDimensions();
 
   const diseasesActivated = useSelector(() => selectDiseasesActivated(reconsentLocalState));
 
@@ -80,33 +79,37 @@ export const DiseasePreferencesList: React.FC<TProps> = React.memo((props: TProp
     dispatchGlobal(setDiseasePreferences({ diseasePreferences: reconsentLocalState.diseasePreferences }));
   }
 
+  const ListHeaderComponent = (
+    <View style={props.topChildren || props.showActiveText ? styles.marginBottom : null}>
+      {props.topChildren}
+      {props.showActiveText ? (
+        <Text style={styles.selfCenter}>
+          <Text inverted colorPalette="accentBlue" colorShade="main" textClass="pMedium">
+            {diseasesActivated.length}{' '}
+          </Text>
+          <Text inverted colorPalette="accentBlue" colorShade="main" textClass="pLight">
+            {i18n.t('wider-health-studies.disease-preferences.description', { count: diseasesActivated.length })}
+          </Text>
+        </Text>
+      ) : null}
+    </View>
+  );
+
+  const ListFooterComponent = (
+    <InfoBox style={styles.marginTop} text={i18n.t('reconsent.disease-preferences.how-data-used')} />
+  );
+
   return (
     <>
-      <ScrollView style={styles.flex}>
-        {props.topChildren}
-        {props.showActiveText ? (
-          <Text style={styles.selfCenter}>
-            <Text inverted colorPalette="accentBlue" colorShade="main" textClass="pMedium">
-              {diseasesActivated.length}{' '}
-            </Text>
-            <Text inverted colorPalette="accentBlue" colorShade="main" textClass="pLight">
-              {i18n.t('wider-health-studies.disease-preferences.description', { count: diseasesActivated.length })}
-            </Text>
-          </Text>
-        ) : null}
-        {/* Needed to prevent nested VirtualizedLists error */}
-        <ScrollView horizontal>
-          <FlatList
-            contentContainerStyle={styles.contentContainer}
-            data={diseasePreferences}
-            keyExtractor={keyExtractor}
-            renderItem={renderItem}
-            scrollEnabled={false}
-            style={[styles.flex, { width: windowDimensions.width }]}
-          />
-        </ScrollView>
-        <InfoBox style={styles.marginHorizontal} text={i18n.t('reconsent.disease-preferences.how-data-used')} />
-      </ScrollView>
+      <FlatList
+        contentContainerStyle={styles.paddingHorizontal}
+        data={diseasePreferences}
+        keyExtractor={keyExtractor}
+        ListFooterComponent={ListFooterComponent}
+        ListHeaderComponent={ListHeaderComponent}
+        renderItem={renderItem}
+        style={styles.flex}
+      />
       <BrandedButton onPress={onPress} style={styles.button} testID="button-cta-disease-preferences-submit">
         {props.buttonTitle}
       </BrandedButton>
@@ -119,17 +122,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.purple,
     margin: sizes.l,
   },
-  contentContainer: {
-    padding: sizes.l,
-  },
   flex: {
     flex: 1,
   },
-  marginHorizontal: {
-    marginHorizontal: sizes.l,
+  marginBottom: {
+    marginBottom: sizes.l,
   },
   marginTop: {
     marginTop: sizes.l,
+  },
+  paddingHorizontal: {
+    paddingHorizontal: sizes.l,
   },
   selfCenter: {
     alignSelf: 'center',
