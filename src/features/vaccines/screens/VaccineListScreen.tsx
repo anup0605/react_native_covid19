@@ -25,7 +25,7 @@ import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 type TProps = {
   route: RouteProp<TScreenParamList, 'VaccineList'>;
@@ -38,9 +38,6 @@ const HIT_SLOP = {
   top: 12,
 };
 
-const SINGLE_DOSE_ROW_HEIGHT = 48;
-const HEIGHT_OF_STATIC_CONTENT = 500;
-
 // Local adverse effects screen should only be shown for flu vaccines via injection OR all COVID vaccines
 const isNotInjectionFluVaccine = (dose: TDose) =>
   dose.mechanism === EVaccineMechanisms.NASAL_SPRAY || dose.mechanism === EVaccineMechanisms.DONT_KNOW;
@@ -51,10 +48,6 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
   const [error, setError] = React.useState<string>();
 
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
-
-  const windowDimensions = useWindowDimensions();
-  const minTabViewHeight = SINGLE_DOSE_ROW_HEIGHT * 5;
-  const tabViewHeight = windowDimensions.height - HEIGHT_OF_STATIC_CONTENT;
 
   const patientId = props.route.params?.assessmentData?.patientData?.patientId;
 
@@ -200,34 +193,30 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
         </Text>
       </View>
 
-      <View>
-        <BrandedButton
-          onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccine)}
-          style={styles.newButton}
-          testID="button-add-vaccine"
-        >
-          <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list.add-button')}</Text>
-        </BrandedButton>
-        {vaccine ? (
-          <Text style={styles.tabTitle} textAlign="center" textClass="h4Medium">
-            {i18n.t('vaccines.vaccine-list.tabs-title')}
-          </Text>
-        ) : null}
+      <BrandedButton
+        onPress={() => assessmentCoordinator.goToAddEditVaccine(vaccine)}
+        style={styles.newButton}
+        testID="button-add-vaccine"
+      >
+        <Text style={styles.newText}>{i18n.t('vaccines.vaccine-list.add-button')}</Text>
+      </BrandedButton>
+      {vaccine ? (
+        <Text style={styles.tabTitle} textAlign="center" textClass="h4Medium">
+          {i18n.t('vaccines.vaccine-list.tabs-title')}
+        </Text>
+      ) : null}
 
-        {loading ? (
-          <Loading error={null} status="" />
-        ) : vaccine ? (
-          <VaccineTabbedListsScreen
-            initialRouteName={initialRouteName}
-            minTabViewHeight={minTabViewHeight}
-            tabViewHeight={tabViewHeight}
-            vaccineDoses={vaccine.doses}
-            vaccineRecord={vaccine}
-          />
-        ) : null}
+      {loading ? (
+        <Loading error={null} status="" />
+      ) : vaccine ? (
+        <VaccineTabbedListsScreen
+          initialRouteName={initialRouteName}
+          vaccineDoses={vaccine.doses}
+          vaccineRecord={vaccine}
+        />
+      ) : null}
 
-        {error ? <ErrorText style={{ textAlign: 'center' }}>{error}</ErrorText> : null}
-      </View>
+      {error ? <ErrorText style={{ textAlign: 'center' }}>{error}</ErrorText> : null}
     </Screen>
   );
 };
@@ -237,8 +226,7 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   introduction: {
-    marginBottom: sizes.xxl,
-    marginTop: sizes.l,
+    marginVertical: sizes.m,
   },
   modalBody: {
     marginBottom: sizes.xl,
@@ -253,7 +241,7 @@ const styles = StyleSheet.create({
   },
   newButton: {
     backgroundColor: colors.backgroundTertiary,
-    marginBottom: sizes.xl,
+    marginBottom: sizes.m,
   },
   newText: {
     color: colors.primary,

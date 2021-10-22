@@ -9,20 +9,10 @@ import renderer from 'react-test-renderer';
 
 import MockedNavigator from '../../../../../__mocks__/MockedNavigator';
 
-function createComponent(covidTests: TCovidTest[], initialRouteName: string) {
-  const minTabViewHeight = 240;
-  const tabViewHeight = 500;
-
+function createComponent(covidTests: TCovidTest[], initialRouteName: ETabScreen) {
   const element = (
     <MockedNavigator
-      Component={() => (
-        <CovidTestTabbedListsScreen
-          covidTests={covidTests}
-          initialRouteName={initialRouteName}
-          minTabViewHeight={minTabViewHeight}
-          tabViewHeight={tabViewHeight}
-        />
-      )}
+      Component={() => <CovidTestTabbedListsScreen covidTests={covidTests} initialRouteName={initialRouteName} />}
     />
   );
 
