@@ -43,7 +43,7 @@ export default function MentalHealthPlaybackModal(props: IProps) {
       <Tag
         color={colors.coral.main.bgColor}
         style={styling.selfCenter}
-        text={i18n.t('mental-health-playback.modal.tag').toUpperCase()}
+        text={i18n.t('mental-health-playback.modal.tag')}
       />
       <Text
         inverted

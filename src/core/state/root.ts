@@ -7,6 +7,8 @@ import { combineReducers } from 'redux';
 import { appSlice } from './app/slice';
 import { IApp } from './app/types';
 import { dietStudySlice, IDietStudy } from './diet-study';
+import mediaCentre from './media-centre';
+import { IMediaCentreState } from './media-centre/types';
 import {
   IMentalHealthChanges,
   IMentalHealthFrequency,
@@ -40,6 +42,7 @@ export type TRootState = {
   mentalHealthPlayback: IMentalHealthPlayback;
   mentalHealthState: IMentalHealthState;
   mentalHealthSupport: IMentalHealthSupport;
+  mediaCentre: IMediaCentreState;
   reconsent: TReconsentState;
   school: TSchoolState;
   settings: ISettings;
@@ -53,6 +56,7 @@ export default combineReducers({
   assessment,
   content: contentSlice.reducer,
   dietStudy: dietStudySlice,
+  mediaCentre: mediaCentre.reducer,
   mentalHealthChanges: mentalHealthChangesSlice,
   mentalHealthFrequency: mentalHealthFrequencySlice,
   mentalHealthHistory: mentalHealthHistorySlice,

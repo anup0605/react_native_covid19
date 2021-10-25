@@ -144,6 +144,9 @@ export type TScreenParamList = {
   // Internal testing mode
   TestingMode: undefined;
 
+  // Media centre
+  MediaCentre: undefined;
+
   // Others
   Anniversary: undefined;
   EstimatedCases: undefined;
