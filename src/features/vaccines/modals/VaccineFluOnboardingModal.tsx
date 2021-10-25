@@ -23,8 +23,8 @@ export const VaccineFluOnboardingModal: React.FC<IProps> = (props) => {
       has_seen_flu_vaccine_onboarding: true,
     };
     patientService.updatePatientInfo(props.patientId, infos).then(() => {
-      props.onRequestClose();
       dispatch(fetchStartUpInfo());
+      props.onRequestClose();
     });
   };
 

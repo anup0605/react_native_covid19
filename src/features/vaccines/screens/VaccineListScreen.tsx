@@ -91,15 +91,15 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      fetchVaccineList();
       if (startupInfo?.show_flu_vaccine_onboarding && !assessmentCoordinator.isReportedByOther()) {
         setShowOnboardingModal(true);
       }
-      fetchVaccineList();
 
       return () => {
         isActive = false;
       };
-    }, []),
+    }, [startupInfo?.show_flu_vaccine_onboarding]),
   );
 
   const navigateToNextPage = async () => {
