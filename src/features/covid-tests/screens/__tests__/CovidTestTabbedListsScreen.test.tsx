@@ -2,7 +2,8 @@
 
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { CovidTestRow } from '@covid/features/covid-tests/components/CovidTestRow';
-import CovidTestTabbedListsScreen, { ETabScreen } from '@covid/features/covid-tests/screens/CovidTestTabbedListsScreen';
+import CovidTestTabbedListsScreen from '@covid/features/covid-tests/screens/CovidTestTabbedListsScreen';
+import { ETabScreen } from '@covid/features/covid-tests/types';
 import * as React from 'react';
 import { TabBarItem } from 'react-native-tab-view';
 import renderer from 'react-test-renderer';

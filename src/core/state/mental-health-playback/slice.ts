@@ -1,8 +1,8 @@
 import { IMentalHealthPlayback } from '@covid/core/state/mental-health-playback/types';
 import { TRootState } from '@covid/core/state/root';
 import store from '@covid/core/state/store';
+import { mentalHealthApiClient } from '@covid/features/mental-health/MentalHealthApiClient';
 import { IMHInsights } from '@covid/features/mental-health-playback/types';
-import { mentalHealthApiClient } from '@covid/services';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialStateMentalHealthPlayback: IMentalHealthPlayback = {

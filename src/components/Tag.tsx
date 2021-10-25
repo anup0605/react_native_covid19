@@ -1,4 +1,4 @@
-import { Text } from '@covid/components';
+import Text from '@covid/components/typography/text';
 import { sizes, styling } from '@covid/themes';
 import * as React from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
