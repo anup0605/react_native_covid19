@@ -3,19 +3,13 @@ import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
 import { CovidListByType, ICovidListByTypeProps } from '@covid/features/covid-tests/components/CovidListByType';
 import { isAntibodyTest, isLateralFlowTest, isOtherTest, isPcrTest } from '@covid/features/covid-tests/helpers';
+import { ETabScreen } from '@covid/features/covid-tests/types';
 import i18n from '@covid/locale/i18n';
 import { sizes, styling } from '@covid/themes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colors } from '@theme';
 import * as React from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
-
-export enum ETabScreen {
-  ANTIBODY = 'CovidTestListAntibodyTab',
-  LATERAL = 'CovidTestListLateralTab',
-  OTHER = 'CovidTestListOtherTab',
-  PCR = 'CovidTestListPCRTab',
-}
 
 interface IProps extends ICovidListByTypeProps {
   initialRouteName: ETabScreen;

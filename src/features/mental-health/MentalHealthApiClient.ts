@@ -28,7 +28,7 @@ interface IMentalHealthApiClientBuildRequest {
 
 const apiClient = new ApiClient();
 
-export class MentalHealthApiClient implements IMentalHealthApiClient {
+class MentalHealthApiClient implements IMentalHealthApiClient {
   get() {
     return apiClient.get<TMentalHealthInfosRequest[]>(PATH);
   }
@@ -148,3 +148,5 @@ export class MentalHealthApiClient implements IMentalHealthApiClient {
     return updatedMentalHealth;
   }
 }
+
+export const mentalHealthApiClient = new MentalHealthApiClient();

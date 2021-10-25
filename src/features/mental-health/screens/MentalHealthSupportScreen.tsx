@@ -9,10 +9,10 @@ import {
 } from '@covid/core/state/mental-health';
 import { IMentalHealthSupport } from '@covid/core/state/mental-health/support/types';
 import { initialOptions } from '@covid/features/mental-health/data';
+import { mentalHealthApiClient } from '@covid/features/mental-health/MentalHealthApiClient';
 import { TMentalHealthInfosRequest } from '@covid/features/mental-health/MentalHealthInfosRequest';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
-import { mentalHealthApiClient } from '@covid/services';
 import { colors } from '@theme';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
