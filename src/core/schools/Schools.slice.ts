@@ -13,12 +13,11 @@ export const initialStateSchools: TSchoolState = {
 
 // Actions: Async
 
-export const fetchSubscribedSchoolGroups = createAsyncThunk(
-  'school/fetch_subscribed_school_groups',
-  async (): Promise<ISubscribedSchoolGroupStats[]> => {
-    return schoolService.getSubscribedSchoolGroups();
-  },
-);
+export const fetchSubscribedSchoolGroups = createAsyncThunk('school/fetch_subscribed_school_groups', async (): Promise<
+  ISubscribedSchoolGroupStats[]
+> => {
+  return schoolService.getSubscribedSchoolGroups();
+});
 
 // Slice (Store, Reducer, Actions etc...)
 
