@@ -13,10 +13,14 @@ import { ProgressHeader } from '@covid/components/ProgressHeader';
 import { Screen } from '@covid/components/Screen';
 import { assessmentCoordinator } from '@covid/core/assessment/AssessmentCoordinator';
 import { isSECountry } from '@covid/core/localisation/LocalisationService';
+import { TRootState } from '@covid/core/state/root';
+import { selectStartupInfo } from '@covid/core/state/selectors';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { EVaccineMechanisms, EVaccineTypes, TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { vaccineService } from '@covid/core/vaccine/VaccineService';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { getInitialRouteName } from '@covid/features/vaccines/helpers';
+import { VaccineFluOnboardingModal } from '@covid/features/vaccines/modals/VaccineFluOnboardingModal';
 import { VaccineTabbedListsScreen } from '@covid/features/vaccines/screens/VaccineTabbedListsScreen';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -26,6 +30,7 @@ import { colors } from '@theme';
 import moment from 'moment';
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 type TProps = {
   route: RouteProp<TScreenParamList, 'VaccineList'>;
@@ -46,8 +51,11 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
   const [vaccine, setVaccine] = React.useState<TVaccineRequest | undefined>();
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string>();
+  const [showOnboardingModal, setShowOnboardingModal] = React.useState<boolean>(false);
 
   const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
   const patientId = props.route.params?.assessmentData?.patientData?.patientId;
 
@@ -77,11 +85,14 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
   useFocusEffect(
     React.useCallback(() => {
       fetchVaccineList();
+      if (startupInfo?.show_flu_vaccine_onboarding && !assessmentCoordinator.isReportedByOther()) {
+        setShowOnboardingModal(true);
+      }
 
       return () => {
         isActive = false;
       };
-    }, []),
+    }, [startupInfo?.show_flu_vaccine_onboarding]),
   );
 
   const navigateToNextPage = async () => {
@@ -179,6 +190,15 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
       testID="vaccine-list-screen"
     >
       {renderMoreInfoModal()}
+
+      <VaccineFluOnboardingModal
+        onRequestClose={() => {
+          setShowOnboardingModal(false);
+        }}
+        patientId={assessmentCoordinator.assessmentData?.patientData?.patientId}
+        visible={showOnboardingModal}
+      />
+
       <ProgressHeader currentStep={0} maxSteps={1} title={i18n.t('vaccines.vaccine-list.title')} />
       <View style={styles.introduction} testID="vaccine-list-introduction">
         <Text>

@@ -186,7 +186,6 @@ CovidTestResultQuestion.createDTO = (formData: ICovidTestResultFormikData): Part
           anti_s: null,
           antibody_type_check: formData.antibody ? formData.antibody : null,
           result: formData.result,
-          thriva_test_id: null,
         }),
       } as Partial<TCovidTest>);
 };

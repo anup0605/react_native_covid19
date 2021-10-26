@@ -263,9 +263,6 @@
     },
     "question-is-rapid-test": "Did you wait less than 2 hours to get the results (i.e. was it a rapid test such as lateral flow test)?",
     "question-invite-to-test": "Did we invite you to perform this test?",
-    "question-thr-number": "Please fill in the 9-digit THR number (on the test kit that you received from gov.uk)",
-    "question-thr-number-description": "ZOE will use your THR number to validate your antibody test results directly with the test-provider. By entering your THR number, you are consenting to ZOE doing this.",
-    "picker-dont-know-thr": "I don’t know the number",
     "question-result": "What was the result of the test?",
     "picker-positive": "Positive",
     "picker-negative": "Negative",
@@ -280,9 +277,6 @@
     "required-dates": "Please indicate between which two dates this test occurred",
     "required-mechanism": "Please indicate how the test was performed",
     "required-result": "Please indicate the result of the test",
-    "required-thr-number": "Please enter your THR number or select \"I don't know the number\"",
-    "required-thr-format": "Should only include numbers",
-    "required-thr-length": "Must be exactly 9 digits",
     "confirm-test": {
       "title": "Confirmation of\npositive test result",
       "body": "Your child’s positive test result will be shared anonymously with their school and the parents of the children within your child’s School Bubble.\n\nWe will only share the below details:\n\n• Date of test \n• Result of test\n• School Bubble name\n\nIf you have not already done so, please contact the school immediately to notify them of this positive result.",
@@ -305,10 +299,6 @@
       "anti-n-description": "Detects the presence of antibodies targeted against the so-called (N) protein of COVID-19. Anti-N antibodies are not produced in response to any of the current vaccines on the market. They are, however, seen in most people who have recovered from COVID-19 but do drop over time.",
       "anti-s-title": "Anti-S antibody test",
       "anti-s-description": "Detects the presence of antibodies targeted against the so-called spike (S) protein of the virus. Anti-S antibodies might be found in both people who have been vaccinated against COVID-19 and people who have recovered from COVID-19."
-    },
-    "thr-number-modal": {
-      "title": "Locate your THR number",
-      "description": "Your 9-digit THR number is located on both the test kit envelope and the sample return form you received from gov.uk"
     }
   },
   "describe-symptoms": {
@@ -585,6 +575,7 @@
   },
   "menu": {
     "item-edit-profile": "Edit profile",
+    "item-media-centre": "Read & Watch",
     "item-share-this-app": "Share this app",
     "item-wider-health-studies": "Wider health studies",
     "opt-in": "Opt in",
@@ -1076,10 +1067,16 @@
       "name-missing": "Edit to add vaccine name",
       "not-logged": "Not yet logged",
       "edit-vaccine": "Edit vaccine"
+    },
+    "flu-onboarding": {
+      "title": "Log your flu vaccine",
+      "description": "Log any *flu vaccine* during your health report. Tap 'Add a vaccine dose' and select 'Flu' when asked for vaccine type.",
+      "new": "New"
     }
   },
   "dashboard": {
     "report-today": "Report today, even if you're well",
+    "report-today-large-font": "Report today",
     "report-now": "Report now",
     "you-have-reported-x-times": "You’ve reported %{count} times",
     "contributors-so-far": "Contributors so far:",
@@ -1651,6 +1648,13 @@
       "name": "Neurological Conditions",
       "description": "600,000 people are diagnosed with a brain disorder every year in the UK"
     }
+  },
+  "media-centre": {
+    "results": "Results",
+    "search-placeholder": "Search blog posts, videos, topics etc",
+    "tab-all": "All",
+    "tab-bookmarked": "Bookmarked",
+    "title": "Read & Watch"
   },
   "required-field": "Required field",
   "modal-close": "Close"
