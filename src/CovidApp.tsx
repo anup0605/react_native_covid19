@@ -27,6 +27,8 @@ const drawerStyle = {
 };
 
 const screenOptions = {
+  // drawerPosition: 'right', -> need to fix
+  drawerStyle,
   swipeEnabled: false,
 };
 
@@ -36,8 +38,8 @@ function DrawerNavigator() {
   return (
     <Drawer.Navigator
       drawerContent={drawerContent}
-      drawerPosition="right"
-      drawerStyle={drawerStyle}
+      // drawerPosition="right"
+      // drawerStyle={drawerStyle} -> need to fix
       screenOptions={screenOptions}
     >
       <Drawer.Screen component={MainNavigator} name="Main" options={optionsMainScreen} />
@@ -76,7 +78,7 @@ export default function CovidApp() {
         visible={app.modalMentalHealthPlaybackVisible}
       />
       <NavigationContainer linking={linking} onStateChange={NavigatorService.handleStateChange} ref={ref}>
-        <Stack.Navigator headerMode="none" initialRouteName="Main" mode="modal">
+        <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false, presentation: 'modal' }}>
           <Stack.Screen component={DrawerNavigator} name="Main" />
           <Stack.Screen component={VaccineListMissingModal} name="VaccineListMissingModal" options={optionsModal} />
           <Stack.Screen component={VersionUpdateModal} name="VersionUpdateModal" options={optionsModal} />
