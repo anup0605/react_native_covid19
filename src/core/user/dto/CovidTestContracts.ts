@@ -11,7 +11,6 @@ export type TCovidTest = {
   mechanism: ECovidTestMechanismOptions;
 
   invited_to_test: boolean;
-  thriva_test_id: string;
   trained_worker: string;
   test_performed_by: string;
   antibody_type_check: string | null;
