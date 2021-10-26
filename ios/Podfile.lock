@@ -51,9 +51,6 @@ PODS:
   - EXNotifications (0.12.3):
     - ExpoModulesCore
     - UMCore
-  - EXPermissions (12.1.1):
-    - ExpoModulesCore
-    - UMCore
   - ExpoModulesCore (0.2.0):
     - ExpoModulesCore/Core (= 0.2.0)
     - ExpoModulesCore/Interfaces (= 0.2.0)
@@ -294,8 +291,6 @@ PODS:
     - react-native-config/App (= 1.4.4)
   - react-native-config/App (1.4.4):
     - React-Core
-  - react-native-netinfo (6.0.0):
-    - React-Core
   - react-native-pager-view (5.4.7):
     - React-Core
   - react-native-safe-area-context (3.2.0):
@@ -374,15 +369,13 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.10):
     - React
-  - RNDateTimePicker (3.5.2):
-    - React-Core
   - RNFastImage (8.3.4):
     - React-Core
     - SDWebImage (~> 5.8)
     - SDWebImageWebPCoder (~> 0.6.1)
   - RNGestureHandler (1.10.2):
     - React-Core
-  - RNReanimated (2.2.0):
+  - RNReanimated (2.2.3):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -455,7 +448,6 @@ DEPENDENCIES:
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLocalization (from `../node_modules/expo-localization/ios`)
   - EXNotifications (from `../node_modules/expo-notifications/ios`)
-  - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - EXSharing (from `../node_modules/expo-sharing/ios`)
   - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
@@ -479,7 +471,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-config (from `../node_modules/react-native-config`)
-  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -499,7 +490,6 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
-  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -557,8 +547,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-localization/ios"
   EXNotifications:
     :path: "../node_modules/expo-notifications/ios"
-  EXPermissions:
-    :path: "../node_modules/expo-permissions/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core/ios"
   EXSharing:
@@ -601,8 +589,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-config:
     :path: "../node_modules/react-native-config"
-  react-native-netinfo:
-    :path: "../node_modules/@react-native-community/netinfo"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -641,8 +627,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
-  RNDateTimePicker:
-    :path: "../node_modules/@react-native-community/datetimepicker"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
   RNGestureHandler:
@@ -687,7 +671,6 @@ SPEC CHECKSUMS:
   EXKeepAwake: f4105ef469be7b283f66ce2d7234bb71ac80cd26
   EXLocalization: 356f4e16a606cec21a77d6250528fde526152b45
   EXNotifications: 171ccaf17643811673c78f4c4830560d6e5a92aa
-  EXPermissions: 916efb5b817cb0a40160c0cd2f369af3c23a78be
   ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
   EXSharing: 567f4b9f38a5266ec2f51973e2efe3b4aaf0bf69
   EXStructuredHeaders: e52b880264d15b8ad07d36670226c29476af6334
@@ -711,7 +694,6 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 43f2542aed3c26e42175b339f8d37fe3dd683765
   React-jsinspector: 41e58e5b8e3e0bf061fdf725b03f2144014a8fb0
   react-native-config: 72d948053a442779b3178fddd571e37f118ef606
-  react-native-netinfo: e849fc21ca2f4128a5726c801a82fc6f4a6db50d
   react-native-pager-view: 741e7606ee2f6e399fc7da777f5519454a4b38c5
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -731,10 +713,9 @@ SPEC CHECKSUMS:
   ReactCommon: eafed38eec7b591c31751bfa7494801618460459
   RNCAsyncStorage: 2d54c86810ecae76f14c1e466f941ec120a54aff
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
   RNGestureHandler: e66feb0fda7da74ea6a3094656b3c1efe05f5c07
-  RNReanimated: 7245c2ff6dca3b42b6f77e800adf85ce68532759
+  RNReanimated: aaf2cf65595b293daae808015761a6014a97b284
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSentry: 51972e3fe50e2fb38ae459af8c87d61f63f364db
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
@@ -747,6 +728,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 2be431101b73604e64fbfffcf759336f9d8fccbb
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
 
-PODFILE CHECKSUM: 3f59eb94ac150255193f9d7f9a3c3a0527ab0f42
+PODFILE CHECKSUM: 9a621db74c3879ec4894d7ed67ce93e175e23b0c
 
 COCOAPODS: 1.11.2

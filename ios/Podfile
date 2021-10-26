@@ -11,7 +11,7 @@ project 'Covid',
   'Beta.Release' => :release
 
 target 'Covid' do
-  use_unimodules!(exclude: ['expo-splash-screen', 'expo-location'])
+  use_unimodules!(exclude: ['expo-location'])
   config = use_native_modules!
   use_react_native!(
     :path => config[:reactNativePath],

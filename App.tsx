@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import { ErrorBoundary } from '@covid/core/ErrorBoundary';
 import store, { persistor } from '@covid/core/state/store';
 import CovidApp from '@covid/CovidApp';
@@ -32,13 +30,12 @@ export default function App() {
     LogBox.ignoreAllLogs();
   }, []);
   SplashScreen.hide();
-  const Root = CovidApp;
   return (
     <ErrorBoundary>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ThemeProvider theme={theme}>
-            <SafeAreaProvider>{loaded ? <Root /> : null}</SafeAreaProvider>
+            <SafeAreaProvider>{loaded ? <CovidApp /> : null}</SafeAreaProvider>
           </ThemeProvider>
         </PersistGate>
       </Provider>

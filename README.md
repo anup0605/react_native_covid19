@@ -137,14 +137,6 @@ detox test
 
 Please refer to the [contributing guidelines](CONTRIBUTING.md).
 
-## Storybook
-
-We are trying to embrace Component Driven Design. To develop
-
-1. Set `ENABLE_STORYBOOK=true` in `App.tsx`
-
-1. Start the storybook server with `npm run storybook`. This will open a webpage where you can flip through the stories in this project, after you've connected a iOS or Android device via `expo start`.
-
 ## Git usage
 
 For working with git we follow the Gitflow Workflow, to read all about it see the following explanation: [https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
