@@ -585,6 +585,7 @@
   },
   "menu": {
     "item-edit-profile": "Edit profile",
+    "item-media-centre": "Read & Watch",
     "item-share-this-app": "Share this app",
     "item-wider-health-studies": "Wider health studies",
     "opt-in": "Opt in",
@@ -1076,10 +1077,16 @@
       "name-missing": "Edit to add vaccine name",
       "not-logged": "Not yet logged",
       "edit-vaccine": "Edit vaccine"
+    },
+    "flu-onboarding": {
+      "title": "Log your flu vaccine",
+      "description": "Log any *flu vaccine* during your health report. Tap 'Add a vaccine dose' and select 'Flu' when asked for vaccine type.",
+      "new": "New"
     }
   },
   "dashboard": {
     "report-today": "Report today, even if you're well",
+    "report-today-large-font": "Report today",
     "report-now": "Report now",
     "you-have-reported-x-times": "You’ve reported %{count} times",
     "contributors-so-far": "Contributors so far:",
@@ -1651,6 +1658,13 @@
       "name": "Neurological Conditions",
       "description": "600,000 people are diagnosed with a brain disorder every year in the UK"
     }
+  },
+  "media-centre": {
+    "results": "Results",
+    "search-placeholder": "Search blog posts, videos, topics etc",
+    "tab-all": "All",
+    "tab-bookmarked": "Bookmarked",
+    "title": "Read & Watch"
   },
   "required-field": "Required field",
   "modal-close": "Close"

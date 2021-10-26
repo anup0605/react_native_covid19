@@ -104,14 +104,14 @@ export const PingdemicScreen: React.FC<TProps> = ({ route }) => {
   const onSubmit = async (values: IPingdemicData) => {
     setIsSubmitting(true);
     const patientId = assessmentCoordinator.assessmentData?.patientData.patientId;
-    const formatDateToPost = (date: Date | undefined) => (date ? moment(date).format('YYYY-MM-DD') : null);
+    const dateToString = (date: Date | undefined) => (date ? moment(date).format('YYYY-MM-DD') : null);
     const pingdemicRequestData = {
       app_bluetooth: values.appActiveWithBluetooth,
       app_installed: values.haveApp,
       asked_to_isolate: values.askedByApp,
-      isolate_date_between_end: formatDateToPost(values.dateTakenBetweenEnd),
-      isolate_date_between_start: formatDateToPost(values.dateTakenBetweenStart),
-      isolate_date_specific: formatDateToPost(values.dateTakenSpecific),
+      isolate_date_between_end: dateToString(values.dateTakenBetweenEnd),
+      isolate_date_between_start: dateToString(values.dateTakenBetweenStart),
+      isolate_date_specific: dateToString(values.dateTakenSpecific),
       other_text: values.otherText,
       patient: patientId,
     } as TPingdemicRequest;
