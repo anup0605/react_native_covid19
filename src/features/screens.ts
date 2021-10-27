@@ -74,6 +74,8 @@ export {
   SchoolIntroScreen,
   SelectProfileScreen,
   SplashScreen,
+  StudiesListScreen,
+  StudyDetailsScreen,
   TermsOfUseUSScreen,
   TestingModeScreen,
   ThankYouSEScreen,

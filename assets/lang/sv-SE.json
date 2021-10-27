@@ -7,10 +7,11 @@
   "loading": "Loading",
   "log-in": "Logga in",
   "more": "More",
+  "new": "Ny",
   "no-change": "No change",
+  "ok": "OK",
   "skip": "Hoppa över",
   "you": "You",
-  "ok": "OK",
   "create-account": {
     "title": "Skapa nytt konto",
     "btn": "Skapa konto",
@@ -1074,8 +1075,7 @@
     },
     "flu-onboarding": {
       "title": "Logga ditt influensavaccin",
-      "description": "Logga eventuella influensavaccin när du rapporterar hur du mår. Klicka på ”Lägg till dos” och välj ”Influensa” som typ av vaccin.",
-      "new": "Ny"
+      "description": "Logga eventuella influensavaccin när du rapporterar hur du mår. Klicka på ”Lägg till dos” och välj ”Influensa” som typ av vaccin."
     }
   },
   "dashboard": {

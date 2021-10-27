@@ -7,10 +7,11 @@
   "loading": "Loading",
   "log-in": "Log in",
   "more": "More",
+  "new": "New",
   "no-change": "No change",
+  "ok": "OK",
   "skip": "Skip",
   "you": "You",
-  "ok": "OK",
   "create-account": {
     "title": "Create new account",
     "btn": "Create account",
@@ -1070,8 +1071,7 @@
     },
     "flu-onboarding": {
       "title": "Log your flu vaccine",
-      "description": "Log any *flu vaccine* during your health report. Tap 'Add a vaccine dose' and select 'Flu' when asked for vaccine type.",
-      "new": "New"
+      "description": "Log any *flu vaccine* during your health report. Tap 'Add a vaccine dose' and select 'Flu' when asked for vaccine type."
     }
   },
   "dashboard": {
@@ -1655,6 +1655,16 @@
     "tab-all": "All",
     "tab-bookmarked": "Bookmarked",
     "title": "Read & Watch"
+  },
+  "studies-hub": {
+    "consented": {
+      "description": "Thanks for joining our Wider Health Studies. Help us decide which studies to run next by expressing your interest here. We'll keep updating the list, so please check back often.",
+      "title": "Studies you're eligible for"
+    },
+    "not-consented": {
+      "description": "Help us decide which COVID-related studies to run next by expressing your interest here. We’ll continue to update the list so please come back regularly.",
+      "title": "COVID-related studies"
+    }
   },
   "required-field": "Required field",
   "modal-close": "Close"

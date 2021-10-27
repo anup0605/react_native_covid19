@@ -147,6 +147,10 @@ export type TScreenParamList = {
   // Media centre
   MediaCentre: undefined;
 
+  // Studies hub
+  StudiesList: undefined;
+  StudyDetails: { studyId: string };
+
   // Others
   Anniversary: undefined;
   EstimatedCases: undefined;
