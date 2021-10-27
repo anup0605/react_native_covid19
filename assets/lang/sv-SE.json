@@ -1660,6 +1660,16 @@
     "tab-bookmarked": false,
     "title": false
   },
+  "studies-hub": {
+    "consented": {
+      "description": false,
+      "title": false
+    },
+    "not-consented": {
+      "description": false,
+      "title": false
+    }
+  },
   "required-field": "Obligatoriska fält",
   "modal-close": "Stänga"
 }
