@@ -36,7 +36,7 @@
     "lint:fix": "yarn lint --fix",
     "metro-empty-cache": "rm -rf $TMPDIR/metro-cache",
     "mock-server": "ts-node --transpile-only ./mock-server/mockServer.ts --watch",
-    "postinstall": "ts-node --transpile-only ./scripts/postinstall.ts",
+    "postinstall": "cd ios && pod install",
     "prettier": "prettier --check 'src/**/*.(js|jsx|ts|tsx)' --ignore-path .gitignore",
     "prettier:fix": "yarn prettier --write",
     "reset": "watchman watch-del-all && rm -rf node_modules && rm -rf $TMPDIR/metro-* && rm -rf $TMPDIR/haste-map-*",
