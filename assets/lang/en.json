@@ -1664,6 +1664,9 @@
     "not-consented": {
       "description": "Help us decide which COVID-related studies to run next by expressing your interest here. We’ll continue to update the list so please come back regularly.",
       "title": "COVID-related studies"
+    },
+    "study-card": {
+      "more-details": "More details"
     }
   },
   "required-field": "Required field",

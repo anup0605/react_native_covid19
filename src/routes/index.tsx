@@ -5,6 +5,7 @@ import DietStudyPlaybackNavigator from '@covid/routes/DietStudyPlaybackNavigator
 import MentalHealthNavigator from '@covid/routes/MentalHealthNavigator';
 import MentalHealthPlaybackNavigator from '@covid/routes/MentalHealthPlaybackNavigator';
 import ReconsentNavigator from '@covid/routes/ReconsentNavigator';
+import StudiesHubNavigator from '@covid/routes/StudiesHubNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
@@ -98,6 +99,7 @@ export default function MainNavigator() {
       {MentalHealthNavigator({ Stack })}
       {MentalHealthPlaybackNavigator({ Stack })}
       {ReconsentNavigator({ Stack })}
+      {StudiesHubNavigator({ Stack })}
 
       {/* Uncomment this line to replace the Dashboard with DebugScreens to allow quick debugging */}
       {/* <Stack.Screen component={DebugScreens} name="Dashboard" options={options} /> */}

@@ -1668,6 +1668,9 @@
     "not-consented": {
       "description": false,
       "title": false
+    },
+    "study-card": {
+      "more-details": false
     }
   },
   "required-field": "Obligatoriska fält",
