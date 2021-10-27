@@ -27,7 +27,7 @@ const drawerStyle = {
 };
 
 const screenOptions = {
-  // drawerPosition: 'right', -> need to fix
+  drawerPosition: 'right',
   drawerStyle,
   swipeEnabled: false,
 };
@@ -36,13 +36,8 @@ const optionsMainScreen = { headerShown: false };
 
 function DrawerNavigator() {
   return (
-    <Drawer.Navigator
-      drawerContent={drawerContent}
-      // drawerPosition="right"
-      // drawerStyle={drawerStyle} -> need to fix
-      screenOptions={screenOptions}
-    >
-      <Drawer.Screen component={MainNavigator} name="Main" options={optionsMainScreen} />
+    <Drawer.Navigator drawerContent={drawerContent} drawerStyle={drawerStyle} screenOptions={screenOptions}>
+      <Drawer.Screen component={MainNavigator} name="MainNavigator" options={optionsMainScreen} />
     </Drawer.Navigator>
   );
 }
