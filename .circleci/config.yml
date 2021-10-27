@@ -60,6 +60,7 @@ references:
     branches:
       only:
         - develop
+        - julia/circleci-upgraded-version
 
   feature_filter: &feature_filter
     branches:
