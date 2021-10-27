@@ -9,16 +9,23 @@ import { sizes, styling } from '@covid/themes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colors } from '@theme';
 import * as React from 'react';
-import { LayoutChangeEvent, View } from 'react-native';
+import { LayoutChangeEvent, useWindowDimensions, View } from 'react-native';
 
 interface IProps extends ICovidListByTypeProps {
   initialRouteName: ETabScreen;
 }
 
 const Tab = createMaterialTopTabNavigator();
+const SINGLE_TEST_ROW_HEIGHT = 48;
+const HEIGHT_OF_STATIC_CONTENT = 500;
 
 export default function CovidTestTabbedListsScreen(props: IProps) {
   const [viewWidth, setViewWidth] = React.useState(0);
+
+  const windowDimensions = useWindowDimensions();
+
+  const minTabViewHeight = SINGLE_TEST_ROW_HEIGHT * 5;
+  const tabViewHeight = windowDimensions.height - HEIGHT_OF_STATIC_CONTENT;
 
   const lateralFlowTests = React.useMemo(
     () =>
@@ -61,6 +68,8 @@ export default function CovidTestTabbedListsScreen(props: IProps) {
         initialRouteName={props.initialRouteName}
         sceneContainerStyle={{
           backgroundColor: colors.backgroundPrimary,
+          height: tabViewHeight,
+          minHeight: minTabViewHeight,
         }}
         screenOptions={{
           tabBarActiveTintColor: colors.primary,

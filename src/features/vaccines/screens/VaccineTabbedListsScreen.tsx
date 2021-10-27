@@ -9,7 +9,7 @@ import { sizes, styling } from '@covid/themes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { colors } from '@theme';
 import * as React from 'react';
-import { LayoutChangeEvent, View } from 'react-native';
+import { LayoutChangeEvent, useWindowDimensions, View } from 'react-native';
 
 export enum ETabScreen {
   COVID = 'VaccineListCovidTab',
@@ -22,8 +22,12 @@ interface IProps extends IVaccineDoseByTypeProps {
 
 const Tab = createMaterialTopTabNavigator();
 
+const SINGLE_DOSE_ROW_HEIGHT = 48;
+const HEIGHT_OF_STATIC_CONTENT = 500;
+
 export function VaccineTabbedListsScreen(props: IProps) {
   const [viewWidth, setViewWidth] = React.useState(0);
+  const windowDimensions = useWindowDimensions();
 
   const covidVaccines = React.useMemo(
     () => props.vaccineDoses.filter((item: TDose) => item.vaccine_type === EVaccineTypes.COVID_VACCINE),
@@ -40,6 +44,9 @@ export function VaccineTabbedListsScreen(props: IProps) {
     [],
   );
 
+  const minTabViewHeight = SINGLE_DOSE_ROW_HEIGHT * 5;
+  const tabViewHeight = windowDimensions.height - HEIGHT_OF_STATIC_CONTENT;
+
   return (
     <>
       <View onLayout={onLayoutWidth} style={styling.measureWidth} />
@@ -48,6 +55,8 @@ export function VaccineTabbedListsScreen(props: IProps) {
         initialRouteName={props.initialRouteName}
         sceneContainerStyle={{
           backgroundColor: colors.backgroundPrimary,
+          height: tabViewHeight,
+          minHeight: minTabViewHeight,
         }}
         screenOptions={{
           tabBarActiveTintColor: colors.primary,

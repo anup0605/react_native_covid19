@@ -2,7 +2,7 @@ import { TDose, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
 import { VaccineDoseRow } from '@covid/features/vaccines/components/VaccineDoseRow';
 import { sizes } from '@covid/themes';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
 export interface IVaccineDoseByTypeProps {
   vaccineDoses: TDose[];
@@ -24,7 +24,7 @@ export function VaccineDoseListByType(props: IVaccineDoseByTypeProps) {
   };
 
   // The unneeded React.Fragment is used here to prevent typescript error hell.
-  return <>{props.vaccineDoses.map(renderItem)}</>;
+  return <ScrollView>{props.vaccineDoses.map(renderItem)}</ScrollView>;
 }
 
 const styles = StyleSheet.create({
