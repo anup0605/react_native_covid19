@@ -109,6 +109,9 @@ export * from './avatars';
 // cards
 export * from './cards';
 
+// Covid Tests
+export const thrNumberInstructions = require('./covid-tests/thr-number-instructions-updated.png');
+
 // Media Centre dummy cards
 export const mediaContentItem1 = require('./media-centre/media-content-item-1.png');
 export const mediaContentItem2 = require('./media-centre/media-content-item-2.png');

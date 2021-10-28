@@ -44,6 +44,7 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-no-covid-test-invited-question');
         await element(by.id('button-no-covid-test-invited-question')).tap();
 
+        await expect(element(by.id('covid-test-thr-number-item-dont_know'))).not.toExist();
         await expect(element(by.id('covid-test-dual-result-question'))).not.toExist();
 
         await submitForm('covid-test-detail-screen', 'scroll-view-covid-test-detail-screen', 'button-submit');
@@ -55,6 +56,7 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
 
     function testUpdateTest() {
       it('should be able to update a COVID-19 test', async () => {
+        // TODO: Not sure why multiple instances error shows up
         await element(by.id('covid-test-row-nose_throat_swab-0')).atIndex(0).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-mechanism-question');
@@ -62,6 +64,8 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-antibody-question');
         await element(by.id('covid-test-antibody-question-item-anti_n')).tap();
+
+        await expect(element(by.id('covid-test-thr-number-item-dont_know'))).not.toExist();
 
         await element(by.id('scroll-view-covid-test-detail-screen')).scroll(150, 'down');
         await element(by.text('1')).tap();
@@ -88,6 +92,11 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-yes-covid-test-invited-question');
         await element(by.id('button-yes-covid-test-invited-question')).tap();
 
+        await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-thr-number-item-dont_know');
+        await element(by.id('covid-test-thr-number-item-dont_know')).tap();
+        // Need to repeat because it sometimes clicks on the input field whilst scrolling, resulting in an error
+        await element(by.id('covid-test-thr-number-item-dont_know')).tap();
+
         await element(by.id('scroll-view-covid-test-detail-screen')).scroll(300, 'down');
         await element(by.text('1')).tap();
 
@@ -106,6 +115,8 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-antibody-question');
         await element(by.id('covid-test-antibody-question-item-anti_s')).tap();
+
+        await expect(element(by.id('covid-test-thr-number-item-dont_know'))).not.toExist();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-result-question');
         await element(by.id('covid-test-result-question-item-negative')).tap();
