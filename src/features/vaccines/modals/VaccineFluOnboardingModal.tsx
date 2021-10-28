@@ -43,7 +43,7 @@ export const VaccineFluOnboardingModal: React.FC<IProps> = (props) => {
       visible={props.visible}
     >
       <View style={styles.tag}>
-        <RegularText style={styles.tagText}>{i18n.t('vaccines.flu-onboarding.new')}</RegularText>
+        <RegularText style={styles.tagText}>{i18n.t('new')}</RegularText>
       </View>
       <HeaderText style={styles.modalTitle}>{i18n.t('vaccines.flu-onboarding.title')}</HeaderText>
       <RegularTextWithBoldInserts

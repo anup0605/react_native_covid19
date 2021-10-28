@@ -27,8 +27,8 @@ import { TUserResponse } from '@covid/core/user/dto/UserAPIContracts';
 import { userService } from '@covid/core/user/UserService';
 import { dietStudyPlaybackCoordinator } from '@covid/features/diet-study-playback/DietStudyPlaybackCoordinator';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
-import { TScreenParamList } from '@covid/features/ScreenParamList';
 import NavigatorService from '@covid/NavigatorService';
+import { TScreenParamList } from '@covid/routes/types';
 import { assessmentService } from '@covid/services';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -136,11 +136,16 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
 
     const { startupInfo } = store.getState().content;
 
-    if (startupInfo?.app_requires_update) {
-      this.goToVersionUpdateModal();
-    }
+    if (startupInfo) {
+      Analytics.identify({
+        hasConsented: startupInfo.wider_health_studies_consent,
+        isTester: startupInfo.is_tester,
+      });
 
-    Analytics.identify();
+      if (startupInfo.app_requires_update) {
+        this.goToVersionUpdateModal();
+      }
+    }
 
     if (this.shouldShowCountryPicker) {
       Analytics.track(events.MISMATCH_COUNTRY_CODE, { current_country_code: LocalisationService.userCountry });

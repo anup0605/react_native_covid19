@@ -1,10 +1,10 @@
-import { TScreenParamList } from '@covid/features/ScreenParamList';
 import * as screens from '@covid/features/screens';
 import AnniversaryNavigator from '@covid/routes/AnniversaryNavigator';
 import DietStudyPlaybackNavigator from '@covid/routes/DietStudyPlaybackNavigator';
 import MentalHealthNavigator from '@covid/routes/MentalHealthNavigator';
 import MentalHealthPlaybackNavigator from '@covid/routes/MentalHealthPlaybackNavigator';
 import ReconsentNavigator from '@covid/routes/ReconsentNavigator';
+import { TScreenParamList } from '@covid/routes/types';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 

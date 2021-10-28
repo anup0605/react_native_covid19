@@ -18,9 +18,9 @@ import { CollapsibleHeaderScrollView } from '@covid/features/dashboard/Collapsib
 import { CompactHeader } from '@covid/features/dashboard/CompactHeader';
 import { ExpandedHeader } from '@covid/features/dashboard/ExpandedHeader';
 import { getDietStudyDoctorImage, getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
-import { TScreenParamList } from '@covid/features/ScreenParamList';
 import { useStartReconsent } from '@covid/features/wider-health-studies/hooks/useStartReconsent';
 import i18n from '@covid/locale/i18n';
+import { TScreenParamList } from '@covid/routes/types';
 import { pushNotificationService } from '@covid/services';
 import { colors, sizes, styling } from '@covid/themes';
 import { openWebLink } from '@covid/utils/links';
