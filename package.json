@@ -23,7 +23,7 @@
     "fastlane:android:release": "yarn fastlane android release",
     "fastlane:ios:register": "bundle exec fastlane register && bundle exec fastlane match adhoc -a com.joinzoe.covid-zoe.qa --force_for_new_devices",
     "fastlane:ios:release": "yarn fastlane ios release",
-    "generate:git-hash": "ts-node ./scripts/generate-git-hash.ts",
+    "generate:git-hash": "ts-node --transpile-only ./scripts/generate-git-hash.ts",
     "generate:icon-names": "ts-node scripts/generate-icon-names.ts",
     "i18n:sanitise": "ts-node ./scripts/i18n-sanitise.ts",
     "ios": "yarn generate:git-hash && react-native run-ios --scheme 'Covid Debug' --configuration Debug",
@@ -49,7 +49,6 @@
     "test:i18n": "ts-node ./scripts/i18n-check-locale.ts",
     "test:updateSnapshots": "jest -u",
     "test:watch": "jest --watch",
-    "ts-node": "ts-node",
     "web": "expo start --web"
   },
   "dependencies": {

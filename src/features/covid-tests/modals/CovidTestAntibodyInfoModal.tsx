@@ -36,6 +36,7 @@ export const CovidTestAntibodyInfoModal: React.FC<IProps> = (props) => {
     <Modal
       showsVerticalScrollIndicator
       footerChildren={footerChildren}
+      modalName="CovidTestAntibodyInfo"
       onRequestClose={props.onRequestClose}
       testID="covid-test-antibody-info-modal"
       visible={props.visible}
