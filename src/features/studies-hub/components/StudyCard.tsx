@@ -16,7 +16,18 @@ type TProps = {
   style?: StyleProp<ViewStyle>;
 };
 
+const HIT_SLOP = {
+  bottom: 16,
+  left: 16,
+  right: 16,
+  top: 16,
+};
+
 export function StudyCard(props: TProps) {
+  const onPressHeart = () => {
+    // @todo
+    // props.onPress();
+  };
   return (
     <TouchableOpacity accessible onPress={props.onPress} style={[styles.outerWrapper, styling.shadow, props.style]}>
       <View style={styles.innerWrapper}>
@@ -46,7 +57,9 @@ export function StudyCard(props: TProps) {
             {props.study.amountParticipants.toLocaleString()}
           </Text>
           <View style={styles.lineVertical} />
-          <IconHeart style={styles.marginRight} />
+          <TouchableOpacity onPress={onPressHeart} hitSlop={HIT_SLOP}>
+            <IconHeart style={styles.marginRight} />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
