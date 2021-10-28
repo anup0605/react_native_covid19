@@ -1,4 +1,5 @@
 import { Text } from '@covid/components';
+import Analytics, { events } from '@covid/core/Analytics';
 import { IconArrowRight } from '@covid/features/studies-hub/components/IconArrowRight';
 import { IconHeart } from '@covid/features/studies-hub/components/IconHeart';
 import { IconPeople } from '@covid/features/studies-hub/components/IconPeople';
@@ -25,10 +26,10 @@ const HIT_SLOP = {
 };
 
 export function StudyCard(props: TProps) {
-  const onPressHeart = () => {
-    // @todo
-    // props.onPress();
-  };
+  const onPressHeart = React.useCallback(() => {
+    // @todo: Handle the on press correctly by persisting the interest shown.
+    Analytics.track(props.active ? events.STUDIES_HUB_INTEREST_OFF : events.STUDIES_HUB_INTEREST_ON);
+  }, [props.active]);
   return (
     <TouchableOpacity
       accessible
