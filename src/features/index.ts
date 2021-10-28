@@ -15,6 +15,5 @@ export * from './reconsent';
 export * from './register';
 export * from './school-network';
 export * from './splash';
-export * from './studies-hub';
 export * from './thank-you';
 export * from './vaccines';
