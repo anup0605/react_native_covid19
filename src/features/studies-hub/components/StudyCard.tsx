@@ -11,6 +11,7 @@ import * as React from 'react';
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 type TProps = {
+  active?: boolean;
   onPress: () => void;
   study: TStudy;
   style?: StyleProp<ViewStyle>;
@@ -31,7 +32,7 @@ export function StudyCard(props: TProps) {
   return (
     <TouchableOpacity accessible onPress={props.onPress} style={[styles.outerWrapper, styling.shadow, props.style]}>
       <View style={styles.innerWrapper}>
-        <View style={styles.lineBlue} />
+        <View style={[styles.lineBlue, !props.active && styles.opacity]} />
         <Text inverted colorPalette="uiDark" colorShade="main" style={styles.marginBottom} textClass="pSmallMedium">
           {props.study.organiser}
         </Text>
@@ -53,12 +54,28 @@ export function StudyCard(props: TProps) {
         <View style={styles.lineHorizontal} />
         <View style={styles.footerWrapper}>
           <IconPeople style={styles.marginRight} />
+          {props.active ? (
+            <>
+              <Text inverted colorPalette="actionSecondary" colorShade="main" textClass="pMedium">
+                {i18n.t('you')}
+              </Text>
+              <Text
+                inverted
+                colorPalette="uiDark"
+                colorShade="darker"
+                style={styles.marginHorizontal}
+                textClass="pMedium"
+              >
+                +
+              </Text>
+            </>
+          ) : null}
           <Text inverted colorPalette="uiDark" colorShade="darker" textClass="pMedium">
             {props.study.amountParticipants.toLocaleString()}
           </Text>
           <View style={styles.lineVertical} />
           <TouchableOpacity hitSlop={HIT_SLOP} onPress={onPressHeart}>
-            <IconHeart style={styles.marginRight} />
+            <IconHeart full={props.active} style={styles.marginRight} />
           </TouchableOpacity>
         </View>
       </View>
@@ -80,7 +97,7 @@ const styles = StyleSheet.create({
     paddingTop: sizes.m,
   },
   lineBlue: {
-    backgroundColor: 'rgba(1, 101, 181, 0.35)',
+    backgroundColor: colors.darkblue,
     bottom: 0,
     left: 0,
     position: 'absolute',
@@ -101,11 +118,17 @@ const styles = StyleSheet.create({
   marginBottom: {
     marginBottom: sizes.xs,
   },
+  marginHorizontal: {
+    marginHorizontal: sizes.xxs,
+  },
   marginLeft: {
     marginLeft: sizes.xs,
   },
   marginRight: {
     marginRight: sizes.xs,
+  },
+  opacity: {
+    opacity: 0.35,
   },
   outerWrapper: {
     backgroundColor: '#ffffff',

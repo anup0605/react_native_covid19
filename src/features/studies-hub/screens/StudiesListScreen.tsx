@@ -55,6 +55,7 @@ export function StudiesListScreen() {
       </Text>
       {studies.map((study, index) => (
         <StudyCard
+          active
           key={`study-card-${study.id}`}
           onPress={() => NavigatorService.navigate('StudyDetails', { studyId: study.id })}
           study={study}
