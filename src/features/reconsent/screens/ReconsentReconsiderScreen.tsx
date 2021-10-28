@@ -6,9 +6,9 @@ import { resetFeedback, selectFeedbackData, selectReturnScreenName } from '@covi
 import { TRootState } from '@covid/core/state/root';
 import VimeoVideo from '@covid/features/reconsent//components/VimeoVideo';
 import ReconsentScreen from '@covid/features/reconsent/components/ReconsentScreen';
-import { TScreenParamList } from '@covid/features/ScreenParamList';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
+import { TScreenParamList } from '@covid/routes/types';
 import { generalApiClient } from '@covid/services';
 import { sizes } from '@covid/themes';
 import { StackNavigationProp } from '@react-navigation/stack';

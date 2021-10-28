@@ -57,7 +57,7 @@ export function StudyCard(props: TProps) {
             {props.study.amountParticipants.toLocaleString()}
           </Text>
           <View style={styles.lineVertical} />
-          <TouchableOpacity onPress={onPressHeart} hitSlop={HIT_SLOP}>
+          <TouchableOpacity hitSlop={HIT_SLOP} onPress={onPressHeart}>
             <IconHeart style={styles.marginRight} />
           </TouchableOpacity>
         </View>

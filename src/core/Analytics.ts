@@ -6,6 +6,7 @@ import * as Amplitude from 'expo-analytics-amplitude';
 let isInitialized = false;
 
 type TUserProperties = {
+  hasConsented?: boolean;
   isTester?: boolean;
   Experiment_mhip?: string;
   Experiment_mhip_2?: string;
