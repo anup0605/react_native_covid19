@@ -11,7 +11,6 @@ const renderItem = (item: TCovidTest, index: number) => {
   return <CovidTestRow item={item} key={item.id} testID={`covid-test-row-${item.mechanism}-${index}`} />;
 };
 
-// The unneeded React.Fragment is used here to prevent typescript error hell.
 export const CovidListByType: React.FC<ICovidListByTypeProps> = (props: ICovidListByTypeProps) => {
   return <ScrollView>{props.covidTests.map(renderItem)}</ScrollView>;
 };

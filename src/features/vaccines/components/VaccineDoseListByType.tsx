@@ -23,7 +23,6 @@ export function VaccineDoseListByType(props: IVaccineDoseByTypeProps) {
     );
   };
 
-  // The unneeded React.Fragment is used here to prevent typescript error hell.
   return <ScrollView>{props.vaccineDoses.map(renderItem)}</ScrollView>;
 }
 
