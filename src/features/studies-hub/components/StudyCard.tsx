@@ -30,7 +30,12 @@ export function StudyCard(props: TProps) {
     // props.onPress();
   };
   return (
-    <TouchableOpacity accessible onPress={props.onPress} style={[styles.outerWrapper, styling.shadow, props.style]}>
+    <TouchableOpacity
+      accessible
+      onPress={props.onPress}
+      style={[styles.outerWrapper, styling.shadow, props.style]}
+      testID={`study-card-${props.study.id}`}
+    >
       <View style={styles.innerWrapper}>
         <View style={[styles.lineBlue, !props.active && styles.opacity]} />
         <Text inverted colorPalette="uiDark" colorShade="main" style={styles.marginBottom} textClass="pSmallMedium">
@@ -56,7 +61,13 @@ export function StudyCard(props: TProps) {
           <IconPeople style={styles.marginRight} />
           {props.active ? (
             <>
-              <Text inverted colorPalette="actionSecondary" colorShade="main" textClass="pMedium">
+              <Text
+                inverted
+                colorPalette="actionSecondary"
+                colorShade="main"
+                testID={`study-card-${props.study.id}-you-text`}
+                textClass="pMedium"
+              >
                 {i18n.t('you')}
               </Text>
               <Text
@@ -75,7 +86,11 @@ export function StudyCard(props: TProps) {
           </Text>
           <View style={styles.lineVertical} />
           <TouchableOpacity hitSlop={HIT_SLOP} onPress={onPressHeart}>
-            <IconHeart full={props.active} style={styles.marginRight} />
+            <IconHeart
+              full={props.active}
+              style={styles.marginRight}
+              testID={`study-card-${props.study.id}-icon-heart`}
+            />
           </TouchableOpacity>
         </View>
       </View>
