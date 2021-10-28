@@ -157,7 +157,7 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
     }
   };
 
-  const footer = () => (
+  const renderFooter = () => (
     <View style={styles.wrapper}>
       <BrandedButton
         onPress={navigateToNextPageOrShowPopup}
@@ -173,30 +173,27 @@ export const VaccineListScreen: React.FC<TProps> = (props) => {
     </View>
   );
 
-  const renderMoreInfoModal = () => (
-    <Modal
-      modalName="VaccineListInfo"
-      onRequestClose={() => setModalVisible(false)}
-      testID="vaccine-list-modal"
-      visible={modalVisible}
-    >
-      <View style={styles.modalWrapper}>
-        <HeaderText style={styles.modalTitle}>{i18n.t('vaccines.vaccine-list.modal-title')}</HeaderText>
-        <LightText style={styles.modalBody}>{i18n.t('vaccines.vaccine-list.modal-body')}</LightText>
-        <BrandedButton onPress={() => setModalVisible(false)}>
-          {i18n.t('vaccines.vaccine-list.modal-button')}
-        </BrandedButton>
-      </View>
-    </Modal>
-  );
-
   return (
     <Screen
       profile={props.route.params?.assessmentData?.patientData?.patientState?.profile}
-      renderFooter={footer}
+      renderFooter={renderFooter}
       testID="vaccine-list-screen"
     >
-      {renderMoreInfoModal()}
+      <Modal
+        enableBackdropDismiss
+        modalName="VaccineListInfo"
+        onRequestClose={() => setModalVisible(false)}
+        testID="vaccine-list-modal"
+        visible={modalVisible}
+      >
+        <View style={styles.modalWrapper}>
+          <HeaderText style={styles.modalTitle}>{i18n.t('vaccines.vaccine-list.modal-title')}</HeaderText>
+          <LightText style={styles.modalBody}>{i18n.t('vaccines.vaccine-list.modal-body')}</LightText>
+          <BrandedButton onPress={() => setModalVisible(false)}>
+            {i18n.t('vaccines.vaccine-list.modal-button')}
+          </BrandedButton>
+        </View>
+      </Modal>
 
       <VaccineFluOnboardingModal
         onRequestClose={() => {

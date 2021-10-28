@@ -35,6 +35,7 @@ export default function MentalHealthPlaybackModal(props: IProps) {
 
   return (
     <Modal
+      enableBackdropDismiss
       modalName="MentalHealthPlayback"
       onRequestClose={onRequestClose}
       testID="mental-health-playback-modal"

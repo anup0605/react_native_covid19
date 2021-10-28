@@ -122,15 +122,15 @@ export function AboutYourVaccineScreen({ route }: TProps) {
       returnToListView(values.vaccineType);
 
       if (doseIdBeingEdited === undefined) {
-        if (values.vaccineType === EVaccineTypes.SEASONAL_FLU) {
-          if (isChild) {
-            Analytics.track(events.VACCINE_NEW, { isChild, mechanism: latestDose.mechanism });
-          }
-        } else {
-          Analytics.track(events.VACCINE_NEW, { vaccine_type: latestDose.vaccine_type });
+        if (values.vaccineType !== EVaccineTypes.SEASONAL_FLU) {
           // Only show the alert when adding a new COVID vaccine.
           showVaccineWarningAlert();
         }
+        Analytics.track(events.VACCINE_NEW, {
+          isChild,
+          mechanism: latestDose.mechanism,
+          vaccine_type: latestDose.vaccine_type,
+        });
       }
     }
   };
