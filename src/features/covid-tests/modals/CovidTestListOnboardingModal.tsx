@@ -130,7 +130,6 @@ export default function CovidTestListOnboardingModal(props: IProps) {
 
 const styles = StyleSheet.create({
   button: {
-    marginTop: sizes.xl,
     paddingHorizontal: sizes.m,
   },
   closeText: {
@@ -150,7 +149,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightBlueBrand,
     borderRadius: sizes.xs,
     marginBottom: sizes.l,
-    marginTop: sizes.xl,
     paddingHorizontal: sizes.s,
     paddingVertical: sizes.xxs,
     textAlign: 'center',
@@ -161,7 +159,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   text: {
-    marginBottom: sizes.l,
+    marginBottom: sizes.s,
     textAlign: 'center',
   },
   title: {
