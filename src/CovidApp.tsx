@@ -19,7 +19,7 @@ import { colors } from '@theme';
 import * as Notifications from 'expo-notifications';
 import { Root } from 'native-base';
 import * as React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Stack = createStackNavigator<TScreenParamList>();
@@ -68,14 +68,29 @@ function HomeScreen() {
   );
 }
 
-const tabNavigatorScreenOptions = { headerShown: false };
+const tabNavigatorScreenOptions = {
+  headerShown: false,
+  tabBarStyle: { position: 'absolute' }, // to show screen under tab bar
+};
+
+const tabNavigatorScreenOptionsAndroidOnly = {
+  tabBarIconStyle: { marginBottom: 10 },
+  tabBarStyle: { height: 57, paddingBottom: 10, paddingTop: 10 },
+};
 const tabHomeScreenOptions = {
+  tabBarAccessibilityLabel: 'Home tab',
   tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => <HomeIcon color={focused ? null : color} />,
+  tabBarTestID: 'tab-home',
 };
 const tabStudiesScreenOptions = {
+  tabBarAccessibilityLabel: 'Studies tab',
+  tabBarBadge: 3,
+  // TODO: replace with Redux state var
+  tabBarBadgeStyle: { backgroundColor: colors.purple },
   tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => (
     <StudiesIcon color={focused ? null : color} />
   ),
+  tabBarTestID: 'tab-studies',
 };
 
 const tabScreenOptions = {
@@ -85,7 +100,13 @@ const tabScreenOptions = {
 
 function TabNavigator() {
   return (
-    <Tab.Navigator screenOptions={tabNavigatorScreenOptions}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        ...tabNavigatorScreenOptions,
+        ...(Platform.OS === 'android' ? tabNavigatorScreenOptionsAndroidOnly : null),
+      }}
+    >
       <Tab.Screen component={HomeScreen} name="Home" options={{ ...tabScreenOptions, ...tabHomeScreenOptions }} />
       <Tab.Screen
         component={StudiesListScreen}
