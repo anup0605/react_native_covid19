@@ -1,16 +1,21 @@
+import { HomeIcon } from '@assets/icons/navigation/HomeIcon';
+import { StudiesIcon } from '@assets/icons/navigation/StudiesIcon';
 import { ShareScreen } from '@covid/components';
 import Analytics, { events } from '@covid/core/Analytics';
 import { appActions, appSelectors } from '@covid/core/state/app/slice';
 import VersionUpdateModal from '@covid/core/VersionUpdateModal';
 import MentalHealthPlaybackModal from '@covid/features/mental-health-playback/modals/MentalHealthPlaybackModal';
 import { DrawerMenu } from '@covid/features/menu/DrawerMenu';
+import { StudiesListScreen } from '@covid/features/screens';
 import { VaccineListMissingModal } from '@covid/features/vaccines/modals/VaccineListMissingModal';
 import NavigatorService from '@covid/NavigatorService';
 import MainNavigator from '@covid/routes';
 import { TScreenParamList } from '@covid/routes/types';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { colors } from '@theme';
 import * as Notifications from 'expo-notifications';
 import { Root } from 'native-base';
 import * as React from 'react';
@@ -19,6 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Stack = createStackNavigator<TScreenParamList>();
 const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
 const drawerContent = (props: DrawerContentComponentProps) => <DrawerMenu {...props} />;
 
@@ -47,8 +53,48 @@ const linking = {
 };
 
 const optionsModal = { cardStyle: { backgroundColor: 'rgba(0,0,0,0.5)' }, gestureEnabled: false };
-
 const optionsShareScreen = { cardStyle: { backgroundColor: 'rgba(0,0,0,0.85)' } };
+
+function HomeScreen() {
+  return (
+    <>
+      <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false, presentation: 'modal' }}>
+        <Stack.Screen component={DrawerNavigator} name="Main" />
+        <Stack.Screen component={VaccineListMissingModal} name="VaccineListMissingModal" options={optionsModal} />
+        <Stack.Screen component={VersionUpdateModal} name="VersionUpdateModal" options={optionsModal} />
+        <Stack.Screen component={ShareScreen} name="Share" options={optionsShareScreen} />
+      </Stack.Navigator>
+    </>
+  );
+}
+
+const tabNavigatorScreenOptions = { headerShown: false };
+const tabHomeScreenOptions = {
+  tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => <HomeIcon color={focused ? null : color} />,
+};
+const tabStudiesScreenOptions = {
+  tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => (
+    <StudiesIcon color={focused ? null : color} />
+  ),
+};
+
+const tabScreenOptions = {
+  tabBarActiveTintColor: colors.accent,
+  tabBarInactiveTintColor: colors.quinary,
+};
+
+function TabNavigator() {
+  return (
+    <Tab.Navigator screenOptions={tabNavigatorScreenOptions}>
+      <Tab.Screen component={HomeScreen} name="Home" options={{ ...tabScreenOptions, ...tabHomeScreenOptions }} />
+      <Tab.Screen
+        component={StudiesListScreen}
+        name="Studies"
+        options={{ ...tabScreenOptions, ...tabStudiesScreenOptions }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 export default function CovidApp() {
   const app = useSelector(appSelectors.selectApp);
@@ -73,12 +119,7 @@ export default function CovidApp() {
         visible={app.modalMentalHealthPlaybackVisible}
       />
       <NavigationContainer linking={linking} onStateChange={NavigatorService.handleStateChange} ref={ref}>
-        <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false, presentation: 'modal' }}>
-          <Stack.Screen component={DrawerNavigator} name="Main" />
-          <Stack.Screen component={VaccineListMissingModal} name="VaccineListMissingModal" options={optionsModal} />
-          <Stack.Screen component={VersionUpdateModal} name="VersionUpdateModal" options={optionsModal} />
-          <Stack.Screen component={ShareScreen} name="Share" options={optionsShareScreen} />
-        </Stack.Navigator>
+        <TabNavigator />
       </NavigationContainer>
     </Root>
   );
