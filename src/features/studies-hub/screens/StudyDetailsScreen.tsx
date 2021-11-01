@@ -2,13 +2,13 @@ import { drTimSpector } from '@assets';
 import { Avatar, DoctorProfile, Text } from '@covid/components';
 import { NavHeader } from '@covid/components/NavHeader';
 import { ScrollView } from '@covid/components/ScrollView';
-import { FooterInterested } from '@covid/features/studies-hub/components/FooterInterested';
 import { IconBlog } from '@covid/features/studies-hub/components/IconBlog';
 import { IconBMI } from '@covid/features/studies-hub/components/IconBMI';
 import { IconLightBulb } from '@covid/features/studies-hub/components/IconLightBulb';
 import { IconPencil } from '@covid/features/studies-hub/components/IconPencil';
 import { IconProfileInfo } from '@covid/features/studies-hub/components/IconProfileInfo';
 import { IconTime } from '@covid/features/studies-hub/components/IconTime';
+import { RowInterested } from '@covid/features/studies-hub/components/RowInterested';
 import { StudyDetailRow } from '@covid/features/studies-hub/components/StudyDetailRow';
 import i18n from '@covid/locale/i18n';
 import { TScreenParamList } from '@covid/routes/types';
@@ -50,7 +50,7 @@ export function StudyDetailsScreen(props: TProps) {
             {props.route.params?.study.organiser}
           </Text>
 
-          {props.route.params?.study ? <FooterInterested active study={props.route.params.study} /> : null}
+          {props.route.params?.study ? <RowInterested active study={props.route.params.study} /> : null}
         </View>
         <View style={styles.bodyWrapper}>
           <StudyDetailRow

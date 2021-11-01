@@ -1,7 +1,7 @@
 import { Text } from '@covid/components';
-import { FooterInterested } from '@covid/features/studies-hub/components/FooterInterested';
 import { IconArrowRight } from '@covid/features/studies-hub/components/IconArrowRight';
 import { IconTime } from '@covid/features/studies-hub/components/IconTime';
+import { RowInterested } from '@covid/features/studies-hub/components/RowInterested';
 import { TStudy } from '@covid/features/studies-hub/types';
 import i18n from '@covid/locale/i18n';
 import { sizes, styling } from '@covid/themes';
@@ -45,17 +45,13 @@ export function StudyCard(props: TProps) {
           </Text>
         </View>
         <View style={styles.lineHorizontal} />
-        <FooterInterested active={props.active} study={props.study} style={styles.footerInterested} />
+        <RowInterested active={props.active} study={props.study} style={styles.rowInterested} />
       </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  footerInterested: {
-    justifyContent: 'flex-end',
-    paddingVertical: sizes.xs,
-  },
   innerWrapper: {
     backgroundColor: '#ffffff',
     borderRadius: sizes.m,
@@ -100,6 +96,10 @@ const styles = StyleSheet.create({
   outerWrapper: {
     backgroundColor: '#ffffff',
     borderRadius: sizes.m,
+  },
+  rowInterested: {
+    justifyContent: 'flex-end',
+    paddingVertical: sizes.xs,
   },
   rowWrapper: {
     flexDirection: 'row',

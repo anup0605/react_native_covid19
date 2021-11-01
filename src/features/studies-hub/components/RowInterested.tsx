@@ -22,7 +22,7 @@ const HIT_SLOP = {
   top: 16,
 };
 
-export function FooterInterested(props: TProps) {
+export function RowInterested(props: TProps) {
   const onPressHeart = React.useCallback(() => {
     // @todo: Handle the on press correctly by persisting the interest shown.
     Analytics.track(props.active ? events.STUDIES_HUB_INTEREST_OFF : events.STUDIES_HUB_INTEREST_ON);
