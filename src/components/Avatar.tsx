@@ -11,10 +11,9 @@ export function Avatar(props: IProps) {
 
 const styles = StyleSheet.create({
   image: {
-    borderRadius: 60,
+    borderRadius: 30,
     height: 60,
     overflow: 'hidden',
-    resizeMode: 'contain',
     width: 60,
   },
 });
