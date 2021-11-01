@@ -5,4 +5,5 @@ export type TSvgProps = {
   height?: number | string;
   style?: StyleProp<ViewStyle>;
   color?: string | null;
+  testID?: string;
 };

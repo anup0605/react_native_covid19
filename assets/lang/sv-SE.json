@@ -1670,6 +1670,13 @@
       "title": false
     }
   },
+  "tab-navigation": {
+    "home-tab": "Home",
+    "studies-tab": "Studies",
+    "studies-tab-overlay": {
+      "description": "From the Studies tab, you can manage Studies you're interested in"
+    }
+  },
   "required-field": "Obligatoriska fält",
   "modal-close": "Stänga"
 }

@@ -1666,6 +1666,13 @@
       "title": "COVID-related studies"
     }
   },
+  "tab-navigation": {
+    "home-tab": "Home",
+    "studies-tab": "Studies",
+    "studies-tab-overlay": {
+      "description": "From the Studies tab, you can manage Studies you're interested in"
+    }
+  },
   "required-field": "Required field",
   "modal-close": "Close"
 }
