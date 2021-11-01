@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
+import { DashboardUKScreen } from '@covid/features/dashboard/DashboardUKScreen';
 import TabNavigator from '@covid/features/tab-navigation/TabNavigator';
-import MainNavigator from '@covid/routes';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import * as React from 'react';
@@ -47,7 +47,7 @@ describe('Tab Navigator tests', () => {
 
   it('shows Home screen stack when selected', async () => {
     const instance = createComponent().instance;
-    expect(instance.findAllByType(MainNavigator).length).toBe(1);
+    expect(instance.findAllByType(DashboardUKScreen).length).toBe(1);
     // add expectation to not see the studies stack
   });
 
