@@ -39,6 +39,7 @@ export function StudyDetailsScreen(props: TProps) {
       <ScrollView
         bottomBackgroundColor="white"
         contentContainerStyle={styles.flexGrow}
+        style={styles.scrollView}
         topBackgroundColor={colors.predict}
       >
         <Image resizeMethod="scale" resizeMode="cover" source={sourceHeaderImage} style={styles.fullWidth} />
@@ -139,5 +140,8 @@ const styles = StyleSheet.create({
   organiserText: {
     marginBottom: sizes.l,
     marginTop: sizes.xs,
+  },
+  scrollView: {
+    backgroundColor: colors.predict,
   },
 });
