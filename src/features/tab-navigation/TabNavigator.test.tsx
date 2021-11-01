@@ -1,5 +1,6 @@
 /* eslint-env jest */
-import { TabNavigator } from '@covid/CovidApp';
+
+import TabNavigator from '@covid/features/tab-navigation/TabNavigator';
 import MainNavigator from '@covid/routes';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
@@ -9,8 +10,8 @@ import renderer from 'react-test-renderer';
 import createMockStore from 'redux-mock-store';
 import { ThemeProvider } from 'styled-components/native';
 
-import { initialState } from '../__mocks__/mockedInitialState';
-import MockedNavigator from '../__mocks__/MockedNavigator';
+import { initialState } from '../../../__mocks__/mockedInitialState';
+import MockedNavigator from '../../../__mocks__/MockedNavigator';
 
 const middlewares = getDefaultMiddleware();
 const mockStore = createMockStore(middlewares);
