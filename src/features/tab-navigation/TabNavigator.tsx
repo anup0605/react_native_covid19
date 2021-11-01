@@ -151,16 +151,9 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  // probably need to do this within the Screen level?
   overlay: {
-    // backgroundColor: 'black',
-    // bottom: 0,
-    // left: 0,
-    opacity: 0.5,
-    // position: 'absolute',
-    // right: 0,
-    // top: 0,
-    // zIndex: 100,
+    // backgroundColor: 'black', // Doesn't take effect. Probably need to do this within the Screen level?
+    opacity: 0.6,
   },
 
   quarterCircle: {
