@@ -20,6 +20,7 @@
     "tools": "Blood Pressure Monitor",
     "id": "2",
     "organiser": "ZOE & King’s College London",
+    "researchFocus": "How has the pandemic affected our Blood Pressure responses?",
     "title": "Impact of the Pandemic on Blood Pressure"
   },
   {
@@ -31,6 +32,7 @@
     "tools": "None",
     "id": "3",
     "organiser": "ZOE & King’s College London",
+    "researchFocus": "How has the health of the nation changed over the course of the pandemic?",
     "title": "Health of the Nation"
   }
 ]
