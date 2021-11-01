@@ -10,8 +10,8 @@ import renderer from 'react-test-renderer';
 import createMockStore from 'redux-mock-store';
 import { ThemeProvider } from 'styled-components/native';
 
-import { initialState } from '../../../__mocks__/mockedInitialState';
-import MockedNavigator from '../../../__mocks__/MockedNavigator';
+import { initialState } from '../../../../__mocks__/mockedInitialState';
+import MockedNavigator from '../../../../__mocks__/MockedNavigator';
 
 const middlewares = getDefaultMiddleware();
 const mockStore = createMockStore(middlewares);
