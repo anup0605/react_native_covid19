@@ -1,65 +1,21 @@
 import { HomeIcon } from '@assets/icons/navigation/HomeIcon';
 import { StudiesIcon } from '@assets/icons/navigation/StudiesIcon';
-import { ShareScreen, Text } from '@covid/components';
+import { Text } from '@covid/components';
 import { TRootState } from '@covid/core/state/root';
-import VersionUpdateModal from '@covid/core/VersionUpdateModal';
-import { DrawerMenu } from '@covid/features/menu/DrawerMenu';
+import { selectStartupInfo } from '@covid/core/state/selectors';
+import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
+import { DashboardUKScreen } from '@covid/features/dashboard/DashboardUKScreen';
 import { StudiesListScreen } from '@covid/features/screens';
-import { VaccineListMissingModal } from '@covid/features/vaccines/modals/VaccineListMissingModal';
 import i18n from '@covid/locale/i18n';
-import MainNavigator from '@covid/routes';
-import { TScreenParamList } from '@covid/routes/types';
 import { sizes } from '@covid/themes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
 import { colors, fontStyles } from '@theme';
 import * as React from 'react';
-import { Dimensions, Platform, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 
-const Stack = createStackNavigator<TScreenParamList>();
-const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
-
-const drawerContent = (props: DrawerContentComponentProps) => <DrawerMenu {...props} />;
-
-const drawerStyle = {
-  width: Dimensions.get('screen').width,
-};
-
-const screenOptions = {
-  drawerPosition: 'right',
-  drawerStyle,
-  swipeEnabled: false,
-};
-
-const optionsMainScreen = { headerShown: false };
-
-function DrawerNavigator() {
-  return (
-    <Drawer.Navigator drawerContent={drawerContent} drawerStyle={drawerStyle} screenOptions={screenOptions}>
-      <Drawer.Screen component={MainNavigator} name="MainNavigator" options={optionsMainScreen} />
-    </Drawer.Navigator>
-  );
-}
-
-const optionsModal = { cardStyle: { backgroundColor: 'rgba(0,0,0,0.5)' }, gestureEnabled: false };
-const optionsShareScreen = { cardStyle: { backgroundColor: 'rgba(0,0,0,0.85)' } };
-
-function HomeScreen() {
-  return (
-    <>
-      <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false, presentation: 'modal' }}>
-        <Stack.Screen component={DrawerNavigator} name="Main" />
-        <Stack.Screen component={VaccineListMissingModal} name="VaccineListMissingModal" options={optionsModal} />
-        <Stack.Screen component={VersionUpdateModal} name="VersionUpdateModal" options={optionsModal} />
-        <Stack.Screen component={ShareScreen} name="Share" options={optionsShareScreen} />
-      </Stack.Navigator>
-    </>
-  );
-}
 
 const tabScreenOptions = {
   tabBarActiveTintColor: colors.accent,
@@ -70,26 +26,24 @@ export default function TabNavigator() {
   const windowDimensions = useWindowDimensions();
   const ratio = 3 / 4;
   const safeAreaInsets = useSafeAreaInsets();
-  const [showOnboarding, setShowOnboarding] = React.useState<boolean>(
-    // !startupInfo?.tab_navigation_onboarding_seen, // TODO: backend and frontend
-    true,
-  );
-  // const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
+  const [showOnboarding, setShowOnboarding] = React.useState<boolean>(false);
+  const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
 
-  const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
+  React.useEffect(() => {
+    setTimeout(() => {
+      if (startupInfo?.menu_notifications_onboarding_seen) {
+        setShowOnboarding(true);
+      }
+    }, 1500);
+  }, [startupInfo?.menu_notifications_onboarding_seen]);
 
   const closeOnboarding = React.useCallback(async () => {
     setShowOnboarding(false);
-    // dispatch(updateTabNavigationOnboardingSeen(true));
-    // await patientService.updatePatientInfo(patientId, {
-    //   tab_navigation_onboarding_seen: true,
-    // });
-    // dispatch(fetchStartUpInfo());
-  }, [patientId]);
+  }, []);
 
   const tabNavigatorScreenOptions = {
     headerShown: false,
-    tabBarStyle: { position: 'absolute' }, // to show screen under tab bar
+    tabBarStyle: { position: 'absolute' }, // Needed to show screen under tab bar
   };
 
   const tabNavigatorScreenOptionsAndroidOnly = {
@@ -149,8 +103,8 @@ export default function TabNavigator() {
               <Text inverted colorPalette="ui" colorShade="lighter" style={styles.flex} textClass="pSmall">
                 {i18n.t('tab-navigation.studies-tab-overlay.description')}
               </Text>
+              <StudiesIcon style={{ zIndex: 1 }} testID="studies-tab-icon" />
               <View style={styles.tabIconOverlay} />
-              <StudiesIcon testID="studies-tab-icon" />
             </Pressable>
           ) : (
             <StudiesIcon color={focused ? null : color} testID="studies-tab-icon" />
@@ -179,7 +133,11 @@ export default function TabNavigator() {
         ...(Platform.OS === 'android' ? tabNavigatorScreenOptionsAndroidOnly : null),
       }}
     >
-      <Tab.Screen component={HomeScreen} name="Home" options={{ ...tabScreenOptions, ...tabHomeScreenOptions }} />
+      <Tab.Screen
+        component={DashboardUKScreen}
+        name="Home"
+        options={{ ...tabScreenOptions, ...tabHomeScreenOptions }}
+      />
       <Tab.Screen
         component={StudiesListScreen}
         name="Studies"

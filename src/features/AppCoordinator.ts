@@ -55,7 +55,7 @@ export class AppCoordinator extends Coordinator implements ISelectProfile, IEdit
       NavigatorService.navigate('Register');
     },
 
-    Dashboard: () => {
+    DashboardUK: () => {
       // UK only so currently no need to check config.enableMultiplePatients
       NavigatorService.navigate('SelectProfile', { assessmentFlow: true });
     },

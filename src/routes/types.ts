@@ -89,6 +89,7 @@ export type TScreenParamList = {
 
   // Dashboards
   Dashboard: undefined;
+  DashboardUK: undefined;
   DashboardUS: undefined;
 
   // School network
