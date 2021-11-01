@@ -5,6 +5,7 @@ import { ISchoolModel, ISubscribedSchoolStats } from '@covid/core/schools/School
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
 import { EVaccineTypes, TVaccineRequest } from '@covid/core/vaccine/dto/VaccineRequest';
+import { TStudy } from '@covid/features/studies-hub/types';
 
 export enum EConsentType {
   Adult = 'adult',
@@ -149,7 +150,7 @@ export type TScreenParamList = {
 
   // Studies hub
   StudiesList: undefined;
-  StudyDetails: { studyId: string };
+  StudyDetails: { study: TStudy };
 
   // Others
   Anniversary: undefined;

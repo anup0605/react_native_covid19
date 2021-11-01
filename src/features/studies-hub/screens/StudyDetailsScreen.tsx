@@ -10,9 +10,10 @@ import { IconPencil } from '@covid/features/studies-hub/components/IconPencil';
 import { IconProfileInfo } from '@covid/features/studies-hub/components/IconProfileInfo';
 import { IconTime } from '@covid/features/studies-hub/components/IconTime';
 import { StudyDetailRow } from '@covid/features/studies-hub/components/StudyDetailRow';
-import { TStudy } from '@covid/features/studies-hub/types';
 import i18n from '@covid/locale/i18n';
+import { TScreenParamList } from '@covid/routes/types';
 import { sizes } from '@covid/themes';
+import { RouteProp } from '@react-navigation/native';
 import { colors } from '@theme';
 import * as React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
@@ -20,11 +21,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const sourceHeaderImage = require('../assets/header.png');
 
-const studies: TStudy[] = require('../assets/studies.json');
+type TProps = {
+  route: RouteProp<TScreenParamList, 'StudyDetails'>;
+};
 
-const study = studies[0];
-
-export function StudyDetailsScreen() {
+export function StudyDetailsScreen(props: TProps) {
   const safeAreaInsets = useSafeAreaInsets();
   return (
     <View style={styles.flex} testID="study-details-screen">
@@ -43,41 +44,41 @@ export function StudyDetailsScreen() {
         <Image resizeMethod="scale" resizeMode="cover" source={sourceHeaderImage} style={styles.fullWidth} />
         <View style={styles.headerWrapper}>
           <Text inverted colorPalette="uiDark" colorShade="darker" textClass="h3Regular">
-            {study.title}
+            {props.route.params.study.title}
           </Text>
           <Text inverted colorPalette="uiDark" colorShade="main" style={styles.organiserText} textClass="pMedium">
-            {study.organiser}
+            {props.route.params.study.organiser}
           </Text>
 
-          <FooterInterested active study={study} />
+          <FooterInterested active study={props.route.params.study} />
         </View>
         <View style={styles.bodyWrapper}>
           <StudyDetailRow
-            description={study.researchFocus}
+            description={props.route.params.study.researchFocus}
             IconComponent={IconLightBulb}
             title={i18n.t('studies-hub.study-details.research-focus')}
           />
           <View style={styles.lineHorizontal} />
           <StudyDetailRow
-            description={study.eligibilityCriteria}
+            description={props.route.params.study.eligibilityCriteria}
             IconComponent={IconProfileInfo}
             style={styles.marginBottom}
             title={i18n.t('studies-hub.study-details.eligibility-criteria')}
           />
           <StudyDetailRow
-            description={study.commitment}
+            description={props.route.params.study.commitment}
             IconComponent={IconTime}
             style={styles.marginBottom}
             title={i18n.t('studies-hub.study-details.commitment')}
           />
           <StudyDetailRow
-            description={study.toDo}
+            description={props.route.params.study.toDo}
             IconComponent={IconPencil}
             style={styles.marginBottom}
             title={i18n.t('studies-hub.study-details.to-do')}
           />
           <StudyDetailRow
-            description={study.tools}
+            description={props.route.params.study.tools}
             IconComponent={IconBMI}
             title={i18n.t('studies-hub.study-details.tools')}
           />
@@ -91,7 +92,7 @@ export function StudyDetailsScreen() {
             title={i18n.t('studies-hub.doctor.title')}
           />
           <Text inverted colorPalette="uiDark" colorShade="dark" textClass="p">
-            {study.blog}
+            {props.route.params.study.blog}
           </Text>
           <View
             style={{

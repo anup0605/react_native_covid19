@@ -41,7 +41,7 @@ export function StudiesListScreen() {
         <StudyCard
           active
           key={`study-card-${study.id}`}
-          onPress={() => NavigatorService.navigate('StudyDetails', { studyId: study.id })}
+          onPress={() => NavigatorService.navigate('StudyDetails', { study })}
           study={study}
           style={index !== 0 && styles.marginTop}
         />
