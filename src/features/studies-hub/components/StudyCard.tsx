@@ -45,19 +45,16 @@ export function StudyCard(props: TProps) {
           </Text>
         </View>
         <View style={styles.lineHorizontal} />
-        <View style={styles.footerWrapper}>
-          <FooterInterested active={props.active} study={props.study} />
-        </View>
+        <FooterInterested active={props.active} study={props.study} style={styles.footerInterested} />
       </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  footerWrapper: {
-    alignItems: 'center',
-    flexDirection: 'row',
+  footerInterested: {
     justifyContent: 'flex-end',
+    paddingVertical: sizes.xs,
   },
   innerWrapper: {
     backgroundColor: '#ffffff',

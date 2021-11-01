@@ -1,5 +1,5 @@
 import { doctorsAvatars, drEllenThompsonUK, drSarahBerry } from '@assets';
-import { Avatar } from '@covid/components/avatar';
+import { Avatar } from '@covid/components/Avatar';
 import { isUSCountry } from '@covid/core/localisation/LocalisationService';
 import * as React from 'react';
 import { Image } from 'react-native';

@@ -29,15 +29,15 @@ export function StudyDetailRow(props: TProps) {
 }
 
 const styles = StyleSheet.create({
-  rowWrapper: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
   labelMargins: {
     marginLeft: sizes.xs,
     marginTop: sizes.xxs,
   },
   marginTop: {
     marginTop: sizes.xs,
+  },
+  rowWrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });

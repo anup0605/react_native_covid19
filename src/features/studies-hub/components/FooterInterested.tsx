@@ -7,11 +7,12 @@ import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 type TProps = {
   active: boolean;
   study: TStudy;
+  style?: StyleProp<ViewStyle>;
 };
 
 const HIT_SLOP = {
@@ -27,7 +28,7 @@ export function FooterInterested(props: TProps) {
     Analytics.track(props.active ? events.STUDIES_HUB_INTEREST_OFF : events.STUDIES_HUB_INTEREST_ON);
   }, [props.active]);
   return (
-    <>
+    <View style={[styles.view, props.style]}>
       <IconPeople style={styles.marginRight} />
       {props.active ? (
         <>
@@ -52,7 +53,7 @@ export function FooterInterested(props: TProps) {
       <TouchableOpacity hitSlop={HIT_SLOP} onPress={onPressHeart}>
         <IconHeart full={props.active} style={styles.marginRight} testID={`study-card-${props.study.id}-icon-heart`} />
       </TouchableOpacity>
-    </>
+    </View>
   );
 }
 
@@ -61,7 +62,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.hrColor,
     height: 24,
     marginHorizontal: sizes.m,
-    marginVertical: sizes.xs,
     width: 1,
   },
   marginHorizontal: {
@@ -69,5 +69,9 @@ const styles = StyleSheet.create({
   },
   marginRight: {
     marginRight: sizes.xs,
+  },
+  view: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });
