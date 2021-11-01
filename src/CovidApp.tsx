@@ -98,7 +98,7 @@ const tabScreenOptions = {
   tabBarInactiveTintColor: colors.quinary,
 };
 
-function TabNavigator() {
+export function TabNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
