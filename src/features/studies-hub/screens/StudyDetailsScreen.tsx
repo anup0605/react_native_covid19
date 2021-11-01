@@ -44,41 +44,41 @@ export function StudyDetailsScreen(props: TProps) {
         <Image resizeMethod="scale" resizeMode="cover" source={sourceHeaderImage} style={styles.fullWidth} />
         <View style={styles.headerWrapper}>
           <Text inverted colorPalette="uiDark" colorShade="darker" textClass="h3Regular">
-            {props.route.params.study.title}
+            {props.route.params?.study.title}
           </Text>
           <Text inverted colorPalette="uiDark" colorShade="main" style={styles.organiserText} textClass="pMedium">
-            {props.route.params.study.organiser}
+            {props.route.params?.study.organiser}
           </Text>
 
-          <FooterInterested active study={props.route.params.study} />
+          {props.route.params?.study ? <FooterInterested active study={props.route.params.study} /> : null}
         </View>
         <View style={styles.bodyWrapper}>
           <StudyDetailRow
-            description={props.route.params.study.researchFocus}
+            description={props.route.params?.study.researchFocus}
             IconComponent={IconLightBulb}
             title={i18n.t('studies-hub.study-details.research-focus')}
           />
           <View style={styles.lineHorizontal} />
           <StudyDetailRow
-            description={props.route.params.study.eligibilityCriteria}
+            description={props.route.params?.study.eligibilityCriteria}
             IconComponent={IconProfileInfo}
             style={styles.marginBottom}
             title={i18n.t('studies-hub.study-details.eligibility-criteria')}
           />
           <StudyDetailRow
-            description={props.route.params.study.commitment}
+            description={props.route.params?.study.commitment}
             IconComponent={IconTime}
             style={styles.marginBottom}
             title={i18n.t('studies-hub.study-details.commitment')}
           />
           <StudyDetailRow
-            description={props.route.params.study.toDo}
+            description={props.route.params?.study.toDo}
             IconComponent={IconPencil}
             style={styles.marginBottom}
             title={i18n.t('studies-hub.study-details.to-do')}
           />
           <StudyDetailRow
-            description={props.route.params.study.tools}
+            description={props.route.params?.study.tools}
             IconComponent={IconBMI}
             title={i18n.t('studies-hub.study-details.tools')}
           />
@@ -92,7 +92,7 @@ export function StudyDetailsScreen(props: TProps) {
             title={i18n.t('studies-hub.doctor.title')}
           />
           <Text inverted colorPalette="uiDark" colorShade="dark" textClass="p">
-            {props.route.params.study.blog}
+            {props.route.params?.study.blog}
           </Text>
           <View
             style={{
