@@ -1,0 +1,36 @@
+[
+  {
+    "amountParticipants": 1658,
+    "blog": "Moderate levels of exercise has been proven to be beneficial to many aspects of health, but scientists are now wondering whether exercising can reduce your risk of catching COVID-19 after you've been vaccinated.\n\nThis is an increasingly important question for the public as \"breakthrough infections\" become more and more common, and people want to know what they can do to reduce their personal infection risk.",
+    "commitment": "3 mins to setup",
+    "eligibilityCriteria": "Everyone",
+    "toDo": "Answer a few survey questions and link up your physical activity information from your other apps/wearables",
+    "tools": "Physical activity tracking app or wearable - measures step-count at minimum",
+    "id": "1",
+    "organiser": "ZOE & King’s College London",
+    "researchFocus": "Does exercise influence your risk of COVID infection post-vaccination ?",
+    "title": "Impact of Physical Activity on COVID infection risk"
+  },
+  {
+    "amountParticipants": 987,
+    "blog": "The pandemic has caused major upheaval in our lifestyles - whether it's changes in diet, levels of exercise or time spent working.\n\nAll these factors have an impact on our bodies and overall health, often in ways that we can't easily see from the outside in the short-term.\n\nBy measuring our blood pressure, we open a window into one key aspect of our overall health, which is closely linked with diseases such as heart disease.",
+    "commitment": "15 mins, once a month",
+    "eligibilityCriteria": "Everyone",
+    "toDo": "Answer a short series of survey questions in this app and take your blood pressure reading once a month",
+    "tools": "Blood Pressure Monitor",
+    "id": "2",
+    "organiser": "ZOE & King’s College London",
+    "title": "Impact of the Pandemic on Blood Pressure"
+  },
+  {
+    "amountParticipants": 13789,
+    "blog": "During the past 18 months, the world's attention has been captured by COVID-19 but other diseases have continued to plague our population.\n\nHelp our scientists build a clearer picture of how health has changed for different parts of the population by understanding what diseases you have (including new diseases you may have developed), how your medication/treatments may have changed and more.",
+    "commitment": "10 mins, one-off",
+    "eligibilityCriteria": "Everyone",
+    "toDo": "Answer a few questions in this app",
+    "tools": "None",
+    "id": "3",
+    "organiser": "ZOE & King’s College London",
+    "title": "Health of the Nation"
+  }
+]

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 interface IProps {
-  image: React.ReactNode;
+  imageNode: React.ReactNode;
   location: string;
   name: string;
   title: string;
@@ -13,7 +13,7 @@ interface IProps {
 export default function DoctorProfile(props: IProps) {
   return (
     <View style={styles.wrapper}>
-      {props.image}
+      {props.imageNode}
       <View style={styles.view}>
         <Text>{props.name}</Text>
         <Text style={styles.text} textClass="pSmall">

@@ -56,7 +56,7 @@ export default function MentalHealthPlaybackModal(props: IProps) {
         {i18n.t('mental-health-playback.modal.title-new-personal')}
       </Text>
       <DoctorProfile
-        image={getMentalHealthStudyDoctorImage()}
+        imageNode={getMentalHealthStudyDoctorImage()}
         location={i18n.t('mental-health.doctor-location')}
         name={i18n.t('mental-health.doctor-name')}
         title={i18n.t('mental-health.doctor-title')}

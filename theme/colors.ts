@@ -16,7 +16,6 @@ export const colors = {
   backgroundSecondary: '#F7F7F7',
   backgroundTertiary: '#EEEEEF',
   backgroundFour: '#E2E2E2',
-  backgroundFive: '#E5E5E5',
 
   feedbackBad: '#FF9600',
   feedbackPoor: '#FFD519',
