@@ -1,6 +1,7 @@
 /* eslint-env jest */
 
 import { DashboardUKScreen } from '@covid/features/dashboard/DashboardUKScreen';
+import { StudiesListScreen } from '@covid/features/screens';
 import TabNavigator from '@covid/features/tab-navigation/TabNavigator';
 import { theme } from '@covid/themes';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
@@ -39,17 +40,21 @@ describe('Tab Navigator tests', () => {
     expect(instance).toBeDefined();
   });
 
-  it('renders the Home and Studies tabs', async () => {
+  it('renders the Home and Studies tabs', () => {
     const instance = createComponent().instance;
     expect(instance.findByProps({ testID: 'tab-home' })).toBeDefined();
     expect(instance.findByProps({ testID: 'tab-studies' })).toBeDefined();
   });
 
-  it('shows Home screen stack when selected', async () => {
+  it('shows Home screen stack when selected', () => {
     const instance = createComponent().instance;
     expect(instance.findAllByType(DashboardUKScreen).length).toBe(1);
-    // add expectation to not see the studies stack
+    expect(instance.findAllByType(StudiesListScreen).length).toBe(0);
   });
 
-  // TODO: add tests to show clicking on studies tab works as expected
+  it('shows Studies screen stack when selected', () => {
+    const instance = createComponent().instance;
+    instance.findByProps({ testID: 'tab-studies' }).props.onPress();
+    expect(instance.findAllByType(StudiesListScreen).length).toBe(1);
+  });
 });

@@ -112,7 +112,14 @@ export default function TabNavigator() {
                 },
               ]}
             >
-              <Text inverted colorPalette="ui" colorShade="lighter" style={styles.flex} textClass="pSmall">
+              <Text
+                inverted
+                colorPalette="ui"
+                colorShade="lighter"
+                style={styles.flex}
+                testID="studies-tab-overlay-description"
+                textClass="pSmall"
+              >
                 {i18n.t('tab-navigation.studies-tab-overlay.description')}
               </Text>
               <StudiesIcon style={{ zIndex: 1 }} testID="studies-tab-icon" />
