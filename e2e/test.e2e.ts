@@ -73,7 +73,7 @@ testCreateNewProfileFeature({
 //   updateTest: false,
 // });
 testReportTodayFeature({
-  addAndUpdateZoeInviteTest: true,
+  addAndUpdateGovUKTest: true,
   addTest: true,
   addVaccines: true,
   healthy: true,

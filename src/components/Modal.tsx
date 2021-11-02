@@ -18,6 +18,7 @@ type TSwipeFunction = (gestureState: PanResponderGestureState) => void;
 interface IProps {
   animationType?: 'fade' | 'none' | 'slide';
   children?: React.ReactNode;
+  enableBackdropDismiss?: boolean;
   footerChildren?: React.ReactNode;
   headerChildren?: React.ReactNode;
   modalName: string;
@@ -68,10 +69,10 @@ export default React.memo(function Modal(props: IProps) {
         onRequestClose={props.onRequestClose}
         visible={props.visible}
       >
-        <TouchableWithoutFeedback onPress={props.onRequestClose}>
+        <TouchableWithoutFeedback disabled={!props.enableBackdropDismiss} onPress={props.onRequestClose}>
           <View style={styles.view1} testID={props.testID}>
             <View style={[styles.view2, paddingStyle]}>
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback disabled={!props.enableBackdropDismiss}>
                 <View style={styles.view3}>
                   {props.headerChildren ? <View style={styles.headerWrapper}>{props.headerChildren}</View> : null}
                   <ScrollView

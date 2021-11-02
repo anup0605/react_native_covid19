@@ -35,6 +35,7 @@ export const VaccineFluOnboardingModal: React.FC<IProps> = (props) => {
 
   return (
     <Modal
+      enableBackdropDismiss
       showsVerticalScrollIndicator
       footerChildren={footerChildren}
       modalName="VaccineFluOnboarding"
