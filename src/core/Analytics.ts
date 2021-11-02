@@ -88,6 +88,10 @@ enum EVaccineEvents {
   VACCINE_SUBMIT = 'VACCINE_SUBMIT',
 }
 
+enum EStudiesHubEvents {
+  STUDIES_HUB_OVERLAY_SHOWN = 'STUDIES_HUB_OVERLAY_SHOWN',
+}
+
 enum EOtherEvents {
   ACCEPT_STUDY_CONTACT = 'ACCEPT_STUDY_CONTACT',
   CLICK_CALLOUT = 'CLICK_CALLOUT',
@@ -125,6 +129,7 @@ export const events = {
   ...EMentalHealthStudyEvents,
   ...EOtherEvents,
   ...EReconsentEvents,
+  ...EStudiesHubEvents,
   ...ETimelineEvents,
   ...EVaccineEvents,
   ...EWiderHealthStudiesEvents,

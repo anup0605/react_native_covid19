@@ -1,6 +1,7 @@
 import { HomeIcon } from '@assets/icons/navigation/HomeIcon';
 import { StudiesIcon } from '@assets/icons/navigation/StudiesIcon';
 import { Text } from '@covid/components';
+import { events, track } from '@covid/core/Analytics';
 import { patientService } from '@covid/core/patient/PatientService';
 import { fetchStartUpInfo, updateStudiesTabOnboardingSeen } from '@covid/core/state';
 import { TRootState } from '@covid/core/state/root';
@@ -37,6 +38,7 @@ export default function TabNavigator() {
     setTimeout(() => {
       if (startupInfo?.menu_notifications_onboarding_seen && !startupInfo?.studies_tab_onboarding_seen) {
         setShowOnboarding(true);
+        track(events.STUDIES_HUB_OVERLAY_SHOWN);
       }
     }, 1500);
   }, [startupInfo?.menu_notifications_onboarding_seen, startupInfo?.studies_tab_onboarding_seen]);
