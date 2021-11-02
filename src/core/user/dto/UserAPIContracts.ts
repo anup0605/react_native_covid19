@@ -298,6 +298,9 @@ export type TPatientInfosRequest = {
   menu_notifications_onboarding_seen: boolean;
   notifications_wider_health_studies: boolean;
 
+  // Onboarding
+  studies_tab_onboarding_seen: boolean;
+
   // Vaccines
   has_seen_flu_vaccine_onboarding: boolean;
 };
@@ -364,6 +367,7 @@ export type TStartupInfo = {
   show_research_consent: boolean;
   show_timeline: boolean;
   show_trendline: boolean;
+  studies_tab_onboarding_seen: boolean;
   users_count: number;
   wider_health_studies_consent?: boolean;
   show_flu_vaccine_onboarding: boolean;

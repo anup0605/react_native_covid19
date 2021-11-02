@@ -1,6 +1,8 @@
 import { HomeIcon } from '@assets/icons/navigation/HomeIcon';
 import { StudiesIcon } from '@assets/icons/navigation/StudiesIcon';
 import { Text } from '@covid/components';
+import { patientService } from '@covid/core/patient/PatientService';
+import { fetchStartUpInfo, updateStudiesTabOnboardingSeen } from '@covid/core/state';
 import { TRootState } from '@covid/core/state/root';
 import { selectStartupInfo } from '@covid/core/state/selectors';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
@@ -13,7 +15,7 @@ import { colors, fontStyles } from '@theme';
 import * as React from 'react';
 import { Platform, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,18 +30,25 @@ export default function TabNavigator() {
   const safeAreaInsets = useSafeAreaInsets();
   const [showOnboarding, setShowOnboarding] = React.useState<boolean>(false);
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
+  const dispatch = useDispatch();
+  const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
 
   React.useEffect(() => {
     setTimeout(() => {
-      if (startupInfo?.menu_notifications_onboarding_seen) {
+      if (startupInfo?.menu_notifications_onboarding_seen && !startupInfo?.studies_tab_onboarding_seen) {
         setShowOnboarding(true);
       }
     }, 1500);
-  }, [startupInfo?.menu_notifications_onboarding_seen]);
+  }, [startupInfo?.menu_notifications_onboarding_seen, startupInfo?.studies_tab_onboarding_seen]);
 
   const closeOnboarding = React.useCallback(async () => {
     setShowOnboarding(false);
-  }, []);
+    dispatch(updateStudiesTabOnboardingSeen(true));
+    await patientService.updatePatientInfo(patientId, {
+      studies_tab_onboarding_seen: true,
+    });
+    dispatch(fetchStartUpInfo());
+  }, [patientId]);
 
   const tabNavigatorScreenOptions = {
     headerShown: false,

@@ -153,6 +153,7 @@ export const updateActiveNotification = createAction<TUpdateActiveNotificationAc
 export const updateMenuNotificationsOnboardingSeen = createAction<boolean>(
   'content/menu_notifications_onboarding_seen',
 );
+export const updateStudiesTabOnboardingSeen = createAction<boolean>('content/studies_tab_onboarding_seen');
 
 export const contentSlice = createSlice({
   extraReducers: {
@@ -167,6 +168,11 @@ export const contentSlice = createSlice({
           ...current.startupInfo!.active_notifications,
           [action.payload.notification]: action.payload.value,
         };
+      }
+    },
+    [updateStudiesTabOnboardingSeen.type]: (current, action: PayloadAction<boolean>) => {
+      if (current.startupInfo) {
+        current.startupInfo.studies_tab_onboarding_seen = action.payload;
       }
     },
     [updateTodayDate.type]: (current) => {
