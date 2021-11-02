@@ -95,7 +95,8 @@ export default function TabNavigator() {
               style={[
                 styles.tabIconWrapperActive,
                 {
-                  height: 150, // TODO: make dynamic
+                  height: (windowDimensions.width * ratio) / 1.8,
+                  // height: 150, // TODO: make dynamic
                   width: windowDimensions.width / (5 / 2),
                 },
               ]}
