@@ -25,6 +25,16 @@ const tabScreenOptions = {
   tabBarInactiveTintColor: colors.quinary,
 };
 
+const tabNavigatorScreenOptions = {
+  headerShown: false,
+  tabBarStyle: { position: 'absolute' }, // Needed to show screen under tab bar
+};
+
+const tabNavigatorScreenOptionsAndroidOnly = {
+  tabBarIconStyle: { marginBottom: 10 },
+  tabBarStyle: { height: 57, paddingBottom: sizes.s, paddingTop: sizes.s },
+};
+
 export default function TabNavigator() {
   const windowDimensions = useWindowDimensions();
   const ratio = 3 / 4;
@@ -52,15 +62,6 @@ export default function TabNavigator() {
     dispatch(fetchStartUpInfo());
   }, [patientId]);
 
-  const tabNavigatorScreenOptions = {
-    headerShown: false,
-    tabBarStyle: { position: 'absolute' }, // Needed to show screen under tab bar
-  };
-
-  const tabNavigatorScreenOptionsAndroidOnly = {
-    tabBarIconStyle: { marginBottom: 10 },
-    tabBarStyle: { height: 57, paddingBottom: 10, paddingTop: 10 }, // TODO: cleanup magic numbers
-  };
   const tabHomeScreenOptions = {
     tabBarAccessibilityLabel: `${i18n.t('tab-navigation.home-tab')} tab`,
     tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => {
@@ -81,7 +82,12 @@ export default function TabNavigator() {
   const tabStudiesScreenOptions = {
     tabBarAccessibilityLabel: `${i18n.t('tab-navigation.studies-tab')} tab`,
     tabBarBadge: 3, // TODO: replace with Redux state var
-    tabBarBadgeStyle: { backgroundColor: colors.purple },
+    tabBarBadgeStyle: {
+      backgroundColor: colors.purple,
+      elevation: 1,
+      top: Platform.OS === 'android' ? -10 : null,
+      zIndex: 1,
+    },
     tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => {
       return (
         <>
@@ -106,12 +112,16 @@ export default function TabNavigator() {
               style={[
                 styles.tabIconWrapperActive,
                 {
-                  height: (windowDimensions.width * ratio) / 1.8,
-                  // height: 150, // TODO: make dynamic
-                  width: windowDimensions.width / (5 / 2),
+                  bottom: Platform.OS === 'android' ? -4 : 7,
+                  height: windowDimensions.width / 2.25,
+                  right: windowDimensions.width / 18,
+                  width: windowDimensions.width / 2.5,
                 },
               ]}
             >
+              <View
+                style={[styles.tabIconOverlay, { top: (windowDimensions.width * ratio - sizes.tabIconOverlay) / 1.65 }]}
+              />
               <Text
                 inverted
                 colorPalette="ui"
@@ -122,8 +132,7 @@ export default function TabNavigator() {
               >
                 {i18n.t('tab-navigation.studies-tab-overlay.description')}
               </Text>
-              <StudiesIcon style={{ zIndex: 1 }} testID="studies-tab-icon" />
-              <View style={styles.tabIconOverlay} />
+              <StudiesIcon testID="studies-tab-icon" />
             </Pressable>
           ) : (
             <StudiesIcon color={focused ? null : color} testID="studies-tab-icon" />
@@ -135,7 +144,9 @@ export default function TabNavigator() {
     // Onboarding overlay requires us to overwrite default behaviour, since we're highlighting the tab that is not the active tab.
     tabBarLabel: ({ color }: { color: string }) => {
       return showOnboarding ? (
-        <Text style={[fontStyles.bodyXXSmall, { color: colors.accent }]}>{i18n.t('tab-navigation.studies-tab')}</Text>
+        <Text style={[fontStyles.bodyXXSmall, { color: colors.accent, elevation: 1, zIndex: 1 }]}>
+          {i18n.t('tab-navigation.studies-tab')}
+        </Text>
       ) : (
         <Text style={[fontStyles.bodyXXSmall, { color }]}>{i18n.t('tab-navigation.studies-tab')}</Text>
       );
@@ -172,9 +183,8 @@ const styles = StyleSheet.create({
   },
   overlay: {
     // backgroundColor: 'black', // Doesn't take effect. Probably need to do this within the Screen level?
-    opacity: 0.6,
+    opacity: 0.5,
   },
-
   quarterCircle: {
     aspectRatio: 1,
     backgroundColor: colors.black,
@@ -187,20 +197,17 @@ const styles = StyleSheet.create({
     borderColor: colors.tertiary,
     borderRadius: sizes.tabIconOverlay / 2,
     borderWidth: 7,
+    elevation: 0,
     height: sizes.tabIconOverlay,
     position: 'absolute',
-    right: 37, // TODO: make dynamic
-    top: 110, // TODO: make dynamic
     width: sizes.tabIconOverlay,
     zIndex: 0,
   },
   tabIconWrapperActive: {
     alignItems: 'center',
-    bottom: 7, // TODO: make dynamic
     flexDirection: 'column',
     justifyContent: 'space-between',
     position: 'absolute',
-    right: 20, // TODO: make dynamic
     zIndex: 999,
   },
 });
