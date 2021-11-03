@@ -8,7 +8,7 @@ import { TRootState } from '@covid/core/state/root';
 import { selectStartupInfo } from '@covid/core/state/selectors';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { DashboardUKScreen } from '@covid/features/dashboard/DashboardUKScreen';
-import { StudiesListScreen } from '@covid/features/screens';
+import { StudiesListScreen } from '@covid/features/studies-hub/screens/StudiesListScreen';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -36,12 +36,12 @@ const tabNavigatorScreenOptionsAndroidOnly = {
 };
 
 export default function TabNavigator() {
-  const windowDimensions = useWindowDimensions();
   const ratio = 3 / 4;
+  const windowDimensions = useWindowDimensions();
   const safeAreaInsets = useSafeAreaInsets();
+  const dispatch = useDispatch();
   const [showOnboarding, setShowOnboarding] = React.useState<boolean>(false);
   const startupInfo = useSelector<TRootState, TStartupInfo | undefined>(selectStartupInfo);
-  const dispatch = useDispatch();
   const patientId = useSelector<TRootState, string>((state) => state.user.patients[0]);
 
   React.useEffect(() => {
@@ -67,8 +67,7 @@ export default function TabNavigator() {
     tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => {
       return showOnboarding ? <HomeIcon color={colors.quinary} /> : <HomeIcon color={focused ? null : color} />;
     },
-    // We can delete tabBarLabel if there's no onboarding concept because bottom tabs navigator takes care of label and styling for us.
-    // Onboarding overlay requires us to overwrite default behaviour, since we're highlighting the tab that is not the active tab.
+    // We can delete tabBarLabel option if there's no onboarding overlay. Overlay requires us to overwrite default behaviour.
     tabBarLabel: ({ color }: { color: string }) => {
       return showOnboarding ? (
         <Text style={[fontStyles.bodyXXSmall]}>{i18n.t('tab-navigation.home-tab')}</Text>
@@ -85,12 +84,13 @@ export default function TabNavigator() {
     tabBarBadgeStyle: {
       backgroundColor: colors.purple,
       elevation: 1,
-      top: Platform.OS === 'android' ? -10 : null,
+      top: Platform.OS === 'android' ? -10 : 5,
       zIndex: 1,
     },
     tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => {
       return (
         <>
+          {/* TODO: Can we refactor overlay into its own component? */}
           {showOnboarding ? (
             <Pressable
               onPress={closeOnboarding}
@@ -112,9 +112,9 @@ export default function TabNavigator() {
               style={[
                 styles.tabIconWrapperActive,
                 {
-                  bottom: Platform.OS === 'android' ? -4 : 7,
+                  bottom: Platform.OS === 'android' ? -4 : 7.5,
                   height: windowDimensions.width / 2.25,
-                  right: windowDimensions.width / 18,
+                  right: windowDimensions.width / 18 - 2,
                   width: windowDimensions.width / 2.5,
                 },
               ]}
@@ -140,8 +140,6 @@ export default function TabNavigator() {
         </>
       );
     },
-    // We can delete tabBarLabel if there's no onboarding concept because bottom tabs navigator takes care of label and styling for us.
-    // Onboarding overlay requires us to overwrite default behaviour, since we're highlighting the tab that is not the active tab.
     tabBarLabel: ({ color }: { color: string }) => {
       return showOnboarding ? (
         <Text style={[fontStyles.bodyXXSmall, { color: colors.accent, elevation: 1, zIndex: 1 }]}>
