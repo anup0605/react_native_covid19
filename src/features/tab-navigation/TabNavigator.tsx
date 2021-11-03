@@ -10,11 +10,13 @@ import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { DashboardUKScreen } from '@covid/features/dashboard/DashboardUKScreen';
 import { StudiesListScreen } from '@covid/features/studies-hub/screens/StudiesListScreen';
 import i18n from '@covid/locale/i18n';
+import { TScreenParamList } from '@covid/routes/types';
 import { sizes } from '@covid/themes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors, fontStyles } from '@theme';
 import * as React from 'react';
-import { Platform, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -35,7 +37,11 @@ const tabNavigatorScreenOptionsAndroidOnly = {
   tabBarStyle: { height: 57, paddingBottom: sizes.s, paddingTop: sizes.s },
 };
 
-export default function TabNavigator() {
+interface IProps {
+  navigation: DrawerNavigationProp<TScreenParamList>;
+}
+
+export default function TabNavigator({ navigation }: IProps) {
   const ratio = 3 / 4;
   const windowDimensions = useWindowDimensions();
   const safeAreaInsets = useSafeAreaInsets();
@@ -61,6 +67,11 @@ export default function TabNavigator() {
     });
     dispatch(fetchStartUpInfo());
   }, [patientId]);
+
+  const goToStudiesTab = React.useCallback(() => {
+    closeOnboarding();
+    navigation.jumpTo('StudiesList');
+  }, [navigation]);
 
   const tabHomeScreenOptions = {
     tabBarAccessibilityLabel: `${i18n.t('tab-navigation.home-tab')} tab`,
@@ -92,7 +103,7 @@ export default function TabNavigator() {
         <>
           {/* TODO: Can we refactor overlay into its own component? */}
           {showOnboarding ? (
-            <Pressable
+            <TouchableOpacity
               onPress={closeOnboarding}
               style={[
                 styles.quarterCircle,
@@ -107,7 +118,7 @@ export default function TabNavigator() {
             />
           ) : null}
           {showOnboarding ? (
-            <Pressable
+            <TouchableOpacity
               onPress={closeOnboarding}
               style={[
                 styles.tabIconWrapperActive,
@@ -132,11 +143,19 @@ export default function TabNavigator() {
               >
                 {i18n.t('tab-navigation.studies-tab-overlay.description')}
               </Text>
-              <StudiesIcon testID="studies-tab-icon" />
-            </Pressable>
+              <TouchableOpacity onPress={goToStudiesTab}>
+                <StudiesIcon testID="studies-tab-icon" />
+              </TouchableOpacity>
+            </TouchableOpacity>
           ) : (
             <StudiesIcon color={focused ? null : color} testID="studies-tab-icon" />
           )}
+          {showOnboarding ? (
+            <TouchableOpacity
+              onPress={closeOnboarding}
+              style={[styles.overlay, { height: windowDimensions.height, width: windowDimensions.width }]}
+            />
+          ) : null}
         </>
       );
     },
@@ -155,7 +174,6 @@ export default function TabNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      sceneContainerStyle={showOnboarding ? styles.overlay : null}
       screenOptions={{
         ...tabNavigatorScreenOptions,
         ...(Platform.OS === 'android' ? tabNavigatorScreenOptionsAndroidOnly : null),
@@ -168,7 +186,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         component={StudiesListScreen}
-        name="Studies"
+        name="StudiesList"
         options={{ ...tabScreenOptions, ...tabStudiesScreenOptions }}
       />
     </Tab.Navigator>
@@ -180,8 +198,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   overlay: {
-    // backgroundColor: 'black', // Doesn't take effect. Probably need to do this within the Screen level?
+    backgroundColor: 'black',
+    bottom: -35,
+    elevation: 0,
+    flex: 1,
     opacity: 0.5,
+    position: 'absolute',
+    right: 0,
+    zIndex: 0,
   },
   quarterCircle: {
     aspectRatio: 1,
