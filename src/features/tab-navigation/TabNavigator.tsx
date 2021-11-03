@@ -181,7 +181,7 @@ export default function TabNavigator({ navigation }: IProps) {
     >
       <Tab.Screen
         component={DashboardUKScreen}
-        name="Home"
+        name="DashboardUK"
         options={{ ...tabScreenOptions, ...tabHomeScreenOptions }}
       />
       <Tab.Screen
