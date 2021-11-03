@@ -18,6 +18,7 @@ import { CollapsibleHeaderScrollView } from '@covid/features/dashboard/Collapsib
 import { CompactHeader } from '@covid/features/dashboard/CompactHeader';
 import { ExpandedHeader } from '@covid/features/dashboard/ExpandedHeader';
 import { getDietStudyDoctorImage, getMentalHealthStudyDoctorImage } from '@covid/features/diet-study-playback/v2/utils';
+import { OnboardingContext } from '@covid/features/tab-navigation/TabNavigator';
 import { useStartReconsent } from '@covid/features/wider-health-studies/hooks/useStartReconsent';
 import i18n from '@covid/locale/i18n';
 import { TScreenParamList } from '@covid/routes/types';
@@ -28,7 +29,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 const headerConfig = {
@@ -92,61 +93,73 @@ export function DashboardUKScreen({ navigation, route }: IProps) {
   const compactHeader = React.useMemo(() => <CompactHeader onPress={onPressReport} />, []);
   const expandedHeader = React.useMemo(() => <ExpandedHeader onPress={onPressReport} />, []);
 
+  const windowDimensions = useWindowDimensions();
+  const onboardingContext = React.useContext(OnboardingContext);
+
   return (
-    <CollapsibleHeaderScrollView compactHeader={compactHeader} config={headerConfig} expandedHeader={expandedHeader}>
-      <View style={styles.calloutContainer}>
-        {shouldShowReminders ? (
-          <ExternalCallout
-            aspectRatio={1244.0 / 368.0}
-            calloutID="notificationReminders"
-            imageSource={notificationReminders}
-            postClicked={PushNotificationService.openSettings}
-            screenName={route.name}
-          />
-        ) : null}
+    <>
+      {Platform.OS === 'android' && onboardingContext.showOnboarding ? (
+        // Needed for Android. Doesn't recognise overlay in the TabNavigator because overlay there is bounded by the size of the TabNavigator.
+        <Pressable
+          onPress={onboardingContext.closeOnboarding}
+          style={[styles.overlay, { height: windowDimensions.height, width: windowDimensions.width }]}
+        />
+      ) : null}
+      <CollapsibleHeaderScrollView compactHeader={compactHeader} config={headerConfig} expandedHeader={expandedHeader}>
+        <View style={styles.calloutContainer}>
+          {shouldShowReminders ? (
+            <ExternalCallout
+              aspectRatio={1244.0 / 368.0}
+              calloutID="notificationReminders"
+              imageSource={notificationReminders}
+              postClicked={PushNotificationService.openSettings}
+              screenName={route.name}
+            />
+          ) : null}
 
-        {showTrendline ? <TrendlineCard onPress={appCoordinator.goToTrendline} /> : null}
+          {showTrendline ? <TrendlineCard onPress={appCoordinator.goToTrendline} /> : null}
 
-        <EstimatedCasesMapCard />
+          <EstimatedCasesMapCard />
 
-        <UKEstimatedCaseCard onPress={onMoreDetails} />
+          <UKEstimatedCaseCard onPress={onMoreDetails} />
 
-        {startupInfo?.show_mh_insight ? (
-          <StudyCard
-            doctorLocation={i18n.t('mental-health.doctor-location')}
-            doctorName={i18n.t('mental-health.doctor-name')}
-            doctorTitle={i18n.t('mental-health.doctor-title')}
-            imageNode={getMentalHealthStudyDoctorImage()}
-            onPress={appCoordinator.goToMentalHealthStudyPlayback}
-            style={styling.marginVerticalSmall}
-            tagColor={colors.coral.main.bgColor}
-            title={i18n.t('mental-health-playback.results-ready')}
-          />
-        ) : null}
+          {startupInfo?.show_mh_insight ? (
+            <StudyCard
+              doctorLocation={i18n.t('mental-health.doctor-location')}
+              doctorName={i18n.t('mental-health.doctor-name')}
+              doctorTitle={i18n.t('mental-health.doctor-title')}
+              imageNode={getMentalHealthStudyDoctorImage()}
+              onPress={appCoordinator.goToMentalHealthStudyPlayback}
+              style={styling.marginVerticalSmall}
+              tagColor={colors.coral.main.bgColor}
+              title={i18n.t('mental-health-playback.results-ready')}
+            />
+          ) : null}
 
-        <FeaturedContentList screenName={route.name} type={EFeaturedContentType.Home} />
+          <FeaturedContentList screenName={route.name} type={EFeaturedContentType.Home} />
 
-        {startupInfo?.show_diet_score ? (
-          <StudyCard
-            showQuotes
-            doctorLocation={i18n.t('diet-study.doctor-location')}
-            doctorName={i18n.t('diet-study.doctor-name')}
-            doctorTitle={i18n.t('diet-study.doctor-title')}
-            imageNode={getDietStudyDoctorImage()}
-            onPress={appCoordinator.goToDietStudy}
-            style={styling.marginVerticalSmall}
-            tagColor="blue"
-            title={i18n.t('diet-study.results-ready')}
-          />
-        ) : null}
+          {startupInfo?.show_diet_score ? (
+            <StudyCard
+              showQuotes
+              doctorLocation={i18n.t('diet-study.doctor-location')}
+              doctorName={i18n.t('diet-study.doctor-name')}
+              doctorTitle={i18n.t('diet-study.doctor-title')}
+              imageNode={getDietStudyDoctorImage()}
+              onPress={appCoordinator.goToDietStudy}
+              style={styling.marginVerticalSmall}
+              tagColor="blue"
+              title={i18n.t('diet-study.results-ready')}
+            />
+          ) : null}
 
-        <ShareVaccineCard screenName="Dashboard" />
+          <ShareVaccineCard screenName="Dashboard" />
 
-        <SchoolNetworks schoolGroups={schoolGroups} style={styles.marginVertical} />
-      </View>
+          <SchoolNetworks schoolGroups={schoolGroups} style={styles.marginVertical} />
+        </View>
 
-      <PoweredByZoeSmall style={styling.marginVertical} />
-    </CollapsibleHeaderScrollView>
+        <PoweredByZoeSmall style={styling.marginVertical} />
+      </CollapsibleHeaderScrollView>
+    </>
   );
 }
 
@@ -163,5 +176,12 @@ const styles = StyleSheet.create({
   },
   marginVertical: {
     marginVertical: sizes.xs,
+  },
+  overlay: {
+    backgroundColor: 'black',
+    flex: 1,
+    opacity: 0.5,
+    position: 'absolute',
+    zIndex: 1, // Needed to ensure it sits on top of overlay in TabNavigator
   },
 });

@@ -16,7 +16,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors, fontStyles } from '@theme';
 import * as React from 'react';
-import { Platform, StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -37,9 +37,17 @@ const tabNavigatorScreenOptionsAndroidOnly = {
   tabBarStyle: { height: 57, paddingBottom: sizes.s, paddingTop: sizes.s },
 };
 
+export const OnboardingContext = React.createContext({ closeOnboarding: () => {}, showOnboarding: false });
 interface IProps {
   navigation: DrawerNavigationProp<TScreenParamList>;
 }
+
+const HIT_SLOP = {
+  bottom: sizes.tabIconOverlay / 2,
+  left: sizes.tabIconOverlay / 2,
+  right: sizes.tabIconOverlay / 2,
+  top: sizes.tabIconOverlay / 2,
+};
 
 export default function TabNavigator({ navigation }: IProps) {
   const ratio = 3 / 4;
@@ -100,10 +108,11 @@ export default function TabNavigator({ navigation }: IProps) {
     },
     tabBarIcon: ({ focused, color }: { focused: boolean; color: string }) => {
       return (
+        // TODO: Can we refactor overlay into its own component?
         <>
-          {/* TODO: Can we refactor overlay into its own component? */}
+          {/* Black quarter circle */}
           {showOnboarding ? (
-            <TouchableOpacity
+            <Pressable
               onPress={closeOnboarding}
               style={[
                 styles.quarterCircle,
@@ -117,13 +126,15 @@ export default function TabNavigator({ navigation }: IProps) {
               ]}
             />
           ) : null}
+
+          {/* Text, icon and white circle for tab icon */}
           {showOnboarding ? (
-            <TouchableOpacity
+            <Pressable
               onPress={closeOnboarding}
               style={[
                 styles.tabIconWrapperActive,
                 {
-                  bottom: Platform.OS === 'android' ? -4 : 7.5,
+                  bottom: Platform.OS === 'android' ? -6 : 7.5, // used to position icon in onboarding mode, to match non-onboarding mode
                   height: windowDimensions.width / 2.25,
                   right: windowDimensions.width / 18 - 2,
                   width: windowDimensions.width / 2.5,
@@ -143,15 +154,17 @@ export default function TabNavigator({ navigation }: IProps) {
               >
                 {i18n.t('tab-navigation.studies-tab-overlay.description')}
               </Text>
-              <TouchableOpacity onPress={goToStudiesTab}>
+              <TouchableOpacity hitSlop={HIT_SLOP} onPress={goToStudiesTab}>
                 <StudiesIcon testID="studies-tab-icon" />
               </TouchableOpacity>
-            </TouchableOpacity>
+            </Pressable>
           ) : (
             <StudiesIcon color={focused ? null : color} testID="studies-tab-icon" />
           )}
+
+          {/* Background screen overlay - only works for iOS. Used React context for Android. */}
           {showOnboarding ? (
-            <TouchableOpacity
+            <Pressable
               onPress={closeOnboarding}
               style={[styles.overlay, { height: windowDimensions.height, width: windowDimensions.width }]}
             />
@@ -171,25 +184,32 @@ export default function TabNavigator({ navigation }: IProps) {
     tabBarTestID: 'tab-studies',
   };
 
+  const onboardingContext = {
+    closeOnboarding,
+    showOnboarding,
+  };
+
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        ...tabNavigatorScreenOptions,
-        ...(Platform.OS === 'android' ? tabNavigatorScreenOptionsAndroidOnly : null),
-      }}
-    >
-      <Tab.Screen
-        component={DashboardUKScreen}
-        name="DashboardUK"
-        options={{ ...tabScreenOptions, ...tabHomeScreenOptions }}
-      />
-      <Tab.Screen
-        component={StudiesListScreen}
-        name="StudiesList"
-        options={{ ...tabScreenOptions, ...tabStudiesScreenOptions }}
-      />
-    </Tab.Navigator>
+    <OnboardingContext.Provider value={onboardingContext}>
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          ...tabNavigatorScreenOptions,
+          ...(Platform.OS === 'android' ? tabNavigatorScreenOptionsAndroidOnly : null),
+        }}
+      >
+        <Tab.Screen
+          component={DashboardUKScreen}
+          name="DashboardUK"
+          options={{ ...tabScreenOptions, ...tabHomeScreenOptions }}
+        />
+        <Tab.Screen
+          component={StudiesListScreen}
+          name="StudiesList"
+          options={{ ...tabScreenOptions, ...tabStudiesScreenOptions }}
+        />
+      </Tab.Navigator>
+    </OnboardingContext.Provider>
   );
 }
 
@@ -198,38 +218,34 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   overlay: {
-    backgroundColor: 'black',
-    bottom: -35,
-    elevation: 0,
+    backgroundColor: colors.black,
+    bottom: -40,
     flex: 1,
     opacity: 0.5,
     position: 'absolute',
     right: 0,
-    zIndex: 0,
   },
   quarterCircle: {
     aspectRatio: 1,
     backgroundColor: colors.black,
     opacity: 0.8,
     position: 'absolute',
-    zIndex: 100,
+    zIndex: 2,
   },
   tabIconOverlay: {
     backgroundColor: colors.white,
     borderColor: colors.tertiary,
     borderRadius: sizes.tabIconOverlay / 2,
     borderWidth: 7,
-    elevation: 0,
     height: sizes.tabIconOverlay,
     position: 'absolute',
     width: sizes.tabIconOverlay,
-    zIndex: 0,
   },
   tabIconWrapperActive: {
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-between',
     position: 'absolute',
-    zIndex: 999,
+    zIndex: 3,
   },
 });
