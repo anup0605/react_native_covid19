@@ -1666,6 +1666,11 @@
       "name": "Tim Spector",
       "title": "Professor of genetic epidemiology"
     },
+    "interest-modal": {
+      "button": "Close",
+      "description": "You tapped the heart on your very first study!\n\nTap more to grow your scientific contribution! We’ll keep you posted on studies you’re interested in.",
+      "title": "Congrats!"
+    },
     "not-consented": {
       "description": "Help us decide which COVID-related studies to run next by expressing your interest here. We’ll continue to update the list so please come back regularly.",
       "title": "COVID-related studies"
@@ -1680,7 +1685,7 @@
       "research-focus": "Research focus",
       "to-do": "To do",
       "tools": "Tools"
-    }
+    },
   },
   "required-field": "Required field",
   "modal-close": "Close"

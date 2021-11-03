@@ -1670,6 +1670,11 @@
       "name": false,
       "title": false
     },
+    "interest-modal": {
+      "button": false,
+      "description": false,
+      "title": false
+    },
     "not-consented": {
       "description": false,
       "title": false

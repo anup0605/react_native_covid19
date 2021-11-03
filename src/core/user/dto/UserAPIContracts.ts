@@ -343,11 +343,11 @@ export type TStartupInfo = {
     cases: number;
     lad: string;
     map_url: string;
-    name: string;
     map_config?: {
       lat: number;
       lng: number;
     };
+    name: string;
   };
   menu_notifications_onboarding_seen: boolean;
   min_supported_app_version?: string;
@@ -355,6 +355,7 @@ export type TStartupInfo = {
   show_covid_test_onboarding: boolean;
   show_diet_score: boolean;
   show_edit_location: boolean;
+  show_flu_vaccine_onboarding: boolean;
   show_long_covid: boolean;
   show_mh_insight?: boolean;
   show_modal?: 'mental-health-playback';
@@ -364,7 +365,7 @@ export type TStartupInfo = {
   show_research_consent: boolean;
   show_timeline: boolean;
   show_trendline: boolean;
+  studies_hub_interested_modal_seen: boolean;
   users_count: number;
   wider_health_studies_consent?: boolean;
-  show_flu_vaccine_onboarding: boolean;
 };

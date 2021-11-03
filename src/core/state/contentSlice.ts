@@ -11,8 +11,6 @@ import { TActiveNotifications, TStartupInfo } from '@covid/core/user/dto/UserAPI
 import { createAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 
-// State interface
-
 type TApiState = 'ready' | 'loading' | 'finished' | 'error';
 
 export type TContentState = {

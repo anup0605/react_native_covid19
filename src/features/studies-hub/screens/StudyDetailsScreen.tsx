@@ -19,7 +19,7 @@ import * as React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const sourceHeaderImage = require('../assets/header.png');
+const sourceImage = require('../assets/header.png');
 
 type TProps = {
   route: RouteProp<TScreenParamList, 'StudyDetails'>;
@@ -42,7 +42,7 @@ export function StudyDetailsScreen(props: TProps) {
         style={styles.scrollView}
         topBackgroundColor={colors.predict}
       >
-        <Image resizeMethod="scale" resizeMode="cover" source={sourceHeaderImage} style={styles.fullWidth} />
+        <Image resizeMethod="scale" resizeMode="cover" source={sourceImage} style={styles.fullWidth} />
         <View style={styles.headerWrapper}>
           <Text inverted colorPalette="uiDark" colorShade="darker" textClass="h3Regular">
             {props.route.params?.study.title}
