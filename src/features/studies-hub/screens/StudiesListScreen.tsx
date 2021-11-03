@@ -11,23 +11,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 
-// @todo: move the retrieving, storing and selecting of the studies hub data to Redux
-const studies: TStudy[] = [
-  {
-    amountParticipants: 1658,
-    duration: '3 mins to set up',
-    id: '1',
-    organiser: 'ZOE & King’s College London',
-    title: 'Impact of Physical Activity on COVID infection risk',
-  },
-  {
-    amountParticipants: 1658,
-    duration: '10 mins, one-off',
-    id: '2',
-    organiser: 'ZOE & King’s College London',
-    title: 'Health of the Nation',
-  },
-];
+const studies: TStudy[] = require('../assets/studies.json');
 
 export function StudiesListScreen() {
   const startupInfo = useSelector(selectStartupInfo);
@@ -57,7 +41,7 @@ export function StudiesListScreen() {
         <StudyCard
           active
           key={`study-card-${study.id}`}
-          onPress={() => NavigatorService.navigate('StudyDetails', { studyId: study.id })}
+          onPress={() => NavigatorService.navigate('StudyDetails', { study })}
           study={study}
           style={index !== 0 && styles.marginTop}
         />

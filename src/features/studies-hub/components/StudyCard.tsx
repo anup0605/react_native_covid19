@@ -1,9 +1,7 @@
 import { Text } from '@covid/components';
-import Analytics, { events } from '@covid/core/Analytics';
 import { IconArrowRight } from '@covid/features/studies-hub/components/IconArrowRight';
-import { IconHeart } from '@covid/features/studies-hub/components/IconHeart';
-import { IconPeople } from '@covid/features/studies-hub/components/IconPeople';
 import { IconTime } from '@covid/features/studies-hub/components/IconTime';
+import { RowInterested } from '@covid/features/studies-hub/components/RowInterested';
 import { TStudy } from '@covid/features/studies-hub/types';
 import i18n from '@covid/locale/i18n';
 import { sizes, styling } from '@covid/themes';
@@ -12,24 +10,13 @@ import * as React from 'react';
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 type TProps = {
-  active?: boolean;
+  active: boolean;
   onPress: () => void;
   study: TStudy;
   style?: StyleProp<ViewStyle>;
 };
 
-const HIT_SLOP = {
-  bottom: 16,
-  left: 16,
-  right: 16,
-  top: 16,
-};
-
 export function StudyCard(props: TProps) {
-  const onPressHeart = React.useCallback(() => {
-    // @todo: Handle the on press correctly by persisting the interest shown.
-    Analytics.track(props.active ? events.STUDIES_HUB_INTEREST_OFF : events.STUDIES_HUB_INTEREST_ON);
-  }, [props.active]);
   return (
     <TouchableOpacity
       accessible
@@ -48,7 +35,7 @@ export function StudyCard(props: TProps) {
         <View style={styles.rowWrapper}>
           <IconTime />
           <Text inverted colorPalette="uiDark" colorShade="main" style={styles.marginLeft} textClass="pXSmall">
-            {props.study.duration}
+            {props.study.commitment}
           </Text>
         </View>
         <View style={styles.rowWrapper}>
@@ -58,53 +45,13 @@ export function StudyCard(props: TProps) {
           </Text>
         </View>
         <View style={styles.lineHorizontal} />
-        <View style={styles.footerWrapper}>
-          <IconPeople style={styles.marginRight} />
-          {props.active ? (
-            <>
-              <Text
-                inverted
-                colorPalette="actionSecondary"
-                colorShade="main"
-                testID={`study-card-${props.study.id}-you-text`}
-                textClass="pMedium"
-              >
-                {i18n.t('you')}
-              </Text>
-              <Text
-                inverted
-                colorPalette="uiDark"
-                colorShade="darker"
-                style={styles.marginHorizontal}
-                textClass="pMedium"
-              >
-                +
-              </Text>
-            </>
-          ) : null}
-          <Text inverted colorPalette="uiDark" colorShade="darker" textClass="pMedium">
-            {props.study.amountParticipants.toLocaleString()}
-          </Text>
-          <View style={styles.lineVertical} />
-          <TouchableOpacity hitSlop={HIT_SLOP} onPress={onPressHeart}>
-            <IconHeart
-              full={props.active}
-              style={styles.marginRight}
-              testID={`study-card-${props.study.id}-icon-heart`}
-            />
-          </TouchableOpacity>
-        </View>
+        <RowInterested active={props.active} study={props.study} style={styles.rowInterested} />
       </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  footerWrapper: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
   innerWrapper: {
     backgroundColor: '#ffffff',
     borderRadius: sizes.m,
@@ -149,6 +96,10 @@ const styles = StyleSheet.create({
   outerWrapper: {
     backgroundColor: '#ffffff',
     borderRadius: sizes.m,
+  },
+  rowInterested: {
+    justifyContent: 'flex-end',
+    paddingVertical: sizes.xs,
   },
   rowWrapper: {
     flexDirection: 'row',

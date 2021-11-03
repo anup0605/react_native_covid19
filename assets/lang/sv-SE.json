@@ -1665,12 +1665,25 @@
       "description": false,
       "title": false
     },
+    "doctor": {
+      "location": false,
+      "name": false,
+      "title": false
+    },
     "not-consented": {
       "description": false,
       "title": false
     },
     "study-card": {
       "more-details": false
+    },
+    "study-details": {
+      "behind-study": false,
+      "commitment": false,
+      "eligibility-criteria": false,
+      "research-focus": false,
+      "to-do": false,
+      "tools": false
     }
   },
   "required-field": "Obligatoriska fält",

@@ -1661,12 +1661,25 @@
       "description": "Thanks for joining our Wider Health Studies. Help us decide which studies to run next by expressing your interest here. We'll keep updating the list, so please check back often.",
       "title": "Studies you're eligible for"
     },
+    "doctor": {
+      "location": "King’s College London",
+      "name": "Tim Spector",
+      "title": "Professor of genetic epidemiology"
+    },
     "not-consented": {
       "description": "Help us decide which COVID-related studies to run next by expressing your interest here. We’ll continue to update the list so please come back regularly.",
       "title": "COVID-related studies"
     },
     "study-card": {
       "more-details": "More details"
+    },
+    "study-details": {
+      "behind-study": "Behind the study",
+      "commitment": "Commitment",
+      "eligibility-criteria": "Eligibility criteria",
+      "research-focus": "Research focus",
+      "to-do": "To do",
+      "tools": "Tools"
     }
   },
   "required-field": "Required field",
