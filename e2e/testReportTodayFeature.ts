@@ -32,17 +32,11 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-mechanism-question');
         await element(by.id('covid-test-mechanism-question-item-lateral_flow')).tap();
 
-        // await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-performed-by-question');
-        // await element(by.id('covid-test-performed-by-question-item-trained')).tap();
-
         await element(by.id('scroll-view-covid-test-detail-screen')).scroll(150, 'down');
         await element(by.text('1')).tap();
 
         await scrollDownToId('scroll-view-covid-test-detail-screen', 'covid-test-result-question');
         await element(by.id('covid-test-result-question-item-negative')).tap();
-
-        // await scrollDownToId('scroll-view-covid-test-detail-screen', 'button-no-covid-test-invited-question');
-        // await element(by.id('button-no-covid-test-invited-question')).tap();
 
         await expect(element(by.id('covid-test-dual-result-question'))).not.toExist();
 
@@ -126,6 +120,11 @@ export function testReportTodayFeature(config: TReportTodayConfig) {
 
     function testAddCovidVaccine() {
       it(`should be able to add a COVID-19 vaccine`, async () => {
+        // Dismiss flu vaccine onboarding modal if present
+        try {
+          await element(by.text('OK')).tap();
+        } catch (_) {}
+
         await element(by.id('button-add-vaccine')).tap();
 
         await element(by.id(`input-your-vaccine-type-item-covid_vaccine`)).tap();
