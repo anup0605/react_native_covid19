@@ -1,5 +1,3 @@
-import { HomeIcon } from '@assets/icons/navigation/HomeIcon';
-import { StudiesIcon } from '@assets/icons/navigation/StudiesIcon';
 import { Text } from '@covid/components';
 import { events, track } from '@covid/core/Analytics';
 import { patientService } from '@covid/core/patient/PatientService';
@@ -9,6 +7,8 @@ import { selectStartupInfo } from '@covid/core/state/selectors';
 import { TStartupInfo } from '@covid/core/user/dto/UserAPIContracts';
 import { DashboardUKScreen } from '@covid/features/dashboard/DashboardUKScreen';
 import { StudiesListScreen } from '@covid/features/studies-hub/screens/StudiesListScreen';
+import { HomeIcon } from '@covid/features/tab-navigation/assets/HomeIcon';
+import { StudiesIcon } from '@covid/features/tab-navigation/assets/StudiesIcon';
 import i18n from '@covid/locale/i18n';
 import { TScreenParamList } from '@covid/routes/types';
 import { sizes } from '@covid/themes';
