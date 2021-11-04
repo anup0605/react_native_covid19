@@ -1,12 +1,17 @@
 import { Tag, Text } from '@covid/components';
 import { Screen } from '@covid/components/Screen';
 import { selectStartupInfo } from '@covid/core/state/selectors';
+import { StudyCard } from '@covid/features/studies-hub/components/StudyCard';
+import { TStudy } from '@covid/features/studies-hub/types';
 import i18n from '@covid/locale/i18n';
+import NavigatorService from '@covid/NavigatorService';
 import { sizes } from '@covid/themes';
 import { colors } from '@theme';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
+
+const studies: TStudy[] = require('../assets/studies.json');
 
 export function StudiesListScreen() {
   const startupInfo = useSelector(selectStartupInfo);
@@ -29,9 +34,18 @@ export function StudiesListScreen() {
       >
         {title}
       </Text>
-      <Text inverted colorPalette="uiDark" colorShade="darker" textClass="pLight">
+      <Text inverted colorPalette="uiDark" colorShade="darker" style={styles.marginBottom} textClass="pLight">
         {description}
       </Text>
+      {studies.map((study, index) => (
+        <StudyCard
+          active
+          key={`study-card-${study.id}`}
+          onPress={() => NavigatorService.navigate('StudyDetails', { study })}
+          study={study}
+          style={index !== 0 && styles.marginTop}
+        />
+      ))}
     </Screen>
   );
 }
@@ -39,6 +53,12 @@ export function StudiesListScreen() {
 const styles = StyleSheet.create({
   alignStart: {
     alignSelf: 'flex-start',
+  },
+  marginBottom: {
+    marginBottom: sizes.l,
+  },
+  marginTop: {
+    marginTop: sizes.m,
   },
   marginVertical: {
     marginBottom: sizes.m,

@@ -120,6 +120,11 @@ enum EOtherEvents {
   VIEW_SCREEN = 'VIEW_SCREEN',
 }
 
+enum EStudiesHubEvents {
+  STUDIES_HUB_INTEREST_OFF = 'STUDIES_HUB_INTEREST_OFF',
+  STUDIES_HUB_INTEREST_ON = 'STUDIES_HUB_INTEREST_ON',
+}
+
 export const events = {
   ...EDashboardEvents,
   ...EDietStudyEvents,
