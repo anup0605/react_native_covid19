@@ -1,5 +1,5 @@
-import { TSvgProps } from '@assets/Svg';
-import { determineDimensions, TIconDimensionConfig } from '@assets/utils';
+import { determineDimensions, TIconDimensionConfig } from '@assets/icons/utils';
+import { TSvgProps } from '@assets/types';
 import * as React from 'react';
 import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
 
