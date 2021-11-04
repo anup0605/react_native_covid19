@@ -29,7 +29,6 @@ const tabScreenOptions = {
 
 const tabNavigatorScreenOptions = {
   headerShown: false,
-  tabBarStyle: { position: 'absolute' }, // Needed to show screen under tab bar
 };
 
 const tabNavigatorScreenOptionsAndroidOnly = {
