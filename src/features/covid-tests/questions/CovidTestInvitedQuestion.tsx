@@ -1,26 +1,16 @@
-import { GenericTextField } from '@covid/components/GenericTextField';
-import { RadioInput } from '@covid/components/inputs/RadioInput';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { isGBCountry } from '@covid/core/localisation/LocalisationService';
 import { TCovidTest } from '@covid/core/user/dto/CovidTestContracts';
 import { ECovidTestMechanismOptions } from '@covid/core/user/dto/UserAPIContracts';
-import CovidTestInfoIcon from '@covid/features/covid-tests/components/CovidTestInfoIcon';
-import {
-  isOldVersionAntibodyInviteTest,
-  isZoeInviteOfferTest,
-  showDualAntibodyTestUI,
-} from '@covid/features/covid-tests/helpers';
-import { CovidTestThrNumberInfoModal } from '@covid/features/covid-tests/modals/CovidTestThrNumberInfoModal';
+import { isOldVersionAntibodyInviteTest, isZoeInviteWithDualResultTest } from '@covid/features/covid-tests/helpers';
 import i18n from '@covid/locale/i18n';
-import { sizes } from '@covid/themes';
 import { FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 
 export interface ICovidTestInvitedData {
   invitedToTest: string;
-  thrNumber: string;
-  thrNumberUnknown: string;
+  bookedViaGov: string;
 }
 
 export interface ICovidTestInvitedFormikData extends ICovidTestInvitedData {
@@ -40,16 +30,11 @@ interface ICovidTestInvitedQuestion<P, Data> extends React.FC<P> {
 
 export const CovidTestInvitedQuestion: ICovidTestInvitedQuestion<IProps, ICovidTestInvitedData> = (props: IProps) => {
   const { formikProps } = props;
-  const [showThrModal, setShowThrModal] = React.useState<boolean>(false);
-
-  const clearThrNumberAndSetAsUnknown = (value: string) => {
-    formikProps.setFieldValue('thrNumber', '');
-    formikProps.setFieldValue('thrNumberUnknown', value);
-  };
 
   return isGBCountry() ? (
-    <>
-      <CovidTestThrNumberInfoModal onRequestClose={() => setShowThrModal(false)} visible={showThrModal} />
+    // For existing tests already logged as invited by ZOE, with dual results, we do NOT show the booked via gov.uk question
+    formikProps.values.mechanism === ECovidTestMechanismOptions.PCR ||
+    (props.test && (isOldVersionAntibodyInviteTest(props.test) || isZoeInviteWithDualResultTest(props.test))) ? (
       <YesNoField
         required
         error={formikProps.touched.invitedToTest && formikProps.errors.invitedToTest}
@@ -58,35 +43,16 @@ export const CovidTestInvitedQuestion: ICovidTestInvitedQuestion<IProps, ICovidT
         selectedValue={formikProps.values.invitedToTest}
         testID="covid-test-invited-question"
       />
-      {props.test && isOldVersionAntibodyInviteTest(props.test)
-        ? null
-        : showDualAntibodyTestUI(formikProps.values.mechanism, formikProps.values.invitedToTest) && (
-            <>
-              <GenericTextField
-                required
-                showError
-                description={i18n.t('covid-test.question-thr-number-description')}
-                formikProps={formikProps}
-                IconComponent={CovidTestInfoIcon}
-                iconOnPress={() => setShowThrModal(true)}
-                label={i18n.t('covid-test.question-thr-number')}
-                maxLength={9}
-                name="thrNumber"
-                onFocus={() => formikProps.setFieldValue('thrNumberUnknown', '')}
-                placeholder="XXXXXXXXX-THR"
-                style={{ marginTop: sizes.xl }}
-              />
-
-              <RadioInput
-                items={[{ label: i18n.t('covid-test.picker-dont-know-thr'), value: 'dont_know' }]}
-                onValueChange={(value) => clearThrNumberAndSetAsUnknown(value)}
-                selectedValue={formikProps.values.thrNumberUnknown}
-                style={{ marginVertical: 0 }}
-                testID="covid-test-thr-number"
-              />
-            </>
-          )}
-    </>
+    ) : (
+      <YesNoField
+        required
+        error={formikProps.touched.bookedViaGov && formikProps.errors.bookedViaGov}
+        label={i18n.t('covid-test.question-booked-via-gov')}
+        onValueChange={formikProps.handleChange('bookedViaGov')}
+        selectedValue={formikProps.values.bookedViaGov}
+        testID="covid-test-booked-via-gov-question"
+      />
+    )
   ) : (
     <></>
   );
@@ -103,60 +69,44 @@ CovidTestInvitedQuestion.initialFormValues = (test?: TCovidTest): ICovidTestInvi
     return '';
   }
 
-  let thrNumber = '';
-  let thrNumberUnknown = '';
-
-  if (test?.id) {
-    if (test.thriva_test_id) {
-      thrNumber = test.thriva_test_id;
-    } else {
-      thrNumberUnknown = 'dont_know';
+  function getBookedViaGov() {
+    if (test?.id) {
+      if (test.booked_via_gov === null) {
+        return '';
+      }
+      return test.booked_via_gov ? 'yes' : 'no';
     }
+    return '';
   }
 
   return {
+    bookedViaGov: getBookedViaGov(),
     invitedToTest: getInvitedToTest(),
-    thrNumber,
-    thrNumberUnknown,
   };
 };
 
 CovidTestInvitedQuestion.schema = () => {
   return isGBCountry()
-    ? Yup.object().shape(
-        {
-          invitedToTest: Yup.string().when('mechanism', {
-            is: (mechanism) => {
-              return isZoeInviteOfferTest(mechanism);
-            },
-            then: Yup.string().required(i18n.t('please-select-option')),
-          }),
-          thrNumber: Yup.string().when(['thrNumberUnknown', 'mechanism', 'invitedToTest'], {
-            is: (thrNumberUnknown, mechanism, invitedToTest) =>
-              showDualAntibodyTestUI(mechanism, invitedToTest) && (!thrNumberUnknown || thrNumberUnknown.length === 0),
-            otherwise: Yup.string().notRequired(),
-            then: Yup.string()
-              .required(i18n.t('covid-test.required-thr-number'))
-              .test('digits', i18n.t('covid-test.required-thr-format'), (value) => (value ? /^\d+$/.test(value) : true))
-              .test('length', i18n.t('covid-test.required-thr-length'), (value) => (value ? value.length === 9 : true)),
-          }),
-          thrNumberUnknown: Yup.string().when(['thrNumber', 'mechanism', 'invitedToTest'], {
-            is: (thrNumber, mechanism, invitedToTest) =>
-              showDualAntibodyTestUI(mechanism, invitedToTest) && (!thrNumber || thrNumber.length === 0),
-            otherwise: Yup.string().notRequired(),
-            then: Yup.string().required(),
-          }),
-        },
-        // needed to prevent circular calculation error
-        [['thrNumber', 'thrNumberUnknown']],
-      )
+    ? Yup.object().shape({
+        bookedViaGov: Yup.string().when(['mechanism', 'invitedToTest'], {
+          is: (mechanism, invitedToTest) => {
+            return mechanism === ECovidTestMechanismOptions.BLOOD_FINGER_PRICK && !invitedToTest;
+          },
+          then: Yup.string().required(i18n.t('please-select-option')),
+        }),
+        invitedToTest: Yup.string().when('mechanism', {
+          is: (mechanism) => {
+            return mechanism === ECovidTestMechanismOptions.PCR;
+          },
+          then: Yup.string().required(i18n.t('please-select-option')),
+        }),
+      })
     : Yup.object().shape({});
 };
 
 CovidTestInvitedQuestion.createDTO = (formData: ICovidTestInvitedData): Partial<TCovidTest> => {
   return {
     ...(isGBCountry() && formData.invitedToTest && { invited_to_test: formData.invitedToTest === 'yes' }),
-    ...(isGBCountry() && !!formData.thrNumber && { thriva_test_id: formData.thrNumber }),
-    ...(isGBCountry() && !!formData.thrNumberUnknown && { thriva_test_id: null }),
+    ...(isGBCountry() && formData.bookedViaGov && { booked_via_gov: formData.bookedViaGov === 'yes' }),
   } as Partial<TCovidTest>;
 };

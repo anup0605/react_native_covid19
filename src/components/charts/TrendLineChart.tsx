@@ -5,16 +5,10 @@ import moment from 'moment';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 
-export enum ETrendLineViewMode {
-  explore,
-  local,
-}
-
 interface IProps {
   beginDate?: Date;
   endDate?: Date;
   height?: number;
-  viewMode: ETrendLineViewMode;
 }
 
 export function TrendLineChart(props: IProps) {
@@ -24,10 +18,7 @@ export function TrendLineChart(props: IProps) {
     const beginMoment = moment(props.beginDate);
     const endMoment = moment(props.endDate);
 
-    let timeseries =
-      (props.viewMode === ETrendLineViewMode.explore
-        ? content.exploreTrendline?.timeseries
-        : content.localTrendline?.timeseries) || [];
+    let timeseries = content.localTrendline?.timeseries || [];
 
     if (props.beginDate && props.endDate) {
       timeseries = timeseries.filter((timeserie) => {
@@ -47,7 +38,7 @@ export function TrendLineChart(props: IProps) {
         x: moment(timeserie.date).toDate(),
         y: Math.round(timeserie.value),
       }));
-  }, [props.beginDate, props.endDate, props.viewMode, content.exploreTrendline, content.localTrendline]);
+  }, [props.beginDate, props.endDate, content.localTrendline]);
 
   return <LineChart data={data} height={props.height} />;
 }
