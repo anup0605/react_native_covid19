@@ -1,6 +1,6 @@
 import ChevronRight from '@assets/icons/ChevronRight';
 import { ShareButton } from '@covid/components/buttons';
-import { ETrendLineViewMode, TrendLineChart } from '@covid/components/charts/TrendLineChart';
+import { TrendLineChart } from '@covid/components/charts/TrendLineChart';
 import { Text } from '@covid/components/typography';
 import Analytics, { events } from '@covid/core/Analytics';
 import { ITrendLineData } from '@covid/core/content/dto/ContentAPIContracts';
@@ -60,7 +60,7 @@ export function TrendlineCard(props: IProps) {
         style={styles.touchableChart}
       >
         <View pointerEvents="none">
-          <TrendLineChart beginDate={beginDate} endDate={endDate} height={200} viewMode={ETrendLineViewMode.local} />
+          <TrendLineChart beginDate={beginDate} endDate={endDate} height={200} />
         </View>
       </TouchableOpacity>
 

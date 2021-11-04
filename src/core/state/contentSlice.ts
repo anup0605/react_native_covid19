@@ -26,10 +26,6 @@ export type TContentState = {
   featuredHome: IFeaturedContent[];
   featuredThankyou: IFeaturedContent[];
 
-  // Explore trend line screen
-  exploreTrendline?: ITrendLineData;
-  exploreTrendlineUpdating: boolean;
-
   // Metrics
   ukMetricsApiState: TApiState;
   ukActive?: string;
@@ -46,7 +42,6 @@ const todaysDate = (): string => moment().format('dddd Do MMMM');
 
 export const initialStateContent: TContentState = {
   dismissedCallouts: [],
-  exploreTrendlineUpdating: false,
   featuredHome: [],
   featuredThankyou: [],
   infoApiState: 'ready',
@@ -129,19 +124,6 @@ export const fetchFeaturedContent = createAsyncThunk('content/featured_content',
   }
 });
 
-export const searchTrendLine = createAsyncThunk('content/search_trend_line', async (query?: string): Promise<
-  Partial<TContentState>
-> => {
-  const { timeseries, ...trendline } = await contentService.getTrendLines(query);
-  return {
-    exploreTrendline: {
-      delta: getTrendLineDelta(timeseries, 7),
-      timeseries,
-      ...trendline,
-    },
-  };
-});
-
 type TUpdateActiveNotificationAction = {
   notification: keyof TActiveNotifications;
   value: boolean;
@@ -219,18 +201,6 @@ export const contentSlice = createSlice({
     // Trendline data
     [fetchLocalTrendLine.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
       current.localTrendline = action.payload?.localTrendline;
-      current.exploreTrendline = action.payload?.localTrendline;
-    },
-
-    [searchTrendLine.fulfilled.type]: (current, action: { payload: Partial<TContentState> }) => {
-      current.exploreTrendline = action.payload?.exploreTrendline;
-      current.exploreTrendlineUpdating = false;
-    },
-    [searchTrendLine.pending.type]: (current) => {
-      current.exploreTrendlineUpdating = true;
-    },
-    [searchTrendLine.rejected.type]: (current) => {
-      current.exploreTrendlineUpdating = false;
     },
   },
   initialState: initialStateContent,
