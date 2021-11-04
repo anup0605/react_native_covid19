@@ -2,7 +2,7 @@ import { BrandedButton, HeaderText, LightText, Modal } from '@covid/components';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 type TProps = {
   onRequestClose: () => void;
@@ -18,25 +18,19 @@ export function VaccineListNewFeatureModal(props: TProps) {
       testID="vaccine-list-new-feature-modal"
       visible={props.visible}
     >
-      <View style={styles.modalWrapper}>
-        <HeaderText style={styles.modalTitle}>{i18n.t('vaccines.vaccine-list.modal-title')}</HeaderText>
-        <LightText style={styles.modalBody}>{i18n.t('vaccines.vaccine-list.modal-body')}</LightText>
-        <BrandedButton onPress={props.onRequestClose}>{i18n.t('vaccines.vaccine-list.modal-button')}</BrandedButton>
-      </View>
+      <HeaderText style={styles.title}>{i18n.t('vaccines.vaccine-list.modal-title')}</HeaderText>
+      <LightText style={styles.body}>{i18n.t('vaccines.vaccine-list.modal-body')}</LightText>
+      <BrandedButton onPress={props.onRequestClose}>{i18n.t('vaccines.vaccine-list.modal-button')}</BrandedButton>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  modalBody: {
+  body: {
     marginBottom: sizes.xl,
   },
-  modalTitle: {
+  title: {
     marginBottom: sizes.l,
     textAlign: 'center',
-  },
-  modalWrapper: {
-    padding: sizes.xxs,
-    paddingBottom: sizes.xs,
   },
 });

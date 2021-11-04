@@ -1666,7 +1666,7 @@
       "name": "Tim Spector",
       "title": "Professor of genetic epidemiology"
     },
-    "interest-modal": {
+    "interest-shown-modal": {
       "button": "Close",
       "description": "You tapped the heart on your very first study!\n\nTap more to grow your scientific contribution! We’ll keep you posted on studies you’re interested in.",
       "title": "Congrats!"

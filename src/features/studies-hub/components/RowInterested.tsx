@@ -3,7 +3,7 @@ import Analytics, { events } from '@covid/core/Analytics';
 import { selectStartupInfo } from '@covid/core/state/selectors';
 import { IconHeart } from '@covid/features/studies-hub/components/IconHeart';
 import { IconPeople } from '@covid/features/studies-hub/components/IconPeople';
-import { InterestModal } from '@covid/features/studies-hub/modals/InterestModal';
+import { InterestShownModal } from '@covid/features/studies-hub/modals/InterestShownModal';
 import { TStudy } from '@covid/features/studies-hub/types';
 import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
@@ -46,7 +46,7 @@ export function RowInterested(props: TProps) {
 
   return (
     <View style={[styles.view, props.style]}>
-      <InterestModal onRequestClose={onRequestClose} visible={showModal} />
+      <InterestShownModal onRequestClose={onRequestClose} visible={showModal} />
       <IconPeople style={styles.marginRight} />
       {props.active ? (
         <>

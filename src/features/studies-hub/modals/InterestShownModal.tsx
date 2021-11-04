@@ -12,17 +12,18 @@ type TProps = {
   visible: boolean;
 };
 
-export function InterestModal(props: TProps) {
+export function InterestShownModal(props: TProps) {
   return (
     <Modal
-      modalName="StudiesHubInterest"
+      enableBackdropDismiss
+      modalName="InterestShown"
       onRequestClose={props.onRequestClose}
-      testID="interest-modal"
+      testID="interest-shown-modal"
       visible={props.visible}
     >
       <Image source={sourceImage} style={styles.image} />
       <Text inverted colorPalette="uiDark" colorShade="darker" textAlign="center" textClass="h3Regular">
-        {i18n.t('studies-hub.interest-modal.title')}
+        {i18n.t('studies-hub.interest-shown-modal.title')}
       </Text>
       <Text
         inverted
@@ -32,10 +33,10 @@ export function InterestModal(props: TProps) {
         textAlign="center"
         textClass="pLight"
       >
-        {i18n.t('studies-hub.interest-modal.description')}
+        {i18n.t('studies-hub.interest-shown-modal.description')}
       </Text>
       <BrandedButton onPress={props.onRequestClose} style={styles.button}>
-        {i18n.t('studies-hub.interest-modal.button')}
+        {i18n.t('studies-hub.interest-shown-modal.button')}
       </BrandedButton>
     </Modal>
   );

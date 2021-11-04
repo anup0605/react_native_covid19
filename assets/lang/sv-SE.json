@@ -1670,7 +1670,7 @@
       "name": false,
       "title": false
     },
-    "interest-modal": {
+    "interest-shown-modal": {
       "button": false,
       "description": false,
       "title": false
