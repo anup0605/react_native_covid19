@@ -19,9 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export const TrendlineScreen: React.FC = () => {
   const dispatch = useDispatch();
   const viewRef = React.useRef<View>(null);
-  const localTrendline = useSelector<TRootState, ITrendLineData | undefined>((state) => ({
-    ...state.content.localTrendline,
-  }));
+  const localTrendline = useSelector<TRootState, ITrendLineData | undefined>((state) => state.content.localTrendline);
 
   const share = async () => {
     try {

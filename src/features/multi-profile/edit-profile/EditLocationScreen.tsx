@@ -5,7 +5,7 @@ import { GenericTextField } from '@covid/components/GenericTextField';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
-import { fetchLocalTrendLine } from '@covid/core/state/contentSlice';
+import { fetchLocalTrendLine, fetchStartUpInfo } from '@covid/core/state/contentSlice';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -92,7 +92,10 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
 
     try {
       await editProfileCoordinator.updatePatientInfo(infos);
+      // Refresh the trend line data because a new postcode corresponds to different trend line data.
       await dispatch(fetchLocalTrendLine());
+      // Refresh the startup info because a new postcode corresponds to changes in the local data.
+      await dispatch(fetchStartUpInfo());
       editProfileCoordinator.gotoNextScreen(props.route.name);
     } catch (_) {
       setErrorMessage(i18n.t('something-went-wrong'));
