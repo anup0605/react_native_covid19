@@ -3,6 +3,7 @@ import { initialStateSchools } from '@covid/core/schools/Schools.slice';
 import { initialStateApp } from '@covid/core/state/app/slice';
 import { initialStateContent } from '@covid/core/state/contentSlice';
 import { initialStateDietStudy } from '@covid/core/state/diet-study/slice';
+import { initialStateMediaCentre } from '@covid/core/state/media-centre';
 import { initialStateMentalHealthChanges } from '@covid/core/state/mental-health/changes/slice';
 import { initialStateMentalHealthFrequency } from '@covid/core/state/mental-health/frequency/slice';
 import { initialStateMentalHealthHistory } from '@covid/core/state/mental-health/history/slice';
@@ -22,6 +23,7 @@ export const initialState: TRootState = {
   assessment: initialStateAssessment,
   content: initialStateContent,
   dietStudy: initialStateDietStudy,
+  mediaCentre: initialStateMediaCentre,
   mentalHealthChanges: initialStateMentalHealthChanges,
   mentalHealthFrequency: initialStateMentalHealthFrequency,
   mentalHealthHistory: initialStateMentalHealthHistory,

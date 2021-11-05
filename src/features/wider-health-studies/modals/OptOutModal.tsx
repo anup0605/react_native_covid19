@@ -50,7 +50,7 @@ export const OptOutModal = React.memo((props: TProps) => {
     <Modal
       modalName="ReconsentOptOut"
       onRequestClose={props.onRequestClose}
-      testID="opt-out-modal"
+      testID="wider-health-studies-opt-out-modal"
       visible={props.visible}
     >
       <Text inverted colorPalette="uiDark" colorShade="darker" textAlign="center" textClass="h3Regular">

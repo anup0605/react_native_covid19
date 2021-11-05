@@ -35,7 +35,7 @@ export function InterestShownModal(props: TProps) {
       >
         {i18n.t('studies-hub.interest-shown-modal.description')}
       </Text>
-      <BrandedButton onPress={props.onRequestClose} style={styles.button}>
+      <BrandedButton onPress={props.onRequestClose} style={styles.button} testID="interest-shown-modal-close-button">
         {i18n.t('studies-hub.interest-shown-modal.button')}
       </BrandedButton>
     </Modal>

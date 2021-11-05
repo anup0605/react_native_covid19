@@ -32,7 +32,7 @@ import { IVaccineState, vaccinesSlice } from './vaccines';
 
 export type TRootState = {
   app: IApp;
-  assessment: TAssessmentInfosRequest;
+  assessment: Partial<TAssessmentInfosRequest>;
   content: TContentState;
   dietStudy: IDietStudy;
   mentalHealthChanges: IMentalHealthChanges;

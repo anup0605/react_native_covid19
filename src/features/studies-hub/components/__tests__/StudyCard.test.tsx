@@ -7,32 +7,26 @@ import * as React from 'react';
 import renderer from 'react-test-renderer';
 import { ThemeProvider } from 'styled-components/native';
 
-const study: TStudy = {
-  amountParticipants: 1000,
-  duration: '1 day',
-  id: '1',
-  organiser: 'ZOE',
-  title: 'Our first study',
-};
+const mockedStudy: TStudy = require('./mocked_study.json');
 
 describe('StudyCard tests', () => {
   it('renders correct version for users who shown interest', () => {
     const instance = renderer.create(
       <ThemeProvider theme={theme}>
-        <StudyCard active onPress={() => {}} study={study} />
+        <StudyCard active onPress={() => {}} study={mockedStudy} />
       </ThemeProvider>,
     ).root;
 
-    expect(instance.findByProps({ full: true, testID: `study-card-${study.id}-icon-heart` })).toBeTruthy();
+    expect(instance.findByProps({ full: true, testID: `row-interested-${mockedStudy.id}-icon-heart` })).toBeTruthy();
   });
 
   it('renders correct version for users who have not shown interest', () => {
     const instance = renderer.create(
       <ThemeProvider theme={theme}>
-        <StudyCard active={false} onPress={() => {}} study={study} />
+        <StudyCard active={false} onPress={() => {}} study={mockedStudy} />
       </ThemeProvider>,
     ).root;
 
-    expect(instance.findByProps({ full: false, testID: `study-card-${study.id}-icon-heart` })).toBeTruthy();
+    expect(instance.findByProps({ full: false, testID: `row-interested-${mockedStudy.id}-icon-heart` })).toBeTruthy();
   });
 });
