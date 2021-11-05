@@ -5,7 +5,7 @@ import i18n from '@covid/locale/i18n';
 import { sizes } from '@covid/themes';
 import { colors } from '@theme/colors';
 import * as React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 interface IProps {
   onRequestClose: () => void;
@@ -33,17 +33,24 @@ export const StudyHubFeedbackModal: React.FC<IProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [selectedFeedback, setSelectedFeedback] = React.useState<EFeedback | null>(null);
 
-  async function onPress() {
+  async function onSubmit() {
     if (!loading) {
       setLoading(true);
-      // TODO: const result = await mentalHealthApiClient.feedback(selectedRating, comments);
+      // TODO: const result = await API save and confirmation;
+      // TODO: update startup info and backend
       const result = true;
       if (result) {
-        props.onRequestClose();
         track(events.STUDIES_HUB_FEEDBACK, { feedback: selectedFeedback });
+        props.onRequestClose();
       }
       setLoading(false);
     }
+  }
+
+  function onClose() {
+    track(events.STUDIES_HUB_FEEDBACK_CLOSE_MODAL);
+    // TODO: Dispatch action to update startup info and backend
+    props.onRequestClose();
   }
 
   const footerChildren = React.useMemo(
@@ -51,7 +58,7 @@ export const StudyHubFeedbackModal: React.FC<IProps> = (props) => {
       <BrandedButton
         enabled={!loading && !!selectedFeedback}
         loading={loading}
-        onPress={props.onRequestClose}
+        onPress={onSubmit}
         style={styles.button}
         testID="button-send-feedback"
       >
@@ -63,7 +70,7 @@ export const StudyHubFeedbackModal: React.FC<IProps> = (props) => {
 
   const headerChildren = React.useMemo(
     () => (
-      <TouchableOpacity hitSlop={HIT_SLOP} onPress={onPress} style={styles.closeTouchable} testID="button-close-modal">
+      <TouchableOpacity hitSlop={HIT_SLOP} onPress={onClose} style={styles.closeTouchable} testID="button-close-modal">
         <Image source={closeIcon} style={styles.closeCross} />
       </TouchableOpacity>
     ),
@@ -84,12 +91,15 @@ export const StudyHubFeedbackModal: React.FC<IProps> = (props) => {
         {i18n.t('studies-hub.feedback.title')}
       </Text>
       <View style={styles.feedbackIcons}>
-        <TouchableOpacity onPress={() => setSelectedFeedback(EFeedback.Negative)}>
-          <Image source={thumbsDown} style={styles.thumbsDown} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setSelectedFeedback(EFeedback.Positive)}>
-          <Image source={thumbsUp} />
-        </TouchableOpacity>
+        <Pressable onPress={() => setSelectedFeedback(EFeedback.Negative)}>
+          <Image
+            source={thumbsDown}
+            style={[styles.thumbsDown, selectedFeedback === EFeedback.Positive ? styles.lowerOpacity : null]}
+          />
+        </Pressable>
+        <Pressable onPress={() => setSelectedFeedback(EFeedback.Positive)}>
+          <Image source={thumbsUp} style={selectedFeedback === EFeedback.Negative ? styles.lowerOpacity : null} />
+        </Pressable>
       </View>
       <TextareaWithCharCount
         onChangeText={setComments}
