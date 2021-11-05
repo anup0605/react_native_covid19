@@ -47,7 +47,6 @@ describe('Study Hub feedback modal tests', () => {
             />
           </SafeAreaProvider>
         </ReduxProvider>
-        ,
       </ThemeProvider>,
     );
     expect(onRequestClose).toHaveBeenCalledTimes(0);
@@ -70,7 +69,6 @@ describe('Study Hub feedback modal tests', () => {
             />
           </SafeAreaProvider>
         </ReduxProvider>
-        ,
       </ThemeProvider>,
     );
     expect(onRequestClose).toHaveBeenCalledTimes(0);
@@ -96,7 +94,6 @@ describe('Study Hub feedback modal tests', () => {
             />
           </SafeAreaProvider>
         </ReduxProvider>
-        ,
       </ThemeProvider>,
     );
     expect(onRequestClose).toHaveBeenCalledTimes(0);
@@ -122,7 +119,6 @@ describe('Study Hub feedback modal tests', () => {
             />
           </SafeAreaProvider>
         </ReduxProvider>
-        ,
       </ThemeProvider>,
     );
     expect(onRequestClose).toHaveBeenCalledTimes(0);
