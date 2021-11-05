@@ -1684,6 +1684,11 @@
       "research-focus": false,
       "to-do": false,
       "tools": false
+    },
+    "feedback": {
+      "title": false,
+      "placeholder": false,
+      "button": false
     }
   },
   "required-field": "Obligatoriska fält",

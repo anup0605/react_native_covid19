@@ -1680,6 +1680,11 @@
       "research-focus": "Research focus",
       "to-do": "To do",
       "tools": "Tools"
+    },
+    "feedback": {
+      "title": "Enjoying our new Study Hub?",
+      "placeholder": "Please add any comments (optional)",
+      "button": "Send feedback"
     }
   },
   "required-field": "Required field",

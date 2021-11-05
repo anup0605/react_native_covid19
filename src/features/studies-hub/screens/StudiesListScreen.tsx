@@ -2,6 +2,7 @@ import { Tag, Text } from '@covid/components';
 import { Screen } from '@covid/components/Screen';
 import { selectStartupInfo } from '@covid/core/state/selectors';
 import { StudyCard } from '@covid/features/studies-hub/components/StudyCard';
+import { StudyHubFeedbackModal } from '@covid/features/studies-hub/modals/StudyHubFeedbackModal';
 import { TStudy } from '@covid/features/studies-hub/types';
 import i18n from '@covid/locale/i18n';
 import NavigatorService from '@covid/NavigatorService';
@@ -21,32 +22,39 @@ export function StudiesListScreen() {
   const description = startupInfo?.wider_health_studies_consent
     ? i18n.t('studies-hub.consented.description')
     : i18n.t('studies-hub.not-consented.description');
+
+  // TODO: Link to backend
+  const [showFeedbackModal, setShowFeedbackModal] = React.useState(true);
+
   return (
-    <Screen testID="studies-hub-screen">
-      <Tag color={colors.accent} style={styles.alignStart} text={i18n.t('new')} />
-      <Text
-        inverted
-        colorPalette="uiDark"
-        colorShade="darker"
-        style={styles.marginVertical}
-        testID="studies-hub-screen-title"
-        textClass="h2"
-      >
-        {title}
-      </Text>
-      <Text inverted colorPalette="uiDark" colorShade="darker" style={styles.marginBottom} textClass="pLight">
-        {description}
-      </Text>
-      {studies.map((study, index) => (
-        <StudyCard
-          active
-          key={`study-card-${study.id}`}
-          onPress={() => NavigatorService.navigate('StudyDetails', { study })}
-          study={study}
-          style={index !== 0 && styles.marginTop}
-        />
-      ))}
-    </Screen>
+    <>
+      <StudyHubFeedbackModal onRequestClose={() => setShowFeedbackModal(false)} visible={showFeedbackModal} />
+      <Screen testID="studies-hub-screen">
+        <Tag color={colors.accent} style={styles.alignStart} text={i18n.t('new')} />
+        <Text
+          inverted
+          colorPalette="uiDark"
+          colorShade="darker"
+          style={styles.marginVertical}
+          testID="studies-hub-screen-title"
+          textClass="h2"
+        >
+          {title}
+        </Text>
+        <Text inverted colorPalette="uiDark" colorShade="darker" style={styles.marginBottom} textClass="pLight">
+          {description}
+        </Text>
+        {studies.map((study, index) => (
+          <StudyCard
+            active
+            key={`study-card-${study.id}`}
+            onPress={() => NavigatorService.navigate('StudyDetails', { study })}
+            study={study}
+            style={index !== 0 && styles.marginTop}
+          />
+        ))}
+      </Screen>
+    </>
   );
 }
 
