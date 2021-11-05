@@ -53,19 +53,21 @@ export const StudyHubFeedbackModal: React.FC<IProps> = (props) => {
     props.onRequestClose();
   }
 
+  const enabled = !loading && !!selectedFeedback;
+
   const footerChildren = React.useMemo(
     () => (
       <BrandedButton
-        enabled={!loading && !!selectedFeedback}
+        enabled={enabled}
         loading={loading}
         onPress={onSubmit}
-        style={styles.button}
+        style={[styles.button, enabled ? null : styles.disabledButton]}
         testID="button-send-feedback"
       >
         {i18n.t('studies-hub.feedback.button')}
       </BrandedButton>
     ),
-    [props.onRequestClose, i18n.t('studies-hub.feedback.title')],
+    [props.onRequestClose, i18n.t('studies-hub.feedback.title'), enabled, loading],
   );
 
   const headerChildren = React.useMemo(
@@ -95,10 +97,15 @@ export const StudyHubFeedbackModal: React.FC<IProps> = (props) => {
           <Image
             source={thumbsDown}
             style={[styles.thumbsDown, selectedFeedback === EFeedback.Positive ? styles.lowerOpacity : null]}
+            testID="study-hub-feedback-negative"
           />
         </Pressable>
         <Pressable onPress={() => setSelectedFeedback(EFeedback.Positive)}>
-          <Image source={thumbsUp} style={selectedFeedback === EFeedback.Negative ? styles.lowerOpacity : null} />
+          <Image
+            source={thumbsUp}
+            style={selectedFeedback === EFeedback.Negative ? styles.lowerOpacity : null}
+            testID="study-hub-feedback-positive"
+          />
         </Pressable>
       </View>
       <TextareaWithCharCount
@@ -127,6 +134,9 @@ const styles = StyleSheet.create({
   },
   closeTouchable: {
     alignSelf: 'flex-end',
+  },
+  disabledButton: {
+    opacity: 0.5,
   },
   feedbackIcons: {
     flexDirection: 'row',
