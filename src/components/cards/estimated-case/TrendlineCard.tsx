@@ -29,12 +29,7 @@ const endDate = moment().toDate();
 export function TrendlineCard(props: IProps) {
   const navigation = useNavigation();
 
-  const localTrendline = useSelector<TRootState, ITrendLineData | undefined>((state) => ({
-    delta: state.content.localTrendline?.delta,
-    name: state.content.personalizedLocalData?.name,
-    timeseries: state.content.localTrendline?.timeseries,
-    today: state.content.personalizedLocalData?.cases,
-  }));
+  const localTrendline = useSelector<TRootState, ITrendLineData | undefined>((state) => state.content.localTrendline);
 
   const onPress = React.useCallback(() => {
     if (props.onPress) {

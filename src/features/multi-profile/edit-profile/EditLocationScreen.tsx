@@ -5,7 +5,7 @@ import { GenericTextField } from '@covid/components/GenericTextField';
 import { YesNoField } from '@covid/components/inputs/YesNoField';
 import { Screen } from '@covid/components/Screen';
 import { ErrorText, HeaderText, SecondaryText } from '@covid/components/Text';
-import { fetchStartUpInfo } from '@covid/core/state/contentSlice';
+import { fetchLocalTrendLine } from '@covid/core/state/contentSlice';
 import { TPatientInfosRequest } from '@covid/core/user/dto/UserAPIContracts';
 import { editProfileCoordinator } from '@covid/features/multi-profile/edit-profile/EditProfileCoordinator';
 import { TScreenParamList } from '@covid/features/ScreenParamList';
@@ -73,7 +73,7 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
     }),
   });
 
-  const onSubmit = (values: TEditLocationData) => {
+  const onSubmit = async (values: TEditLocationData) => {
     const infos: Partial<TPatientInfosRequest> = {};
 
     if (values.differentAddress === 'no') {
@@ -90,15 +90,13 @@ export const EditLocationScreen: React.FC<TProps> = (props) => {
       infos.current_country_code = values.currentCountry;
     }
 
-    editProfileCoordinator
-      .updatePatientInfo(infos)
-      .then(() => {
-        dispatch(fetchStartUpInfo());
-        editProfileCoordinator.gotoNextScreen(props.route.name);
-      })
-      .catch(() => {
-        setErrorMessage(i18n.t('something-went-wrong'));
-      });
+    try {
+      await editProfileCoordinator.updatePatientInfo(infos);
+      await dispatch(fetchLocalTrendLine());
+      editProfileCoordinator.gotoNextScreen(props.route.name);
+    } catch (_) {
+      setErrorMessage(i18n.t('something-went-wrong'));
+    }
   };
 
   const countryList: PickerItemProps[] = require('country-list')
