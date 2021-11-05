@@ -5,7 +5,7 @@ import { TFeaturedContentResponse, TTrendLineResponse } from './dto/ContentAPICo
 
 interface IContentApiClient {
   getStartupInfo(): Promise<TStartupInfo>;
-  getTrendLines(lad?: string): Promise<TTrendLineResponse>;
+  getTrendLines(): Promise<TTrendLineResponse>;
   getFeaturedContent(): Promise<TFeaturedContentResponse>;
   signUpForDietNewsletter(signup: boolean): Promise<void>;
   signUpForDiseaseResearchNewsletter(signup: boolean): Promise<void>;
@@ -18,9 +18,8 @@ class ContentApiClient implements IContentApiClient {
     return apiClient.get<TStartupInfo>('/users/startup_info/');
   }
 
-  getTrendLines(lad?: string): Promise<TTrendLineResponse> {
-    const path = lad ? `/trendlines/?lad=${lad}` : `/trendlines/`;
-    return apiClient.get<TTrendLineResponse>(path);
+  getTrendLines(): Promise<TTrendLineResponse> {
+    return apiClient.get<TTrendLineResponse>('/trendlines/');
   }
 
   getFeaturedContent(): Promise<TFeaturedContentResponse> {

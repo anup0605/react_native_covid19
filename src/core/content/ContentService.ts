@@ -18,7 +18,7 @@ export interface IContentService {
   setAskedToRateStatus(status: string): void;
   getUserCount(): Promise<string | null>;
   getStartupInfo(): Promise<TStartupInfo | undefined>;
-  getTrendLines(lad?: string): Promise<TTrendLineResponse>;
+  getTrendLines(): Promise<TTrendLineResponse>;
   getFeaturedContent(): Promise<TFeaturedContentResponse>;
   signUpForDietNewsletter(signup: boolean): Promise<void>;
   signUpForDiseaseResearchNewsletter(signup: boolean): Promise<void>;
@@ -115,8 +115,8 @@ class ContentService implements IContentService {
     AsyncStorageService.setAskedToRateStatus(status);
   }
 
-  public async getTrendLines(lad?: string): Promise<TTrendLineResponse> {
-    return contentApiClient.getTrendLines(lad);
+  public async getTrendLines(): Promise<TTrendLineResponse> {
+    return contentApiClient.getTrendLines();
   }
 
   public async getFeaturedContent(): Promise<TFeaturedContentResponse> {
