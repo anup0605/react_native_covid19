@@ -1094,7 +1094,7 @@
       "share-cta": false
     }
   },
-  "explore-trend-line": {
+  "trendline": {
     "title": false,
     "cta": false,
     "active-covid-cases": false,

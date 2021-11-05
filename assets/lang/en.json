@@ -1090,7 +1090,7 @@
       "share-cta": "Share your graph"
     }
   },
-  "explore-trend-line": {
+  "trendline": {
     "title": "Estimated COVID cases in",
     "cta": "Share",
     "active-covid-cases": "Active COVID cases in {{location}}",
